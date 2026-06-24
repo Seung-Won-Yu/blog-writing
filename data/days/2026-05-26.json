@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 26",
+  "weekday": "화",
+  "news": [
+    {
+      "title_kr": "정말로 지금은 Codex가 Claude Code보다 나을까?",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3771/",
+      "blurb_kr": "공식 자료·외부 측정·분석을 층층이 쌓아 Opus 4.7과 GPT-5.5, Claude Code와 Codex의 모델·도구 차이를 두 축으로 비교했다."
+    },
+    {
+      "title_kr": "에이전틱 코드 리뷰",
+      "source": "GeekNews",
+      "url": "https://addyo.substack.com/p/agentic-code-review",
+      "blurb_kr": "코딩 에이전트의 급격한 발전으로 엔지니어링 초점이 코드 작성에서 신뢰성 평가로 이동."
+    }
+  ],
+  "quiz": {
+    "category": "신기술",
+    "question": "빅데이터의 일반적 특성인 3V에 해당하지 않는 것은?",
+    "options": [
+      "규모(Volume)",
+      "속도(Velocity)",
+      "다양성(Variety)",
+      "가시성(Visibility)"
+    ],
+    "answer": 3,
+    "explain_kr": "빅데이터의 3V는 규모(Volume), 속도(Velocity), 다양성(Variety)이며 여기에 정확성(Veracity), 가치(Value)를 더해 5V로 확장하기도 한다. 가시성(Visibility)은 빅데이터의 핵심 특성에 포함되지 않는다."
+  },
+  "terms": [
+    {
+      "term": "WBS (Work Breakdown Structure)",
+      "kind": "기획",
+      "meaning_kr": "프로젝트 전체를 관리 가능한 작은 작업 단위로 계층적으로 분해한 구조."
+    },
+    {
+      "term": "코드 커버리지 (Code Coverage)",
+      "kind": "개발",
+      "meaning_kr": "테스트가 전체 코드 중 얼마나 실행·검증하는지 비율로 나타낸 지표."
+    },
+    {
+      "term": "그래이스풀 셧다운 (Graceful Shutdown)",
+      "kind": "IT",
+      "meaning_kr": "진행 중인 요청을 정상 처리하고 마무리한 뒤 서버를 안전하게 종료하는 절차."
+    }
+  ]
+}

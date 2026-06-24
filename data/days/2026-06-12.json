@@ -1,0 +1,53 @@
+{
+  "date_label": "2026. 6. 12",
+  "weekday": "금",
+  "news": [
+    {
+      "title_kr": "지금 진짜 쓸 만한 AI 에이전트 10가지 총정리(2) : 자율 에이전트",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3800/",
+      "blurb_kr": "OpenClaw·Hermes·OpenHuman·Gemini Spark 등 24시간 스스로 도는 자율 에이전트 4종을 정리하고, 어디까지 맡길지 정하는 감각의 중요성을 짚었다."
+    },
+    {
+      "title_kr": "AI 활용 경험, 포트폴리오에 어떻게 담아야 할까",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3799/",
+      "blurb_kr": "어떤 AI 도구를 써야 하느냐는 주니어 디자이너들의 흔한 질문을 짚으며, AI 활용 경험을 포트폴리오에 담는 올바른 방향을 논한다."
+    },
+    {
+      "title_kr": "클로드 페이블 5, 출시 하루 만에 너무 막힌다는 반응이 쏟아졌다 + 차단 소식 업데이트",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3798",
+      "blurb_kr": "AI한테 매번 처음부터 다시 설명하기 지치셨다면. 모델은 그대로 두고 기억만 따로 붙여주는 오픈소스 도구 supermemory, 출시 하루 만에 너무 막혀서 못 쓰겠다는 반응이 쏟아졌다는 앤트로픽 Fable 5, 그리고 1~2년이면 AI가 차원이 달라진다며 정부 검증을 요구한 앤트로픽 CEO의 제안까지 정리했습니다."
+    }
+  ],
+  "quiz": {
+    "category": "자료구조/알고리즘",
+    "question": "먼저 들어온 데이터가 먼저 나가는(FIFO) 구조로, 한쪽 끝에서 삽입하고 다른 쪽 끝에서 삭제하는 자료구조는?",
+    "options": [
+      "스택(Stack)",
+      "큐(Queue)",
+      "트리(Tree)",
+      "그래프(Graph)"
+    ],
+    "answer": 1,
+    "explain_kr": "큐(Queue)는 선입선출(FIFO) 구조로 한쪽(rear)에서 삽입(enqueue)하고 다른 쪽(front)에서 삭제(dequeue)한다. 스택은 후입선출(LIFO) 구조다. 트리는 계층적, 그래프는 정점과 간선으로 이루어진 비선형 자료구조다."
+  },
+  "terms": [
+    {
+      "term": "로드맵 (Roadmap)",
+      "kind": "기획",
+      "meaning_kr": "제품의 중장기 방향과 주요 기능 출시 일정을 시간 흐름으로 정리한 전략 계획."
+    },
+    {
+      "term": "디버깅 (Debugging)",
+      "kind": "개발",
+      "meaning_kr": "코드에서 발생한 오류의 원인을 찾아 추적하고 수정하는 과정."
+    },
+    {
+      "term": "마이크로서비스 (Microservices)",
+      "kind": "IT",
+      "meaning_kr": "애플리케이션을 독립적으로 배포 가능한 작은 서비스 단위로 나눠 구성하는 아키텍처."
+    }
+  ]
+}

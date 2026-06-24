@@ -19,7 +19,22 @@
     <article class="daysec sec-news">
       <div class="secnum">01</div>
       <span class="seclabel">오늘의 뉴스</span>
-      <p class="empty">오늘은 수집된 소식이 없습니다.</p>
+      <ul class="newslist">
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3809/" target="_blank" rel="noopener">AI PRD는 무엇이 달라야 하는가 ↗</a></h3>
+          <p class="ni-blurb">출력이 매번 달라지는 AI 기능을 위해 허용 답변 범위와 Eval Plan을 약속해야 한다며 AI PRD 필수 8가지를 짚었다.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3808/" target="_blank" rel="noopener">당신이 매달 내는 20달러는 진짜 AI의 몸값이 아니다 ↗</a></h3>
+          <p class="ni-blurb">월 20달러 구독은 기업들의 시장 선점용 보조금에 가깝다며, 토큰 기반 종량제로 변할 때 마주할 비용 현실을 분석한다.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">GeekNews</span>
+          <h3 class="ni-title"><a href="https://claude.com/blog/the-founders-playbook" target="_blank" rel="noopener">창업자 플레이북: AI-native 스타트업 만들기 ↗</a></h3>
+          <p class="ni-blurb">아이디어 검증부터 확장까지 AI를 활용하는 방법을 담은 창업자용 실전 플레이북.</p>
+        </li></ul>
     </article>
 
     <article class="daysec sec-quiz">
@@ -27,13 +42,13 @@
       <span class="seclabel">기초상식 · 정처기</span>
       
       <div class="quiz">
-        <div class="sectag">#정보보안</div>
-        <p class="q-question">사용자 입력이 쿼리로 해석되어 악의적 SQL이 실행되는 취약점과, 그 대표 대응책으로 옳게 짝지어진 것은?</p>
-        <ol class="qopts"><li class="qopt"><span class="ql">①</span> XSS — 출력 인코딩</li><li class="qopt correct"><span class="ql">②</span> SQL 삽입 — 파라미터화 쿼리(PreparedStatement)</li><li class="qopt"><span class="ql">③</span> CSRF — 토큰 검증</li><li class="qopt"><span class="ql">④</span> 버퍼 오버플로 — 경계 검사</li></ol>
+        <div class="sectag">#네트워크</div>
+        <p class="q-question">IPv4 주소 체계에서 C클래스의 기본 서브넷 마스크는?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 255.0.0.0</li><li class="qopt"><span class="ql">②</span> 255.255.0.0</li><li class="qopt correct"><span class="ql">③</span> 255.255.255.0</li><li class="qopt"><span class="ql">④</span> 255.255.255.255</li></ol>
         <details class="q-ans">
           <summary>정답 &amp; 해설 보기</summary>
-          <p><b>정답: ②</b></p>
-          <p>SQL 삽입(SQL Injection)은 입력값이 쿼리 구문으로 해석되어 발생하며, 파라미터화 쿼리(PreparedStatement)와 입력 검증으로 방어한다. 나머지 보기도 각각 옳은 짝이지만 문제의 정의에 해당하는 것은 SQL 삽입이다.</p>
+          <p><b>정답: ③</b></p>
+          <p>C클래스는 상위 24비트를 네트워크 식별자로 사용하므로 기본 서브넷 마스크가 255.255.255.0이며 호스트는 약 254개를 가질 수 있다. A클래스는 255.0.0.0, B클래스는 255.255.0.0이다. 255.255.255.255는 제한적 브로드캐스트 주소다.</p>
         </details>
       </div>
     </article>
@@ -44,18 +59,18 @@
       <ul class="terms">
         <li class="termrow">
           <span class="t-kind" style="background:#c2532f">기획</span>
-          <span class="t-term">페르소나(Persona)</span>
-          <span class="t-mean">타깃 사용자를 대표하는 가상의 인물상으로, 기능·디자인 의사결정의 기준이 된다.</span>
+          <span class="t-term">KPI (Key Performance Indicator)</span>
+          <span class="t-mean">목표 달성 정도를 수치로 측정해 성과를 추적하는 핵심 성과 지표.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#0a8f6b">개발</span>
-          <span class="t-term">풀 리퀘스트(PR)</span>
-          <span class="t-mean">변경한 코드를 본 브랜치에 합쳐 달라고 요청하며 리뷰를 받는 단위.</span>
+          <span class="t-term">TDD (Test-Driven Development)</span>
+          <span class="t-mean">구현보다 테스트 코드를 먼저 작성하고 그것을 통과시키며 개발하는 방법론.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#1f6feb">IT</span>
-          <span class="t-term">멱등성(Idempotency)</span>
-          <span class="t-mean">같은 요청을 여러 번 보내도 결과가 한 번 보낸 것과 같은 성질(예: HTTP PUT).</span>
+          <span class="t-term">멱등성 (Idempotency)</span>
+          <span class="t-mean">같은 요청을 여러 번 보내도 결과가 한 번 보낸 것과 동일하게 유지되는 성질.</span>
         </li></ul>
     </article>
   </section>

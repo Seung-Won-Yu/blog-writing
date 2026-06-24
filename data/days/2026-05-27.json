@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 27",
+  "weekday": "수",
+  "news": [
+    {
+      "title_kr": "Next API Capture – App Router의 '서버에서 부르는 API'를 DevTools에서 보기",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30783",
+      "blurb_kr": "Next.js의 RSC와 서버 액션의 fetch 호출을 DevTools에서 확인할 수 있게 해주는 도구"
+    },
+    {
+      "title_kr": "GLM-5.2를 로컬에서 실행하는 방법",
+      "source": "GeekNews",
+      "url": "https://unsloth.ai/docs/models/glm-5.2",
+      "blurb_kr": "Z.ai의 신규 오픈 모델은 744B 파라미터, 1M 컨텍스트로 코딩·추론에서 SOTA 성능."
+    }
+  ],
+  "quiz": {
+    "category": "신기술",
+    "question": "하드웨어 인프라(서버, 스토리지, 네트워크)를 가상화하여 인터넷으로 제공하는 클라우드 서비스 모델은?",
+    "options": [
+      "IaaS",
+      "PaaS",
+      "SaaS",
+      "DaaS"
+    ],
+    "answer": 0,
+    "explain_kr": "IaaS(Infrastructure as a Service)는 서버, 스토리지, 네트워크 등 컴퓨팅 인프라를 가상화하여 제공하는 모델이다. PaaS는 개발·실행 플랫폼을, SaaS는 완성된 소프트웨어 애플리케이션을 서비스로 제공한다."
+  },
+  "terms": [
+    {
+      "term": "스코프 크립 (Scope Creep)",
+      "kind": "기획",
+      "meaning_kr": "프로젝트 진행 중 요구사항이 통제 없이 계속 늘어나 범위가 비대해지는 현상."
+    },
+    {
+      "term": "컴파일 (Compile)",
+      "kind": "개발",
+      "meaning_kr": "사람이 작성한 소스 코드를 기계가 실행할 수 있는 언어로 변환하는 과정."
+    },
+    {
+      "term": "폴링 (Polling)",
+      "kind": "IT",
+      "meaning_kr": "변경 여부를 알기 위해 클라이언트가 서버에 주기적으로 반복 요청하는 방식."
+    }
+  ]
+}

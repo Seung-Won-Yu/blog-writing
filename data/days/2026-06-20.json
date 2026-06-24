@@ -1,17 +1,47 @@
 {
   "date_label": "2026. 6. 20",
   "weekday": "토",
-  "news": [],
+  "news": [
+    {
+      "title_kr": "AI 시대에 K-공문서(HWP)를 못 여는 진짜 이유, 그리고 해법",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30663",
+      "blurb_kr": "표준 명세만 있으면 호환 앱이든 렌더러든 AI로 만들어낼 수 있다는 논의"
+    },
+    {
+      "title_kr": "Project Valhalla: 10년간의 작업이 JDK 28에 어떻게 반영되었는가",
+      "source": "GeekNews",
+      "url": "https://www.jvm-weekly.com/p/project-valhalla-explained-how-a",
+      "blurb_kr": "JEP 401이 프리뷰 단계 도달, 자바 객체가 클래스처럼 작성되고 int처럼 동작하도록 지원."
+    }
+  ],
   "quiz": {
-    "category": "운영체제",
-    "question": "가장 오랫동안 참조되지 않은 페이지를 교체 대상으로 선택하는 페이지 교체 알고리즘은?",
-    "options": ["FIFO", "LRU", "LFU", "OPT"],
+    "category": "네트워크",
+    "question": "OSI 7계층 중 데이터의 표현 형식 변환, 암호화, 압축을 담당하는 계층은?",
+    "options": [
+      "세션 계층(Session)",
+      "표현 계층(Presentation)",
+      "응용 계층(Application)",
+      "전송 계층(Transport)"
+    ],
     "answer": 1,
-    "explain_kr": "LRU(Least Recently Used)는 가장 오래 참조되지 않은 페이지를 교체한다. LFU는 사용 빈도가 가장 낮은 것을, OPT는 앞으로 가장 늦게 쓰일 페이지를(이론적 최적) 교체한다."
+    "explain_kr": "표현 계층(6계층)은 데이터의 인코딩/디코딩, 암호화/복호화, 압축 등 데이터 표현 형식을 담당한다. 세션 계층은 연결 설정·동기화, 응용 계층은 사용자 응용 서비스, 전송 계층은 종단 간 신뢰성 있는 데이터 전송을 담당한다."
   },
   "terms": [
-    { "term": "A/B 테스트", "kind": "기획", "meaning_kr": "두 버전을 사용자에게 나눠 보여주고 지표로 더 나은 쪽을 고르는 비교 실험." },
-    { "term": "페어 프로그래밍", "kind": "개발", "meaning_kr": "두 명이 한 화면에서 함께 코딩하며 실시간으로 리뷰하는 작업 방식." },
-    { "term": "CDN", "kind": "IT", "meaning_kr": "콘텐츠를 세계 곳곳의 서버에 캐싱해 사용자와 가까운 곳에서 빠르게 전달하는 망." }
+    {
+      "term": "MVP (Minimum Viable Product)",
+      "kind": "기획",
+      "meaning_kr": "핵심 가치를 검증할 수 있는 최소 기능만 담아 빠르게 출시하는 제품의 초기 버전."
+    },
+    {
+      "term": "린터 (Linter)",
+      "kind": "개발",
+      "meaning_kr": "코드의 문법 오류·스타일 위반·잠재적 결함을 자동으로 검사해 알려 주는 정적 분석 도구."
+    },
+    {
+      "term": "CDN (Content Delivery Network)",
+      "kind": "IT",
+      "meaning_kr": "콘텐츠를 사용자와 가까운 지역 서버에 분산 배치해 전송 속도를 높이는 네트워크."
+    }
   ]
 }

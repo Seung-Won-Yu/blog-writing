@@ -1,0 +1,53 @@
+{
+  "date_label": "2026. 6. 9",
+  "weekday": "화",
+  "news": [
+    {
+      "title_kr": "AI 챗봇을 도입했는데, 왜 업무는 그대로일까",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3791",
+      "blurb_kr": "챗봇 도입만으로 일하는 방식이 바뀌는 회사와 채널만 느는 회사의 차이를, 보험 대행사 TPA KOREA 사례와 AX 도입 전 답해야 할 6가지 질문으로 정리했습니다."
+    },
+    {
+      "title_kr": "'토큰 맥싱'의 시대는 끝났다: 메타·아마존·우버의 선택",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3790",
+      "blurb_kr": "토큰 사용량으로 AI 활용을 증명하던 분위기가 메타·아마존·우버의 사용량 제한으로 무너진 흐름을 짚고, 토큰맥싱 이후 무엇을 성과로 봐야 할지 정리했습니다."
+    },
+    {
+      "title_kr": "나만의 유틸리티 타입 만들기: Mapped Type, Conditional Type",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3789",
+      "blurb_kr": "내장 유틸리티 타입만으로 해결하기 어려운 상황에서 진가를 발휘하는 Mapped Type과 Conditional Type의 동작 원리를 살펴보고, 나만의 유틸리티 타입을 만드는 방법을 다룹니다."
+    }
+  ],
+  "quiz": {
+    "category": "자료구조/알고리즘",
+    "question": "흐름도(순서도)에서 수식 표기법(중위 표기)를 후위 표기법으로 변환하거나 수식 계산 시 가장 적합한 자료구조는?",
+    "options": [
+      "스택(Stack)",
+      "큐(Queue)",
+      "데큐(Deque)",
+      "해시 테이블(Hash Table)"
+    ],
+    "answer": 0,
+    "explain_kr": "스택은 후입선출(LIFO) 구조로 연산자 우선순위 처리와 괄호 대응에 적합하여 중위·후위 표기법 변환과 수식 계산에 널리 사용된다. 또한 함수 호출의 복귀 주소 저장, 재귀 처리 등에도 쓰인다. 큐는 FIFO, 해시 테이블은 키 기반 빠른 검색에 적합하다."
+  },
+  "terms": [
+    {
+      "term": "퍼널 (Funnel)",
+      "kind": "기획",
+      "meaning_kr": "사용자가 유입부터 전환까지 거치는 단계별 흐름과 이탈을 분석하는 깔때기형 모델."
+    },
+    {
+      "term": "코드컨벤션 (Code Convention)",
+      "kind": "개발",
+      "meaning_kr": "팀이 일관된 코드를 작성하도록 정한 명명·들여쓰기·구조 등의 약속."
+    },
+    {
+      "term": "DNS 라운드로빈 (Round Robin)",
+      "kind": "IT",
+      "meaning_kr": "요청을 서버에 순번대로 돌아가며 분배해 부하를 단순 분산하는 방식."
+    }
+  ]
+}

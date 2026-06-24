@@ -19,7 +19,22 @@
     <article class="daysec sec-news">
       <div class="secnum">01</div>
       <span class="seclabel">오늘의 뉴스</span>
-      <p class="empty">오늘은 수집된 소식이 없습니다.</p>
+      <ul class="newslist">
+        <li class="newsitem">
+          <span class="ni-src">GeekNews</span>
+          <h3 class="ni-title"><a href="https://news.hada.io/topic?id=30671" target="_blank" rel="noopener">ClickHouse 오픈소스 10년 ↗</a></h3>
+          <p class="ni-blurb">2016년 공개 후 2,000명 이상 기여, 분석 데이터베이스 대표 프로젝트로 성장</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">GeekNews</span>
+          <h3 class="ni-title"><a href="https://news.hada.io/topic?id=30674" target="_blank" rel="noopener">AI가 우리의 능력을 망치고 있는가? 초기 연구 결과는 부정적 ↗</a></h3>
+          <p class="ni-blurb">의료·컴퓨터과학 등에서 AI 의존이 숙련도 약화 가능성을 보인다는 초기 근거</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">GeekNews</span>
+          <h3 class="ni-title"><a href="https://news.hada.io/topic?id=30672" target="_blank" rel="noopener">머신러닝 연구의 선(Zen)과 예술 ↗</a></h3>
+          
+        </li></ul>
     </article>
 
     <article class="daysec sec-quiz">
@@ -27,13 +42,13 @@
       <span class="seclabel">기초상식 · 정처기</span>
       
       <div class="quiz">
-        <div class="sectag">#소프트웨어 테스트</div>
-        <p class="q-question">입력 조건의 경계가 되는 값에서 오류가 자주 발생한다는 점에 착안한 블랙박스 테스트 기법은?</p>
-        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 동등 분할</li><li class="qopt correct"><span class="ql">②</span> 경계값 분석</li><li class="qopt"><span class="ql">③</span> 기초 경로 검사</li><li class="qopt"><span class="ql">④</span> 조건 커버리지</li></ol>
+        <div class="sectag">#데이터베이스</div>
+        <p class="q-question">데이터베이스에서 다른 테이블의 기본키를 참조하여 참조 무결성을 보장하는 속성은?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 기본키(Primary Key)</li><li class="qopt correct"><span class="ql">②</span> 외래키(Foreign Key)</li><li class="qopt"><span class="ql">③</span> 후보키(Candidate Key)</li><li class="qopt"><span class="ql">④</span> 대체키(Alternate Key)</li></ol>
         <details class="q-ans">
           <summary>정답 &amp; 해설 보기</summary>
           <p><b>정답: ②</b></p>
-          <p>경계값 분석(Boundary Value Analysis)은 경계 근처 값을 집중 테스트하는 블랙박스 기법이다. 기초 경로 검사·조건 커버리지는 내부 구조를 보는 화이트박스 기법이다.</p>
+          <p>외래키(Foreign Key)는 한 테이블에서 다른(또는 같은) 테이블의 기본키를 참조하는 속성으로 참조 무결성을 보장한다. 기본키는 행을 유일하게 식별하는 키, 후보키는 기본키가 될 수 있는 키들, 대체키는 후보키 중 기본키로 선택되지 않은 키다.</p>
         </details>
       </div>
     </article>
@@ -44,18 +59,18 @@
       <ul class="terms">
         <li class="termrow">
           <span class="t-kind" style="background:#c2532f">기획</span>
-          <span class="t-term">백로그(Backlog)</span>
-          <span class="t-mean">해야 할 일·기능을 우선순위로 정리해 둔 작업 목록.</span>
+          <span class="t-term">칸반 (Kanban)</span>
+          <span class="t-mean">작업을 카드로 시각화하고 진행 단계별 열로 흐름을 관리하는 시각적 업무 관리 방식.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#0a8f6b">개발</span>
-          <span class="t-term">CI/CD</span>
-          <span class="t-mean">빌드·테스트·배포를 자동화하는 지속적 통합/지속적 배포 파이프라인.</span>
+          <span class="t-term">코드리뷰 (Code Review)</span>
+          <span class="t-mean">동료가 작성한 코드를 검토해 버그·품질·컨벤션 문제를 사전에 잡아내는 협업 활동.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#1f6feb">IT</span>
-          <span class="t-term">컨테이너(Container)</span>
-          <span class="t-mean">앱과 실행 환경을 함께 묶어 어디서나 동일하게 실행하는 격리 단위(예: 도커).</span>
+          <span class="t-term">컨테이너 (Container)</span>
+          <span class="t-mean">애플리케이션과 실행 환경을 함께 패키징해 어디서나 동일하게 동작하도록 격리한 실행 단위.</span>
         </li></ul>
     </article>
   </section>

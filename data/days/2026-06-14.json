@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 14",
+  "weekday": "일",
+  "news": [
+    {
+      "title_kr": "FUTO Swipe: 공개형 스와이프 입력 모델",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30787",
+      "blurb_kr": "프라이버시를 우선하는 모바일 키보드용 오픈소스 스와이프 입력 구현"
+    },
+    {
+      "title_kr": "한국 무기 산업의 부상",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30700",
+      "blurb_kr": "한국이 세계 9위이자 가장 빠르게 성장하는 무기 수출국으로 부상 중"
+    }
+  ],
+  "quiz": {
+    "category": "운영체제",
+    "question": "선점형(Preemptive) CPU 스케줄링 기법에 해당하는 것은?",
+    "options": [
+      "FCFS",
+      "SJF(비선점)",
+      "라운드 로빈(Round Robin)",
+      "HRN"
+    ],
+    "answer": 2,
+    "explain_kr": "라운드 로빈은 각 프로세스에 동일한 타임 슬라이스(시간 할당량)를 주고 만료 시 강제로 CPU를 회수하는 선점형 기법이다. FCFS, 비선점 SJF, HRN은 실행 중인 프로세스를 도중에 뺏지 않는 비선점형 스케줄링이다."
+  },
+  "terms": [
+    {
+      "term": "PRD (Product Requirements Document)",
+      "kind": "기획",
+      "meaning_kr": "제품이 해결할 문제·목표·요구사항·범위를 정리해 개발과 협업의 기준이 되는 문서."
+    },
+    {
+      "term": "커밋 (Commit)",
+      "kind": "개발",
+      "meaning_kr": "코드 변경 사항을 의미 있는 단위로 저장소에 기록하는 버전 관리의 기본 단위."
+    },
+    {
+      "term": "DNS (Domain Name System)",
+      "kind": "IT",
+      "meaning_kr": "사람이 읽는 도메인 주소를 컴퓨터가 사용하는 IP 주소로 변환해 주는 시스템."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 16",
+  "weekday": "화",
+  "news": [
+    {
+      "title_kr": "바이브 코딩을 만난 1년, 40대 비개발자에게 일어난 일들",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3803/",
+      "blurb_kr": "에러 메시지를 AI에 붙여넣으며 시작한 평범한 40대 직장인이 AI를 만나 겪은 1년간의 변화 기록."
+    },
+    {
+      "title_kr": "Git에서 파일을 무시하는 방법은 .gitignore만이 아님",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30627",
+      "blurb_kr": "파일 무시 규칙의 세 수준(.gitignore, .git/info/exclude, ~/.config/git/ignore) 설명"
+    }
+  ],
+  "quiz": {
+    "category": "운영체제",
+    "question": "페이지 교체 알고리즘 중 앞으로 가장 오랫동안 사용되지 않을 페이지를 교체하여 이론상 최적이지만 실제 구현이 불가능한 기법은?",
+    "options": [
+      "FIFO",
+      "LRU",
+      "OPT(Optimal)",
+      "LFU"
+    ],
+    "answer": 2,
+    "explain_kr": "OPT(최적 교체)는 미래에 가장 늦게 참조될 페이지를 교체하므로 페이지 폴트가 최소이지만, 미래 참조를 알 수 없어 실제로는 구현 불가능하고 성능 비교의 기준으로만 쓰인다. LRU는 과거 가장 오래 미사용된 페이지를 교체하는 근사 기법이다."
+  },
+  "terms": [
+    {
+      "term": "와이어프레임 (Wireframe)",
+      "kind": "기획",
+      "meaning_kr": "화면의 구성 요소와 배치를 선과 박스로 단순하게 표현한 초기 설계 골격."
+    },
+    {
+      "term": "브랜치 (Branch)",
+      "kind": "개발",
+      "meaning_kr": "기존 코드에 영향을 주지 않고 독립적으로 작업하기 위해 분기한 버전 관리의 작업 줄기."
+    },
+    {
+      "term": "오케스트레이션 (Orchestration)",
+      "kind": "IT",
+      "meaning_kr": "여러 컨테이너·서비스의 배포·확장·연결을 자동으로 조율해 관리하는 작업."
+    }
+  ]
+}

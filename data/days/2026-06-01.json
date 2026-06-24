@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 1",
+  "weekday": "월",
+  "news": [
+    {
+      "title_kr": "AX의 어려움은 전 직원이 AI를 쓴 이후부터 시작된다",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3781/",
+      "blurb_kr": "전사가 AI를 잘 쓰게 만드는 일은 들여다볼수록 쉽지 않다. 조직문화와 일하는 법 관점에서 AX의 진짜 어려움을 짚는다."
+    },
+    {
+      "title_kr": "데이터가 없으면 디자인을 어떻게 개선하나요?",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3779/",
+      "blurb_kr": "UX/UI 디자이너로 일하다 보면 근거 있나요라는 질문이 돌아오는 순간이 온다. 데이터가 없을 때 디자인을 개선하는 방법을 다룬다."
+    }
+  ],
+  "quiz": {
+    "category": "정보보안",
+    "question": "웹 애플리케이션에서 사용자 입력값을 검증하지 않아 악의적인 SQL 구문이 실행되는 공격 기법은?",
+    "options": [
+      "DDoS 공격",
+      "SQL 인젝션",
+      "스니핑(Sniffing)",
+      "무차별 대입 공격"
+    ],
+    "answer": 1,
+    "explain_kr": "SQL 인젝션은 입력값 검증 부족을 악용해 조작된 SQL 구문을 주입하여 인증 우회나 데이터 유출을 일으키는 공격으로, 입력값 검증과 매개변수화 쿼리(Prepared Statement)로 방어한다. DDoS는 가용성 공격, 스니핑은 패킷 도청, 무차별 대입은 비밀번호 추측 공격이다."
+  },
+  "terms": [
+    {
+      "term": "벨로시티 (Velocity)",
+      "kind": "기획",
+      "meaning_kr": "한 스프린트에서 팀이 완료한 작업량을 측정해 향후 일정을 예측하는 속도 지표."
+    },
+    {
+      "term": "스텁 (Stub)",
+      "kind": "개발",
+      "meaning_kr": "테스트에서 호출되는 함수가 미리 정해진 응답만 반환하도록 대체한 가짜 구현."
+    },
+    {
+      "term": "쿠키 (Cookie)",
+      "kind": "IT",
+      "meaning_kr": "브라우저에 저장되어 사용자 상태·식별 정보를 서버와 주고받게 하는 작은 데이터."
+    }
+  ]
+}

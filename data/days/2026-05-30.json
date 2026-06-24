@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 30",
+  "weekday": "토",
+  "news": [
+    {
+      "title_kr": "취업과 소프트웨어는 망했다",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30767",
+      "blurb_kr": "AI로 증폭된 채용 시장이 자동화 시험으로 규칙 준수형 지원자에게 불리하게 작용"
+    },
+    {
+      "title_kr": "Show GN: GWEB: Go 언어를 위한 문학적 프로그래밍 도구",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30761",
+      "blurb_kr": "GWEB은 Knuth의 CWEB 구조를 본떠 Go를 위한 문학적 프로그래밍을 구현."
+    }
+  ],
+  "quiz": {
+    "category": "프로그래밍 언어",
+    "question": "객체지향 프로그래밍에서 부모 클래스의 속성과 메서드를 자식 클래스가 물려받는 개념은?",
+    "options": [
+      "캡슐화(Encapsulation)",
+      "상속(Inheritance)",
+      "다형성(Polymorphism)",
+      "추상화(Abstraction)"
+    ],
+    "answer": 1,
+    "explain_kr": "상속(Inheritance)은 기존 클래스(부모)의 속성과 메서드를 새로운 클래스(자식)가 물려받아 재사용하고 확장하는 개념이다. 캡슐화는 데이터와 메서드의 묶음과 은닉, 다형성은 같은 메시지에 대한 다른 동작, 추상화는 핵심 특징 추출을 의미한다."
+  },
+  "terms": [
+    {
+      "term": "DoD (Definition of Done)",
+      "kind": "기획",
+      "meaning_kr": "작업이 완료되었다고 인정받기 위해 충족해야 할 공통 기준 정의."
+    },
+    {
+      "term": "스모크테스트 (Smoke Test)",
+      "kind": "개발",
+      "meaning_kr": "배포 직후 핵심 기능이 최소한 정상 작동하는지 빠르게 확인하는 기초 점검."
+    },
+    {
+      "term": "타임아웃 (Timeout)",
+      "kind": "IT",
+      "meaning_kr": "정해진 시간 안에 응답이 없으면 요청을 중단하고 실패로 처리하는 제한 시간."
+    }
+  ]
+}

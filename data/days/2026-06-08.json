@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 8",
+  "weekday": "월",
+  "news": [
+    {
+      "title_kr": "GEO 콘텐츠 전략: SEO 키워드 보다 AI '맥락' 설계하는 법",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3788",
+      "blurb_kr": "SEO는 키워드, GEO는 프롬프트에서 시작한다는 차이와, AI가 맥락을 믿기에 브랜드를 문제·솔루션·증거·제3자 검증과 함께 반복 설계해야 한다는 GEO 콘텐츠 전략을 1인칭으로 정리했습니다."
+    },
+    {
+      "title_kr": "AI 시대의 시지프스: 멈추지 못하는 완벽주의자를 위한 안내서",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3787/",
+      "blurb_kr": "AI 에이전트는 작업물을 검토해 단점을 심각도별로 분류하고 대안까지 내놓는다. 완벽주의 기질이 있는 사람에게 이건 독이 든 성배다."
+    }
+  ],
+  "quiz": {
+    "category": "소프트웨어공학",
+    "question": "모듈 간의 결합도(Coupling) 중 결합 정도가 가장 낮아(가장 바람직한) 좋은 결합도는?",
+    "options": [
+      "내용 결합도(Content)",
+      "공통 결합도(Common)",
+      "스탬프 결합도(Stamp)",
+      "자료 결합도(Data)"
+    ],
+    "answer": 3,
+    "explain_kr": "결합도는 낮을수록 좋으며, 자료 결합도(Data Coupling)는 모듈 간에 필요한 파라미터(값)만 주고받는 가장 낮고 바람직한 결합도다. 내용 결합도가 가장 높고(나쁨), 공통·스탬프 결합도가 그 사이에 위치한다."
+  },
+  "terms": [
+    {
+      "term": "GTM (Go-To-Market)",
+      "kind": "기획",
+      "meaning_kr": "제품을 시장에 출시해 고객에게 도달하기까지의 채널·가격·메시지 전략."
+    },
+    {
+      "term": "유닛테스트 (Unit Test)",
+      "kind": "개발",
+      "meaning_kr": "함수·모듈 등 가장 작은 단위가 의도대로 동작하는지 독립적으로 검증하는 테스트."
+    },
+    {
+      "term": "세션 (Session)",
+      "kind": "IT",
+      "meaning_kr": "서버가 사용자의 연결 상태와 정보를 일정 기간 유지·관리하는 접속 단위."
+    }
+  ]
+}

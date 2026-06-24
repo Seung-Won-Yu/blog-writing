@@ -19,7 +19,22 @@
     <article class="daysec sec-news">
       <div class="secnum">01</div>
       <span class="seclabel">오늘의 뉴스</span>
-      <p class="empty">오늘은 수집된 소식이 없습니다.</p>
+      <ul class="newslist">
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3812/" target="_blank" rel="noopener">오픈AI 사장·딥마인드 CEO·클로드 코드 창시자가 말하는 5가지 미래 ↗</a></h3>
+          <p class="ni-blurb">AI Ascent 2026에서 브록먼·허사비스·체르니 세 인터뷰에 공통으로 흐른 메시지를 5가지로 정리했다.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3811/" target="_blank" rel="noopener">아이팟·아이폰의 아버지 토니 파델: AI에게 넘겨선 안 될 한 가지 ↗</a></h3>
+          <p class="ni-blurb">앤트로픽 40만 세션 분석, 로컬 코딩 모델 현황, 토니 파델의 &#x27;생각은 넘기지 말라&#x27;는 조언 등 프로덕트 메이커가 주목할 세 가지.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3810/" target="_blank" rel="noopener">AI는 어떤 사이트를 인용할까? ↗</a></h3>
+          <p class="ni-blurb">SEO 플랫폼을 직접 운영하며 두 달간 목격한, AI 검색 환경이 사이트를 평가하고 인용하는 구조의 변화를 기록했다.</p>
+        </li></ul>
     </article>
 
     <article class="daysec sec-quiz">
@@ -27,13 +42,13 @@
       <span class="seclabel">기초상식 · 정처기</span>
       
       <div class="quiz">
-        <div class="sectag">#자료구조/알고리즘</div>
-        <p class="q-question">다음 정렬 알고리즘 중 평균 시간복잡도가 O(n log n)이 아닌 것은?</p>
-        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 퀵 정렬</li><li class="qopt"><span class="ql">②</span> 병합 정렬</li><li class="qopt"><span class="ql">③</span> 힙 정렬</li><li class="qopt correct"><span class="ql">④</span> 삽입 정렬</li></ol>
+        <div class="sectag">#네트워크</div>
+        <p class="q-question">TCP/IP 프로토콜에서 비연결형(connectionless) 전송을 제공하며 신뢰성보다 속도를 우선하는 전송 계층 프로토콜은?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> TCP</li><li class="qopt correct"><span class="ql">②</span> UDP</li><li class="qopt"><span class="ql">③</span> IP</li><li class="qopt"><span class="ql">④</span> ICMP</li></ol>
         <details class="q-ans">
           <summary>정답 &amp; 해설 보기</summary>
-          <p><b>정답: ④</b></p>
-          <p>삽입 정렬의 평균·최악 시간복잡도는 O(n²)이다. 퀵 정렬(평균)·병합 정렬·힙 정렬은 O(n log n)이다.</p>
+          <p><b>정답: ②</b></p>
+          <p>UDP는 비연결형으로 흐름 제어·재전송·순서 보장을 하지 않아 오버헤드가 적고 빠르며 실시간 스트리밍이나 DNS 등에 쓰인다. TCP는 연결형으로 신뢰성을 보장한다. IP는 네트워크 계층 라우팅, ICMP는 오류·제어 메시지 전달 프로토콜이다.</p>
         </details>
       </div>
     </article>
@@ -44,18 +59,18 @@
       <ul class="terms">
         <li class="termrow">
           <span class="t-kind" style="background:#c2532f">기획</span>
-          <span class="t-term">OKR</span>
-          <span class="t-mean">목표(Objective)와 핵심결과(Key Results)로 성과를 정렬·측정하는 목표관리 기법.</span>
+          <span class="t-term">OKR (Objectives and Key Results)</span>
+          <span class="t-mean">도전적인 목표(O)와 측정 가능한 핵심 결과(KR)로 조직의 방향과 성과를 정렬하는 관리 프레임워크.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#0a8f6b">개발</span>
-          <span class="t-term">린터(Linter)</span>
-          <span class="t-mean">코드의 문법·스타일·잠재 오류를 자동 점검해 주는 정적 분석 도구.</span>
+          <span class="t-term">기술부채 (Technical Debt)</span>
+          <span class="t-mean">빠른 개발을 위해 미뤄 둔 설계·품질 개선이 누적되어 향후 비용으로 돌아오는 부담.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#1f6feb">IT</span>
-          <span class="t-term">웹훅(Webhook)</span>
-          <span class="t-mean">특정 이벤트가 발생하면 지정한 URL로 자동 알림(HTTP 요청)을 보내는 방식.</span>
+          <span class="t-term">웹훅 (Webhook)</span>
+          <span class="t-mean">특정 이벤트 발생 시 지정된 URL로 자동으로 데이터를 전송하는 역방향 알림 방식.</span>
         </li></ul>
     </article>
   </section>

@@ -23,17 +23,17 @@
         <li class="newsitem">
           <span class="ni-src">요즘IT</span>
           <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3816/" target="_blank" rel="noopener">제가 정말 루프 엔지니어링까지 알아야 할까요? ↗</a></h3>
-          <p class="ni-blurb">프롬프트·컨텍스트·하네스·루프 엔지니어링의 차이와 흐름을 한 번에 정리한 AI 엔지니어링 가이드.</p>
+          <p class="ni-blurb">프롬프트·컨텍스트·하네스·루프 엔지니어링 네 개념을 정리하며, 사람이 다루는 단위가 어떻게 줌아웃돼 왔는지 짚었다.</p>
         </li>
         <li class="newsitem">
           <span class="ni-src">요즘IT</span>
           <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3815/" target="_blank" rel="noopener">SaaS의 종말? AI 시대에 적합한 소프트웨어는 무엇일까 ↗</a></h3>
-          <p class="ni-blurb">에이전트가 잘 쓰는 SaaS를 만들려면 무엇을 신경 써야 하는지에 대한 필자의 관점.</p>
+          <p class="ni-blurb">AI 시대 소프트웨어는 사람과 AI 에이전트가 함께 쓰는 업무 시스템이 돼야 한다며 에이전트 친화적 SaaS 설계를 논한다.</p>
         </li>
         <li class="newsitem">
           <span class="ni-src">GeekNews</span>
-          <h3 class="ni-title"><a href="https://news.hada.io/" target="_blank" rel="noopener">AI로 구글 해킹해 70만 달러 벌기 ↗</a></h3>
-          <p class="ni-blurb">보안 연구자가 AI로 API 퍼징을 자동화해 6만+ 취약점을 찾아 3개월 만에 버그 바운티 50만 달러 획득.</p>
+          <h3 class="ni-title"><a href="https://news.hada.io/topic?id=30747" target="_blank" rel="noopener">bigset - 세상의 모든 데이터를 가지고 있다면? ↗</a></h3>
+          <p class="ni-blurb">자연어로부터 구조화된 데이터셋을 생성하고 주기적으로 자동 갱신하는 오픈소스 도구</p>
         </li></ul>
     </article>
 
@@ -42,13 +42,13 @@
       <span class="seclabel">기초상식 · 정처기</span>
       
       <div class="quiz">
-        <div class="sectag">#네트워크</div>
-        <p class="q-question">OSI 7계층 중 종단 간(end-to-end) 신뢰성 있는 데이터 전송과 흐름·오류 제어를 담당하며 TCP/UDP가 동작하는 계층은?</p>
-        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 네트워크 계층</li><li class="qopt correct"><span class="ql">②</span> 전송 계층</li><li class="qopt"><span class="ql">③</span> 세션 계층</li><li class="qopt"><span class="ql">④</span> 데이터링크 계층</li></ol>
+        <div class="sectag">#데이터베이스</div>
+        <p class="q-question">트랜잭션의 ACID 특성 중 &#x27;여러 트랜잭션이 동시에 수행되어도 결과가 순차 수행과 같아야 한다&#x27;는 성질은?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 원자성(Atomicity)</li><li class="qopt"><span class="ql">②</span> 일관성(Consistency)</li><li class="qopt correct"><span class="ql">③</span> 고립성(Isolation)</li><li class="qopt"><span class="ql">④</span> 지속성(Durability)</li></ol>
         <details class="q-ans">
           <summary>정답 &amp; 해설 보기</summary>
-          <p><b>정답: ②</b></p>
-          <p>전송 계층(4계층)은 종단 간 신뢰성, 흐름·오류 제어를 담당하고 TCP/UDP가 여기에 속한다. 경로 선택(라우팅)은 네트워크 계층(3)의 역할이다.</p>
+          <p><b>정답: ③</b></p>
+          <p>고립성(Isolation)은 동시에 실행되는 트랜잭션들이 서로 간섭하지 않고 각자 독립적으로 수행되는 것처럼 보장하는 성질이다. 원자성은 전부 실행 또는 전부 취소, 일관성은 수행 전후 무결성 유지, 지속성은 완료된 결과의 영구 반영을 의미한다.</p>
         </details>
       </div>
     </article>
@@ -59,18 +59,18 @@
       <ul class="terms">
         <li class="termrow">
           <span class="t-kind" style="background:#c2532f">기획</span>
-          <span class="t-term">스프린트(Sprint)</span>
-          <span class="t-mean">애자일에서 1~4주 단위로 목표를 정해 결과물을 만들어내는 짧은 개발 주기.</span>
+          <span class="t-term">스프린트 (Sprint)</span>
+          <span class="t-mean">보통 1~4주 단위로 정해진 목표 분량의 작업을 완료하는 애자일의 반복 개발 주기.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#0a8f6b">개발</span>
-          <span class="t-term">기술 부채(Tech Debt)</span>
-          <span class="t-mean">빠르게 처리하려 미뤄둔 설계·코드 문제로, 나중에 갚아야 할 유지보수 비용.</span>
+          <span class="t-term">CI/CD</span>
+          <span class="t-mean">코드 통합·테스트·배포를 자동화해 변경사항을 빠르고 안정적으로 운영 환경에 반영하는 파이프라인.</span>
         </li>
         <li class="termrow">
           <span class="t-kind" style="background:#1f6feb">IT</span>
-          <span class="t-term">캐시(Cache)</span>
-          <span class="t-mean">자주 쓰는 데이터를 빠른 저장소에 미리 두어 응답 속도를 높이는 기법.</span>
+          <span class="t-term">캐시 (Cache)</span>
+          <span class="t-mean">자주 쓰는 데이터를 빠른 저장소에 임시 보관해 반복 조회 시 응답 속도를 높이는 기법.</span>
         </li></ul>
     </article>
   </section>

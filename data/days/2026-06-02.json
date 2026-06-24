@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 2",
+  "weekday": "화",
+  "news": [
+    {
+      "title_kr": "MCP·Skills·Hooks·Sub-agents, 4가지 중 뭘 골라야 할까?",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3777/",
+      "blurb_kr": "클로드 코드를 쓰다 보면 왜 이렇게 멍청해지지라는 불만이 쌓인다. 앤트로픽 엔지니어가 말하는, 에이전트를 코드베이스에 맞추는 방법을 정리한다."
+    },
+    {
+      "title_kr": "AI 오피스: 픽셀 아트로 살아난 2D 월드 제작기",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3782/",
+      "blurb_kr": "API 비용 폭탄을 맞고 아키텍처를 통째로 갈아엎은 사투에 이어, 픽셀 아트 2D 월드를 만들며 부딪힌 다음 벽을 다룬 제작기."
+    }
+  ],
+  "quiz": {
+    "category": "정보보안",
+    "question": "암호화와 복호화에 동일한 키를 사용하는 대칭키(비밀키) 암호화 알고리즘은?",
+    "options": [
+      "RSA",
+      "AES",
+      "ECC",
+      "DSA"
+    ],
+    "answer": 1,
+    "explain_kr": "AES는 동일한 키로 암복호화하는 대칭키 블록 암호 알고리즘으로 DES를 대체하여 널리 쓰인다. RSA·ECC는 공개키와 개인키를 사용하는 비대칭키 알고리즘이며, DSA는 전자서명 알고리즘이다."
+  },
+  "terms": [
+    {
+      "term": "처닝 (Churn)",
+      "kind": "기획",
+      "meaning_kr": "일정 기간 동안 제품을 떠나거나 이탈한 고객의 비율을 나타내는 이탈률 지표."
+    },
+    {
+      "term": "캐노피 배포 (Canary Deploy)",
+      "kind": "개발",
+      "meaning_kr": "새 버전을 소수 사용자에게 먼저 배포해 문제를 관찰한 뒤 점진적으로 확대하는 방식."
+    },
+    {
+      "term": "ORM (Object-Relational Mapping)",
+      "kind": "IT",
+      "meaning_kr": "객체와 관계형 데이터베이스를 자동으로 매핑해 SQL 없이 데이터를 다루게 하는 기술."
+    }
+  ]
+}

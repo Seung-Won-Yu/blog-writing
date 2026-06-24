@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 6",
+  "weekday": "토",
+  "news": [
+    {
+      "title_kr": "Unlimited OCR — Baidu의 원샷 장문 파싱 모델",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30775",
+      "blurb_kr": "단일 순전파로 여러 페이지 문서를 전사하는 엔드투엔드 OCR 모델"
+    },
+    {
+      "title_kr": "미첼 하시모토, Zig 재단에 40만 달러 추가 기부 약정",
+      "source": "GeekNews",
+      "url": "https://mitchellh.com/writing/zig-donation-2026",
+      "blurb_kr": "하시모토 가족이 Zig 소프트웨어 재단에 40만 달러를 추가 약정해 2024년 이후 총 70만 달러 지원."
+    }
+  ],
+  "quiz": {
+    "category": "소프트웨어공학",
+    "question": "GoF 디자인 패턴 중 객체 생성 메커니즘을 다루는 '생성(Creational) 패턴'에 해당하는 것은?",
+    "options": [
+      "어댑터(Adapter)",
+      "옵서버(Observer)",
+      "싱글턴(Singleton)",
+      "데코레이터(Decorator)"
+    ],
+    "answer": 2,
+    "explain_kr": "싱글턴(Singleton)은 클래스의 인스턴스가 하나만 생성되도록 보장하는 생성 패턴이다. 어댑터·데코레이터는 구조(Structural) 패턴, 옵서버는 행위(Behavioral) 패턴에 속한다."
+  },
+  "terms": [
+    {
+      "term": "백로그 그루밍 (Backlog Grooming)",
+      "kind": "기획",
+      "meaning_kr": "백로그 항목을 정기적으로 다듬고 우선순위·세부사항을 정리하는 정제 활동."
+    },
+    {
+      "term": "정적분석 (Static Analysis)",
+      "kind": "개발",
+      "meaning_kr": "코드를 실행하지 않고 소스만 분석해 결함·취약점·품질 문제를 찾는 검사."
+    },
+    {
+      "term": "레이트리밋 (Rate Limit)",
+      "kind": "IT",
+      "meaning_kr": "일정 시간당 요청 횟수를 제한해 서버 과부하와 남용을 방지하는 제어 정책."
+    }
+  ]
+}

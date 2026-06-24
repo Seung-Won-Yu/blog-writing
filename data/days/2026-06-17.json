@@ -1,0 +1,53 @@
+{
+  "date_label": "2026. 6. 17",
+  "weekday": "수",
+  "news": [
+    {
+      "title_kr": "타입 계층과 호환성, extends가 진짜 의미하는 것",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3807/",
+      "blurb_kr": "타입스크립트 extends의 '할당 가능성' 기준을 타입 계층도 전체 구조로 살펴보며 타입 좁히기·유틸리티 타입 동작 원리를 설명한다."
+    },
+    {
+      "title_kr": "GEO를 둘러싼 3가지 오해와 팩트체크",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3806/",
+      "blurb_kr": "요즘IT 'GEO 팩트체크' 세미나 패널토크에서 GEO에 대한 세 가지 오해를 풀고 실무자용 체크리스트까지 정리했다."
+    },
+    {
+      "title_kr": "내가 전혀 모르는 사람들에게 이메일을 보내는 이유",
+      "source": "GeekNews",
+      "url": "https://www.goodinternetmagazine.com/why-i-email-complete-strangers/",
+      "blurb_kr": "거절에 대한 두려움에도 낯선 이에게 이메일을 보내는 것은 의도적인 인간적 관계 맺기."
+    }
+  ],
+  "quiz": {
+    "category": "네트워크",
+    "question": "네트워크 계층(3계층)에서 동작하며 서로 다른 네트워크를 연결하고 최적 경로를 선택(라우팅)하는 장비는?",
+    "options": [
+      "리피터(Repeater)",
+      "허브(Hub)",
+      "스위치(L2 Switch)",
+      "라우터(Router)"
+    ],
+    "answer": 3,
+    "explain_kr": "라우터는 OSI 3계층(네트워크 계층) 장비로 IP 주소를 기반으로 서로 다른 네트워크를 연결하고 패킷의 최적 경로를 결정한다. 리피터는 1계층 신호 증폭, 허브는 1계층 다중 연결, L2 스위치는 2계층에서 MAC 주소 기반 프레임 전달을 수행한다."
+  },
+  "terms": [
+    {
+      "term": "페르소나 (Persona)",
+      "kind": "기획",
+      "meaning_kr": "실제 사용자 데이터를 바탕으로 만든 대표적 가상 사용자 프로필로 의사결정 기준이 되는 모델."
+    },
+    {
+      "term": "페어프로그래밍 (Pair Programming)",
+      "kind": "개발",
+      "meaning_kr": "두 개발자가 한 화면에서 함께 코드를 작성하며 실시간으로 리뷰·협업하는 방식."
+    },
+    {
+      "term": "직렬화 (Serialization)",
+      "kind": "IT",
+      "meaning_kr": "객체나 데이터를 저장·전송 가능한 바이트나 텍스트 형식으로 변환하는 과정."
+    }
+  ]
+}

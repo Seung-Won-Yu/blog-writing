@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 7",
+  "weekday": "일",
+  "news": [
+    {
+      "title_kr": "boring - 단순하고 가벼운 커맨드라인 SSH 터널 매니저",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30776",
+      "blurb_kr": "TOML 설정으로 다중 SSH 터널과 포트포워딩을 관리하는 경량 CLI 도구"
+    },
+    {
+      "title_kr": "누가 지능의 가격을 정할 것인가?",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30710",
+      "blurb_kr": ""
+    }
+  ],
+  "quiz": {
+    "category": "소프트웨어공학",
+    "question": "한 모듈 내부 구성 요소들이 모두 단일 기능 수행에 기여하는, 가장 바람직한 응집도(Cohesion)는?",
+    "options": [
+      "우연적 응집도(Coincidental)",
+      "논리적 응집도(Logical)",
+      "기능적 응집도(Functional)",
+      "시간적 응집도(Temporal)"
+    ],
+    "answer": 2,
+    "explain_kr": "응집도는 높을수록 좋으며, 기능적 응집도는 모듈 내 모든 요소가 단일 기능 수행에 기여하는 가장 강하고 바람직한 응집도다. 우연적 응집도가 가장 약하고(나쁨), 논리적·시간적 응집도가 그보다 높은 수준이다."
+  },
+  "terms": [
+    {
+      "term": "디스커버리 (Discovery)",
+      "kind": "기획",
+      "meaning_kr": "본격 개발 전 사용자 문제와 기회를 탐색해 무엇을 만들지 정하는 초기 리서치 단계."
+    },
+    {
+      "term": "머지컨플릭트 (Merge Conflict)",
+      "kind": "개발",
+      "meaning_kr": "여러 브랜치가 같은 부분을 다르게 수정해 자동 병합이 불가능해진 충돌 상태."
+    },
+    {
+      "term": "로드밸런싱 헬스체크 (Health Check)",
+      "kind": "IT",
+      "meaning_kr": "서버가 정상 동작하는지 주기적으로 확인해 장애 서버를 트래픽에서 제외하는 점검."
+    }
+  ]
+}

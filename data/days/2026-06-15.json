@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 6. 15",
+  "weekday": "월",
+  "news": [
+    {
+      "title_kr": "Typescript 7.0 RC버전이 배포되었습니다",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30788",
+      "blurb_kr": "Go로 재작성되어 약 10배 성능 향상을 이룬 TypeScript 7.0 릴리스 후보 공개"
+    },
+    {
+      "title_kr": "memcached 예찬",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30778",
+      "blurb_kr": "Redis와 달리 캐시 본질에 충실하며 영속 저장소 의존성 문제를 회피하는 memcached"
+    }
+  ],
+  "quiz": {
+    "category": "운영체제",
+    "question": "교착상태(Deadlock) 발생의 4가지 필요조건에 해당하지 않는 것은?",
+    "options": [
+      "상호 배제(Mutual Exclusion)",
+      "점유와 대기(Hold and Wait)",
+      "비선점(No Preemption)",
+      "선점(Preemption)"
+    ],
+    "answer": 3,
+    "explain_kr": "교착상태의 4대 필요조건은 상호 배제, 점유와 대기, 비선점, 환형 대기(Circular Wait)다. 선점(Preemption)은 오히려 비선점 조건을 깨뜨려 교착상태를 예방하는 방법이므로 발생 조건이 아니다."
+  },
+  "terms": [
+    {
+      "term": "린 (Lean)",
+      "kind": "기획",
+      "meaning_kr": "낭비를 줄이고 가설 검증을 빠르게 반복하며 가치를 극대화하는 제품 개발 철학."
+    },
+    {
+      "term": "머지 (Merge)",
+      "kind": "개발",
+      "meaning_kr": "분리된 브랜치의 변경 내용을 하나의 브랜치로 합치는 버전 관리 작업."
+    },
+    {
+      "term": "프록시 (Proxy)",
+      "kind": "IT",
+      "meaning_kr": "클라이언트와 서버 사이에서 요청을 중계하며 보안·캐싱·접근 제어 역할을 하는 중간 서버."
+    }
+  ]
+}

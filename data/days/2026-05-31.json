@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 31",
+  "weekday": "일",
+  "news": [
+    {
+      "title_kr": "Show GN: AI 에이전트를 내 걸로 만드는 방법",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30768",
+      "blurb_kr": "세션과 컨벤션 전반에서 AI 코딩 에이전트 일관성을 유지하는 방법 안내"
+    },
+    {
+      "title_kr": "스팀 머신 출시",
+      "source": "GeekNews",
+      "url": "https://store.steampowered.com/news/group/45479024/view/685257114654870245",
+      "blurb_kr": "스팀 머신 가격 공개(512GB $1,049 등), 한국에서는 판매되지 않음."
+    }
+  ],
+  "quiz": {
+    "category": "정보보안",
+    "question": "정보보안의 3대 요소(CIA)에 해당하지 않는 것은?",
+    "options": [
+      "기밀성(Confidentiality)",
+      "무결성(Integrity)",
+      "가용성(Availability)",
+      "확장성(Scalability)"
+    ],
+    "answer": 3,
+    "explain_kr": "정보보안의 3대 요소는 기밀성(인가된 자만 접근), 무결성(데이터의 정확성·완전성 유지), 가용성(필요 시 접근 가능)이다. 확장성(Scalability)은 시스템 성능 특성으로 정보보안의 핵심 요소가 아니다."
+  },
+  "terms": [
+    {
+      "term": "에픽 (Epic)",
+      "kind": "기획",
+      "meaning_kr": "여러 유저스토리로 쪼개지는 큰 단위의 기능 묶음 또는 목표."
+    },
+    {
+      "term": "피처플래그 (Feature Flag)",
+      "kind": "개발",
+      "meaning_kr": "코드 배포와 무관하게 기능을 켜고 끌 수 있게 만든 스위치 형태의 제어 장치."
+    },
+    {
+      "term": "JWT (JSON Web Token)",
+      "kind": "IT",
+      "meaning_kr": "사용자 정보를 서명된 JSON 형태로 담아 인증·인가에 쓰는 토큰 표준."
+    }
+  ]
+}

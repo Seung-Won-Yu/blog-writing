@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 28",
+  "weekday": "목",
+  "news": [
+    {
+      "title_kr": "SSH 터널 매니저 - GUI, 맥/윈도용",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30784",
+      "blurb_kr": "터널링 관리 앱들이 유료가 많고 무료는 불편해 직접 만든 GUI SSH 터널 매니저"
+    },
+    {
+      "title_kr": "SMPTE, 표준 라이브러리 무료 공개",
+      "source": "GeekNews",
+      "url": "https://www.smpte.org/blog/smpte-makes-its-standards-freely-accessible-openingstandards-library-to-the-global-media-technology-community",
+      "blurb_kr": "SMPTE가 미디어 기술 표준 카탈로그 전체를 무료로 공개해 산업 상호운용성 증진."
+    }
+  ],
+  "quiz": {
+    "category": "프로그래밍 언어",
+    "question": "컴파일러와 인터프리터에 대한 설명으로 옳은 것은?",
+    "options": [
+      "인터프리터는 소스 전체를 한 번에 목적 코드로 번역한다",
+      "컴파일러는 한 줄씩 해석하여 즉시 실행한다",
+      "컴파일러는 실행 전 전체를 번역해 목적 파일을 생성한다",
+      "인터프리터는 실행 속도가 컴파일러보다 항상 빠르다"
+    ],
+    "answer": 2,
+    "explain_kr": "컴파일러는 소스 코드 전체를 실행 전에 한 번에 목적 코드(목적 파일)로 번역하여 이후 실행 속도가 빠르다. 인터프리터는 소스를 한 줄씩 해석·실행하므로 일반적으로 실행 속도가 더 느리지만 개발·디버깅이 편리하다."
+  },
+  "terms": [
+    {
+      "term": "프로토타입 (Prototype)",
+      "kind": "기획",
+      "meaning_kr": "실제 개발 전에 동작·흐름을 미리 체험하도록 만든 시제품 또는 시안."
+    },
+    {
+      "term": "빌드 (Build)",
+      "kind": "개발",
+      "meaning_kr": "소스 코드를 실행 가능한 형태로 컴파일·패키징하는 과정."
+    },
+    {
+      "term": "역방향 프록시 (Reverse Proxy)",
+      "kind": "IT",
+      "meaning_kr": "외부 요청을 받아 내부 서버로 전달하며 보안·부하분산을 담당하는 중계 서버."
+    }
+  ]
+}

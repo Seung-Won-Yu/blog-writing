@@ -1,17 +1,53 @@
 {
   "date_label": "2026. 6. 22",
   "weekday": "월",
-  "news": [],
+  "news": [
+    {
+      "title_kr": "런던에서 만난 AI 시대 디자이너의 5가지 생존 전략",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3814/",
+      "blurb_kr": "런던 AI × Design 세미나에서 짚은 직무 통합, 디자인 대량 생산, 다크 디자인 시대 등 다섯 가지 변화를 정리했다."
+    },
+    {
+      "title_kr": "개발자는 여전히 수학을 잘해야 할까요?",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3813/",
+      "blurb_kr": "과거 수학이 중요했던 이유와 달라진 개발 환경을 비교하며, 수학이 약한 개발자가 무엇부터 준비하면 좋을지 현실적으로 다룬다."
+    },
+    {
+      "title_kr": "ponytail - AI 에이전트를 가장 게으른 시니어 개발자처럼 생각하게 만들기",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30701",
+      "blurb_kr": "불필요한 코드를 피하도록 AI 에이전트를 게으른 시니어 개발자 사고방식으로 유도하는 프레임워크"
+    }
+  ],
   "quiz": {
-    "category": "소프트웨어공학",
-    "question": "모듈의 독립성을 높이기 위한 바람직한 설계 기준으로 옳은 것은?",
-    "options": ["결합도 높게, 응집도 높게", "결합도 낮게, 응집도 낮게", "결합도 낮게, 응집도 높게", "결합도 높게, 응집도 낮게"],
-    "answer": 2,
-    "explain_kr": "모듈 독립성을 높이려면 모듈 간 의존(결합도, coupling)은 낮추고, 모듈 내부 기능의 관련성(응집도, cohesion)은 높여야 한다."
+    "category": "데이터베이스",
+    "question": "SQL에서 GROUP BY로 묶은 그룹에 대해 조건을 지정할 때 사용하는 절은?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "ORDER BY",
+      "DISTINCT"
+    ],
+    "answer": 1,
+    "explain_kr": "HAVING 절은 GROUP BY로 형성된 그룹에 대한 조건을 지정하며 집계 함수(SUM, COUNT 등)를 조건으로 사용할 수 있다. WHERE는 그룹화 이전 개별 행에 대한 조건이고 집계 함수를 직접 쓸 수 없다. ORDER BY는 정렬, DISTINCT는 중복 제거에 쓰인다."
   },
   "terms": [
-    { "term": "MVP", "kind": "기획", "meaning_kr": "핵심 가치만 담아 빠르게 출시·검증하는 최소 기능 제품(Minimum Viable Product)." },
-    { "term": "코드 리뷰(Code Review)", "kind": "개발", "meaning_kr": "동료가 코드를 검토해 버그·품질 문제를 병합 전에 잡는 협업 과정." },
-    { "term": "로드 밸런서(Load Balancer)", "kind": "IT", "meaning_kr": "트래픽을 여러 서버에 분산해 부하를 고르게 하고 가용성을 높이는 장치." }
+    {
+      "term": "백로그 (Backlog)",
+      "kind": "기획",
+      "meaning_kr": "제품에 필요한 기능·개선 요청을 우선순위대로 정리해 둔 작업 대기 목록."
+    },
+    {
+      "term": "PR (Pull Request)",
+      "kind": "개발",
+      "meaning_kr": "작성한 코드 변경을 본 브랜치에 병합하기 전 리뷰와 검토를 요청하는 절차."
+    },
+    {
+      "term": "로드밸런서 (Load Balancer)",
+      "kind": "IT",
+      "meaning_kr": "들어오는 트래픽을 여러 서버에 고르게 분산해 과부하와 장애를 방지하는 장치."
+    }
   ]
 }

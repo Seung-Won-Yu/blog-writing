@@ -1,17 +1,53 @@
 {
   "date_label": "2026. 6. 21",
   "weekday": "일",
-  "news": [],
+  "news": [
+    {
+      "title_kr": "ClickHouse 오픈소스 10년",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30671",
+      "blurb_kr": "2016년 공개 후 2,000명 이상 기여, 분석 데이터베이스 대표 프로젝트로 성장"
+    },
+    {
+      "title_kr": "AI가 우리의 능력을 망치고 있는가? 초기 연구 결과는 부정적",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30674",
+      "blurb_kr": "의료·컴퓨터과학 등에서 AI 의존이 숙련도 약화 가능성을 보인다는 초기 근거"
+    },
+    {
+      "title_kr": "머신러닝 연구의 선(Zen)과 예술",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30672",
+      "blurb_kr": ""
+    }
+  ],
   "quiz": {
-    "category": "소프트웨어 테스트",
-    "question": "입력 조건의 경계가 되는 값에서 오류가 자주 발생한다는 점에 착안한 블랙박스 테스트 기법은?",
-    "options": ["동등 분할", "경계값 분석", "기초 경로 검사", "조건 커버리지"],
+    "category": "데이터베이스",
+    "question": "데이터베이스에서 다른 테이블의 기본키를 참조하여 참조 무결성을 보장하는 속성은?",
+    "options": [
+      "기본키(Primary Key)",
+      "외래키(Foreign Key)",
+      "후보키(Candidate Key)",
+      "대체키(Alternate Key)"
+    ],
     "answer": 1,
-    "explain_kr": "경계값 분석(Boundary Value Analysis)은 경계 근처 값을 집중 테스트하는 블랙박스 기법이다. 기초 경로 검사·조건 커버리지는 내부 구조를 보는 화이트박스 기법이다."
+    "explain_kr": "외래키(Foreign Key)는 한 테이블에서 다른(또는 같은) 테이블의 기본키를 참조하는 속성으로 참조 무결성을 보장한다. 기본키는 행을 유일하게 식별하는 키, 후보키는 기본키가 될 수 있는 키들, 대체키는 후보키 중 기본키로 선택되지 않은 키다."
   },
   "terms": [
-    { "term": "백로그(Backlog)", "kind": "기획", "meaning_kr": "해야 할 일·기능을 우선순위로 정리해 둔 작업 목록." },
-    { "term": "CI/CD", "kind": "개발", "meaning_kr": "빌드·테스트·배포를 자동화하는 지속적 통합/지속적 배포 파이프라인." },
-    { "term": "컨테이너(Container)", "kind": "IT", "meaning_kr": "앱과 실행 환경을 함께 묶어 어디서나 동일하게 실행하는 격리 단위(예: 도커)." }
+    {
+      "term": "칸반 (Kanban)",
+      "kind": "기획",
+      "meaning_kr": "작업을 카드로 시각화하고 진행 단계별 열로 흐름을 관리하는 시각적 업무 관리 방식."
+    },
+    {
+      "term": "코드리뷰 (Code Review)",
+      "kind": "개발",
+      "meaning_kr": "동료가 작성한 코드를 검토해 버그·품질·컨벤션 문제를 사전에 잡아내는 협업 활동."
+    },
+    {
+      "term": "컨테이너 (Container)",
+      "kind": "IT",
+      "meaning_kr": "애플리케이션과 실행 환경을 함께 패키징해 어디서나 동일하게 동작하도록 격리한 실행 단위."
+    }
   ]
 }

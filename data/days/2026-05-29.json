@@ -1,0 +1,47 @@
+{
+  "date_label": "2026. 5. 29",
+  "weekday": "금",
+  "news": [
+    {
+      "title_kr": "구글을 AI로 해킹해서 7억원 벌기",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=30741",
+      "blurb_kr": "AI 기반 자동화 API 취약점 테스트로 약 50만 달러 버그바운티 보상 획득"
+    },
+    {
+      "title_kr": "독립 블로그를 위한 Hacker News, Bubbles",
+      "source": "GeekNews",
+      "url": "https://bubbles.town/",
+      "blurb_kr": "Bubbles는 5,033개의 독립 블로그를 투표 기반 랭킹으로 한 페이지에 모음."
+    }
+  ],
+  "quiz": {
+    "category": "프로그래밍 언어",
+    "question": "프로그래밍 언어의 변수 명명 규칙으로 옳지 않은 것은?",
+    "options": [
+      "첫 글자는 문자 또는 밑줄(_)로 시작한다",
+      "예약어(키워드)는 변수명으로 사용할 수 없다",
+      "변수명 중간에 공백을 포함할 수 있다",
+      "숫자로 시작할 수 없다"
+    ],
+    "answer": 2,
+    "explain_kr": "대부분의 프로그래밍 언어에서 변수명 중간에는 공백을 포함할 수 없으며, 단어를 구분할 때는 밑줄이나 카멜 표기법을 사용한다. 변수명은 문자나 밑줄로 시작하고 숫자로 시작할 수 없으며 예약어도 사용할 수 없다."
+  },
+  "terms": [
+    {
+      "term": "린캔버스 (Lean Canvas)",
+      "kind": "기획",
+      "meaning_kr": "문제·해결책·고객·수익 등 사업 핵심 요소를 한 장에 정리하는 비즈니스 설계 도구."
+    },
+    {
+      "term": "회귀테스트 (Regression Test)",
+      "kind": "개발",
+      "meaning_kr": "수정·추가 후 기존 기능이 깨지지 않았는지 다시 확인하는 테스트."
+    },
+    {
+      "term": "샤딩 (Sharding)",
+      "kind": "IT",
+      "meaning_kr": "대용량 데이터를 여러 데이터베이스에 분할 저장해 부하를 나누는 분산 기법."
+    }
+  ]
+}
