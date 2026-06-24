@@ -27,10 +27,10 @@ def parse_md(day_id):
 def thumb_svg(day_id, rec):
     mo, da = parse_md(day_id)
     wd = rec.get("weekday", "")
-    top = " ".join(rec["news"]["title_kr"].split("\n"))
+    top = headline(rec)
     top = (top[:26] + "…") if len(top) > 27 else top
     gid = "o" + day_id.replace("-", "")
-    chips = ["뉴스", "꿀팁", "이것저것"]
+    chips = ["뉴스", "정처기", "용어"]
     chipcols = [ACCENT, "#0a8f6b", "#1f6feb"]
     cx = 50
     chip_svg = ""
@@ -55,8 +55,21 @@ def thumb_svg(day_id, rec):
       <text x="52" y="210" font-family="'Noto Serif KR',serif" font-size="15" font-weight="600" fill="{INK}">{esc(top)}</text>
     </svg>'''
 
+def headline(rec):
+    news = rec.get("news") or []
+    if news:
+        return " ".join(news[0]["title_kr"].split("\n"))
+    if rec.get("quiz"):
+        return " ".join(rec["quiz"]["question"].split("\n"))
+    return "오늘의 읽을거리"
+
+def meta_line(rec):
+    nn = len(rec.get("news") or [])
+    nt = len(rec.get("terms") or [])
+    return f"뉴스 {nn} · 정처기 1 · 용어 {nt}"
+
 def card(day_id, rec, hero=False):
-    top = " ".join(rec["news"]["title_kr"].split("\n"))
+    top = headline(rec)
     wd = rec.get("weekday", "")
     label = f'{rec["date_label"]}' + (f' ({wd})' if wd else '')
     href = f'days/{day_id}.html'
@@ -66,7 +79,7 @@ def card(day_id, rec, hero=False):
       <div class="cbody">
         <div class="eyebrow">오늘 · {esc(label)}</div>
         <h3 class="ctitle">{esc(top)}</h3>
-        <p class="cmeta">뉴스 · 꿀팁 · 이것저것</p>
+        <p class="cmeta">{esc(meta_line(rec))}</p>
         <span class="clink">오늘 읽기 <span class="arr">→</span></span>
       </div></a></div>'''
     return f'''<a class="card tilt" href="{esc(href)}">
@@ -74,7 +87,7 @@ def card(day_id, rec, hero=False):
       <div class="cbody">
         <div class="eyebrow">{esc(label)}</div>
         <h3 class="ctitle">{esc(top)}</h3>
-        <p class="cmeta">뉴스 · 꿀팁 · 이것저것</p>
+        <p class="cmeta">{esc(meta_line(rec))}</p>
         <span class="clink">읽기 <span class="arr">→</span></span>
       </div></a>'''
 

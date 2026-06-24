@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 데일리 다이제스트 — 하루치 상세 페이지 렌더러.
-미니멀 에디토리얼 디자인. 공유 assets/site.css · site.js 사용 (index와 동일 시스템).
-구성: 뉴스 1 · 꿀팁 1 · 이것저것 1.
+구성: 오늘의 뉴스(소스 수집, 소량) · 기초상식(정처기 문제) · IT/개발/기획 용어.
+공유 assets/site.css · site.js 사용.
 
 usage: python build.py <day.json> [out.html]
 """
 import json, sys, html, os
+
+KIND_COLORS = {"IT": "#1f6feb", "개발": "#0a8f6b", "기획": "#c2532f"}
 
 def esc(s):
     return html.escape(html.unescape(str(s)))
@@ -21,50 +23,63 @@ def strip_check(s):
 def oneline(s):
     return " ".join(str(s).split("\n")).strip()
 
-def _src(obj):
-    if obj.get("url") and obj.get("source"):
-        return f'<a class="ssrc" href="{esc(obj["url"])}" target="_blank" rel="noopener">출처 · {esc(obj["source"])} ↗</a>'
-    if obj.get("source"):
-        return f'<span class="ssrc">출처 · {esc(obj["source"])}</span>'
-    return ""
+def build_news(news):
+    if not news:
+        return '<p class="empty">오늘은 수집된 소식이 없습니다.</p>'
+    out = []
+    for it in news:
+        blurb = f'<p class="ni-blurb">{esc(it["blurb_kr"])}</p>' if it.get("blurb_kr") else ""
+        title = esc(oneline(it["title_kr"]))
+        link = (f'<a href="{esc(it["url"])}" target="_blank" rel="noopener">{title} ↗</a>'
+                if it.get("url") else title)
+        out.append(f'''
+        <li class="newsitem">
+          <span class="ni-src">{esc(it.get("source",""))}</span>
+          <h3 class="ni-title">{link}</h3>
+          {blurb}
+        </li>''')
+    return f'<ul class="newslist">{"".join(out)}</ul>'
 
-def build_sections(d):
-    news, tip, misc = d["news"], d["tip"], d["misc"]
-    facts = "".join(f"<li>{esc(strip_check(b))}</li>" for b in news["bullets_kr"])
-    steps = "".join(f"<li>{esc(strip_check(s))}</li>" for s in tip["steps_kr"])
+def build_quiz(q):
+    letters = "①②③④⑤"
+    opts = "".join(
+        f'<li class="qopt{" correct" if i == q["answer"] else ""}">'
+        f'<span class="ql">{letters[i]}</span> {esc(o)}</li>'
+        for i, o in enumerate(q["options"])
+    )
+    cat = esc(q.get("category", "정보처리기사"))
+    ans = letters[q["answer"]]
     return f'''
-      <article class="daysec sec-news">
-        <div class="secnum">01</div>
-        <span class="seclabel">뉴스</span>
-        <h2 class="stitle">{esc(oneline(news["title_kr"]))}</h2>
-        <ul class="sfacts">{facts}</ul>
-        <div class="stake">{esc(news["why_kr"])}</div><br>
-        {_src(news)}
-      </article>
+      <div class="quiz">
+        <div class="sectag">#{cat}</div>
+        <p class="q-question">{esc(q["question"])}</p>
+        <ol class="qopts">{opts}</ol>
+        <details class="q-ans">
+          <summary>정답 &amp; 해설 보기</summary>
+          <p><b>정답: {ans}</b></p>
+          <p>{esc(q["explain_kr"])}</p>
+        </details>
+      </div>'''
 
-      <article class="daysec sec-tip">
-        <div class="secnum">02</div>
-        <span class="seclabel">꿀팁</span>
-        <div class="sectag">#{esc(tip.get("tag","개발"))}</div>
-        <h2 class="stitle">{esc(oneline(tip["title_kr"]))}</h2>
-        <p class="secbody">{esc(tip["summary_kr"])}</p>
-        <ol class="steps">{steps}</ol>
-      </article>
-
-      <article class="daysec sec-misc">
-        <div class="secnum">03</div>
-        <span class="seclabel">이것저것</span>
-        <div class="sectag">#{esc(misc.get("tag","잡학"))}</div>
-        <h2 class="stitle">{esc(oneline(misc["title_kr"]))}</h2>
-        <p class="secbody">{esc(misc["body_kr"])}</p>
-        {_src(misc)}
-      </article>'''
+def build_terms(terms):
+    rows = []
+    for t in terms:
+        kind = t.get("kind", "IT")
+        col = KIND_COLORS.get(kind, "#1f6feb")
+        rows.append(f'''
+        <li class="termrow">
+          <span class="t-kind" style="background:{col}">{esc(kind)}</span>
+          <span class="t-term">{esc(t["term"])}</span>
+          <span class="t-mean">{esc(t["meaning_kr"])}</span>
+        </li>''')
+    return f'<ul class="terms">{"".join(rows)}</ul>'
 
 def render_day(d, back_href=None, asset_prefix="../"):
     a = asset_prefix
     back = (f'<div class="dnav"><a class="backlink" href="{esc(back_href)}">← 전체 보기</a></div>') if back_href else ''
     wd = d.get("weekday", "")
     label = f'{esc(d["date_label"])}' + (f' ({esc(wd)})' if wd else '')
+    n_news = len(d.get("news", []))
     return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>데일리 다이제스트 · {esc(d["date_label"])}</title>
@@ -78,15 +93,33 @@ def render_day(d, back_href=None, asset_prefix="../"):
 {back}
 <main class="reader">
   <div class="kicker">{label} · 데일리 다이제스트</div>
-  <h1 class="dhead">오늘 <em>알아두면</em> 좋은 것</h1>
-  <p class="dsub">뉴스 · 꿀팁 · 이것저것</p>
+  <h1 class="dhead">오늘 <em>읽을거리</em></h1>
+  <p class="dsub">뉴스 · 기초상식(정처기) · IT·개발·기획 용어</p>
   <div class="rule"></div>
 
-  <section class="daystack">{build_sections(d)}</section>
+  <section class="daystack">
+    <article class="daysec sec-news">
+      <div class="secnum">01</div>
+      <span class="seclabel">오늘의 뉴스</span>
+      {build_news(d.get("news", []))}
+    </article>
+
+    <article class="daysec sec-quiz">
+      <div class="secnum">02</div>
+      <span class="seclabel">기초상식 · 정처기</span>
+      {build_quiz(d["quiz"])}
+    </article>
+
+    <article class="daysec sec-terms">
+      <div class="secnum">03</div>
+      <span class="seclabel">IT · 개발 · 기획 용어</span>
+      {build_terms(d.get("terms", []))}
+    </article>
+  </section>
 
   <div class="foot">
-    <span class="fbrand">데일리</span> · 알아두면 좋은 것들 · {esc(d["date_label"])}<br>
-    뉴스 본문은 LLM 웹검색 자동 수집물입니다. 게시 전 출처 확인을 권장합니다.
+    <span class="fbrand">데일리</span> · 읽을거리 · {esc(d["date_label"])}<br>
+    뉴스는 yozm.wishket · GeekNews(news.hada.io) · Threads 등에서 수집한 링크입니다. 원문 출처를 확인하세요.
   </div>
 </main>
 <script src="{a}assets/site.js"></script>

@@ -11,41 +11,73 @@
 <div class="dnav"><a class="backlink" href="../index.html">← 전체 보기</a></div>
 <main class="reader">
   <div class="kicker">2026. 6. 24 (수) · 데일리 다이제스트</div>
-  <h1 class="dhead">오늘 <em>알아두면</em> 좋은 것</h1>
-  <p class="dsub">뉴스 · 꿀팁 · 이것저것</p>
+  <h1 class="dhead">오늘 <em>읽을거리</em></h1>
+  <p class="dsub">뉴스 · 기초상식(정처기) · IT·개발·기획 용어</p>
   <div class="rule"></div>
 
   <section class="daystack">
-      <article class="daysec sec-news">
-        <div class="secnum">01</div>
-        <span class="seclabel">뉴스</span>
-        <h2 class="stitle">앤트로픽, 965조원 가치로 IPO 비밀 신청 — OpenAI보다 먼저 상장 노린다</h2>
-        <ul class="sfacts"><li>Claude 개발사 앤트로픽이 SEC에 IPO 초안(S-1)을 비밀 제출, 올가을 나스닥 상장 목표</li><li>직전 라운드 650억 달러 조달, 9,650억 달러(약 965조원) 가치로 OpenAI를 처음 추월</li><li>골드만삭스·JP모건·모건스탠리 주관, 600억 달러 이상 조달 전망(주식 수·가격 미정)</li><li>연 매출 런레이트가 100억 → 470억 달러로 급증, 이달 말 500억 달러 돌파 전망</li></ul>
-        <div class="stake">AI 대표 기업의 첫 대형 상장 — AI 산업 전체의 시장 가치와 투자 심리를 가늠하는 분수령.</div><br>
-        <a class="ssrc" href="https://fortune.com/2026/06/01/anthropic-confidentially-files-ipo-965-billion-valuation/" target="_blank" rel="noopener">출처 · Fortune / CNBC ↗</a>
-      </article>
+    <article class="daysec sec-news">
+      <div class="secnum">01</div>
+      <span class="seclabel">오늘의 뉴스</span>
+      <ul class="newslist">
+        <li class="newsitem">
+          <span class="ni-src">요즘IT</span>
+          <h3 class="ni-title"><a href="https://yozm.wishket.com/magazine/detail/3817/" target="_blank" rel="noopener">K8s 운영을 AI 에이전트에 맡길 수 있을까? ↗</a></h3>
+          <p class="ni-blurb">Claude Code·Gemini CLI·Codex CLI 등 9개 모델을 K8s 장애 10개에 투입해 운영 능력을 비교한 벤치마크.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">GeekNews</span>
+          <h3 class="ni-title"><a href="https://news.hada.io/" target="_blank" rel="noopener">Google Workspace CLI 개발자, 구글에서 해고됨 ↗</a></h3>
+          <p class="ni-blurb">Workspace API 전반을 다루는 오픈소스 gws CLI 도구 개발자가 해커뉴스에서 주목받은 직후 해고됨.</p>
+        </li>
+        <li class="newsitem">
+          <span class="ni-src">Threads</span>
+          <h3 class="ni-title"><a href="https://www.threads.com/@choi.openai" target="_blank" rel="noopener">NVIDIA, 자율 과학 연구용 BioNeMo Agent Toolkit 오픈소스 공개 ↗</a></h3>
+          <p class="ni-blurb">단백질 구조 예측 도구 선택·반복 실험을 자동화, 성공률 57%→100%, 토큰 효율 2배 개선.</p>
+        </li></ul>
+    </article>
 
-      <article class="daysec sec-tip">
-        <div class="secnum">02</div>
-        <span class="seclabel">꿀팁</span>
-        <div class="sectag">#git</div>
-        <h2 class="stitle">git 실수, 일단 reflog부터 — 거의 다 되돌린다</h2>
-        <p class="secbody">잘못 reset·rebase·삭제해 커밋이 사라진 듯해도, git reflog에 HEAD 이동 기록이 남아 대부분 복구된다.</p>
-        <ol class="steps"><li>git reflog 로 최근 HEAD 이동 이력과 각 시점 커밋 해시 확인</li><li>되돌릴 시점 해시(예: HEAD@{3})를 고른다</li><li>git reset --hard &lt;해시&gt; 로 복원, 또는 git checkout -b rescue &lt;해시&gt; 로 안전하게 분기</li><li>기본 90일 보관이니 사고 직후 바로 확인</li></ol>
-      </article>
+    <article class="daysec sec-quiz">
+      <div class="secnum">02</div>
+      <span class="seclabel">기초상식 · 정처기</span>
+      
+      <div class="quiz">
+        <div class="sectag">#데이터베이스</div>
+        <p class="q-question">이행적 함수 종속(A→B, B→C ⇒ A→C)을 제거하여 무손실 분해하는 정규화 단계는?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 제1정규형(1NF)</li><li class="qopt"><span class="ql">②</span> 제2정규형(2NF)</li><li class="qopt correct"><span class="ql">③</span> 제3정규형(3NF)</li><li class="qopt"><span class="ql">④</span> BCNF</li></ol>
+        <details class="q-ans">
+          <summary>정답 &amp; 해설 보기</summary>
+          <p><b>정답: ③</b></p>
+          <p>3NF는 이행적 함수 종속을 제거한 형태다. 부분 함수 종속 제거는 2NF, 모든 결정자가 후보키가 되도록 하는 것은 BCNF다.</p>
+        </details>
+      </div>
+    </article>
 
-      <article class="daysec sec-misc">
-        <div class="secnum">03</div>
-        <span class="seclabel">이것저것</span>
-        <div class="sectag">#자연</div>
-        <h2 class="stitle">문어는 심장이 3개, 피는 파랗다</h2>
-        <p class="secbody">문어는 심장이 세 개다. 둘은 아가미로, 하나는 온몸으로 피를 보낸다. 철 대신 구리 기반 헤모시아닌으로 산소를 날라 피가 파란색을 띠고, 차갑고 산소 적은 바다에서 유리하다. 다만 헤엄칠 때는 전신 심장이 멈춰서 대부분 기어다니길 택한다.</p>
-        <a class="ssrc" href="https://www.smithsonianmag.com/science-nature/ten-wild-facts-about-octopuses-they-have-three-hearts-big-brains-and-blue-blood-7625828/" target="_blank" rel="noopener">출처 · Smithsonian Magazine ↗</a>
-      </article></section>
+    <article class="daysec sec-terms">
+      <div class="secnum">03</div>
+      <span class="seclabel">IT · 개발 · 기획 용어</span>
+      <ul class="terms">
+        <li class="termrow">
+          <span class="t-kind" style="background:#c2532f">기획</span>
+          <span class="t-term">애자일(Agile)</span>
+          <span class="t-mean">짧은 주기로 개발·피드백을 반복하며 변화에 빠르게 대응하는 개발 방법론.</span>
+        </li>
+        <li class="termrow">
+          <span class="t-kind" style="background:#0a8f6b">개발</span>
+          <span class="t-term">리팩토링(Refactoring)</span>
+          <span class="t-mean">동작은 그대로 두고 코드 내부 구조를 개선해 가독성·유지보수성을 높이는 작업.</span>
+        </li>
+        <li class="termrow">
+          <span class="t-kind" style="background:#1f6feb">IT</span>
+          <span class="t-term">API</span>
+          <span class="t-mean">프로그램 간 기능을 주고받기 위한 약속된 인터페이스(요청·응답 규격).</span>
+        </li></ul>
+    </article>
+  </section>
 
   <div class="foot">
-    <span class="fbrand">데일리</span> · 알아두면 좋은 것들 · 2026. 6. 24<br>
-    뉴스 본문은 LLM 웹검색 자동 수집물입니다. 게시 전 출처 확인을 권장합니다.
+    <span class="fbrand">데일리</span> · 읽을거리 · 2026. 6. 24<br>
+    뉴스는 yozm.wishket · GeekNews(news.hada.io) · Threads 등에서 수집한 링크입니다. 원문 출처를 확인하세요.
   </div>
 </main>
 <script src="../assets/site.js"></script>

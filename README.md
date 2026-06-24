@@ -1,7 +1,8 @@
 # 데일리 다이제스트 (Daily Digest)
 
-매일 **AI·테크 뉴스 1 + 실무 꿀팁 1 + 이것저것(업무 무관 흥미) 1**을
+매일 **오늘의 뉴스(소량) + 기초상식(정처기 문제) + IT·개발·기획 용어**를
 미니멀 에디토리얼 + 3D 정적 사이트로 보여준다. 모바일 반응형.
+뉴스는 요즘IT(yozm.wishket) · GeekNews(news.hada.io) · Threads(@choi.openai)에서 하루 ≤3건 수집.
 
 🔗 **라이브: https://ihan0316.github.io/ai-weekly-newsroom/**
 
@@ -24,9 +25,9 @@ ai-weekly-news/
 ```jsonc
 {
   "date_label": "2026. 6. 24", "weekday": "수",
-  "news": { "title_kr", "bullets_kr[3-4]", "why_kr", "source", "url" },
-  "tip":  { "title_kr", "summary_kr", "steps_kr[2-4]", "tag" },
-  "misc": { "title_kr", "body_kr", "tag", "source?", "url?" }
+  "news":  [ { "title_kr", "source", "url", "blurb_kr" } ],          // 0~3건
+  "quiz":  { "category", "question", "options[4]", "answer": 0, "explain_kr" },  // 정처기
+  "terms": [ { "term", "kind": "IT|개발|기획", "meaning_kr" } ]       // ~3개
 }
 ```
 

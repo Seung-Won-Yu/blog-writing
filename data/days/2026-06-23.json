@@ -1,33 +1,21 @@
 {
   "date_label": "2026. 6. 23",
   "weekday": "화",
-  "news": {
-    "title_kr": "파이브 아이즈, \"AI 사이버공격, 수년이 아니라 수개월 내 현실화\" 공동 경고",
-    "bullets_kr": [
-      "미·영·캐·호·뉴 정보동맹(Five Eyes)이 공동 성명으로 방어망을 압도할 AI 기반 사이버공격이 '수개월 내' 가능하다고 경고",
-      "프런티어 모델이 공격·방어 양쪽 사이버 역량을 근본적으로 바꾸며, 일부는 이미 전문가 수준에 도달했다고 평가",
-      "기업·정부에 'AI 위협 방어는 기술이 아닌 핵심 경영 리스크'로 다루고 다층 방어를 즉시 도입할 것을 촉구",
-      "美 정부가 앤트로픽에 최첨단 모델의 외국인 사용 제한을 지시한 직후 나온 경고"
-    ],
-    "why_kr": "AI 보안이 '연구 단계 우려'에서 국가·기업의 즉각적 방어 과제로 넘어갔음을 보여준다.",
-    "source": "CNN / KOMO News",
-    "url": "https://www.cnn.com/2026/06/23/world/ai-five-eyes-warning-cyber-threat-intl-hnk"
+  "news": [
+    { "title_kr": "제가 정말 루프 엔지니어링까지 알아야 할까요?", "source": "요즘IT", "url": "https://yozm.wishket.com/magazine/detail/3816/", "blurb_kr": "프롬프트·컨텍스트·하네스·루프 엔지니어링의 차이와 흐름을 한 번에 정리한 AI 엔지니어링 가이드." },
+    { "title_kr": "SaaS의 종말? AI 시대에 적합한 소프트웨어는 무엇일까", "source": "요즘IT", "url": "https://yozm.wishket.com/magazine/detail/3815/", "blurb_kr": "에이전트가 잘 쓰는 SaaS를 만들려면 무엇을 신경 써야 하는지에 대한 필자의 관점." },
+    { "title_kr": "AI로 구글 해킹해 70만 달러 벌기", "source": "GeekNews", "url": "https://news.hada.io/", "blurb_kr": "보안 연구자가 AI로 API 퍼징을 자동화해 6만+ 취약점을 찾아 3개월 만에 버그 바운티 50만 달러 획득." }
+  ],
+  "quiz": {
+    "category": "네트워크",
+    "question": "OSI 7계층 중 종단 간(end-to-end) 신뢰성 있는 데이터 전송과 흐름·오류 제어를 담당하며 TCP/UDP가 동작하는 계층은?",
+    "options": ["네트워크 계층", "전송 계층", "세션 계층", "데이터링크 계층"],
+    "answer": 1,
+    "explain_kr": "전송 계층(4계층)은 종단 간 신뢰성, 흐름·오류 제어를 담당하고 TCP/UDP가 여기에 속한다. 경로 선택(라우팅)은 네트워크 계층(3)의 역할이다."
   },
-  "tip": {
-    "title_kr": "VS Code 다중 커서 — 반복 편집을 한 번에",
-    "summary_kr": "같은 단어/패턴을 여러 곳에서 동시에 고칠 때 찾기-바꾸기보다 다중 커서가 빠르고 안전하다.",
-    "steps_kr": [
-      "Ctrl+D: 현재 선택 단어와 동일한 다음 항목을 하나씩 추가 선택",
-      "Ctrl+Shift+L: 동일 단어 전체를 한 번에 선택",
-      "Alt+클릭: 원하는 위치마다 커서를 직접 추가 / Alt+Shift+드래그: 열(세로) 선택"
-    ],
-    "tag": "에디터"
-  },
-  "misc": {
-    "title_kr": "꿀은 사실상 썩지 않는다 — 3천 년 된 꿀도 먹을 수 있었다",
-    "body_kr": "고대 이집트 무덤에서 발견된 3천 년 넘은 꿀이 상하지 않은 채 발견된 사례가 있다. 꿀은 수분 함량이 매우 낮고 천연 산성을 띠며, 벌이 분비하는 효소가 소량의 과산화수소를 만들어 세균이 거의 살 수 없는 환경을 만든다. 밀봉만 잘 되면 사실상 무기한 보존된다.",
-    "tag": "과학",
-    "source": "Smithsonian Magazine",
-    "url": "https://www.smithsonianmag.com/science-nature/the-science-behind-honeys-eternal-shelf-life-1218690/"
-  }
+  "terms": [
+    { "term": "스프린트(Sprint)", "kind": "기획", "meaning_kr": "애자일에서 1~4주 단위로 목표를 정해 결과물을 만들어내는 짧은 개발 주기." },
+    { "term": "기술 부채(Tech Debt)", "kind": "개발", "meaning_kr": "빠르게 처리하려 미뤄둔 설계·코드 문제로, 나중에 갚아야 할 유지보수 비용." },
+    { "term": "캐시(Cache)", "kind": "IT", "meaning_kr": "자주 쓰는 데이터를 빠른 저장소에 미리 두어 응답 속도를 높이는 기법." }
+  ]
 }

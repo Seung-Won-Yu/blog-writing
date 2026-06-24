@@ -11,41 +11,58 @@
 <div class="dnav"><a class="backlink" href="../index.html">← 전체 보기</a></div>
 <main class="reader">
   <div class="kicker">2026. 6. 22 (월) · 데일리 다이제스트</div>
-  <h1 class="dhead">오늘 <em>알아두면</em> 좋은 것</h1>
-  <p class="dsub">뉴스 · 꿀팁 · 이것저것</p>
+  <h1 class="dhead">오늘 <em>읽을거리</em></h1>
+  <p class="dsub">뉴스 · 기초상식(정처기) · IT·개발·기획 용어</p>
   <div class="rule"></div>
 
   <section class="daystack">
-      <article class="daysec sec-news">
-        <div class="secnum">01</div>
-        <span class="seclabel">뉴스</span>
-        <h2 class="stitle">NVIDIA, 차세대 &#x27;Vera Rubin&#x27; 슈퍼컴 공개 (ISC 2026) — 유럽 35개 연구소 도입</h2>
-        <ul class="sfacts"><li>ISC 2026에서 단일 랙으로 TOP500급 성능과 네이티브 FP64를 제공하는 Vera Rubin 플랫폼 공개</li><li>Dell·HPE·Supermicro 등이 이 플랫폼 기반 시스템을 구축</li><li>유럽에서만 35개 AI/HPC 슈퍼컴이 Vera Rubin으로 개발 중(기록적 규모)</li><li>유럽 연구자 300만 명 이상을 지원하는 대륙 단위 AI 인프라 신호</li></ul>
-        <div class="stake">AI 경쟁의 무게중심이 모델에서 &#x27;하드웨어·전력 인프라&#x27;로 옮겨가는 신호탄.</div><br>
-        <a class="ssrc" href="https://nvidianews.nvidia.com/news/nvidia-vera-rubin-delivers-world-class-supercomputers-for-science" target="_blank" rel="noopener">출처 · NVIDIA Newsroom / TechTimes ↗</a>
-      </article>
+    <article class="daysec sec-news">
+      <div class="secnum">01</div>
+      <span class="seclabel">오늘의 뉴스</span>
+      <p class="empty">오늘은 수집된 소식이 없습니다.</p>
+    </article>
 
-      <article class="daysec sec-tip">
-        <div class="secnum">02</div>
-        <span class="seclabel">꿀팁</span>
-        <div class="sectag">#개발</div>
-        <h2 class="stitle">정규식 lookaround — 매칭하되 &#x27;잡아먹지&#x27; 않기</h2>
-        <p class="secbody">앞뒤 조건은 확인만 하고 결과에는 포함하지 않는 lookahead/lookbehind로 치환을 깔끔하게 만든다.</p>
-        <ol class="steps"><li>(?=...) 뒤쪽 긍정 전방탐색 / (?&lt;=...) 앞쪽 긍정 후방탐색 — 위치만 매칭</li><li>예: 천 단위 콤마 → \d(?=(\d{3})+$) 위치에 &#x27;,&#x27; 삽입</li><li>예: &#x27;price:&#x27; 뒤 숫자만 → (?&lt;=price:)\d+ 로 숫자만 캡처</li><li>부정형은 (?!...) / (?&lt;!...) — 특정 패턴이 &#x27;아닐 때&#x27;만 매칭</li></ol>
-      </article>
+    <article class="daysec sec-quiz">
+      <div class="secnum">02</div>
+      <span class="seclabel">기초상식 · 정처기</span>
+      
+      <div class="quiz">
+        <div class="sectag">#소프트웨어공학</div>
+        <p class="q-question">모듈의 독립성을 높이기 위한 바람직한 설계 기준으로 옳은 것은?</p>
+        <ol class="qopts"><li class="qopt"><span class="ql">①</span> 결합도 높게, 응집도 높게</li><li class="qopt"><span class="ql">②</span> 결합도 낮게, 응집도 낮게</li><li class="qopt correct"><span class="ql">③</span> 결합도 낮게, 응집도 높게</li><li class="qopt"><span class="ql">④</span> 결합도 높게, 응집도 낮게</li></ol>
+        <details class="q-ans">
+          <summary>정답 &amp; 해설 보기</summary>
+          <p><b>정답: ③</b></p>
+          <p>모듈 독립성을 높이려면 모듈 간 의존(결합도, coupling)은 낮추고, 모듈 내부 기능의 관련성(응집도, cohesion)은 높여야 한다.</p>
+        </details>
+      </div>
+    </article>
 
-      <article class="daysec sec-misc">
-        <div class="secnum">03</div>
-        <span class="seclabel">이것저것</span>
-        <div class="sectag">#과학</div>
-        <h2 class="stitle">바나나는 아주 약하게 방사능을 띤다</h2>
-        <p class="secbody">바나나에는 칼륨이 풍부한데, 그중 극히 일부가 방사성 동위원소인 칼륨-40이라 바나나는 미량의 방사선을 낸다. 이 정도가 워낙 작아 방사선 노출을 비교할 때 &#x27;바나나 등가 선량(BED)&#x27;이라는 비공식 단위로 쓰기도 한다. 물론 아무리 먹어도 몸이 알아서 칼륨을 조절하므로 해롭지 않다.</p>
-        <a class="ssrc" href="https://en.wikipedia.org/wiki/Banana_equivalent_dose" target="_blank" rel="noopener">출처 · Wikipedia — Banana equivalent dose ↗</a>
-      </article></section>
+    <article class="daysec sec-terms">
+      <div class="secnum">03</div>
+      <span class="seclabel">IT · 개발 · 기획 용어</span>
+      <ul class="terms">
+        <li class="termrow">
+          <span class="t-kind" style="background:#c2532f">기획</span>
+          <span class="t-term">MVP</span>
+          <span class="t-mean">핵심 가치만 담아 빠르게 출시·검증하는 최소 기능 제품(Minimum Viable Product).</span>
+        </li>
+        <li class="termrow">
+          <span class="t-kind" style="background:#0a8f6b">개발</span>
+          <span class="t-term">코드 리뷰(Code Review)</span>
+          <span class="t-mean">동료가 코드를 검토해 버그·품질 문제를 병합 전에 잡는 협업 과정.</span>
+        </li>
+        <li class="termrow">
+          <span class="t-kind" style="background:#1f6feb">IT</span>
+          <span class="t-term">로드 밸런서(Load Balancer)</span>
+          <span class="t-mean">트래픽을 여러 서버에 분산해 부하를 고르게 하고 가용성을 높이는 장치.</span>
+        </li></ul>
+    </article>
+  </section>
 
   <div class="foot">
-    <span class="fbrand">데일리</span> · 알아두면 좋은 것들 · 2026. 6. 22<br>
-    뉴스 본문은 LLM 웹검색 자동 수집물입니다. 게시 전 출처 확인을 권장합니다.
+    <span class="fbrand">데일리</span> · 읽을거리 · 2026. 6. 22<br>
+    뉴스는 yozm.wishket · GeekNews(news.hada.io) · Threads 등에서 수집한 링크입니다. 원문 출처를 확인하세요.
   </div>
 </main>
 <script src="../assets/site.js"></script>
