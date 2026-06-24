@@ -1,63 +1,58 @@
-# 주간 AI 뉴스 손그림 다이제스트 (MVP)
+# 주간 AI 뉴스룸 (Weekly AI Newsroom)
 
-이미지(손그림/필기체 스타일)처럼 **이번 주 AI 뉴스 3가지 + 실전 영어 표현 + 개발자 은어**를
-한 장짜리 정적 사이트로 자동 생성한다.
+매주 가장 중요한 AI 뉴스 3가지 + 실전 영어 표현 + 개발자 은어를
+**미니멀 에디토리얼 + 3D** 정적 사이트로 자동 생성한다.
+
+🔗 **라이브: https://ihan0316.github.io/ai-weekly-newsroom/**
 
 ## 구조
 
 ```
 ai-weekly-news/
-├─ build.py              # digest.json → dist/index.html 생성기 (손그림 스타일)
-├─ data/
-│  ├─ digest.json        # 이번 주 실제 뉴스 데이터 (워크플로우 산출물)
-│  └─ sample_digest.json # 참고용 샘플(원본 이미지 내용)
-├─ dist/
-│  └─ index.html         # 최종 사이트 (자체 포함, 브라우저로 바로 열림)
+├─ build.py          # digest 1건 → 상세(호) HTML 렌더러
+├─ build_site.py     # 전체 사이트 빌드 (index + 모든 호) → docs/
+├─ assets/
+│  ├─ site.css       # 공유 디자인 시스템 (index·상세 단일 소스)
+│  └─ site.js        # 3D 히어로(Three.js) + 카드 포인터 틸트
+├─ data/issues/      # 주차별 데이터 (예: 2026-w26.json) — 워크플로우 산출물
+├─ docs/             # 빌드 결과 = GitHub Pages 서빙 대상 (main /docs)
 └─ README.md
 ```
 
-## 파이프라인 (주 1회)
+## 디자인
+
+- **타입**: Fraunces(라틴 세리프) · Noto Serif KR(한글 헤드) · Hanken Grotesk(본문) · JetBrains Mono(용어)
+- **색**: 본(bone) + 잉크 + 테라코타 단일 악센트
+- **3D**: Three.js 회전 다면체 히어로, CSS 포인터 틸트, 플로팅 오브, 썸네일 3D 구 (reduced-motion 가드)
+- index ↔ 상세가 `assets/site.css` 한 파일을 공유 → 완전 일관
+
+## 빌드 & 배포
+
+```powershell
+# 사이트 빌드 (docs/ 생성)
+python build_site.py
+
+# 변경 푸시 → GitHub Pages 자동 재배포(1~2분)
+git add -A; git commit -m "Update issues"; git push
+```
+
+## 주간 파이프라인
 
 ```
 [1] 뉴스 수집·큐레이션 (Claude 워크플로우)
-      └ 5각 병렬 웹검색(model/bigtech/agents/research/business) → 상위 3개 선별 + 한글 다이제스트 작성
-      └ 산출: data/digest.json (스키마 고정)
-[2] 사이트 빌드
-      └ python build.py data/digest.json dist/index.html
-[3] 게시
-      └ GitHub Pages / Netlify / 사내 정적호스팅에 dist/ 올림
+      └ 5각 병렬 웹검색 → 상위 3개 선별 + 한글 다이제스트 → data/issues/<week>.json
+[2] python build_site.py   → docs/
+[3] git push               → Pages 자동 재배포
 ```
 
-## 수동 실행
+새 주차 추가 = `data/issues/`에 JSON 한 개 넣고 [2][3]만 반복. 코드 변경 0.
 
-```powershell
-# 데이터가 있으면 빌드만:
-python build.py data/digest.json dist/index.html
-
-# 결과 열기:
-start dist/index.html
-```
-
-## 손그림 스타일 구현
-
-- **폰트**: Gaegu·Nanum Pen Script(한글 필기체), Patrick Hand(영문) — Google Fonts
-- **테두리**: rough.js 로 패널마다 손으로 그린 듯한 사각형 동적 렌더
-- **두들**: 인라인 SVG(로봇·폰·구름·전구·동전 등) + 약한 turbulence 흔들림 필터
-- **배경**: 노트 줄·스프링 제본·포스트잇 날짜 메모
-
-## 데이터 스키마 (digest.json)
+## 데이터 스키마
 
 `news[3]`(제목/날짜/말풍선/체크리스트/별요약/출처url) · `english_expressions[10]` ·
 `dev_slang[5]` · `mini_practice` · `summary_kr[3]` · `memo`.
-자세한 형태는 `data/sample_digest.json` 참고.
 
-## 주간 자동화 (다음 단계)
-
-- **A안 (추천)**: Claude 예약 작업(routine)으로 매주 월요일 워크플로우 실행 →
-  digest.json 갱신 → build.py → GitHub Pages 푸시. 사람 개입 0.
-- **B안**: 워크플로우만 자동, 게시 전 사람이 사실확인(아래 주의 참고) 후 수동 푸시.
-
-## ⚠ 콘텐츠 정확도 주의
+## ⚠ 콘텐츠 정확도
 
 뉴스 본문은 LLM 웹검색 자동 수집물이다. **게시 전 출처 링크로 사실 확인 권장**
-(특히 인수·금액 등 큰 숫자). 자동 파이프라인이라도 1차 게시 단계에 사람 검수 1회를 넣는 것이 안전.
+(특히 인수·금액 등 큰 숫자). 자동 파이프라인에도 1차 게시 전 사람 검수 1회를 권장.
