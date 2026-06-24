@@ -1,0 +1,34 @@
+{
+  "date_label": "2026. 6. 22",
+  "weekday": "월",
+  "news": {
+    "title_kr": "NVIDIA, 차세대 'Vera Rubin' 슈퍼컴 공개 (ISC 2026) — 유럽 35개 연구소 도입",
+    "bullets_kr": [
+      "ISC 2026에서 단일 랙으로 TOP500급 성능과 네이티브 FP64를 제공하는 Vera Rubin 플랫폼 공개",
+      "Dell·HPE·Supermicro 등이 이 플랫폼 기반 시스템을 구축",
+      "유럽에서만 35개 AI/HPC 슈퍼컴이 Vera Rubin으로 개발 중(기록적 규모)",
+      "유럽 연구자 300만 명 이상을 지원하는 대륙 단위 AI 인프라 신호"
+    ],
+    "why_kr": "AI 경쟁의 무게중심이 모델에서 '하드웨어·전력 인프라'로 옮겨가는 신호탄.",
+    "source": "NVIDIA Newsroom / TechTimes",
+    "url": "https://nvidianews.nvidia.com/news/nvidia-vera-rubin-delivers-world-class-supercomputers-for-science"
+  },
+  "tip": {
+    "title_kr": "정규식 lookaround — 매칭하되 '잡아먹지' 않기",
+    "summary_kr": "앞뒤 조건은 확인만 하고 결과에는 포함하지 않는 lookahead/lookbehind로 치환을 깔끔하게 만든다.",
+    "steps_kr": [
+      "(?=...) 뒤쪽 긍정 전방탐색 / (?<=...) 앞쪽 긍정 후방탐색 — 위치만 매칭",
+      "예: 천 단위 콤마 → \\d(?=(\\d{3})+$) 위치에 ',' 삽입",
+      "예: 'price:' 뒤 숫자만 → (?<=price:)\\d+ 로 숫자만 캡처",
+      "부정형은 (?!...) / (?<!...) — 특정 패턴이 '아닐 때'만 매칭"
+    ],
+    "tag": "개발"
+  },
+  "misc": {
+    "title_kr": "바나나는 아주 약하게 방사능을 띤다",
+    "body_kr": "바나나에는 칼륨이 풍부한데, 그중 극히 일부가 방사성 동위원소인 칼륨-40이라 바나나는 미량의 방사선을 낸다. 이 정도가 워낙 작아 방사선 노출을 비교할 때 '바나나 등가 선량(BED)'이라는 비공식 단위로 쓰기도 한다. 물론 아무리 먹어도 몸이 알아서 칼륨을 조절하므로 해롭지 않다.",
+    "tag": "과학",
+    "source": "Wikipedia — Banana equivalent dose",
+    "url": "https://en.wikipedia.org/wiki/Banana_equivalent_dose"
+  }
+}

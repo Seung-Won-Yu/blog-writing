@@ -5,9 +5,11 @@
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- 1) tilt ---------- */
+  var coarse = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  /* ---------- 1) tilt (포인터 기기만; 터치/모바일 제외) ---------- */
   function initTilt() {
-    if (reduce) return;
+    if (reduce || coarse) return;
     var els = document.querySelectorAll('.tilt');
     els.forEach(function (el) {
       var max = el.classList.contains('featured-tilt') ? 5 : 7;
@@ -33,7 +35,7 @@
     var w = host.clientWidth, h = host.clientHeight;
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(w, h, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.5 : 2));
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);

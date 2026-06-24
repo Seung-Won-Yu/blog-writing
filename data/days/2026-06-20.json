@@ -1,0 +1,33 @@
+{
+  "date_label": "2026. 6. 20",
+  "weekday": "토",
+  "news": {
+    "title_kr": "Anthropic, 서울 오피스 개설 + KAIST·고대·연대·POSTECH(NAIRL)와 AI 안전 연구 협력",
+    "bullets_kr": [
+      "Anthropic이 서울 오피스를 개설(최기영 대표 총괄)하며 아시아 거점을 확대",
+      "국가AI연구실(NAIRL: KAIST·고려대·연세대·POSTECH) 컨소시엄과 협력",
+      "NAIRL 연구자 최대 60명에게 정렬(alignment)·평가·견고성 연구용 Claude 접근권 제공",
+      "과기정통부와 공공부문 AI 안전·사이버보안 협력 MOU 체결"
+    ],
+    "why_kr": "한국 AI 생태계에 프런티어 랩이 직접 발을 들인, 국내에 가장 와닿는 소식.",
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem"
+  },
+  "tip": {
+    "title_kr": "터미널이 빨라지는 fzf — 명령·파일을 흐릿하게 검색",
+    "summary_kr": "긴 명령을 외우거나 ls로 헤매지 말고, fzf로 히스토리·파일을 실시간 퍼지 검색해 골라 쓴다.",
+    "steps_kr": [
+      "설치 후 셸 연동(Ctrl+R: 명령 히스토리 퍼지 검색, Ctrl+T: 파일 경로 검색)",
+      "vim $(fzf) 처럼 다른 명령의 인자로 파이프해 파일을 즉시 선택",
+      "git branch | fzf 로 브랜치 목록에서 골라 체크아웃 등 조합 활용"
+    ],
+    "tag": "터미널"
+  },
+  "misc": {
+    "title_kr": "상어는 나무보다 오래된 생물이다",
+    "body_kr": "상어의 조상은 약 4억 5천만 년 전부터 바다를 누볐다. 반면 육상에 진짜 '나무'라 할 만한 식물이 등장한 것은 약 3억 5천만~3억 9천만 년 전이다. 즉 상어는 나무는 물론 토성의 고리, 북극성보다도 먼저 지구에 있었던 셈이다.",
+    "tag": "자연",
+    "source": "Natural History Museum (UK)",
+    "url": "https://www.nhm.ac.uk/discover/news/2022/february/sharks-older-than-trees.html"
+  }
+}
