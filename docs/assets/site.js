@@ -157,9 +157,11 @@
       if (synth) {
         var pickVoice = function () {
           var vs = synth.getVoices() || [];
-          // 한국어 음성 중 'Google'/'Neural' 우선
           var ko = vs.filter(function (v) { return /ko/i.test(v.lang); });
-          koVoice = ko.filter(function (v) { return /google|neural|natural/i.test(v.name); })[0] || ko[0] || null;
+          // 여성 보이스 우선(이름 힌트) → 그다음 Google/Neural 고품질 → 나머지
+          var female = ko.filter(function (v) { return /female|여성|sunhi|sun-?hi|heami|yuna|nari|jimin|ji-?min|seo|yujin|소|선희|아라|유나/i.test(v.name); });
+          var pool = female.length ? female : ko;
+          koVoice = pool.filter(function (v) { return /google|neural|natural/i.test(v.name); })[0] || pool[0] || null;
         };
         pickVoice();
         try { synth.onvoiceschanged = pickVoice; } catch (e) {}
