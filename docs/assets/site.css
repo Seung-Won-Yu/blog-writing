@@ -349,6 +349,11 @@ table.slang .sex{font-family:var(--mono); font-size:13px; color:var(--muted);}
   .modal{padding:30px 22px 26px; max-height:90vh;}
   .modal-title{font-size:22px;}
   .modal-body{font-size:15.5px;}
+  /* IT·개발·기획 용어: 모바일은 2행 스택 (긴 용어가 뜻 칸을 밀어내던 문제 수정) */
+  .termrow{grid-template-columns:auto 1fr; gap:6px 10px; align-items:center;}
+  .t-kind{padding:3px 8px;}
+  .t-term{white-space:normal; word-break:break-word; font-size:15px;}
+  .t-mean{grid-column:1 / -1; font-size:14.5px;}
 }
 @media(max-width:380px){
   .nav .pill{display:none;}
