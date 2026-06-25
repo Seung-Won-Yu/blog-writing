@@ -141,7 +141,10 @@
       origEl.href = it.url || '#';
       bodyEl.innerHTML = '';
       if (it.content && it.content.length) {
-        it.content.forEach(function (b) {
+        var t = (it.title || '').trim();
+        it.content.forEach(function (b, i) {
+          // 첫 소제목이 기사 제목과 같으면 중복이라 건너뜀
+          if (i === 0 && b.t === 'h' && (b.text || '').trim() === t) return;
           var el = document.createElement(b.t === 'h' ? 'h3' : 'p');
           el.textContent = b.text;
           bodyEl.appendChild(el);
