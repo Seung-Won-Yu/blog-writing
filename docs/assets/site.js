@@ -282,49 +282,87 @@
     if (n0 !== null) { var ni = parseInt(n0, 10); if (!isNaN(ni)) open(ni); }
   }
 
-  /* ---------- 5) 뉴스 검색 (인덱스 페이지) ---------- */
+  /* ---------- 5) 뉴스 검색: 본문 포함 + 가중 랭킹 + 스니펫 (search.json 지연 로드) ---------- */
   function initSearch() {
     var input = document.getElementById('news-search');
     var results = document.getElementById('search-results');
     var feed = document.getElementById('feed');
     var clearBtn = document.getElementById('search-clear');
-    var dataEl = document.getElementById('search-index');
-    if (!input || !results || !feed || !dataEl) return;
-    var items = [];
-    try { items = JSON.parse(dataEl.textContent || '[]'); } catch (e) { items = []; }
+    if (!input || !results || !feed) return;
+    var srcUrl = input.getAttribute('data-index') || 'search.json';
+    var items = null, loading = false, pending = null;
+
     function esc(s) {
       return String(s).replace(/[&<>"]/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function highlight(text, terms) {
+      var out = esc(text);
+      terms.forEach(function (t) { if (t) out = out.replace(new RegExp('(' + escRe(esc(t)) + ')', 'gi'), '<mark>$1</mark>'); });
+      return out;
+    }
+    function snippet(c, terms) {
+      if (!c) return '';
+      var lc = c.toLowerCase(), pos = -1;
+      terms.forEach(function (t) { var i = lc.indexOf(t); if (i >= 0 && (pos < 0 || i < pos)) pos = i; });
+      if (pos < 0) return '';
+      var start = Math.max(0, pos - 40), end = Math.min(c.length, pos + 110);
+      return (start > 0 ? '…' : '') + highlight(c.slice(start, end), terms) + (end < c.length ? '…' : '');
+    }
+    function load(cb) {
+      if (items) { cb(); return; }
+      if (loading) { pending = cb; return; }
+      loading = true;
+      fetch(srcUrl).then(function (r) { return r.json(); }).then(function (j) {
+        items = j; loading = false; cb(); if (pending) { var p = pending; pending = null; p(); }
+      }).catch(function () {
+        loading = false;
+        results.innerHTML = '<p class="search-empty">검색 데이터를 불러오지 못했습니다.</p>';
       });
     }
     function render(q) {
       var ql = q.trim().toLowerCase();
       clearBtn.hidden = !q;
       if (!ql) { results.hidden = true; results.innerHTML = ''; feed.hidden = false; return; }
-      var terms = ql.split(/\s+/).filter(Boolean);
-      var hits = items.filter(function (it) {
-        var hay = (it.t + ' ' + it.b + ' ' + it.s + ' ' + it.d).toLowerCase();
-        return terms.every(function (t) { return hay.indexOf(t) >= 0; });
-      });
       feed.hidden = true; results.hidden = false;
-      if (!hits.length) {
-        results.innerHTML = '<p class="search-empty">“' + esc(q) + '” 검색 결과가 없습니다.</p>';
+      if (!items) {
+        results.innerHTML = '<p class="search-empty">검색 준비 중…</p>';
+        load(function () { if (input.value.trim().toLowerCase() === ql) render(q); });
         return;
       }
-      var html = '<div class="search-count">' + hits.length + '건</div>';
-      hits.forEach(function (it) {
-        var href = 'days/' + it.id + '.html?n=' + it.n;
+      var terms = ql.split(/\s+/).filter(Boolean);
+      var scored = [];
+      items.forEach(function (it) {
+        var T = (it.t || '').toLowerCase(), B = (it.b || '').toLowerCase(),
+            S = (it.s || '').toLowerCase(), C = (it.c || '').toLowerCase(), D = (it.d || '').toLowerCase();
+        var ok = true, score = 0;
+        for (var k = 0; k < terms.length; k++) {
+          var t = terms[k];
+          if (T.indexOf(t) < 0 && B.indexOf(t) < 0 && S.indexOf(t) < 0 && C.indexOf(t) < 0 && D.indexOf(t) < 0) { ok = false; break; }
+          score += (T.indexOf(t) >= 0 ? 5 : 0) + (B.indexOf(t) >= 0 ? 3 : 0) + (S.indexOf(t) >= 0 ? 2 : 0) + (C.split(t).length - 1);
+        }
+        if (ok) scored.push({ it: it, score: score });
+      });
+      scored.sort(function (a, b) { return b.score - a.score; });
+      if (!scored.length) { results.innerHTML = '<p class="search-empty">“' + esc(q) + '” 검색 결과가 없습니다.</p>'; return; }
+      var html = '<div class="search-count">' + scored.length + '건</div>';
+      scored.forEach(function (o) {
+        var it = o.it, href = 'days/' + it.id + '.html?n=' + it.n;
         var thumb = it.img ? '<img class="sr-thumb" src="' + esc(it.img) + '" alt="" loading="lazy" onerror="this.remove()">' : '';
+        var snip = snippet(it.c, terms) || esc(it.b || '');
         html += '<a class="sr-item" href="' + href + '">' + thumb +
           '<div class="sr-text"><div class="sr-meta">' + esc(it.s) + ' · ' + esc(it.d) +
           (it.wd ? (' (' + esc(it.wd) + ')') : '') + '</div>' +
-          '<div class="sr-title">' + esc(it.t) + '</div>' +
-          (it.b ? ('<div class="sr-blurb">' + esc(it.b) + '</div>') : '') + '</div></a>';
+          '<div class="sr-title">' + highlight(it.t, terms) + '</div>' +
+          (snip ? ('<div class="sr-blurb">' + snip + '</div>') : '') + '</div></a>';
       });
       results.innerHTML = html;
     }
     input.addEventListener('input', function () { render(input.value); });
     clearBtn.addEventListener('click', function () { input.value = ''; render(''); input.focus(); });
+    input.addEventListener('focus', function () { load(function () {}); }, { once: true });
     var q0 = new URLSearchParams(location.search).get('q');
     if (q0) { input.value = q0; render(q0); }
   }
