@@ -50,6 +50,7 @@ def news_payload(news):
             "url": it.get("url", ""),
             "blurb": it.get("blurb_kr", ""),
             "content": it.get("content", []) or [],
+            "audio": it.get("audio", ""),
         })
     js = json.dumps(items, ensure_ascii=False)
     return js.replace("</", "<\\/")
@@ -91,6 +92,11 @@ MODAL = '''
     <button class="modal-close" type="button" aria-label="닫기">✕</button>
     <div class="modal-src"></div>
     <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-tools">
+      <button class="tts-toggle" type="button" hidden aria-label="본문 읽어주기">
+        <span class="tts-ico">🔊</span><span class="tts-label">본문 듣기</span>
+      </button>
+    </div>
     <div class="modal-body"></div>
     <a class="modal-orig" target="_blank" rel="noopener">원문 사이트에서 보기 ↗</a>
   </div>

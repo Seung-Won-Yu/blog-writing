@@ -291,7 +291,7 @@ table.slang .sex{font-family:var(--mono); font-size:13px; color:var(--muted);}
 .modal-overlay.open{display:flex;}
 .modal-overlay.show{opacity:1;}
 .modal{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:22px;
-  width:100%; max-width:720px; max-height:86vh; overflow-y:auto; padding:42px 46px 38px;
+  width:100%; max-width:680px; max-height:86vh; overflow-y:auto; padding:42px 46px 38px;
   box-shadow:var(--shadow-lg); transform-origin:50% 0;
   transform:rotateX(14deg) translateY(40px) scale(.9); opacity:0;
   transition:transform .44s cubic-bezier(.16,.84,.3,1), opacity .4s ease;}
@@ -303,7 +303,15 @@ table.slang .sex{font-family:var(--mono); font-size:13px; color:var(--muted);}
 .modal-src{display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:.08em;
   color:var(--accent-deep); background:var(--accent-wash); border-radius:6px; padding:3px 10px; margin-bottom:14px;}
 .modal-title{font-family:var(--serif-kr); font-weight:600; font-size:27px; line-height:1.3;
-  letter-spacing:-.01em; margin:0 0 20px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  letter-spacing:-.01em; margin:0 0 16px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+.modal-tools{display:flex; margin:0 0 20px;}
+.tts-toggle{display:inline-flex; align-items:center; gap:7px; font-family:var(--sans); font-size:13.5px;
+  font-weight:600; color:var(--accent-deep); background:var(--accent-wash); border:1px solid transparent;
+  border-radius:999px; padding:9px 16px; cursor:pointer; transition:background .2s, color .2s, transform .1s;}
+.tts-toggle:hover{background:#f0d9cd;}
+.tts-toggle:active{transform:scale(.97);}
+.tts-toggle.on{background:var(--accent); color:#fff;}
+.tts-toggle .tts-ico{font-size:14px; line-height:1;}
 .modal-body{font-size:16.5px; line-height:1.92; color:var(--ink-soft); letter-spacing:.005em;}
 .modal-body h3{font-family:var(--serif-kr); font-weight:600; font-size:20px; color:var(--ink);
   margin:34px 0 12px; line-height:1.4;}
@@ -353,7 +361,9 @@ table.slang .sex{font-family:var(--mono); font-size:13px; color:var(--muted);}
   .squote{font-size:18px;}
   .modal{padding:30px 22px 26px; max-height:90vh;}
   .modal-title{font-size:22px;}
-  .modal-body{font-size:15.5px;}
+  .modal-body{font-size:16.5px;}    /* 모바일 가독성 */
+  body{font-size:16.5px;}
+  .ni-blurb{font-size:15px;} .t-mean{font-size:15px;}
   /* IT·개발·기획 용어: 모바일은 2행 스택 (긴 용어가 뜻 칸을 밀어내던 문제 수정) */
   .termrow{grid-template-columns:auto 1fr; gap:6px 10px; align-items:center;}
   .t-kind{padding:3px 8px;}
