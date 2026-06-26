@@ -214,14 +214,14 @@
     var amEl = document.querySelector('meta[name="ask-endpoint"]');
     var askEndpoint = amEl ? (amEl.getAttribute('content') || '') : '';
     var enabled = !!askEndpoint;
-    var askFab = overlay.querySelector('.ask-fab');
-    var askPanel = overlay.querySelector('.ask-panel');
-    var askInput = overlay.querySelector('.ask-input');
-    var askSend = overlay.querySelector('.ask-send');
-    var askAnswer = overlay.querySelector('.ask-answer');
-    var askQuote = overlay.querySelector('.ask-quote');
-    var askCountEl = overlay.querySelector('.ask-count');
-    var askX = overlay.querySelector('.ask-x');
+    var askFab = document.querySelector('.ask-fab');
+    var askPanel = document.querySelector('.ask-panel');
+    var askInput = document.querySelector('.ask-input');
+    var askSend = document.querySelector('.ask-send');
+    var askAnswer = document.querySelector('.ask-answer');
+    var askQuote = document.querySelector('.ask-quote');
+    var askCountEl = document.querySelector('.ask-count');
+    var askX = document.querySelector('.ask-x');
     var selAsk = document.querySelector('.sel-ask');
     var selBtn = selAsk ? selAsk.querySelector('.sel-ask-btn') : null;
     var asking = false, selectedText = '';
@@ -336,7 +336,7 @@
     }
     function close() {
       if (overlay.hidden) return;
-      ttsReset(); closePanel();
+      ttsReset(); closePanel(); if (askFab) askFab.hidden = true;
       overlay.classList.remove('show');
       var done = function () {
         if (overlay.hidden) return;
