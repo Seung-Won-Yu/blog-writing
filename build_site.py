@@ -219,6 +219,20 @@ def main():
 
     with open(os.path.join(OUT_DIR, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(build_index(days, ver, build_v))
+
+    # /today.html : 항상 최신(오늘) 날짜 상세로 바로 이동하는 고정 주소(북마크용)
+    latest = days[0][0]
+    today_html = ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+                  '<meta http-equiv="refresh" content="0; url=days/%s.html">'
+                  '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                  '<title>오늘의 다이제스트…</title><link rel="canonical" href="days/%s.html">'
+                  '<script>location.replace("days/%s.html"+location.search);</script>'
+                  '<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f1efe7;'
+                  'color:#6a6353;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0}</style>'
+                  '</head><body><p>오늘의 다이제스트로 이동 중… <a href="days/%s.html">바로가기</a></p></body></html>'
+                  ) % (latest, latest, latest, latest)
+    with open(os.path.join(OUT_DIR, "today.html"), "w", encoding="utf-8") as fh:
+        fh.write(today_html)
     print("built index + %d days:" % len(days), ", ".join(d for d, _ in days))
 
 if __name__ == "__main__":
