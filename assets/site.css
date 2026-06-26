@@ -225,7 +225,10 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
   font-size:14.5px; font-weight:600; box-shadow:0 8px 24px rgba(0,113,227,.4); transition:background .2s, transform .15s;}
 .ask-fab:hover{background:var(--accent-2);} .ask-fab:active{transform:scale(.96);}
 .ask-panel{position:fixed; right:26px; bottom:26px; z-index:211; width:360px; max-width:calc(100vw - 36px);
+  max-height:min(74vh,560px); display:flex; flex-direction:column;
   background:#fff; border:1px solid var(--line-soft); border-radius:18px; box-shadow:0 22px 60px rgba(0,0,0,.25); padding:16px;}
+.ask-head, .ask-quote, .ask-foot{flex:0 0 auto;}
+.ask-foot{margin-top:2px;}
 .ask-head{display:flex; align-items:center; justify-content:space-between; font-size:15px; font-weight:600; color:var(--ink); margin-bottom:12px;}
 .ask-x{border:none; background:var(--bg-sub); color:var(--ink-3); width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:13px;}
 .ask-x:hover{background:var(--line);}
@@ -239,10 +242,10 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .ask-send{flex:0 0 auto; border:none; background:var(--accent); color:#fff; border-radius:980px;
   padding:0 16px; font-weight:600; font-size:13.5px; cursor:pointer;}
 .ask-send:hover{background:var(--accent-2);} .ask-send:disabled{opacity:.5; cursor:default;}
-.ask-answer{margin-top:12px; background:var(--bg-sub); border-radius:12px; padding:12px 14px;
-  font-size:14.5px; line-height:1.55; color:var(--ink-2); white-space:pre-wrap; max-height:240px; overflow:auto;}
+.ask-answer{flex:1 1 auto; min-height:0; overflow:auto; margin:0 0 12px; background:var(--bg-sub); border-radius:12px;
+  padding:12px 14px; font-size:14.5px; line-height:1.55; color:var(--ink-2); white-space:pre-wrap;}
 .ask-answer.err{color:#c4271d;}
-.ask-count{margin-top:10px; font-size:11.5px; color:var(--ink-4); text-align:right;}
+.ask-count{margin-top:8px; font-size:11.5px; color:var(--ink-4); text-align:right;}
 .sel-ask{position:fixed; z-index:215;}
 .sel-ask-btn{border:none; cursor:pointer; background:var(--ink); color:#fff; border-radius:980px;
   padding:7px 14px; font-family:var(--sans); font-size:13px; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,.35);}
