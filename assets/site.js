@@ -214,14 +214,12 @@
     var amEl = document.querySelector('meta[name="ask-endpoint"]');
     var askEndpoint = amEl ? (amEl.getAttribute('content') || '') : '';
     var enabled = !!askEndpoint;
-    var askFab = document.querySelector('.ask-fab');
     var askPanel = document.querySelector('.ask-panel');
     var askInput = document.querySelector('.ask-input');
     var askSend = document.querySelector('.ask-send');
     var askThread = document.querySelector('.ask-thread');
     var askQuote = document.querySelector('.ask-quote');
     var askCountEl = document.querySelector('.ask-count');
-    var askX = document.querySelector('.ask-x');
     var selAsk = document.querySelector('.sel-ask');
     var selBtn = selAsk ? selAsk.querySelector('.sel-ask-btn') : null;
     var asking = false, selectedText = '', convo = [];
@@ -260,7 +258,6 @@
       convo = [];
       if (askPanel) askPanel.hidden = true;
       hideSel();
-      if (askFab) askFab.hidden = !enabled;
       updateCount();
     }
     function doAsk() {
@@ -289,8 +286,6 @@
         .catch(function () { botEl.classList.remove('loading'); botEl.classList.add('err'); botEl.textContent = '오류가 났어요. 잠시 후 다시 시도해 주세요.'; })
         .then(function () { asking = false; updateCount(); askThread.scrollTop = askThread.scrollHeight; if (askInput) askInput.focus(); });
     }
-    if (askFab) askFab.addEventListener('click', function () { setQuote(''); openPanel(); });
-    if (askX) askX.addEventListener('click', closePanel);
     if (askSend) askSend.addEventListener('click', doAsk);
     if (askInput) askInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') doAsk(); });
     if (enabled && bodyEl) {
@@ -344,6 +339,7 @@
       }
       overlay.hidden = false;
       document.body.classList.add('modal-open');
+      if (enabled && askPanel) { askPanel.hidden = false; updateCount(); }  // 패널 상시 표시(FAB 없음)
       overlay.classList.add('open');            // display:flex 즉시 (rAF 비의존)
       var showIt = function () { overlay.classList.add('show'); };
       requestAnimationFrame(showIt);
@@ -354,7 +350,7 @@
     }
     function close() {
       if (overlay.hidden) return;
-      ttsReset(); closePanel(); if (askFab) askFab.hidden = true;
+      ttsReset(); closePanel();
       document.body.classList.remove('modal-open');
       overlay.classList.remove('show');
       var done = function () {

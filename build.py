@@ -111,9 +111,8 @@ MODAL = '''
     <a class="modal-orig" target="_blank" rel="noopener">원문 사이트에서 보기 ↗</a>
   </div>
 </div>
-<button class="ask-fab" type="button" hidden aria-label="이 기사에 질문하기">🤔 질문하기</button>
 <div class="ask-panel" hidden role="dialog" aria-label="기사 질문">
-  <div class="ask-head"><span>이 기사에 질문</span><button class="ask-x" type="button" aria-label="닫기">✕</button></div>
+  <div class="ask-head"><span>이 기사에 질문</span></div>
   <div class="ask-thread"></div>
   <div class="ask-foot">
     <div class="ask-quote" hidden></div>

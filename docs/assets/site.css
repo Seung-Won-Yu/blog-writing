@@ -221,16 +221,11 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .modal-body .mb-note{font-size:13px; color:var(--ink-4); background:var(--bg-sub); border-radius:12px; padding:13px 15px; margin-top:6px;}
 .modal-orig{display:inline-block; margin-top:16px; font-size:15px; color:var(--accent); font-weight:500;}
 
-/* 기사 Q&A : FAB + 선택 팝업 + 패널 */
-.ask-fab{display:none; position:fixed; right:26px; bottom:26px; z-index:210; border:none; cursor:pointer;
-  background:var(--accent); color:#fff; border-radius:980px; padding:12px 20px; font-family:var(--sans);
-  font-size:14.5px; font-weight:600; box-shadow:0 8px 24px rgba(0,113,227,.4); transition:background .2s, transform .15s;}
-/* FAB·패널·선택팝업 모두 기사 모달이 열린 동안에만 표시 — 본문 밖에선 절대 안 뜸 */
-body.modal-open .ask-fab:not([hidden]){display:inline-flex; align-items:center;}
-body:not(.modal-open) .ask-fab,
+/* 기사 Q&A : 선택 팝업 + 패널 (FAB 없음 — 모달 열리면 패널 상시 표시) */
+/* 패널·선택팝업 모두 기사 모달이 열린 동안에만 표시 — 본문 밖에선 절대 안 뜸 */
+body.modal-open .ask-panel{display:flex !important;}
 body:not(.modal-open) .ask-panel,
 body:not(.modal-open) .sel-ask{display:none !important;}
-.ask-fab:hover{background:var(--accent-2);} .ask-fab:active{transform:scale(.96);}
 .ask-panel{position:fixed; right:26px; bottom:26px; z-index:211; width:360px; max-width:calc(100vw - 36px);
   max-height:min(74vh,560px); display:flex; flex-direction:column;
   background:#fff; border:1px solid var(--line-soft); border-radius:18px; box-shadow:0 22px 60px rgba(0,0,0,.25); padding:16px;}
@@ -300,8 +295,7 @@ body:not(.modal-open) .sel-ask{display:none !important;}
 .daystack .daysec:nth-child(3){animation-delay:.2s}
 
 /* 모달/패널/선택/해설 등장 (hidden 해제 시 재생) */
-.ask-fab:not([hidden]){animation:popIn .28s both;}
-.ask-panel:not([hidden]){animation:popIn .28s both;}
+body.modal-open .ask-panel{animation:popIn .28s both;}
 .sel-ask:not([hidden]){animation:popSmall .16s both;}
 .q-explain:not([hidden]){animation:fadeUp .3s both;}
 .modal-hero:not([hidden]){animation:fadeIn .4s both;}
@@ -309,7 +303,7 @@ body:not(.modal-open) .sel-ask{display:none !important;}
 @media(prefers-reduced-motion:reduce){
   .masthead .mh-copy,.searchbar,.featured,.sec-label,.grid .card,.sr-item,
   .reader .kicker,.reader .dhead,.reader .dsub,.daystack .daysec,
-  .ask-fab,.ask-panel,.sel-ask,.msg,.q-explain,.modal-hero{animation:none !important;}
+  .ask-panel,.sel-ask,.msg,.q-explain,.modal-hero{animation:none !important;}
 }
 
 /* ---------------- responsive ---------------- */
@@ -335,7 +329,6 @@ body:not(.modal-open) .sel-ask{display:none !important;}
   .sr-thumb{width:84px; height:60px;}
   .modal-hero{max-height:220px;}
   .dnav{padding:14px 18px 0;}
-  .ask-fab{right:16px; bottom:16px; padding:11px 18px;}
   .ask-panel{right:12px; left:12px; bottom:12px; width:auto; max-width:none;}
 }
 @media(max-width:380px){
