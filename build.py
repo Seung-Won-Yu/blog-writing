@@ -114,9 +114,9 @@ MODAL = '''
 <button class="ask-fab" type="button" hidden aria-label="이 기사에 질문하기">🤔 질문하기</button>
 <div class="ask-panel" hidden role="dialog" aria-label="기사 질문">
   <div class="ask-head"><span>이 기사에 질문</span><button class="ask-x" type="button" aria-label="닫기">✕</button></div>
-  <div class="ask-quote" hidden></div>
-  <div class="ask-answer" hidden></div>
+  <div class="ask-thread"></div>
   <div class="ask-foot">
+    <div class="ask-quote" hidden></div>
     <div class="ask-row">
       <input class="ask-input" type="text" maxlength="500" autocomplete="off"
         placeholder="이 기사에서 궁금한 점" aria-label="질문 입력">

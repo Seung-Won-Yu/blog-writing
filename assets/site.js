@@ -218,13 +218,13 @@
     var askPanel = document.querySelector('.ask-panel');
     var askInput = document.querySelector('.ask-input');
     var askSend = document.querySelector('.ask-send');
-    var askAnswer = document.querySelector('.ask-answer');
+    var askThread = document.querySelector('.ask-thread');
     var askQuote = document.querySelector('.ask-quote');
     var askCountEl = document.querySelector('.ask-count');
     var askX = document.querySelector('.ask-x');
     var selAsk = document.querySelector('.sel-ask');
     var selBtn = selAsk ? selAsk.querySelector('.sel-ask-btn') : null;
-    var asking = false, selectedText = '';
+    var asking = false, selectedText = '', convo = [];
     var ASK_LIMIT = 50;
 
     function todayKey() { var d = new Date(); return 'ask:' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
@@ -246,10 +246,18 @@
     }
     function openPanel() { if (!enabled || !askPanel) return; askPanel.hidden = false; updateCount(); setTimeout(function () { if (askInput && !askInput.disabled) askInput.focus(); }, 50); }
     function closePanel() { if (askPanel) askPanel.hidden = true; hideSel(); }
+    function bubble(cls, text) {
+      var el = document.createElement('div');
+      el.className = 'msg ' + cls; el.textContent = text;
+      askThread.appendChild(el);
+      askThread.scrollTop = askThread.scrollHeight;
+      return el;
+    }
     function askReset() {
       asking = false; setQuote('');
       if (askInput) { askInput.value = ''; askInput.disabled = false; askInput.placeholder = '이 기사에서 궁금한 점'; }
-      if (askAnswer) { askAnswer.hidden = true; askAnswer.textContent = ''; askAnswer.classList.remove('err'); }
+      if (askThread) askThread.innerHTML = '';
+      convo = [];
       if (askPanel) askPanel.hidden = true;
       hideSel();
       if (askFab) askFab.hidden = !enabled;
@@ -260,18 +268,26 @@
       if (getCount() >= ASK_LIMIT) { updateCount(); return; }
       var q = (askInput.value || '').trim();
       if (!q) return;
+      var sel = selectedText;
       asking = true; askSend.disabled = true;
-      askAnswer.hidden = false; askAnswer.classList.remove('err'); askAnswer.textContent = '답변 생성 중…';
+      bubble('user', (sel ? ('“' + sel.slice(0, 80) + (sel.length > 80 ? '…' : '') + '”\n') : '') + q);
+      askInput.value = ''; setQuote('');
+      var botEl = bubble('bot loading', '답변 생성 중…');
       var ctx = '';
       (curItem.content || []).forEach(function (b) { if (b.text) ctx += b.text + '\n'; });
       if (!ctx) ctx = curItem.blurb || '';
+      var history = convo.slice(-4).map(function (t) { return { q: t.q, a: t.a }; });
       fetch(askEndpoint, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: q, title: curItem.title || '', context: ctx.slice(0, 8000), selection: selectedText.slice(0, 500) })
+        body: JSON.stringify({ question: q, title: curItem.title || '', context: ctx.slice(0, 8000), selection: sel.slice(0, 500), history: history })
       }).then(function (r) { return r.json(); })
-        .then(function (j) { askAnswer.textContent = (j && j.answer) ? j.answer : '답변을 받지 못했어요.'; bumpCount(); })
-        .catch(function () { askAnswer.textContent = '오류가 났어요. 잠시 후 다시 시도해 주세요.'; askAnswer.classList.add('err'); })
-        .then(function () { asking = false; updateCount(); });
+        .then(function (j) {
+          var a = (j && j.answer) ? j.answer : '답변을 받지 못했어요.';
+          botEl.classList.remove('loading'); botEl.textContent = a;
+          convo.push({ q: q, a: a }); bumpCount();
+        })
+        .catch(function () { botEl.classList.remove('loading'); botEl.classList.add('err'); botEl.textContent = '오류가 났어요. 잠시 후 다시 시도해 주세요.'; })
+        .then(function () { asking = false; updateCount(); askThread.scrollTop = askThread.scrollHeight; if (askInput) askInput.focus(); });
     }
     if (askFab) askFab.addEventListener('click', function () { setQuote(''); openPanel(); });
     if (askX) askX.addEventListener('click', closePanel);
@@ -291,6 +307,7 @@
       });
     }
     if (selBtn) selBtn.addEventListener('click', function () { setQuote(selAsk._text || ''); hideSel(); openPanel(); });
+    if (askQuote) { askQuote.title = '선택 해제'; askQuote.addEventListener('click', function () { setQuote(''); }); }
     window.addEventListener('scroll', hideSel, true);
 
     function open(idx) {

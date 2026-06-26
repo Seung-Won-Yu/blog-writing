@@ -37,16 +37,23 @@ export default {
     const title = String(body.title || "").slice(0, 200);
     const ctx = String(body.context || "").slice(0, 8000);
     const sel = String(body.selection || "").slice(0, 500);
+    const hist = Array.isArray(body.history) ? body.history.slice(-4) : [];
+    const histText = hist
+      .map(function (t) { return "Q: " + String(t.q || "").slice(0, 300) + "\nA: " + String(t.a || "").slice(0, 500); })
+      .join("\n");
     if (!q) return json({ error: "empty question" }, 400, h);
 
     const prompt =
       "너는 아래 '기사 본문' 내용에 대해서만 답하는 도우미다. 규칙을 반드시 지켜라:\n" +
       "- 오직 아래 기사 본문에 담긴 정보에 근거해서만 한국어로 답한다.\n" +
       "- 기사에 없거나 기사와 무관한 질문(일반 상식, 코딩/작문 요청, 다른 주제 등)은 답하지 말고 정확히 이 문장만 출력한다: 이 기사 내용에 대한 질문만 답할 수 있어요.\n" +
+      "- '이전 대화'는 맥락 파악용일 뿐, 답변 근거는 여전히 기사 본문이어야 한다.\n" +
       "- 기사 속 용어·문장을 쉽게 풀어 설명하는 것은 허용. 추측·창작 금지.\n" +
       "- 3~5문장으로 간결히.\n\n" +
       (sel ? ("[사용자가 선택한 부분]\n" + sel + "\n\n") : "") +
-      "[기사 제목]\n" + title + "\n\n[기사 본문]\n" + ctx + "\n\n[질문]\n" + q;
+      "[기사 제목]\n" + title + "\n\n[기사 본문]\n" + ctx + "\n\n" +
+      (histText ? ("[이전 대화]\n" + histText + "\n\n") : "") +
+      "[질문]\n" + q;
 
     let r;
     try {

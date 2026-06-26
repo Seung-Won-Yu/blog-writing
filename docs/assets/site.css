@@ -242,9 +242,15 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .ask-send{flex:0 0 auto; border:none; background:var(--accent); color:#fff; border-radius:980px;
   padding:0 16px; font-weight:600; font-size:13.5px; cursor:pointer;}
 .ask-send:hover{background:var(--accent-2);} .ask-send:disabled{opacity:.5; cursor:default;}
-.ask-answer{flex:1 1 auto; min-height:0; overflow:auto; margin:0 0 12px; background:var(--bg-sub); border-radius:12px;
-  padding:12px 14px; font-size:14.5px; line-height:1.55; color:var(--ink-2); white-space:pre-wrap;}
-.ask-answer.err{color:#c4271d;}
+.ask-thread{flex:1 1 auto; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:9px; margin:0;}
+.ask-thread:not(:empty){margin-bottom:12px;}
+.msg{max-width:90%; padding:9px 12px; border-radius:14px; font-size:14.5px; line-height:1.5;
+  white-space:pre-wrap; word-break:break-word; animation:fadeUp .22s both;}
+.msg.user{align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:5px;}
+.msg.bot{align-self:flex-start; background:var(--bg-sub); color:var(--ink-2); border-bottom-left-radius:5px;}
+.msg.bot.loading{color:var(--ink-4);}
+.msg.bot.err{color:#c4271d;}
+.ask-quote{cursor:pointer;}
 .ask-count{margin-top:8px; font-size:11.5px; color:var(--ink-4); text-align:right;}
 .sel-ask{position:fixed; z-index:215;}
 .sel-ask-btn{border:none; cursor:pointer; background:var(--ink); color:#fff; border-radius:980px;
@@ -290,14 +296,13 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .ask-fab:not([hidden]){animation:popIn .28s both;}
 .ask-panel:not([hidden]){animation:popIn .28s both;}
 .sel-ask:not([hidden]){animation:popSmall .16s both;}
-.ask-answer:not([hidden]){animation:fadeUp .25s both;}
 .q-explain:not([hidden]){animation:fadeUp .3s both;}
 .modal-hero:not([hidden]){animation:fadeIn .4s both;}
 
 @media(prefers-reduced-motion:reduce){
   .masthead .mh-copy,.searchbar,.featured,.sec-label,.grid .card,.sr-item,
   .reader .kicker,.reader .dhead,.reader .dsub,.daystack .daysec,
-  .ask-fab,.ask-panel,.sel-ask,.ask-answer,.q-explain,.modal-hero{animation:none !important;}
+  .ask-fab,.ask-panel,.sel-ask,.msg,.q-explain,.modal-hero{animation:none !important;}
 }
 
 /* ---------------- responsive ---------------- */
