@@ -367,7 +367,47 @@
     if (q0) { input.value = q0; render(q0); }
   }
 
-  function boot() { initTilt(); initHero(); initQuiz(); initNews(); initSearch(); }
+  /* ---------- 6) 새 빌드 자동 감지 (강제 새로고침 불필요) ---------- */
+  function initUpdateCheck() {
+    var meta = document.querySelector('meta[name="site-build"]');
+    if (!meta) return;
+    var cur = meta.getAttribute('content') || '';
+    var src = meta.getAttribute('data-src') || 'build.json';
+    if (!cur) return;
+    var toasted = false;
+    function toast(v) {
+      if (toasted) return; toasted = true;
+      var el = document.createElement('div');
+      el.className = 'update-toast';
+      el.innerHTML = '새 글이 업데이트됐어요 <button type="button">새로고침</button>';
+      el.querySelector('button').addEventListener('click', function () {
+        location.replace(location.pathname + '?_=' + v);
+      });
+      document.body.appendChild(el);
+      requestAnimationFrame(function () { el.classList.add('show'); });
+    }
+    function check(initial) {
+      fetch(src + '?_=' + Date.now(), { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j || !j.v || j.v === cur) return;
+          var key = 'rl:' + j.v;
+          var seen = false;
+          try { seen = !!sessionStorage.getItem(key); } catch (e) {}
+          if (initial && !seen) {
+            try { sessionStorage.setItem(key, '1'); } catch (e) {}
+            location.replace(location.pathname + '?_=' + j.v);   // 캐시 무시 새로고침
+          } else {
+            toast(j.v);
+          }
+        }).catch(function () {});
+    }
+    check(true);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) check(false); });
+    setInterval(function () { check(false); }, 300000);
+  }
+
+  function boot() { initTilt(); initHero(); initQuiz(); initNews(); initSearch(); initUpdateCheck(); }
   if (document.readyState !== 'loading') boot();
   else document.addEventListener('DOMContentLoaded', boot);
 })();

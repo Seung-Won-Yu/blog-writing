@@ -91,7 +91,7 @@ def card(day_id, rec, hero=False):
         <span class="clink">읽기 <span class="arr">→</span></span>
       </div></a>'''
 
-def build_index(days, ver=""):
+def build_index(days, ver="", build_v=""):
     latest_id, latest = days[0]
     rest = days[1:]
     hero_card = card(latest_id, latest, hero=True)
@@ -106,6 +106,7 @@ def build_index(days, ver=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css{ver}">
+<meta name="site-build" content="{build_v}" data-src="build.json">
 </head>
 <body>
 <div class="orbs"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
@@ -187,11 +188,16 @@ def main():
                 it["image"] = "../images/" + os.path.basename(imgs[0]); n_img += 1
     print("audio linked:", n_audio, "| images linked:", n_img)
 
+    # 빌드 버전(콘텐츠 변경 시마다 달라짐) → 클라이언트가 자동 갱신 감지에 사용
+    build_v = hashlib.md5(json.dumps([r for _, r in days], ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:10]
+    with open(os.path.join(OUT_DIR, "build.json"), "w", encoding="utf-8") as fh:
+        json.dump({"v": build_v}, fh, ensure_ascii=False)
+
     os.makedirs(os.path.join(OUT_DIR, "days"), exist_ok=True)
     for did, rec in days:
         out = os.path.join(OUT_DIR, "days", did + ".html")
         with open(out, "w", encoding="utf-8") as fh:
-            fh.write(render_day(rec, back_href="../index.html", asset_prefix="../", ver=ver))
+            fh.write(render_day(rec, back_href="../index.html", asset_prefix="../", ver=ver, build_v=build_v))
     # 클라이언트 검색 인덱스(전체 뉴스, 본문 포함) → docs/search.json (지연 로드)
     search = []
     for did, rec in days:
@@ -212,7 +218,7 @@ def main():
         json.dump(search, fh, ensure_ascii=False)
 
     with open(os.path.join(OUT_DIR, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(build_index(days, ver))
+        fh.write(build_index(days, ver, build_v))
     print("built index + %d days:" % len(days), ", ".join(d for d, _ in days))
 
 if __name__ == "__main__":

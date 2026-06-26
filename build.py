@@ -109,7 +109,7 @@ MODAL = '''
   </div>
 </div>'''
 
-def render_day(d, back_href=None, asset_prefix="../", ver=""):
+def render_day(d, back_href=None, asset_prefix="../", ver="", build_v=""):
     a = asset_prefix
     back = (f'<div class="dnav"><a class="backlink" href="{esc(back_href)}">← 전체 보기</a></div>') if back_href else ''
     wd = d.get("weekday", "")
@@ -122,6 +122,7 @@ def render_day(d, back_href=None, asset_prefix="../", ver=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{a}assets/site.css{ver}">
+<meta name="site-build" content="{build_v}" data-src="{a}build.json">
 </head>
 <body>
 <div class="orbs"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
