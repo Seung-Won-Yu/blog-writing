@@ -31,6 +31,8 @@ body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--sans); font-size:17px; line-height:1.5; letter-spacing:-.01em;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  word-break:keep-all;        /* 한글은 어절 단위로 줄바꿈 */
+  overflow-wrap:break-word;   /* 긴 URL·영문 토큰만 강제 줄바꿈 */
 }
 a{color:var(--accent); text-decoration:none;}
 a:hover{text-decoration:underline;}
@@ -180,7 +182,7 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .terms .termrow{border-top:1px solid var(--line-soft);}
 .terms li:first-child .termrow{border-top:none;}
 .t-kind{font-size:10.5px; font-weight:600; letter-spacing:.02em; color:#fff; border-radius:6px; padding:4px 0; text-align:center;}
-.t-term{font-weight:600; font-size:16px; color:var(--ink); white-space:nowrap;}
+.t-term{font-weight:600; font-size:16px; color:var(--ink);}
 .t-mean{font-size:15px; color:var(--ink-2); line-height:1.5;}
 
 /* footer */
@@ -245,7 +247,7 @@ mark{background:#fff3c4; color:inherit; border-radius:3px; padding:0 1px;}
 .ask-thread{flex:1 1 auto; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:9px; margin:0;}
 .ask-thread:not(:empty){margin-bottom:12px;}
 .msg{max-width:90%; padding:9px 12px; border-radius:14px; font-size:14.5px; line-height:1.5;
-  white-space:pre-wrap; word-break:break-word; animation:fadeUp .22s both;}
+  white-space:pre-wrap; word-break:keep-all; overflow-wrap:break-word; animation:fadeUp .22s both;}
 .msg.user{align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:5px;}
 .msg.bot{align-self:flex-start; background:var(--bg-sub); color:var(--ink-2); border-bottom-left-radius:5px;}
 .msg.bot.loading{color:var(--ink-4);}
