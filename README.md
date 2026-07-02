@@ -29,6 +29,7 @@ https://seung-won-yu.github.io/blog-writing/
 
 ```text
 .github/workflows/tistory-draft.yml # 매일 13:00 KST 초안 생성
+.github/workflows/pages.yml         # docs 복사 페이지를 GitHub Pages로 배포
 pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용 데이터로 변환
 export_tistory.py                   # 티스토리 본문 HTML 생성
 build_copy_page.py                  # HTML 복사 페이지 생성
