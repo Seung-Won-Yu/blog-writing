@@ -1,0 +1,269 @@
+/* Codex daily digest post view polish */
+.entry-content .daily-digest-post {
+  max-width: 820px !important;
+  margin: 0 auto !important;
+  padding: 0 0 48px !important;
+  color: #263244 !important;
+  font-family: AppleSDGothicNeo, "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 16.5px !important;
+  line-height: 1.82 !important;
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+}
+
+.entry-content .daily-digest-post .digest-hero {
+  position: relative !important;
+  margin: 0 0 38px !important;
+  padding: 30px 32px !important;
+  border: 1px solid #dce7ef !important;
+  border-radius: 20px !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f4fbf8 58%, #fff7ed 100%) !important;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08) !important;
+  overflow: hidden !important;
+}
+
+.entry-content .daily-digest-post .digest-hero::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(90deg, #0f9b8e, #2563eb, #f59e0b) !important;
+}
+
+.entry-content .daily-digest-post .digest-kicker,
+.entry-content .daily-digest-post .digest-source {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 28px !important;
+  margin: 0 0 12px !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: #eaf8f5 !important;
+  color: #0f766e !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-title {
+  margin: 0 0 14px !important;
+  color: #111827 !important;
+  font-size: 30px !important;
+  font-weight: 850 !important;
+  line-height: 1.34 !important;
+  letter-spacing: 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-lead {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #475569 !important;
+  font-size: 16px !important;
+  line-height: 1.78 !important;
+}
+
+.entry-content .daily-digest-post > h2 {
+  margin: 46px 0 20px !important;
+  padding: 0 0 12px !important;
+  border: 0 !important;
+  border-bottom: 2px solid #111827 !important;
+  color: #111827 !important;
+  font-size: 24px !important;
+  font-weight: 850 !important;
+  line-height: 1.34 !important;
+  letter-spacing: 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-news-card,
+.entry-content .daily-digest-post .digest-quiz {
+  margin: 26px 0 34px !important;
+  padding: 26px !important;
+  border: 1px solid #dde7f0 !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07) !important;
+}
+
+.entry-content .daily-digest-post .digest-news-image {
+  display: block !important;
+  width: 100% !important;
+  max-height: 320px !important;
+  margin: 0 0 20px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  background: #f8fafc !important;
+  object-fit: cover !important;
+}
+
+.entry-content .daily-digest-post .digest-news-card h3 {
+  margin: 2px 0 18px !important;
+  color: #111827 !important;
+  font-size: 23px !important;
+  font-weight: 850 !important;
+  line-height: 1.42 !important;
+  letter-spacing: 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-full-content {
+  margin: 18px 0 0 !important;
+  padding: 20px 0 0 !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.entry-content .daily-digest-post .digest-full-content p {
+  margin: 0 0 14px !important;
+  color: #475569 !important;
+  font-size: 16.5px !important;
+  line-height: 1.86 !important;
+}
+
+.entry-content .daily-digest-post .digest-full-content h4 {
+  margin: 30px 0 10px !important;
+  padding: 0 0 0 12px !important;
+  border-left: 4px solid #0f9b8e !important;
+  color: #111827 !important;
+  font-size: 18px !important;
+  font-weight: 850 !important;
+  line-height: 1.45 !important;
+}
+
+.entry-content .daily-digest-post .digest-source-link {
+  margin: 22px 0 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-source-link a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 42px !important;
+  padding: 0 16px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #111827 !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+.entry-content .daily-digest-post .digest-quiz {
+  border-color: #b7e4dc !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #eefbf7 100%) !important;
+}
+
+.entry-content .daily-digest-post .digest-quiz h2 {
+  margin: 2px 0 16px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: #111827 !important;
+  font-size: 22px !important;
+  font-weight: 850 !important;
+}
+
+.entry-content .daily-digest-post .digest-quiz ol {
+  margin: 16px 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.entry-content .daily-digest-post .digest-quiz li {
+  margin: 8px 0 !important;
+  padding: 11px 14px !important;
+  border: 1px solid #d9e5ee !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+}
+
+.entry-content .daily-digest-post .digest-quiz li.is-answer {
+  border-color: #99d9ce !important;
+  background: #eaf8f5 !important;
+  color: #0f766e !important;
+  font-weight: 850 !important;
+}
+
+.entry-content .daily-digest-post .digest-terms {
+  margin: 40px 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-terms ul {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.entry-content .daily-digest-post .digest-terms li {
+  min-height: 150px !important;
+  margin: 0 !important;
+  padding: 18px !important;
+  border: 1px solid #dde7f0 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05) !important;
+}
+
+.entry-content .daily-digest-post .digest-terms b {
+  display: block !important;
+  margin: 0 0 8px !important;
+  color: #111827 !important;
+  font-size: 16px !important;
+  line-height: 1.45 !important;
+}
+
+.entry-content .daily-digest-post .digest-terms span {
+  margin: 0 0 10px !important;
+  color: #b45309 !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
+}
+
+.entry-content .daily-digest-post .digest-terms em {
+  color: #475569 !important;
+  font-size: 14.5px !important;
+  line-height: 1.7 !important;
+}
+
+.entry-content .daily-digest-post .digest-note {
+  margin: 42px 0 0 !important;
+  padding: 18px 20px !important;
+  border: 0 !important;
+  border-left: 4px solid #0f9b8e !important;
+  border-radius: 14px !important;
+  background: #f8fafc !important;
+  color: #64748b !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+@media screen and (max-width: 767px) {
+  .entry-content .daily-digest-post {
+    max-width: none !important;
+    font-size: 15.5px !important;
+    line-height: 1.78 !important;
+  }
+
+  .entry-content .daily-digest-post .digest-hero,
+  .entry-content .daily-digest-post .digest-news-card,
+  .entry-content .daily-digest-post .digest-quiz {
+    padding: 20px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .entry-content .daily-digest-post .digest-title {
+    font-size: 25px !important;
+  }
+
+  .entry-content .daily-digest-post .digest-news-card h3 {
+    font-size: 20px !important;
+  }
+
+  .entry-content .daily-digest-post .digest-terms ul {
+    grid-template-columns: 1fr !important;
+  }
+}
