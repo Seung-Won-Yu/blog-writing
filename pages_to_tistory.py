@@ -18,9 +18,9 @@ from urllib.request import Request, urlopen
 
 from export_tistory import DAYS_DIR, latest_or_today, today_day_id, write_post
 
-DEFAULT_BASE_URL = "https://seung-won-yu.github.io/blog-writing/"
+DEFAULT_BASE_URL = "https://ihan0316.github.io/ai-weekly-newsroom/"
 DEFAULT_RAW_URL = (
-    "https://raw.githubusercontent.com/Seung-Won-Yu/blog-writing/main/"
+    "https://raw.githubusercontent.com/Ihan0316/ai-weekly-newsroom/main/"
     "data/days/{day}.json"
 )
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "

@@ -1,181 +1,81 @@
-# Blog Writing Automation
+# Blog Writing
 
-매일 생성되는 GitHub Pages 데일리 다이제스트를 티스토리 블로그 초안으로 옮기기 위한 자동화 프로젝트입니다.
+조이한 GitHub Pages에 매일 발행되는 데일리 IT 뉴스 글을 가져와서, 티스토리 블로그에 붙여넣을 수 있는 HTML 초안을 만드는 저장소입니다.
 
-기본 흐름은 다음과 같습니다.
-
-1. GitHub Actions가 매일 IT/개발 뉴스, 정처기 문제, 용어 데이터를 생성합니다.
-2. 정적 사이트가 `docs/`에 빌드되고 GitHub Pages로 배포됩니다.
-3. 발행된 Pages 글을 가져와 티스토리용 HTML 초안으로 변환합니다.
-4. 티스토리 글쓰기 화면에서 HTML 초안을 붙여넣고 최종 확인 후 직접 발행합니다.
-
-라이브 Pages:
+이 저장소는 뉴스를 직접 생성하지 않습니다. 원본 뉴스 생성과 Pages 발행은 아래 공개 사이트를 기준으로 합니다.
 
 ```text
-https://seung-won-yu.github.io/blog-writing/
+https://ihan0316.github.io/ai-weekly-newsroom/
 ```
 
-## 핵심 파일
+## 매일 자동 흐름
 
 ```text
-.github/workflows/daily.yml     # 매일 09:30 KST Pages 글 자동 생성/빌드/커밋
-.github/workflows/tistory-draft.yml # 매일 13:00 KST 티스토리 HTML 초안 생성/커밋
-pipeline_gemini.py              # Gemini로 뉴스 3개, 본문, 정처기 문제, 용어 생성
-fetch_images.py                 # 기사 대표 이미지 수집
-gen_audio.py                    # 기사 음성 MP3 생성
-build.py                        # 하루 상세 페이지 렌더러
-build_site.py                   # docs/ 정적 사이트 전체 빌드
-assets/site.css                 # Pages 사이트 스타일
-assets/site.js                  # Pages 사이트 인터랙션
-data/days/YYYY-MM-DD.json       # 하루치 원천 데이터
-docs/                           # GitHub Pages 배포 결과물
-pages_to_tistory.py             # Pages 글을 티스토리 HTML로 변환
-export_tistory.py               # 티스토리 본문 HTML 생성기
-draft_tistory_post.py           # 로컬 Chrome 로그인 세션으로 티스토리 임시저장 생성(선택)
-tistory/post-view-custom.css    # 티스토리 글 상세 화면용 스킨 CSS
-ask-worker/                     # 선택 기능: 기사 Q&A Cloudflare Worker
-```
-
-`docs/`는 생성 산출물이지만 GitHub Pages가 실제로 서빙하는 폴더입니다. 이미지, 오디오, 날짜별 HTML이 들어 있으므로 운영 중에는 삭제하지 않습니다.
-
-## 매일 자동 운영
-
-두 개의 GitHub Actions가 시간차로 실행됩니다.
-
-```text
-09:30 KST  Daily digest
-           data/days/YYYY-MM-DD.json 생성
-           docs/days/YYYY-MM-DD.html 생성
-           GitHub Pages 배포용 파일 커밋
-
-13:00 KST  Tistory draft HTML
-           발행된 Pages 글을 다시 읽음
+09:30 KST  조이한 GitHub Pages 쪽 데일리 뉴스 발행
+13:00 KST  이 저장소의 GitHub Actions 실행
+           원본 Pages 글과 원본 JSON을 가져옴
            docs/tistory/YYYY-MM-DD.html 생성
            docs/tistory/YYYY-MM-DD.json 생성
-           Git에 커밋
+           이 저장소에 자동 커밋
 ```
 
-13:00 이후에는 GitHub에서 `docs/tistory/YYYY-MM-DD.html` 파일을 열고 본문 HTML을 티스토리 글쓰기 화면에 넣으면 됩니다.
+13시 이후에는 `docs/tistory/YYYY-MM-DD.html` 파일을 열고, 티스토리 글쓰기 HTML 모드에 붙여넣어 발행하면 됩니다.
 
-## 로컬에서 티스토리 임시저장 만들기
-
-Chrome에 티스토리 로그인이 살아 있고, 로컬에서 바로 임시저장까지 만들고 싶을 때만 사용합니다.
-
-```bash
-python draft_tistory_post.py --day 2026-07-02 --from-pages
-```
-
-오늘 날짜를 기준으로 가져오려면:
-
-```bash
-python draft_tistory_post.py --today --from-pages
-```
-
-저장 전에 제목, 카테고리, 태그, 본문 길이만 확인하려면:
-
-```bash
-python draft_tistory_post.py --day 2026-07-02 --from-pages --dry-run
-```
-
-성공하면 다음 파일도 함께 만들어집니다.
+## 필요한 파일
 
 ```text
-docs/tistory/YYYY-MM-DD.html
-docs/tistory/YYYY-MM-DD.json
+.github/workflows/tistory-draft.yml # 매일 13:00 KST 초안 생성
+pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용 데이터로 변환
+export_tistory.py                   # 티스토리 본문 HTML 생성
+docs/tistory/                       # 생성된 티스토리 초안 보관
 ```
 
-티스토리에서는 글쓰기 화면의 `임시저장` 목록에서 방금 생성된 글을 불러온 뒤 이미지, 원문 링크, 정처기 문제를 확인하고 발행합니다.
+## 수동 실행
 
-## 수동으로 티스토리 HTML만 만들기
+오늘 날짜 초안을 직접 만들 때:
 
-브라우저 임시저장까지 하지 않고 HTML 파일만 만들 때 사용합니다.
+```bash
+python pages_to_tistory.py --today
+```
+
+특정 날짜 초안을 만들 때:
 
 ```bash
 python pages_to_tistory.py --day 2026-07-02
 ```
 
-결과:
+결과 파일:
 
 ```text
 docs/tistory/2026-07-02.html
 docs/tistory/2026-07-02.json
 ```
 
-## Pages 사이트 다시 빌드하기
+## 티스토리 발행 방법
 
-로컬에서 `data/days/`를 수정한 뒤 사이트를 다시 만들 때 사용합니다.
+1. GitHub에서 `docs/tistory/YYYY-MM-DD.html` 파일을 연다.
+2. HTML 내용을 복사한다.
+3. 티스토리 글쓰기에서 HTML 모드로 전환한다.
+4. 본문에 붙여넣는다.
+5. 제목, 태그, 이미지, 원문 링크, 정처기 문제를 확인한다.
+6. 발행한다.
 
-```bash
-python fetch_images.py
-python gen_audio.py
-python build_site.py
-```
-
-자동 운영에서는 `.github/workflows/daily.yml`이 이 과정을 실행합니다. `GEMINI_API_KEY`는 GitHub repository secret에 등록되어 있어야 합니다.
-
-## 티스토리 스킨 CSS
-
-티스토리 글 상세 화면 디자인은 다음 파일이 기준입니다.
+제목과 태그는 같은 날짜의 JSON 파일에서 확인할 수 있습니다.
 
 ```text
-tistory/post-view-custom.css
+docs/tistory/YYYY-MM-DD.json
 ```
 
-이 CSS는 티스토리 스킨 편집의 CSS 영역에 들어가는 커스텀 블록입니다. 현재는 본문 카드, 뉴스 카드, 정처기 문제, 용어 카드, 상단 커버 스타일을 조정합니다.
+## GitHub Actions
 
-수정 후에는 티스토리 스킨 편집 화면에 반영하고, 공개 글에서 강력 새로고침으로 확인합니다.
+이 저장소의 자동화는 로그인이나 비밀 키가 필요 없습니다.
 
-## 선택 기능: 기사 Q&A Worker
+- `GEMINI_API_KEY` 필요 없음
+- 티스토리 로그인 필요 없음
+- GitHub Pages 설정 필요 없음
 
-`ask-worker/`는 Pages 사이트의 "이 기사에 질문" 기능을 위한 Cloudflare Worker입니다. 티스토리 초안 생성에는 필요하지 않습니다.
-
-배포 개요:
-
-```bash
-cd ask-worker
-npx wrangler secret put GEMINI_API_KEY
-npx wrangler deploy
-```
-
-배포 URL을 `build.py`의 `ASK_ENDPOINT`에 넣고 `python build_site.py`를 다시 실행하면 Pages 사이트 질문 기능에 연결됩니다.
-
-## 문제 해결
-
-### 카테고리 API가 404를 반환할 때
-
-Chrome이 티스토리 관리 화면이 아닌 다른 사이트 관리 화면을 잡은 경우입니다. `draft_tistory_post.py`는 `won0322.tistory.com/manage` 도메인을 확인하도록 되어 있으니, Chrome에서 티스토리 로그인이 유지되는지 먼저 확인합니다.
-
-### 임시저장 글이 안 보일 때
-
-다음 명령으로 실제 저장 전 페이로드가 정상인지 확인합니다.
-
-```bash
-python draft_tistory_post.py --day YYYY-MM-DD --from-pages --dry-run
-```
-
-정상이라면 티스토리 글쓰기 화면을 새로고침하고 `임시저장` 목록을 다시 엽니다.
-
-### 이미지가 깨질 때
-
-`--from-pages`를 사용했는지 확인합니다. 이 옵션은 Pages에 올라간 이미지 URL을 절대 경로로 바꿔 티스토리 본문에 넣습니다.
-
-## 정리 원칙
-
-보존하는 파일:
-
-- GitHub Actions와 Pages 빌드에 필요한 코드
-- `data/days/` 원천 데이터
-- `docs/` Pages 배포 산출물
-- `docs/tistory/` 티스토리 발행 기록
-- 티스토리 스킨 CSS
-
-제거해도 되는 파일:
-
-- `.DS_Store`
-- `__pycache__/`, `*.pyc`
-- 현재 코드에서 참조되지 않는 과거 샘플 JSON
-- 중복 README
+원본 사이트가 9:30 KST 이후 정상 발행되어 있으면, 13:00 KST에 초안 HTML만 가져와 저장합니다.
 
 ## 주의
 
-티스토리 Open API의 글 작성 기능은 종료되어 공식 API로 완전 자동 발행할 수 없습니다. 이 프로젝트는 안정성을 위해 임시저장 초안까지만 자동화하고, 최종 발행은 사람이 확인하도록 설계했습니다.
+티스토리 Open API의 글 작성 기능은 종료되어 공식 API로 자동 발행할 수 없습니다. 이 저장소는 발행 자동화가 아니라, 사람이 검토해서 붙여넣을 수 있는 블로그 글 초안 생성을 담당합니다.
