@@ -19,7 +19,11 @@ https://ihan0316.github.io/ai-weekly-newsroom/
            이 저장소에 자동 커밋
 ```
 
-13시 이후에는 `docs/tistory/YYYY-MM-DD.html` 파일을 열고, 티스토리 글쓰기 HTML 모드에 붙여넣어 발행하면 됩니다.
+13시 이후에는 복사 페이지에서 제목, 태그, 본문 HTML을 바로 복사해 티스토리 글쓰기 HTML 모드에 붙여넣으면 됩니다.
+
+```text
+https://seung-won-yu.github.io/blog-writing/
+```
 
 ## 필요한 파일
 
@@ -27,7 +31,9 @@ https://ihan0316.github.io/ai-weekly-newsroom/
 .github/workflows/tistory-draft.yml # 매일 13:00 KST 초안 생성
 pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용 데이터로 변환
 export_tistory.py                   # 티스토리 본문 HTML 생성
+build_copy_page.py                  # HTML 복사 페이지 생성
 docs/tistory/                       # 생성된 티스토리 초안 보관
+docs/index.html                     # 복사 전용 페이지
 ```
 
 ## 수동 실행
@@ -42,6 +48,7 @@ python pages_to_tistory.py --today
 
 ```bash
 python pages_to_tistory.py --day 2026-07-02
+python build_copy_page.py
 ```
 
 결과 파일:
@@ -54,11 +61,12 @@ docs/tistory/2026-07-02.json
 ## 티스토리 발행 방법
 
 1. GitHub에서 `docs/tistory/YYYY-MM-DD.html` 파일을 연다.
-2. HTML 내용을 복사한다.
-3. 티스토리 글쓰기에서 HTML 모드로 전환한다.
-4. 본문에 붙여넣는다.
-5. 제목, 태그, 이미지, 원문 링크, 정처기 문제를 확인한다.
-6. 발행한다.
+2. 또는 복사 페이지에서 날짜를 선택한다.
+3. 제목, 태그, 본문 HTML을 복사한다.
+4. 티스토리 글쓰기에서 HTML 모드로 전환한다.
+5. 본문에 붙여넣는다.
+6. 이미지, 원문 링크, 정처기 문제를 확인한다.
+7. 발행한다.
 
 제목과 태그는 같은 날짜의 JSON 파일에서 확인할 수 있습니다.
 
@@ -72,7 +80,7 @@ docs/tistory/YYYY-MM-DD.json
 
 - `GEMINI_API_KEY` 필요 없음
 - 티스토리 로그인 필요 없음
-- GitHub Pages 설정 필요 없음
+- 별도 비밀 키 필요 없음
 
 원본 사이트가 9:30 KST 이후 정상 발행되어 있으면, 13:00 KST에 초안 HTML만 가져와 저장합니다.
 

@@ -1,0 +1,353 @@
+# -*- coding: utf-8 -*-
+"""Build a small GitHub Pages UI for copying Tistory draft HTML."""
+import html
+import json
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+DOCS_DIR = ROOT / "docs"
+TISTORY_DIR = DOCS_DIR / "tistory"
+OUT_PATH = DOCS_DIR / "index.html"
+
+
+def esc(value):
+    return html.escape(str(value or ""), quote=True)
+
+
+def load_drafts():
+    drafts = []
+    for meta_path in sorted(TISTORY_DIR.glob("*.json"), reverse=True):
+        html_path = meta_path.with_suffix(".html")
+        if not html_path.exists():
+            continue
+        with meta_path.open("r", encoding="utf-8") as f:
+            meta = json.load(f)
+        day = meta_path.stem
+        drafts.append(
+            {
+                "day": day,
+                "title": meta.get("title") or day,
+                "category": meta.get("category") or "",
+                "tags": ", ".join(meta.get("tags") or []),
+                "source_page": meta.get("source_page") or "",
+                "html_path": f"tistory/{day}.html",
+                "meta_path": f"tistory/{day}.json",
+            }
+        )
+    return drafts
+
+
+def render(drafts):
+    payload = json.dumps(drafts, ensure_ascii=False)
+    latest = drafts[0]["day"] if drafts else ""
+    buttons = "\n".join(
+        f'<button class="draft-btn" type="button" data-day="{esc(item["day"])}">'
+        f'<span>{esc(item["day"])}</span><small>{esc(item["title"])}</small></button>'
+        for item in drafts
+    )
+    return f"""<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>티스토리 블로그 초안 복사</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #dbe5ee;
+      --soft: #f8fafc;
+      --accent: #0f9b8e;
+      --accent-weak: #e8f7f4;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      background: #f5f7fb;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      line-height: 1.6;
+    }}
+    .wrap {{
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 54px;
+    }}
+    header {{
+      margin-bottom: 24px;
+      padding: 26px 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffffff 0%, #f1faf8 64%, #fff7ed 100%);
+      box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07);
+    }}
+    h1 {{
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }}
+    .lead {{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }}
+    .layout {{
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }}
+    .panel {{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+    }}
+    .side-head, .main-head {{
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      font-weight: 850;
+    }}
+    .drafts {{
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+    }}
+    .draft-btn {{
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }}
+    .draft-btn:hover, .draft-btn.is-active {{
+      border-color: #9ad9d0;
+      background: var(--accent-weak);
+    }}
+    .draft-btn span {{
+      display: block;
+      font-weight: 850;
+    }}
+    .draft-btn small {{
+      display: -webkit-box;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }}
+    .content {{
+      padding: 18px;
+    }}
+    .meta-grid {{
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }}
+    .field {{
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+    }}
+    .label {{
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .value {{
+      min-width: 0;
+      overflow: hidden;
+      color: #243044;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }}
+    button.copy {{
+      min-height: 36px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 10px;
+      background: #111827;
+      color: #ffffff;
+      font-weight: 850;
+      cursor: pointer;
+    }}
+    button.copy.secondary {{
+      background: #0f9b8e;
+    }}
+    .code-head {{
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 0 10px;
+    }}
+    .code-head h2 {{
+      margin: 0;
+      font-size: 18px;
+    }}
+    textarea {{
+      display: block;
+      width: 100%;
+      min-height: 560px;
+      padding: 16px;
+      border: 1px solid #cfdbe7;
+      border-radius: 14px;
+      background: #0b1220;
+      color: #dce8f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.62;
+      resize: vertical;
+      white-space: pre;
+    }}
+    .status {{
+      min-height: 22px;
+      margin-top: 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .empty {{
+      padding: 28px;
+      color: var(--muted);
+    }}
+    @media (max-width: 820px) {{
+      .layout {{ grid-template-columns: 1fr; }}
+      .field {{ grid-template-columns: 1fr; }}
+      button.copy {{ width: 100%; }}
+      textarea {{ min-height: 430px; }}
+    }}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>티스토리 블로그 초안 복사</h1>
+      <p class="lead">조이한 데일리 뉴스룸에서 가져온 글을 티스토리 HTML 모드에 바로 붙여넣을 수 있게 보여줍니다.</p>
+    </header>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="side-head">초안 목록</div>
+        <div class="drafts" id="drafts">{buttons or '<p class="empty">아직 생성된 초안이 없습니다.</p>'}</div>
+      </aside>
+
+      <main class="panel">
+        <div class="main-head">붙여넣기 정보</div>
+        <div class="content" id="content">
+          <div class="meta-grid">
+            <div class="field"><span class="label">제목</span><span class="value" id="title"></span><button class="copy" type="button" data-copy="title">복사</button></div>
+            <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="copy" type="button" data-copy="category">복사</button></div>
+            <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="copy" type="button" data-copy="tags">복사</button></div>
+            <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
+          </div>
+
+          <div class="code-head">
+            <h2>본문 HTML 코드</h2>
+            <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
+          </div>
+          <textarea id="htmlCode" spellcheck="false"></textarea>
+          <div class="status" id="status"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const drafts = {payload};
+    const latest = {json.dumps(latest, ensure_ascii=False)};
+    let current = null;
+    let currentHtml = "";
+    const byDay = new Map(drafts.map((item) => [item.day, item]));
+
+    const els = {{
+      title: document.getElementById("title"),
+      category: document.getElementById("category"),
+      tags: document.getElementById("tags"),
+      source: document.getElementById("source"),
+      htmlCode: document.getElementById("htmlCode"),
+      status: document.getElementById("status"),
+    }};
+
+    function setStatus(text) {{
+      els.status.textContent = text;
+      if (text) setTimeout(() => {{ if (els.status.textContent === text) els.status.textContent = ""; }}, 1800);
+    }}
+
+    async function selectDraft(day) {{
+      const draft = byDay.get(day);
+      if (!draft) return;
+      current = draft;
+      document.querySelectorAll(".draft-btn").forEach((button) => {{
+        button.classList.toggle("is-active", button.dataset.day === day);
+      }});
+      els.title.textContent = draft.title || "";
+      els.category.textContent = draft.category || "";
+      els.tags.textContent = draft.tags || "";
+      els.source.textContent = draft.source_page || "";
+      els.htmlCode.value = "불러오는 중...";
+      const response = await fetch(draft.html_path + "?v=" + Date.now());
+      currentHtml = await response.text();
+      els.htmlCode.value = currentHtml;
+      setStatus(day + " 초안을 불러왔습니다.");
+    }}
+
+    async function copyText(text, label) {{
+      if (!text) return;
+      try {{
+        await navigator.clipboard.writeText(text);
+      }} catch (error) {{
+        els.htmlCode.focus();
+        els.htmlCode.select();
+        document.execCommand("copy");
+      }}
+      setStatus(label + " 복사 완료");
+    }}
+
+    document.getElementById("drafts").addEventListener("click", (event) => {{
+      const button = event.target.closest(".draft-btn");
+      if (button) selectDraft(button.dataset.day);
+    }});
+
+    document.addEventListener("click", (event) => {{
+      const button = event.target.closest("[data-copy]");
+      if (!button || !current) return;
+      const type = button.dataset.copy;
+      if (type === "html") copyText(currentHtml, "본문 HTML");
+      if (type === "title") copyText(current.title, "제목");
+      if (type === "category") copyText(current.category, "카테고리");
+      if (type === "tags") copyText(current.tags, "태그");
+      if (type === "source") copyText(current.source_page, "원본 링크");
+    }});
+
+    if (latest) selectDraft(latest);
+  </script>
+</body>
+</html>
+"""
+
+
+def main():
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    TISTORY_DIR.mkdir(parents=True, exist_ok=True)
+    OUT_PATH.write_text(render(load_drafts()), encoding="utf-8")
+    print(f"built: {OUT_PATH}")
+
+
+if __name__ == "__main__":
+    main()

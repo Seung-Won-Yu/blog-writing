@@ -28,18 +28,20 @@ jobs:
         run: |
           for i in 1 2 3; do
             if python pages_to_tistory.py --today; then
+              python build_copy_page.py
               exit 0
             fi
             echo "Pages export failed. retry=$i"
             sleep 60
           done
           python pages_to_tistory.py --today
+          python build_copy_page.py
 
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/tistory
+          git add docs
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 생략"
           else
