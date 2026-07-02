@@ -17,6 +17,8 @@
   --dev-blue: #2563eb;
   --dev-gold: #b7791f;
   --dev-red: #d64545;
+  --dev-shadow-card: 0 10px 28px rgba(24, 33, 47, 0.06);
+  --dev-shadow-card-hover: 0 16px 36px rgba(24, 33, 47, 0.1);
 }
 
 body {
@@ -54,17 +56,20 @@ a:focus {
 }
 
 #gnb {
-  height: auto;
+  height: 66px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 #gnb ul li {
-  padding: 0 18px;
+  padding: 0 24px;
 }
 
 #gnb ul li a {
-  padding: 18px 4px 20px;
+  padding: 22px 4px 24px;
   color: var(--dev-muted);
   font-weight: 600;
+  line-height: 20px;
 }
 
 #gnb ul li.current a,
@@ -171,24 +176,33 @@ a:focus {
 
 .post-item {
   min-height: 0;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .post-item a {
-  height: auto;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  transition: color 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 218px;
+  height: 100%;
+  padding: 18px 18px 16px;
+  border: 1px solid var(--dev-line);
+  border-radius: 8px;
+  background: var(--dev-panel);
+  box-shadow: var(--dev-shadow-card);
+  box-sizing: border-box;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
 }
 
 .post-item a:hover,
 .post-item a:focus {
-  border-color: transparent;
-  box-shadow: none;
+  border-color: rgba(15, 155, 142, 0.42);
+  box-shadow: var(--dev-shadow-card-hover);
   text-decoration: none;
-  transform: none;
+  transform: translateY(-2px);
 }
 
 .post-item a:hover .title,
@@ -198,14 +212,18 @@ a:focus {
 }
 
 .post-item .thum {
-  margin-bottom: 12px;
-  border-radius: 10px;
+  width: auto;
+  margin: -18px -18px 14px;
+  border-radius: 8px 8px 0 0;
   background-color: #f8f8f8;
   background-image: none;
 }
 
 .post-item .thum:not(:has(img)) {
   display: none;
+  width: 0;
+  height: 0;
+  margin: 0;
   padding-bottom: 0;
 }
 
@@ -231,7 +249,7 @@ a:focus {
 }
 
 .post-item .meta {
-  margin: 0;
+  margin: auto 0 0;
   color: var(--dev-muted);
   font-family: "JetBrains Mono", monospace;
 }
@@ -565,6 +583,15 @@ a:focus {
 
   #content {
     padding-top: 34px;
+  }
+
+  .post-item a {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .post-item .thum {
+    margin: -16px -16px 12px;
   }
 
   .post-item .title,
