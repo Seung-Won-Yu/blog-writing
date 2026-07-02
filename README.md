@@ -55,12 +55,21 @@ python prepare_tistory_post.py --latest --copy body
 python prepare_tistory_post.py --latest --copy title --open-editor
 ```
 
+로그인된 Chrome이 열려 있으면 티스토리 임시저장 초안까지 자동으로 만들 수 있다.
+
+```powershell
+python draft_tistory_post.py --latest
+python draft_tistory_post.py --latest --dry-run
+```
+
 추천 운영 방식:
 
 1. GitHub Actions가 매일 글 데이터를 생성한다.
-2. `prepare_tistory_post.py --latest --copy body --open-editor`로 티스토리 글쓰기 화면을 연다.
-3. 출력된 제목·카테고리·태그를 입력하고, HTML 모드에서 복사된 본문을 붙여넣는다.
+2. `draft_tistory_post.py --latest`로 티스토리 임시저장 초안을 만든다.
+3. 티스토리 글쓰기 화면의 임시저장 목록에서 초안을 불러온다.
 4. 원문 링크와 정처기 답만 확인한 뒤 발행한다.
+
+`prepare_tistory_post.py`는 브라우저 자동화가 실패했을 때 쓰는 수동 붙여넣기용 백업 흐름이다.
 
 생성 위치:
 - `docs/tistory/<YYYY-MM-DD>.html`: 티스토리 HTML 모드에 붙여넣을 본문
