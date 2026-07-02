@@ -14,6 +14,7 @@ https://ihan0316.github.io/ai-weekly-newsroom/
 09:30 KST  조이한 GitHub Pages 쪽 데일리 뉴스 발행
 13:00 KST  이 저장소의 GitHub Actions 실행
            원본 Pages 글과 원본 JSON을 가져옴
+           뉴스 이미지를 docs/tistory/assets/YYYY-MM-DD/에 저장
            docs/tistory/YYYY-MM-DD.html 생성
            docs/tistory/YYYY-MM-DD.json 생성
            이 저장소에 자동 커밋
@@ -34,6 +35,7 @@ pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용
 export_tistory.py                   # 티스토리 본문 HTML 생성
 build_copy_page.py                  # HTML 복사 페이지 생성
 docs/tistory/                       # 생성된 티스토리 초안 보관
+docs/tistory/assets/                # 날짜별 백업 이미지 보관
 docs/index.html                     # 복사 전용 페이지
 ```
 
@@ -57,6 +59,7 @@ python build_copy_page.py
 ```text
 docs/tistory/2026-07-02.html
 docs/tistory/2026-07-02.json
+docs/tistory/assets/2026-07-02/
 ```
 
 ## 티스토리 발행 방법
@@ -74,6 +77,8 @@ docs/tistory/2026-07-02.json
 ```text
 docs/tistory/YYYY-MM-DD.json
 ```
+
+이미지는 원본 URL을 그대로 쓰지 않고 이 저장소의 GitHub Pages 주소로 다시 저장해 둡니다. 그래서 원본 사이트의 이미지 경로가 바뀌어도, 저장소에 커밋된 이미지가 남아 있으면 티스토리 글에서 계속 사용할 수 있습니다.
 
 ## GitHub Actions
 

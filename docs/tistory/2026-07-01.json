@@ -11,5 +11,25 @@
   ],
   "source": "data/days/2026-07-01.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-01.html",
-  "html": "docs/tistory/2026-07-01.html"
+  "html": "docs/tistory/2026-07-01.html",
+  "image_assets": [
+    {
+      "title": "개정된 엔지니어링 리더십 규칙",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-01.png",
+      "path": "docs/tistory/assets/2026-07-01/news-01.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/50f3bb3ed755.png"
+    },
+    {
+      "title": "Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-02.png",
+      "path": "docs/tistory/assets/2026-07-01/news-02.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/0f8ed8737a8a.png"
+    },
+    {
+      "title": "Alert 시스템을 표준화하고 IaC로 운영하기",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-03.png",
+      "path": "docs/tistory/assets/2026-07-01/news-03.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/965f83806ff6.png"
+    }
+  ]
 }

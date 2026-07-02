@@ -11,5 +11,25 @@
   ],
   "source": "data/days/2026-07-02.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-02.html",
-  "html": "docs/tistory/2026-07-02.html"
+  "html": "docs/tistory/2026-07-02.html",
+  "image_assets": [
+    {
+      "title": "논쟁 대부분은 아이디어가 아니라 자아에 관한 것",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-01.png",
+      "path": "docs/tistory/assets/2026-07-02/news-01.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/1138e083d395.png"
+    },
+    {
+      "title": "supertree - 디시젼 트리 인터랙티브 시각화 도구",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-02.png",
+      "path": "docs/tistory/assets/2026-07-02/news-02.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/fbdbfd935059.png"
+    },
+    {
+      "title": "PlayStation 신작 물리 디스크 생산, 2028년 1월 종료",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-03.png",
+      "path": "docs/tistory/assets/2026-07-02/news-03.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/4e3e1d25dc80.png"
+    }
+  ]
 }

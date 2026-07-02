@@ -283,6 +283,16 @@ slug: {slugify(day_id + "-daily-digest")}
 def write_post(day_id, day=None, source_page=None):
     day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    image_assets = [
+        {
+            "title": plain(item.get("title_kr")),
+            "url": plain(item.get("image_url")),
+            "path": plain(item.get("saved_image_path")),
+            "original_url": plain(item.get("original_image_url")),
+        }
+        for item in day.get("news", [])
+        if item.get("saved_image_path")
+    ]
 
     html_path = OUT_DIR / f"{day_id}.html"
     meta_path = OUT_DIR / f"{day_id}.json"
@@ -297,6 +307,7 @@ def write_post(day_id, day=None, source_page=None):
                 "source": f"data/days/{day_id}.json",
                 "source_page": source_page,
                 "html": f"docs/tistory/{day_id}.html",
+                "image_assets": image_assets,
             },
             ensure_ascii=False,
             indent=2,
