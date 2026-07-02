@@ -8,6 +8,7 @@ the final review and publish step stays in the browser.
 
 usage:
   python draft_tistory_post.py --today
+  python draft_tistory_post.py --day 2026-07-01 --from-pages
   python draft_tistory_post.py --latest
   python draft_tistory_post.py --day 2026-07-01
   python draft_tistory_post.py --latest --dry-run
@@ -17,10 +18,9 @@ import json
 import subprocess
 import sys
 import time
-from pathlib import Path
 
-from export_tistory import DEFAULT_CATEGORY, latest_or_today, today_day_id, write_post
-from prepare_tistory_post import DEFAULT_BLOG_URL, read_export
+from export_tistory import DEFAULT_BLOG_URL, DEFAULT_CATEGORY, latest_or_today, read_export, today_day_id, write_post
+from pages_to_tistory import DEFAULT_BASE_URL, write_page_post
 
 CHROME_BUNDLE_ID = "com.google.Chrome"
 
@@ -258,6 +258,12 @@ def main():
     group.add_argument("--latest", action="store_true", help="draft the newest exported day only when it is today")
     group.add_argument("--day", help="draft one YYYY-MM-DD day")
     parser.add_argument("--blog-url", default=DEFAULT_BLOG_URL)
+    parser.add_argument(
+        "--from-pages",
+        action="store_true",
+        help="build the Tistory post from the published GitHub Pages day, including images",
+    )
+    parser.add_argument("--pages-url", default=DEFAULT_BASE_URL)
     parser.add_argument("--category", default=DEFAULT_CATEGORY)
     parser.add_argument("--pid", type=int, help="reuse an existing Chrome pid")
     parser.add_argument("--window-id", type=int, help="reuse an existing Chrome window id")
@@ -270,7 +276,10 @@ def main():
         day_id = latest_or_today()
     else:
         day_id = args.day
-    write_post(day_id)
+    if args.from_pages:
+        write_page_post(day_id, args.pages_url)
+    else:
+        write_post(day_id)
     meta, content, html_path, _ = read_export(day_id)
 
     if args.pid and args.window_id:

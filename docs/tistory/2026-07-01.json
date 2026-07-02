@@ -10,5 +10,6 @@
     "데일리다이제스트"
   ],
   "source": "data/days/2026-07-01.json",
+  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-01.html",
   "html": "docs/tistory/2026-07-01.html"
 }

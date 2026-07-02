@@ -6,6 +6,9 @@ Official Tistory Open API publishing has been retired, so this script generates
 reviewable HTML that can be pasted into the Tistory editor's HTML mode.
 
 usage:
+  python pages_to_tistory.py --day 2026-07-01
+  python draft_tistory_post.py --day 2026-07-01 --from-pages
+  python export_tistory.py --today
   python export_tistory.py --latest
   python export_tistory.py --day 2026-07-01
   python export_tistory.py --all
@@ -23,6 +26,7 @@ HERE = Path(__file__).resolve().parent
 DAYS_DIR = HERE / "data" / "days"
 OUT_DIR = HERE / "docs" / "tistory"
 
+DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
 
@@ -47,6 +51,10 @@ SECTION_TITLE_STYLE = (
 CARD_STYLE = (
     "margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;"
     "background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);"
+)
+NEWS_IMAGE_STYLE = (
+    "display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;"
+    "border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;"
 )
 BADGE_STYLE = (
     "display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;"
@@ -151,7 +159,14 @@ def build_news_section(news):
         source = plain(item.get("source"))
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
+        image = plain(item.get("image_url") or item.get("image"))
         bullets = summarize_blocks(item.get("content"))
+
+        image_html = (
+            f'<img class="digest-news-image" src="{esc(image)}" alt="" loading="lazy"{style(NEWS_IMAGE_STYLE)}>'
+            if image
+            else ""
+        )
 
         bullet_html = ""
         if bullets:
@@ -168,6 +183,7 @@ def build_news_section(news):
         parts.append(
             f"""
 <section class="digest-news-card"{style(CARD_STYLE)}>
+  {image_html}
   <p class="digest-source"{style(BADGE_STYLE)}>{idx}. {esc(source)}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   <p style="margin:0;color:#475569;">{esc(blurb)}</p>
@@ -258,8 +274,8 @@ slug: {slugify(day_id + "-daily-digest")}
 """
 
 
-def write_post(day_id):
-    day = load_day(day_id)
+def write_post(day_id, day=None, source_page=None):
+    day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     html_path = OUT_DIR / f"{day_id}.html"
@@ -273,6 +289,7 @@ def write_post(day_id):
                 "category": DEFAULT_CATEGORY,
                 "tags": DEFAULT_TAGS,
                 "source": f"data/days/{day_id}.json",
+                "source_page": source_page,
                 "html": f"docs/tistory/{day_id}.html",
             },
             ensure_ascii=False,
@@ -281,6 +298,19 @@ def write_post(day_id):
         encoding="utf-8",
     )
     print(f"exported: {html_path}")
+
+
+def read_export(day_id):
+    html_path = OUT_DIR / f"{day_id}.html"
+    meta_path = OUT_DIR / f"{day_id}.json"
+
+    if not html_path.exists() or not meta_path.exists():
+        write_post(day_id)
+
+    with meta_path.open("r", encoding="utf-8") as f:
+        meta = json.load(f)
+    body = html_path.read_text(encoding="utf-8")
+    return meta, body, html_path, meta_path
 
 
 def main():

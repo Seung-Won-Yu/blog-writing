@@ -31,9 +31,6 @@ jobs:
           TZ: Asia/Seoul
         run: python pipeline_gemini.py
 
-      - name: Export Tistory-ready post
-        run: python export_tistory.py --latest
-
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
