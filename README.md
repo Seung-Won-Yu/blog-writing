@@ -13,7 +13,7 @@
 라이브 Pages:
 
 ```text
-https://ihan0316.github.io/ai-weekly-newsroom/
+https://seung-won-yu.github.io/ai-weekly-newsroom/
 ```
 
 ## 핵심 파일
