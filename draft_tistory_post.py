@@ -18,6 +18,7 @@ import json
 import subprocess
 import sys
 import time
+from urllib.parse import urlparse
 
 from export_tistory import DEFAULT_BLOG_URL, DEFAULT_CATEGORY, latest_or_today, read_export, today_day_id, write_post
 from pages_to_tistory import DEFAULT_BASE_URL, write_page_post
@@ -80,6 +81,11 @@ def open_manage(blog_url):
     )
     pid = info["pid"]
     window_id = pick_window(info.get("windows") or [])
+    execute_js(
+        pid,
+        window_id,
+        f"(() => {{ if (location.href !== {json.dumps(url)}) location.href = {json.dumps(url)}; return location.href; }})()",
+    )
     return pid, window_id, url
 
 
@@ -106,7 +112,8 @@ def pick_window(windows):
     return candidates[0]["window_id"]
 
 
-def wait_for_manage(pid, window_id, timeout=20):
+def wait_for_manage(pid, window_id, manage_url, timeout=20):
+    expected_host = urlparse(manage_url).hostname
     deadline = time.time() + timeout
     last = ""
     while time.time() < deadline:
@@ -115,6 +122,7 @@ def wait_for_manage(pid, window_id, timeout=20):
             window_id,
             """(() => JSON.stringify({
               href: location.href,
+              host: location.hostname,
               title: document.title,
               ready: document.readyState
             }))()""",
@@ -123,7 +131,11 @@ def wait_for_manage(pid, window_id, timeout=20):
             data = json.loads(last)
         except json.JSONDecodeError:
             data = {}
-        if data.get("ready") == "complete" and "/manage" in data.get("href", ""):
+        if (
+            data.get("ready") == "complete"
+            and data.get("host") == expected_host
+            and "/manage" in data.get("href", "")
+        ):
             return data
         time.sleep(0.7)
     raise SystemExit(f"Tistory manage page did not become ready: {last}")
@@ -287,7 +299,7 @@ def main():
     else:
         pid, window_id, manage_url = open_manage(args.blog_url)
 
-    wait_for_manage(pid, window_id)
+    wait_for_manage(pid, window_id, manage_url)
     result = save_draft(pid, window_id, meta, content, args.category, args.dry_run)
     if not result.get("ok"):
         print(json.dumps(result, ensure_ascii=False, indent=2))
