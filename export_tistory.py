@@ -61,6 +61,13 @@ BADGE_STYLE = (
     "background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;"
 )
 NEWS_TITLE_STYLE = "margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;"
+NEWS_BODY_STYLE = (
+    "margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"
+)
+NEWS_BODY_HEADING_STYLE = (
+    "margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;"
+)
+NEWS_BODY_PARAGRAPH_STYLE = "margin:0 0 12px;color:#475569;line-height:1.78;"
 BUTTON_STYLE = (
     "display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;"
     "background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;"
@@ -125,19 +132,19 @@ def latest_or_today():
     return latest
 
 
-def summarize_blocks(blocks, limit=3):
-    """Use only a short digest so the Tistory post points readers to sources."""
+def render_content_blocks(blocks):
     rows = []
     for block in blocks or []:
-        if block.get("t") != "p":
-            continue
         text = plain(block.get("text"))
         if not text:
             continue
-        rows.append(text)
-        if len(rows) >= limit:
-            break
-    return rows
+        if block.get("t") == "h":
+            rows.append(f'<h4{style(NEWS_BODY_HEADING_STYLE)}>{esc(text)}</h4>')
+        else:
+            rows.append(f'<p{style(NEWS_BODY_PARAGRAPH_STYLE)}>{esc(text)}</p>')
+    if not rows:
+        return ""
+    return f'<div class="digest-full-content"{style(NEWS_BODY_STYLE)}>' + "".join(rows) + "</div>"
 
 
 def style(value):
@@ -160,19 +167,13 @@ def build_news_section(news):
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
         image = plain(item.get("image_url") or item.get("image"))
-        bullets = summarize_blocks(item.get("content"))
+        full_content = render_content_blocks(item.get("content"))
 
         image_html = (
             f'<img class="digest-news-image" src="{esc(image)}" alt="" loading="lazy"{style(NEWS_IMAGE_STYLE)}>'
             if image
             else ""
         )
-
-        bullet_html = ""
-        if bullets:
-            bullet_html = '<ul class="digest-points" style="margin:14px 0 0;padding-left:22px;">' + "".join(
-                f'<li style="margin:0 0 8px;">{esc(text)}</li>' for text in bullets
-            ) + "</ul>"
 
         source_link = (
             f'<p class="digest-source-link" style="margin:14px 0 0;"><a href="{esc(url)}" target="_blank" rel="noopener"{style(BUTTON_STYLE)}>원문 보기</a></p>'
@@ -187,7 +188,7 @@ def build_news_section(news):
   <p class="digest-source"{style(BADGE_STYLE)}>{idx}. {esc(source)}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   <p style="margin:0;color:#475569;">{esc(blurb)}</p>
-  {bullet_html}
+  {full_content}
   {source_link}
 </section>""".strip()
         )
@@ -255,7 +256,7 @@ slug: {slugify(day_id + "-daily-digest")}
     <h2 class="digest-title"{style(TITLE_STYLE)}>오늘의 IT/개발 읽을거리</h2>
     <p class="digest-lead"{style(LEAD_STYLE)}>
       오늘은 {esc(lead)} 흐름을 중심으로 읽어볼 만한 소식을 정리했습니다.
-      본문은 짧은 요약과 학습용 문제로 구성했으며, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
+      본문은 핵심 내용 요약과 학습용 문제로 구성했으며, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
     </p>
   </section>
 
