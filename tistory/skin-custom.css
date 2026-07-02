@@ -57,21 +57,41 @@ a:focus {
 
 #gnb {
   height: 66px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: visible;
+}
+
+#gnb ul {
+  display: flex !important;
+  align-items: stretch;
+  gap: 34px;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
 }
 
 #gnb ul li {
-  padding: 0 24px;
+  display: block;
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0;
+  list-style: none;
 }
 
 #gnb ul li a {
-  padding: 22px 4px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 66px;
+  padding: 0 6px;
   color: var(--dev-muted);
   font-weight: 600;
-  line-height: 20px;
+  line-height: 1;
   outline: 0;
   box-sizing: border-box;
+  overflow: visible;
+  white-space: nowrap;
 }
 
 #gnb ul li.current a,
@@ -83,8 +103,8 @@ a:focus {
 #gnb ul li.current a:after,
 #gnb ul li a:hover:after,
 #gnb ul li a:focus:after {
-  left: 4px;
-  width: calc(100% - 8px);
+  left: 8px;
+  width: calc(100% - 16px);
   height: 3px;
   border-radius: 999px;
   background: var(--dev-teal);
