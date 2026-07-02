@@ -36,12 +36,21 @@ docs/tistory/YYYY-MM-DD.html
 docs/tistory/YYYY-MM-DD.json
 ```
 
+가장 빠른 준비 명령:
+
+```bash
+python prepare_tistory_post.py --latest --copy body --open-editor
+```
+
 티스토리 글쓰기에서:
 
-1. `YYYY-MM-DD.json`의 `title`, `category`, `tags`를 확인한다.
+1. 터미널에 출력된 `title`, `category`, `tags`를 입력한다.
 2. 글쓰기 화면을 HTML 모드로 바꾼다.
-3. `YYYY-MM-DD.html` 본문을 붙여넣는다.
+3. 클립보드에 복사된 본문을 붙여넣는다.
 4. 원문 링크 3개와 정처기 문제를 확인하고 발행한다.
+
+완전 무인 발행은 티스토리 Open API 종료 이후 공식 지원되지 않는다. 브라우저 자동화로 초안 작성까지는 만들 수 있지만,
+로그인 세션 만료와 관리자 UI 변경에 취약하므로 운영 기본값은 위 흐름처럼 발행 전 확인을 한 번 두는 방식이 안전하다.
 
 ## 6. 추천 메뉴
 

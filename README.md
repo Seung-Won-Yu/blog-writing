@@ -47,6 +47,21 @@ GitHub Actions (cron 09:30 KST)
 python export_tistory.py --latest
 ```
 
+매일 생성된 글을 실제 티스토리 편집기에 올릴 때는 아래 헬퍼를 쓴다.
+
+```powershell
+python prepare_tistory_post.py --latest
+python prepare_tistory_post.py --latest --copy body
+python prepare_tistory_post.py --latest --copy title --open-editor
+```
+
+추천 운영 방식:
+
+1. GitHub Actions가 매일 글 데이터를 생성한다.
+2. `prepare_tistory_post.py --latest --copy body --open-editor`로 티스토리 글쓰기 화면을 연다.
+3. 출력된 제목·카테고리·태그를 입력하고, HTML 모드에서 복사된 본문을 붙여넣는다.
+4. 원문 링크와 정처기 답만 확인한 뒤 발행한다.
+
 생성 위치:
 - `docs/tistory/<YYYY-MM-DD>.html`: 티스토리 HTML 모드에 붙여넣을 본문
 - `docs/tistory/<YYYY-MM-DD>.json`: 제목과 태그 메타데이터
