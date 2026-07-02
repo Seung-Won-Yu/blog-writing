@@ -70,6 +70,8 @@ a:focus {
   color: var(--dev-muted);
   font-weight: 600;
   line-height: 20px;
+  outline: 0;
+  box-sizing: border-box;
 }
 
 #gnb ul li.current a,
@@ -81,8 +83,15 @@ a:focus {
 #gnb ul li.current a:after,
 #gnb ul li a:hover:after,
 #gnb ul li a:focus:after {
+  left: 4px;
+  width: calc(100% - 8px);
   height: 3px;
+  border-radius: 999px;
   background: var(--dev-teal);
+}
+
+#gnb ul li a:focus-visible {
+  color: var(--dev-ink);
 }
 
 .dev-hero {
