@@ -207,9 +207,9 @@ def build_quiz_section(quiz):
     answer = int(quiz.get("answer", 0))
     option_html = "".join(
         (
-            f'<li class="is-answer" style="margin:0 0 8px;color:#0f9b8e;font-weight:800;">정답 · {esc(opt)}</li>'
+            f'<li class="digest-option is-answer" style="margin:0 0 8px;color:#0f9b8e;font-weight:800;">정답 · {esc(opt)}</li>'
             if i == answer
-            else f'<li style="margin:0 0 8px;">{esc(opt)}</li>'
+            else f'<li class="digest-option" style="margin:0 0 8px;">{esc(opt)}</li>'
         )
         for i, opt in enumerate(options)
     )
@@ -217,8 +217,8 @@ def build_quiz_section(quiz):
 <section class="digest-quiz"{style(QUIZ_STYLE)}>
   <p class="digest-source"{style(BADGE_STYLE)}>기초상식 · {esc(quiz.get("category", "정보처리기사"))}</p>
   <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 정처기 문제</h2>
-  <p style="margin:0 0 12px;color:#18212f;font-weight:700;">{esc(quiz.get("question"))}</p>
-  <ol style="margin:12px 0 14px;padding-left:22px;">{option_html}</ol>
+  <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">{esc(quiz.get("question"))}</p>
+  <ol class="digest-options" style="margin:12px 0 14px;padding-left:22px;">{option_html}</ol>
   <p class="digest-explain" style="margin:0;color:#475569;"><b>해설</b> {esc(quiz.get("explain_kr"))}</p>
 </section>""".strip()
 
