@@ -3,7 +3,7 @@
 // 배포: 루트 README.md 참고. Secret 이름: GEMINI_API_KEY
 
 const ALLOW = [
-  "https://ihan0316.github.io",
+  "https://seung-won-yu.github.io",
   "http://localhost:8753",
 ];
 const MODEL = "gemini-2.5-flash";

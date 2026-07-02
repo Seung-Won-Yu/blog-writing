@@ -1,4 +1,4 @@
-# AI Weekly Newsroom
+# Blog Writing Automation
 
 매일 생성되는 GitHub Pages 데일리 다이제스트를 티스토리 블로그 초안으로 옮기기 위한 자동화 프로젝트입니다.
 
@@ -12,7 +12,7 @@
 라이브 Pages:
 
 ```text
-https://seung-won-yu.github.io/ai-weekly-newsroom/
+https://seung-won-yu.github.io/blog-writing/
 ```
 
 ## 핵심 파일
