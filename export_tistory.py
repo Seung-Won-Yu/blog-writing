@@ -174,6 +174,11 @@ def build_news_section(news):
             if image
             else ""
         )
+        summary_html = (
+            f'<p style="margin:0;color:#475569;">{esc(blurb)}</p>'
+            if blurb and not full_content
+            else ""
+        )
 
         source_link = (
             f'<p class="digest-source-link" style="margin:14px 0 0;"><a href="{esc(url)}" target="_blank" rel="noopener"{style(BUTTON_STYLE)}>원문 보기</a></p>'
@@ -187,7 +192,7 @@ def build_news_section(news):
   {image_html}
   <p class="digest-source"{style(BADGE_STYLE)}>{idx}. {esc(source)}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
-  <p style="margin:0;color:#475569;">{esc(blurb)}</p>
+  {summary_html}
   {full_content}
   {source_link}
 </section>""".strip()
