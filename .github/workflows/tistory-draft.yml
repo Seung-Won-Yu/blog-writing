@@ -2,7 +2,8 @@ name: Tistory draft HTML
 
 on:
   schedule:
-    - cron: '0 4 * * *'   # 04:00 UTC = 13:00 KST (매일)
+    - cron: '30 1 * * *'  # 01:30 UTC = 10:30 KST (매일 1차 시도)
+    - cron: '0 4 * * *'   # 04:00 UTC = 13:00 KST (매일 백업 시도)
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
