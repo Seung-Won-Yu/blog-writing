@@ -87,36 +87,11 @@ a:focus {
     linear-gradient(135deg, #f8fafc 0%, #eef6f5 46%, #fff7ed 100%);
 }
 
-#tt-body-index #container:before {
-  content: "하루 한 시간, 개발자로 자라는 기록.\\A AI/IT 뉴스, 프로젝트 개발일지, 자격증 공부를 매일 쌓아가는 개발 블로그입니다.";
-  display: block;
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 44px 20px 38px;
-  border-bottom: 1px solid var(--dev-line);
-  color: var(--dev-ink);
-  white-space: pre-line;
-  font-size: 1.625em;
-  font-weight: 700;
-  line-height: 1.45;
-  background:
-    radial-gradient(circle at 88% 18%, rgba(15, 155, 142, 0.14), transparent 28%),
-    linear-gradient(135deg, #f8fafc 0%, #eef6f5 46%, #fff7ed 100%);
-  box-sizing: border-box;
-}
-
+/* Keep home hero content in real HTML only; generated CSS text breaks this skin. */
+#tt-body-index #container:before,
 #tt-body-index #container:after {
-  content: "AI · Backend · Data · Certification";
-  position: absolute;
-  top: 24px;
-  left: 50%;
-  width: min(1040px, calc(100% - 40px));
-  transform: translateX(-50%);
-  color: var(--dev-teal);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.8125em;
-  font-weight: 700;
-  pointer-events: none;
+  content: none !important;
+  display: none !important;
 }
 
 .dev-hero__inner {
@@ -195,38 +170,48 @@ a:focus {
 }
 
 .post-item {
-  min-height: 340px;
-  margin-bottom: 42px;
+  min-height: 0;
+  margin-bottom: 40px;
 }
 
 .post-item a {
-  height: 100%;
-  border: 1px solid var(--dev-line);
-  border-radius: 14px;
-  background: var(--dev-panel);
-  box-shadow: 0 10px 28px rgba(24, 33, 47, 0.06);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: color 0.18s ease;
 }
 
 .post-item a:hover,
 .post-item a:focus {
-  border-color: rgba(15, 155, 142, 0.45);
-  box-shadow: 0 18px 42px rgba(24, 33, 47, 0.11);
+  border-color: transparent;
+  box-shadow: none;
   text-decoration: none;
-  transform: translateY(-3px);
+  transform: none;
+}
+
+.post-item a:hover .title,
+.post-item a:focus .title {
+  color: var(--dev-blue);
+  text-decoration: none;
 }
 
 .post-item .thum {
-  margin-bottom: 0;
-  border-radius: 14px 14px 0 0;
-  background:
-    linear-gradient(135deg, rgba(15, 155, 142, 0.18), rgba(37, 99, 235, 0.12)),
-    var(--dev-paper);
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  background-image: none;
+}
+
+.post-item .thum:not(:has(img)) {
+  display: none;
+  padding-bottom: 0;
 }
 
 .post-item .title {
   max-width: none;
-  margin: 16px 16px 8px;
+  margin: 0 0 8px;
   padding-top: 0;
   color: var(--dev-ink);
   font-size: 1.03em;
@@ -239,14 +224,14 @@ a:focus {
 
 .post-item .excerpt {
   max-width: none;
-  margin: 0 16px 16px;
+  margin: 0 0 16px;
   color: var(--dev-body);
   font-size: 0.875em;
   line-height: 1.65;
 }
 
 .post-item .meta {
-  margin: 0 16px 18px;
+  margin: 0;
   color: var(--dev-muted);
   font-family: "JetBrains Mono", monospace;
 }
@@ -568,16 +553,6 @@ a:focus {
     font-size: 1.625em;
   }
 
-  #tt-body-index #container:before {
-    padding: 34px 20px 28px;
-    font-size: 1.25em;
-  }
-
-  #tt-body-index #container:after {
-    top: 16px;
-    font-size: 0.6875em;
-  }
-
   .dev-hero p {
     font-size: 0.9375em;
   }
@@ -592,15 +567,11 @@ a:focus {
     padding-top: 34px;
   }
 
-  .post-item a {
-    border-radius: 12px;
-  }
-
   .post-item .title,
   .post-item .excerpt,
   .post-item .meta {
-    margin-right: 14px;
-    margin-left: 14px;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .entry-content {
