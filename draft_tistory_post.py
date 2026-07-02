@@ -3,8 +3,8 @@
 Create or update a Tistory draft from the generated daily digest.
 
 This uses the logged-in Chrome session through cua-driver. It does not publish:
-it only saves a draft in Tistory, so the final review and publish step stays in
-the browser.
+it only saves a draft in Tistory without touching the current editor fields, so
+the final review and publish step stays in the browser.
 
 usage:
   python draft_tistory_post.py --latest
@@ -66,8 +66,8 @@ def execute_js(pid, window_id, javascript):
     return parse_page_result(output)
 
 
-def open_editor(blog_url):
-    url = blog_url.rstrip("/") + "/manage/newpost"
+def open_manage(blog_url):
+    url = blog_url.rstrip("/") + "/manage"
     info = parse_json_output(
         run_cua(
             "launch_app",
@@ -83,7 +83,9 @@ def open_editor(blog_url):
 
 
 def pick_window(windows):
-    candidates = [w for w in windows if w.get("title") == "글쓰기"]
+    candidates = [w for w in windows if "블로그관리" in (w.get("title") or "")]
+    if not candidates:
+        candidates = [w for w in windows if w.get("title") == "글쓰기"]
     if not candidates:
         candidates = [w for w in windows if w.get("on_current_space") and w.get("is_on_screen")]
     if not candidates:
@@ -93,6 +95,7 @@ def pick_window(windows):
     candidates.sort(
         key=lambda w: (
             w.get("title") == "글쓰기",
+            "블로그관리" in (w.get("title") or ""),
             w.get("on_current_space", False),
             w.get("is_on_screen", False),
             (w.get("bounds", {}).get("width", 0) * w.get("bounds", {}).get("height", 0)),
@@ -102,7 +105,7 @@ def pick_window(windows):
     return candidates[0]["window_id"]
 
 
-def wait_for_editor(pid, window_id, timeout=20):
+def wait_for_manage(pid, window_id, timeout=20):
     deadline = time.time() + timeout
     last = ""
     while time.time() < deadline:
@@ -112,19 +115,17 @@ def wait_for_editor(pid, window_id, timeout=20):
             """(() => JSON.stringify({
               href: location.href,
               title: document.title,
-              ready: document.readyState,
-              hasTitle: !!document.querySelector('#post-title-inp'),
-              hasEditor: !!document.querySelector('#editor-tistory_ifr')
+              ready: document.readyState
             }))()""",
         )
         try:
             data = json.loads(last)
         except json.JSONDecodeError:
             data = {}
-        if data.get("ready") == "complete" and data.get("hasTitle") and data.get("hasEditor"):
+        if data.get("ready") == "complete" and "/manage" in data.get("href", ""):
             return data
         time.sleep(0.7)
-    raise SystemExit(f"Tistory editor did not become ready: {last}")
+    raise SystemExit(f"Tistory manage page did not become ready: {last}")
 
 
 def upload_content_chunks(pid, window_id, content):
@@ -214,24 +215,6 @@ def save_draft(pid, window_id, meta, content, category, dry_run):
       totalWritingTimeMs: 0,
     }};
 
-    const titleEl = document.querySelector("#post-title-inp");
-    if (titleEl) {{
-      titleEl.value = payload.title;
-      titleEl.dispatchEvent(new Event("input", {{ bubbles: true }}));
-      titleEl.dispatchEvent(new Event("change", {{ bubbles: true }}));
-    }}
-    const editorTextarea = document.querySelector("#editor-tistory");
-    if (editorTextarea) {{
-      editorTextarea.value = payload.content;
-      editorTextarea.dispatchEvent(new Event("input", {{ bubbles: true }}));
-      editorTextarea.dispatchEvent(new Event("change", {{ bubbles: true }}));
-    }}
-    const iframe = document.querySelector("#editor-tistory_ifr");
-    if (iframe && iframe.contentDocument && iframe.contentDocument.body) {{
-      iframe.contentDocument.body.innerHTML = payload.content;
-      iframe.contentDocument.body.dispatchEvent(new Event("input", {{ bubbles: true }}));
-    }}
-
     if (payload.dryRun) {{
       return JSON.stringify({{
         ok: true,
@@ -276,7 +259,7 @@ def main():
     parser.add_argument("--category", default=DEFAULT_CATEGORY)
     parser.add_argument("--pid", type=int, help="reuse an existing Chrome pid")
     parser.add_argument("--window-id", type=int, help="reuse an existing Chrome window id")
-    parser.add_argument("--dry-run", action="store_true", help="fill the editor and validate payload without saving")
+    parser.add_argument("--dry-run", action="store_true", help="validate payload without saving")
     args = parser.parse_args()
 
     day_id = latest_day_id() if args.latest else args.day
@@ -284,11 +267,11 @@ def main():
     meta, content, html_path, _ = read_export(day_id)
 
     if args.pid and args.window_id:
-        pid, window_id, editor_url = args.pid, args.window_id, args.blog_url.rstrip("/") + "/manage/newpost"
+        pid, window_id, manage_url = args.pid, args.window_id, args.blog_url.rstrip("/") + "/manage"
     else:
-        pid, window_id, editor_url = open_editor(args.blog_url)
+        pid, window_id, manage_url = open_manage(args.blog_url)
 
-    wait_for_editor(pid, window_id)
+    wait_for_manage(pid, window_id)
     result = save_draft(pid, window_id, meta, content, args.category, args.dry_run)
     if not result.get("ok"):
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -301,7 +284,8 @@ def main():
     print(f"태그: {', '.join(result.get('tags') or [])}")
     print(f"본문 길이: {result.get('contentLength')}")
     print(f"본문 HTML: {html_path}")
-    print(f"글쓰기 URL: {editor_url}")
+    print(f"관리 URL: {manage_url}")
+    print(f"글쓰기 URL: {args.blog_url.rstrip('/')}/manage/newpost")
     if args.dry_run:
         print("드라이런: 실제 임시저장은 하지 않음")
         if result.get("existingSequence"):
