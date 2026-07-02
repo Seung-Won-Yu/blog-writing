@@ -8,6 +8,7 @@ print its metadata, optionally copy one field to the clipboard, and optionally
 open the Tistory editor.
 
 usage:
+  python prepare_tistory_post.py --today
   python prepare_tistory_post.py --latest
   python prepare_tistory_post.py --latest --copy body
   python prepare_tistory_post.py --latest --copy title --open-editor
@@ -21,7 +22,7 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from export_tistory import OUT_DIR, latest_day_id, write_post
+from export_tistory import OUT_DIR, latest_or_today, today_day_id, write_post
 
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 
@@ -79,7 +80,8 @@ def editor_url(blog_url):
 def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--latest", action="store_true", help="prepare the newest exported day")
+    group.add_argument("--today", action="store_true", help="prepare today's exported day")
+    group.add_argument("--latest", action="store_true", help="prepare the newest exported day only when it is today")
     group.add_argument("--day", help="prepare one YYYY-MM-DD day")
     parser.add_argument(
         "--copy",
@@ -95,7 +97,12 @@ def main():
     parser.add_argument("--blog-url", default=DEFAULT_BLOG_URL)
     args = parser.parse_args()
 
-    day_id = latest_day_id() if args.latest else args.day
+    if args.today:
+        day_id = today_day_id()
+    elif args.latest:
+        day_id = latest_or_today()
+    else:
+        day_id = args.day
     meta, body, html_path, meta_path = read_export(day_id)
     tags = ", ".join(meta.get("tags") or [])
 

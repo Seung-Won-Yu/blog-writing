@@ -39,7 +39,7 @@ docs/tistory/YYYY-MM-DD.json
 가장 빠른 준비 명령:
 
 ```bash
-python draft_tistory_post.py --latest
+python draft_tistory_post.py --today
 ```
 
 티스토리 글쓰기에서:
@@ -55,7 +55,7 @@ python draft_tistory_post.py --latest
 브라우저 자동화가 실패할 때의 백업 명령:
 
 ```bash
-python prepare_tistory_post.py --latest --copy body --open-editor
+python prepare_tistory_post.py --today --copy body --open-editor
 ```
 
 ## 6. 추천 메뉴

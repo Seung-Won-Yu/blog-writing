@@ -11,6 +11,7 @@ usage:
   python export_tistory.py --all
 """
 import argparse
+import datetime
 import glob
 import html
 import json
@@ -99,6 +100,21 @@ def latest_day_id():
     if not files:
         raise SystemExit(f"no day json files in {DAYS_DIR}")
     return files[-1].stem
+
+
+def today_day_id():
+    return datetime.date.today().isoformat()
+
+
+def latest_or_today():
+    latest = latest_day_id()
+    today = today_day_id()
+    if latest != today:
+        raise SystemExit(
+            f"today's data is missing: expected data/days/{today}.json, latest is {latest}. "
+            f"Run pipeline_gemini.py first or pass --day {latest} explicitly."
+        )
+    return latest
 
 
 def summarize_blocks(blocks, limit=3):
@@ -270,13 +286,16 @@ def write_post(day_id):
 def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--latest", action="store_true", help="export the newest day")
+    group.add_argument("--today", action="store_true", help="export today's day")
+    group.add_argument("--latest", action="store_true", help="export the newest day only when it is today")
     group.add_argument("--day", help="export one YYYY-MM-DD day")
     group.add_argument("--all", action="store_true", help="export every day")
     args = parser.parse_args()
 
-    if args.latest:
-        write_post(latest_day_id())
+    if args.today:
+        write_post(today_day_id())
+    elif args.latest:
+        write_post(latest_or_today())
     elif args.day:
         write_post(args.day)
     else:

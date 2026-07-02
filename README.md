@@ -44,28 +44,28 @@ GitHub Actions (cron 09:30 KST)
 **티스토리 편집기용 HTML 생성**까지 자동화한다.
 
 ```powershell
-python export_tistory.py --latest
+python export_tistory.py --today
 ```
 
 매일 생성된 글을 실제 티스토리 편집기에 올릴 때는 아래 헬퍼를 쓴다.
 
 ```powershell
-python prepare_tistory_post.py --latest
-python prepare_tistory_post.py --latest --copy body
-python prepare_tistory_post.py --latest --copy title --open-editor
+python prepare_tistory_post.py --today
+python prepare_tistory_post.py --today --copy body
+python prepare_tistory_post.py --today --copy title --open-editor
 ```
 
 로그인된 Chrome이 열려 있으면 티스토리 임시저장 초안까지 자동으로 만들 수 있다.
 
 ```powershell
-python draft_tistory_post.py --latest
-python draft_tistory_post.py --latest --dry-run
+python draft_tistory_post.py --today
+python draft_tistory_post.py --today --dry-run
 ```
 
 추천 운영 방식:
 
 1. GitHub Actions가 매일 글 데이터를 생성한다.
-2. `draft_tistory_post.py --latest`로 티스토리 임시저장 초안을 만든다.
+2. `draft_tistory_post.py --today`로 티스토리 임시저장 초안을 만든다.
 3. 티스토리 글쓰기 화면의 임시저장 목록에서 초안을 불러온다.
 4. 원문 링크와 정처기 답만 확인한 뒤 발행한다.
 

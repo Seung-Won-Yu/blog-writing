@@ -7,6 +7,7 @@ it only saves a draft in Tistory without touching the current editor fields, so
 the final review and publish step stays in the browser.
 
 usage:
+  python draft_tistory_post.py --today
   python draft_tistory_post.py --latest
   python draft_tistory_post.py --day 2026-07-01
   python draft_tistory_post.py --latest --dry-run
@@ -18,7 +19,7 @@ import sys
 import time
 from pathlib import Path
 
-from export_tistory import DEFAULT_CATEGORY, latest_day_id, write_post
+from export_tistory import DEFAULT_CATEGORY, latest_or_today, today_day_id, write_post
 from prepare_tistory_post import DEFAULT_BLOG_URL, read_export
 
 CHROME_BUNDLE_ID = "com.google.Chrome"
@@ -253,7 +254,8 @@ def save_draft(pid, window_id, meta, content, category, dry_run):
 def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--latest", action="store_true", help="draft the newest exported day")
+    group.add_argument("--today", action="store_true", help="draft today's exported day")
+    group.add_argument("--latest", action="store_true", help="draft the newest exported day only when it is today")
     group.add_argument("--day", help="draft one YYYY-MM-DD day")
     parser.add_argument("--blog-url", default=DEFAULT_BLOG_URL)
     parser.add_argument("--category", default=DEFAULT_CATEGORY)
@@ -262,7 +264,12 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="validate payload without saving")
     args = parser.parse_args()
 
-    day_id = latest_day_id() if args.latest else args.day
+    if args.today:
+        day_id = today_day_id()
+    elif args.latest:
+        day_id = latest_or_today()
+    else:
+        day_id = args.day
     write_post(day_id)
     meta, content, html_path, _ = read_export(day_id)
 
