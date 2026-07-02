@@ -1,89 +1,162 @@
-# 데일리 다이제스트 (Daily Digest)
+# AI Weekly Newsroom
 
-매일 **오늘의 뉴스 + 기초상식(정처기 문제) + IT·개발·기획 용어**를 미니멀 에디토리얼 + 3D 정적 사이트로.
-뉴스는 요즘IT(yozm) · GeekNews(news.hada.io)에서 수집. **PC 없이 매일 자동**으로 갱신·배포된다.
+매일 생성되는 GitHub Pages 데일리 다이제스트를 티스토리 블로그 초안으로 옮기기 위한 자동화 프로젝트입니다.
 
-🔗 **라이브: https://ihan0316.github.io/ai-weekly-newsroom/**
+기본 흐름은 다음과 같습니다.
 
-## 기능
-- **오늘의 뉴스**: 클릭 시 외부 이동 대신 **3D 모달**로 크롤한 원문 표시 + **뉴럴 TTS 본문 듣기**(edge-tts) + 대표 이미지
-- **기초상식**: 정보처리기사 4지선다 — 보기 클릭 시 정답/오답 즉시 표시
-- **IT·개발·기획 용어** 3개/일
-- **검색**: 제목·요약·출처 + **본문 전체** 대상, 가중 랭킹 + 매칭 스니펫 (`docs/search.json` 지연 로드)
-- **자동 갱신**: 새 빌드 감지 시 강제 새로고침 없이 자동 반영(`build.json` + `<meta site-build>`)
-- 데스크톱·모바일 반응형, WCAG AA 대비
+1. GitHub Actions가 매일 IT/개발 뉴스, 정처기 문제, 용어 데이터를 생성합니다.
+2. 정적 사이트가 `docs/`에 빌드되고 GitHub Pages로 배포됩니다.
+3. 발행된 Pages 글을 가져와 티스토리용 HTML 초안으로 변환합니다.
+4. 로그인된 Chrome 세션을 사용해 티스토리 임시저장 글을 만듭니다.
+5. 티스토리 글쓰기 화면에서 최종 확인 후 직접 발행합니다.
 
-## 구조
-```
-data/days/<YYYY-MM-DD>.json   # 하루치 원천 (news[]/quiz/terms)
-build.py                      # render_day(): 하루 상세 HTML
-build_site.py                 # 전체 빌드 → docs/ (index 피드 + 날짜별 + search.json + build.json)
-assets/site.css, site.js      # 공유 디자인·인터랙션(3D 히어로/틸트/모달/TTS/검색/자동갱신)
-fetch_images.py               # 기사 대표 이미지(og:image) → docs/images (증분)
-gen_audio.py                  # 뉴럴 TTS MP3(ko-KR-SunHiNeural) → docs/audio (증분)
-attach_content.py             # 크롤 본문(_crawled.json) → day json 주입
-pipeline_gemini.py            # [무인용] 뉴스선별·본문추출·퀴즈/용어를 Gemini로 + 위 스크립트 호출
-.github/workflows/daily.yml   # 매일 09:30 KST 자동 실행 → 커밋 → Pages 배포
-pages_to_tistory.py           # 발행된 GitHub Pages 글을 티스토리 HTML 초안으로 변환
-draft_tistory_post.py         # 로그인된 Chrome 세션으로 티스토리 임시저장 생성
-```
-주의: `assemble_days.py`는 **초기 한 달 일괄 생성용**. 재실행하면 기존 날짜의 퀴즈/용어가 재셔플되니 **운영 중 실행 금지**(하루 추가는 day json 하나만 넣고 `build_site.py`).
+라이브 Pages:
 
-## 자동화 (무인 CI/CD)
-```
-GitHub Actions (cron 09:30 KST)
- → pipeline_gemini.py: Gemini(무료 2.5 Flash)로 뉴스 3선별·본문추출·퀴즈/용어 생성
- → fetch_images / gen_audio / build_site
- → github-actions[bot] 커밋 → GitHub Pages 자동 배포
-```
-- 키: repo secret `GEMINI_API_KEY` (무료). 비용 $0 (Gemini 무료티어·edge-tts·Pages 전부 무료).
-- 데이터센터 IP 차단(yozm 403) 우회: `r.jina.ai` 리더 프록시 폴백.
-- 수동 실행: `gh workflow run "Daily digest"` 또는 Actions 탭.
-
-## 티스토리 글 발행
-티스토리 Open API의 글 작성·수정 기능은 종료되었기 때문에, 이 프로젝트는 자동 발행 대신
-**발행된 GitHub Pages 글을 티스토리 임시저장 초안으로 변환**한다.
-
-가장 빠른 흐름은 이미 배포된 날짜를 가져오는 방식이다. 대표 이미지도 Pages의 `docs/images` URL을
-절대 경로로 넣어 티스토리 본문에서 같이 보이게 만든다.
-
-```powershell
-python pages_to_tistory.py --day 2026-07-01
-python draft_tistory_post.py --day 2026-07-01 --from-pages
+```text
+https://ihan0316.github.io/ai-weekly-newsroom/
 ```
 
-저장 전 페이로드만 확인하려면:
+## 핵심 파일
 
-```powershell
-python draft_tistory_post.py --day 2026-07-01 --from-pages --dry-run
+```text
+.github/workflows/daily.yml     # 매일 09:30 KST 자동 생성/빌드/커밋
+pipeline_gemini.py              # Gemini로 뉴스 3개, 본문, 정처기 문제, 용어 생성
+fetch_images.py                 # 기사 대표 이미지 수집
+gen_audio.py                    # 기사 음성 MP3 생성
+build.py                        # 하루 상세 페이지 렌더러
+build_site.py                   # docs/ 정적 사이트 전체 빌드
+assets/site.css                 # Pages 사이트 스타일
+assets/site.js                  # Pages 사이트 인터랙션
+data/days/YYYY-MM-DD.json       # 하루치 원천 데이터
+docs/                           # GitHub Pages 배포 결과물
+pages_to_tistory.py             # Pages 글을 티스토리 HTML로 변환
+export_tistory.py               # 티스토리 본문 HTML 생성기
+draft_tistory_post.py           # 티스토리 임시저장 생성
+tistory/post-view-custom.css    # 티스토리 글 상세 화면용 스킨 CSS
+ask-worker/                     # 선택 기능: 기사 Q&A Cloudflare Worker
 ```
 
-오늘치가 Pages에 올라온 뒤에는 날짜만 `--today`로 바꿀 수 있다.
+`docs/`는 생성 산출물이지만 GitHub Pages가 실제로 서빙하는 폴더입니다. 이미지, 오디오, 날짜별 HTML이 들어 있으므로 운영 중에는 삭제하지 않습니다.
 
-```powershell
-python pages_to_tistory.py --today
+## 매일 티스토리 초안 만들기
+
+Pages에 해당 날짜 글이 올라온 뒤 실행합니다.
+
+```bash
+python draft_tistory_post.py --day 2026-07-02 --from-pages
+```
+
+오늘 날짜를 기준으로 가져오려면:
+
+```bash
 python draft_tistory_post.py --today --from-pages
 ```
 
-추천 운영 방식:
+저장 전에 제목, 카테고리, 태그, 본문 길이만 확인하려면:
 
-1. GitHub Pages에 해당 날짜 글이 올라왔는지 확인한다.
-2. `draft_tistory_post.py --day YYYY-MM-DD --from-pages`로 티스토리 임시저장 초안을 만든다.
-3. 티스토리 글쓰기 화면의 임시저장 목록에서 초안을 불러온다.
-4. 이미지, 원문 링크, 정처기 문제를 확인한 뒤 발행한다.
-
-생성 위치:
-- `docs/tistory/<YYYY-MM-DD>.html`: 티스토리 HTML 모드에 붙여넣을 본문
-- `docs/tistory/<YYYY-MM-DD>.json`: 제목과 태그 메타데이터
-
-완전 자동 발행이 꼭 필요하면 브라우저 자동화로 티스토리 관리자 화면을 조작하는 방식은 가능하지만,
-로그인 세션 만료와 UI 변경에 취약하므로 운영 기본값으로는 권장하지 않는다.
-
-## 수동 빌드/배포
-```powershell
-python build_site.py
-git add -A; git commit -m "update"; git push   # Pages 자동 재배포(1~2분)
+```bash
+python draft_tistory_post.py --day 2026-07-02 --from-pages --dry-run
 ```
 
-## ⚠ 콘텐츠 정확도
-뉴스 본문은 자동 수집·요약물이다. 공개 사이트이므로 큰 수치·민감 내용은 원문 확인 권장(모달에 출처 링크 있음).
+성공하면 다음 파일도 함께 만들어집니다.
+
+```text
+docs/tistory/YYYY-MM-DD.html
+docs/tistory/YYYY-MM-DD.json
+```
+
+티스토리에서는 글쓰기 화면의 `임시저장` 목록에서 방금 생성된 글을 불러온 뒤 이미지, 원문 링크, 정처기 문제를 확인하고 발행합니다.
+
+## 수동으로 티스토리 HTML만 만들기
+
+브라우저 임시저장까지 하지 않고 HTML 파일만 만들 때 사용합니다.
+
+```bash
+python pages_to_tistory.py --day 2026-07-02
+```
+
+결과:
+
+```text
+docs/tistory/2026-07-02.html
+docs/tistory/2026-07-02.json
+```
+
+## Pages 사이트 다시 빌드하기
+
+로컬에서 `data/days/`를 수정한 뒤 사이트를 다시 만들 때 사용합니다.
+
+```bash
+python fetch_images.py
+python gen_audio.py
+python build_site.py
+```
+
+자동 운영에서는 `.github/workflows/daily.yml`이 이 과정을 실행합니다. `GEMINI_API_KEY`는 GitHub repository secret에 등록되어 있어야 합니다.
+
+## 티스토리 스킨 CSS
+
+티스토리 글 상세 화면 디자인은 다음 파일이 기준입니다.
+
+```text
+tistory/post-view-custom.css
+```
+
+이 CSS는 티스토리 스킨 편집의 CSS 영역에 들어가는 커스텀 블록입니다. 현재는 본문 카드, 뉴스 카드, 정처기 문제, 용어 카드, 상단 커버 스타일을 조정합니다.
+
+수정 후에는 티스토리 스킨 편집 화면에 반영하고, 공개 글에서 강력 새로고침으로 확인합니다.
+
+## 선택 기능: 기사 Q&A Worker
+
+`ask-worker/`는 Pages 사이트의 "이 기사에 질문" 기능을 위한 Cloudflare Worker입니다. 티스토리 초안 생성에는 필요하지 않습니다.
+
+배포 개요:
+
+```bash
+cd ask-worker
+npx wrangler secret put GEMINI_API_KEY
+npx wrangler deploy
+```
+
+배포 URL을 `build.py`의 `ASK_ENDPOINT`에 넣고 `python build_site.py`를 다시 실행하면 Pages 사이트 질문 기능에 연결됩니다.
+
+## 문제 해결
+
+### 카테고리 API가 404를 반환할 때
+
+Chrome이 티스토리 관리 화면이 아닌 다른 사이트 관리 화면을 잡은 경우입니다. `draft_tistory_post.py`는 `won0322.tistory.com/manage` 도메인을 확인하도록 되어 있으니, Chrome에서 티스토리 로그인이 유지되는지 먼저 확인합니다.
+
+### 임시저장 글이 안 보일 때
+
+다음 명령으로 실제 저장 전 페이로드가 정상인지 확인합니다.
+
+```bash
+python draft_tistory_post.py --day YYYY-MM-DD --from-pages --dry-run
+```
+
+정상이라면 티스토리 글쓰기 화면을 새로고침하고 `임시저장` 목록을 다시 엽니다.
+
+### 이미지가 깨질 때
+
+`--from-pages`를 사용했는지 확인합니다. 이 옵션은 Pages에 올라간 이미지 URL을 절대 경로로 바꿔 티스토리 본문에 넣습니다.
+
+## 정리 원칙
+
+보존하는 파일:
+
+- GitHub Actions와 Pages 빌드에 필요한 코드
+- `data/days/` 원천 데이터
+- `docs/` Pages 배포 산출물
+- `docs/tistory/` 티스토리 발행 기록
+- 티스토리 스킨 CSS
+
+제거해도 되는 파일:
+
+- `.DS_Store`
+- `__pycache__/`, `*.pyc`
+- 현재 코드에서 참조되지 않는 과거 샘플 JSON
+- 중복 README
+
+## 주의
+
+티스토리 Open API의 글 작성 기능은 종료되어 공식 API로 완전 자동 발행할 수 없습니다. 이 프로젝트는 안정성을 위해 임시저장 초안까지만 자동화하고, 최종 발행은 사람이 확인하도록 설계했습니다.

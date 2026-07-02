@@ -1,6 +1,6 @@
 // 기사 Q&A 프록시 (Cloudflare Worker)
 // 브라우저 → 이 Worker → Gemini. GEMINI_API_KEY는 Worker Secret에 보관(클라이언트 노출 X).
-// 배포: ask-worker/README.md 참고. Secret 이름: GEMINI_API_KEY
+// 배포: 루트 README.md 참고. Secret 이름: GEMINI_API_KEY
 
 const ALLOW = [
   "https://ihan0316.github.io",
