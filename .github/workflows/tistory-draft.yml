@@ -1,0 +1,48 @@
+name: Tistory draft HTML
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 04:00 UTC = 13:00 KST (매일)
+  workflow_dispatch: {}     # 수동 실행
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tistory-draft
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Export today's Tistory HTML from Pages
+        env:
+          TZ: Asia/Seoul
+        run: |
+          for i in 1 2 3; do
+            if python pages_to_tistory.py --today; then
+              exit 0
+            fi
+            echo "Pages export failed. retry=$i"
+            sleep 60
+          done
+          python pages_to_tistory.py --today
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/tistory
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git commit -m "Tistory draft: add $(TZ=Asia/Seoul date +%F) HTML"
+            git push
+          fi

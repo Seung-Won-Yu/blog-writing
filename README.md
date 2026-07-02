@@ -7,8 +7,7 @@
 1. GitHub Actions가 매일 IT/개발 뉴스, 정처기 문제, 용어 데이터를 생성합니다.
 2. 정적 사이트가 `docs/`에 빌드되고 GitHub Pages로 배포됩니다.
 3. 발행된 Pages 글을 가져와 티스토리용 HTML 초안으로 변환합니다.
-4. 로그인된 Chrome 세션을 사용해 티스토리 임시저장 글을 만듭니다.
-5. 티스토리 글쓰기 화면에서 최종 확인 후 직접 발행합니다.
+4. 티스토리 글쓰기 화면에서 HTML 초안을 붙여넣고 최종 확인 후 직접 발행합니다.
 
 라이브 Pages:
 
@@ -19,7 +18,8 @@ https://seung-won-yu.github.io/ai-weekly-newsroom/
 ## 핵심 파일
 
 ```text
-.github/workflows/daily.yml     # 매일 09:30 KST 자동 생성/빌드/커밋
+.github/workflows/daily.yml     # 매일 09:30 KST Pages 글 자동 생성/빌드/커밋
+.github/workflows/tistory-draft.yml # 매일 13:00 KST 티스토리 HTML 초안 생성/커밋
 pipeline_gemini.py              # Gemini로 뉴스 3개, 본문, 정처기 문제, 용어 생성
 fetch_images.py                 # 기사 대표 이미지 수집
 gen_audio.py                    # 기사 음성 MP3 생성
@@ -31,16 +31,35 @@ data/days/YYYY-MM-DD.json       # 하루치 원천 데이터
 docs/                           # GitHub Pages 배포 결과물
 pages_to_tistory.py             # Pages 글을 티스토리 HTML로 변환
 export_tistory.py               # 티스토리 본문 HTML 생성기
-draft_tistory_post.py           # 티스토리 임시저장 생성
+draft_tistory_post.py           # 로컬 Chrome 로그인 세션으로 티스토리 임시저장 생성(선택)
 tistory/post-view-custom.css    # 티스토리 글 상세 화면용 스킨 CSS
 ask-worker/                     # 선택 기능: 기사 Q&A Cloudflare Worker
 ```
 
 `docs/`는 생성 산출물이지만 GitHub Pages가 실제로 서빙하는 폴더입니다. 이미지, 오디오, 날짜별 HTML이 들어 있으므로 운영 중에는 삭제하지 않습니다.
 
-## 매일 티스토리 초안 만들기
+## 매일 자동 운영
 
-Pages에 해당 날짜 글이 올라온 뒤 실행합니다.
+두 개의 GitHub Actions가 시간차로 실행됩니다.
+
+```text
+09:30 KST  Daily digest
+           data/days/YYYY-MM-DD.json 생성
+           docs/days/YYYY-MM-DD.html 생성
+           GitHub Pages 배포용 파일 커밋
+
+13:00 KST  Tistory draft HTML
+           발행된 Pages 글을 다시 읽음
+           docs/tistory/YYYY-MM-DD.html 생성
+           docs/tistory/YYYY-MM-DD.json 생성
+           Git에 커밋
+```
+
+13:00 이후에는 GitHub에서 `docs/tistory/YYYY-MM-DD.html` 파일을 열고 본문 HTML을 티스토리 글쓰기 화면에 넣으면 됩니다.
+
+## 로컬에서 티스토리 임시저장 만들기
+
+Chrome에 티스토리 로그인이 살아 있고, 로컬에서 바로 임시저장까지 만들고 싶을 때만 사용합니다.
 
 ```bash
 python draft_tistory_post.py --day 2026-07-02 --from-pages
