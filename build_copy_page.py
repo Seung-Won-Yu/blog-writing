@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent
 DOCS_DIR = ROOT / "docs"
 TISTORY_DIR = DOCS_DIR / "tistory"
 OUT_PATH = DOCS_DIR / "index.html"
+WORKFLOW_URL = "https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/tistory-draft.yml"
 
 
 def esc(value):
@@ -93,6 +94,33 @@ def render(drafts):
       margin: 0;
       color: var(--muted);
       font-size: 15px;
+    }}
+    .header-row {{
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }}
+    .header-copy {{
+      min-width: 0;
+    }}
+    .action-btn {{
+      display: inline-flex;
+      min-height: 42px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      border-radius: 12px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+      white-space: nowrap;
+    }}
+    .action-btn:hover {{
+      background: #0f9b8e;
     }}
     .layout {{
       display: grid;
@@ -228,6 +256,8 @@ def render(drafts):
     }}
     @media (max-width: 820px) {{
       .layout {{ grid-template-columns: 1fr; }}
+      .header-row {{ align-items: stretch; flex-direction: column; }}
+      .action-btn {{ width: 100%; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
       textarea {{ min-height: 430px; }}
@@ -237,8 +267,13 @@ def render(drafts):
 <body>
   <div class="wrap">
     <header>
-      <h1>티스토리 블로그 초안 복사</h1>
-      <p class="lead">조이한 데일리 뉴스룸에서 가져온 글을 티스토리 HTML 모드에 바로 붙여넣을 수 있게 보여줍니다.</p>
+      <div class="header-row">
+        <div class="header-copy">
+          <h1>티스토리 블로그 초안 복사</h1>
+          <p class="lead">조이한 데일리 뉴스룸에서 가져온 글을 티스토리 HTML 모드에 바로 붙여넣을 수 있게 보여줍니다.</p>
+        </div>
+        <a class="action-btn" href="{esc(WORKFLOW_URL)}" target="_blank" rel="noopener" title="GitHub Actions에서 Run workflow로 오늘 초안을 생성합니다.">초안 수동 생성</a>
+      </div>
     </header>
 
     <div class="layout">
