@@ -396,7 +396,7 @@ def render(drafts):
             <div class="field"><span class="label">제목</span><span class="value" id="title"></span><button class="copy" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="copy" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="copy" type="button" data-copy="tags">복사</button></div>
-            <div class="field"><span class="label">메타 설명</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
+            <div class="field"><span class="label">첫 문단/메타</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
             <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
           </div>
 
@@ -496,7 +496,7 @@ def render(drafts):
         "[제목 후보]",
         numbered(current.title_candidates),
         "",
-        "[메타 설명]",
+        "[첫 문단/메타 설명]",
         current.meta_description || "",
         "",
         "[핵심 요약]",

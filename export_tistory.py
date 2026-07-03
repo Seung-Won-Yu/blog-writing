@@ -45,6 +45,9 @@ KICKER_STYLE = (
 )
 TITLE_STYLE = "margin:0 0 14px;color:#18212f;font-size:30px;line-height:1.32;font-weight:800;"
 LEAD_STYLE = "margin:0;color:#475569;font-size:16px;line-height:1.75;"
+META_INTRO_STYLE = (
+    "margin:0 0 14px;color:#334155;font-size:15px;line-height:1.7;font-weight:700;"
+)
 SECTION_TITLE_STYLE = (
     "margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;"
 )
@@ -384,6 +387,7 @@ slug: {slugify(day_id + "-daily-digest")}
 -->
 <article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
+    <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(build_meta_description(day))}</p>
     <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 자동 생성 데일리 다이제스트</p>
     <h2 class="digest-title"{style(TITLE_STYLE)}>오늘의 IT/개발 읽을거리</h2>
     <p class="digest-lead"{style(LEAD_STYLE)}>
