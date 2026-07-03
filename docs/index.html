@@ -193,6 +193,67 @@
       color: #334155;
       font-size: 14px;
     }
+    .image-card {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      margin: 0 0 18px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #ffffff;
+    }
+    .cover-preview {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft);
+    }
+    .image-info {
+      min-width: 0;
+    }
+    .image-info h2 {
+      margin: 0 0 6px;
+      color: #18212f;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+    .image-info p {
+      margin: 0 0 10px;
+      color: #334155;
+      font-size: 14px;
+    }
+    .image-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .download-link {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: #0f9b8e;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+    .image-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .image-list a {
+      color: #0f766e;
+      text-decoration: none;
+    }
     button.copy {
       min-height: 36px;
       padding: 0 12px;
@@ -248,8 +309,10 @@
       .header-row { align-items: stretch; flex-direction: column; }
       .action-btn { width: 100%; }
       .assist-grid { grid-template-columns: 1fr; }
+      .image-card { grid-template-columns: 1fr; }
       .field { grid-template-columns: 1fr; }
       button.copy { width: 100%; }
+      .download-link { width: 100%; }
       textarea { min-height: 430px; }
     }
   </style>
@@ -284,6 +347,19 @@
             <div class="field"><span class="label">메타 설명</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
             <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
           </div>
+
+          <section class="image-card" id="imageCard" hidden>
+            <img class="cover-preview" id="coverPreview" alt="대표 이미지 미리보기" loading="lazy">
+            <div class="image-info">
+              <h2>대표 이미지</h2>
+              <p id="coverTitle"></p>
+              <div class="image-actions">
+                <a class="download-link" id="coverDownload" href="#" download>대표 이미지 다운로드</a>
+                <button class="copy" type="button" data-copy="coverUrl">이미지 URL 복사</button>
+              </div>
+              <ul class="image-list" id="imageList"></ul>
+            </div>
+          </section>
 
           <div class="assist-grid">
             <section class="assist-card">
@@ -320,7 +396,7 @@
   </div>
 
   <script>
-    const drafts = [{"day": "2026-07-03", "title": "[데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리", "[개발 뉴스] ADBC CLI · OpenAI Codex Micro 핵심 정리", "2026. 7. 3 개발 뉴스 요약: ADBC CLI 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 3)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, 플랫폼 엔지니어링 (Platform Engineering), 데이터 레이크 (Data Lake), 싱글 사인온 (Single Sign-On, SSO)", "meta_description": "2026. 7. 3 데일리 IT 뉴스: ADBC CLI, OpenAI Codex Micro 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: databow - ADBC로 데이터베이스를 조회하는 CLI 도구 / OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: 플랫폼 엔지니어링 (Platform Engineering), 데이터 레이크 (Data Lake), 싱글 사인온 (Single Sign-On, SSO)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리"], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-03.html", "html_path": "tistory/2026-07-03.html", "meta_path": "tistory/2026-07-03.json"}, {"day": "2026-07-02", "title": "[데일리 IT 뉴스] 2026. 7. 2 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 2 - 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 정처기 문제 정리", "[개발 뉴스] 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 · 디시젼 트리 인터랙티브 시각화 도구 핵심 정리", "2026. 7. 2 개발 뉴스 요약: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 2)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, 컨테이너 오케스트레이션 (Container Orchestration), 도메인 (Domain), 온보딩 (Onboarding)", "meta_description": "2026. 7. 2 데일리 IT 뉴스: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 디시젼 트리 인터랙티브 시각화 도구 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 / supertree - 디시젼 트리 인터랙티브 시각화 도구 / PlayStation 신작 물리 디스크 생산, 2028년 1월 종료", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: 컨테이너 오케스트레이션 (Container Orchestration), 도메인 (Domain), 온보딩 (Onboarding)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 2 - 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 정처기 문제 정리"], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-02.html", "html_path": "tistory/2026-07-02.html", "meta_path": "tistory/2026-07-02.json"}, {"day": "2026-07-01", "title": "[데일리 IT 뉴스] 2026. 7. 1 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리", "[개발 뉴스] 개정된 엔지니어링 리더십 규칙 · Atlassian DESIGN.md 핵심 정리", "2026. 7. 1 개발 뉴스 요약: 개정된 엔지니어링 리더십 규칙 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 1)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, CQRS (Command Query Responsibility Segregation), DNS 라운드로빈 (DNS Round Robin), 프라이싱 (Pricing)", "meta_description": "2026. 7. 1 데일리 IT 뉴스: 개정된 엔지니어링 리더십 규칙, Atlassian DESIGN.md 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: 개정된 엔지니어링 리더십 규칙 / Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈 / Alert 시스템을 표준화하고 IaC로 운영하기", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: CQRS (Command Query Responsibility Segregation), DNS 라운드로빈 (DNS Round Robin), 프라이싱 (Pricing)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리"], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-01.html", "html_path": "tistory/2026-07-01.html", "meta_path": "tistory/2026-07-01.json"}];
+    const drafts = [{"day": "2026-07-03", "title": "[데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리", "[개발 뉴스] ADBC CLI · OpenAI Codex Micro 핵심 정리", "2026. 7. 3 개발 뉴스 요약: ADBC CLI 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 3)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, 플랫폼 엔지니어링 (Platform Engineering), 데이터 레이크 (Data Lake), 싱글 사인온 (Single Sign-On, SSO)", "meta_description": "2026. 7. 3 데일리 IT 뉴스: ADBC CLI, OpenAI Codex Micro 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: databow - ADBC로 데이터베이스를 조회하는 CLI 도구 / OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: 플랫폼 엔지니어링 (Platform Engineering), 데이터 레이크 (Data Lake), 싱글 사인온 (Single Sign-On, SSO)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리"], "image_assets": [{"title": "databow - ADBC로 데이터베이스를 조회하는 CLI 도구", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-01.png", "path": "docs/tistory/assets/2026-07-03/news-01.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/c4d711def87b.png"}, {"title": "OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-02.png", "path": "docs/tistory/assets/2026-07-03/news-02.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/9e7ef179f50e.png"}], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-03.html", "html_path": "tistory/2026-07-03.html", "meta_path": "tistory/2026-07-03.json"}, {"day": "2026-07-02", "title": "[데일리 IT 뉴스] 2026. 7. 2 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 2 - 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 정처기 문제 정리", "[개발 뉴스] 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 · 디시젼 트리 인터랙티브 시각화 도구 핵심 정리", "2026. 7. 2 개발 뉴스 요약: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 2)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, 컨테이너 오케스트레이션 (Container Orchestration), 도메인 (Domain), 온보딩 (Onboarding)", "meta_description": "2026. 7. 2 데일리 IT 뉴스: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 디시젼 트리 인터랙티브 시각화 도구 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: 논쟁 대부분은 아이디어가 아니라 자아에 관한 것 / supertree - 디시젼 트리 인터랙티브 시각화 도구 / PlayStation 신작 물리 디스크 생산, 2028년 1월 종료", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: 컨테이너 오케스트레이션 (Container Orchestration), 도메인 (Domain), 온보딩 (Onboarding)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 2 - 논쟁 대부분은 아이디어가 아니라 자아에 관한 것, 정처기 문제 정리"], "image_assets": [{"title": "논쟁 대부분은 아이디어가 아니라 자아에 관한 것", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-01.png", "path": "docs/tistory/assets/2026-07-02/news-01.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/1138e083d395.png"}, {"title": "supertree - 디시젼 트리 인터랙티브 시각화 도구", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-02.png", "path": "docs/tistory/assets/2026-07-02/news-02.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/fbdbfd935059.png"}, {"title": "PlayStation 신작 물리 디스크 생산, 2028년 1월 종료", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-02/news-03.png", "path": "docs/tistory/assets/2026-07-02/news-03.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/4e3e1d25dc80.png"}], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-02.html", "html_path": "tistory/2026-07-02.html", "meta_path": "tistory/2026-07-02.json"}, {"day": "2026-07-01", "title": "[데일리 IT 뉴스] 2026. 7. 1 - 오늘의 개발 뉴스와 정처기 문제", "title_candidates": ["[데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리", "[개발 뉴스] 개정된 엔지니어링 리더십 규칙 · Atlassian DESIGN.md 핵심 정리", "2026. 7. 1 개발 뉴스 요약: 개정된 엔지니어링 리더십 규칙 외 오늘의 IT 이슈", "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 1)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, CQRS (Command Query Responsibility Segregation), DNS 라운드로빈 (DNS Round Robin), 프라이싱 (Pricing)", "meta_description": "2026. 7. 1 데일리 IT 뉴스: 개정된 엔지니어링 리더십 규칙, Atlassian DESIGN.md 핵심과 운영체제 문제, 개발 용어를 정리했습니다.", "key_summary": ["오늘의 주요 뉴스: 개정된 엔지니어링 리더십 규칙 / Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈 / Alert 시스템을 표준화하고 IaC로 운영하기", "정처기 포인트: 운영체제 문제로 개념을 점검합니다.", "함께 익힐 용어: CQRS (Command Query Responsibility Segregation), DNS 라운드로빈 (DNS Round Robin), 프라이싱 (Pricing)", "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 상단 이미지가 정상 표시되는지 확인하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: [데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리"], "image_assets": [{"title": "개정된 엔지니어링 리더십 규칙", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-01.png", "path": "docs/tistory/assets/2026-07-01/news-01.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/50f3bb3ed755.png"}, {"title": "Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-02.png", "path": "docs/tistory/assets/2026-07-01/news-02.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/0f8ed8737a8a.png"}, {"title": "Alert 시스템을 표준화하고 IaC로 운영하기", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-01/news-03.png", "path": "docs/tistory/assets/2026-07-01/news-03.png", "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/965f83806ff6.png"}], "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-01.html", "html_path": "tistory/2026-07-01.html", "meta_path": "tistory/2026-07-01.json"}];
     const latest = "2026-07-03";
     let current = null;
     let currentHtml = "";
@@ -335,6 +411,11 @@
       titleCandidates: document.getElementById("titleCandidates"),
       keySummary: document.getElementById("keySummary"),
       publishChecklist: document.getElementById("publishChecklist"),
+      imageCard: document.getElementById("imageCard"),
+      coverPreview: document.getElementById("coverPreview"),
+      coverTitle: document.getElementById("coverTitle"),
+      coverDownload: document.getElementById("coverDownload"),
+      imageList: document.getElementById("imageList"),
       htmlCode: document.getElementById("htmlCode"),
       status: document.getElementById("status"),
     };
@@ -374,6 +455,43 @@
       ].join("\n");
     }
 
+    function filenameFromUrl(url) {
+      try {
+        const pathname = new URL(url).pathname;
+        return pathname.split("/").filter(Boolean).pop() || "cover-image.png";
+      } catch (error) {
+        return "cover-image.png";
+      }
+    }
+
+    function renderImageAssets(assets) {
+      const cover = (assets || [])[0];
+      els.imageList.innerHTML = "";
+      if (!cover || !cover.url) {
+        els.imageCard.hidden = true;
+        els.coverPreview.removeAttribute("src");
+        return;
+      }
+
+      els.imageCard.hidden = false;
+      els.coverPreview.src = cover.url;
+      els.coverTitle.textContent = cover.title || "오늘 글 대표 이미지";
+      els.coverDownload.href = cover.url;
+      els.coverDownload.download = `${current.day}-${filenameFromUrl(cover.url)}`;
+
+      (assets || []).forEach((asset, index) => {
+        if (!asset.url) return;
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = asset.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = `${index + 1}번 이미지 열기`;
+        li.appendChild(a);
+        els.imageList.appendChild(li);
+      });
+    }
+
     async function selectDraft(day) {
       const draft = byDay.get(day);
       if (!draft) return;
@@ -389,6 +507,7 @@
       renderList(els.titleCandidates, draft.title_candidates);
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
+      renderImageAssets(draft.image_assets);
       els.htmlCode.value = "불러오는 중...";
       const response = await fetch(draft.html_path + "?v=" + Date.now());
       currentHtml = await response.text();
@@ -426,6 +545,7 @@
       if (type === "summary") copyText(numbered(current.key_summary), "핵심 요약");
       if (type === "checklist") copyText(numbered(current.publish_checklist), "체크리스트");
       if (type === "allMeta") copyText(operatingMemo(), "운영 정보");
+      if (type === "coverUrl") copyText((current.image_assets || [])[0]?.url, "대표 이미지 URL");
       if (type === "source") copyText(current.source_page, "원본 링크");
     });
 

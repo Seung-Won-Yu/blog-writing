@@ -35,6 +35,7 @@ def load_drafts():
                 "meta_description": meta.get("meta_description") or "",
                 "key_summary": meta.get("key_summary") or [],
                 "publish_checklist": meta.get("publish_checklist") or [],
+                "image_assets": meta.get("image_assets") or [],
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
                 "meta_path": f"tistory/{day}.json",
@@ -246,6 +247,67 @@ def render(drafts):
       color: #334155;
       font-size: 14px;
     }}
+    .image-card {{
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      margin: 0 0 18px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #ffffff;
+    }}
+    .cover-preview {{
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft);
+    }}
+    .image-info {{
+      min-width: 0;
+    }}
+    .image-info h2 {{
+      margin: 0 0 6px;
+      color: #18212f;
+      font-size: 15px;
+      line-height: 1.35;
+    }}
+    .image-info p {{
+      margin: 0 0 10px;
+      color: #334155;
+      font-size: 14px;
+    }}
+    .image-actions {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }}
+    .download-link {{
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: #0f9b8e;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 850;
+      text-decoration: none;
+    }}
+    .image-list {{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }}
+    .image-list a {{
+      color: #0f766e;
+      text-decoration: none;
+    }}
     button.copy {{
       min-height: 36px;
       padding: 0 12px;
@@ -301,8 +363,10 @@ def render(drafts):
       .header-row {{ align-items: stretch; flex-direction: column; }}
       .action-btn {{ width: 100%; }}
       .assist-grid {{ grid-template-columns: 1fr; }}
+      .image-card {{ grid-template-columns: 1fr; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
+      .download-link {{ width: 100%; }}
       textarea {{ min-height: 430px; }}
     }}
   </style>
@@ -335,6 +399,19 @@ def render(drafts):
             <div class="field"><span class="label">메타 설명</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
             <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
           </div>
+
+          <section class="image-card" id="imageCard" hidden>
+            <img class="cover-preview" id="coverPreview" alt="대표 이미지 미리보기" loading="lazy">
+            <div class="image-info">
+              <h2>대표 이미지</h2>
+              <p id="coverTitle"></p>
+              <div class="image-actions">
+                <a class="download-link" id="coverDownload" href="#" download>대표 이미지 다운로드</a>
+                <button class="copy" type="button" data-copy="coverUrl">이미지 URL 복사</button>
+              </div>
+              <ul class="image-list" id="imageList"></ul>
+            </div>
+          </section>
 
           <div class="assist-grid">
             <section class="assist-card">
@@ -386,6 +463,11 @@ def render(drafts):
       titleCandidates: document.getElementById("titleCandidates"),
       keySummary: document.getElementById("keySummary"),
       publishChecklist: document.getElementById("publishChecklist"),
+      imageCard: document.getElementById("imageCard"),
+      coverPreview: document.getElementById("coverPreview"),
+      coverTitle: document.getElementById("coverTitle"),
+      coverDownload: document.getElementById("coverDownload"),
+      imageList: document.getElementById("imageList"),
       htmlCode: document.getElementById("htmlCode"),
       status: document.getElementById("status"),
     }};
@@ -425,6 +507,43 @@ def render(drafts):
       ].join("\\n");
     }}
 
+    function filenameFromUrl(url) {{
+      try {{
+        const pathname = new URL(url).pathname;
+        return pathname.split("/").filter(Boolean).pop() || "cover-image.png";
+      }} catch (error) {{
+        return "cover-image.png";
+      }}
+    }}
+
+    function renderImageAssets(assets) {{
+      const cover = (assets || [])[0];
+      els.imageList.innerHTML = "";
+      if (!cover || !cover.url) {{
+        els.imageCard.hidden = true;
+        els.coverPreview.removeAttribute("src");
+        return;
+      }}
+
+      els.imageCard.hidden = false;
+      els.coverPreview.src = cover.url;
+      els.coverTitle.textContent = cover.title || "오늘 글 대표 이미지";
+      els.coverDownload.href = cover.url;
+      els.coverDownload.download = `${{current.day}}-${{filenameFromUrl(cover.url)}}`;
+
+      (assets || []).forEach((asset, index) => {{
+        if (!asset.url) return;
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = asset.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = `${{index + 1}}번 이미지 열기`;
+        li.appendChild(a);
+        els.imageList.appendChild(li);
+      }});
+    }}
+
     async function selectDraft(day) {{
       const draft = byDay.get(day);
       if (!draft) return;
@@ -440,6 +559,7 @@ def render(drafts):
       renderList(els.titleCandidates, draft.title_candidates);
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
+      renderImageAssets(draft.image_assets);
       els.htmlCode.value = "불러오는 중...";
       const response = await fetch(draft.html_path + "?v=" + Date.now());
       currentHtml = await response.text();
@@ -477,6 +597,7 @@ def render(drafts):
       if (type === "summary") copyText(numbered(current.key_summary), "핵심 요약");
       if (type === "checklist") copyText(numbered(current.publish_checklist), "체크리스트");
       if (type === "allMeta") copyText(operatingMemo(), "운영 정보");
+      if (type === "coverUrl") copyText((current.image_assets || [])[0]?.url, "대표 이미지 URL");
       if (type === "source") copyText(current.source_page, "원본 링크");
     }});
 
