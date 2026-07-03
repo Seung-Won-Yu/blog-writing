@@ -1,0 +1,29 @@
+{
+  "title": "[데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제",
+  "category": "데일리IT뉴스",
+  "tags": [
+    "AI",
+    "IT뉴스",
+    "개발뉴스",
+    "정처기",
+    "개발용어",
+    "데일리다이제스트"
+  ],
+  "source": "data/days/2026-07-03.json",
+  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-03.html",
+  "html": "docs/tistory/2026-07-03.html",
+  "image_assets": [
+    {
+      "title": "databow - ADBC로 데이터베이스를 조회하는 CLI 도구",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-01.png",
+      "path": "docs/tistory/assets/2026-07-03/news-01.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/c4d711def87b.png"
+    },
+    {
+      "title": "OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-02.png",
+      "path": "docs/tistory/assets/2026-07-03/news-02.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/9e7ef179f50e.png"
+    }
+  ]
+}
