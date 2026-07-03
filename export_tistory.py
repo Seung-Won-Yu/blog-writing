@@ -83,6 +83,11 @@ NOTE_STYLE = (
     "margin-top:34px;padding:16px 18px;border-left:4px solid #0f9b8e;border-radius:12px;"
     "background:#f8fafc;color:#64748b;font-size:14px;line-height:1.7;"
 )
+SUMMARY_STYLE = (
+    "margin:0 0 28px;padding:20px 22px;border:1px solid #d9e0ea;border-radius:16px;"
+    "background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);"
+)
+SUMMARY_LIST_STYLE = "margin:0;padding-left:20px;color:#475569;line-height:1.75;"
 
 
 def esc(value):
@@ -154,6 +159,100 @@ def style(value):
 def post_title(day):
     label = plain(day.get("date_label"))
     return f"[데일리 IT 뉴스] {label} - 오늘의 개발 뉴스와 정처기 문제"
+
+
+def news_titles(day, limit=None):
+    titles = [plain(item.get("title_kr")) for item in day.get("news", [])]
+    titles = [title for title in titles if title]
+    return titles[:limit] if limit else titles
+
+
+def trim_text(text, limit):
+    value = plain(text)
+    if len(value) <= limit:
+        return value
+    return value[: limit - 1].rstrip() + "…"
+
+
+def build_title_candidates(day):
+    label = plain(day.get("date_label"))
+    titles = news_titles(day, 3)
+    first = titles[0] if titles else "오늘의 개발 뉴스"
+    second = titles[1] if len(titles) > 1 else "정처기 문제"
+
+    candidates = [
+        f"[데일리 IT 뉴스] {label} - {trim_text(first, 22)}, 정처기 문제 정리",
+        f"{label} 개발 뉴스 요약: {trim_text(first, 24)} 외 오늘의 IT 이슈",
+        f"오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 ({label})",
+    ]
+    if len(titles) > 1:
+        candidates.insert(
+            1,
+            f"[개발 뉴스] {trim_text(first, 18)} · {trim_text(second, 18)} 핵심 정리",
+        )
+    return candidates[:4]
+
+
+def build_meta_description(day):
+    label = plain(day.get("date_label"))
+    titles = news_titles(day, 2)
+    topic_text = ", ".join(titles) if titles else "오늘의 AI/개발 뉴스"
+    quiz = day.get("quiz") or {}
+    quiz_category = plain(quiz.get("category")) or "정보처리기사"
+    return trim_text(
+        f"{label} 데일리 IT 뉴스입니다. {topic_text}를 중심으로 핵심 내용을 정리하고 "
+        f"{quiz_category} 문제와 개발 용어까지 함께 공부할 수 있게 구성했습니다.",
+        155,
+    )
+
+
+def build_key_summary(day):
+    titles = news_titles(day, 3)
+    quiz = day.get("quiz") or {}
+    terms = [plain(item.get("term")) for item in day.get("terms", []) if item.get("term")]
+
+    rows = []
+    if titles:
+        rows.append("오늘의 주요 뉴스: " + " / ".join(titles))
+    if quiz.get("question"):
+        rows.append(f"정처기 포인트: {plain(quiz.get('category')) or '기초상식'} 문제로 개념을 점검합니다.")
+    if terms:
+        rows.append("함께 익힐 용어: " + ", ".join(terms[:4]))
+    rows.append("읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.")
+    return rows[:4]
+
+
+def build_publish_checklist(day):
+    titles = build_title_candidates(day)
+    return [
+        "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+        "본문 상단 이미지가 정상 표시되는지 확인하기",
+        "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+        "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
+        f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
+    ]
+
+
+def build_recommended_tags(day):
+    tags = list(DEFAULT_TAGS)
+    for item in day.get("news", []):
+        source = plain(item.get("source"))
+        if source and source not in tags:
+            tags.append(source)
+    for term in day.get("terms", [])[:3]:
+        value = plain(term.get("term"))
+        if value and value not in tags:
+            tags.append(value)
+    return tags[:12]
+
+
+def build_summary_section(day):
+    rows = "".join(f"<li>{esc(item)}</li>" for item in build_key_summary(day))
+    return f"""
+<section class="digest-summary"{style(SUMMARY_STYLE)}>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 핵심 요약</h2>
+  <ul{style(SUMMARY_LIST_STYLE)}>{rows}</ul>
+</section>""".strip()
 
 
 def build_news_section(news):
@@ -265,6 +364,8 @@ slug: {slugify(day_id + "-daily-digest")}
     </p>
   </section>
 
+  {build_summary_section(day)}
+
   <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 3개</h2>
   {build_news_section(news)}
 
@@ -302,8 +403,12 @@ def write_post(day_id, day=None, source_page=None):
         json.dumps(
             {
                 "title": post_title(day),
+                "title_candidates": build_title_candidates(day),
                 "category": DEFAULT_CATEGORY,
-                "tags": DEFAULT_TAGS,
+                "tags": build_recommended_tags(day),
+                "meta_description": build_meta_description(day),
+                "key_summary": build_key_summary(day),
+                "publish_checklist": build_publish_checklist(day),
                 "source": f"data/days/{day_id}.json",
                 "source_page": source_page,
                 "html": f"docs/tistory/{day_id}.html",

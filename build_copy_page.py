@@ -29,8 +29,12 @@ def load_drafts():
             {
                 "day": day,
                 "title": meta.get("title") or day,
+                "title_candidates": meta.get("title_candidates") or [],
                 "category": meta.get("category") or "",
                 "tags": ", ".join(meta.get("tags") or []),
+                "meta_description": meta.get("meta_description") or "",
+                "key_summary": meta.get("key_summary") or [],
+                "publish_checklist": meta.get("publish_checklist") or [],
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
                 "meta_path": f"tistory/{day}.json",
@@ -204,6 +208,44 @@ def render(drafts):
       text-overflow: ellipsis;
       white-space: nowrap;
     }}
+    .value.long {{
+      white-space: normal;
+    }}
+    .assist-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 18px;
+    }}
+    .assist-card {{
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }}
+    .assist-card h2 {{
+      margin: 0 0 10px;
+      color: #18212f;
+      font-size: 15px;
+      line-height: 1.35;
+    }}
+    .assist-card ul {{
+      display: grid;
+      gap: 8px;
+      margin: 0 0 12px;
+      padding-left: 18px;
+      color: #334155;
+      font-size: 14px;
+    }}
+    .assist-card li {{
+      padding-left: 2px;
+    }}
+    .assist-card p {{
+      margin: 0 0 12px;
+      color: #334155;
+      font-size: 14px;
+    }}
     button.copy {{
       min-height: 36px;
       padding: 0 12px;
@@ -258,6 +300,7 @@ def render(drafts):
       .layout {{ grid-template-columns: 1fr; }}
       .header-row {{ align-items: stretch; flex-direction: column; }}
       .action-btn {{ width: 100%; }}
+      .assist-grid {{ grid-template-columns: 1fr; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
       textarea {{ min-height: 430px; }}
@@ -289,7 +332,31 @@ def render(drafts):
             <div class="field"><span class="label">제목</span><span class="value" id="title"></span><button class="copy" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="copy" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="copy" type="button" data-copy="tags">복사</button></div>
+            <div class="field"><span class="label">메타 설명</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
             <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
+          </div>
+
+          <div class="assist-grid">
+            <section class="assist-card">
+              <h2>검색형 제목 후보</h2>
+              <ul id="titleCandidates"></ul>
+              <button class="copy" type="button" data-copy="titles">제목 후보 복사</button>
+            </section>
+            <section class="assist-card">
+              <h2>오늘의 핵심 요약</h2>
+              <ul id="keySummary"></ul>
+              <button class="copy" type="button" data-copy="summary">요약 복사</button>
+            </section>
+            <section class="assist-card">
+              <h2>발행 체크리스트</h2>
+              <ul id="publishChecklist"></ul>
+              <button class="copy" type="button" data-copy="checklist">체크리스트 복사</button>
+            </section>
+            <section class="assist-card">
+              <h2>운영 메모</h2>
+              <p>제목은 후보 중 하나를 골라 티스토리 제목칸에 넣고, 본문은 HTML 모드에서 붙여넣으면 됩니다.</p>
+              <button class="copy" type="button" data-copy="allMeta">운영 정보 전체 복사</button>
+            </section>
           </div>
 
           <div class="code-head">
@@ -314,7 +381,11 @@ def render(drafts):
       title: document.getElementById("title"),
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
+      metaDescription: document.getElementById("metaDescription"),
       source: document.getElementById("source"),
+      titleCandidates: document.getElementById("titleCandidates"),
+      keySummary: document.getElementById("keySummary"),
+      publishChecklist: document.getElementById("publishChecklist"),
       htmlCode: document.getElementById("htmlCode"),
       status: document.getElementById("status"),
     }};
@@ -322,6 +393,36 @@ def render(drafts):
     function setStatus(text) {{
       els.status.textContent = text;
       if (text) setTimeout(() => {{ if (els.status.textContent === text) els.status.textContent = ""; }}, 1800);
+    }}
+
+    function renderList(target, rows) {{
+      target.innerHTML = "";
+      (rows || []).forEach((text) => {{
+        const li = document.createElement("li");
+        li.textContent = text;
+        target.appendChild(li);
+      }});
+    }}
+
+    function numbered(rows) {{
+      return (rows || []).map((text, index) => `${{index + 1}}. ${{text}}`).join("\\n");
+    }}
+
+    function operatingMemo() {{
+      if (!current) return "";
+      return [
+        "[제목 후보]",
+        numbered(current.title_candidates),
+        "",
+        "[메타 설명]",
+        current.meta_description || "",
+        "",
+        "[핵심 요약]",
+        numbered(current.key_summary),
+        "",
+        "[발행 체크리스트]",
+        numbered(current.publish_checklist),
+      ].join("\\n");
     }}
 
     async function selectDraft(day) {{
@@ -334,7 +435,11 @@ def render(drafts):
       els.title.textContent = draft.title || "";
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
+      els.metaDescription.textContent = draft.meta_description || "";
       els.source.textContent = draft.source_page || "";
+      renderList(els.titleCandidates, draft.title_candidates);
+      renderList(els.keySummary, draft.key_summary);
+      renderList(els.publishChecklist, draft.publish_checklist);
       els.htmlCode.value = "불러오는 중...";
       const response = await fetch(draft.html_path + "?v=" + Date.now());
       currentHtml = await response.text();
@@ -365,8 +470,13 @@ def render(drafts):
       const type = button.dataset.copy;
       if (type === "html") copyText(currentHtml, "본문 HTML");
       if (type === "title") copyText(current.title, "제목");
+      if (type === "titles") copyText(numbered(current.title_candidates), "제목 후보");
       if (type === "category") copyText(current.category, "카테고리");
       if (type === "tags") copyText(current.tags, "태그");
+      if (type === "meta") copyText(current.meta_description, "메타 설명");
+      if (type === "summary") copyText(numbered(current.key_summary), "핵심 요약");
+      if (type === "checklist") copyText(numbered(current.publish_checklist), "체크리스트");
+      if (type === "allMeta") copyText(operatingMemo(), "운영 정보");
       if (type === "source") copyText(current.source_page, "원본 링크");
     }});
 

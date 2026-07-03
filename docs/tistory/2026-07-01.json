@@ -1,5 +1,11 @@
 {
   "title": "[데일리 IT 뉴스] 2026. 7. 1 - 오늘의 개발 뉴스와 정처기 문제",
+  "title_candidates": [
+    "[데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리",
+    "[개발 뉴스] 개정된 엔지니어링 리더십 규칙 · Atlassian의 DESIGN… 핵심 정리",
+    "2026. 7. 1 개발 뉴스 요약: 개정된 엔지니어링 리더십 규칙 외 오늘의 IT 이슈",
+    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 1)"
+  ],
   "category": "데일리IT뉴스",
   "tags": [
     "AI",
@@ -7,7 +13,25 @@
     "개발뉴스",
     "정처기",
     "개발용어",
-    "데일리다이제스트"
+    "데일리다이제스트",
+    "GeekNews",
+    "CQRS (Command Query Responsibility Segregation)",
+    "DNS 라운드로빈 (DNS Round Robin)",
+    "프라이싱 (Pricing)"
+  ],
+  "meta_description": "2026. 7. 1 데일리 IT 뉴스입니다. 개정된 엔지니어링 리더십 규칙, Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈를 중심으로 핵심 내용을 정리하고 운영체제 문제와 개발 용어까지 함께 공부할 수 있게 구성했습니다.",
+  "key_summary": [
+    "오늘의 주요 뉴스: 개정된 엔지니어링 리더십 규칙 / Atlassian의 DESIGN.md 공개 - 이식 가능한 디자인 컨텍스트를 실전 테스트하며 얻은 교훈 / Alert 시스템을 표준화하고 IaC로 운영하기",
+    "정처기 포인트: 운영체제 문제로 개념을 점검합니다.",
+    "함께 익힐 용어: CQRS (Command Query Responsibility Segregation), DNS 라운드로빈 (DNS Round Robin), 프라이싱 (Pricing)",
+    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 상단 이미지가 정상 표시되는지 확인하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 1 - 개정된 엔지니어링 리더십 규칙, 정처기 문제 정리"
   ],
   "source": "data/days/2026-07-01.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-01.html",
