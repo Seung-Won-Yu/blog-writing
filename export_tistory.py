@@ -223,13 +223,14 @@ def build_title_candidates(day):
 def build_meta_description(day):
     label = plain(day.get("date_label"))
     titles = news_titles(day, 2)
-    topic_text = ", ".join(titles) if titles else "오늘의 AI/개발 뉴스"
+    keywords = [title_keyword(title, 34) for title in titles]
+    keywords = [keyword for keyword in keywords if keyword]
+    topic_text = ", ".join(keywords[:2]) if keywords else "AI/개발 뉴스"
     quiz = day.get("quiz") or {}
     quiz_category = plain(quiz.get("category")) or "정보처리기사"
-    return trim_text(
-        f"{label} 데일리 IT 뉴스입니다. {topic_text}를 중심으로 핵심 내용을 정리하고 "
-        f"{quiz_category} 문제와 개발 용어까지 함께 공부할 수 있게 구성했습니다.",
-        155,
+    return (
+        f"{label} 데일리 IT 뉴스: {topic_text} 핵심과 "
+        f"{quiz_category} 문제, 개발 용어를 정리했습니다."
     )
 
 
