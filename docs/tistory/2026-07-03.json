@@ -1,9 +1,9 @@
 {
   "title": "[데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 3 - databow - ADBC로 데이터베이…, 정처기 문제 정리",
-    "[개발 뉴스] databow - ADBC로 데… · OpenAI, Codex 전용… 핵심 정리",
-    "2026. 7. 3 개발 뉴스 요약: databow - ADBC로 데이터베이스를… 외 오늘의 IT 이슈",
+    "[데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리",
+    "[개발 뉴스] ADBC CLI · OpenAI Codex Micro 핵심 정리",
+    "2026. 7. 3 개발 뉴스 요약: ADBC CLI 외 오늘의 IT 이슈",
     "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 3)"
   ],
   "category": "데일리IT뉴스",
@@ -31,7 +31,7 @@
     "본문 상단 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 3 - databow - ADBC로 데이터베이…, 정처기 문제 정리"
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리"
   ],
   "source": "data/days/2026-07-03.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-03.html",

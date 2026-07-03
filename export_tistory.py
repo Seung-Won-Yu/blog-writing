@@ -174,21 +174,48 @@ def trim_text(text, limit):
     return value[: limit - 1].rstrip() + "…"
 
 
+def title_keyword(text, limit=28):
+    value = plain(text)
+    if " - " in value:
+        left, right = value.split(" - ", 1)
+        if len(left) <= 18:
+            value = right
+
+    english_terms = []
+    for term in re.findall(r"[A-Za-z][A-Za-z0-9+._/-]*", value):
+        normalized = term.strip(".,:;()[]{}")
+        if len(normalized) < 2:
+            continue
+        if normalized.lower() in {"the", "and", "with", "for", "from"}:
+            continue
+        if normalized not in english_terms:
+            english_terms.append(normalized)
+    if english_terms:
+        return " ".join(english_terms[:3])
+
+    value = re.split(r"[,·:;|()]", value)[0].strip()
+    if len(value) > limit:
+        return value[:limit].rstrip()
+    return value
+
+
 def build_title_candidates(day):
     label = plain(day.get("date_label"))
     titles = news_titles(day, 3)
     first = titles[0] if titles else "오늘의 개발 뉴스"
     second = titles[1] if len(titles) > 1 else "정처기 문제"
+    first_keyword = title_keyword(first)
+    second_keyword = title_keyword(second)
 
     candidates = [
-        f"[데일리 IT 뉴스] {label} - {trim_text(first, 22)}, 정처기 문제 정리",
-        f"{label} 개발 뉴스 요약: {trim_text(first, 24)} 외 오늘의 IT 이슈",
+        f"[데일리 IT 뉴스] {label} - {first_keyword}, 정처기 문제 정리",
+        f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
         f"오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 ({label})",
     ]
     if len(titles) > 1:
         candidates.insert(
             1,
-            f"[개발 뉴스] {trim_text(first, 18)} · {trim_text(second, 18)} 핵심 정리",
+            f"[개발 뉴스] {first_keyword} · {second_keyword} 핵심 정리",
         )
     return candidates[:4]
 
