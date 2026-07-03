@@ -13,7 +13,8 @@ https://ihan0316.github.io/ai-weekly-newsroom/
 ```text
 09:30 KST  조이한 GitHub Pages 쪽 데일리 뉴스 발행
 10:30 KST  이 저장소의 GitHub Actions 1차 실행
-13:00 KST  10:30 실행이 늦거나 실패했을 때를 대비한 백업 실행
+11:00 KST  GitHub 예약 실행 지연/누락 대비 재시도
+13:00 KST  앞선 실행이 늦거나 실패했을 때를 대비한 백업 실행
            원본 Pages 글과 원본 JSON을 가져옴
            뉴스 이미지를 docs/tistory/assets/YYYY-MM-DD/에 저장
            docs/tistory/YYYY-MM-DD.html 생성
@@ -30,7 +31,7 @@ https://seung-won-yu.github.io/blog-writing/
 ## 필요한 파일
 
 ```text
-.github/workflows/tistory-draft.yml # 매일 10:30/13:00 KST 초안 생성
+.github/workflows/tistory-draft.yml # 매일 10:30/11:00/13:00 KST 초안 생성
 .github/workflows/pages.yml         # docs 복사 페이지를 GitHub Pages로 배포
 pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용 데이터로 변환
 export_tistory.py                   # 티스토리 본문 HTML 생성
@@ -91,7 +92,7 @@ docs/tistory/YYYY-MM-DD.json
 - 티스토리 로그인 필요 없음
 - 별도 비밀 키 필요 없음
 
-원본 사이트가 9:30 KST 이후 정상 발행되어 있으면, 10:30 KST에 초안 HTML과 이미지를 가져와 저장합니다. 원본 Pages 반영이 늦는 날을 대비해 13:00 KST에 같은 작업을 한 번 더 시도합니다.
+원본 사이트가 9:30 KST 이후 정상 발행되어 있으면, 10:30 KST에 초안 HTML과 이미지를 가져와 저장합니다. GitHub 예약 실행이 지연되거나 원본 Pages 반영이 늦는 날을 대비해 11:00 KST와 13:00 KST에 같은 작업을 한 번 더 시도합니다.
 
 ## 주의
 
