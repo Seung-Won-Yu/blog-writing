@@ -18,7 +18,7 @@ https://ihan0316.github.io/ai-weekly-newsroom/
            docs/tistory/YYYY-MM-DD.html 생성
            docs/tistory/YYYY-MM-DD.json 생성
            이 저장소에 자동 커밋
-           GitHub Pages가 main /docs를 공개 페이지로 자동 배포
+           같은 workflow에서 GitHub Pages 복사 페이지까지 배포
 ```
 
 보통 10시 40분 이후에는 복사 페이지에서 제목, 태그, 본문 HTML을 바로 복사해 티스토리 글쓰기 HTML 모드에 붙여넣으면 됩니다.
@@ -41,7 +41,7 @@ docs/index.html                     # 복사 전용 페이지
 
 ## 수동 실행
 
-복사 페이지의 `초안 수동 생성/배포` 버튼을 누르면 GitHub Actions 화면이 열립니다. 그 화면에서 `Run workflow`를 누르면 오늘 날짜 초안을 직접 만들고 GitHub Pages 배포까지 요청합니다.
+복사 페이지의 `초안 수동 생성/배포` 버튼을 누르면 GitHub Actions 화면이 열립니다. 그 화면에서 `Run workflow`를 누르면 오늘 날짜 초안을 직접 만들고 GitHub Pages 복사 페이지까지 배포합니다.
 
 오늘 날짜 초안을 직접 만들 때:
 
