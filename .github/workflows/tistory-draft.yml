@@ -2,11 +2,12 @@ name: Tistory draft HTML
 
 on:
   schedule:
-    - cron: '23 4 * * *'   # 04:23 UTC = 13:23 KST. 원본 뉴스 발행 후 초안 생성
+    - cron: '35 1 * * *'   # 01:35 UTC = 10:35 KST. 원본 뉴스 발행 후 초안 생성
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
   contents: write
+  pages: write
 
 concurrency:
   group: tistory-draft
@@ -48,3 +49,9 @@ jobs:
             git commit -m "Tistory draft: add $(TZ=Asia/Seoul date +%F) HTML"
             git push
           fi
+
+      - name: Request GitHub Pages rebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" || true
