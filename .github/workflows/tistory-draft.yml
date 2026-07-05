@@ -2,15 +2,22 @@ name: Tistory draft HTML
 
 on:
   schedule:
-    - cron: '23 1 * * *'  # 01:23 UTC = 10:23 KST (매일 1차 시도)
-    - cron: '37 1 * * *'  # 01:37 UTC = 10:37 KST (예약 지연 대비 재시도)
-    - cron: '53 1 * * *'  # 01:53 UTC = 10:53 KST (원본 Pages 반영 지연 대비)
-    - cron: '13 2 * * *'  # 02:13 UTC = 11:13 KST (추가 재시도)
-    - cron: '33 2 * * *'  # 02:33 UTC = 11:33 KST (최종 백업 시도)
+    - cron: '23 10 * * *' # 매일 10:23 KST 1차 시도
+      timezone: Asia/Seoul
+    - cron: '37 10 * * *' # 매일 10:37 KST 예약 지연 대비
+      timezone: Asia/Seoul
+    - cron: '53 10 * * *' # 매일 10:53 KST 원본 Pages 반영 지연 대비
+      timezone: Asia/Seoul
+    - cron: '13 11 * * *' # 매일 11:13 KST 추가 재시도
+      timezone: Asia/Seoul
+    - cron: '33 11 * * *' # 매일 11:33 KST 최종 백업 시도
+      timezone: Asia/Seoul
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: tistory-draft
@@ -18,6 +25,9 @@ concurrency:
 
 jobs:
   export:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,3 +62,12 @@ jobs:
             git commit -m "Tistory draft: add $(TZ=Asia/Seoul date +%F) HTML"
             git push
           fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - id: deployment
+        uses: actions/deploy-pages@v5
