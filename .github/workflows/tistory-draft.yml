@@ -2,14 +2,11 @@ name: Tistory draft HTML
 
 on:
   schedule:
-    - cron: '17,32,47 1-4 * * *' # KST 10:17~13:47, 15분 간격
-    - cron: '5 5 * * *'           # KST 14:05 최종 백업 시도
+    - cron: '23 4 * * *'   # 04:23 UTC = 13:23 KST. 원본 뉴스 발행 후 초안 생성
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: tistory-draft
@@ -17,9 +14,6 @@ concurrency:
 
 jobs:
   export:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,41 +38,13 @@ jobs:
           python build_copy_page.py
 
       - name: Commit & push
-        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 생략"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "Tistory draft: add $(TZ=Asia/Seoul date +%F) HTML"
             git push
-            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Check published draft
-        id: published
-        env:
-          TZ: Asia/Seoul
-        run: |
-          today="$(date +%F)"
-          url="https://seung-won-yu.github.io/blog-writing/tistory/${today}.html?check=$(date +%s)"
-          if curl --fail --location --silent --output /dev/null "$url"; then
-            echo "published=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "published=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - uses: actions/configure-pages@v5
-        if: steps.commit.outputs.changed == 'true' || steps.published.outputs.published != 'true' || github.event_name == 'workflow_dispatch'
-
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.commit.outputs.changed == 'true' || steps.published.outputs.published != 'true' || github.event_name == 'workflow_dispatch'
-        with:
-          path: docs
-
-      - id: deployment
-        if: steps.commit.outputs.changed == 'true' || steps.published.outputs.published != 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/deploy-pages@v5
