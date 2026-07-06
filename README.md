@@ -13,6 +13,7 @@ https://ihan0316.github.io/ai-weekly-newsroom/
 ```text
 아침 KST  조이한 GitHub Pages 쪽 데일리 뉴스 발행
 10:35 KST 이 저장소의 GitHub Actions 실행
+10:47/11:13 KST GitHub 예약 누락 대비 보강 실행
            원본 Pages 글과 원본 JSON을 가져옴
            뉴스 이미지를 docs/tistory/assets/YYYY-MM-DD/에 저장
            docs/tistory/YYYY-MM-DD.html 생성
@@ -21,7 +22,7 @@ https://ihan0316.github.io/ai-weekly-newsroom/
            같은 workflow에서 GitHub Pages 복사 페이지까지 배포
 ```
 
-보통 10시 40분 이후에는 복사 페이지에서 제목, 태그, 본문 HTML을 바로 복사해 티스토리 글쓰기 HTML 모드에 붙여넣으면 됩니다.
+보통 10시 40분 이후에는 복사 페이지에서 제목, 태그, 본문 HTML을 바로 복사해 티스토리 글쓰기 HTML 모드에 붙여넣으면 됩니다. GitHub 예약 실행이 지연되거나 누락될 때를 대비해 10:47, 11:13 KST에 한 번씩 더 시도합니다.
 
 ```text
 https://seung-won-yu.github.io/blog-writing/
@@ -30,7 +31,7 @@ https://seung-won-yu.github.io/blog-writing/
 ## 필요한 파일
 
 ```text
-.github/workflows/tistory-draft.yml # 매일 10:35 KST 초안 생성
+.github/workflows/tistory-draft.yml # 매일 10:35 KST 초안 생성 및 보강 실행
 pages_to_tistory.py                 # 원본 Pages 글을 읽어 티스토리용 데이터로 변환
 export_tistory.py                   # 티스토리 본문 HTML 생성
 build_copy_page.py                  # HTML 복사 페이지 생성
@@ -90,7 +91,7 @@ docs/tistory/YYYY-MM-DD.json
 - 티스토리 로그인 필요 없음
 - 별도 비밀 키 필요 없음
 
-원본 사이트가 정상 발행되어 있으면, 10:35 KST에 초안 HTML과 이미지를 가져와 저장합니다. 예약 방식은 조이한 원본 저장소와 같은 단순 UTC cron 구조를 사용합니다.
+원본 사이트가 정상 발행되어 있으면, 10:35 KST부터 초안 HTML과 이미지를 가져와 저장합니다. GitHub 예약 이벤트가 가끔 늦거나 빠질 수 있어 10:47, 11:13 KST에도 보강 실행합니다. 관련 파일이 `main`에 푸시될 때도 같은 workflow에서 GitHub Pages 복사 페이지를 배포합니다.
 
 ## 주의
 

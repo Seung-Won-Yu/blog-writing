@@ -1,8 +1,18 @@
 name: Tistory draft HTML
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/tistory-draft.yml'
+      - 'pages_to_tistory.py'
+      - 'build_copy_page.py'
+      - 'docs/**'
   schedule:
     - cron: '35 1 * * *'   # 01:35 UTC = 10:35 KST. 원본 뉴스 발행 후 초안 생성
+    - cron: '47 1 * * *'   # 01:47 UTC = 10:47 KST. GitHub 예약 누락 대비
+    - cron: '13 2 * * *'   # 02:13 UTC = 11:13 KST. 최종 보강 실행
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
