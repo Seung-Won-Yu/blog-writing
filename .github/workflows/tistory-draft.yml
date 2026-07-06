@@ -10,9 +10,11 @@ on:
       - 'build_copy_page.py'
       - 'docs/**'
   schedule:
-    - cron: '35 1 * * *'   # 01:35 UTC = 10:35 KST. 원본 뉴스 발행 후 초안 생성
-    - cron: '47 1 * * *'   # 01:47 UTC = 10:47 KST. GitHub 예약 누락 대비
-    - cron: '13 2 * * *'   # 02:13 UTC = 11:13 KST. 최종 보강 실행
+    - cron: '38 23 * * *'  # 23:38 UTC = 08:38 KST. 최근 원본 뉴스 완료 후 5분대 1차 확인
+    - cron: '8 0 * * *'    # 00:08 UTC = 09:08 KST. 보강 실행
+    - cron: '38 0 * * *'   # 00:38 UTC = 09:38 KST. 보강 실행
+    - cron: '8 1 * * *'    # 01:08 UTC = 10:08 KST. 보강 실행
+    - cron: '38 1 * * *'   # 01:38 UTC = 10:38 KST. 최종 보강 실행
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
