@@ -10,10 +10,10 @@ on:
       - 'build_copy_page.py'
       - 'docs/**'
   schedule:
-    - cron: '38 23 * * *'  # 23:38 UTC = 08:38 KST. 최근 원본 뉴스 완료 후 5분대 1차 확인
-    - cron: '8 0 * * *'    # 00:08 UTC = 09:08 KST. 보강 실행
-    - cron: '38 0 * * *'   # 00:38 UTC = 09:38 KST. 보강 실행
-    - cron: '8 1 * * *'    # 01:08 UTC = 10:08 KST. 보강 실행
+    - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST. 원본 07:23 KST schedule 5분 뒤
+    - cron: '8 23 * * *'   # 23:08 UTC = 08:08 KST. GitHub schedule 지연/원본 반영 확인
+    - cron: '48 23 * * *'  # 23:48 UTC = 08:48 KST. 최근 원본 실제 완료 시간대 이후
+    - cron: '28 0 * * *'   # 00:28 UTC = 09:28 KST. 보강 실행
     - cron: '38 1 * * *'   # 01:38 UTC = 10:38 KST. 최종 보강 실행
   workflow_dispatch: {}     # 수동 실행
 
