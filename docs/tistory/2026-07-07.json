@@ -1,0 +1,59 @@
+{
+  "title": "[데일리 IT 뉴스] 2026. 7. 7 - 오늘의 개발 뉴스와 정처기 문제",
+  "title_candidates": [
+    "[데일리 IT 뉴스] 2026. 7. 7 - Show GN Jetendard, 정처기 문제 정리",
+    "[개발 뉴스] Show GN Jetendard · 덜한 것이 더 낫다 핵심 정리",
+    "2026. 7. 7 개발 뉴스 요약: Show GN Jetendard 외 오늘의 IT 이슈",
+    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 7)"
+  ],
+  "category": "데일리IT뉴스",
+  "tags": [
+    "AI",
+    "IT뉴스",
+    "개발뉴스",
+    "정처기",
+    "개발용어",
+    "데일리다이제스트",
+    "GeekNews",
+    "멱등성 (Idempotency)",
+    "CDN (Content Delivery Network)",
+    "퍼널 (Funnel)"
+  ],
+  "meta_description": "2026. 7. 7 데일리 IT 뉴스: Show GN Jetendard, 덜한 것이 더 낫다 핵심과 운영체제 문제, 개발 용어를 정리했습니다.",
+  "key_summary": [
+    "오늘의 주요 뉴스: Show GN: Jetendard 폰트 (JetBrains Mono Nerd Font + Pretendard) / 덜한 것이 더 낫다, 대체로 / AI 코딩 시대의 개발자 역할 변화: 코딩 실행자에서 맥락·검증·제품화 설계자로",
+    "정처기 포인트: 운영체제 문제로 개념을 점검합니다.",
+    "함께 익힐 용어: 멱등성 (Idempotency), CDN (Content Delivery Network), 퍼널 (Funnel)",
+    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 상단 이미지가 정상 표시되는지 확인하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 7 - Show GN Jetendard, 정처기 문제 정리"
+  ],
+  "source": "data/days/2026-07-07.json",
+  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-07.html",
+  "html": "docs/tistory/2026-07-07.html",
+  "image_assets": [
+    {
+      "title": "Show GN: Jetendard 폰트 (JetBrains Mono Nerd Font + Pretendard)",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-07/news-01.png",
+      "path": "docs/tistory/assets/2026-07-07/news-01.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/1930b68c8edb.png"
+    },
+    {
+      "title": "덜한 것이 더 낫다, 대체로",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-07/news-02.png",
+      "path": "docs/tistory/assets/2026-07-07/news-02.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/b756696d03e0.png"
+    },
+    {
+      "title": "AI 코딩 시대의 개발자 역할 변화: 코딩 실행자에서 맥락·검증·제품화 설계자로",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-07/news-03.png",
+      "path": "docs/tistory/assets/2026-07-07/news-03.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/eb1f12d8e97a.png"
+    }
+  ]
+}
