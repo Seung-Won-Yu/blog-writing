@@ -75,7 +75,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Run tests
+        run: python -m unittest discover -s tests
+
       - name: Install editorial image tools
+        if: github.event_name != 'push'
         id: image_tools
         continue-on-error: true
         run: |
@@ -84,7 +88,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
 
       - name: Collect today's news review inbox
-        if: github.event_name != 'workflow_dispatch' || inputs.refresh_existing != true
+        if: github.event_name != 'push' && (github.event_name != 'workflow_dispatch' || inputs.refresh_existing != true)
         env:
           REQUESTED_DAY: ${{ inputs.day }}
           TZ: Asia/Seoul
@@ -107,6 +111,7 @@ jobs:
           test -f "docs/inbox/$REQUESTED_DAY.json"
 
       - name: Generate today's local Tistory draft
+        if: github.event_name != 'push'
         id: daily_generation
         continue-on-error: true
         env:
@@ -131,6 +136,7 @@ jobs:
           fi
 
       - name: Generate branded cover and story images
+        if: github.event_name != 'push'
         id: editorial_images
         continue-on-error: true
         env:

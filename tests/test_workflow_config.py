@@ -3,6 +3,24 @@ from pathlib import Path
 
 
 class WorkflowConfigTests(unittest.TestCase):
+    def test_push_validates_without_regenerating_daily_content(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("name: Run tests", workflow)
+        self.assertIn("python -m unittest discover -s tests", workflow)
+        for step_name in (
+            "Install editorial image tools",
+            "Collect today's news review inbox",
+            "Generate today's local Tistory draft",
+            "Generate branded cover and story images",
+        ):
+            step = workflow.split("- name: {}".format(step_name), 1)[1].split(
+                "\n      - ", 1
+            )[0]
+            self.assertIn("github.event_name != 'push'", step)
+
     def test_daily_schedule_runs_after_gemini_daily_quota_reset(self):
         workflow = (
             Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
