@@ -367,7 +367,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 gemini_day["generation"] = {
                     "provider": "gemini",
                     "model": "gemini-3.5-flash",
-                    "revision": 6,
+                    "revision": 7,
                 }
                 write_post("2026-07-14", day=gemini_day)
                 gemini_meta = json.loads(

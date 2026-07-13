@@ -29,7 +29,7 @@ OUT_DIR = HERE / "docs" / "tistory"
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
-MIN_PUBLISH_REVISION = 6
+MIN_PUBLISH_REVISION = 7
 
 POST_SHELL_STYLE = (
     "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"

@@ -298,6 +298,20 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(DraftQualityError, "직접 경험"):
             build_day(INBOX, fabricated)
 
+    def test_strips_a_repeated_author_note_label_and_caps_the_copy(self):
+        labeled = copy.deepcopy(MODEL_OUTPUT)
+        labeled["news"][0]["author_note"] = (
+            "승원의 메모 · 자료 기반 해석 "
+            + labeled["news"][0]["author_note"]
+            + " 추가 설명을 길게 반복한다."
+        )
+
+        day = build_day(INBOX, labeled)
+
+        self.assertTrue(day["news"][0]["author_note"].startswith("승원의 관점에서는"))
+        self.assertNotIn("승원의 메모", day["news"][0]["author_note"])
+        self.assertLessEqual(len(day["news"][0]["author_note"]), 220)
+
     def test_rejects_a_vague_verification_paragraph(self):
         vague = copy.deepcopy(MODEL_OUTPUT)
         vague["news"][0]["content"][5]["text"] = (

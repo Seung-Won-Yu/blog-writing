@@ -21,7 +21,7 @@ GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{mode
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
-GENERATION_REVISION = 6
+GENERATION_REVISION = 7
 MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
@@ -238,7 +238,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
 - content는 정확히 '무슨 일이 있었나'(h+p), '왜 우리에게 중요한가'(h+p), '직접 확인할 점'(h+p) 6블록이다.
 - 각 p는 {paragraph_range}자, 뉴스당 p 합계는 최소 {paragraph_total}자다. 첫 p는 사실·배경, 둘째는 독자 영향 뒤 개발자 해석을 쓴다.
 - 셋째 문단은 자료에서 빠진 정보의 이름을 밝히고 구체적인 확인 방법을 하나 이상 적는다. '원문 확인이 중요하다' 같은 말만 반복하지 않는다.
-- author_note는 뉴스마다 100~220자로 쓴다. '{author_note_label}'에 표시할 자료 기반 해석이며, '승원의 관점에서는'으로 시작해 설정·권한·버전·비용·로그·테스트 중 실제로 확인할 한 가지를 제안한다.
+- author_note는 뉴스마다 100~220자로 쓴다. 화면에서 '{author_note_label}' 라벨을 별도로 붙이므로 author_note 값에는 라벨을 쓰지 않는다. '승원의 관점에서는'으로 시작해 설정·권한·버전·비용·로그·테스트 중 실제로 확인할 한 가지를 제안한다.
 - 해석은 '개발자 관점에서는'처럼 표시한다. 적용 아이디어를 제품이 제공하는 기능처럼 쓰지 않는다.
 - 같은 뜻을 반복하지 않는다. '기술의 융합이 가속화되고 있습니다', '새로운 기회를 제공합니다', '중요한 역할을 할 수 있습니다', '응용 가능성을 열어줍니다'는 금지한다.
 - quiz는 빈 객체 {{}}다. 검증된 정처기 문제은행에서 프로그램이 붙인다. IT·개발·기획 용어는 3개다.
@@ -545,6 +545,16 @@ def _validated_content(blocks):
     return content
 
 
+def _validated_author_note(value):
+    note = _text(value, 320)
+    note = re.sub(
+        r"^(?:승원의\s*메모\s*[·:|-]?\s*자료\s*기반\s*해석\s*)+",
+        "",
+        note,
+    ).strip()
+    return _text(note, 220)
+
+
 def _validated_quiz(raw):
     if not isinstance(raw, dict):
         return {}
@@ -792,7 +802,7 @@ def build_day(
                 "selection_reason": _text(candidate.get("selection_reason"), 120),
                 "blurb_kr": _text(raw.get("blurb_kr"), 400)
                 or _text(candidate.get("summary"), 400),
-                "author_note": _text(raw.get("author_note"), 300),
+                "author_note": _validated_author_note(raw.get("author_note")),
                 "content": _validated_content(raw.get("content")),
             }
         )
