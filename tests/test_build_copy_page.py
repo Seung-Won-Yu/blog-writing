@@ -71,24 +71,28 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('copyText(buildReviewedHtml(), "본문 HTML")', html)
         self.assertNotIn('copyText(currentHtml, "본문 HTML")', html)
 
-    def test_requires_human_review_before_html_copy(self):
+    def test_allows_publish_ready_copy_without_required_manual_review(self):
         html = render([])
 
         self.assertIn('id="editorNote"', html)
         self.assertIn('id="verificationNote"', html)
-        self.assertIn('id="sourceChecked"', html)
+        self.assertNotIn('id="sourceChecked"', html)
         self.assertIn('id="relatedUrl"', html)
         self.assertIn('id="htmlCopyButton"', html)
         self.assertIn('data-copy="html" disabled', html)
         self.assertIn('<textarea id="htmlCode" spellcheck="false" readonly>', html)
-        self.assertIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
+        self.assertNotIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
         self.assertIn("function escapeHtml(value)", html)
         self.assertIn("function buildAuthorNoteHtml()", html)
         self.assertIn('class="digest-author-note"', html)
-        self.assertIn("editorNote.length >= 40", html)
-        self.assertIn("verificationNote.length >= 40", html)
-        self.assertIn("Boolean(els.sourceChecked.checked)", html)
+        self.assertIn("function isDraftCopyReady()", html)
+        self.assertNotIn("editorNote.length >= 40", html)
+        self.assertNotIn("verificationNote.length >= 40", html)
+        self.assertNotIn("Boolean(els.sourceChecked.checked)", html)
         self.assertIn("current.publish_ready", html)
+        self.assertIn("currentBaseHtml", html)
+        self.assertIn("바로 복사 가능", html)
+        self.assertIn("메모는 선택", html)
         self.assertIn("발행 보류", html)
 
     def test_loads_generation_readiness_from_metadata(self):

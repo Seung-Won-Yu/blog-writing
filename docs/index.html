@@ -255,20 +255,6 @@
       min-height: 42px;
       resize: none;
     }
-    .review-check {
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      margin: 14px 0 0;
-      color: #27332d;
-      font-size: 14px;
-      font-weight: 750;
-    }
-    .review-check input {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-    }
     .review-gate {
       margin: 12px 0 0;
       color: #9a5c12;
@@ -512,24 +498,20 @@
           </div>
 
           <section class="review-card" aria-labelledby="reviewTitle">
-            <h2 id="reviewTitle">발행 전 내 내용 더하기</h2>
-            <p>기사 요약만 복사하지 않도록 직접 확인한 사실과 내 판단을 각각 2문장 이상 적어주세요. 입력 내용은 본문과 같은 페이지 미리보기에 바로 반영됩니다.</p>
+            <h2 id="reviewTitle">발행 전 내 내용 더하기 · 선택</h2>
+            <p>품질 검사를 통과한 초안은 바로 복사할 수 있습니다. 직접 확인한 사실이나 내 관점을 더하고 싶을 때만 아래 칸을 사용하세요.</p>
             <div class="review-grid">
-              <label class="review-field" for="verificationNote">직접 확인한 내용 · 40자 이상
+              <label class="review-field" for="verificationNote">직접 확인한 내용 · 선택
                 <textarea id="verificationNote" maxlength="800" placeholder="원문에서 직접 대조한 수치, 적용 범위, 제한 조건을 구체적으로 적어주세요."></textarea>
               </label>
-              <label class="review-field" for="editorNote">내 판단·경험 · 40자 이상
+              <label class="review-field" for="editorNote">내 판단·경험 · 선택
                 <textarea id="editorNote" maxlength="800" placeholder="내 프로젝트나 공부에 어떤 의미인지, 동의하지 않는 점은 무엇인지 적어주세요."></textarea>
               </label>
             </div>
             <label class="review-field" for="relatedUrl" style="margin-top:12px;">관련 내 글 URL · 선택
               <input id="relatedUrl" type="url" inputmode="url" placeholder="https://won0322.tistory.com/101">
             </label>
-            <label class="review-check" for="sourceChecked">
-              <input id="sourceChecked" type="checkbox">
-              <span>원문 링크를 열어 핵심 사실과 문맥을 직접 확인했습니다.</span>
-            </label>
-            <p class="review-gate" id="reviewGateStatus" data-ready="false">검수 내용을 입력하면 본문 HTML 복사가 열립니다.</p>
+            <p class="review-gate" id="reviewGateStatus" data-ready="false">초안을 불러오면 품질 상태를 확인합니다.</p>
           </section>
 
           <div class="code-head">
@@ -580,7 +562,6 @@
       verificationNote: document.getElementById("verificationNote"),
       editorNote: document.getElementById("editorNote"),
       relatedUrl: document.getElementById("relatedUrl"),
-      sourceChecked: document.getElementById("sourceChecked"),
       reviewGateStatus: document.getElementById("reviewGateStatus"),
     };
 
@@ -660,18 +641,11 @@
       return currentBaseHtml.replace(marker, authorNote + "\n\n" + marker);
     }
 
-    function isReviewReady() {
-      const editorNote = els.editorNote.value.trim();
-      const verificationNote = els.verificationNote.value.trim();
-      const relatedValue = els.relatedUrl.value.trim();
-      const relatedIsValid = !relatedValue || Boolean(safeRelatedUrl(relatedValue));
+    function isDraftCopyReady() {
       return Boolean(
         current &&
         current.publish_ready &&
-        editorNote.length >= 40 &&
-        verificationNote.length >= 40 &&
-        Boolean(els.sourceChecked.checked) &&
-        relatedIsValid
+        currentBaseHtml
       );
     }
 
@@ -680,16 +654,9 @@
       if (!current.publish_ready) {
         return `발행 보류 · ${current.generation_provider || "fallback"} 초안은 모델 품질 검사를 통과하지 못했습니다. 다시 생성해 주세요.`;
       }
-      const missing = [];
-      if (els.verificationNote.value.trim().length < 40) missing.push("직접 확인한 내용 40자");
-      if (els.editorNote.value.trim().length < 40) missing.push("내 판단·경험 40자");
-      if (!els.sourceChecked.checked) missing.push("원문 확인 체크");
-      if (els.relatedUrl.value.trim() && !safeRelatedUrl(els.relatedUrl.value)) {
-        missing.push("won0322.tistory.com 내부 링크");
-      }
-      return missing.length
-        ? "복사 잠금 · " + missing.join(" · ")
-        : "검수 완료 · 본문 HTML을 복사할 수 있습니다.";
+      return currentBaseHtml
+        ? "바로 복사 가능 · 아래 메모는 선택입니다."
+        : "초안 HTML을 불러오는 중입니다.";
     }
 
     function appendPreviewParagraph(doc, section, headingText, bodyText) {
@@ -742,14 +709,12 @@
     }
 
     function updateReviewState() {
-      const ready = isReviewReady();
+      const ready = isDraftCopyReady();
       els.htmlCopyButton.disabled = !ready;
       els.reviewGateStatus.textContent = reviewGateMessage();
       els.reviewGateStatus.dataset.ready = String(ready);
       if (currentBaseHtml) {
-        els.htmlCode.value = ready
-          ? buildReviewedHtml()
-          : "검수 완료 후 HTML 코드가 표시됩니다.";
+        els.htmlCode.value = buildReviewedHtml();
       }
       updatePreviewNote();
     }
@@ -758,7 +723,6 @@
       els.verificationNote.value = "";
       els.editorNote.value = "";
       els.relatedUrl.value = "";
-      els.sourceChecked.checked = false;
       updateReviewState();
     }
 
@@ -915,7 +879,6 @@
     [els.verificationNote, els.editorNote, els.relatedUrl].forEach((field) => {
       field.addEventListener("input", updateReviewState);
     });
-    els.sourceChecked.addEventListener("change", updateReviewState);
 
     document.getElementById("drafts").addEventListener("click", (event) => {
       const button = event.target.closest(".draft-btn");
@@ -927,7 +890,7 @@
       if (!button || !current) return;
       const type = button.dataset.copy;
       if (type === "html") {
-        if (!isReviewReady()) {
+        if (!isDraftCopyReady()) {
           setStatus(reviewGateMessage(), "error");
           return;
         }
