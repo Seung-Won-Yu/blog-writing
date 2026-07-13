@@ -1,9 +1,9 @@
 {
   "title": "[데일리 IT 뉴스] 2026. 7. 13 - 오늘의 개발 뉴스와 정처기 문제",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 13 - Show GN LLRUN, 정처기 문제 정리",
-    "[개발 뉴스] Show GN LLRUN · Show GN macOS/iOS 핵심 정리",
-    "2026. 7. 13 개발 뉴스 요약: Show GN LLRUN 외 오늘의 IT 이슈",
+    "[데일리 IT 뉴스] 2026. 7. 13 - AI, 정처기 문제 정리",
+    "[개발 뉴스] AI · AI 핵심 정리",
+    "2026. 7. 13 개발 뉴스 요약: AI 외 오늘의 IT 이슈",
     "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 13)"
   ],
   "category": "데일리IT뉴스",
@@ -14,46 +14,28 @@
     "정처기",
     "개발용어",
     "데일리다이제스트",
+    "OpenAI News",
     "GeekNews",
-    "데이터 마트 (Data Mart)",
-    "SSR (Server-Side Rendering)",
-    "퍼스트 파티 데이터 (First-Party Data)"
+    "arXiv cs.AI",
+    "능동적 메모리",
+    "세션 관리",
+    "AI 코딩 에이전트"
   ],
-  "meta_description": "2026. 7. 13 데일리 IT 뉴스: Show GN LLRUN, Show GN macOS/iOS 핵심과 소프트웨어 공학 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "2026. 7. 13 데일리 IT 뉴스: AI, AI 핵심과 정보처리기사 문제, 개발 용어를 정리했습니다.",
   "key_summary": [
-    "오늘의 주요 뉴스: Show GN: 러닝 대회가 답답해서 직접 만든 러닝앱 \"LLRUN\" (Android/iOS) / Show GN: macOS/iOS Native RSS 리더 앱을 개발했습니다. / sem - Git 위에 함수/클래스 단위 변경 추적을 추가하는 시맨틱 버전 관리 도구",
-    "정처기 포인트: 소프트웨어 공학 문제로 개념을 점검합니다.",
-    "함께 익힐 용어: 데이터 마트 (Data Mart), SSR (Server-Side Rendering), 퍼스트 파티 데이터 (First-Party Data)",
-    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
+    "1. 도이치 텔레콤, AI로 통신 산업 재편",
+    "2. AgentsView - AI 코딩 에이전트의 세션 관리 도구",
+    "3. 장기 과제를 위한 능동적 메모리 에이전트",
+    "정처기 포인트: 정보처리기사 문제로 개념을 점검합니다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
-    "본문 상단 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 13 - Show GN LLRUN, 정처기 문제 정리"
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 13 - AI, 정처기 문제 정리"
   ],
   "source": "data/days/2026-07-13.json",
-  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-13.html",
+  "source_page": null,
   "html": "docs/tistory/2026-07-13.html",
-  "image_assets": [
-    {
-      "title": "Show GN: 러닝 대회가 답답해서 직접 만든 러닝앱 \"LLRUN\" (Android/iOS)",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png",
-      "path": "docs/tistory/assets/2026-07-13/news-01.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/a771f9166e9c.png"
-    },
-    {
-      "title": "Show GN: macOS/iOS Native RSS 리더 앱을 개발했습니다.",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-02.png",
-      "path": "docs/tistory/assets/2026-07-13/news-02.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/e29cfe418390.png"
-    },
-    {
-      "title": "sem - Git 위에 함수/클래스 단위 변경 추적을 추가하는 시맨틱 버전 관리 도구",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-03.png",
-      "path": "docs/tistory/assets/2026-07-13/news-03.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/122495cc6fbe.png"
-    }
-  ]
+  "image_assets": []
 }
