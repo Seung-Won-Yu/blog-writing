@@ -16,9 +16,12 @@
     "데일리다이제스트",
     "AI타임스",
     "GitHub Changelog",
-    "GeekNews"
+    "GeekNews",
+    "OpenTelemetry",
+    "AI 추론",
+    "토큰화"
   ],
-  "meta_description": "오늘은 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단와 Enterprise-managed OpenTelemetry export for VS Code and CLI을 중심으로 개발… 프로그래밍 언어 활용 문제로 개념도 확인합니다.",
+  "meta_description": "최근 메타가 인스타그램의 AI 이미지 생성 기능을 사흘 만에 중단한 사건은 기술이 우리의 일상에 미치는 영향을 다시금 생각하게 합니다. 특히 개인정보 보호와 관련된 논란은 개발자들에게 중요한 교훈을… 프로그래밍 언어 활용 문제로 개념도 확인합니다.",
   "key_summary": [
     "1. 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
     "2. Enterprise-managed OpenTelemetry export for VS Code and CLI",

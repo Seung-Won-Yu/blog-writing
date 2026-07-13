@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T05:37:16.880037+00:00",
+  "generated_at": "2026-07-13T06:05:00.841424+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -1833,6 +1833,433 @@
         "deep": 3
       },
       "topic_tags": []
+    },
+    {
+      "id": "c0902b6ef178",
+      "title": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "normalized_title": "페이블 d 2 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "url": "https://yozm.wishket.com/magazine/detail/3848",
+      "published_at": "",
+      "summary": "6월 9일 출시된 페이블 5(Fable 5)는 지난 한 달간 롤러코스터 같은 시간을 보냈습니다. 출시 사흘 만인 6월 12일, 미국 상무부의 지시로 서비스가 전면 차단되는 위기를 맞았지만, 6월 30일 규제가 풀리면서 7월 1일 유료 플랜 서비스를 재개했죠. 현재 기존 유료 구독자라면, 주간 사용량 제한의 최대 50%까지 페이블 5를 이용할 수 있는데요. 원래는 7월 7일에 이 구독제 이용도 끝날 예정이었지만, 앤트로픽이 기간을 5일 더 연장했습니다. 변경된 만료일은 7월 12일. 오늘이 7월 10일이니, 이제 딱 이틀 남았습니다. 마침 앤트로픽 클로드 코드(Claude Code) 팀의 타리크 시히파(Thariq Shihipar)가 AI Engineer World Fair에서 발표한 \"Field Guide to Fable\" 키노트에 좋은 내용이 있어 공유합니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "bac79aac38a2",
+      "title": "바이브코더를 위한 기초 보안 A to Z",
+      "normalized_title": "바이브코더를 위한 기초 보안 a to z",
+      "url": "https://yozm.wishket.com/magazine/detail/3832",
+      "published_at": "",
+      "summary": "AI가 짜준 코드는 생각보다 안전하지 않습니다. 실제로 AI 생성 코드의 45%가 보안 테스트를 통과하지 못했죠. 그래서 지금 벌어지는 바이브코딩 사고 대부분은 누가 작정하고 '털어서'가 아니라, 애초에 문도 안 잠그고 나간 쪽에 가깝습니다. 그럴수록 보안 이슈가 발생하는 환경과 기본 원칙을 알아두는 것이 필요합니다. RLS·API 키·인증처럼 바이브코더가 가장 많이 하는 보안 실수 5가지가 어떻게 사고로 번지는지 모았습니다. 여기에 설계·개발·배포 세 시점에서 어떻게 막는지, 이를 도와줄 코딩 에이전트 안에서 바로 쓰는 보안 도구까지 정리했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 5,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "16eeb94c1a77",
+      "title": "이벤트 기반 MSA, AI 시대엔 더 비싸진다고요?",
+      "normalized_title": "이벤트 기반 msa ai 시대엔 더 비싸진다고요",
+      "url": "https://yozm.wishket.com/magazine/detail/3839",
+      "published_at": "",
+      "summary": "이벤트 기반 MSA(Microservice Architecture)를 운영하다 보면 처음엔 꽤 잘 나눴다고 느낍니다. 주문, 결제, 재고, 알림이 각자 맡은 일을 처리하고, 한쪽 장애가 곧바로 전체 장애로 번지지 않는 장점도 분명히 보입니다. 그런데 AI 에이전트에게 유지보수를 맡기기 시작하면, 그 느슨한 연결이 갑자기 흐름을 다시 찾아야 하는 비용으로 돌아옵니다. 제가 이 글에서 말하는 비용은 “MSA는 복잡하다”는 일반론이 아닙니다. 이벤트 기반 MSA를 운영하면서 이벤트 흐름을 다시 이해하고 검증하는 데 드는 비용입니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "0164f5dfc5ea",
+      "title": "로컬 LLM, 나를 위한 작은 AI 작업대 만들기",
+      "normalized_title": "로컬 llm 나를 위한 작은 ai 작업대 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3835",
+      "published_at": "",
+      "summary": "예전에는 로컬에서 LLM을 돌린다는 말만 들어도 피곤했습니다. 모델 파일부터 실행 환경, GPU 설정까지 줄줄이 떠올랐으니까요. 요즘은 그 장벽이 많이 낮아졌습니다. Ollama 같은 도구를 쓰면 명령어 몇 줄로 모델을 내려받고 바로 실행합니다. 이쯤 되면 로컬 LLM을 다시 보게 됩니다. ChatGPT를 대체하는 무언가라기보다는, 개인 개발자가 자기 작업 흐름 옆에 붙여두는 작은 AI 작업대에 가깝습니다. 이번 글에서는 로컬 LLM을 어디에 쓰면 괜찮고, 어디서부터는 기대를 접어야 하는지 그 기준을 잡아보려고 합니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 4,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "2ce3e505b30b",
+      "title": "“이 정도면 직접 만들겠는데?” 바이브 코딩으로 유료 앱 대체하기",
+      "normalized_title": "이 정도면 직접 만들겠는데 바이브 코딩으로 유료 앱 대체하기",
+      "url": "https://yozm.wishket.com/magazine/detail/3838",
+      "published_at": "",
+      "summary": "평소 만족스럽게 쓰던 유료 루틴 앱에 아쉬움이 쌓이던 어느 날, '이 정도면 직접 만들 수 있겠는데?'라는 생각을 바로 테스트해봤습니다. Obsidian과 Claude Code, 몇 가지 플러그인으로 가중치 루틴 체크, 월간·연간 대시보드, 루틴 메모까지 붙인 개인용 도구를 만들었습니다. 가장 큰 난관이던 기존 데이터는 스크린샷을 생성형 AI에게 읽혀 옮겼죠. 루틴 관리가 쉬워진 건 물론, 만드는 게 쉬워진 시대에 직접 도구를 만들며 배운 점도 생겼습니다. 무엇을 왜 만들지에 대한 이야기를 함께 정리했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 5,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "0f19fa97a5bb",
+      "title": "990원이 찍혔다: 바이브 코딩이 유료 서비스가 되기까지",
+      "normalized_title": "990원이 찍혔다 바이브 코딩이 유료 서비스가 되기까지",
+      "url": "https://yozm.wishket.com/magazine/detail/3844",
+      "published_at": "",
+      "summary": "저는 톡시그널을 아이디어부터 웹 제작까지 단 3일 만에 완성했습니다. 그러나 진짜 현실은 웹을 다 만들고, 이 서비스를 '유료'로 전환하겠다고 마음먹은 순간부터였습니다. '990원'을 받기 위해 결제 심사, 복잡한 서류 작업, 개인정보 보호, 보안 규정 같은 현실의 벽을 마주해야 했죠. 서비스 완성도와 신뢰 구조를 갖추는 과정이 가장 큰 도전이었는데요. 웹을 만드는 것보다 더 어려운 건 990원을 받는 거였습니다. 이번 글은 그 여정에 대해 전해드리려고 합니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "practical": 3,
+        "deep": 1
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "60e46c7d2f00",
+      "title": "같은 주에 나온 GPT-5.6과 Grok 4.5, 정부가 먼저 검토한 모델은",
+      "normalized_title": "같은 주에 나온 gpt 5 6과 grok 4 5 정부가 먼저 검토한 모델은",
+      "url": "https://yozm.wishket.com/magazine/detail/3843",
+      "published_at": "",
+      "summary": "같은 주에 공개된 OpenAI의 GPT-5.6과 SpaceXAI의 Grok 4.5, 그런데 정부 검토를 먼저 거친 건 한쪽뿐이었습니다. Cursor와 함께 만들어 지금 써볼 수 있는 Grok 4.5, 대화는 GPT-Live가 맡고 어려운 추론은 뒤에서 처리하는 OpenAI의 새 구조, 그리고 Claude Code 팀이 정리한 AI에게 어디까지 일을 맡길지 정하는 법까지. 이번 주 프로덕트 메이커가 주목할 세 가지를 정리했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "607ef667dc42",
+      "title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "normalized_title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3834",
+      "published_at": "",
+      "summary": "한창 바이브 코딩(Vibe Coding)이 열풍이었는데요. 코드를 잘 몰라도 AI에게 말만 걸면 뚝딱 앱이 만들어진다는 이야기가 여기저기서 들려왔죠. 저는 현업에서 코드를 다루는 개발자이지만, 그 모습을 보다 보니 문득 궁금해졌습니다. 정말 명령만 하면 되는 걸까요? 그리고 비전공자라면 또 어디서 막히게 될까요? 그래서 저도 한번 간단한 페이지를 만들어보기로 했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 4,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "7db767638b3c",
+      "title": "구글이 공개한 AI 에이전트 제작 노하우를 가져다 쓰는 법",
+      "normalized_title": "구글이 공개한 ai 에이전트 제작 노하우를 가져다 쓰는 법",
+      "url": "https://yozm.wishket.com/magazine/detail/3833",
+      "published_at": "",
+      "summary": "일주일 동안 다시 열린 앤트로픽의 최신 모델 Claude Fable 5, AI가 만든 디자인 화면이 다 비슷해지는 이유와 그 해법을 실제로 써본 아틀라시안의 DESIGN.md 실험기, 그리고 에이전트는 만들기보다 평가와 배포가 진짜 일이라는 구글의 google/agents-cli까지. 이번 주 프로덕트 메이커가 주목할 세 가지를 정리했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "564fea386642",
+      "title": "담당자 퇴사하면 업무 못 하는 회사를 위한 AX는?",
+      "normalized_title": "담당자 퇴사하면 업무 못 하는 회사를 위한 ax는",
+      "url": "https://yozm.wishket.com/magazine/detail/3842",
+      "published_at": "",
+      "summary": "AI 전환, 이른바 'AX'를 내걸지 않는 IT 기업을 찾기 어렵지만, 정작 성과로 이어지는 곳은 절반이 안 됩니다. 도구는 넘쳐나는데 왜 자꾸 성과 앞에서 멈춰 설까요. 매주 기업 20~30곳을 만나는 위시켓 박우범 대표는 그 병목이 데이터화와 워크플로우 정리 단계에 있다고 진단합니다. AX를 '일하는 방식을 자산화하는 일'로 정의하고, 마이리얼트립·해빗팩토리의 사례로 감축이 아니라 집중으로서의 AX가 어떻게 구현되는지 짚었습니다. 스마일게이트인베스트먼트 미래전망 컨퍼런스 패널토크 정리.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "bf81115f2f29",
+      "title": "사람마다 다른 썸네일이 나온다? GenUI의 빛과 어둠",
+      "normalized_title": "사람마다 다른 썸네일이 나온다 genui의 빛과 어둠",
+      "url": "https://yozm.wishket.com/magazine/detail/3841",
+      "published_at": "",
+      "summary": "생성형 UI 기술을 적용하면 AI가 같은 정보도 받는 사람에 맞춰 화면과 메시지를 다시 짭니다. 넷플릭스 썸네일, 토스 홈, 듀오링고 알림처럼 이미 곁에 온 생성형 UI(GenUI)의 상용 사례가 많습니다. 이러한 사례와 효과, 이를 가능케 한 JSON·컴포넌트 매핑 원리, 다크 패턴·접근성·인종 편향 같은 그림자를 정리했습니다. AI가 정교해질수록 오히려 사람이 다듬지 않은 날것의 메시지가 희소해지는 역설도 함께 살펴봅니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "f8117c100197",
+      "title": "AI 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "normalized_title": "ai 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "url": "https://yozm.wishket.com/magazine/detail/3845",
+      "published_at": "",
+      "summary": "AI 도구가 일상적인 업무 곳곳에 자리를 잡으면서, 직장 내 소통의 방식도 조용히 달라지고 있습니다. 짧은 질문 하나에도 AI가 생성한 장문의 답변이 돌아오는 일이 점점 흔해졌지만, 그 과정에서 정작 필요했던 판단과 맥락은 빠져 있는 경우가 많습니다. 이 글은 AI가 생성한 콘텐츠가 직장 내 커뮤니케이션에 드리우는 보이지 않는 비용, 즉 구성원 모두가 치르게 되는 '소음의 세금'으로서 AI 슬롭 문제를 살펴봅니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "a7daf90e40e2",
+      "title": "1인 빌더, 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "normalized_title": "1인 빌더 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "url": "https://yozm.wishket.com/magazine/detail/3840",
+      "published_at": "",
+      "summary": "이번 글은 클코나잇 2 웨비나의 두 번째 발표였던 '1인 빌더가 9개 프로젝트를 Claude Code로 동시 운영하는 법'을 정리한 글입니다. 발표자는 혼자서 13개 프로젝트를 동시에 운영하는 1인 빌더의 실전 노하우를 공개했습니다. 클로드 코드(Claude Code)를 단순한 도구가 아닌 '동료'로 활용하여 작업 효율을 극대화하는 5가지 핵심 시스템(중앙 허브, 핸드오프, 스킬 관리 등)을 소개합니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "46761bb14ea1",
+      "title": "실전 이커머스: 재고 관리 단위 설계로 품절률 10% 낮추기",
+      "normalized_title": "실전 이커머스 재고 관리 단위 설계로 품절률 10 낮추기",
+      "url": "https://yozm.wishket.com/magazine/detail/3836",
+      "published_at": "",
+      "summary": "이커머스 기획자라면 '품절률'이라는 단어를 KPI 리포트에서 본 적이 있을 겁니다. 하지만 대부분의 이커머스 조직에서 품절률은 MD나 물류팀의 숙제로 취급되고, 기획자는 \"상품 옵션을 어떻게 노출할까\"라는 화면 설계 관점에서만 SKU(재고 관리 단위)를 다룹니다. 문제는 광고가 켜진 상태에서 SKU 하나가 품절되는 순간입니다. 고객은 광고를 클릭해 상세페이지까지 들어오지만, 원하는 옵션이 품절이라 구매하지 못하고 이탈합니다. 이번 글에서는 실제 서비스들의 사례를 통해 SKU 단위 재고 관리가 왜 마케팅 비용과 직결되는지, 그리고 기획자가 설계 단계에서 챙겨야 할 기술적 디테일은 무엇인지 쉽게 풀어보겠습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "88af05dd26b8",
+      "title": "쿠버네티스 7개 주요 게이트웨이 기술 검증(Poc) 다시 하기 (feat. Ingress NGINX 은퇴)",
+      "normalized_title": "쿠버네티스 7개 주요 게이트웨이 기술 검증 poc 다시 하기 feat ingress nginx 은퇴",
+      "url": "https://yozm.wishket.com/magazine/detail/3837",
+      "published_at": "",
+      "summary": "2026년 3월, 쿠버네티스에서 가장 널리 쓰이던 Ingress NGINX의 지원이 공식 종료됐습니다. IngressNightmare(CVE-2025-1974) 취약점까지 겹치며 Gateway API 이전은 더 미룰 수 없는 과제가 됐죠. 그런데 앞선 검증에서 F등급을 줬던 Kong과 Traefik을 같은 구현체 7종으로 다시 측정해 보니, 이번엔 모두 기준을 통과했습니다. 문제는 제품이 아니라 측정 방식과 조건에 있었던 셈입니다. 새 순위표와 함께, 스스로 내린 결론을 의심하고 채점 기준을 처음부터 다시 세운 재측정 과정을 기록했습니다.",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 2
+      },
+      "topic_tags": []
     }
   ],
   "selected": [
@@ -1933,10 +2360,5 @@
       "selection_reason": "deep 독자 적합도 4"
     }
   ],
-  "errors": [
-    {
-      "source_id": "yozmit",
-      "message": "HTTP Error 405: Not Allowed"
-    }
-  ]
+  "errors": []
 }
