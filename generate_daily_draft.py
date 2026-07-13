@@ -20,10 +20,12 @@ MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
-GENERATION_REVISION = 5
-MAX_PROMPT_INPUT_TOKENS = 6_900
+GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
+GENERATION_REVISION = 6
+MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
-MIN_LONGFORM_READ_MINUTES = 6
+MIN_LONGFORM_READ_MINUTES = 7
+PERSONA_PATH = Path(__file__).resolve().parent / "config" / "editorial_persona.json"
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
 QUIZ_CATEGORIES = {
     "소프트웨어 설계",
@@ -52,8 +54,19 @@ GENERIC_REWRITES = {
     "고민해보는 것도 유익할 것입니다": "적용 전후의 차이를 기록해 비교해야 합니다",
     "논의가 필요합니다": "판단 기준을 먼저 정해야 합니다",
     "더 나은 시스템": "검증 가능한 시스템",
+    "다시금 부각시켰습니다": "다시 확인하게 했습니다",
+    "많은 가능성을 열어주지만": "적용 범위가 넓지만",
+    "간과해서는 안 됩니다": "확인 항목에서 빼서는 안 됩니다",
+    "주의 깊게 살펴보아야": "검증 대상을 나눠 확인해야",
+    "윤리적 고민": "데이터·권한·책임 범위에 대한 판단",
+    "실질적인 도구를 제공": "사용할 수 있는 기능을 제공",
+    "시사합니다": "보여줍니다",
 }
 GENERIC_COPY = tuple(GENERIC_REWRITES)
+VERIFICATION_TERMS = (
+    "설정", "권한", "버전", "비용", "가격", "로그", "테스트", "벤치마크",
+    "API", "문서", "정책", "환경", "오류", "지표", "제한", "출처", "요금",
+)
 
 
 class DraftQualityError(ValueError):
@@ -67,10 +80,27 @@ def _text(value, limit):
 
 def _paragraph_targets(news_count):
     if news_count >= 3:
-        return "180~260", 540
+        return "220~300", 660
     if news_count == 2:
-        return "300~380", 900
-    return "520~650", 1560
+        return "320~420", 960
+    return "650~800", 1950
+
+
+def load_persona(path=PERSONA_PATH):
+    """Load a writing voice without inventing the author's experience."""
+    fallback = {
+        "name": "승원",
+        "role": "개발을 배우고 자동화 프로젝트를 운영하는 기록자",
+        "voice": "담백하고 구체적인 한국어",
+        "reader": "일반 독자와 실무 개발자",
+        "author_note_label": "승원의 메모 · 자료 기반 해석",
+        "forbidden_firsthand_claims": ["직접 해보니", "써봤다", "경험했다", "느꼈다"],
+    }
+    try:
+        loaded = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return fallback
+    return {**fallback, **loaded} if isinstance(loaded, dict) else fallback
 
 
 def _selected(inbox):
@@ -183,6 +213,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
     news_count = len(references)
     news_count_label = f"{news_count}개 뉴스"
     paragraph_range, paragraph_total = _paragraph_targets(news_count)
+    persona = load_persona()
     template = """오늘 날짜는 {day}다. 뉴스 후보로 한국어 AI·개발 블로그 초안을 만든다.
 
 [안전]
@@ -192,9 +223,11 @@ def build_prompt(inbox, history=None, article_contexts=None):
 - 링크·출처·HTML·마크다운 없이 JSON 객체 하나만 반환한다.
 
 [목표와 톤]
-- 요약 묶음이 아니라 6~8분 동안 읽을 2,700~3,400자의 글이다.
-- 개발을 배우며 기록하는 사람의 담백한 한국어로 쓰고 홍보·과장을 피한다.
+- 요약 묶음이 아니라 7~9분 동안 읽을 3,200~4,100자의 글이다.
+- 필자 이름은 {persona_name}, 역할은 '{persona_role}'이다. 독자는 {persona_reader}다.
+- 문체는 '{persona_voice}'를 따른다. 뉴스 앵커 말투, 보도자료 말투, AI식 결론을 피한다.
 - 사람의 실제 경험·직접 확인 결과·감정은 대신 만들지 않는다. 이 부분은 운영자가 발행 전 입력한다.
+- 특히 {forbidden_claims} 같은 1인칭 체험을 만들지 않는다.
 - {news_count}를 하나의 흐름으로 잇는다. broad는 일상 영향, practical은 바로 쓰는 도구, deep은 원리를 맡는다.
 - opening 100~170자는 첫 기사와 시간·비용·개인정보·일 중 하나를 연결한다. 뒤 기사 제목은 미리 나열하지 않는다.
 - throughline 200~320자는 뉴스를 하나로 묶는 공통점뿐 아니라 각 소식의 차이와 긴장을 설명한다. closing 120~180자는 변화와 한계, action 50~100자는 10~15분 행동을 쓴다.
@@ -205,6 +238,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
 - content는 정확히 '무슨 일이 있었나'(h+p), '왜 우리에게 중요한가'(h+p), '직접 확인할 점'(h+p) 6블록이다.
 - 각 p는 {paragraph_range}자, 뉴스당 p 합계는 최소 {paragraph_total}자다. 첫 p는 사실·배경, 둘째는 독자 영향 뒤 개발자 해석을 쓴다.
 - 셋째 문단은 자료에서 빠진 정보의 이름을 밝히고 구체적인 확인 방법을 하나 이상 적는다. '원문 확인이 중요하다' 같은 말만 반복하지 않는다.
+- author_note는 뉴스마다 100~220자로 쓴다. '{author_note_label}'에 표시할 자료 기반 해석이며, '승원의 관점에서는'으로 시작해 설정·권한·버전·비용·로그·테스트 중 실제로 확인할 한 가지를 제안한다.
 - 해석은 '개발자 관점에서는'처럼 표시한다. 적용 아이디어를 제품이 제공하는 기능처럼 쓰지 않는다.
 - 같은 뜻을 반복하지 않는다. '기술의 융합이 가속화되고 있습니다', '새로운 기회를 제공합니다', '중요한 역할을 할 수 있습니다', '응용 가능성을 열어줍니다'는 금지한다.
 - quiz는 빈 객체 {{}}다. 검증된 정처기 문제은행에서 프로그램이 붙인다. IT·개발·기획 용어는 3개다.
@@ -213,7 +247,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
 {{
   "visual": {{"subject":"", "hook":"", "motif":"network|agent|memory|security|data|code|cloud|hardware|research|signal"}},
   "editorial": {{"headline":"", "opening":"", "throughline":"", "closing":"", "action":""}},
-  "news": [{{"title_kr":"", "blurb_kr":"", "content":[{{"t":"h", "text":"무슨 일이 있었나"}},{{"t":"p", "text":""}},{{"t":"h", "text":"왜 우리에게 중요한가"}},{{"t":"p", "text":""}},{{"t":"h", "text":"직접 확인할 점"}},{{"t":"p", "text":""}}]}}],
+  "news": [{{"title_kr":"", "blurb_kr":"", "author_note":"", "content":[{{"t":"h", "text":"무슨 일이 있었나"}},{{"t":"p", "text":""}},{{"t":"h", "text":"왜 우리에게 중요한가"}},{{"t":"p", "text":""}},{{"t":"h", "text":"직접 확인할 점"}},{{"t":"p", "text":""}}]}}],
   "quiz": {{}},
   "terms": [{{"term":"", "kind":"IT|개발|기획", "meaning_kr":""}}]
 }}
@@ -243,6 +277,12 @@ def build_prompt(inbox, history=None, article_contexts=None):
             news_count=news_count_label,
             paragraph_range=paragraph_range,
             paragraph_total=paragraph_total,
+            persona_name=persona["name"],
+            persona_role=persona["role"],
+            persona_reader=persona["reader"],
+            persona_voice=persona["voice"],
+            author_note_label=persona["author_note_label"],
+            forbidden_claims=", ".join(persona["forbidden_firsthand_claims"]),
             references=json.dumps(model_references, ensure_ascii=False, indent=2),
             history=json.dumps(history_payload, ensure_ascii=False, indent=2),
         )
@@ -481,6 +521,16 @@ def request_gemini_model(
     return _parse_json_content(content)
 
 
+def gemini_model_candidates(primary):
+    """Return a stable, deduplicated Gemini text fallback chain."""
+    candidates = [str(primary or "").strip(), *GEMINI_TEXT_FALLBACK_MODELS]
+    return [
+        model
+        for index, model in enumerate(candidates)
+        if model and model not in candidates[:index]
+    ]
+
+
 def _validated_content(blocks):
     content = []
     for block in blocks or []:
@@ -588,6 +638,7 @@ def _estimated_read_minutes(day):
     pieces.extend(editorial.values())
     for item in day.get("news") or []:
         pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
+        pieces.append(item.get("author_note"))
         pieces.extend(
             block.get("text")
             for block in item.get("content") or []
@@ -634,7 +685,7 @@ def _assert_source_originality(news, selected, article_contexts=None):
             )
         )
         draft_text = " ".join(
-            [item.get("blurb_kr", "")]
+            [item.get("blurb_kr", ""), item.get("author_note", "")]
             + [
                 block.get("text", "")
                 for block in item.get("content") or []
@@ -676,6 +727,8 @@ def _assert_draft_quality(day):
     all_copy = list(editorial.values())
     expected_types = ["h", "p", "h", "p", "h", "p"]
     expected_headings = ["무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점"]
+    persona = load_persona()
+    forbidden_claims = tuple(persona.get("forbidden_firsthand_claims") or [])
     for item in day.get("news") or []:
         blocks = item.get("content") or []
         headings = [block for block in blocks if block.get("t") == "h"]
@@ -685,11 +738,20 @@ def _assert_draft_quality(day):
             raise DraftQualityError("뉴스별 본문 구조가 충분하지 않습니다.")
         if [block.get("text") for block in headings] != expected_headings:
             raise DraftQualityError("뉴스별 소제목 구조가 올바르지 않습니다.")
-        if any(len(_text(block.get("text"), 700)) < 100 for block in paragraphs):
+        if any(len(_text(block.get("text"), 700)) < 120 for block in paragraphs):
             raise DraftQualityError("뉴스별 본문 문단이 너무 짧습니다.")
-        if paragraph_chars < 360:
+        if paragraph_chars < 540:
             raise DraftQualityError("뉴스별 설명이 너무 짧습니다.")
+        author_note = _text(item.get("author_note"), 300)
+        if len(author_note) < 90:
+            raise DraftQualityError("뉴스별 승원의 메모가 충분하지 않습니다.")
+        if any(claim and claim in author_note for claim in forbidden_claims):
+            raise DraftQualityError("확인되지 않은 직접 경험을 승원의 메모에 만들 수 없습니다.")
+        verification_text = _text(paragraphs[-1].get("text"), 700)
+        if not any(term in verification_text for term in VERIFICATION_TERMS):
+            raise DraftQualityError("직접 확인할 문단에 구체적인 검증 대상이 없습니다.")
         all_copy.append(item.get("blurb_kr", ""))
+        all_copy.append(author_note)
         all_copy.extend(block.get("text", "") for block in blocks)
 
     combined = " ".join(str(value) for value in all_copy)
@@ -699,7 +761,7 @@ def _assert_draft_quality(day):
     if quiz.get("category") not in QUIZ_CATEGORIES:
         raise DraftQualityError("정처기 문제의 필기 과목이 올바르지 않습니다.")
     if _estimated_read_minutes(day) < MIN_LONGFORM_READ_MINUTES:
-        raise DraftQualityError("전체 글이 6분 읽기 분량에 미치지 못합니다.")
+        raise DraftQualityError("전체 글이 7분 읽기 분량에 미치지 못합니다.")
 
 
 def build_day(
@@ -730,6 +792,7 @@ def build_day(
                 "selection_reason": _text(candidate.get("selection_reason"), 120),
                 "blurb_kr": _text(raw.get("blurb_kr"), 400)
                 or _text(candidate.get("summary"), 400),
+                "author_note": _text(raw.get("author_note"), 300),
                 "content": _validated_content(raw.get("content")),
             }
         )
@@ -823,6 +886,7 @@ def _compact_retry_draft(generated):
             {
                 "title_kr": _text(item.get("title_kr"), 160),
                 "blurb_kr": _text(item.get("blurb_kr"), 260),
+                "author_note": _text(item.get("author_note"), 300),
                 "content": [
                     {
                         "t": "h" if block.get("t") == "h" else "p",
@@ -913,11 +977,16 @@ def _news_sections_are_quality_ready(generated):
         ]
         if headings != expected_headings:
             return False
-        if any(len(paragraph) < 100 for paragraph in paragraphs):
+        if any(len(paragraph) < 120 for paragraph in paragraphs):
             return False
-        if sum(len(paragraph) for paragraph in paragraphs) < 360:
+        if sum(len(paragraph) for paragraph in paragraphs) < 540:
+            return False
+        if len(_text(item.get("author_note"), 300)) < 90:
+            return False
+        if not any(term in paragraphs[-1] for term in VERIFICATION_TERMS):
             return False
         all_copy.append(_text(item.get("blurb_kr"), 400))
+        all_copy.append(_text(item.get("author_note"), 300))
         all_copy.extend(paragraphs)
     combined = " ".join(all_copy)
     return not any(phrase in combined for phrase in GENERIC_COPY)
@@ -1011,7 +1080,7 @@ def _quality_retry_prompt(generated, error):
 - 기존 초안에 없는 수치, 발언, 기능, 출시일, 인물을 추가하지 않는다.
 - 기존 사실을 새 문장으로 풀어 설명하고, 독자 영향과 확인 질문은 해석으로 명확히 구분한다.
 - 응답에는 editorial과 news 두 필드만 반환한다. visual·quiz·terms는 반환하지 않는다.
-- 각 news의 title_kr은 유지하고 blurb_kr과 content를 충분히 고친다.
+- 각 news의 title_kr은 유지하고 blurb_kr, author_note, content를 충분히 고친다.
 
 [분량과 구조를 다시 점검]
 - 이전 응답은 {reason} 사유로 거절됐다.
@@ -1023,7 +1092,7 @@ def _quality_retry_prompt(generated, error):
 
 [반환 형식]
 아래 두 필드만 반환하고, 각 뉴스의 순서와 개수는 유지한다.
-{{"editorial":{{"headline":"","opening":"","throughline":"","closing":"","action":""}},"news":[{{"title_kr":"","blurb_kr":"","content":[{{"t":"h","text":"무슨 일이 있었나"}},{{"t":"p","text":""}},{{"t":"h","text":"왜 우리에게 중요한가"}},{{"t":"p","text":""}},{{"t":"h","text":"직접 확인할 점"}},{{"t":"p","text":""}}]}}]}}
+{{"editorial":{{"headline":"","opening":"","throughline":"","closing":"","action":""}},"news":[{{"title_kr":"","blurb_kr":"","author_note":"","content":[{{"t":"h","text":"무슨 일이 있었나"}},{{"t":"p","text":""}},{{"t":"h","text":"왜 우리에게 중요한가"}},{{"t":"p","text":""}},{{"t":"h","text":"직접 확인할 점"}},{{"t":"p","text":""}}]}}]}}
 위 분량을 먼저 확인한 뒤 JSON 객체 하나만 반환한다.
 
 [previous_draft]
@@ -1194,24 +1263,29 @@ def main(argv=None):
                 **collect_article_contexts(inbox, allowed_hosts, total_chars=3_600),
             }
         if gemini_key:
-            try:
-                day = generate_and_write(
-                    inbox_path,
-                    args.data_dir,
-                    token=gemini_key,
-                    model=args.gemini_model,
-                    fallback_on_error=False,
-                    model_call=request_gemini_model,
-                    provider="gemini",
-                    reference_loader=reference_loader,
-                )
-            except Exception as exc:
-                print(
-                    "Gemini 초안 생성 실패({}); GitHub Models로 재시도합니다.".format(
-                        type(exc).__name__
-                    ),
-                    file=sys.stderr,
-                )
+            day = None
+            for gemini_model in gemini_model_candidates(args.gemini_model):
+                try:
+                    day = generate_and_write(
+                        inbox_path,
+                        args.data_dir,
+                        token=gemini_key,
+                        model=gemini_model,
+                        fallback_on_error=False,
+                        model_call=request_gemini_model,
+                        provider="gemini",
+                        reference_loader=reference_loader,
+                    )
+                    break
+                except Exception as exc:
+                    print(
+                        "Gemini 텍스트 모델 {} 실패({}).".format(
+                            gemini_model, type(exc).__name__
+                        ),
+                        file=sys.stderr,
+                    )
+            if day is None:
+                print("GitHub Models로 재시도합니다.", file=sys.stderr)
                 day = generate_and_write(
                     inbox_path,
                     args.data_dir,

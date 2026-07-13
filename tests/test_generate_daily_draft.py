@@ -14,6 +14,7 @@ from generate_daily_draft import (
     fallback_day,
     generate_and_write,
     load_history,
+    gemini_model_candidates,
     request_gemini_model,
     request_github_model,
     selected_fingerprint,
@@ -52,7 +53,7 @@ MODEL_OUTPUT = {
     "editorial": {
         "headline": "GitHub Actions 보안 점검, 실행 전 검증이 중요해진 이유",
         "opening": "오늘은 자동화의 편리함보다 결과를 검증하는 과정에 초점을 맞춰봤다. 실행 속도가 빨라질수록 무엇이 바뀌었는지 설명할 수 있는 기록과, 그 결과를 사람이 다시 확인하는 기준이 함께 필요하기 때문이다.",
-        "throughline": "오늘의 두 소식은 자동화를 더 많이 쓰는 문제보다, 자동화가 남긴 실행 기록을 어떻게 확인하고 결과를 어떤 기준으로 판단할지에 초점을 맞춘다. 실행 전 위험을 확인하는 기능과 AI 결과를 검토하는 습관은 결국 같은 질문으로 이어진다. 빠른 실행 뒤에 검증 가능한 흔적이 남는가 하는 질문이다. 하나는 워크플로가 실제로 움직이기 전의 안전 장치를 다루고, 다른 하나는 생성된 코드가 나온 뒤의 판단 과정을 다룬다. 시점은 달라도 자동화의 책임을 도구에만 넘기지 않는다는 점에서 맞닿아 있다.",
+        "throughline": "오늘의 두 소식은 자동화를 더 많이 쓰는 문제보다, 자동화가 남긴 실행 기록을 어떻게 확인하고 결과를 어떤 기준으로 판단할지에 초점을 맞춘다. 실행 전 위험을 확인하는 기능과 AI 결과를 검토하는 습관은 결국 같은 질문으로 이어진다. 빠른 실행 뒤에 검증 가능한 흔적이 남는가 하는 질문이다. 하나는 워크플로가 실제로 움직이기 전의 안전 장치를 다루고, 다른 하나는 생성된 코드가 나온 뒤의 판단 과정을 다룬다. 시점은 달라도 자동화의 책임을 도구에만 넘기지 않는다는 점에서 맞닿아 있다. 자동화가 넓어질수록 검토할 대상도 코드 한 줄에서 권한, 실행 환경, 생성 결과까지 함께 넓어진다. 결국 속도를 얻는 조건은 검토를 생략하는 것이 아니라, 무엇을 언제 확인했는지 다시 찾을 수 있게 만드는 데 있다. 이 기준이 있으면 새 기능을 무작정 켜는 대신 작은 범위에서 먼저 실행하고 결과를 비교할 수 있다.",
         "closing": "도구가 바뀌어도 결국 중요한 것은 변경을 이해하고 판단하는 힘이다. 자동화 전후에 확인할 기준을 먼저 정해두면 속도를 얻으면서도 실패 원인을 다시 찾을 수 있다. 기능의 이름보다 검증 가능한 작업 흐름이 남는지를 보는 편이 오래 간다.",
         "action": "관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자. 이어서 적용 전후에 확인할 로그나 테스트 기준도 한 가지 덧붙여보자.",
     },
@@ -62,6 +63,7 @@ MODEL_OUTPUT = {
             "source": "가짜 출처",
             "url": "https://evil.example/hallucinated",
             "blurb_kr": "워크플로 변경을 실행 전에 살펴보는 기능이다.",
+            "author_note": "승원의 관점에서는 기능 이름보다 실제 저장소에서 어떤 권한 변화와 경고가 표시되는지가 더 중요하다. 테스트 워크플로에 최소 권한과 과한 권한을 각각 넣어 차이를 기록해볼 만하다. 경고가 실제 실행을 막는지, 안내만 하는지도 로그와 함께 남기면 다음 변경을 검토할 기준이 생긴다.",
             "content": [
                 {"t": "h", "text": "무슨 일이 있었나"},
                 {"t": "p", "text": "GitHub Actions 워크플로를 실행하기 전에 위험한 변경을 확인할 수 있는 점검 단계가 추가됐다. 실행 이후 로그에서 문제를 찾는 방식과 달리, 변경 내용이 실제 권한과 자동화 흐름에 어떤 영향을 주는지 먼저 살펴볼 수 있다. 배포나 비밀 정보 접근이 포함된 작업일수록 검토 시점이 앞당겨진다는 점이 핵심이다. 검토 화면에 표시되는 변경 범위를 실행 로그와 함께 남기면, 나중에 문제가 생겼을 때 어떤 판단으로 실행을 허용했는지도 되짚을 수 있다."},
@@ -74,6 +76,7 @@ MODEL_OUTPUT = {
         {
             "title_kr": "AI와 함께 일하는 개발자",
             "blurb_kr": "도구보다 판단과 검증이 중요하다는 내용이다.",
+            "author_note": "승원의 관점에서는 AI 사용량보다 검토 시간과 수정 횟수를 같이 기록해야 효과를 판단할 수 있다. 다음 작은 기능에서 생성 시간, 리뷰 왕복, 회귀 오류를 한 표에 남겨볼 만하다. 결과가 빨리 나온 경우에도 테스트와 수정에 든 시간을 더해야 실제 작업 시간이 줄었는지 비교할 수 있다.",
             "content": [
                 {"t": "h", "text": "무슨 일이 있었나"},
                 {"t": "p", "text": "AI 도구가 코드를 빠르게 만드는 상황에서는 작성 속도만으로 개발자의 기여를 설명하기 어려워진다. 요구사항을 정확히 나누고, 생성된 결과가 시스템의 기존 규칙과 맞는지 확인하며, 실패했을 때 원인을 추적하는 일이 더 큰 비중을 차지한다. 결과를 받아들이는 사람의 판단 과정이 개발 품질에 직접 연결된다. 생성에 걸린 시간만 기록하면 검토 부담을 놓치기 쉬우므로, 결과를 읽고 수정한 시간과 테스트에서 발견된 오류도 함께 봐야 변화의 실제 크기를 알 수 있다."},
@@ -108,7 +111,7 @@ class PromptTests(unittest.TestCase):
         self.assertIn('"news"', prompt)
         self.assertIn('"editorial"', prompt)
         self.assertIn("뉴스를 하나의 흐름", prompt)
-        self.assertIn("6~8분", prompt)
+        self.assertIn("7~9분", prompt)
         self.assertIn("무슨 일이 있었나", prompt)
         self.assertIn("왜 우리에게 중요한가", prompt)
         self.assertIn("직접 확인할 점", prompt)
@@ -127,6 +130,16 @@ class PromptTests(unittest.TestCase):
         self.assertIn("차이와 긴장", prompt)
         self.assertIn("10단어 이상 연속", prompt)
 
+    def test_applies_the_blog_persona_without_fabricating_firsthand_experience(self):
+        prompt = build_prompt(INBOX)
+
+        self.assertIn("승원", prompt)
+        self.assertIn("7~9분", prompt)
+        self.assertIn("승원의 메모", prompt)
+        self.assertIn("자료 기반 해석", prompt)
+        self.assertIn("직접 해보니", prompt)
+        self.assertIn('"author_note"', prompt)
+
     def test_bounds_history_to_fit_free_tier_input_limit(self):
         history = {
             "questions": ["문" * 1000 for _ in range(100)],
@@ -144,7 +157,7 @@ class PromptTests(unittest.TestCase):
 
         self.assertIn("2개 뉴스", prompt)
         self.assertNotIn("세 뉴스", prompt)
-        self.assertIn("300~380자", prompt)
+        self.assertIn("320~420자", prompt)
 
     def test_includes_bounded_article_context_as_untrusted_evidence(self):
         inbox = copy.deepcopy(INBOX)
@@ -237,6 +250,7 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["news"][0]["published_at"], INBOX["selected"][0]["published_at"])
         self.assertEqual(day["news"][0]["audience_lane"], "practical")
         self.assertEqual(day["news"][0]["selection_reason"], "실무 독자 적합도 5")
+        self.assertIn("승원의 관점", day["news"][0]["author_note"])
         self.assertEqual(day["quiz"]["answer"], 0)
         self.assertEqual(len(day["terms"]), 3)
         self.assertIn("검증하는 과정", day["editorial"]["opening"])
@@ -269,6 +283,33 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaises(DraftQualityError):
             build_day(INBOX, generic)
 
+    def test_rejects_missing_or_fabricated_personal_author_notes(self):
+        missing = copy.deepcopy(MODEL_OUTPUT)
+        missing["news"][0].pop("author_note")
+        with self.assertRaisesRegex(DraftQualityError, "승원의 메모"):
+            build_day(INBOX, missing)
+
+        fabricated = copy.deepcopy(MODEL_OUTPUT)
+        fabricated["news"][0]["author_note"] = (
+            "직접 해보니 성능이 아주 좋았고 현업 프로젝트에서도 문제없이 쓸 수 있었다. "
+            "그래서 모든 개발자에게 추천할 수 있다고 느꼈다. 구체적인 설정이나 테스트 결과가 없어도 "
+            "내 경험만으로 충분히 판단할 수 있으며 당장 적용해도 된다고 생각한다."
+        )
+        with self.assertRaisesRegex(DraftQualityError, "직접 경험"):
+            build_day(INBOX, fabricated)
+
+    def test_rejects_a_vague_verification_paragraph(self):
+        vague = copy.deepcopy(MODEL_OUTPUT)
+        vague["news"][0]["content"][5]["text"] = (
+            "아직 모든 내용이 확인된 것은 아니므로 주의 깊게 살펴보아야 한다. "
+            "자세한 내용은 원문을 확인하는 것이 중요하며 앞으로의 변화를 지켜볼 필요가 있다. "
+            "기술의 장단점을 생각하면서 신중하게 판단해야 한다. 독자가 각자의 상황을 고려해 "
+            "충분히 생각한 뒤 결정해야 하며 새로운 소식이 나오는지도 계속 지켜봐야 한다."
+        )
+
+        with self.assertRaisesRegex(DraftQualityError, "검증 대상"):
+            build_day(INBOX, vague)
+
     def test_rejects_verbatim_passages_from_the_source_material(self):
         inbox = copy.deepcopy(INBOX)
         copied = MODEL_OUTPUT["news"][0]["content"][1]["text"]
@@ -283,7 +324,8 @@ class DayValidationTests(unittest.TestCase):
             "제공된 자료에서 확인되는 변화와 그 범위를 구분해 설명한다. "
             "개발자가 직접 적용하기 전에는 설정과 제한 조건을 원문에서 다시 확인해야 한다. "
             "이 문단은 구조만 갖췄지만 전체 글을 여섯 분 동안 읽기에는 짧다. "
-            "확인 기준이 없다면 짧은 요약과 다르지 않다."
+            "확인 기준이 없다면 짧은 요약과 다르지 않다. 설정과 권한 범위를 먼저 적고 로그를 비교한다. "
+            "비교한 결과는 날짜와 함께 짧게 기록한다."
         )
         for item in short["news"]:
             for block in item["content"]:
@@ -291,7 +333,7 @@ class DayValidationTests(unittest.TestCase):
                     block["text"] = paragraph
         short["quiz"]["explain_kr"] = "숨겨진 해설 " * 500
 
-        with self.assertRaisesRegex(DraftQualityError, "6분"):
+        with self.assertRaisesRegex(DraftQualityError, "7분"):
             build_day(INBOX, short)
 
     def test_rejects_an_individually_short_news_paragraph(self):
@@ -521,6 +563,16 @@ class GitHubModelsClientTests(unittest.TestCase):
 
 
 class GeminiClientTests(unittest.TestCase):
+    def test_builds_a_deduplicated_free_tier_text_model_fallback_chain(self):
+        self.assertEqual(
+            gemini_model_candidates("gemini-3.5-flash"),
+            ["gemini-3.5-flash", "gemini-3-flash-preview", "gemini-3.1-flash-lite"],
+        )
+        self.assertEqual(
+            gemini_model_candidates("gemini-3-flash-preview"),
+            ["gemini-3-flash-preview", "gemini-3.1-flash-lite"],
+        )
+
     def test_sends_key_only_in_header_and_parses_structured_json(self):
         captured = {}
 
@@ -711,8 +763,8 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(len(calls), 2)
         self.assertIn("분량과 구조를 다시 점검", calls[1])
         self.assertIn("4~6개의 완결된 문장", calls[1])
-        self.assertIn("300~380자", calls[1])
-        self.assertIn("최소 900자", calls[1])
+        self.assertIn("320~420자", calls[1])
+        self.assertIn("최소 960자", calls[1])
         self.assertIn("이전 응답의 본문 문단 길이", calls[1])
         self.assertLessEqual(
             _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 900

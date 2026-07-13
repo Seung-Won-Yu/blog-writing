@@ -29,7 +29,7 @@ OUT_DIR = HERE / "docs" / "tistory"
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
-MIN_PUBLISH_REVISION = 5
+MIN_PUBLISH_REVISION = 6
 
 POST_SHELL_STYLE = (
     "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"
@@ -110,6 +110,14 @@ ACTION_STYLE = (
 THROUGHLINE_STYLE = (
     "margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;"
     "border-top:4px solid #28745a;background:#f4f7f5;"
+)
+READING_GUIDE_STYLE = (
+    "margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;"
+    "background:#fff;"
+)
+AUTHOR_NOTE_STYLE = (
+    "margin:20px 0 0;padding:16px 18px;border-left:3px solid #28745a;"
+    "background:#f4f7f5;color:#35433c;font-size:15px;line-height:1.78;"
 )
 
 
@@ -225,6 +233,7 @@ def estimate_read_minutes(day):
     pieces.extend(editorial.values())
     for item in day.get("news", []):
         pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
+        pieces.append(item.get("author_note"))
         pieces.extend(block.get("text") for block in item.get("content", []) if isinstance(block, dict))
     quiz = day.get("quiz") or {}
     pieces.append(quiz.get("question"))
@@ -381,6 +390,25 @@ def build_throughline_section(editorial):
 </section>""".strip()
 
 
+def build_reading_guide(news):
+    if not news:
+        return ""
+    rows = []
+    for index, item in enumerate(news, 1):
+        lane = "오늘의 메인 이슈" if index == 1 else "함께 볼 흐름"
+        rows.append(
+            '<li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;">'
+            f'<a href="#digest-news-{index}" style="color:#27332d;text-decoration:none;">'
+            f'<b style="color:#28745a;">{esc(lane)}</b> · {esc(item.get("title_kr"))}</a></li>'
+        )
+    return f"""
+<nav class="digest-reading-guide" aria-label="글 순서"{style(READING_GUIDE_STYLE)}>
+  <p{style(KICKER_STYLE)}>READING GUIDE</p>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>이 글에서 볼 것</h2>
+  <ol style="margin:0;padding:0;list-style:none;">{''.join(rows)}</ol>
+</nav>""".strip()
+
+
 def build_editorial_image(asset, kind):
     if not isinstance(asset, dict) or not plain(asset.get("url")):
         return ""
@@ -421,6 +449,7 @@ def build_news_section(news, flow_image=None, story_images=None):
         audience_lane = audience_lane_label(item.get("audience_lane"))
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
+        author_note = plain(item.get("author_note"))
         image = plain(item.get("image_url") or item.get("image"))
         full_content = render_content_blocks(item.get("content"))
 
@@ -447,15 +476,24 @@ def build_news_section(news, flow_image=None, story_images=None):
         source_meta = " · ".join(
             value for value in (source, published, audience_lane) if value
         )
+        lane_label = "오늘의 메인 이슈" if idx == 1 else "함께 볼 흐름"
+        author_note_html = (
+            f'<aside class="digest-author-note"{style(AUTHOR_NOTE_STYLE)}>'
+            '<b style="display:block;margin-bottom:5px;color:#28745a;font-size:12px;letter-spacing:.04em;">'
+            f'승원의 메모 · 자료 기반 해석</b>{esc(author_note)}</aside>'
+            if author_note
+            else ""
+        )
 
         parts.append(
             f"""
-<section class="digest-news-card"{style(CARD_STYLE)}>
+<section id="digest-news-{idx}" class="digest-news-card"{style(CARD_STYLE)}>
   {image_html}
-  <p class="digest-source"{style(BADGE_STYLE)}>NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
+  <p class="digest-source"{style(BADGE_STYLE)}>{esc(lane_label)} · NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   {summary_html}
   {full_content}
+  {author_note_html}
   {source_link}
 </section>""".strip()
         )
@@ -566,6 +604,8 @@ def render_post(day_id, day):
   {build_summary_section(day)}
 
   {build_throughline_section(editorial)}
+
+  {build_reading_guide(news)}
 
   <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
   {build_news_section(

@@ -59,6 +59,32 @@ class OptionalLearningSectionsTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_renders_an_in_page_reading_guide_and_source_based_author_note(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [
+            {
+                **FALLBACK_DAY["news"][0],
+                "author_note": "승원의 관점에서는 실제 설정과 권한 범위를 먼저 비교해볼 만하다.",
+            },
+            {
+                "title_kr": "두 번째 흐름",
+                "source": "공식 블로그",
+                "url": "https://example.com/2",
+                "author_note": "승원의 관점에서는 버전별 차이를 표로 남겨볼 만하다.",
+                "content": [],
+            },
+        ]
+
+        html = render_post("2026-07-13", day)
+
+        self.assertIn("이 글에서 볼 것", html)
+        self.assertIn('href="#digest-news-1"', html)
+        self.assertIn('id="digest-news-1"', html)
+        self.assertIn("오늘의 메인 이슈", html)
+        self.assertIn("함께 볼 흐름", html)
+        self.assertIn("승원의 메모 · 자료 기반 해석", html)
+        self.assertIn("실제 설정과 권한 범위", html)
+
     def test_uses_a_specific_editorial_headline_in_search_and_the_hero(self):
         day = dict(FALLBACK_DAY)
         day["editorial"] = {
@@ -341,7 +367,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 gemini_day["generation"] = {
                     "provider": "gemini",
                     "model": "gemini-3.5-flash",
-                    "revision": 5,
+                    "revision": 6,
                 }
                 write_post("2026-07-14", day=gemini_day)
                 gemini_meta = json.loads(

@@ -49,6 +49,15 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertLess(workflow.index(generate_command), workflow.index(image_command))
         self.assertLess(workflow.index(image_command), workflow.index(copy_command))
 
+    def test_generated_docs_and_data_do_not_retrigger_the_workflow(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+        push_paths = workflow.split("schedule:", 1)[0]
+
+        self.assertNotIn("- 'docs/**'", push_paths)
+        self.assertNotIn("- 'data/**'", push_paths)
+
 
 if __name__ == "__main__":
     unittest.main()
