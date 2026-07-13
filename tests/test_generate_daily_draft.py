@@ -69,7 +69,7 @@ MODEL_OUTPUT = {
             "source": "가짜 출처",
             "url": "https://evil.example/hallucinated",
             "blurb_kr": "워크플로 변경을 실행 전에 살펴보는 기능이다.",
-            "author_note": "승원의 관점에서는 기능 이름보다 실제 저장소에서 어떤 권한 변화와 경고가 표시되는지가 더 중요하다. 테스트 워크플로에 최소 권한과 과한 권한을 각각 넣어 차이를 기록해볼 만하다. 경고가 실제 실행을 막는지, 안내만 하는지도 로그와 함께 남기면 다음 변경을 검토할 기준이 생긴다.",
+            "author_note": "이 소식에서 내가 먼저 볼 것은 기능 이름보다 실제 저장소에서 표시되는 권한 변화와 경고다. 테스트 워크플로에 최소 권한과 과한 권한을 각각 넣어 차이를 기록해볼 만하다. 경고가 실행을 막는지 안내만 하는지도 로그와 함께 남기면 다음 변경을 검토할 기준이 생긴다.",
             "content": [
                 {"t": "h", "text": "무슨 일이 있었나"},
                 {"t": "p", "text": "GitHub Actions 워크플로를 실행하기 전에 위험한 변경을 확인할 수 있는 점검 단계가 추가됐다. 실행 이후 로그에서 문제를 찾는 방식과 달리, 변경 내용이 실제 권한과 자동화 흐름에 어떤 영향을 주는지 먼저 살펴볼 수 있다. 배포나 비밀 정보 접근이 포함된 작업일수록 검토 시점이 앞당겨진다는 점이 핵심이다. 검토 화면에 표시되는 변경 범위를 실행 로그와 함께 남기면, 나중에 문제가 생겼을 때 어떤 판단으로 실행을 허용했는지도 되짚을 수 있다."},
@@ -82,7 +82,7 @@ MODEL_OUTPUT = {
         {
             "title_kr": "AI와 함께 일하는 개발자",
             "blurb_kr": "도구보다 판단과 검증이 중요하다는 내용이다.",
-            "author_note": "승원의 관점에서는 AI 사용량보다 검토 시간과 수정 횟수를 같이 기록해야 효과를 판단할 수 있다. 다음 작은 기능에서 생성 시간, 리뷰 왕복, 회귀 오류를 한 표에 남겨볼 만하다. 결과가 빨리 나온 경우에도 테스트와 수정에 든 시간을 더해야 실제 작업 시간이 줄었는지 비교할 수 있다.",
+            "author_note": "이 소식에서 내가 먼저 볼 것은 AI 사용량보다 검토 시간과 수정 횟수다. 다음 작은 기능에서 생성 시간, 리뷰 왕복, 회귀 오류를 한 표에 남겨볼 만하다. 결과가 빨리 나온 경우에도 테스트와 수정에 든 시간을 더해야 실제 작업 시간이 줄었는지 비교할 수 있다.",
             "content": [
                 {"t": "h", "text": "무슨 일이 있었나"},
                 {"t": "p", "text": "AI 도구가 코드를 빠르게 만드는 상황에서는 작성 속도만으로 개발자의 기여를 설명하기 어려워진다. 요구사항을 정확히 나누고, 생성된 결과가 시스템의 기존 규칙과 맞는지 확인하며, 실패했을 때 원인을 추적하는 일이 더 큰 비중을 차지한다. 결과를 받아들이는 사람의 판단 과정이 개발 품질에 직접 연결된다. 생성에 걸린 시간만 기록하면 검토 부담을 놓치기 쉬우므로, 결과를 읽고 수정한 시간과 테스트에서 발견된 오류도 함께 봐야 변화의 실제 크기를 알 수 있다."},
@@ -151,7 +151,7 @@ class PromptTests(unittest.TestCase):
                 {
                     "title_kr": full_title[:72],
                     "blurb_kr": "수정 후",
-                    "author_note": "승원의 관점에서는 설정을 확인한다.",
+                    "author_note": "이 소식에서 내가 먼저 볼 것은 설정이다.",
                     "content": [],
                 }
             ],
@@ -313,7 +313,7 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["news"][0]["published_at"], INBOX["selected"][0]["published_at"])
         self.assertEqual(day["news"][0]["audience_lane"], "practical")
         self.assertEqual(day["news"][0]["selection_reason"], "실무 독자 적합도 5")
-        self.assertIn("승원의 관점", day["news"][0]["author_note"])
+        self.assertIn("이 소식에서 내가 먼저 볼 것은", day["news"][0]["author_note"])
         self.assertEqual(day["quiz"]["answer"], 0)
         self.assertEqual(len(day["terms"]), 3)
         self.assertIn("검증하는 과정", day["editorial"]["opening"])
@@ -349,13 +349,38 @@ class DayValidationTests(unittest.TestCase):
     def test_rejects_press_release_ai_tone(self):
         formal = copy.deepcopy(MODEL_OUTPUT)
         formal["news"][0]["author_note"] = (
-            "승원의 관점에서는 이 기능이 중요하다고 봅니다. 저장소 설정을 확인하십시오. "
+            "이 소식에서 내가 먼저 볼 것은 이 기능이 중요하다고 봅니다. 저장소 설정을 확인하십시오. "
             "모든 팀에 적용할 것을 권장합니다. 권한과 로그를 점검해 보십시오. "
             "이 변화는 개발자에게 도움이 될 것입니다."
         )
 
         with self.assertRaisesRegex(DraftQualityError, "AI식"):
             build_day(INBOX, formal)
+
+    def test_rejects_live_ai_marketing_language_and_repeated_transitions(self):
+        marketing = copy.deepcopy(MODEL_OUTPUT)
+        marketing["news"][0]["content"][3]["text"] += (
+            " 개발 생산성을 극대화하는 실무적 이점을 제공한다. "
+            "다각적인 검증 과정을 거쳐야 함을 시사한다."
+        )
+        marketing["news"][1]["content"][3]["text"] += (
+            " 개발자 관점에서는 효율적으로 제어할 수 있음을 의미한다."
+        )
+        marketing["news"][0]["content"][3]["text"] += " 개발자 관점에서는 변화가 크다."
+
+        with self.assertRaisesRegex(DraftQualityError, "AI식"):
+            build_day(INBOX, marketing)
+
+    def test_rejects_abstract_author_note_instead_of_a_personal_check(self):
+        abstract = copy.deepcopy(MODEL_OUTPUT)
+        abstract["news"][0]["author_note"] = (
+            "이 소식에서 내가 먼저 볼 것은 권한 설정이다. 개발자 관점에서는 장기적인 "
+            "서비스 운영을 위해 검증 파이프라인을 구성하는 연습이 필요하다. "
+            "관련 프로세스를 마련해야 한다."
+        )
+
+        with self.assertRaisesRegex(DraftQualityError, "승원의 메모"):
+            build_day(INBOX, abstract)
 
     def test_derives_a_missing_note_from_verification_but_rejects_fake_experience(self):
         missing = copy.deepcopy(MODEL_OUTPUT)
@@ -389,7 +414,11 @@ class DayValidationTests(unittest.TestCase):
 
         day = build_day(INBOX, labeled)
 
-        self.assertTrue(day["news"][0]["author_note"].startswith("승원의 관점에서는"))
+        self.assertTrue(
+            day["news"][0]["author_note"].startswith(
+                "이 소식에서 내가 먼저 볼 것은"
+            )
+        )
         self.assertNotIn("승원의 메모", day["news"][0]["author_note"])
         self.assertLessEqual(len(day["news"][0]["author_note"]), 220)
 
