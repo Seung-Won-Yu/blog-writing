@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T02:09:44.298859+00:00",
+  "generated_at": "2026-07-13T02:43:52.694171+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -353,6 +353,25 @@
       ]
     },
     {
+      "id": "1bada9753e94",
+      "title": "AI 에이전트 시대의 새로운 SaaS 플레이북",
+      "normalized_title": "ai 에이전트 시대의 새로운 saas 플레이북",
+      "url": "https://news.hada.io/topic?id=31387",
+      "published_at": "2026-07-13T02:26:01+00:00",
+      "summary": "소프트웨어 제작 비용이 0에 가까워지면서 기능과 UI는 빠르게 복제 가능한 상품이 되고, SaaS의 가치는 소프트웨어 포장 아래의 희소 자산 으로 이동함 새로운 방어력은 독점 데이터 루프와 행동 권한 , 에이전트의 의사결정 단계에 들어가는 유통, ERP·원장·신원·...",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ]
+    },
+    {
       "id": "7b506526e329",
       "title": "LLM은 사랑하지만 과대광고는 싫다",
       "normalized_title": "llm은 사랑하지만 과대광고는 싫다",
@@ -448,6 +467,126 @@
       ]
     },
     {
+      "id": "d148aa969482",
+      "title": "VEXAIoT: Autonomous IoT Vulnerability EXploitation using AI Agents",
+      "normalized_title": "vexaiot autonomous iot vulnerability exploitation using ai agents",
+      "url": "https://arxiv.org/abs/2607.09653v1",
+      "published_at": "2026-07-10T17:52:29+00:00",
+      "summary": "Internet of Things (IoT) systems are inherently vulnerable due to constrained hardware, outdated firmware, and insecure default configurations, creating a need for scalable and adaptive security testing approaches. While recent adoptions of Large Language Model (LLM) agents have demonstrated promise in penetration testing and Capture-the-Flag (CTF) environments, their application to IoT specific vulnerabilities remains unexplored. This paper presents an autonomous multi-agent framework, referred to as Vulnerability EXploitation using AI Agents (VEXAIoT), for vulnerability discovery and exploitation in IoT environments using LLM-based reasoning and offensive security tools. The framework combines a vulnerability detection agent and an attack execution agent to perform reconnaissance, plan attack sequences, and execute exploits against vulnerable IoT services. The system is evaluated in IoTGoat and Metasploitable environments across ten attack scenarios mapped to OWASP IoT vulnerabilities. Experimental results show attack success rate of up to 100% with low token overhead and average execution times under two minutes for most attacks. Across 260 attack executions, VEXAIoT achieves a 95.0% overall success rate, including 94.5% success in IoTGoat and 96.7% success in Metasploitable2. These results demonstrate the potential for LLM-driven agents to automate IoT vulnerability assessment and offensive security workflows in controlled environments",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
+      "id": "f46996618b2c",
+      "title": "Semantic Pareto-DQN: A Multi-Objective Reinforcement Learning Framework for Financial Anomaly Detection",
+      "normalized_title": "semantic pareto dqn a multi objective reinforcement learning framework for financial anomaly detection",
+      "url": "https://arxiv.org/abs/2607.09641v1",
+      "published_at": "2026-07-10T17:39:00+00:00",
+      "summary": "Financial anomaly detection suffers from extreme class imbalance, causing traditional single-objective algorithms to exhibit ``fraud collapse'', defaulting to the majority class and failing to balance anomaly interdiction with customer friction. To overcome this without distortive data resampling, we propose the Semantic Pareto-DQN, a multi-objective reinforcement learning framework. Our approach synthesizes heterogeneous transaction features into cohesive natural-language narratives, encoded by large language models, thereby producing a robust, scale-invariant state representation. The agent optimizes a vectorial reward that explicitly decouples financial efficacy, operational friction, and semantic discovery. By mapping the continuous Pareto frontier, the system dynamically navigates the asymmetric costs of missed anomalies versus false positives. Empirical evaluations across E-Commerce fraud and UCI Credit datasets show that semantic Pareto-DQN successfully shatters the zero-recall trap. It achieves superior minority-class recall compared to scalarized baselines, providing an alternative to trade bounded operational friction for financial anomaly discovery.",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
+      "id": "3a6280f24dac",
+      "title": "Lean-QIT: Towards a Formal Infrastructure for Quantum Information Theory",
+      "normalized_title": "lean qit towards a formal infrastructure for quantum information theory",
+      "url": "https://arxiv.org/abs/2607.09632v1",
+      "published_at": "2026-07-10T17:28:26+00:00",
+      "summary": "Quantum information theory (QIT) characterizes the capabilities and fundamental limits of quantum information processing, underpinning quantum communication, computation, and error correction. Formalizing its coding theorems requires connecting finite-block protocols, analytic inequalities, and asymptotic limits within a unified machine-checked framework. Existing developments, however, lack a reusable operational layer that defines codes, error criteria, achievable rates, and capacities independently of their information-theoretic characterizations. In this work, we present LeanQIT, a Lean 4 library for finite-dimensional QIT. It provides composable, kernel-checked interfaces for quantum states and channels, source and channel codes, finite-block performance criteria, hypothesis testing, one-shot quantities, and asymptotic rate constructions. Using this infrastructure, we formalize Schumacher's quantum source-coding theorem, the Holevo--Schumacher--Westmoreland classical-capacity theorem, and the entanglement-assisted classical-capacity theorem together with its strong converse. By separating operational definitions from analytic characterizations and exposing reusable achievability, converse, and asymptotic components, Lean-QIT provides a machine-readable foundation for formal QIT and a compositional knowledge substrate for emerging AI-assisted formalization, automated proof search, and agentic reasoning in quantum information and computation.",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
+      "id": "00fa38caad45",
+      "title": "Task-Specific Multimodal Question Answering Agents via Confidence Calibration and Incremental Reasoning for QANTA 2026",
+      "normalized_title": "task specific multimodal question answering agents via confidence calibration and incremental reasoning for qanta 2026",
+      "url": "https://arxiv.org/abs/2607.09623v1",
+      "published_at": "2026-07-10T17:22:49+00:00",
+      "summary": "We present our submission to the QANTA 2026 shared challenge at the ICML 2026 Workshop on Efficient Multimodal Question Answering (EMM-QA). Quanta evaluates multimodal quizbowl systems that answer pyramid-style questions from incrementally revealed text and accompanying images while operating under realistic efficiency constraints. The challenge consists of two distinct tasks: Tossup questions, which require deciding when to answer under uncertainty, and Bonus questions, which emphasize accurate answer selection and human adoption. To address these differing objectives, we develop a task-specific two-agent architecture. Our Tossup agent utilizes a GPT-4o-mini-class model (referred to as GPT-4.1-mini in the competition logs) with confidence-calibrated answering and a domain-specific numeric reasoning policy that reduces overconfident predictions from isolated quantitative clues. Our Bonus agent uses GPT-4o-class model (referred to as GPT-4.1) with leadin-aware reasoning, structured relational reasoning, and multimodal evidence integration to improve exact answer selection. Rather than relying on a retrieval pipeline or model ensembles, our approach emphasizes efficient reasoning policies and confidence calibration within a hosted-only environment. Our system achieved the highest overall leaderboard score of 0.402, including a Tossup score of 0.238 and a Bonus Effect score of 0.164. The results demonstrate that lightweight, task-specific reasoning strategies can provide strong performance on resource-constrained multimodal question answering benchmarks.",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
+      "id": "6944eeba9bda",
+      "title": "Agora: Enhancing LLM Agent Reasoning Via Auction-Based Task Allocation",
+      "normalized_title": "agora enhancing llm agent reasoning via auction based task allocation",
+      "url": "https://arxiv.org/abs/2607.09600v1",
+      "published_at": "2026-07-10T16:54:52+00:00",
+      "summary": "Enhancing the reasoning capabilities of large language model (LLM) agents requires effective orchestration of diverse expert models and tools. However, existing frameworks typically call APIs based on coarse-grained matching between tasks and the functions of expert models or tools, while overlooking critical factors such as performance variability and cost efficiency among functionally similar alternatives. To address this, we propose Agora, a framework that introduces an incentive-compatible auction mechanism for dynamically allocating tasks to expert models and tools. By treating reasoning steps as tradeable items, Agora enables agents to bid based on their rectified competence-ensuring that critical logic is routed to the most capable solver rather than the most overconfident one. Evaluations across five benchmarks show that Agora improves over matched single-model, routing, and cascade baselines under comparable candidate pools, while exposing a controllable cost-quality trade-off through a single auction parameter.",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
+      "id": "e81ede38a469",
+      "title": "TrustX Agent Risk Classification Framework (ARC): Risk-Tiering Internally Created Agentic AI Systems",
+      "normalized_title": "trustx agent risk classification framework arc risk tiering internally created agentic ai systems",
+      "url": "https://arxiv.org/abs/2607.09586v1",
+      "published_at": "2026-07-10T16:36:44+00:00",
+      "summary": "The proliferation of agentic AI systems across enterprise and public-sector contexts has outpaced the capacity of general-purpose AI risk frameworks to classify and govern them. In this paper, we introduce the TrustX Agent Risk Classification Framework, a structured, repeatable instrument that can be applied to seven types of agentic AI systems and is grounded in foundational pre-existing AI governance frameworks. At the core of the framework is a twelve-dimension scoring rubric that robustly quantifies the risk. This rubric is combined with other components, such as the GPA + IAT classification model and the five-level autonomy framework derived from existing literature. These inputs produce a three-tier governance output with mapped control recommendations. A specialised Coding Assistant extension is also included to account for nuances specific to this type of agentic AI system. We then use an illustrative example to show our framework in practice. ARC is intended for AI governance practitioners, risk officers, developers, and regulators, and it will regularly undergo iteration as we continue to expand it and make it more robust. The community can access the interactive framework here: https://arc.responsible.ai/",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
+        "관심 키워드"
+      ]
+    },
+    {
       "id": "ebd15df645ba",
       "title": "GitHub Mobile: Improved filters and sorting for Copilot sessions",
       "normalized_title": "github mobile improved filters and sorting for copilot sessions",
@@ -464,86 +603,6 @@
         "출처 가중치 5",
         "공식 출처",
         "7일 이내"
-      ]
-    },
-    {
-      "id": "3c175c01f657",
-      "title": "Remember When It Matters: Proactive Memory Agent for Long-Horizon Agents",
-      "normalized_title": "remember when it matters proactive memory agent for long horizon agents",
-      "url": "https://arxiv.org/abs/2607.08716v1",
-      "published_at": "2026-07-09T17:26:28+00:00",
-      "summary": "In long-horizon tasks, decision-relevant state is often scattered across an expanding trajectory, while the action agent must surface it and act. As trajectories grow, task requirements, environment facts, prior attempts, diagnoses, and open subgoals can be buried in the context window or pushed beyond it, failing to influence decisions when needed. We call this failure mode \"behavioral state decay\". We study memory as an active intervention mechanism rather than passive retrieval. A separate memory agent runs alongside an unmodified action agent, updating a structured memory bank from the recent trajectory and deciding whether to inject a memory-grounded reminder or remain silent. The module is plug-and-play with frontier action agents and existing agent harnesses. Across Terminal-Bench 2.0 and $τ^2$-Bench, it improves pass@1 for both weaker and stronger action agents, with gains of +8.3 pp on Terminal-Bench and +6.8 pp on $τ^2$-Bench. Ablations show that selective intervention outperforms passive bank exposure, always-on injection, advisor-only guidance, and general retrieval. As an early step toward open-weight memory policies, we train Qwen3.5-27B on SETA using SFT and GRPO, improving validation reward and achieving partial transfer to Terminal-Bench.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "1e46e0411e45",
-      "title": "ProjAgent: Procedural Similarity Retrieval for Repository-Level Code Generation",
-      "normalized_title": "projagent procedural similarity retrieval for repository level code generation",
-      "url": "https://arxiv.org/abs/2607.08691v1",
-      "published_at": "2026-07-09T16:50:54+00:00",
-      "summary": "Repository-level code generation requires implementing target functions while accounting for complex cross-file dependencies and project-specific conventions. Existing retrieval methods predominantly rely on lexical, structural, or semantic similarity, often overlooking repository functions that implement similar procedural logic despite differing in identifiers or application domains. We propose ProjAgent, a repository-level code generation system that introduces procedural similarity as an explicit retrieval signal. ProjAgent decomposes the target function into intermediate reasoning steps and employs an agentic workflow to retrieve repository functions that exhibit similar procedural behavior at each step. The retrieved procedural context is integrated with conventional semantic retrieval to construct a richer repository context for code generation. ProjAgent further incorporates a conservative static-analysis feedback loop that iteratively repairs generated code using compiler and static-analysis feedback. Evaluated on REPOCOD, ProjAgent achieves 41.14% Pass@1, outperforming existing retrieval-based baselines. These results demonstrate that procedural similarity is an effective and previously unexplored retrieval dimension for repository-level code generation.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "837c004336b1",
-      "title": "SolarChain-Eval: A Physics-Constrained Benchmark for Trustworthy Economic Agents in Decentralized Energy Markets",
-      "normalized_title": "solarchain eval a physics constrained benchmark for trustworthy economic agents in decentralized energy markets",
-      "url": "https://arxiv.org/abs/2607.08681v1",
-      "published_at": "2026-07-09T16:43:42+00:00",
-      "summary": "As agentic AI systems are increasingly applied to cyber-physical environments, their evaluation requires assessment of both task performance and trustworthiness. In decentralized energy markets, autonomous agents may improve market utility, but may also exploit invalid physical data, create artificial liquidity, and produce unstable governance decisions. Therefore, we propose SolarChain-Eval, a physics-constrained benchmark for evaluating trustworthy economic agents. It formulates market governance as a Gymnasium-compatible Markov Decision Process, where agents make hourly decisions. SolarChain-Eval evaluates each policy across multiple dimensions, including market utility, physical safety, slippage, action smoothness, spatial fairness, and auditability. To support agentic evaluation, SolarChain-Eval incorporates an LLM-based Planner/Auditor layer. The Planner defines episode-level action bounds and audit rules, while the Auditor reviews and revises high-risk actions. All interventions are recorded through structured logs, including trigger signals, proposed actions, revised actions, and audit rationales. Experiments with static, random, myopic, RL, and RL+LLM policies reveal a clear utility-safety trade-off. RL agents improve market utility but can still produce unsafe behavior. When the physics penalty is removed, reward-maximizing agents exploit invalid generation and increase artificial liquidity. The LLM Planner/Auditor improves auditability and mitigates selected risks, but it cannot fully compensate for a misspecified reward function. These results indicate that trustworthy agentic AI evaluation requires both physical constraints and transparent intervention traces. We release data and code as open access on GitHub for replicability.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "7fe914fd2d44",
-      "title": "WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search",
-      "normalized_title": "webswarm recursive multi agent orchestration for deep and wide web search",
-      "url": "https://arxiv.org/abs/2607.08662v1",
-      "published_at": "2026-07-09T16:28:49+00:00",
-      "summary": "Large language model (LLM)-based web search agents are transforming information seeking from simple factoid question answering into complex, deep-and-wide search and research-oriented tasks. A single ReAct-style agent is constrained by one long trajectory and limited context, making it difficult to handle depth and coverage simultaneously. Existing multi-agent systems improve search coverage through parallel execution and aggregation, but still exhibit clear limitations in recursive depth, collaboration adaptability, and evidence-grounded expansion. We propose WebSwarm, a progressive recursive delegation framework that jointly constructs task decomposition, recursive expansion, and agent collaboration during inference. WebSwarm dynamically instantiates agentic search nodes, each coupling a local objective with a search mode that specifies how the node should organize search and collaboration. Each node can either solve its objective itself or further delegate child nodes; after solving, it returns evidence and results upward, enabling parent nodes to further expand, revise, or aggregate the search process. To guide this process, WebSwarm first probes how task-relevant information is organized on the web to ground subsequent node expansion, and reuses process-level experience across homogeneous sibling nodes. Experiments on BrowseComp-Plus, WideSearch, DeepWideSearch, and GISA show that WebSwarm consistently outperforms single-agent and multi-agent baselines on deep, wide, and interleaved deep-and-wide tasks. Further analyses of ablation, task difficulty, web tool efficiency, and model generalization explain WebSwarm's effectiveness and provide insights for multi-agent search systems.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
       ]
     },
     {
@@ -699,31 +758,12 @@
       ]
     },
     {
-      "id": "9197adbac7ca",
-      "title": "Claude Code는 프롬프트를 읽기 전 3.3만 토큰, OpenCode는 7천 토큰을 전송함",
-      "normalized_title": "claude code는 프롬프트를 읽기 전 3 3만 토큰 opencode는 7천 토큰을 전송함",
-      "url": "https://news.hada.io/topic?id=31373",
-      "published_at": "2026-07-13T00:55:24+00:00",
-      "summary": "동일한 모델·머신·작업에서 API 경계를 측정한 결과, Sonnet 4.5 첫 요청의 고정 오버헤드는 Claude Code 약 32,800토큰 , OpenCode 약 6,900토큰으로 4.7배 차이 났으며 Fable 5에서는 약 3.3배로 줄어듦 격차의 대부분은 도구 스키마 에서 발생함. Claude Code는 2...",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "53d104305ce8",
-      "title": "OpenCoF: Learning to Reason Through Video Generation",
-      "normalized_title": "opencof learning to reason through video generation",
-      "url": "https://arxiv.org/abs/2607.08763v1",
-      "published_at": "2026-07-09T17:58:29+00:00",
-      "summary": "Reasoning has become a core capability for large models, especially when reliable decisions require understanding logical consequences. Recent video generation models offer a reasoning path distinct from previous Chain-of-Thought (CoT): reasoning can unfold through temporally connected frames, known as Chain-of-Frame (CoF) reasoning. However, existing video generators are primarily trained on general video corpora, still lacking diverse supervision and dedicated designs for CoF reasoning. To address this gap, we introduce OpenCoF, a framework comprising the OpenCoF-17K dataset, a reasoning video dataset spanning 11 task families, and Wan-CoF, a fine-tuned video model for studying whether diverse temporal supervision improves CoF behavior. Across four video reasoning benchmarks, Wan-CoF achieves considerable gains over the Wan2.2-I2V-A14B baseline. Building on this, we empirically explore more advanced designs for CoF capabilities, i.e., equipping the model with visual and textual reasoning tokens. This mechanism respectively captures low-level visual cues and high-level semantic priors for spatial and temporal reasoning. Through performance comparisons and attention analysis, we examine how these tokens contribute across model depth, denoising steps, space, and time. Our results suggest that stronger video reasoning requires both broad temporal supervision and explicit mechanisms for organizing intermediate reasoning state. We open-source the dataset, model, and code to facilitate future research on reasoning-oriented video generation.",
+      "id": "9a409f5752d3",
+      "title": "Scalable Visual Pretraining for Language Intelligence",
+      "normalized_title": "scalable visual pretraining for language intelligence",
+      "url": "https://arxiv.org/abs/2607.09657v1",
+      "published_at": "2026-07-10T17:57:03+00:00",
+      "summary": "The rapid progress of large foundation models has been driven predominantly by pretraining on large-scale text corpora. However, many forms of knowledge are conveyed through visual representations, where figures, typeset equations, and page layouts carry rich information that cannot be faithfully or completely captured by text alone. Yet current pretraining approaches discard these visual cues by converting visually rich sources, such as documents and web pages, into plain text for learning language intelligence. This paper challenges the default assumption that language models must be trained on text-only representations and shows that Visual Pretraining is a scalable learner for foundation model intelligence. To this end, we conduct a systematic study of unsupervised visual pretraining paradigms that directly leverage visual documents without text extraction. Across multiple backbones and benchmarks, visual pretraining on the same underlying corpora consistently outperforms text-only pretraining, offering an efficient pathway to scalable language intelligence.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -738,12 +778,12 @@
       ]
     },
     {
-      "id": "a2bf3e53171c",
-      "title": "Ideas Have Genomes: Benchmarking Scientific Lineage Reasoning and Lineage-Grounded Idea Generation",
-      "normalized_title": "ideas have genomes benchmarking scientific lineage reasoning and lineage grounded idea generation",
-      "url": "https://arxiv.org/abs/2607.08758v1",
-      "published_at": "2026-07-09T17:55:53+00:00",
-      "summary": "Scientific ideas rarely start from a blank page. They inherit mechanisms, repair known limitations, and recombine pieces of earlier work, much like biological genomes. Current benchmarks still say little about whether AI systems can follow this inheritance structure. We present IdeaGene-Bench (IG-Bench), a benchmark for scientific lineage reasoning and lineage-grounded idea generation. IG-Bench is organized around the IdeaGene framework: each paper or proposal is represented as a set of minimal, typed, evidence-grounded Idea Genome objects, and a GenomeDiff aligns these objects to record inheritance, mutation, loss, external import, and novel insertion under six operational evolutionary dynamics. The benchmark contains 1,961 golden lineage traces, 1,085 curated Idea Genome objects, and 920 pairwise GenomeDiff records across 10 scientific domains. It supports two evaluations. IG-Exam (42 task types, 1,029 instances) tests closed-form lineage reasoning across Idea Genome abstraction, inheritance tracing, evolutionary reasoning, and lineage verification. IG-Arena evaluates generation with a lineage-conditioned Population-Evolution Score(PES), asking whether a proposal can be inserted as a coherent descendant of a given lineage population: it should inherit the right Idea Genome objects, vary meaningfully from nearby work, and offer selection value for future research. Experiments on 14 LLM-based scientists expose a compositional bottleneck. The strongest system reaches only 27.3% exact accuracy on lineage reasoning, and structured lineage context reshuffles system rankings rather than helping every participant uniformly.",
+      "id": "4363eb8fe749",
+      "title": "Evolution of Accuracy and Visual-Cognitive Errors in a Decade of Vision-Language AI Models",
+      "normalized_title": "evolution of accuracy and visual cognitive errors in a decade of vision language ai models",
+      "url": "https://arxiv.org/abs/2607.09654v1",
+      "published_at": "2026-07-10T17:53:37+00:00",
+      "summary": "Vision language models (VLMs) have made remarkable progress in visual reasoning during the last decade. Most evaluations have used simple scenes (MS-COCO) that do not showcase complex human interactions or behaviors, only a handful of non-curated human descriptions as a benchmark, and have not focused on understanding the model's error types. Here, we introduce the Complex Social Behavior (CSB) dataset, containing 100 images depicting complex social interactions/behaviors. We analyze the progression of scene descriptions over a decade (2017-2025) of VLMs (four pre-Multimodal Large Language Models, MLLMs, and five MLLMs). We evaluate the accuracy of the models and 20 human descriptions relative to a gold standard on the CSB dataset and on a sample from MS-COCO. We analyzed five visual-cognitive error types: object detection, recognition, hallucination, scene understanding, and spatial dependence. The CSB dataset showed a more pronounced improvement than MS-COCO in scene description accuracy, with pre-MLLMs achieving much lower accuracy than the bottom-ranked human descriptions and MLLMs attaining accuracies similar to the top-ranked human descriptions. We show that MLLMs have eliminated the gap in scene description accuracy between simpler MS-COCO scenes and scenes depicting complex behaviors (CSB). MLLMs have almost eliminated all error types in our tested datasets, except for occasionally relying on different image regions for scene descriptions than humans do (spatial dependence error). We also show that detection, recognition, and hallucination errors have the highest impact on scene description accuracy. Together, our findings provide a more thorough evaluation of how visual language models have advanced over the last decade.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -758,12 +798,12 @@
       ]
     },
     {
-      "id": "a0ae5fdcd3f8",
-      "title": "SLORR: Simple and Efficient In-Training Low-Rank Regularization",
-      "normalized_title": "slorr simple and efficient in training low rank regularization",
-      "url": "https://arxiv.org/abs/2607.08754v1",
-      "published_at": "2026-07-09T17:51:50+00:00",
-      "summary": "Low-rank factorization is widely used to compress neural networks, but modern models are often not naturally amenable to aggressive factorization without significant accuracy loss. Existing training-time low-rank regularizers can improve compressibility, but they often require SVDs of large weight matrices, modify the model architecture (introducing additional trainable parameters), or rely on stateful cached quantities. To address these limitations, we introduce SLORR, a simple, stateless, and architecture-preserving framework for in-training low-rank regularization, instantiated with two main variants based on the Hoyer sparsity metric and the nuclear norm. SLORR directly regularizes the original weight matrices using GPU-friendly approximations for the forward and backward passes of the regularizers, for which we provide approximation guarantees. We first evaluate SLORR on ImageNet-1K across short-horizon continued training of ResNet-50, ViT-B/16, and ViT-L/16, and pretraining of ResNet-18, where SLORR induces compressibility while introducing less than 8% training overhead. We further evaluate SLORR-Hoyer in LLM pretraining at 135M and 560M scales: SLORR-trained compressed models preserve performance substantially better than unregularized models while adding less than 1% average training overhead.",
+      "id": "eb6ad2959e69",
+      "title": "ConceptSMILE: Auditing the Trustworthiness of Concept-Based Explainable AI",
+      "normalized_title": "conceptsmile auditing the trustworthiness of concept based explainable ai",
+      "url": "https://arxiv.org/abs/2607.09649v1",
+      "published_at": "2026-07-10T17:47:38+00:00",
+      "summary": "Concept-based explainable artificial intelligence (AI) can make model reasoning more human-understandable, but concept-level outputs are not automatically trustworthy. We introduce ConceptSMILE, a model-agnostic perturbation-based auditing framework for evaluating the reliability of concept-based explanations. Rather than replacing SMILE, ConceptSMILE extends its perturbation-based logic from feature- or region-level attribution to the auditing of human-understandable concept explanations. The framework perturbs input regions, measures concept-response shifts, applies locality weighting, and fits an XGBoost surrogate to approximate local concept behaviour. Reliability is assessed through attribution accuracy, surrogate fidelity, faithfulness, stability, and consistency. We evaluate ConceptSMILE on retinal fundus images by comparing MedSAM-derived visual concepts with VLM-based semantic concepts. Results show that reliability varies across concepts and pathways: MedSAM achieves stronger spatial attribution and the highest surrogate fidelity ($R^2 = 0.8503$, $R_w^2 = 0.8465$), while the VLM pathway shows stronger vessel faithfulness and stronger stability under selected artefact conditions. ConceptSMILE provides an independent audit layer for evaluating the trustworthiness of concept-based XAI.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -778,12 +818,12 @@
       ]
     },
     {
-      "id": "c133d6e631e7",
-      "title": "Using AI-based Learning Assistants in Higher Education: A Large-Scale Descriptive Analysis",
-      "normalized_title": "using ai based learning assistants in higher education a large scale descriptive analysis",
-      "url": "https://arxiv.org/abs/2607.08748v1",
-      "published_at": "2026-07-09T17:49:14+00:00",
-      "summary": "In this study, we present a large-scale descriptive analysis of the use of an AI-based learning assistant (Syntea) in higher education. Based on objective log data from 77,543 students enrolled in distance studies, we examine usage patterns across gender, age group, study cluster, degree, and study mode. To date, existing research on educational chatbots has largely relied on comparatively small samples and self-reported survey data, while large-scale evidence on actual usage behavior remains limited. Our findings show that Syntea is already embedded in the study routines of many learners, but that usage differs across demographic and structural contexts. By identifying these patterns, our study provides an empirical basis for the further development of AI-based learning support and contributes a large-scale analysis of educational chatbot usage in higher education.",
+      "id": "b90e718f787e",
+      "title": "4DR360: State Reasoning for Joint 3D Detection and Occupancy Prediction in 4D Radar-Camera Full-Scene Perception",
+      "normalized_title": "4dr360 state reasoning for joint 3d detection and occupancy prediction in 4d radar camera full scene perception",
+      "url": "https://arxiv.org/abs/2607.09629v1",
+      "published_at": "2026-07-10T17:26:19+00:00",
+      "summary": "Reliable autonomous driving requires full-scene perception that couples foreground objects with dense semantic layout. Recently, 4D millimeter-wave radar has emerged as a robust and affordable sensor, yet its sparse returns make radar-camera fusion necessary for comprehensive scene understanding. Existing radar-camera methods mainly optimize detection, while dual-task systems usually decode boxes and occupancy with limited interaction. To address this gap and advance radar-based multi-task learning, we propose \\method, a 4D radar-camera framework for 360$^\\circ$ full-scene perception, which models semantic occupancy as a persistent scene state rather than a terminal output. \\method{} follows a cross-modal state reasoning paradigm, where the occupancy state is modeled and propagated through stages for coarse-to-fine feature aggregation. Specifically, State-guided BEV Enhancement (SBE) strengthens intra-frame BEV representation, while Doppler-guided Temporal Fusion (DTF) preserves state evidence over longer temporal horizons. Beyond the model, we further extend ManTruckScenes with satellite-map-based generated occupancy labels and pair it with OmniHD-Scenes in a unified cross-dataset detection-and-occupancy protocol. The resulting experiments cover accuracy, robustness, ablation, and efficiency under one radar-camera multi-task evaluation framework. Code and labels will be released upon acceptance.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -798,12 +838,12 @@
       ]
     },
     {
-      "id": "1c8311fd3069",
-      "title": "AUTOPILOT VQA: Benchmarking Vision-Language Models for Incident-Centric Dashcam Understanding",
-      "normalized_title": "autopilot vqa benchmarking vision language models for incident centric dashcam understanding",
-      "url": "https://arxiv.org/abs/2607.08745v1",
-      "published_at": "2026-07-09T17:46:24+00:00",
-      "summary": "Recent advances in Vision-Language Models, Large Language Models, and Multimodal Large Language Models have improved autonomous driving tasks such as scene understanding, decision making, trajectory prediction, and visual question answering. However, evaluating whether these models can reliably reason about safety-critical incidents remains challenging. To address this gap, we present AUTOPILOT-VQA, an incident-centric visual question answering benchmark for dashcam video understanding. The dataset evaluates different systems through structured questions designed around real-world driving incidents and near-incidents. The benchmark covers diverse safety-relevant categories, including weather and lighting conditions, traffic environment, road layout, road surface state, signage, involved entities, accident occurrence, impact location, and avoidability-related reasoning. By requiring models to answer grounded questions about both contextual scene properties and event-level incident details, AUTOPILOT-VQA moves beyond object recognition toward temporally grounded, safety-aware reasoning. The dataset is released as part of the AUTOPILOT CVPR 2026 competition and provides a standardized benchmark for assessing the reliability of autonomous driving systems in different scenarios. Our benchmark support developments for more interpretable, robust, and safety-conscious vision-language systems for real-world autonomous driving.",
+      "id": "8f876812d6d6",
+      "title": "PAC-ACT: Post-training Actor-Critic for Action Chunking Transformers",
+      "normalized_title": "pac act post training actor critic for action chunking transformers",
+      "url": "https://arxiv.org/abs/2607.09590v1",
+      "published_at": "2026-07-10T16:42:17+00:00",
+      "summary": "Precision industrial contact manipulation requires reliable robot policies under pose perturbations and contact-force constraints. Vision-language-action models offer broad generalization but often introduce high inference latency and GPU-memory cost, while vision-action chunking policies are more suitable for real-time industrial control. However, these policies are usually trained by behavior cloning and suffer from distribution shift in contact-rich tasks. This paper proposes PAC-ACT, a reinforcement-learning post-training framework for pretrained Action Chunking Transformer policies. PAC-ACT reformulates policy optimization at the chunk level, constructs an ACT-transferred actor-critic architecture, and introduces a hybrid behavior-prior constraint to preserve the pretrained action distribution during online fine-tuning. Experiments on industrial precision-contact benchmarks show that PAC-ACT improves task success, contact stability, and force safety while retaining low latency and low GPU-memory usage. On the Contour task, PAC-ACT significantly reduces peak contact force and decreases the proportion of force readings above 60 N by 46 times. Sparse-reward ablations further show that the proposed behavior-prior constraint enables effective exploration under randomized initial poses.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -818,12 +858,12 @@
       ]
     },
     {
-      "id": "8ca2708b5320",
-      "title": "Workflow as Knowledge: Semantic Persistence for LLM-Mediated Workflows",
-      "normalized_title": "workflow as knowledge semantic persistence for llm mediated workflows",
-      "url": "https://arxiv.org/abs/2607.08740v1",
-      "published_at": "2026-07-09T17:40:46+00:00",
-      "summary": "Large language model (LLM) applications increasingly use explicit workflows for tool use, retrieval, branching, checkpointing, and human approval. Existing workflow systems already address many execution concerns. This paper proposes a Lisp-inspired but language-independent conceptual model: symbolic forms, object identity, and live-image thinking are used as explanatory lenses, not implementation commitments. In this model, workflow definitions, workflow instances, inference records, context snapshots, and dependency relations are represented as persistent knowledge objects in a shared knowledge substrate. Its central semantic distinction is between derive and infer: derive is deterministic computation over available state; infer is mediated LLM judgment under declared context and executor-controlled capability policy. The result is a preliminary conceptual account of semantic persistence: workflows do not merely produce knowledge and leave traces, but can themselves be represented as inspectable, resumable, and reviewable knowledge objects, while formal transition semantics remain future work.",
+      "id": "58af507fda88",
+      "title": "Knowledge Graphs and Explainable AI as Complementary Resources for Urban Mining",
+      "normalized_title": "knowledge graphs and explainable ai as complementary resources for urban mining",
+      "url": "https://arxiv.org/abs/2607.09578v1",
+      "published_at": "2026-07-10T16:27:29+00:00",
+      "summary": "Pre-demolition assessment, the regulated audit process at the heart of urban mining, is an information process in which AI support must serve qualified auditors who remain accountable for the decisions taken. The relevant unit of value is not prediction accuracy alone, but the defensibility of the supported decisions: their legibility, plausibility, sourcing, and contestability. Explainable AI techniques and domain knowledge graphs each address parts of this requirement, and existing taxonomies have catalogued their integration. The literature is descriptively rich but structurally under-specified: what remains less developed is a structural account of why specific integrations produce artefacts neither resource can provide alone. This paper offers a complementarity-theoretic interpretation grounded in the IS resource-based tradition. We propose four consolidated KG-XAI integration modes (Lifting, Constraining, Typing, and Revising), each defined as a typed operation over XAI artefacts and knowledge-graph substrate structures. Each mode unlocks a distinct property of defensibility and contributes to the kind of regulatory artefact pre-demolition assessment demands. A fire-door example from the urban-mining process illustrates the modes using the W3C Linked Building Data stack and valuation extensions.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -838,12 +878,12 @@
       ]
     },
     {
-      "id": "8a1eedf75a0e",
-      "title": "The Illusion of Equivalency: Statistical Characterization of Quantization Effects in LLMs",
-      "normalized_title": "the illusion of equivalency statistical characterization of quantization effects in llms",
-      "url": "https://arxiv.org/abs/2607.08734v1",
-      "published_at": "2026-07-09T17:35:02+00:00",
-      "summary": "Post-training quantization is widely used to deploy large language models in resource-constrained settings, yet its evaluation relies almost exclusively on accuracy and perplexity. We show that these metrics fail to capture behavioral changes induced by quantization. We introduce correctness agreement, a decision-level metric that measures overlap in correct predictions between a base model and its quantized variants, independent of absolute accuracy. Across multiple models and quantization schemes from 8-bit to 2-bit, we find that behavioral divergence emerges under moderate quantization even when task performance appears preserved. To explain this effect, we analyze quantization as a structural operator on attention weights and quantify layer-wise distortions using statistical and distributional measures. Our results reveal non-linear breakpoints at low bit-widths and show that query and key projections are consistently more sensitive than value and output projections. These findings expose an illusion of equivalence between base and quantized models and motivate behavioral evaluation beyond conventional performance metrics.",
+      "id": "4ee07a7f00b2",
+      "title": "Conceptual Networks for Cross-Linguistic Idiomatic Expressions:A Feature-Based Graph Approach",
+      "normalized_title": "conceptual networks for cross linguistic idiomatic expressions a feature based graph approach",
+      "url": "https://arxiv.org/abs/2607.09576v1",
+      "published_at": "2026-07-10T16:25:51+00:00",
+      "summary": "We present an interpretable network-based framework for representing idiomatic and figurative meaning across eight typologically diverse languages, totaling 160 conventional expressions, the large majority of which are idiomatic. Each expression is annotated with binary conceptual features (containment, concealment, emotional, social, etc.) derived from cognitive-linguistic theory, and pairwise Jaccard similarities define a weighted graph. Community detection reveals that idioms cluster by conceptual schema rather than by language, producing a structure consistent with cognitive-linguistic predictions. The conceptual network captures unique semantic information not present in distributional embeddings, can be scaled via automatic annotation with LLMs, improves downstream idiom detection, and remains robust when enriched with corpus frequencies. Cross-lingual transfer experiments show that conceptual proximity alone can identify acceptable translation equivalents across five language families, with substantial gains over embedding-based baselines. Ablation studies demonstrate that all three feature dimensions -- schemas, roles, and valence -- contribute non-redundantly to both the network's organizational properties and its performance on idiom detection, and that specific graph-derived signals (community membership, neighbor similarity) are particularly informative. The framework offers an interpretable, cross-linguistically stable representation of idiomatic meaning, combining theoretical grounding with practical utility.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -858,52 +898,12 @@
       ]
     },
     {
-      "id": "09e5fe194cb8",
-      "title": "Validity of LLMs as data annotators: AMALIA on authority",
-      "normalized_title": "validity of llms as data annotators amalia on authority",
-      "url": "https://arxiv.org/abs/2607.08731v1",
-      "published_at": "2026-07-09T17:34:25+00:00",
-      "summary": "A national language model offers a linguistic community its own instrument for measuring what its citizens say and value. Portugal's AMALIA, a publicly funded 9B-parameter model for European Portuguese, appears competitive on agreement alone: asked to code the moral foundation of authority, it agrees with trained human coders to within six F1 points of open models eight to thirteen times its size. Yet agreement is reliability, not validity. For theoretical constructs that must be inferred rather than read from surface features, the question is whether the model follows the construct's theory or reaches the right code by correlated shortcuts. We test this with the recovery gap: the loss in performance when a holistic prompt is decomposed into the codebook's atomic clauses and recombined by the theory's explicit rule. If calibration closes that gap, some portability should survive across models and languages; where it does not, the construct-model instrument is the likely locus of failure. We ask whether a calibrated English instrument transfers to AMALIA-9B and to European Portuguese. For one construct and one corpus, it does not. Decomposition recovers only about half of AMALIA's holistic performance, and error analysis suggests reliance on surface correlates, especially moral outrage near authority figures. An open multilingual LLM closes the gap on the same Portuguese corpus under the same instructions, pointing away from the corpus as the main explanation. AMALIA can still screen and pre-code at scale, but it cannot yet measure this construct well enough to stand alone. The study is a single counterexample, not a verdict on national models; it argues that sovereign-LLM benchmark batteries should test not only agreement with human coders, but the evidential route by which that agreement is warranted.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "5385a43899cd",
-      "title": "Pose-to-Biomechanics: Bridging 3D Human Pose Estimation and Biomechanical Attribute Prediction",
-      "normalized_title": "pose to biomechanics bridging 3d human pose estimation and biomechanical attribute prediction",
-      "url": "https://arxiv.org/abs/2607.08725v1",
-      "published_at": "2026-07-09T17:31:16+00:00",
-      "summary": "Recent progress in 3D human pose estimation has made markerless recovery of skeletal motion increasingly accurate and scalable. However, most pose estimators remain optimized for geometric keypoint accuracy, while many real-world applications in rehabilitation, sports science, ergonomics, and clinical movement analysis require biomechanical quantities that describe how the body moves, loads, and activates. In this work, we propose BioModule, a lightweight plug-in temporal transformer that attaches downstream of any 3D pose estimator and predicts biomechanical attributes from standard 17-joint 3D skeletons. BioModule is estimator-agnostic and requires no modification of the upstream pose model, enabling existing pose estimators to be extended toward physically interpretable motion analysis. To train and evaluate BioModule, we construct a large-scale aligned dataset pairing Human3.6M video and 3D keypoints with the biomechanical label space of Human3.6Mplus. We establish and verify anatomical correspondence between coordinate systems of the two datasets, enabling frame-accurate cross-modal supervision. Using this aligned supervision, BioModule predicts biomechanical quantities. We further benchmark BioModule across seven state-of-the-art 3D pose estimators, providing the first systematic analysis of how upstream pose estimation quality propagates to downstream biomechanical prediction fidelity. The results position BioModule as a compact, modular bridge between vision-based pose estimation and biomechanically meaningful human motion analysis.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "7일 이내",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "7ef4bac9679c",
-      "title": "A Practical Investigation of Training-free Relaxed Speculative Decoding",
-      "normalized_title": "a practical investigation of training free relaxed speculative decoding",
-      "url": "https://arxiv.org/abs/2607.08690v1",
-      "published_at": "2026-07-09T16:50:41+00:00",
-      "summary": "Speculative decoding accelerates sampling from an autoregressive LLM by using a faster auxiliary model to draft tokens which are then verified in parallel by the LLM. Standard speculative decoding is lossless: its rejection and resampling steps exactly preserve the LLM's sampling distribution. Recent work argues that relaxing this strict guarantee can yield further speed-ups, controlled capability-speed trade-offs, or even capability gains. We practically investigate training-free relaxed speculative decoding techniques, unify existing approaches within a shared framework, benchmark them on contemporary settings, and distil takeaways and empirical findings for practitioners. Important takeaways include: relaxation can require considerable capability evaluation unlike lossless speculative decoding, and many relaxed approaches rely on a drafter that is a good language model, making them unsuited for lightweight dedicated multi-token-prediction drafters.",
+      "id": "334a16e69953",
+      "title": "Large-Scale Portfolio Optimization Problem Under Cardinality Constraint With Enhanced Multi-Objective Evolutionary Algorithms",
+      "normalized_title": "large scale portfolio optimization problem under cardinality constraint with enhanced multi objective evolutionary algorithms",
+      "url": "https://arxiv.org/abs/2607.09566v1",
+      "published_at": "2026-07-10T16:12:58+00:00",
+      "summary": "Decision-making is posing an increasingly formidable challenge to investors because of the growing number of alternatives available in financial markets. A hot area of research over the past few decades has been portfolio optimization that seeks to determine how much an investor should invest in which asset. Introducing real-world conditions to the optimization model turns the problem into an NP-hard one for whose solution exact methods become inefficient; hence, researchers have turned to evolutionary algorithms to approximate solutions. In this paper, strengthening strategies are presented for multi-objective evolutionary algorithms that can provide a faster convergence rate and extensive search ability in the portfolio optimization problem under the cardinality constraint. To implement those features, a unique solution representation, a novel operator, and new repair mechanisms are introduced for solving the aforementioned problem in which lower and upper limits are set on the number of assets in the portfolio. For this purpose, new mating strategies along with the aforesaid package are implemented in well-known multi-objective evolutionary algorithms to solve the problem. The customized algorithms are subsequently tested against traditional ones using well-known market indices as benchmarks. Results indicate that the proposed strategy not only provides better approximations but also converges faster as well at no loss of performance with an increasing number of assets in the market.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -933,6 +933,24 @@
       "score_reasons": [
         "출처 가중치 5",
         "공식 출처"
+      ]
+    },
+    {
+      "id": "98bfd557604e",
+      "title": "앤트로픽, 한국 무료 사용자에 1,660만 달러 '유령 청구서' 발송",
+      "normalized_title": "앤트로픽 한국 무료 사용자에 1 660만 달러 유령 청구서 발송",
+      "url": "https://news.hada.io/topic?id=31388",
+      "published_at": "2026-07-13T02:31:20+00:00",
+      "summary": "API 사용량이 0인 무료 요금제 한국 사용자에게 앤트로픽이 공식 도메인·정식 Stripe로 1,660만 달러(약 230억 원) 청구서를 보냈고, 하루 전 같은 청구서는 167만 달러였다. 7월 8일 결제 시도 - 첫 청구서 $1,669,875.90 → 24시간 뒤 $16,627,739.70(약 230억 원), 하루",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
       ]
     },
     {
@@ -1044,32 +1062,12 @@
       ]
     },
     {
-      "id": "a720ca0157ec",
-      "title": "외부 루프를 소유하라",
-      "normalized_title": "외부 루프를 소유하라",
-      "url": "https://news.hada.io/topic?id=31372",
-      "published_at": "2026-07-13T00:36:01+00:00",
-      "summary": "에이전트가 조사·구현·검증을 반복하는 내부 실행 루프 를 맡더라도, 엔지니어는 배포 여부를 결정하고 결과에 책임지는 외부 루프 를 소유해야 함 에이전트 시스템은 사전 검사를 뜻하는 품질(Quality) , 프로덕션 투입 여부를 결정하는 판...",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드",
-        "짧은 제목"
-      ]
-    },
-    {
-      "id": "ec8e2556513d",
-      "title": "Dimensionality Reduction Meets Network Science: Sensemaking on UMAP's kNN Graph",
-      "normalized_title": "dimensionality reduction meets network science sensemaking on umap s knn graph",
-      "url": "https://arxiv.org/abs/2607.08746v1",
-      "published_at": "2026-07-09T17:47:08+00:00",
-      "summary": "While UMAP is widely used for exploring high-dimensional data, typical workflows focus on its lower-dimensional embedding, largely overlooking the rich k-nearest-neighbor (kNN) graph that UMAP constructs internally. This graph encodes the data manifold in its original high-dimensional space, before the distortion that UMAP's 2D projection introduces. We demonstrate the untapped potential of this internal representation, showing how standard graph algorithms applied to this graph enhance data sensemaking: (1) PageRank identifies representative data points, (2) k-core decomposition reveals dense core regions versus sparse periphery, and (3) clustering coefficient detects tight-knit neighborhoods with highly-similar data points. Through quantitative and qualitative evaluation on MNIST and Fashion MNIST, we show that these graph-based analyses are not only practical but also competitive with or complementary to purpose-built methods (e.g., k-medoids for exemplar selection, HDBSCAN for density-based clustering).",
+      "id": "ee47ed3691cf",
+      "title": "PHINN-EEG: Topological Time-Series Analysis of Dream-State EEG -- Dynamic Betti Curves for Dream Content Classification and Topology-Conditioned Neural Signal Synthesis",
+      "normalized_title": "phinn eeg topological time series analysis of dream state eeg dynamic betti curves for dream content classification and topology conditioned neural signal synthesis",
+      "url": "https://arxiv.org/abs/2607.09662v1",
+      "published_at": "2026-07-10T17:59:45+00:00",
+      "summary": "Current electroencephalography (EEG)-based dream detection relies on power spectral density (PSD) and statistical moment features, achieving a state-of-the-art area under the receiver operating characteristic curve (AUC) of approximately 0.70 on the DREAM database (Wong et al., 2025, Nature Communications). We introduce PHINN-EEG (Persistent Homology Inspired Neural Network for EEG), the first topological time-series framework for dream mentation analysis. Using sliding-window Takens delay embeddings and Vietoris-Rips filtrations on multichannel pre-awakening EEG epochs, we extract Dynamic Betti Curves that characterize the geometric architecture of neural activity, not merely its energy. These topological invariants, combined with topology-conditioned flow matching, are analytically projected to outperform existing PSD and catch22 benchmarks, targeting AUC = 0.82-0.90 on the 1,462-awakening open-access subset of the DREAM database (drawn from a full registry of 3,191 total awakenings from 263 participants across 20 independent laboratories). We further introduce a topology-conditioned rectified flow model for dream-state EEG synthesis-with a spectral-conditioned flow model of comparable feature dimensionality as an additional ablation baseline to isolate the value of topological conditioning specifically-and propose a set of candidate Betti transition archetypes linking topology to phenomenological dream report categories, presented as an exploratory hypothesis space pending empirical validation. If validated, this work represents a paradigm shift from spectral energy to phase-space geometry in neural rare-event detection, with potential future implications for wearable BCI dream monitoring.",
       "source_id": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
@@ -1080,274 +1078,6 @@
         "출처 가중치 4",
         "연구 출처",
         "7일 이내"
-      ]
-    },
-    {
-      "id": "c0902b6ef178",
-      "title": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
-      "normalized_title": "페이블 d 2 앤트로픽 엔지니어가 알려주는 활용 가이드",
-      "url": "https://yozm.wishket.com/magazine/detail/3848",
-      "published_at": "",
-      "summary": "6월 9일 출시된 페이블 5(Fable 5)는 지난 한 달간 롤러코스터 같은 시간을 보냈습니다. 출시 사흘 만인 6월 12일, 미국 상무부의 지시로 서비스가 전면 차단되는 위기를 맞았지만, 6월 30일 규제가 풀리면서 7월 1일 유료 플랜 서비스를 재개했죠. 현재 기존 유료 구독자라면, 주간 사용량 제한의 최대 50%까지 페이블 5를 이용할 수 있는데요. 원래는 7월 7일에 이 구독제 이용도 끝날 예정이었지만, 앤트로픽이 기간을 5일 더 연장했습니다. 변경된 만료일은 7월 12일. 오늘이 7월 10일이니, 이제 딱 이틀 남았습니다. 마침 앤트로픽 클로드 코드(Claude Code) 팀의 타리크 시히파(Thariq Shihipar)가 AI Engineer World Fair에서 발표한 \"Field Guide to Fable\" 키노트에 좋은 내용이 있어 공유합니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "bac79aac38a2",
-      "title": "바이브코더를 위한 기초 보안 A to Z",
-      "normalized_title": "바이브코더를 위한 기초 보안 a to z",
-      "url": "https://yozm.wishket.com/magazine/detail/3832",
-      "published_at": "",
-      "summary": "AI가 짜준 코드는 생각보다 안전하지 않습니다. 실제로 AI 생성 코드의 45%가 보안 테스트를 통과하지 못했죠. 그래서 지금 벌어지는 바이브코딩 사고 대부분은 누가 작정하고 '털어서'가 아니라, 애초에 문도 안 잠그고 나간 쪽에 가깝습니다. 그럴수록 보안 이슈가 발생하는 환경과 기본 원칙을 알아두는 것이 필요합니다. RLS·API 키·인증처럼 바이브코더가 가장 많이 하는 보안 실수 5가지가 어떻게 사고로 번지는지 모았습니다. 여기에 설계·개발·배포 세 시점에서 어떻게 막는지, 이를 도와줄 코딩 에이전트 안에서 바로 쓰는 보안 도구까지 정리했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "16eeb94c1a77",
-      "title": "이벤트 기반 MSA, AI 시대엔 더 비싸진다고요?",
-      "normalized_title": "이벤트 기반 msa ai 시대엔 더 비싸진다고요",
-      "url": "https://yozm.wishket.com/magazine/detail/3839",
-      "published_at": "",
-      "summary": "이벤트 기반 MSA(Microservice Architecture)를 운영하다 보면 처음엔 꽤 잘 나눴다고 느낍니다. 주문, 결제, 재고, 알림이 각자 맡은 일을 처리하고, 한쪽 장애가 곧바로 전체 장애로 번지지 않는 장점도 분명히 보입니다. 그런데 AI 에이전트에게 유지보수를 맡기기 시작하면, 그 느슨한 연결이 갑자기 흐름을 다시 찾아야 하는 비용으로 돌아옵니다. 제가 이 글에서 말하는 비용은 “MSA는 복잡하다”는 일반론이 아닙니다. 이벤트 기반 MSA를 운영하면서 이벤트 흐름을 다시 이해하고 검증하는 데 드는 비용입니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "0164f5dfc5ea",
-      "title": "로컬 LLM, 나를 위한 작은 AI 작업대 만들기",
-      "normalized_title": "로컬 llm 나를 위한 작은 ai 작업대 만들기",
-      "url": "https://yozm.wishket.com/magazine/detail/3835",
-      "published_at": "",
-      "summary": "예전에는 로컬에서 LLM을 돌린다는 말만 들어도 피곤했습니다. 모델 파일부터 실행 환경, GPU 설정까지 줄줄이 떠올랐으니까요. 요즘은 그 장벽이 많이 낮아졌습니다. Ollama 같은 도구를 쓰면 명령어 몇 줄로 모델을 내려받고 바로 실행합니다. 이쯤 되면 로컬 LLM을 다시 보게 됩니다. ChatGPT를 대체하는 무언가라기보다는, 개인 개발자가 자기 작업 흐름 옆에 붙여두는 작은 AI 작업대에 가깝습니다. 이번 글에서는 로컬 LLM을 어디에 쓰면 괜찮고, 어디서부터는 기대를 접어야 하는지 그 기준을 잡아보려고 합니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "2ce3e505b30b",
-      "title": "“이 정도면 직접 만들겠는데?” 바이브 코딩으로 유료 앱 대체하기",
-      "normalized_title": "이 정도면 직접 만들겠는데 바이브 코딩으로 유료 앱 대체하기",
-      "url": "https://yozm.wishket.com/magazine/detail/3838",
-      "published_at": "",
-      "summary": "평소 만족스럽게 쓰던 유료 루틴 앱에 아쉬움이 쌓이던 어느 날, '이 정도면 직접 만들 수 있겠는데?'라는 생각을 바로 테스트해봤습니다. Obsidian과 Claude Code, 몇 가지 플러그인으로 가중치 루틴 체크, 월간·연간 대시보드, 루틴 메모까지 붙인 개인용 도구를 만들었습니다. 가장 큰 난관이던 기존 데이터는 스크린샷을 생성형 AI에게 읽혀 옮겼죠. 루틴 관리가 쉬워진 건 물론, 만드는 게 쉬워진 시대에 직접 도구를 만들며 배운 점도 생겼습니다. 무엇을 왜 만들지에 대한 이야기를 함께 정리했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "0f19fa97a5bb",
-      "title": "990원이 찍혔다: 바이브 코딩이 유료 서비스가 되기까지",
-      "normalized_title": "990원이 찍혔다 바이브 코딩이 유료 서비스가 되기까지",
-      "url": "https://yozm.wishket.com/magazine/detail/3844",
-      "published_at": "",
-      "summary": "저는 톡시그널을 아이디어부터 웹 제작까지 단 3일 만에 완성했습니다. 그러나 진짜 현실은 웹을 다 만들고, 이 서비스를 '유료'로 전환하겠다고 마음먹은 순간부터였습니다. '990원'을 받기 위해 결제 심사, 복잡한 서류 작업, 개인정보 보호, 보안 규정 같은 현실의 벽을 마주해야 했죠. 서비스 완성도와 신뢰 구조를 갖추는 과정이 가장 큰 도전이었는데요. 웹을 만드는 것보다 더 어려운 건 990원을 받는 거였습니다. 이번 글은 그 여정에 대해 전해드리려고 합니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "60e46c7d2f00",
-      "title": "같은 주에 나온 GPT-5.6과 Grok 4.5, 정부가 먼저 검토한 모델은",
-      "normalized_title": "같은 주에 나온 gpt 5 6과 grok 4 5 정부가 먼저 검토한 모델은",
-      "url": "https://yozm.wishket.com/magazine/detail/3843",
-      "published_at": "",
-      "summary": "같은 주에 공개된 OpenAI의 GPT-5.6과 SpaceXAI의 Grok 4.5, 그런데 정부 검토를 먼저 거친 건 한쪽뿐이었습니다. Cursor와 함께 만들어 지금 써볼 수 있는 Grok 4.5, 대화는 GPT-Live가 맡고 어려운 추론은 뒤에서 처리하는 OpenAI의 새 구조, 그리고 Claude Code 팀이 정리한 AI에게 어디까지 일을 맡길지 정하는 법까지. 이번 주 프로덕트 메이커가 주목할 세 가지를 정리했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "607ef667dc42",
-      "title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
-      "normalized_title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
-      "url": "https://yozm.wishket.com/magazine/detail/3834",
-      "published_at": "",
-      "summary": "한창 바이브 코딩(Vibe Coding)이 열풍이었는데요. 코드를 잘 몰라도 AI에게 말만 걸면 뚝딱 앱이 만들어진다는 이야기가 여기저기서 들려왔죠. 저는 현업에서 코드를 다루는 개발자이지만, 그 모습을 보다 보니 문득 궁금해졌습니다. 정말 명령만 하면 되는 걸까요? 그리고 비전공자라면 또 어디서 막히게 될까요? 그래서 저도 한번 간단한 페이지를 만들어보기로 했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "7db767638b3c",
-      "title": "구글이 공개한 AI 에이전트 제작 노하우를 가져다 쓰는 법",
-      "normalized_title": "구글이 공개한 ai 에이전트 제작 노하우를 가져다 쓰는 법",
-      "url": "https://yozm.wishket.com/magazine/detail/3833",
-      "published_at": "",
-      "summary": "일주일 동안 다시 열린 앤트로픽의 최신 모델 Claude Fable 5, AI가 만든 디자인 화면이 다 비슷해지는 이유와 그 해법을 실제로 써본 아틀라시안의 DESIGN.md 실험기, 그리고 에이전트는 만들기보다 평가와 배포가 진짜 일이라는 구글의 google/agents-cli까지. 이번 주 프로덕트 메이커가 주목할 세 가지를 정리했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "564fea386642",
-      "title": "담당자 퇴사하면 업무 못 하는 회사를 위한 AX는?",
-      "normalized_title": "담당자 퇴사하면 업무 못 하는 회사를 위한 ax는",
-      "url": "https://yozm.wishket.com/magazine/detail/3842",
-      "published_at": "",
-      "summary": "AI 전환, 이른바 'AX'를 내걸지 않는 IT 기업을 찾기 어렵지만, 정작 성과로 이어지는 곳은 절반이 안 됩니다. 도구는 넘쳐나는데 왜 자꾸 성과 앞에서 멈춰 설까요. 매주 기업 20~30곳을 만나는 위시켓 박우범 대표는 그 병목이 데이터화와 워크플로우 정리 단계에 있다고 진단합니다. AX를 '일하는 방식을 자산화하는 일'로 정의하고, 마이리얼트립·해빗팩토리의 사례로 감축이 아니라 집중으로서의 AX가 어떻게 구현되는지 짚었습니다. 스마일게이트인베스트먼트 미래전망 컨퍼런스 패널토크 정리.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "bf81115f2f29",
-      "title": "사람마다 다른 썸네일이 나온다? GenUI의 빛과 어둠",
-      "normalized_title": "사람마다 다른 썸네일이 나온다 genui의 빛과 어둠",
-      "url": "https://yozm.wishket.com/magazine/detail/3841",
-      "published_at": "",
-      "summary": "생성형 UI 기술을 적용하면 AI가 같은 정보도 받는 사람에 맞춰 화면과 메시지를 다시 짭니다. 넷플릭스 썸네일, 토스 홈, 듀오링고 알림처럼 이미 곁에 온 생성형 UI(GenUI)의 상용 사례가 많습니다. 이러한 사례와 효과, 이를 가능케 한 JSON·컴포넌트 매핑 원리, 다크 패턴·접근성·인종 편향 같은 그림자를 정리했습니다. AI가 정교해질수록 오히려 사람이 다듬지 않은 날것의 메시지가 희소해지는 역설도 함께 살펴봅니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "f8117c100197",
-      "title": "AI 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
-      "normalized_title": "ai 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
-      "url": "https://yozm.wishket.com/magazine/detail/3845",
-      "published_at": "",
-      "summary": "AI 도구가 일상적인 업무 곳곳에 자리를 잡으면서, 직장 내 소통의 방식도 조용히 달라지고 있습니다. 짧은 질문 하나에도 AI가 생성한 장문의 답변이 돌아오는 일이 점점 흔해졌지만, 그 과정에서 정작 필요했던 판단과 맥락은 빠져 있는 경우가 많습니다. 이 글은 AI가 생성한 콘텐츠가 직장 내 커뮤니케이션에 드리우는 보이지 않는 비용, 즉 구성원 모두가 치르게 되는 '소음의 세금'으로서 AI 슬롭 문제를 살펴봅니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "a7daf90e40e2",
-      "title": "1인 빌더, 클로드 코드로 프로젝트 9개 동시 운영한 방법",
-      "normalized_title": "1인 빌더 클로드 코드로 프로젝트 9개 동시 운영한 방법",
-      "url": "https://yozm.wishket.com/magazine/detail/3840",
-      "published_at": "",
-      "summary": "이번 글은 클코나잇 2 웨비나의 두 번째 발표였던 '1인 빌더가 9개 프로젝트를 Claude Code로 동시 운영하는 법'을 정리한 글입니다. 발표자는 혼자서 13개 프로젝트를 동시에 운영하는 1인 빌더의 실전 노하우를 공개했습니다. 클로드 코드(Claude Code)를 단순한 도구가 아닌 '동료'로 활용하여 작업 효율을 극대화하는 5가지 핵심 시스템(중앙 허브, 핸드오프, 스킬 관리 등)을 소개합니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ]
-    },
-    {
-      "id": "46761bb14ea1",
-      "title": "실전 이커머스: 재고 관리 단위 설계로 품절률 10% 낮추기",
-      "normalized_title": "실전 이커머스 재고 관리 단위 설계로 품절률 10 낮추기",
-      "url": "https://yozm.wishket.com/magazine/detail/3836",
-      "published_at": "",
-      "summary": "이커머스 기획자라면 '품절률'이라는 단어를 KPI 리포트에서 본 적이 있을 겁니다. 하지만 대부분의 이커머스 조직에서 품절률은 MD나 물류팀의 숙제로 취급되고, 기획자는 \"상품 옵션을 어떻게 노출할까\"라는 화면 설계 관점에서만 SKU(재고 관리 단위)를 다룹니다. 문제는 광고가 켜진 상태에서 SKU 하나가 품절되는 순간입니다. 고객은 광고를 클릭해 상세페이지까지 들어오지만, 원하는 옵션이 품절이라 구매하지 못하고 이탈합니다. 이번 글에서는 실제 서비스들의 사례를 통해 SKU 단위 재고 관리가 왜 마케팅 비용과 직결되는지, 그리고 기획자가 설계 단계에서 챙겨야 할 기술적 디테일은 무엇인지 쉽게 풀어보겠습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 3,
-      "score_reasons": [
-        "출처 가중치 3"
-      ]
-    },
-    {
-      "id": "88af05dd26b8",
-      "title": "쿠버네티스 7개 주요 게이트웨이 기술 검증(Poc) 다시 하기 (feat. Ingress NGINX 은퇴)",
-      "normalized_title": "쿠버네티스 7개 주요 게이트웨이 기술 검증 poc 다시 하기 feat ingress nginx 은퇴",
-      "url": "https://yozm.wishket.com/magazine/detail/3837",
-      "published_at": "",
-      "summary": "2026년 3월, 쿠버네티스에서 가장 널리 쓰이던 Ingress NGINX의 지원이 공식 종료됐습니다. IngressNightmare(CVE-2025-1974) 취약점까지 겹치며 Gateway API 이전은 더 미룰 수 없는 과제가 됐죠. 그런데 앞선 검증에서 F등급을 줬던 Kong과 Traefik을 같은 구현체 7종으로 다시 측정해 보니, 이번엔 모두 기준을 통과했습니다. 문제는 제품이 아니라 측정 방식과 조건에 있었던 셈입니다. 새 순위표와 함께, 스스로 내린 결론을 의심하고 채점 기준을 처음부터 다시 세운 재측정 과정을 기록했습니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "requires_manual_review": true,
-      "score": 3,
-      "score_reasons": [
-        "출처 가중치 3"
       ]
     }
   ],
@@ -1373,12 +1103,12 @@
       ]
     },
     {
-      "id": "7b506526e329",
-      "title": "LLM은 사랑하지만 과대광고는 싫다",
-      "normalized_title": "llm은 사랑하지만 과대광고는 싫다",
-      "url": "https://news.hada.io/topic?id=31378",
-      "published_at": "2026-07-13T01:04:24+00:00",
-      "summary": "LLM, 자율주행차, 영상 생성 모델, 코딩 에이전트는 실제로 유용하고 흥미롭지만, 이를 둘러싼 공포와 종말론적 과대광고 에는 동의하지 않음 기회의 창이 닫히면 영구적 하층민이 된다는 담론은 사실이라기보다 사람을 불안하게 만들어 San Francisco로 끌어들이는 과대광고...",
+      "id": "1bada9753e94",
+      "title": "AI 에이전트 시대의 새로운 SaaS 플레이북",
+      "normalized_title": "ai 에이전트 시대의 새로운 saas 플레이북",
+      "url": "https://news.hada.io/topic?id=31387",
+      "published_at": "2026-07-13T02:26:01+00:00",
+      "summary": "소프트웨어 제작 비용이 0에 가까워지면서 기능과 UI는 빠르게 복제 가능한 상품이 되고, SaaS의 가치는 소프트웨어 포장 아래의 희소 자산 으로 이동함 새로운 방어력은 독점 데이터 루프와 행동 권한 , 에이전트의 의사결정 단계에 들어가는 유통, ERP·원장·신원·...",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1392,23 +1122,30 @@
       ]
     },
     {
-      "id": "c0902b6ef178",
-      "title": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
-      "normalized_title": "페이블 d 2 앤트로픽 엔지니어가 알려주는 활용 가이드",
-      "url": "https://yozm.wishket.com/magazine/detail/3848",
-      "published_at": "",
-      "summary": "6월 9일 출시된 페이블 5(Fable 5)는 지난 한 달간 롤러코스터 같은 시간을 보냈습니다. 출시 사흘 만인 6월 12일, 미국 상무부의 지시로 서비스가 전면 차단되는 위기를 맞았지만, 6월 30일 규제가 풀리면서 7월 1일 유료 플랜 서비스를 재개했죠. 현재 기존 유료 구독자라면, 주간 사용량 제한의 최대 50%까지 페이블 5를 이용할 수 있는데요. 원래는 7월 7일에 이 구독제 이용도 끝날 예정이었지만, 앤트로픽이 기간을 5일 더 연장했습니다. 변경된 만료일은 7월 12일. 오늘이 7월 10일이니, 이제 딱 이틀 남았습니다. 마침 앤트로픽 클로드 코드(Claude Code) 팀의 타리크 시히파(Thariq Shihipar)가 AI Engineer World Fair에서 발표한 \"Field Guide to Fable\" 키노트에 좋은 내용이 있어 공유합니다.",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
+      "id": "d148aa969482",
+      "title": "VEXAIoT: Autonomous IoT Vulnerability EXploitation using AI Agents",
+      "normalized_title": "vexaiot autonomous iot vulnerability exploitation using ai agents",
+      "url": "https://arxiv.org/abs/2607.09653v1",
+      "published_at": "2026-07-10T17:52:29+00:00",
+      "summary": "Internet of Things (IoT) systems are inherently vulnerable due to constrained hardware, outdated firmware, and insecure default configurations, creating a need for scalable and adaptive security testing approaches. While recent adoptions of Large Language Model (LLM) agents have demonstrated promise in penetration testing and Capture-the-Flag (CTF) environments, their application to IoT specific vulnerabilities remains unexplored. This paper presents an autonomous multi-agent framework, referred to as Vulnerability EXploitation using AI Agents (VEXAIoT), for vulnerability discovery and exploitation in IoT environments using LLM-based reasoning and offensive security tools. The framework combines a vulnerability detection agent and an attack execution agent to perform reconnaissance, plan attack sequences, and execute exploits against vulnerable IoT services. The system is evaluated in IoTGoat and Metasploitable environments across ten attack scenarios mapped to OWASP IoT vulnerabilities. Experimental results show attack success rate of up to 100% with low token overhead and average execution times under two minutes for most attacks. Across 260 attack executions, VEXAIoT achieves a 95.0% overall success rate, including 94.5% success in IoTGoat and 96.7% success in Metasploitable2. These results demonstrate the potential for LLM-driven agents to automate IoT vulnerability assessment and offensive security workflows in controlled environments",
+      "source_id": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
       "requires_manual_review": true,
-      "score": 5,
+      "score": 8,
       "score_reasons": [
-        "출처 가중치 3",
+        "출처 가중치 4",
+        "연구 출처",
+        "7일 이내",
         "관심 키워드"
       ]
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "source_id": "yozmit",
+      "message": "HTTP Error 405: Not Allowed"
+    }
+  ]
 }
