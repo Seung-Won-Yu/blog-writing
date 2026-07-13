@@ -1,10 +1,10 @@
 {
-  "title": "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
+  "title": "[데일리 IT 뉴스] 2026. 7. 8 - 오늘의 개발 뉴스와 정처기 문제",
   "title_candidates": [
-    "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
-    "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유 외 2건",
-    "코드 변경의 흐름: AI의 속도는 결국 칩에서 갈릴까?",
-    "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유 (2026. 7. 8)"
+    "[데일리 IT 뉴스] 2026. 7. 8 - AI, 정처기 문제 정리",
+    "[개발 뉴스] AI · Show GN gh-attach 핵심 정리",
+    "2026. 7. 8 개발 뉴스 요약: AI 외 오늘의 IT 이슈",
+    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 8)"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -14,69 +14,46 @@
     "정처기",
     "개발용어",
     "데일리다이제스트",
-    "GeekNews"
+    "GeekNews",
+    "멱등성 (Idempotence)",
+    "서킷 브레이커 (Circuit Breaker)",
+    "온보딩 (Onboarding)"
   ],
-  "meta_description": "오늘은 AI 시대에 취미가 곧 비즈니스 기회가 되는 이유와 Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기을 중심으로 개발 흐름을 살펴본다. 프로그래밍 언어 활용 문제로 개념도 확인합니다.",
+  "meta_description": "2026. 7. 8 데일리 IT 뉴스: AI, Show GN gh-attach 핵심과 소프트웨어 공학 문제, 개발 용어를 정리했습니다.",
   "key_summary": [
-    "1. AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
-    "2. Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기",
-    "3. Show GN: 대본(YAML) 한 장이면 나레이션·자막·BGM 입힌 영상이 나오는 도구를 만들었습니다",
-    "정처기 포인트: 프로그래밍 언어 활용 문제로 개념을 점검합니다."
+    "오늘의 주요 뉴스: AI 시대에 취미가 곧 비즈니스 기회가 되는 이유 / Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기 / Show GN: 대본(YAML) 한 장이면 나레이션·자막·BGM 입힌 영상이 나오는 도구를 만들었습니다",
+    "정처기 포인트: 소프트웨어 공학 문제로 개념을 점검합니다.",
+    "함께 익힐 용어: 멱등성 (Idempotence), 서킷 브레이커 (Circuit Breaker), 온보딩 (Onboarding)",
+    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
-    "본문 이미지가 정상 표시되는지 확인하기",
-    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
-    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "본문 상단 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: AI 시대에 취미가 곧 비즈니스 기회가 되는 이유"
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 8 - AI, 정처기 문제 정리"
   ],
-  "generation_provider": "deterministic-fallback",
-  "publish_ready": false,
   "source": "data/days/2026-07-08.json",
-  "source_page": null,
+  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-08.html",
   "html": "docs/tistory/2026-07-08.html",
   "image_assets": [
     {
-      "kind": "cover",
-      "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/cover.png",
-      "path": "docs/tistory/assets/2026-07-08/cover.png",
-      "original_url": "",
-      "alt": "2026. 7. 8 코드 변경의 흐름 - AI의 속도는 결국 칩에서 갈릴까? 대표 이미지",
-      "width": 1200,
-      "height": 630
+      "title": "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/news-01.png",
+      "path": "docs/tistory/assets/2026-07-08/news-01.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/049ed0489476.png"
     },
     {
-      "kind": "story_1",
-      "title": "본문 1번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-01.png",
-      "path": "docs/tistory/assets/2026-07-08/story-01.png",
-      "original_url": "",
-      "alt": "데이터 흐름 · 데이터 흐름: 원천 데이터 → 저장·분석 → 판단 근거 흐름을 표현한 기사 이해 이미지",
-      "width": 1200,
-      "height": 630
+      "title": "Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/news-02.png",
+      "path": "docs/tistory/assets/2026-07-08/news-02.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/235aacd8baa0.png"
     },
     {
-      "kind": "story_2",
-      "title": "본문 2번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-02.png",
-      "path": "docs/tistory/assets/2026-07-08/story-02.png",
-      "original_url": "",
-      "alt": "코딩 방식 · 코딩 방식: 작업 목표 → 에이전트 수행 → 사람의 검토 흐름을 표현한 기사 이해 이미지",
-      "width": 1200,
-      "height": 630
-    },
-    {
-      "kind": "story_3",
-      "title": "본문 3번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-03.png",
-      "path": "docs/tistory/assets/2026-07-08/story-03.png",
-      "original_url": "",
-      "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지",
-      "width": 1200,
-      "height": 630
+      "title": "Show GN: 대본(YAML) 한 장이면 나레이션·자막·BGM 입힌 영상이 나오는 도구를 만들었습니다",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/news-03.png",
+      "path": "docs/tistory/assets/2026-07-08/news-03.png",
+      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/d3f45f3d1533.png"
     }
   ]
 }
