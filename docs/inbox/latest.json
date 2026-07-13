@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "day": "2026-07-11",
-  "generated_at": "2026-07-13T12:27:11.367090+00:00",
+  "day": "2026-07-12",
+  "generated_at": "2026-07-13T12:19:07.552691+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -1016,37 +1016,6 @@
       ]
     },
     {
-      "id": "cf4af4e548f6",
-      "title": "Show GN: 만든 SaaS를 AI에게 말만 하면 등록되는 MCP 서버",
-      "normalized_title": "show gn 만든 saas를 ai에게 말만 하면 등록되는 mcp 서버",
-      "url": "https://news.hada.io/topic?id=31397",
-      "published_at": "2026-07-13T12:20:18+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
       "id": "26a3bbe87351",
       "title": "Show GN: 정치 커뮤니티에 AI 팩트체크 기능을 붙이며 겪은 시행착오들",
       "normalized_title": "show gn 정치 커뮤니티에 ai 팩트체크 기능을 붙이며 겪은 시행착오들",
@@ -1667,6 +1636,34 @@
       "topic_tags": []
     },
     {
+      "id": "3878a43b9b3f",
+      "title": "Chromium 148부터 Math.tanh로 기반 OS를 식별할 수 있음",
+      "normalized_title": "chromium 148부터 math tanh로 기반 os를 식별할 수 있음",
+      "url": "https://news.hada.io/topic?id=31380",
+      "published_at": "2026-07-13T01:10:24+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": []
+    },
+    {
       "id": "ee47ed3691cf",
       "title": "PHINN-EEG: Topological Time-Series Analysis of Dream-State EEG -- Dynamic Betti Curves for Dream Content Classification and Topology-Conditioned Neural Signal Synthesis",
       "normalized_title": "phinn eeg topological time series analysis of dream state eeg dynamic betti curves for dream content classification and topology conditioned neural signal synthesis",
@@ -1864,35 +1861,6 @@
       ]
     },
     {
-      "id": "165b690500d9",
-      "title": "중소기업 AI 도입률 23.4%, 왜 나중으로 미룰까?",
-      "normalized_title": "중소기업 ai 도입률 23 4 왜 나중으로 미룰까",
-      "url": "https://yozm.wishket.com/magazine/detail/3846",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
       "id": "f8117c100197",
       "title": "AI 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
       "normalized_title": "ai 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
@@ -2057,6 +2025,33 @@
         "broad": 0,
         "practical": 3,
         "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "bac79aac38a2",
+      "title": "바이브코더를 위한 기초 보안 A to Z",
+      "normalized_title": "바이브코더를 위한 기초 보안 a to z",
+      "url": "https://yozm.wishket.com/magazine/detail/3832",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
       },
       "topic_tags": []
     },
