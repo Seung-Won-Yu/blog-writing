@@ -9,6 +9,7 @@ on:
       - 'collect_news.py'
       - 'news_pipeline.py'
       - 'generate_daily_draft.py'
+      - 'restore_review_inbox.py'
       - 'article_context.py'
       - 'quiz_bank.py'
       - 'generate_editorial_images.py'
@@ -98,6 +99,9 @@ jobs:
           REQUESTED_DAY: ${{ inputs.day }}
         run: |
           test -n "$REQUESTED_DAY"
+          if [ ! -f "docs/inbox/$REQUESTED_DAY.json" ]; then
+            python restore_review_inbox.py --day "$REQUESTED_DAY"
+          fi
           test -f "docs/inbox/$REQUESTED_DAY.json"
 
       - name: Generate today's local Tistory draft

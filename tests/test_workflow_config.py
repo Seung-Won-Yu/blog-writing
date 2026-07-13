@@ -75,6 +75,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("refresh_existing:", workflow)
         self.assertIn("REFRESH_EXISTING: ${{ inputs.refresh_existing }}", workflow)
         self.assertIn("Verify historical review inbox", workflow)
+        self.assertIn("python restore_review_inbox.py", workflow)
         self.assertIn('test -n "$REQUESTED_DAY"', workflow)
         self.assertIn('test -f "docs/inbox/$REQUESTED_DAY.json"', workflow)
         self.assertIn("inputs.refresh_existing != true", workflow)
