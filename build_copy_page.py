@@ -52,6 +52,8 @@ def load_drafts():
                 "key_summary": meta.get("key_summary") or [],
                 "publish_checklist": meta.get("publish_checklist") or [],
                 "image_assets": meta.get("image_assets") or [],
+                "generation_provider": meta.get("generation_provider") or "unknown",
+                "publish_ready": bool(meta.get("publish_ready")),
                 "source": source,
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
@@ -307,6 +309,76 @@ def render(drafts):
       color: #334155;
       font-size: 14px;
     }}
+    .review-card {{
+      margin: 0 0 20px;
+      padding: 18px;
+      border: 1px solid #c99b43;
+      border-left: 4px solid #c99b43;
+      border-radius: 6px;
+      background: #fffcf5;
+    }}
+    .review-card h2 {{
+      margin: 0 0 6px;
+      font-size: 18px;
+    }}
+    .review-card > p {{
+      margin: 0 0 14px;
+      color: #536159;
+      font-size: 13px;
+    }}
+    .review-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }}
+    .review-field {{
+      display: grid;
+      gap: 6px;
+      color: #27332d;
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .review-field textarea,
+    .review-field input[type="url"] {{
+      width: 100%;
+      min-height: 112px;
+      padding: 12px;
+      border: 1px solid #bbc8c1;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #17211c;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+      resize: vertical;
+      white-space: normal;
+    }}
+    .review-field input[type="url"] {{
+      min-height: 42px;
+      resize: none;
+    }}
+    .review-check {{
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin: 14px 0 0;
+      color: #27332d;
+      font-size: 14px;
+      font-weight: 750;
+    }}
+    .review-check input {{
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+    }}
+    .review-gate {{
+      margin: 12px 0 0;
+      color: #9a5c12;
+      font-size: 13px;
+      font-weight: 850;
+    }}
+    .review-gate[data-ready="true"] {{ color: var(--accent); }}
     .image-card {{
       display: grid;
       grid-template-columns: 180px minmax(0, 1fr);
@@ -459,6 +531,7 @@ def render(drafts):
       .header-row {{ align-items: stretch; flex-direction: column; }}
       .action-btn {{ width: 100%; }}
       .assist-grid {{ grid-template-columns: 1fr; }}
+      .review-grid {{ grid-template-columns: 1fr; }}
       .image-card {{ grid-template-columns: 1fr; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
@@ -540,16 +613,37 @@ def render(drafts):
             </section>
           </div>
 
+          <section class="review-card" aria-labelledby="reviewTitle">
+            <h2 id="reviewTitle">발행 전 내 내용 더하기</h2>
+            <p>기사 요약만 복사하지 않도록 직접 확인한 사실과 내 판단을 각각 2문장 이상 적어주세요. 입력 내용은 본문과 같은 페이지 미리보기에 바로 반영됩니다.</p>
+            <div class="review-grid">
+              <label class="review-field" for="verificationNote">직접 확인한 내용 · 40자 이상
+                <textarea id="verificationNote" maxlength="800" placeholder="원문에서 직접 대조한 수치, 적용 범위, 제한 조건을 구체적으로 적어주세요."></textarea>
+              </label>
+              <label class="review-field" for="editorNote">내 판단·경험 · 40자 이상
+                <textarea id="editorNote" maxlength="800" placeholder="내 프로젝트나 공부에 어떤 의미인지, 동의하지 않는 점은 무엇인지 적어주세요."></textarea>
+              </label>
+            </div>
+            <label class="review-field" for="relatedUrl" style="margin-top:12px;">관련 내 글 URL · 선택
+              <input id="relatedUrl" type="url" inputmode="url" placeholder="https://won0322.tistory.com/101">
+            </label>
+            <label class="review-check" for="sourceChecked">
+              <input id="sourceChecked" type="checkbox">
+              <span>원문 링크를 열어 핵심 사실과 문맥을 직접 확인했습니다.</span>
+            </label>
+            <p class="review-gate" id="reviewGateStatus" data-ready="false">검수 내용을 입력하면 본문 HTML 복사가 열립니다.</p>
+          </section>
+
           <div class="code-head">
             <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <div class="code-actions">
               <button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
-              <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
+              <button class="copy secondary" type="button" id="htmlCopyButton" data-copy="html" disabled>본문 HTML 복사</button>
             </div>
           </div>
           <textarea id="htmlCode" spellcheck="false"></textarea>
           <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
-            <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>
+            <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
           </section>
           <div class="status" id="status" role="status" aria-live="polite"></div>
         </div>
@@ -562,6 +656,7 @@ def render(drafts):
     const latest = {json_for_script(latest)};
     let current = null;
     let currentPreviewPath = "";
+    let currentBaseHtml = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -583,6 +678,12 @@ def render(drafts):
       previewButton: document.getElementById("previewButton"),
       previewPane: document.getElementById("previewPane"),
       previewFrame: document.getElementById("previewFrame"),
+      htmlCopyButton: document.getElementById("htmlCopyButton"),
+      verificationNote: document.getElementById("verificationNote"),
+      editorNote: document.getElementById("editorNote"),
+      relatedUrl: document.getElementById("relatedUrl"),
+      sourceChecked: document.getElementById("sourceChecked"),
+      reviewGateStatus: document.getElementById("reviewGateStatus"),
     }};
 
     function setStatus(text, kind = "success") {{
@@ -604,6 +705,159 @@ def render(drafts):
 
     function numbered(rows) {{
       return (rows || []).map((text, index) => `${{index + 1}}. ${{text}}`).join("\\n");
+    }}
+
+    function escapeHtml(value) {{
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }}
+
+    function safeRelatedUrl(value) {{
+      const raw = String(value || "").trim();
+      if (!raw) return "";
+      try {{
+        const url = new URL(raw);
+        if (url.protocol !== "https:" || url.hostname !== "won0322.tistory.com") return "";
+        return url.href;
+      }} catch (error) {{
+        return "";
+      }}
+    }}
+
+    function buildAuthorNoteHtml() {{
+      const verificationNote = els.verificationNote.value.trim();
+      const editorNote = els.editorNote.value.trim();
+      const relatedUrl = safeRelatedUrl(els.relatedUrl.value);
+      if (!verificationNote && !editorNote && !relatedUrl) return "";
+      const verificationHtml = escapeHtml(verificationNote).replace(/\\n/g, "<br>");
+      const editorHtml = escapeHtml(editorNote).replace(/\\n/g, "<br>");
+      const relatedHtml = relatedUrl
+        ? `<p style="margin:18px 0 0;"><a href="${{escapeHtml(relatedUrl)}}" target="_blank" rel="noopener" style="color:#28745a;font-weight:850;text-decoration:none;border-bottom:1px solid #28745a;">함께 읽을 내 기록</a></p>`
+        : "";
+      return `<section class="digest-author-note" style="margin:42px 0 0;padding:24px 0;border-top:3px solid #c99b43;border-bottom:1px solid #d8dedb;background:#fff;">
+  <p style="margin:0 0 10px;color:#9a5c12;font-size:12px;font-weight:850;letter-spacing:.08em;">MY REVIEW</p>
+  <h2 style="margin:0 0 18px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">직접 확인하고 남긴 메모</h2>
+  <h3 style="margin:0 0 8px;color:#27332d;font-size:16px;">원문에서 확인한 내용</h3>
+  <p style="margin:0 0 18px;color:#46534d;font-size:16px;line-height:1.85;">${{verificationHtml}}</p>
+  <h3 style="margin:0 0 8px;color:#27332d;font-size:16px;">내 판단과 적용 메모</h3>
+  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.85;">${{editorHtml}}</p>
+  ${{relatedHtml}}
+</section>`;
+    }}
+
+    function buildReviewedHtml() {{
+      const authorNote = buildAuthorNoteHtml();
+      if (!authorNote || !currentBaseHtml) return currentBaseHtml;
+      const markers = [
+        '<section class="digest-closing"',
+        '<p class="digest-note"',
+        "</article>",
+      ];
+      const marker = markers.find((candidate) => currentBaseHtml.includes(candidate));
+      if (!marker) return currentBaseHtml + "\\n" + authorNote;
+      return currentBaseHtml.replace(marker, authorNote + "\\n\\n" + marker);
+    }}
+
+    function isReviewReady() {{
+      const editorNote = els.editorNote.value.trim();
+      const verificationNote = els.verificationNote.value.trim();
+      const relatedValue = els.relatedUrl.value.trim();
+      const relatedIsValid = !relatedValue || Boolean(safeRelatedUrl(relatedValue));
+      return Boolean(
+        current &&
+        current.publish_ready &&
+        editorNote.length >= 40 &&
+        verificationNote.length >= 40 &&
+        Boolean(els.sourceChecked.checked) &&
+        relatedIsValid
+      );
+    }}
+
+    function reviewGateMessage() {{
+      if (!current) return "초안을 선택해 주세요.";
+      if (!current.publish_ready) {{
+        return `발행 보류 · ${{current.generation_provider || "fallback"}} 초안은 모델 품질 검사를 통과하지 못했습니다. 다시 생성해 주세요.`;
+      }}
+      const missing = [];
+      if (els.verificationNote.value.trim().length < 40) missing.push("직접 확인한 내용 40자");
+      if (els.editorNote.value.trim().length < 40) missing.push("내 판단·경험 40자");
+      if (!els.sourceChecked.checked) missing.push("원문 확인 체크");
+      if (els.relatedUrl.value.trim() && !safeRelatedUrl(els.relatedUrl.value)) {{
+        missing.push("won0322.tistory.com 내부 링크");
+      }}
+      return missing.length
+        ? "복사 잠금 · " + missing.join(" · ")
+        : "검수 완료 · 본문 HTML을 복사할 수 있습니다.";
+    }}
+
+    function appendPreviewParagraph(doc, section, headingText, bodyText) {{
+      const heading = doc.createElement("h3");
+      heading.textContent = headingText;
+      heading.setAttribute("style", "margin:0 0 8px;color:#27332d;font-size:16px;");
+      const paragraph = doc.createElement("p");
+      paragraph.textContent = bodyText;
+      paragraph.setAttribute("style", "margin:0 0 18px;color:#46534d;font-size:16px;line-height:1.85;white-space:pre-line;");
+      section.append(heading, paragraph);
+    }}
+
+    function updatePreviewNote() {{
+      const doc = els.previewFrame.contentDocument;
+      if (!doc) return;
+      doc.querySelector(".digest-author-note")?.remove();
+      const article = doc.querySelector(".daily-digest-post");
+      if (!article) return;
+      const verificationNote = els.verificationNote.value.trim();
+      const editorNote = els.editorNote.value.trim();
+      const relatedUrl = safeRelatedUrl(els.relatedUrl.value);
+      if (!verificationNote && !editorNote && !relatedUrl) return;
+
+      const section = doc.createElement("section");
+      section.className = "digest-author-note";
+      section.setAttribute("style", "margin:42px 0 0;padding:24px 0;border-top:3px solid #c99b43;border-bottom:1px solid #d8dedb;background:#fff;");
+      const kicker = doc.createElement("p");
+      kicker.textContent = "MY REVIEW";
+      kicker.setAttribute("style", "margin:0 0 10px;color:#9a5c12;font-size:12px;font-weight:850;letter-spacing:.08em;");
+      const title = doc.createElement("h2");
+      title.textContent = "직접 확인하고 남긴 메모";
+      title.setAttribute("style", "margin:0 0 18px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;");
+      section.append(kicker, title);
+      appendPreviewParagraph(doc, section, "원문에서 확인한 내용", verificationNote);
+      appendPreviewParagraph(doc, section, "내 판단과 적용 메모", editorNote);
+      if (relatedUrl) {{
+        const row = doc.createElement("p");
+        row.setAttribute("style", "margin:18px 0 0;");
+        const link = doc.createElement("a");
+        link.href = relatedUrl;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "함께 읽을 내 기록";
+        link.setAttribute("style", "color:#28745a;font-weight:850;text-decoration:none;border-bottom:1px solid #28745a;");
+        row.appendChild(link);
+        section.appendChild(row);
+      }}
+      const target = article.querySelector(".digest-closing, .digest-note");
+      article.insertBefore(section, target || null);
+    }}
+
+    function updateReviewState() {{
+      const ready = isReviewReady();
+      els.htmlCopyButton.disabled = !ready;
+      els.reviewGateStatus.textContent = reviewGateMessage();
+      els.reviewGateStatus.dataset.ready = String(ready);
+      if (currentBaseHtml) els.htmlCode.value = buildReviewedHtml();
+      updatePreviewNote();
+    }}
+
+    function resetReviewFields() {{
+      els.verificationNote.value = "";
+      els.editorNote.value = "";
+      els.relatedUrl.value = "";
+      els.sourceChecked.checked = false;
+      updateReviewState();
     }}
 
     function operatingMemo() {{
@@ -708,6 +962,8 @@ def render(drafts):
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
+      currentBaseHtml = "";
+      resetReviewFields();
       setPreviewMode(false);
       els.previewButton.disabled = true;
       els.previewFrame.removeAttribute("src");
@@ -716,11 +972,15 @@ def render(drafts):
       try {{
         const response = await fetch(draft.html_path + "?v=" + Date.now());
         if (!response.ok) throw new Error("HTTP " + response.status);
-        els.htmlCode.value = await response.text();
+        currentBaseHtml = await response.text();
+        els.htmlCode.value = currentBaseHtml;
         currentPreviewPath = draft.preview_path + "?v=" + Date.now();
         els.previewButton.disabled = false;
+        updateReviewState();
         setStatus(day + " 초안을 불러왔습니다.");
       }} catch (error) {{
+        currentBaseHtml = "";
+        updateReviewState();
         els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
         setStatus("초안을 불러오지 못했습니다. 직접 생성 후 다시 시도해 주세요.", "error");
       }}
@@ -749,6 +1009,12 @@ def render(drafts):
       setPreviewMode(showingPreview);
     }});
 
+    els.previewFrame.addEventListener("load", updatePreviewNote);
+    [els.verificationNote, els.editorNote, els.relatedUrl].forEach((field) => {{
+      field.addEventListener("input", updateReviewState);
+    }});
+    els.sourceChecked.addEventListener("change", updateReviewState);
+
     document.getElementById("drafts").addEventListener("click", (event) => {{
       const button = event.target.closest(".draft-btn");
       if (button) selectDraft(button.dataset.day);
@@ -758,7 +1024,13 @@ def render(drafts):
       const button = event.target.closest("[data-copy]");
       if (!button || !current) return;
       const type = button.dataset.copy;
-      if (type === "html") copyText(els.htmlCode.value, "본문 HTML");
+      if (type === "html") {{
+        if (!isReviewReady()) {{
+          setStatus(reviewGateMessage(), "error");
+          return;
+        }}
+        copyText(buildReviewedHtml(), "본문 HTML");
+      }}
       if (type === "title") copyText(current.title, "제목");
       if (type === "titles") copyText(numbered(current.title_candidates), "제목 후보");
       if (type === "category") copyText(current.category, "카테고리");

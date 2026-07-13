@@ -20,7 +20,7 @@ MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
-GENERATION_REVISION = 4
+GENERATION_REVISION = 5
 MAX_PROMPT_INPUT_TOKENS = 6_900
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 6
@@ -48,6 +48,10 @@ GENERIC_REWRITES = {
     "중요한 논의를 불러일으키고 있습니다": "구체적인 기준을 다시 묻게 합니다",
     "기여할 것입니다": "영향을 주는 범위를 확인해야 합니다",
     "중요한 요소들을 살펴보아야 합니다": "병목이 생기는 구간을 구분해 확인해야 합니다",
+    "살펴보는 것이 중요합니다": "확인할 항목을 구체적으로 나눠야 합니다",
+    "고민해보는 것도 유익할 것입니다": "적용 전후의 차이를 기록해 비교해야 합니다",
+    "논의가 필요합니다": "판단 기준을 먼저 정해야 합니다",
+    "더 나은 시스템": "검증 가능한 시스템",
 }
 GENERIC_COPY = tuple(GENERIC_REWRITES)
 
@@ -84,6 +88,8 @@ def selected_fingerprint(inbox):
             "url": _text(item.get("url"), 500),
             "summary": _text(item.get("summary"), 1200),
             "audience_lane": _text(item.get("audience_lane"), 20),
+            "published_at": _text(item.get("published_at"), 40),
+            "selection_reason": _text(item.get("selection_reason"), 120),
         }
         for item in _selected(inbox)
     ]
@@ -161,6 +167,8 @@ def build_prompt(inbox, history=None, article_contexts=None):
                 "summary": summary,
                 "detail": context_text,
                 "audience_lane": _text(item.get("audience_lane"), 20),
+                "published_at": _text(item.get("published_at"), 40),
+                "selection_reason": _text(item.get("selection_reason"), 120),
                 "_summary_floor": min(len(summary), 300 if runtime_summary else 60),
                 "_detail_floor": min(len(context_text), 300),
             }
@@ -185,16 +193,18 @@ def build_prompt(inbox, history=None, article_contexts=None):
 
 [목표와 톤]
 - 요약 묶음이 아니라 6~8분 동안 읽을 2,700~3,400자의 글이다.
-- 개발을 배우며 기록하는 사람의 담백한 한국어로 쓰고 홍보·과장·가짜 1인칭 경험을 피한다.
+- 개발을 배우며 기록하는 사람의 담백한 한국어로 쓰고 홍보·과장을 피한다.
+- 사람의 실제 경험·직접 확인 결과·감정은 대신 만들지 않는다. 이 부분은 운영자가 발행 전 입력한다.
 - {news_count}를 하나의 흐름으로 잇는다. broad는 일상 영향, practical은 바로 쓰는 도구, deep은 원리를 맡는다.
 - opening 100~170자는 첫 기사와 시간·비용·개인정보·일 중 하나를 연결한다. 뒤 기사 제목은 미리 나열하지 않는다.
-- throughline 200~320자는 뉴스를 하나의 흐름으로 잇는 이유, closing 120~180자는 변화와 한계, action 50~100자는 10~15분 행동을 쓴다.
+- throughline 200~320자는 뉴스를 하나로 묶는 공통점뿐 아니라 각 소식의 차이와 긴장을 설명한다. closing 120~180자는 변화와 한계, action 50~100자는 10~15분 행동을 쓴다.
 - headline·visual은 첫 기사 범위만 쓰며 날짜·데일리·핵심 정리·충격·무조건·미래 같은 낚시 표현을 금지한다.
 
 [뉴스 본문]
 - 각 뉴스에 title_kr과 '확인된 사실 + 독자에게 중요한 이유'를 잇는 blurb_kr 한 문장을 쓴다.
 - content는 정확히 '무슨 일이 있었나'(h+p), '왜 우리에게 중요한가'(h+p), '직접 확인할 점'(h+p) 6블록이다.
-- 각 p는 {paragraph_range}자, 뉴스당 p 합계는 최소 {paragraph_total}자다. 첫 p는 사실·배경, 둘째는 독자 영향 뒤 개발자 해석, 셋째는 미확인 범위·검토 질문을 쓴다.
+- 각 p는 {paragraph_range}자, 뉴스당 p 합계는 최소 {paragraph_total}자다. 첫 p는 사실·배경, 둘째는 독자 영향 뒤 개발자 해석을 쓴다.
+- 셋째 문단은 자료에서 빠진 정보의 이름을 밝히고 구체적인 확인 방법을 하나 이상 적는다. '원문 확인이 중요하다' 같은 말만 반복하지 않는다.
 - 해석은 '개발자 관점에서는'처럼 표시한다. 적용 아이디어를 제품이 제공하는 기능처럼 쓰지 않는다.
 - 같은 뜻을 반복하지 않는다. '기술의 융합이 가속화되고 있습니다', '새로운 기회를 제공합니다', '중요한 역할을 할 수 있습니다', '응용 가능성을 열어줍니다'는 금지한다.
 - quiz는 빈 객체 {{}}다. 검증된 정처기 문제은행에서 프로그램이 붙인다. IT·개발·기획 용어는 3개다.
@@ -221,6 +231,10 @@ def build_prompt(inbox, history=None, article_contexts=None):
                 key: value
                 for key, value in item.items()
                 if not key.startswith("_")
+                and (
+                    value
+                    or key in {"title", "source", "url", "summary", "detail"}
+                )
             }
             for item in references
         ]
@@ -663,6 +677,9 @@ def build_day(inbox, generated, model=DEFAULT_MODEL, provider="github-models"):
                 or _text(candidate.get("title"), 220),
                 "source": _text(candidate.get("source_name"), 80),
                 "url": _text(candidate.get("url"), 500),
+                "published_at": _text(candidate.get("published_at"), 40),
+                "audience_lane": _text(candidate.get("audience_lane"), 20),
+                "selection_reason": _text(candidate.get("selection_reason"), 120),
                 "blurb_kr": _text(raw.get("blurb_kr"), 400)
                 or _text(candidate.get("summary"), 400),
                 "content": _validated_content(raw.get("content")),
@@ -699,6 +716,9 @@ def fallback_day(inbox, quiz=None):
             "title_kr": _text(item.get("title"), 220),
             "source": _text(item.get("source_name"), 80),
             "url": _text(item.get("url"), 500),
+            "published_at": _text(item.get("published_at"), 40),
+            "audience_lane": _text(item.get("audience_lane"), 20),
+            "selection_reason": _text(item.get("selection_reason"), 120),
             "blurb_kr": _text(item.get("summary"), 400),
             "content": [],
         }

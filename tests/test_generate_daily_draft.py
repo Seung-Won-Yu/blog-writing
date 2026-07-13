@@ -29,6 +29,9 @@ INBOX = {
             "url": "https://github.blog/changelog/actions-security",
             "summary": "워크플로 실행 전 위험한 변경을 확인할 수 있다.",
             "source_name": "GitHub Changelog",
+            "published_at": "2026-07-12T07:00:00+00:00",
+            "audience_lane": "practical",
+            "selection_reason": "실무 독자 적합도 5",
         },
         {
             "title": "AI 시대 개발자의 역할",
@@ -117,6 +120,11 @@ class PromptTests(unittest.TestCase):
         self.assertIn('"subject"', prompt)
         self.assertIn('"headline"', prompt)
         self.assertIn("network|agent|memory|security|data|code|cloud|hardware|research|signal", prompt)
+        self.assertIn("사람의 실제 경험", prompt)
+        self.assertIn("운영자가 발행 전 입력", prompt)
+        self.assertIn("빠진 정보의 이름", prompt)
+        self.assertIn("구체적인 확인 방법", prompt)
+        self.assertIn("차이와 긴장", prompt)
 
     def test_bounds_history_to_fit_free_tier_input_limit(self):
         history = {
@@ -225,6 +233,9 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["schema_version"], 2)
         self.assertEqual(day["news"][0]["source"], "GitHub Changelog")
         self.assertEqual(day["news"][0]["url"], INBOX["selected"][0]["url"])
+        self.assertEqual(day["news"][0]["published_at"], INBOX["selected"][0]["published_at"])
+        self.assertEqual(day["news"][0]["audience_lane"], "practical")
+        self.assertEqual(day["news"][0]["selection_reason"], "실무 독자 적합도 5")
         self.assertEqual(day["quiz"]["answer"], 0)
         self.assertEqual(len(day["terms"]), 3)
         self.assertIn("검증하는 과정", day["editorial"]["opening"])
