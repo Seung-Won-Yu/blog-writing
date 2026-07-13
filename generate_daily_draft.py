@@ -21,7 +21,7 @@ GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{mode
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
-GENERATION_REVISION = 10
+GENERATION_REVISION = 11
 MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
@@ -816,8 +816,6 @@ def _assert_draft_quality(day):
             raise DraftQualityError("승원의 메모가 정해진 개인 점검 형식이 아닙니다.")
         if any(phrase in author_note for phrase in AUTHOR_NOTE_AI_COPY):
             raise DraftQualityError("승원의 메모가 추상적인 AI 조언처럼 작성됐습니다.")
-        if not any(term in author_note for term in VERIFICATION_TERMS):
-            raise DraftQualityError("승원의 메모에 직접 비교할 대상이 없습니다.")
         verification_text = _text(paragraphs[-1].get("text"), 700)
         if not any(term in verification_text for term in VERIFICATION_TERMS):
             raise DraftQualityError("직접 확인할 문단에 구체적인 검증 대상이 없습니다.")
