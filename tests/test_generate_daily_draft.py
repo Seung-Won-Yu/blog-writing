@@ -418,6 +418,8 @@ class DraftFileTests(unittest.TestCase):
             )
 
             self.assertEqual(result["generation"]["provider"], "deterministic-fallback")
+            self.assertEqual(len(result["quiz"]["options"]), 4)
+            self.assertIn(result["quiz"]["answer"], range(4))
             saved_text = (root / "days" / "2026-07-13.json").read_text()
             self.assertNotIn("internal details", saved_text)
 
@@ -504,10 +506,38 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(len(calls), 2)
         self.assertIn("분량과 구조를 다시 점검", calls[1])
         self.assertIn("4~5개의 완결된 문장", calls[1])
+        self.assertIn("최소 540자", calls[1])
         self.assertIn("이전 응답의 본문 문단 길이", calls[1])
         self.assertLessEqual(
             _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 900
         )
+
+    def test_uses_a_final_quality_retry_before_falling_back(self):
+        calls = []
+        almost_long_enough = copy.deepcopy(MODEL_OUTPUT)
+        for block in almost_long_enough["news"][0]["content"]:
+            if block["t"] == "p":
+                block["text"] = "검증 가능한 근거와 개발 작업의 영향을 구분해 확인한다. " * 3
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return almost_long_enough if len(calls) < 3 else MODEL_OUTPUT
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 3)
+        self.assertIn("분량과 구조를 다시 점검", calls[2])
 
     def test_second_quality_attempt_rewrites_banned_generic_phrases(self):
         calls = []

@@ -528,7 +528,7 @@ def build_day(inbox, generated, model=DEFAULT_MODEL):
     return day
 
 
-def fallback_day(inbox):
+def fallback_day(inbox, quiz=None):
     """Build a publishable minimal draft without inventing any new facts."""
     selected = _selected(inbox)
     label, weekday = _date_fields(inbox["day"])
@@ -549,7 +549,7 @@ def fallback_day(inbox):
         "visual": _fallback_visual(selected),
         "editorial": _fallback_editorial(selected),
         "news": news,
-        "quiz": {},
+        "quiz": quiz or {},
         "terms": [],
         "generation": {
             "provider": "deterministic-fallback",
@@ -600,9 +600,9 @@ def _quality_retry_prompt(prompt, generated, error):
 [분량과 구조를 다시 점검]
 - 이전 응답은 {reason} 사유로 거절됐다.
 - 이전 응답의 본문 문단 길이는 {paragraphs}자, 연결고리는 {throughline}자였다.
-- 이번에는 각 뉴스의 본문 문단 3개를 각각 4~5개의 완결된 문장으로 쓴다. 뉴스 하나의 본문 세 문단 합계는 최소 420자다.
+- 이번에는 각 뉴스의 본문 문단 3개를 각각 180~260자, 4~5개의 완결된 문장으로 쓴다. 뉴스 하나의 본문 세 문단 합계는 최소 540자다.
 - 사실 문단에는 구체적 변화와 배경, 개발자 문단에는 작업 흐름과 적용 예, 확인 문단에는 확인되지 않은 범위와 검토 질문을 넣는다.
-- editorial.throughline은 최소 200자, 전체 표시 텍스트는 최소 2,700자다.
+- editorial.throughline은 최소 200자, 전체 표시 텍스트는 최소 3,000자다.
 - 같은 말을 바꾸어 반복하지 말고 detail과 summary에 있는 서로 다른 정보를 사용한다. 위 분량을 확인한 뒤 JSON 전체를 다시 반환한다.
 """.format(
         reason=_text(error, 120),
@@ -638,18 +638,25 @@ def generate_and_write(
             article_contexts = {}
 
     try:
-        prompt = build_prompt(inbox, history, article_contexts)
-        generated = model_call(prompt, token, model)
-        generated = {**generated, "quiz": curated_quiz}
-        try:
-            day = build_day(inbox, generated, model=model)
-        except DraftQualityError as exc:
-            retry_prompt = _quality_retry_prompt(prompt, generated, exc)
-            generated = model_call(retry_prompt, token, model)
+        base_prompt = build_prompt(inbox, history, article_contexts)
+        attempt_prompt = base_prompt
+        for attempt in range(3):
+            generated = model_call(attempt_prompt, token, model)
             generated = {**generated, "quiz": curated_quiz}
-            day = build_day(
-                inbox, _rewrite_generic_phrases(generated), model=model
+            candidate = (
+                generated
+                if attempt == 0
+                else _rewrite_generic_phrases(generated)
             )
+            try:
+                day = build_day(inbox, candidate, model=model)
+                break
+            except DraftQualityError as exc:
+                if attempt == 2:
+                    raise
+                attempt_prompt = _quality_retry_prompt(
+                    base_prompt, generated, exc
+                )
     except Exception as exc:
         if not fallback_on_error:
             raise
@@ -659,7 +666,7 @@ def generate_and_write(
             ),
             file=sys.stderr,
         )
-        day = fallback_day(inbox)
+        day = fallback_day(inbox, quiz=curated_quiz)
 
     data_dir.mkdir(parents=True, exist_ok=True)
     output_path = data_dir / "{}.json".format(inbox["day"])
