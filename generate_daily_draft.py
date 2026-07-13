@@ -21,10 +21,11 @@ GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{mode
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
-GENERATION_REVISION = 9
+GENERATION_REVISION = 10
 MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
+NEWS_HEADINGS = ("무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점")
 PERSONA_PATH = Path(__file__).resolve().parent / "config" / "editorial_persona.json"
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
 QUIZ_CATEGORIES = {
@@ -790,7 +791,7 @@ def _assert_draft_quality(day):
 
     all_copy = list(editorial.values())
     expected_types = ["h", "p", "h", "p", "h", "p"]
-    expected_headings = ["무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점"]
+    expected_headings = list(NEWS_HEADINGS)
     persona = load_persona()
     forbidden_claims = tuple(persona.get("forbidden_firsthand_claims") or [])
     for item in day.get("news") or []:
@@ -1026,10 +1027,33 @@ def _merge_quality_repair(base, repair):
             {
                 **repair_item,
                 "title_kr": base_item["title_kr"],
+                "content": _fixed_repair_content(repair_item.get("content")),
             }
             for base_item, repair_item in zip(base_news, repair_news)
         ]
     return merged
+
+
+def _fixed_repair_content(blocks):
+    """Keep model prose but make the machine-owned three-part structure stable."""
+    if not isinstance(blocks, list):
+        return blocks
+    paragraphs = [
+        block
+        for block in blocks
+        if isinstance(block, dict) and block.get("t") == "p" and block.get("text")
+    ]
+    if len(paragraphs) != 3:
+        return blocks
+    content = []
+    for heading, paragraph in zip(NEWS_HEADINGS, paragraphs):
+        content.extend(
+            [
+                {"t": "h", "text": heading},
+                {"t": "p", "text": paragraph["text"]},
+            ]
+        )
+    return content
 
 
 def _repair_title_matches(base_value, repair_value):
