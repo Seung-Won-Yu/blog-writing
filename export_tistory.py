@@ -103,6 +103,10 @@ ACTION_STYLE = (
     "margin:18px 0 0;padding:16px 18px;border-left:3px solid #c99b43;"
     "background:#f7f4ec;color:#35433c;"
 )
+THROUGHLINE_STYLE = (
+    "margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;"
+    "border-top:4px solid #28745a;background:#f4f7f5;"
+)
 
 
 def esc(value):
@@ -330,6 +334,18 @@ def build_summary_section(day):
 </section>""".strip()
 
 
+def build_throughline_section(editorial):
+    throughline = plain((editorial or {}).get("throughline"))
+    if not throughline:
+        return ""
+    return f"""
+<section class="digest-throughline"{style(THROUGHLINE_STYLE)}>
+  <p{style(KICKER_STYLE)}>WHY THESE THREE</p>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 연결고리</h2>
+  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">{esc(throughline)}</p>
+</section>""".strip()
+
+
 def build_editorial_image(asset, kind):
     if not isinstance(asset, dict) or not plain(asset.get("url")):
         return ""
@@ -487,6 +503,8 @@ slug: {slugify(day_id + "-daily-digest")}
   {build_editorial_image(images.get("cover"), "cover")}
 
   {build_summary_section(day)}
+
+  {build_throughline_section(editorial)}
 
   <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
   {build_news_section(news, images.get("flow"))}

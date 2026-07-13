@@ -74,6 +74,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
         day = dict(FALLBACK_DAY)
         day["editorial"] = {
             "opening": "오늘은 도구보다 검증 과정에 초점을 맞춰봤다.",
+            "throughline": "세 소식은 결국 자동화 결과를 어떻게 확인할지라는 질문으로 이어진다.",
             "closing": "결국 오래 남는 것은 결과를 판단하는 힘이다.",
             "action": "기사 하나를 골라 적용 지점을 한 줄로 적어보자.",
         }
@@ -81,6 +82,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
         html = render_post("2026-07-13", day)
 
         self.assertIn("도구보다 검증 과정", html)
+        self.assertIn('class="digest-throughline"', html)
+        self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘의 뉴스 1개", html)
         self.assertIn('class="digest-closing"', html)
         self.assertIn("오늘 해볼 것", html)

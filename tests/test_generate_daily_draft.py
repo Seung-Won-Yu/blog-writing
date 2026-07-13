@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from generate_daily_draft import (
+    DraftQualityError,
     build_day,
     build_prompt,
     fallback_day,
@@ -36,6 +37,7 @@ INBOX = {
 MODEL_OUTPUT = {
     "editorial": {
         "opening": "오늘은 자동화의 편리함보다 결과를 검증하는 과정에 초점을 맞춰봤다.",
+        "throughline": "오늘의 두 소식은 자동화를 더 많이 쓰는 문제보다, 자동화가 남긴 실행 기록을 어떻게 확인하고 결과를 어떤 기준으로 판단할지에 초점을 맞춘다. 실행 전 위험을 확인하는 기능과 AI 결과를 검토하는 습관은 결국 같은 질문으로 이어진다. 빠른 실행 뒤에 검증 가능한 흔적이 남는가 하는 질문이다.",
         "closing": "도구가 바뀌어도 결국 중요한 것은 변경을 이해하고 판단하는 힘이다.",
         "action": "관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자.",
     },
@@ -46,14 +48,25 @@ MODEL_OUTPUT = {
             "url": "https://evil.example/hallucinated",
             "blurb_kr": "워크플로 변경을 실행 전에 살펴보는 기능이다.",
             "content": [
-                {"t": "h", "text": "무슨 소식인가"},
-                {"t": "p", "text": "위험한 워크플로 변경을 사전에 확인할 수 있게 됐다."},
+                {"t": "h", "text": "무엇이 달라졌나"},
+                {"t": "p", "text": "GitHub Actions 워크플로를 실행하기 전에 위험한 변경을 확인할 수 있는 점검 단계가 추가됐다. 실행 이후 로그에서 문제를 찾는 방식과 달리, 변경 내용이 실제 권한과 자동화 흐름에 어떤 영향을 주는지 먼저 살펴볼 수 있다. 배포나 비밀 정보 접근이 포함된 작업일수록 검토 시점이 앞당겨진다는 점이 핵심이다."},
+                {"t": "h", "text": "개발자 작업에 닿는 지점"},
+                {"t": "p", "text": "자동화 파일도 애플리케이션 코드와 같은 검토 대상으로 다뤄야 한다는 신호다. 팀에서는 권한 범위, 외부 액션 버전, 비밀 값 사용 위치를 변경 리뷰 항목에 넣을 수 있다. 특히 코드 리뷰를 통과했다고 곧바로 실행하는 대신, 실행 단계에서 달라지는 권한과 환경을 한 번 더 확인하는 절차를 설계할 수 있다."},
+                {"t": "h", "text": "아직 확인할 점"},
+                {"t": "p", "text": "이 점검이 모든 위험을 자동으로 찾아준다고 해석해서는 안 된다. 어떤 변경을 차단하고 어떤 변경을 경고만 하는지, 조직별 정책과 어떻게 연결되는지는 실제 설정에서 확인해야 한다. 도입 전에는 테스트 저장소에서 경고 범위와 오탐 가능성을 먼저 살펴보는 편이 안전하다."},
             ],
         },
         {
             "title_kr": "AI와 함께 일하는 개발자",
             "blurb_kr": "도구보다 판단과 검증이 중요하다는 내용이다.",
-            "content": [{"t": "p", "text": "AI 결과를 검토하는 역량이 중요하다."}],
+            "content": [
+                {"t": "h", "text": "무엇이 달라졌나"},
+                {"t": "p", "text": "AI 도구가 코드를 빠르게 만드는 상황에서는 작성 속도만으로 개발자의 기여를 설명하기 어려워진다. 요구사항을 정확히 나누고, 생성된 결과가 시스템의 기존 규칙과 맞는지 확인하며, 실패했을 때 원인을 추적하는 일이 더 큰 비중을 차지한다. 결과를 받아들이는 사람의 판단 과정이 개발 품질에 직접 연결된다."},
+                {"t": "h", "text": "개발자 작업에 닿는 지점"},
+                {"t": "p", "text": "프롬프트를 잘 쓰는 능력만으로는 부족하다. 변경 범위를 작게 유지하고, 테스트로 기대 동작을 고정하며, 생성된 코드의 의존성과 예외 경로를 읽는 습관이 함께 필요하다. AI가 만든 결과를 팀원이 다시 검토할 수 있도록 작업 의도와 판단 근거를 기록하는 방식도 중요해진다."},
+                {"t": "h", "text": "아직 확인할 점"},
+                {"t": "p", "text": "모든 작업에서 AI 사용량을 늘리는 것이 답은 아니다. 반복적이고 검증 기준이 명확한 작업과, 도메인 판단이 많이 필요한 작업을 구분해야 한다. 작은 기능 하나를 대상으로 생성 시간, 검토 시간, 수정 횟수를 함께 기록하면 우리 팀에서 실제로 줄어든 비용이 무엇인지 확인할 수 있다."},
+            ],
         },
     ],
     "quiz": {
@@ -80,6 +93,11 @@ class PromptTests(unittest.TestCase):
         self.assertIn('"news"', prompt)
         self.assertIn('"editorial"', prompt)
         self.assertIn("뉴스를 하나의 흐름", prompt)
+        self.assertIn("6~8분", prompt)
+        self.assertIn("무엇이 달라졌나", prompt)
+        self.assertIn("개발자 작업에 닿는 지점", prompt)
+        self.assertIn("아직 확인할 점", prompt)
+        self.assertIn("새로운 기회를 제공합니다", prompt)
         self.assertIn('"visual"', prompt)
         self.assertIn('"hook"', prompt)
         self.assertIn("network|agent|memory|security|data|code|cloud|hardware|research|signal", prompt)
@@ -114,11 +132,14 @@ class DayValidationTests(unittest.TestCase):
 
         self.assertEqual(day["date_label"], "2026. 7. 13")
         self.assertEqual(day["weekday"], "월")
+        self.assertEqual(day["schema_version"], 2)
         self.assertEqual(day["news"][0]["source"], "GitHub Changelog")
         self.assertEqual(day["news"][0]["url"], INBOX["selected"][0]["url"])
         self.assertEqual(day["quiz"]["answer"], 0)
         self.assertEqual(len(day["terms"]), 3)
         self.assertIn("검증하는 과정", day["editorial"]["opening"])
+        self.assertIn("같은 질문", day["editorial"]["throughline"])
+        self.assertEqual(len(day["news"][0]["content"]), 6)
         self.assertIn("한 줄로 적어보자", day["editorial"]["action"])
         self.assertEqual(day["generation"]["provider"], "github-models")
 
@@ -128,6 +149,20 @@ class DayValidationTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             build_day(INBOX, incomplete, model="openai/gpt-4o-mini")
+
+    def test_rejects_shallow_or_generic_model_copy(self):
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [
+            {"t": "h", "text": "무슨 소식인가"},
+            {"t": "p", "text": "새 기능이 나왔다."},
+        ]
+        with self.assertRaises(DraftQualityError):
+            build_day(INBOX, shallow)
+
+        generic = copy.deepcopy(MODEL_OUTPUT)
+        generic["editorial"]["opening"] = "이 기술은 새로운 기회를 제공합니다."
+        with self.assertRaises(DraftQualityError):
+            build_day(INBOX, generic)
 
     def test_keeps_safe_visual_hook_and_rejects_unknown_motif(self):
         generated = copy.deepcopy(MODEL_OUTPUT)
@@ -291,6 +326,31 @@ class DraftFileTests(unittest.TestCase):
 
         self.assertEqual(result["generation"]["provider"], "github-models")
         self.assertEqual(len(seen_prompts), 1)
+
+    def test_retries_once_when_first_model_draft_is_too_shallow(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return shallow if len(calls) == 1 else MODEL_OUTPUT
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 2)
+        self.assertIn("분량과 구조를 다시 점검", calls[1])
 
     def test_history_collects_previous_questions_and_terms(self):
         with tempfile.TemporaryDirectory() as directory:
