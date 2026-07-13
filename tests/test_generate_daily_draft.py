@@ -379,7 +379,7 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(DraftQualityError, "AI식"):
             build_day(INBOX, formal)
 
-    def test_rejects_live_ai_marketing_language_and_repeated_transitions(self):
+    def test_rejects_repeated_ai_transitions_in_marketing_language(self):
         marketing = copy.deepcopy(MODEL_OUTPUT)
         marketing["news"][0]["content"][3]["text"] += (
             " 개발 생산성을 극대화하는 실무적 이점을 제공한다. "

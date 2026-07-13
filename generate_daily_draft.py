@@ -21,7 +21,7 @@ GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{mode
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
-GENERATION_REVISION = 12
+GENERATION_REVISION = 13
 MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
@@ -46,26 +46,6 @@ AI_TONE_REWRITES = {
     "다시 고민해야 합니다": "다시 생각할 문제다",
     "직접 모니터링해야 합니다": "직접 기록해 비교할 수 있다",
 }
-AI_TONE_PHRASES = (
-    "생산성을 극대화",
-    "실무적 이점",
-    "다각적인 검증",
-    "함을 시사한다",
-    "을 의미한다",
-    "효율적으로 제어",
-    "효율적인",
-    "전격 철회",
-    "공식 도입",
-    "필수적인",
-    "엄밀한",
-    "의사결정권자",
-    "정교한 리소스 관리",
-    "장기적인 서비스 운영",
-    "검증 파이프라인",
-    "프로세스를 마련",
-    "선행되어야 한다",
-    "모니터링할 필요가 있다",
-)
 GENERIC_REWRITES = {
     "기술의 융합이 가속화되고 있습니다": "서로 다른 기술을 한 흐름에서 다루는 사례가 늘고 있습니다",
     "새로운 기회를 제공합니다": "적용할 수 있는 범위를 넓힙니다",
@@ -825,10 +805,7 @@ def _assert_draft_quality(day):
     if combined.count("개발자 관점에서는") > 1:
         raise DraftQualityError("반복되는 AI식 해석 표지문이 포함되어 있습니다.")
     strong_ai_tone = any(phrase in combined for phrase in AI_TONE_REWRITES)
-    broad_ai_tone_hits = sum(
-        combined.count(phrase) for phrase in AI_TONE_PHRASES
-    )
-    if strong_ai_tone or broad_ai_tone_hits >= 2:
+    if strong_ai_tone:
         raise DraftQualityError("보도자료·AI식 훈계 문체가 포함되어 있습니다.")
     if any(phrase in combined for phrase in GENERIC_COPY):
         raise DraftQualityError("막연한 요약 표현이 포함되어 있습니다.")
