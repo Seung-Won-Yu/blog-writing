@@ -57,6 +57,12 @@ NEWS_IMAGE_STYLE = (
     "display:block;width:100%;max-height:300px;object-fit:cover;margin:0 0 20px;"
     "border-radius:3px;border:1px solid #d8dedb;background:#f5f6f4;"
 )
+EDITORIAL_IMAGE_STYLE = (
+    "display:block;width:100%;height:auto;border:1px solid #d8dedb;"
+    "border-radius:4px;background:#f5f6f4;"
+)
+COVER_FIGURE_STYLE = "margin:0 0 34px;"
+FLOW_FIGURE_STYLE = "margin:8px 0 36px;"
 BADGE_STYLE = (
     "display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;"
     "letter-spacing:.08em;"
@@ -295,7 +301,9 @@ def build_publish_checklist(day):
         "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
         f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
     ]
-    if any(item.get("image_url") or item.get("image") for item in day.get("news", [])):
+    if day.get("images") or any(
+        item.get("image_url") or item.get("image") for item in day.get("news", [])
+    ):
         checklist.insert(1, "본문 이미지가 정상 표시되는지 확인하기")
     return checklist
 
@@ -322,7 +330,23 @@ def build_summary_section(day):
 </section>""".strip()
 
 
-def build_news_section(news):
+def build_editorial_image(asset, kind):
+    if not isinstance(asset, dict) or not plain(asset.get("url")):
+        return ""
+    width = int(asset.get("width") or 1200)
+    height = int(asset.get("height") or (630 if kind == "cover" else 675))
+    figure_style = COVER_FIGURE_STYLE if kind == "cover" else FLOW_FIGURE_STYLE
+    loading = "eager" if kind == "cover" else "lazy"
+    return (
+        f'<figure class="digest-{kind}-figure"{style(figure_style)}>'
+        f'<img class="digest-{kind}-image" src="{esc(asset.get("url"))}" '
+        f'alt="{esc(asset.get("alt"))}" width="{width}" height="{height}" '
+        f'loading="{loading}"{style(EDITORIAL_IMAGE_STYLE)}>'
+        "</figure>"
+    )
+
+
+def build_news_section(news, flow_image=None):
     if not news:
         return '<p style="margin:0 0 16px;">오늘 수집된 뉴스가 없습니다.</p>'
 
@@ -363,6 +387,8 @@ def build_news_section(news):
   {source_link}
 </section>""".strip()
         )
+        if idx == 1 and flow_image:
+            parts.append(build_editorial_image(flow_image, "flow"))
     return "\n".join(parts)
 
 
@@ -435,6 +461,7 @@ def render_post(day_id, day):
     date_text = f"{label} ({weekday})" if weekday else label
     news = day.get("news") or []
     editorial = day.get("editorial") or {}
+    images = day.get("images") if isinstance(day.get("images"), dict) else {}
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     composition = (
@@ -457,10 +484,12 @@ slug: {slugify(day_id + "-daily-digest")}
     <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(composition)} 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.</p>
   </section>
 
+  {build_editorial_image(images.get("cover"), "cover")}
+
   {build_summary_section(day)}
 
   <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
-  {build_news_section(news)}
+  {build_news_section(news, images.get("flow"))}
 
   {build_quiz_section(day.get("quiz"))}
 
@@ -479,16 +508,33 @@ slug: {slugify(day_id + "-daily-digest")}
 def write_post(day_id, day=None, source_page=None):
     day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    images = day.get("images") if isinstance(day.get("images"), dict) else {}
     image_assets = [
         {
-            "title": plain(item.get("title_kr")),
-            "url": plain(item.get("image_url")),
-            "path": plain(item.get("saved_image_path")),
-            "original_url": plain(item.get("original_image_url")),
+            "kind": kind,
+            "title": "대표 이미지" if kind == "cover" else "오늘의 흐름 이미지",
+            "url": plain(asset.get("url")),
+            "path": plain(asset.get("path")),
+            "original_url": "",
+            "alt": plain(asset.get("alt")),
         }
-        for item in day.get("news", [])
-        if item.get("saved_image_path")
+        for kind in ("cover", "flow")
+        for asset in [images.get(kind)]
+        if isinstance(asset, dict) and asset.get("url")
     ]
+    image_assets.extend(
+        [
+            {
+                "kind": "source",
+                "title": plain(item.get("title_kr")),
+                "url": plain(item.get("image_url")),
+                "path": plain(item.get("saved_image_path")),
+                "original_url": plain(item.get("original_image_url")),
+            }
+            for item in day.get("news", [])
+            if item.get("saved_image_path")
+        ]
+    )
 
     html_path = OUT_DIR / f"{day_id}.html"
     meta_path = OUT_DIR / f"{day_id}.json"

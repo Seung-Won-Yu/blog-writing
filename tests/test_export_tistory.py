@@ -1,4 +1,8 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 from export_tistory import (
     build_key_summary,
@@ -7,6 +11,7 @@ from export_tistory import (
     estimate_read_minutes,
     post_title,
     render_post,
+    write_post,
 )
 
 
@@ -107,6 +112,58 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
     def test_estimates_a_short_but_nonzero_read_time(self):
         self.assertGreaterEqual(estimate_read_minutes(FALLBACK_DAY), 2)
+
+
+class EditorialImageIntegrationTests(unittest.TestCase):
+    def image_day(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [dict(FALLBACK_DAY["news"][0])]
+        day["images"] = {
+            "cover": {
+                "url": "https://blog.example/assets/cover.png?a=1&b=2",
+                "path": "docs/tistory/assets/2026-07-13/cover.png",
+                "alt": '오늘의 대표 <이미지> "테스트"',
+                "width": 1200,
+                "height": 630,
+            },
+            "flow": {
+                "url": "https://blog.example/assets/flow.png",
+                "path": "docs/tistory/assets/2026-07-13/flow.png",
+                "alt": "오늘의 뉴스 흐름",
+                "width": 1200,
+                "height": 675,
+            },
+        }
+        return day
+
+    def test_places_cover_before_summary_and_flow_after_first_story(self):
+        html = render_post("2026-07-13", self.image_day())
+
+        cover_index = html.index('class="digest-cover-image"')
+        summary_index = html.index('class="digest-summary"')
+        story_index = html.index('class="digest-news-card"')
+        flow_index = html.index('class="digest-flow-image"')
+        self.assertLess(cover_index, summary_index)
+        self.assertLess(story_index, flow_index)
+        self.assertIn("cover.png?a=1&amp;b=2", html)
+        self.assertIn("오늘의 대표 &lt;이미지&gt; &quot;테스트&quot;", html)
+        self.assertEqual(html.count("<img"), 2)
+        self.assertTrue(any("이미지" in item for item in build_publish_checklist(self.image_day())))
+
+    def test_writes_generated_images_first_in_copy_page_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("export_tistory.OUT_DIR", Path(directory)):
+                write_post("2026-07-13", day=self.image_day())
+
+            meta = json.loads(Path(directory, "2026-07-13.json").read_text(encoding="utf-8"))
+            self.assertEqual(
+                [asset["kind"] for asset in meta["image_assets"]],
+                ["cover", "flow"],
+            )
+            self.assertEqual(
+                meta["image_assets"][0]["path"],
+                "docs/tistory/assets/2026-07-13/cover.png",
+            )
 
 
 if __name__ == "__main__":
