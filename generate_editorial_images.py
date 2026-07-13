@@ -923,6 +923,205 @@ def draw_scene(draw, scene, motif, box, foreground=WHITE, accent=ORANGE, muted=M
                 light = _point(rack, 0.5, 0.18 + row * 0.2)
                 radius = max(2, stroke // 2)
                 draw.ellipse((light[0] - radius, light[1] - radius, light[0] + radius, light[1] + radius), fill=accent)
+    elif scene == "model_choice":
+        # Three celestial personalities above one editor: the choice is about
+        # fit, not a generic left-to-right process diagram.
+        editor = _scaled_box(box, 0.22, 0.58, 0.78, 0.9)
+        draw.rounded_rectangle(
+            editor,
+            radius=width // 34,
+            fill="#102936",
+            outline=foreground,
+            width=stroke,
+        )
+        draw.line(
+            (_point(editor, 0.0, 0.22), _point(editor, 1.0, 0.22)),
+            fill=muted,
+            width=stroke,
+        )
+        for index, color in enumerate((accent, muted, "#D49BFF")):
+            cx, cy = _point(editor, 0.08 + index * 0.08, 0.11)
+            radius = max(3, width // 110)
+            draw.ellipse(
+                (cx - radius, cy - radius, cx + radius, cy + radius),
+                fill=color,
+            )
+        for y, line_width, color in (
+            (0.42, 0.44, accent),
+            (0.62, 0.62, muted),
+            (0.8, 0.34, "#D49BFF"),
+        ):
+            draw.line(
+                (_point(editor, 0.12, y), _point(editor, 0.12 + line_width, y)),
+                fill=color,
+                width=stroke,
+            )
+
+        bodies = ((0.27, 0.29), (0.5, 0.24), (0.73, 0.3))
+        for body, target, color in zip(
+            bodies,
+            ((0.36, 0.58), (0.5, 0.58), (0.64, 0.58)),
+            (accent, muted, "#D49BFF"),
+        ):
+            start = _point(box, *body)
+            end = _point(box, *target)
+            draw.line((start, end), fill=color, width=max(2, stroke // 2))
+            node = max(3, stroke)
+            draw.ellipse(
+                (end[0] - node, end[1] - node, end[0] + node, end[1] + node),
+                fill=color,
+            )
+
+        sun_x, sun_y = _point(box, *bodies[0])
+        sun_r = width // 17
+        draw.ellipse(
+            (sun_x - sun_r, sun_y - sun_r, sun_x + sun_r, sun_y + sun_r),
+            fill=accent,
+        )
+        for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0), (1, 1), (-1, -1)):
+            draw.line(
+                (
+                    sun_x + dx * int(sun_r * 1.35),
+                    sun_y + dy * int(sun_r * 1.35),
+                    sun_x + dx * int(sun_r * 1.85),
+                    sun_y + dy * int(sun_r * 1.85),
+                ),
+                fill=accent,
+                width=stroke,
+            )
+
+        planet_x, planet_y = _point(box, *bodies[1])
+        planet_r = width // 14
+        draw.ellipse(
+            (
+                planet_x - planet_r,
+                planet_y - planet_r,
+                planet_x + planet_r,
+                planet_y + planet_r,
+            ),
+            fill=muted,
+            outline=foreground,
+            width=stroke,
+        )
+        draw.arc(
+            (
+                planet_x - planet_r,
+                planet_y - planet_r // 2,
+                planet_x + planet_r,
+                planet_y + planet_r // 2,
+            ),
+            0,
+            360,
+            fill=foreground,
+            width=max(2, stroke // 2),
+        )
+
+        moon_x, moon_y = _point(box, *bodies[2])
+        moon_r = width // 16
+        draw.arc(
+            (
+                moon_x - moon_r,
+                moon_y - moon_r,
+                moon_x + moon_r,
+                moon_y + moon_r,
+            ),
+            65,
+            295,
+            fill="#D49BFF",
+            width=stroke * 3,
+        )
+        for dx, dy in ((0.09, -0.11), (0.13, 0.04), (-0.1, -0.13)):
+            star_x, star_y = _point(box, bodies[2][0] + dx, bodies[2][1] + dy)
+            radius = max(2, stroke // 2)
+            draw.ellipse(
+                (
+                    star_x - radius,
+                    star_y - radius,
+                    star_x + radius,
+                    star_y + radius,
+                ),
+                fill=foreground,
+            )
+    elif scene == "benchmark_gap":
+        # A confident score dial confronts messy real-world code under a lens.
+        gauge = _scaled_box(box, 0.04, 0.12, 0.5, 0.88)
+        draw.arc(gauge, 205, 335, fill=muted, width=stroke * 3)
+        draw.arc(gauge, 205, 286, fill=accent, width=stroke * 3)
+        gauge_center = _point(box, 0.27, 0.62)
+        draw.line(
+            (gauge_center, _point(box, 0.41, 0.31)),
+            fill=foreground,
+            width=stroke * 2,
+        )
+        hub = width // 34
+        draw.ellipse(
+            (
+                gauge_center[0] - hub,
+                gauge_center[1] - hub,
+                gauge_center[0] + hub,
+                gauge_center[1] + hub,
+            ),
+            fill=accent,
+        )
+        for x, y in ((0.12, 0.55), (0.19, 0.34), (0.34, 0.26), (0.43, 0.45)):
+            cx, cy = _point(box, x, y)
+            radius = max(2, stroke // 2)
+            draw.ellipse(
+                (cx - radius, cy - radius, cx + radius, cy + radius),
+                fill=foreground,
+            )
+
+        crack = [
+            _point(box, 0.52, 0.16),
+            _point(box, 0.48, 0.38),
+            _point(box, 0.55, 0.5),
+            _point(box, 0.49, 0.67),
+            _point(box, 0.54, 0.86),
+        ]
+        draw.line(crack, fill=accent, width=stroke * 2, joint="curve")
+
+        for offset in (0.05, 0.025, 0.0):
+            page = _scaled_box(
+                box,
+                0.58 + offset,
+                0.18 - offset,
+                0.91 + offset,
+                0.78 - offset,
+            )
+            draw.rounded_rectangle(
+                page,
+                radius=width // 42,
+                fill="#102936" if offset == 0 else None,
+                outline=foreground,
+                width=stroke,
+            )
+        front_page = _scaled_box(box, 0.58, 0.18, 0.91, 0.78)
+        for y, line_width in ((0.28, 0.55), (0.44, 0.38), (0.6, 0.64)):
+            draw.line(
+                (
+                    _point(front_page, 0.13, y),
+                    _point(front_page, 0.13 + line_width, y),
+                ),
+                fill=muted if y != 0.44 else accent,
+                width=stroke,
+            )
+        lens_x, lens_y = _point(box, 0.82, 0.69)
+        lens_r = width // 11
+        draw.ellipse(
+            (
+                lens_x - lens_r,
+                lens_y - lens_r,
+                lens_x + lens_r,
+                lens_y + lens_r,
+            ),
+            outline=accent,
+            width=stroke * 2,
+        )
+        draw.line(
+            (lens_x + lens_r * 2 // 3, lens_y + lens_r * 2 // 3, *_point(box, 0.96, 0.9)),
+            fill=accent,
+            width=stroke * 2,
+        )
     elif scene == "code_workflow":
         draw_motif(draw, "code", _scaled_box(box, 0.03, 0.2, 0.34, 0.8), foreground, accent, muted)
         _arrow(draw, _point(box, 0.34, 0.5), _point(box, 0.47, 0.5), muted, stroke)
