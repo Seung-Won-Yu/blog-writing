@@ -114,6 +114,35 @@ class EditorialImageTests(unittest.TestCase):
             ],
         )
 
+    def test_maps_model_choice_and_benchmark_limits_to_distinct_scenes(self):
+        day = {
+            "news": [
+                {
+                    "title_kr": "메타, 인스타그램 AI 이미지 학습 논란에 3일 만에 철회",
+                    "blurb_kr": "사진 데이터 연동과 사용자 통제 문제다.",
+                },
+                {
+                    "title_kr": "GitHub Copilot, 목적별 최적화된 GPT-5.6 모델 3종 도입",
+                    "blurb_kr": "속도와 비용에 따라 Sol, Terra, Luna를 선택한다.",
+                },
+                {
+                    "title_kr": "OpenAI가 지적한 SWE-Bench Pro의 코딩 평가 한계",
+                    "blurb_kr": "벤치마크 점수와 실제 저장소 작업 사이의 간극을 짚었다.",
+                },
+            ]
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(
+            [item["scene"] for item in visual["stories"]],
+            ["privacy_photo", "model_choice", "benchmark_gap"],
+        )
+        self.assertEqual(
+            [item["scene_label"] for item in visual["stories"]],
+            ["사진 데이터의 흐름", "세 모델의 선택 기준", "벤치마크와 실제 차이"],
+        )
+
     def test_keeps_a_short_subject_separate_from_the_curiosity_hook(self):
         day = {
             **DAY,

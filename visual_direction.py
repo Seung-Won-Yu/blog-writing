@@ -91,6 +91,14 @@ SCENE_RULES = (
         ("데이터센터", "data center", "datacenter", "inference", "gpu"),
     ),
     (
+        "benchmark_gap",
+        ("swe-bench", "벤치마크", "benchmark", "코딩 평가", "평가 한계"),
+    ),
+    (
+        "model_choice",
+        ("모델 3종", "gpt-5.6", "sol", "terra", "luna", "목적별 최적화"),
+    ),
+    (
         "code_workflow",
         ("pull request", "code review", "github actions", "workflow", "워크플로", "코드 리뷰"),
     ),
@@ -99,23 +107,31 @@ SCENE_SUBJECTS = {
     "privacy_photo": "사진과 AI 연동",
     "observability": "개발 도구 관측",
     "datacenter": "AI 토큰의 여정",
+    "model_choice": "AI 모델 선택",
+    "benchmark_gap": "코딩 평가의 빈틈",
     "code_workflow": "코드 변경의 흐름",
 }
 SCENE_HOOKS = {
     "privacy_photo": "내 사진은 어디까지 연결될까?",
     "observability": "개발 도구의 기록은 어디로 갈까?",
     "datacenter": "AI 답변 전 토큰은 어디를 지날까?",
+    "model_choice": "빠른 모델과 깊은 모델, 무엇을 고를까?",
+    "benchmark_gap": "점수는 실제 코딩을 얼마나 보여줄까?",
 }
 SCENE_LABELS = {
     "privacy_photo": "사진 데이터의 흐름",
     "observability": "개발 도구의 관측 흐름",
     "datacenter": "AI 요청의 처리 흐름",
+    "model_choice": "세 모델의 선택 기준",
+    "benchmark_gap": "벤치마크와 실제 차이",
     "code_workflow": "코드 변경의 검토 흐름",
 }
 SCENE_STEPS = {
     "privacy_photo": "사진 → AI 연동 → 사용자 통제",
     "observability": "개발 도구 → 관측 데이터 → 관리",
     "datacenter": "요청 토큰 → 데이터센터 → 응답",
+    "model_choice": "속도·비용·정확도에 따른 모델 선택",
+    "benchmark_gap": "평가 점수와 실제 코드 검증의 간극",
     "code_workflow": "코드 변경 → 검토 → 실행",
 }
 MOTIF_STEPS = {
