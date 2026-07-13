@@ -450,6 +450,39 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(result["generation"]["provider"], "github-models")
         self.assertEqual(len(calls), 2)
         self.assertIn("분량과 구조를 다시 점검", calls[1])
+        self.assertIn("4~5개의 완결된 문장", calls[1])
+        self.assertIn("이전 응답의 본문 문단 길이", calls[1])
+        self.assertLessEqual(
+            _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 800
+        )
+
+    def test_second_quality_attempt_rewrites_banned_generic_phrases(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["editorial"]["throughline"] = "짧은 연결"
+        generic = copy.deepcopy(MODEL_OUTPUT)
+        generic["editorial"]["opening"] = "이 변화는 새로운 기회를 제공합니다."
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return shallow if len(calls) == 1 else generic
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        rendered = json.dumps(result, ensure_ascii=False)
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertNotIn("새로운 기회를 제공합니다", rendered)
+        self.assertIn("적용할 수 있는 범위를 넓힙니다", rendered)
 
     def test_history_collects_previous_questions_and_terms(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -18,19 +18,20 @@ from visual_direction import fallback_visual, validate_visual
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 GENERATION_REVISION = 2
-MAX_PROMPT_INPUT_TOKENS = 7_000
+MAX_PROMPT_INPUT_TOKENS = 6_200
 MIN_LONGFORM_READ_MINUTES = 6
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
-GENERIC_COPY = (
-    "기술의 융합이 가속화되고 있습니다",
-    "새로운 기회를 제공합니다",
-    "중요한 역할을 할 수 있습니다",
-    "응용 가능성을 열어줍니다",
-    "미래를 재정의",
-    "혁신하고 있습니다",
-    "주목할 필요가 있습니다",
-    "살펴보았습니다",
-)
+GENERIC_REWRITES = {
+    "기술의 융합이 가속화되고 있습니다": "서로 다른 기술을 한 흐름에서 다루는 사례가 늘고 있습니다",
+    "새로운 기회를 제공합니다": "적용할 수 있는 범위를 넓힙니다",
+    "중요한 역할을 할 수 있습니다": "판단 기준으로 활용할 수 있습니다",
+    "응용 가능성을 열어줍니다": "적용할 수 있는 범위를 보여줍니다",
+    "미래를 재정의": "기존 작업 방식을 변경",
+    "혁신하고 있습니다": "작업 방식을 바꾸고 있습니다",
+    "주목할 필요가 있습니다": "변경 범위를 직접 확인해야 합니다",
+    "살펴보았습니다": "확인했습니다",
+}
+GENERIC_COPY = tuple(GENERIC_REWRITES)
 
 
 class DraftQualityError(ValueError):
@@ -234,6 +235,22 @@ def build_prompt(inbox, history=None, article_contexts=None):
                 url_item["url"] = _text(
                     url_item["url"], max(160, len(url_item["url"]) - 40)
                 )
+            elif len(title_item["title"]) > 80:
+                title_item["title"] = _text(
+                    title_item["title"], max(80, len(title_item["title"]) - 20)
+                )
+            elif len(source_item["source"]) > 20:
+                source_item["source"] = _text(
+                    source_item["source"], max(20, len(source_item["source"]) - 10)
+                )
+            elif len(summary_item["summary"]) > 60:
+                summary_item["summary"] = _text(
+                    summary_item["summary"], max(60, len(summary_item["summary"]) - 30)
+                )
+            elif len(url_item["url"]) > 120:
+                url_item["url"] = _text(
+                    url_item["url"], max(120, len(url_item["url"]) - 20)
+                )
             else:
                 raise ValueError("모델 입력을 안전한 크기로 줄일 수 없습니다.")
         prompt = render()
@@ -248,6 +265,21 @@ def _parse_json_content(content):
     value = json.loads(text)
     if not isinstance(value, dict):
         raise ValueError("모델 응답이 JSON 객체가 아닙니다.")
+    return value
+
+
+def _rewrite_generic_phrases(value):
+    if isinstance(value, str):
+        for generic, replacement in GENERIC_REWRITES.items():
+            value = value.replace(generic, replacement)
+        return value
+    if isinstance(value, list):
+        return [_rewrite_generic_phrases(item) for item in value]
+    if isinstance(value, dict):
+        return {
+            key: _rewrite_generic_phrases(item)
+            for key, item in value.items()
+        }
     return value
 
 
@@ -532,6 +564,41 @@ def load_history(data_dir):
     return {"questions": questions[-60:], "terms": terms[-160:]}
 
 
+def _quality_retry_prompt(prompt, generated, error):
+    editorial = generated.get("editorial") if isinstance(generated, dict) else {}
+    editorial = editorial if isinstance(editorial, dict) else {}
+    throughline_chars = len(_text(editorial.get("throughline"), 500))
+    paragraph_lengths = []
+    for item in (generated.get("news") or []) if isinstance(generated, dict) else []:
+        if not isinstance(item, dict):
+            continue
+        paragraph_lengths.append(
+            [
+                len(_text(block.get("text"), 600))
+                for block in item.get("content") or []
+                if isinstance(block, dict) and block.get("t") == "p"
+            ]
+        )
+    feedback = """
+
+[분량과 구조를 다시 점검]
+- 이전 응답은 {reason} 사유로 거절됐다.
+- 이전 응답의 본문 문단 길이는 {paragraphs}자, 연결고리는 {throughline}자였다.
+- 이번에는 각 뉴스의 본문 문단 3개를 각각 4~5개의 완결된 문장으로 쓴다. 뉴스 하나의 본문 세 문단 합계는 최소 420자다.
+- 사실 문단에는 구체적 변화와 배경, 개발자 문단에는 작업 흐름과 적용 예, 확인 문단에는 확인되지 않은 범위와 검토 질문을 넣는다.
+- editorial.throughline은 최소 200자, 전체 표시 텍스트는 최소 2,700자다.
+- 같은 말을 바꾸어 반복하지 말고 detail과 summary에 있는 서로 다른 정보를 사용한다. 위 분량을 확인한 뒤 JSON 전체를 다시 반환한다.
+""".format(
+        reason=_text(error, 120),
+        throughline=throughline_chars,
+        paragraphs=paragraph_lengths,
+    )
+    retry_prompt = prompt + feedback
+    if _conservative_token_estimate(retry_prompt) > 7_000:
+        raise DraftQualityError("품질 재작성 입력이 모델 한도를 초과했습니다.")
+    return retry_prompt
+
+
 def generate_and_write(
     inbox_path,
     data_dir,
@@ -558,17 +625,21 @@ def generate_and_write(
         generated = model_call(prompt, token, model)
         try:
             day = build_day(inbox, generated, model=model)
-        except DraftQualityError:
-            retry_prompt = (
-                prompt
-                + "\n\n[분량과 구조를 다시 점검]\n"
-                + "이전 응답은 깊이가 부족했다. 각 뉴스의 세 문단을 근거·개발자 관점·확인할 점으로 분리하고, 반복이나 막연한 전망 없이 반환 구조 전체를 다시 작성한다."
-            )
+        except DraftQualityError as exc:
+            retry_prompt = _quality_retry_prompt(prompt, generated, exc)
             generated = model_call(retry_prompt, token, model)
-            day = build_day(inbox, generated, model=model)
-    except Exception:
+            day = build_day(
+                inbox, _rewrite_generic_phrases(generated), model=model
+            )
+    except Exception as exc:
         if not fallback_on_error:
             raise
+        print(
+            "모델 초안이 품질 기준을 통과하지 못해 최소 초안으로 전환: {}: {}".format(
+                type(exc).__name__, _text(exc, 240)
+            ),
+            file=sys.stderr,
+        )
         day = fallback_day(inbox)
 
     data_dir.mkdir(parents=True, exist_ok=True)
