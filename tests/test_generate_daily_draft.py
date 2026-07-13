@@ -759,8 +759,21 @@ class DraftFileTests(unittest.TestCase):
         shallow_body["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
         repaired_body = copy.deepcopy(MODEL_OUTPUT)
         repaired_body["editorial"]["throughline"] = "짧은 연결"
+        echoed_news = copy.deepcopy(MODEL_OUTPUT["news"])
+        for item in echoed_news:
+            item["content"] = []
         editorial_repair = {
-            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "editorial": {
+                "throughline": MODEL_OUTPUT["editorial"]["throughline"],
+            },
+            "news": echoed_news,
+            "terms": [
+                {
+                    "term": "REPAIR_INJECTED",
+                    "kind": "IT",
+                    "meaning_kr": "허용되지 않은 필드다.",
+                }
+            ],
         }
 
         def model_call(prompt, _token, _model):
@@ -787,6 +800,41 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertIn("editorial 한 필드만 반환", calls[2])
         self.assertNotIn("news 두 필드만 반환", calls[2])
+        self.assertEqual(result["news"], build_day(INBOX, MODEL_OUTPUT)["news"])
+        self.assertEqual(
+            result["editorial"]["opening"], MODEL_OUTPUT["editorial"]["opening"]
+        )
+        self.assertEqual(result["terms"], MODEL_OUTPUT["terms"])
+
+    def test_editorial_retry_repairs_a_missing_base_editorial(self):
+        calls = []
+        missing_editorial = copy.deepcopy(MODEL_OUTPUT)
+        missing_editorial.pop("editorial")
+        editorial_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return missing_editorial if len(calls) == 1 else editorial_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(
+            result["editorial"]["throughline"], MODEL_OUTPUT["editorial"]["throughline"]
+        )
         self.assertEqual(result["news"], build_day(INBOX, MODEL_OUTPUT)["news"])
 
     def test_uses_a_final_quality_retry_before_falling_back(self):

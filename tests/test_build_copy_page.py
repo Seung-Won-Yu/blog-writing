@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from build_copy_page import json_for_script, load_drafts, render
+from build_copy_page import json_for_script, load_drafts, render, write_preview_pages
 
 
 class CopyPageTests(unittest.TestCase):
@@ -56,6 +56,7 @@ class CopyPageTests(unittest.TestCase):
                     "source": "data/days/2026-07-13.json",
                     "source_page": "",
                     "html_path": "tistory/2026-07-13.html",
+                    "preview_path": "preview/2026-07-13.html",
                     "meta_path": "tistory/2026-07-13.json",
                 }
             ]
@@ -84,33 +85,67 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('asset.kind.startsWith("story_")', html)
         self.assertIn("본문 1번 이미지 열기", html)
 
-    def test_body_preview_is_sandboxed_accessible_and_keyboard_closeable(self):
+    def test_body_preview_toggles_inline_next_to_copy_button(self):
         html = render([])
 
         self.assertIn(
-            '<button class="copy preview" type="button" id="previewButton" aria-haspopup="dialog" aria-controls="previewDialog" disabled>본문 미리보기</button>',
+            '<button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>',
+            html,
+        )
+        self.assertLess(html.index('id="previewButton"'), html.index('data-copy="html"'))
+        self.assertIn(
+            '<section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>',
             html,
         )
         self.assertIn(
-            '<dialog class="preview-dialog" id="previewDialog" aria-labelledby="previewTitle">',
+            '<iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>',
             html,
         )
-        self.assertIn(
-            '<iframe id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>',
-            html,
-        )
-        self.assertNotIn("allow-scripts", html)
-        self.assertIn(
-            "els.previewFrame.srcdoc = previewDocument(els.htmlCode.value);", html
-        )
-        self.assertIn('<meta name="viewport" content="width=device-width, initial-scale=1">', html)
-        self.assertIn("els.previewDialog.showModal();", html)
-        self.assertIn("els.previewDialog.close();", html)
-        self.assertIn('els.previewDialog.addEventListener("cancel"', html)
-        self.assertIn('els.previewDialog.addEventListener("close"', html)
-        self.assertIn("previewReturnFocus?.focus();", html)
+        self.assertIn('currentPreviewPath = draft.preview_path + "?v=" + Date.now();', html)
+        self.assertIn('els.previewFrame.setAttribute("src", currentPreviewPath);', html)
+        self.assertIn('showingPreview && !els.previewFrame.hasAttribute("src")', html)
+        self.assertIn('els.previewButton.addEventListener("click"', html)
+        self.assertIn('els.previewPane.hidden = !showingPreview;', html)
+        self.assertIn('els.htmlCode.hidden = showingPreview;', html)
+        self.assertIn('els.previewButton.textContent = showingPreview', html)
+        self.assertIn('els.previewButton.setAttribute("aria-expanded"', html)
+        self.assertNotIn("previewDialog", html)
+        self.assertNotIn("showModal", html)
         self.assertIn(".code-actions {", html)
-        self.assertIn(".preview-dialog {", html)
+        self.assertIn(".preview-pane {", html)
+        self.assertIn("textarea[hidden], .preview-pane[hidden] { display: none; }", html)
+
+    def test_writes_a_utf8_script_blocked_standalone_preview(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "tistory"
+            preview = root / "preview"
+            tistory.mkdir()
+            (tistory / "2026-07-13.html").write_text(
+                '<article><h2>한글 제목</h2><script>alert("x")</script></article>',
+                encoding="utf-8",
+            )
+            drafts = [
+                {
+                    "day": "2026-07-13",
+                    "title": "한글 제목",
+                    "html_path": "tistory/2026-07-13.html",
+                    "preview_path": "preview/2026-07-13.html",
+                }
+            ]
+
+            with patch("build_copy_page.TISTORY_DIR", tistory), patch(
+                "build_copy_page.PREVIEW_DIR", preview
+            ):
+                write_preview_pages(drafts)
+
+            page = (preview / "2026-07-13.html").read_text(encoding="utf-8")
+
+        self.assertIn('<meta charset="utf-8">', page)
+        self.assertIn('Content-Security-Policy', page)
+        self.assertIn("script-src 'none'", page)
+        self.assertIn("한글 제목 · 본문 미리보기", page)
+        self.assertIn("<article><h2>한글 제목</h2>", page)
 
 
 if __name__ == "__main__":

@@ -746,6 +746,56 @@ def _merge_quality_repair(base, repair):
     return merged
 
 
+def _merge_editorial_quality_repair(base, repair):
+    """Overlay editorial prose only; never replace already validated side fields."""
+    merged = dict(base) if isinstance(base, dict) else {}
+    base_editorial = merged.get("editorial")
+    repair_editorial = repair.get("editorial") if isinstance(repair, dict) else None
+    if not isinstance(repair_editorial, dict):
+        return merged
+
+    editorial = dict(base_editorial) if isinstance(base_editorial, dict) else {}
+    for key in ("headline", "opening", "throughline", "closing", "action"):
+        value = repair_editorial.get(key)
+        if isinstance(value, str) and value.strip():
+            editorial[key] = value
+    merged["editorial"] = editorial
+    return merged
+
+
+def _news_sections_are_quality_ready(generated):
+    if not isinstance(generated, dict) or not isinstance(generated.get("news"), list):
+        return False
+    news = generated["news"]
+    if not news:
+        return False
+    expected_types = ["h", "p", "h", "p", "h", "p"]
+    expected_headings = ["무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점"]
+    all_copy = []
+    for item in news:
+        if not isinstance(item, dict):
+            return False
+        blocks = item.get("content") or []
+        if not all(isinstance(block, dict) for block in blocks):
+            return False
+        if [block.get("t") for block in blocks] != expected_types:
+            return False
+        headings = [block.get("text") for block in blocks if block.get("t") == "h"]
+        paragraphs = [
+            _text(block.get("text"), 700) for block in blocks if block.get("t") == "p"
+        ]
+        if headings != expected_headings:
+            return False
+        if any(len(paragraph) < 100 for paragraph in paragraphs):
+            return False
+        if sum(len(paragraph) for paragraph in paragraphs) < 360:
+            return False
+        all_copy.append(_text(item.get("blurb_kr"), 400))
+        all_copy.extend(paragraphs)
+    combined = " ".join(all_copy)
+    return not any(phrase in combined for phrase in GENERIC_COPY)
+
+
 def _editorial_quality_retry_prompt(generated, error):
     editorial = generated.get("editorial") if isinstance(generated, dict) else {}
     editorial = editorial if isinstance(editorial, dict) else {}
@@ -807,7 +857,7 @@ def _editorial_quality_retry_prompt(generated, error):
 
 def _quality_retry_prompt(generated, error):
     reason = _text(error, 120)
-    if "연결고리" in reason:
+    if "연결고리" in reason and _news_sections_are_quality_ready(generated):
         return _editorial_quality_retry_prompt(generated, reason)
 
     editorial = generated.get("editorial") if isinstance(generated, dict) else {}
@@ -905,7 +955,13 @@ def generate_and_write(
                     raise
                 repair_prompt = _quality_retry_prompt(candidate, exc)
                 repair = model_call(repair_prompt, token, model)
-                generated = _merge_quality_repair(candidate, repair)
+                if (
+                    "연결고리" in _text(exc, 120)
+                    and _news_sections_are_quality_ready(candidate)
+                ):
+                    generated = _merge_editorial_quality_repair(candidate, repair)
+                else:
+                    generated = _merge_quality_repair(candidate, repair)
                 generated["quiz"] = curated_quiz
     except Exception as exc:
         if not fallback_on_error:
