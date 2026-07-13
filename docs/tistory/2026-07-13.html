@@ -1,0 +1,78 @@
+<!--
+title: [데일리 IT 뉴스] 2026. 7. 13 - 오늘의 개발 뉴스와 정처기 문제
+category: 데일리IT뉴스
+tags: AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트
+slug: 2026-07-13-daily-digest
+-->
+<article class="daily-digest-post" style="max-width:760px;margin:0 auto;padding:8px 0 28px;color:#334155;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.75;">
+  <section class="digest-hero" style="margin:0 0 28px;padding:28px 26px;border:1px solid #d9e0ea;border-radius:18px;background:linear-gradient(135deg,#f8fafc 0%,#eef6f5 52%,#fff7ed 100%);box-shadow:0 12px 34px rgba(24,33,47,.06);">
+    <p class="digest-meta-intro" style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.7;font-weight:700;">2026. 7. 13 데일리 IT 뉴스: Show GN LLRUN, Show GN macOS/iOS 핵심과 소프트웨어 공학 문제, 개발 용어를 정리했습니다.</p>
+    <p class="digest-kicker" style="margin:0 0 10px;color:#0f9b8e;font-size:13px;font-weight:700;letter-spacing:.02em;">2026. 7. 13 (월) · 자동 생성 데일리 다이제스트</p>
+    <h2 class="digest-title" style="margin:0 0 14px;color:#18212f;font-size:30px;line-height:1.32;font-weight:800;">오늘의 IT/개발 읽을거리</h2>
+    <p class="digest-lead" style="margin:0;color:#475569;font-size:16px;line-height:1.75;">
+      오늘은 Show GN: 러닝 대회가 답답해서 직접 만든 러닝앱 &quot;LLRUN&quot; (Android/iOS) / Show GN: macOS/iOS Native RSS 리더 앱을 개발했습니다. / sem - Git 위에 함수/클래스 단위 변경 추적을 추가하는 시맨틱 버전 관리 도구 흐름을 중심으로 읽어볼 만한 소식을 정리했습니다.
+      본문은 핵심 내용 요약과 학습용 문제로 구성했으며, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
+    </p>
+  </section>
+
+  <section class="digest-summary" style="margin:0 0 28px;padding:20px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);">
+  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;margin-top:0;">오늘의 핵심 요약</h2>
+  <ul style="margin:0;padding-left:20px;color:#475569;line-height:1.75;"><li>오늘의 주요 뉴스: Show GN: 러닝 대회가 답답해서 직접 만든 러닝앱 &quot;LLRUN&quot; (Android/iOS) / Show GN: macOS/iOS Native RSS 리더 앱을 개발했습니다. / sem - Git 위에 함수/클래스 단위 변경 추적을 추가하는 시맨틱 버전 관리 도구</li><li>정처기 포인트: 소프트웨어 공학 문제로 개념을 점검합니다.</li><li>함께 익힐 용어: 데이터 마트 (Data Mart), SSR (Server-Side Rendering), 퍼스트 파티 데이터 (First-Party Data)</li><li>읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.</li></ul>
+</section>
+
+  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;">오늘의 뉴스 3개</h2>
+  <section class="digest-news-card" style="margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);">
+  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png" alt="" loading="lazy" style="display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;">
+  <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">1. GeekNews</p>
+  <h3 style="margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;">Show GN: 러닝 대회가 답답해서 직접 만든 러닝앱 &quot;LLRUN&quot; (Android/iOS)</h3>
+  
+  <div class="digest-full-content" style="margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"><p style="margin:0 0 12px;color:#475569;line-height:1.78;">달리기는 공짜인데 &quot;대회&quot;는 선착순 마감에 참가비 10~15만원이라 직접 만든 러닝앱입니다. 1인 개발, 무료입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">핵심 아이디어: 특정 날짜·장소에 모여야 대회가 되는 게 아니라, 코스가 등록돼 있으면 아무 때나 대회 모드로 달릴 수 있게.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">챌린지런: 코스별 기록 경쟁 (개인 PB / 코스 순위)</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">경로비행: 달린 GPS 경로를 위성지도 위 3D 비행 영상으로 재생</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">아트런: GPS 폴리라인으로 지도에 그림 그리기</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">크루: 크루 누적거리 랭킹, 크루 대항전</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">기술 스택: React 18 + Capacitor(안드로이드/iOS 동시), 지도 MapLibre GL, 백엔드 Spring Boot. 걸음은 안드로이드 TYPE_STEP_COUNTER를 포그라운드 서비스로 직접 처리하고, 백그라운드 유실을 막기 위해 앱 종료 시에도 서비스가 센서를 붙잡는 방식으로 구현했습니다. 갤럭시워치 러닝 걸음은 워치 연동으로 별도 반영합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">다운로드: https://www.finiteorder.com/download</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">만들면서 겪은 것들(자정 넘은 걸음수 롤오버 버그, GPS 부정행위 검증 등) 질문 주시면 답변 드리겠습니다.</p></div>
+  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://news.hada.io/topic?id=31369" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;">원문 보기</a></p>
+</section>
+<section class="digest-news-card" style="margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);">
+  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-02.png" alt="" loading="lazy" style="display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;">
+  <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">2. GeekNews</p>
+  <h3 style="margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;">Show GN: macOS/iOS Native RSS 리더 앱을 개발했습니다.</h3>
+  
+  <div class="digest-full-content" style="margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"><p style="margin:0 0 12px;color:#475569;line-height:1.78;">안녕하세요, 이번에 macOS, iOS 네이티브 앱을 새로 만들었습니다. 기기 상관 없이 기존에 사용하고 있는 iCloud 기반으로 동기화를 할 수 있으면서 무료이고, 어느 플랫폼에도 정보가 묶이지 않도록 하는게 핵심이었습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">전 약 10년 넘게 RSS 앱을 이것저것 사용하면서 정착하지 못하고 있었는데요, 정착하지 못한 이유는 대부분 회원가입이 필요하거나, 불편한 UX, 버그로 인한 피로감, 비용(macOS 앱은 무료인데 iOS는 구매해야 하거나, 기기 간 동기화에 비용이 드는)이 거슬려서 였던것 같습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">제가 만든 앱은 다른 클라우드 서비스를 사용하셔도 동기화 폴더만 동일하게 사용할 수 있다면 동기화가 가능하지만 iCloud를 중심으로 테스트 되었기에 참고 부탁드립니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">MIT 라이선스 오픈소스에, 당연히 무료로 사용하실수 있고, iOS 앱은 더 사용해보면서 다듬은 이후... 조만간 앱스토어에 등록할 예정입니다. 제가 매일매일 사용하면서 불편하거나 발견한 버그를 꾸준히 업데이트 할 예정이고 아직은 v0.1 이라 다소 불안정한 부분을 발견하실수 있지만 발견한다면 꼭 GitHub 이슈 또는 설정에서 피드백 보내기를 통해 메일로 제보 부탁드리겠습니다!</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">그동안 RSS 앱을 사용하면서 저와 같은 불편함이 있으셨다면 한번 사용해보셔도... ㅎㅎ 기능 추가 요청이나 아이디어 제안도 감사히 검토하겠습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">감사합니다!</p></div>
+  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://news.hada.io/topic?id=31366" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;">원문 보기</a></p>
+</section>
+<section class="digest-news-card" style="margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);">
+  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-03.png" alt="" loading="lazy" style="display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;">
+  <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">3. GeekNews</p>
+  <h3 style="margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;">sem - Git 위에 함수/클래스 단위 변경 추적을 추가하는 시맨틱 버전 관리 도구</h3>
+  
+  <div class="digest-full-content" style="margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem은 Git 위에 함수/클래스 단위 변경 추적 기능을 추가하는 시맨틱 버전 관리 도구입니다. 이 도구는 줄 단위가 아닌 코드 엔티티를 비교하여 어떤 함수, 메서드, 클래스가 추가, 수정, 삭제, 이동, 이름 변경되었는지 보여줍니다. 예를 들어, “line x~y가 변경됨” 대신 “함수 blah가 변경됨”과 같이 구체적인 정보를 제공합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem은 별도의 설정 없이 모든 Git 저장소에서 작동하며, Git 외부에서도 임의의 파일을 비교할 수 있습니다. 엔티티 캐시는 SQLite에 저장되며, 저장소 외부의 OS 캐시 디렉토리에 보관되어 작업 트리를 오염시키지 않습니다. tree-sitter를 사용하여 코드를 파싱하고, 엔티티 ID, AST 구조 해시, 80% 초과 토큰 유사도 순서로 변경 전후 코드를 연결하여 이름 변경 및 이동을 감지합니다.</p><h4 style="margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;">지원 명령들</h4><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem diff: 작업 트리, 스테이징, 커밋, 커밋 범위, 임의의 두 파일을 비교하며, 일반 텍스트, Markdown, JSON 출력을 지원합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem impact: 특정 함수 변경 시 영향을 받는 의존 코드, 호출자, 테스트를 찾아줍니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem blame: 함수, 클래스, 메서드의 엔티티 레벨 마지막 수정자를 보여줍니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem log: Git 히스토리를 통해 하나의 엔티티가 어떻게 변화했는지 추적합니다. 엔티티를 지정하지 않으면 저장소의 핫스팟(자주 변경된 부분)과 동시 변경 쌍(반복적으로 함께 변경된 부분)을 분석하여 “하나를 건드리면 이것도 잊지 마세요”와 같은 정보를 제공합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem entities: 현재 폴더 아래의 모든 엔티티를 표시합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem context: 에이전트에 필요한 주변 코드만 토큰 예산에 맞춰 구성해줍니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem setup: 실행하면 기존 git diff가 엔티티 단위 출력으로 변경되고, 스테이징된 변경의 영향 범위를 보여주는 pre-commit 훅이 설치됩니다. macOS와 Linux에서는 Claude Code에 상주 의존 그래프와 프롬프트 시작 시 컨텍스트 훅을 연결하여 매번 저장소를 다시 분석하거나 코드를 찾아다니는 비용을 줄입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">sem mcp: diff, impact, context, entities, blame, log를 MCP 도구로 제공하여 코딩 에이전트가 전체 파일 대신 필요한 함수와 의존 관계만 조회하도록 합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">GitHub Action을 추가하면 PR마다 변경된 함수, 클래스, 메서드를 하나의 고정 댓글로 갱신하며, 포맷이나 주석만 바뀐 PR도 구분합니다. TypeScript, Python, Go, Rust, Java, Swift, SQL, C/C++ 등 32개 언어와 JSON, YAML, TOML, CSV, Markdown을 지원하며, 미지원 파일은 청크 단위 diff로 처리합니다. 라이선스는 MIT 또는 Apache-2.0입니다.</p></div>
+  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://news.hada.io/topic?id=31339" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;">원문 보기</a></p>
+</section>
+
+  <section class="digest-quiz" style="margin:30px 0;padding:24px 22px;border:1px solid #bddfd9;border-radius:18px;background:linear-gradient(135deg,#f8fafc,#effaf7);box-shadow:0 10px 28px rgba(15,155,142,.08);">
+  <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">기초상식 · 소프트웨어 공학</p>
+  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;margin-top:0;">오늘의 정처기 문제</h2>
+  <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">소프트웨어 개발 과정에서 품질을 보증하고 위험을 관리하기 위해, 개발 초기부터 전체 생명주기 동안 체계적인 활동을 수행하는 것은?</p>
+  <ol class="digest-options" style="margin:12px 0 14px;padding-left:22px;"><li class="digest-option" style="margin:0 0 8px;">테스트 자동화 (Test Automation)</li><li class="digest-option" style="margin:0 0 8px;">형상 관리 (Configuration Management)</li><li class="digest-option is-answer" style="margin:0 0 8px;color:#0f9b8e;font-weight:800;">정답 · 소프트웨어 품질 보증 (Software Quality Assurance, SQA)</li><li class="digest-option" style="margin:0 0 8px;">애자일 방법론 (Agile Methodology)</li></ol>
+  <p class="digest-explain" style="margin:0;color:#475569;"><b>해설</b> 소프트웨어 품질 보증(SQA)은 소프트웨어 제품 및 개발 프로세스의 품질을 확보하기 위한 체계적인 활동입니다. 이는 개발 초기부터 전체 생명주기에 걸쳐 오류를 예방하고 품질 표준을 준수하도록 관리합니다. 테스트 자동화는 SQA의 한 부분이며, 형상 관리는 변경 사항을 관리하고, 애자일 방법론은 개발 접근 방식 중 하나입니다.</p>
+</section>
+
+  <section class="digest-terms">
+  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;">오늘의 IT · 개발 · 기획 용어</h2>
+  <ul style="margin:0;padding:0;list-style:none;"><li style="margin:0 0 10px;padding:16px 0;border-bottom:1px solid #d9e0ea;list-style:none;">
+  <b style="color:#18212f;">데이터 마트 (Data Mart)</b>
+  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">IT</span><br>
+  <em style="color:#475569;font-style:normal;">데이터 웨어하우스에서 특정 부서나 사용자의 요구에 맞춰 정제된 데이터를 담은 작은 규모의 데이터 저장소입니다.</em>
+</li><li style="margin:0 0 10px;padding:16px 0;border-bottom:1px solid #d9e0ea;list-style:none;">
+  <b style="color:#18212f;">SSR (Server-Side Rendering)</b>
+  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">개발</span><br>
+  <em style="color:#475569;font-style:normal;">웹 페이지를 서버에서 미리 렌더링하여 클라이언트에 전송하는 방식으로, 초기 로딩 속도 개선과 SEO에 유리합니다.</em>
+</li><li style="margin:0 0 10px;padding:16px 0;border-bottom:1px solid #d9e0ea;list-style:none;">
+  <b style="color:#18212f;">퍼스트 파티 데이터 (First-Party Data)</b>
+  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">기획</span><br>
+  <em style="color:#475569;font-style:normal;">기업이 자사 웹사이트, 앱, CRM 시스템 등을 통해 직접 수집한 고객 데이터로, 신뢰도가 높고 활용 가치가 큽니다.</em>
+</li></ul>
+</section>
+
+  <p class="digest-note" style="margin-top:34px;padding:16px 18px;border-left:4px solid #0f9b8e;border-radius:12px;background:#f8fafc;color:#64748b;font-size:14px;line-height:1.7;">
+    이 글은 공개 뉴스 페이지를 기반으로 자동 수집·요약한 학습용 다이제스트입니다.
+    수치, 정책, 제품 정보처럼 정확성이 중요한 내용은 반드시 원문을 함께 확인해 주세요.
+  </p>
+</article>
