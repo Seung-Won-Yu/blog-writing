@@ -617,6 +617,142 @@ class DraftFileTests(unittest.TestCase):
             _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 900
         )
 
+    def test_quality_repair_can_return_only_editorial_and_news(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+        shallow["terms"][0]["meaning_kr"] = "새로운 기회를 제공합니다."
+        compact_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "news": copy.deepcopy(MODEL_OUTPUT["news"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return shallow if len(calls) == 1 else compact_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(result["terms"], shallow["terms"])
+        self.assertIn('"editorial"', calls[1])
+        self.assertIn('"news"', calls[1])
+        self.assertIn("두 필드만 반환", calls[1])
+
+    def test_quality_repair_ignores_off_schema_terms(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+        shallow["terms"] = []
+        compact_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "news": copy.deepcopy(MODEL_OUTPUT["news"]),
+            "terms": [
+                {
+                    "term": "REPAIR_INJECTED",
+                    "kind": "IT",
+                    "meaning_kr": "허용되지 않은 필드다.",
+                }
+            ],
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return shallow if len(calls) == 1 else compact_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(result["terms"], [])
+
+    def test_invalid_compact_repair_keeps_the_final_retry_available(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+        compact_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "news": copy.deepcopy(MODEL_OUTPUT["news"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            if len(calls) == 1:
+                return shallow
+            if len(calls) == 2:
+                return {"editorial": {}, "news": []}
+            return compact_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 3)
+
+    def test_reordered_compact_repair_keeps_the_final_retry_available(self):
+        calls = []
+        shallow = copy.deepcopy(MODEL_OUTPUT)
+        shallow["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+        compact_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "news": copy.deepcopy(MODEL_OUTPUT["news"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            if len(calls) == 1:
+                return shallow
+            if len(calls) == 2:
+                reordered = copy.deepcopy(compact_repair)
+                reordered["news"].reverse()
+                return reordered
+            return compact_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(result["news"][0]["title_kr"], "GitHub Actions 보안 점검 기능")
+        self.assertEqual(result["news"][0]["source"], "GitHub Changelog")
+
     def test_uses_a_final_quality_retry_before_falling_back(self):
         calls = []
         almost_long_enough = copy.deepcopy(MODEL_OUTPUT)
