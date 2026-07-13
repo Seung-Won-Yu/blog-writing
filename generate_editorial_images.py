@@ -323,10 +323,12 @@ def _gradient(image, start, end):
 
 
 def _arrow(draw, start, end, color, width=8):
+    """Draw a quiet connector node instead of a presentation-style arrow."""
     draw.line((start, end), fill=color, width=width)
     ex, ey = end
-    draw.polygon(
-        [(ex, ey), (ex - width * 2, ey - width), (ex - width * 2, ey + width)],
+    radius = max(2, width // 2)
+    draw.ellipse(
+        (ex - radius, ey - radius, ex + radius, ey + radius),
         fill=color,
     )
 
@@ -967,7 +969,6 @@ def _cover(day, font_path, bold_font_path):
     label_font = _font(bold_font_path, 18)
     subject_font = _font(bold_font_path, 58)
     hook_font = _font(font_path, 27)
-    small_font = _font(font_path, 17)
 
     draw.text((66, 54), "하루 한 시간 나를 DEVELOP", font=label_font, fill=accent)
     subject_lines = wrap_text_by_pixels(draw, visual["subject"], subject_font, 480, 2)
@@ -979,7 +980,6 @@ def _cover(day, font_path, bold_font_path):
         draw, hook_lines, (66, subject_bottom + 28), hook_font, "#C1D1D6", line_gap=8
     )
     draw.line((66, 536, 126, 536), fill=accent, width=6)
-    draw.text((66, 558), story["steps"], font=small_font, fill="#8FAAB2")
     return image
 
 
@@ -1029,21 +1029,15 @@ def _story_image(day, index, font_path, bold_font_path):
         fill=_blend(palette["panel"], accent, 0.07),
     )
 
-    label_font = _font(bold_font_path, 30)
-    steps_font = _font(font_path, 23)
-
     draw_scene(
         draw,
         story["scene"],
         story["motif"],
-        (82, 48, 1118, 476),
+        (58, 38, 1142, 592),
         foreground=palette["foreground"],
         accent=accent,
         muted=palette["motif_muted"],
     )
-    draw.text((64, 512), story["scene_label"], font=label_font, fill=palette["foreground"])
-    steps_lines = wrap_text_by_pixels(draw, story["steps"], steps_font, 760, 1)
-    _draw_multiline(draw, steps_lines, (64, 558), steps_font, palette["muted"], 0)
     return image
 
 
@@ -1127,6 +1121,7 @@ def generate_editorial_images(
             ),
             "width": 1200,
             "height": 630,
+            "style": "text-free-editorial-scene",
         }
     day["images"] = assets
     return assets

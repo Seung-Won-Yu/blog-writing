@@ -8,6 +8,7 @@ from unittest.mock import patch
 from PIL import Image, ImageChops, ImageDraw
 
 from generate_editorial_images import (
+    _arrow,
     draw_scene,
     find_font,
     generate_editorial_images,
@@ -52,6 +53,15 @@ DAY = {
 
 
 class EditorialImageTests(unittest.TestCase):
+    def test_scene_connectors_do_not_draw_presentation_arrowheads(self):
+        image = Image.new("RGB", (120, 100), "#000000")
+        draw = ImageDraw.Draw(image)
+
+        _arrow(draw, (20, 50), (90, 50), "#FFFFFF", width=8)
+
+        self.assertEqual(image.getpixel((76, 44)), (0, 0, 0))
+        self.assertNotEqual(image.getpixel((90, 50)), (0, 0, 0))
+
     def test_every_generic_motif_draws_a_three_stage_scene_across_the_frame(self):
         for motif in sorted(VISUAL_MOTIFS):
             with self.subTest(motif=motif):
@@ -204,6 +214,9 @@ class EditorialImageTests(unittest.TestCase):
             self.assertIn("코드 변경의 흐름", assets["cover"]["alt"])
             self.assertIn("자동화, 어디까지 믿어도 될까?", assets["cover"]["alt"])
             self.assertIn("자동화 보안", assets["story_1"]["alt"])
+            self.assertEqual(
+                assets["story_1"]["style"], "text-free-editorial-scene"
+            )
             self.assertEqual(
                 assets["story_2"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/story-02.png",

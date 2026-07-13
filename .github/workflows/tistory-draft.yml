@@ -16,10 +16,9 @@ on:
       - 'export_tistory.py'
       - 'requirements-images.txt'
       - 'config/news_sources.json'
+      - 'config/editorial_persona.json'
       - 'build_copy_page.py'
       - 'tests/**'
-      - 'docs/**'
-      - 'data/**'
   schedule:
     - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST
   workflow_dispatch:
