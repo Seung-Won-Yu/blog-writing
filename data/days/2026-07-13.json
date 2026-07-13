@@ -3,111 +3,38 @@
   "date_label": "2026. 7. 13",
   "weekday": "월",
   "visual": {
-    "hook": "AI가 통신을 어떻게 변화시키고 있나?",
-    "motif": "network"
+    "subject": "사진과 AI 연동",
+    "hook": "내 사진은 어디까지 연결될까?",
+    "motif": "security"
   },
   "editorial": {
-    "opening": "최근 통신사와 커뮤니티에서 AI의 도입이 활발하게 이루어지고 있습니다. Deutsche Telekom은 AI를 활용해 고객 서비스와 네트워크 운영을 혁신하고 있으며, 정치 커뮤니티에서는 AI 팩트체크 기능을 도입해 가짜뉴스 문제를 해결하고자 합니다. IoT 보안 분야에서도 AI의 적용이 필요성이 커지고 있습니다.",
-    "throughline": "세 뉴스는 AI의 도입이 통신, 커뮤니티, IoT 보안 분야에서 어떻게 진행되고 있는지를 보여줍니다. Deutsche Telekom은 고객 서비스와 네트워크 운영을 개선하기 위해 AI를 활용하고 있으며, 정치 커뮤니티는 가짜뉴스를 줄이기 위해 AI 팩트체크 기능을 도입했습니다. IoT 보안에서는 AI를 통해 취약점을 탐지하고 대응하는 방법이 모색되고 있습니다.",
-    "closing": "AI의 도입은 다양한 분야에서 변화의 물결을 일으키고 있습니다. 그러나 각 분야에서 여전히 해결해야 할 문제들이 존재하며, 개발자들은 이러한 변화를 적극적으로 검토하고 적용할 필요가 있습니다. 앞으로 AI 기술이 어떻게 발전할지 주목해야 합니다.",
-    "action": "Deutsche Telekom의 AI 활용 사례를 참고해, 자신의 프로젝트에 AI를 어떻게 적용할 수 있을지 고민해보세요."
+    "headline": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "opening": "오늘은 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단와 Enterprise-managed OpenTelemetry export for VS Code and CLI을 중심으로 개발 흐름을 살펴본다.",
+    "throughline": "",
+    "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+    "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자."
   },
   "news": [
     {
-      "title_kr": "도이치 텔레콤, AI로 통신 산업을 재편하다",
-      "source": "OpenAI News",
-      "url": "https://openai.com/index/deutsche-telekom",
-      "blurb_kr": "AI를 통해 고객 서비스와 네트워크 운영을 혁신하는 도이치 텔레콤의 사례를 살펴보세요.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무엇이 달라졌나"
-        },
-        {
-          "t": "p",
-          "text": "도이치 텔레콤은 AI를 도입하여 고객 서비스와 직원 업무 흐름, 네트워크 운영을 변화시키고 있습니다. AI를 활용한 고객 서비스는 더 빠르고 정확한 응답을 제공하며, 직원들은 반복적인 작업에서 벗어나 더 창의적인 업무에 집중할 수 있게 됩니다. 이러한 변화는 고객 만족도를 높이고, 운영 효율성을 개선하는 데 기여하고 있습니다."
-        },
-        {
-          "t": "h",
-          "text": "개발자 작업에 닿는 지점"
-        },
-        {
-          "t": "p",
-          "text": "개발자 관점에서는 AI를 활용한 자동화가 중요한 흐름으로 자리잡고 있습니다. 고객 서비스에 AI를 적용하면, 챗봇이나 가상 비서와 같은 솔루션을 통해 고객 문의를 처리할 수 있습니다. 이는 개발자들이 새로운 기능을 구현하는 데 있어 더 많은 시간을 할애할 수 있게 해주며, 사용자 경험을 개선하는 데 기여할 수 있습니다."
-        },
-        {
-          "t": "h",
-          "text": "아직 확인할 점"
-        },
-        {
-          "t": "p",
-          "text": "AI 도입에 따른 윤리적 문제와 데이터 보안 문제는 여전히 해결해야 할 과제입니다. AI가 고객 데이터를 어떻게 처리하고 있는지, 그리고 고객의 프라이버시를 어떻게 보장할 것인지에 대한 명확한 기준이 필요합니다. 이러한 점들을 검토하기 위해서는 관련 법규와 기술적 요구사항을 지속적으로 확인해야 합니다."
-        }
-      ]
+      "title_kr": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+      "source": "AI타임스",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212666",
+      "blurb_kr": "",
+      "content": []
     },
     {
-      "title_kr": "정치 커뮤니티에 AI 팩트체크 기능 도입의 시행착오",
+      "title_kr": "Enterprise-managed OpenTelemetry export for VS Code and CLI",
+      "source": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-07-08-enterprise-managed-opentelemetry-export-for-vs-code-and-cli",
+      "blurb_kr": "Organizations can now mandate where GitHub Copilot sends OpenTelemetry (OTel) data, so telemetry flows to an approved collector without each developer setting OTEL_* environment variables. The configuration is delivered through… The post Enterprise-managed OpenTelemetry export for VS Code and CLI appeared first on The GitHub Blog .",
+      "content": []
+    },
+    {
+      "title_kr": "AI 토큰은 데이터센터를 어떻게 여행하는가",
       "source": "GeekNews",
-      "url": "https://news.hada.io/topic?id=31389",
-      "blurb_kr": "AI 팩트체크 기능 도입 과정에서의 고민과 시행착오를 공유합니다.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무엇이 달라졌나"
-        },
-        {
-          "t": "p",
-          "text": "정치 커뮤니티에서는 AI 팩트체크 기능을 도입하여 가짜뉴스와 소모적인 논쟁을 줄이려는 노력을 하고 있습니다. 초기에는 단순한 프롬프트를 사용했지만, 실제 서비스에서는 개인의 의견까지 사실로 판단하는 등의 문제에 직면했습니다. 이러한 시행착오는 AI의 한계와 함께 기술적 접근 방식의 재검토를 요구하고 있습니다."
-        },
-        {
-          "t": "h",
-          "text": "개발자 작업에 닿는 지점"
-        },
-        {
-          "t": "p",
-          "text": "개발자 관점에서는 AI 팩트체크 기능을 구현할 때, 데이터의 출처와 신뢰성을 고려해야 합니다. 단순히 텍스트를 검증하는 것에서 벗어나, 다양한 데이터 소스를 통합하고, 검증 알고리즘을 개선해야 합니다. 이를 통해 보다 정확한 정보 제공이 가능해질 것입니다."
-        },
-        {
-          "t": "h",
-          "text": "아직 확인할 점"
-        },
-        {
-          "t": "p",
-          "text": "AI 팩트체크 기능이 실제로 얼마나 효과적인지에 대한 데이터가 부족합니다. 이 기능이 가짜뉴스를 줄이는 데 얼마나 기여하고 있는지, 그리고 사용자들이 이를 어떻게 받아들이고 있는지에 대한 피드백이 필요합니다. 이를 통해 향후 개선 방향을 모색할 수 있을 것입니다."
-        }
-      ]
-    },
-    {
-      "title_kr": "VEXAIoT: AI 에이전트를 통한 IoT 보안 취약점 탐지",
-      "source": "arXiv cs.AI",
-      "url": "https://arxiv.org/abs/2607.09653v1",
-      "blurb_kr": "AI 에이전트를 활용한 IoT 보안 취약점 탐지 방법을 알아보세요.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무엇이 달라졌나"
-        },
-        {
-          "t": "p",
-          "text": "IoT 시스템은 하드웨어 제약, 구형 펌웨어, 불안전한 기본 설정으로 인해 취약점이 많습니다. VEXAIoT는 AI 에이전트를 활용하여 이러한 취약점을 자동으로 탐지하고 대응하는 방법을 제시합니다. 이는 IoT 보안 테스트의 효율성을 높이고, 보다 안전한 IoT 환경을 구축하는 데 기여할 수 있습니다."
-        },
-        {
-          "t": "h",
-          "text": "개발자 작업에 닿는 지점"
-        },
-        {
-          "t": "p",
-          "text": "개발자 관점에서는 AI를 활용한 보안 테스트가 새로운 표준이 될 가능성이 있습니다. AI 에이전트를 통해 취약점을 자동으로 탐지하고, 이를 기반으로 보안 패치를 적용하는 시스템을 구축할 수 있습니다. 이는 개발자들이 보안 문제를 사전에 예방하는 데 큰 도움이 될 것입니다."
-        },
-        {
-          "t": "h",
-          "text": "아직 확인할 점"
-        },
-        {
-          "t": "p",
-          "text": "AI 기반 보안 테스트의 신뢰성과 정확성에 대한 검증이 필요합니다. AI가 탐지한 취약점이 실제로 문제가 되는지, 그리고 이를 해결하는 데 얼마나 효과적인지에 대한 데이터가 부족합니다. 이러한 점들을 확인하기 위해서는 실제 환경에서의 테스트 결과를 지속적으로 모니터링해야 합니다."
-        }
-      ]
+      "url": "https://news.hada.io/topic?id=31381",
+      "blurb_kr": "2026년 AI 추론 은 전체 AI 컴퓨팅의 약 3분의 2까지 확대됐으며, 배포된 모델의 생애 컴퓨팅 비용 중 80~90%를 차지해 토큰 처리 비용과 지연시간이 인프라 경제성을 좌우함 하나의 요청은 토큰화, API 게이트웨이, 인증, 라우팅, 스케줄링, KV 캐시, GPU·HBM, CUDA 커널, NVLink·스...",
+      "content": []
     }
   ],
   "quiz": {
@@ -122,55 +49,38 @@
     "answer": 1,
     "explain_kr": "#include 지시어는 지정한 헤더 파일의 내용을 현재 소스 파일에 포함하도록 전처리기에 지시합니다."
   },
-  "terms": [
-    {
-      "term": "AI 팩트체크",
-      "kind": "IT",
-      "meaning_kr": "인공지능을 활용하여 정보의 진위를 검증하는 기술"
-    },
-    {
-      "term": "IoT 보안",
-      "kind": "개발",
-      "meaning_kr": "사물인터넷 기기의 보안을 확보하기 위한 기술 및 방법"
-    },
-    {
-      "term": "자동화 테스트",
-      "kind": "기획",
-      "meaning_kr": "소프트웨어의 기능을 자동으로 검증하는 테스트 방법"
-    }
-  ],
+  "terms": [],
   "generation": {
-    "provider": "github-models",
-    "model": "openai/gpt-4o-mini",
-    "revision": 3,
-    "input_fingerprint": "265fb1cbbe24f288"
+    "provider": "deterministic-fallback",
+    "revision": 4,
+    "input_fingerprint": "7ffba283255d53d8"
   },
   "images": {
     "cover": {
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/cover.png",
       "path": "docs/tistory/assets/2026-07-13/cover.png",
-      "alt": "2026. 7. 13 AI가 통신을 어떻게 변화시키고 있나? 대표 이미지",
+      "alt": "2026. 7. 13 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지",
       "width": 1200,
       "height": 630
     },
     "story_1": {
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-01.png",
       "path": "docs/tistory/assets/2026-07-13/story-01.png",
-      "alt": "",
+      "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지",
       "width": 1200,
       "height": 630
     },
     "story_2": {
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-02.png",
       "path": "docs/tistory/assets/2026-07-13/story-02.png",
-      "alt": "",
+      "alt": "코딩 방식 · 개발 도구의 관측 흐름: 개발 도구 → 관측 데이터 → 관리 흐름을 표현한 기사 이해 이미지",
       "width": 1200,
       "height": 630
     },
     "story_3": {
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-03.png",
       "path": "docs/tistory/assets/2026-07-13/story-03.png",
-      "alt": "",
+      "alt": "데이터 흐름 · AI 요청의 처리 흐름: 요청 토큰 → 데이터센터 → 응답 흐름을 표현한 기사 이해 이미지",
       "width": 1200,
       "height": 630
     }
