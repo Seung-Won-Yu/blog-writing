@@ -8,8 +8,13 @@ class WorkflowConfigTests(unittest.TestCase):
             Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
         ).read_text(encoding="utf-8")
 
+        self.assertIn("name: Install Python dependencies", workflow)
         self.assertIn("name: Run tests", workflow)
         self.assertIn("python -m unittest discover -s tests", workflow)
+        self.assertLess(
+            workflow.index("name: Install Python dependencies"),
+            workflow.index("name: Run tests"),
+        )
         for step_name in (
             "Install editorial image tools",
             "Collect today's news review inbox",
