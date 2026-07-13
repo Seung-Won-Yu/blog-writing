@@ -188,6 +188,10 @@ class PromptTests(unittest.TestCase):
         self.assertIn("구체적인 확인 방법", prompt)
         self.assertIn("차이와 긴장", prompt)
         self.assertIn("10단어 이상 연속", prompt)
+        self.assertIn("보도자료", prompt)
+        self.assertIn("판단합니다", prompt)
+        self.assertIn("~다", prompt)
+        self.assertIn("구체적인 장면", prompt)
 
     def test_applies_the_blog_persona_without_fabricating_firsthand_experience(self):
         prompt = build_prompt(INBOX)
@@ -342,12 +346,27 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaises(DraftQualityError):
             build_day(INBOX, generic)
 
+    def test_rejects_press_release_ai_tone(self):
+        formal = copy.deepcopy(MODEL_OUTPUT)
+        formal["news"][0]["author_note"] = (
+            "승원의 관점에서는 이 기능이 중요하다고 봅니다. 저장소 설정을 확인하십시오. "
+            "모든 팀에 적용할 것을 권장합니다. 권한과 로그를 점검해 보십시오. "
+            "이 변화는 개발자에게 도움이 될 것입니다."
+        )
+
+        with self.assertRaisesRegex(DraftQualityError, "AI식"):
+            build_day(INBOX, formal)
+
     def test_derives_a_missing_note_from_verification_but_rejects_fake_experience(self):
         missing = copy.deepcopy(MODEL_OUTPUT)
         missing["news"][0].pop("author_note")
         day = build_day(INBOX, missing)
 
-        self.assertTrue(day["news"][0]["author_note"].startswith("승원의 관점에서는"))
+        self.assertTrue(
+            day["news"][0]["author_note"].startswith(
+                "이 소식에서 내가 먼저 볼 것은"
+            )
+        )
         self.assertIn("설정", day["news"][0]["author_note"])
         self.assertGreaterEqual(len(day["news"][0]["author_note"]), 90)
 
@@ -704,6 +723,12 @@ class GeminiClientTests(unittest.TestCase):
         self.assertEqual(
             captured["body"]["generationConfig"]["responseMimeType"],
             "application/json",
+        )
+        self.assertEqual(captured["body"]["generationConfig"]["temperature"], 0.45)
+        self.assertEqual(captured["body"]["generationConfig"]["topP"], 0.9)
+        self.assertIn(
+            "테크 칼럼",
+            captured["body"]["systemInstruction"]["parts"][0]["text"],
         )
         self.assertNotIn("gemini-secret", captured["url"])
         self.assertNotIn("gemini-secret", json.dumps(captured["body"]))
