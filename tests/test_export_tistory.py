@@ -8,6 +8,7 @@ from export_tistory import (
     build_key_summary,
     build_meta_description,
     build_publish_checklist,
+    build_title_candidates,
     estimate_read_minutes,
     post_title,
     render_post,
@@ -53,11 +54,42 @@ class OptionalLearningSectionsTests(unittest.TestCase):
             "explain_kr": "변경 이력을 관리한다.",
         }
 
-        self.assertIn("정처기 문제", post_title(day))
+        self.assertNotIn("정처기 문제", post_title(day))
         self.assertIn("소프트웨어 공학", build_meta_description(day))
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_uses_a_specific_editorial_headline_in_search_and_the_hero(self):
+        day = dict(FALLBACK_DAY)
+        day["editorial"] = {
+            "headline": "인스타 사진을 가져가던 AI, 반발 뒤 무엇이 멈췄나",
+            "opening": "내 사진이 어디에 쓰이는지 알기 어려운 기능은 편리함보다 먼저 불안을 만든다. 오늘은 자동 연동이 멈춘 이유와 사용자가 확인할 지점을 따져본다.",
+            "throughline": "개인정보와 도구 업데이트는 결국 사용자가 알고 선택할 수 있는지의 문제로 연결된다.",
+            "closing": "편리함이 커질수록 동작 방식을 설명하는 기준도 함께 높아져야 한다.",
+            "action": "자주 쓰는 앱 하나의 AI 데이터 설정을 확인해보자.",
+        }
+        day["news"] = [
+            {
+                "title_kr": "메타, 인스타 사진 AI 자동 연동 중단",
+                "source": "AI타임스",
+                "url": "https://example.com/meta",
+                "blurb_kr": "사용자 반발 뒤 자동 연동을 멈춘 배경을 짚어본다.",
+                "content": [],
+            },
+            {"title_kr": "GitHub 대시보드 업데이트", "content": []},
+            {"title_kr": "Postgres 19 그래프 쿼리", "content": []},
+        ]
+
+        candidates = build_title_candidates(day)
+        html = render_post("2026-07-13", day)
+
+        self.assertEqual(post_title(day), day["editorial"]["headline"])
+        self.assertEqual(candidates[0], day["editorial"]["headline"])
+        self.assertFalse(any(title.startswith("2026") for title in candidates))
+        self.assertNotIn("핵심 정리", " ".join(candidates))
+        self.assertIn(day["editorial"]["headline"], html)
+        self.assertIn("내 사진이 어디에 쓰이는지", build_meta_description(day))
+
     def test_key_summary_splits_news_into_scannable_rows(self):
         day = dict(FALLBACK_DAY)
         day["news"] = [

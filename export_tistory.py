@@ -179,10 +179,14 @@ def style(value):
 
 
 def post_title(day):
-    label = plain(day.get("date_label"))
-    if day.get("quiz"):
-        return f"[데일리 IT 뉴스] {label} - 오늘의 개발 뉴스와 정처기 문제"
-    return f"[데일리 IT 뉴스] {label} - 오늘의 AI·개발 소식 정리"
+    editorial = day.get("editorial") or {}
+    headline = plain(editorial.get("headline"))
+    if headline:
+        return trim_text(headline, 70)
+    titles = news_titles(day, 1)
+    if titles:
+        return trim_text(titles[0], 70)
+    return "오늘 확인할 AI·개발 소식"
 
 
 def news_titles(day, limit=None):
@@ -221,6 +225,11 @@ def title_keyword(text, limit=28):
         if len(left) <= 18:
             value = right
 
+    korean_terms = re.findall(r"[가-힣][가-힣0-9]*", value)
+    if korean_terms:
+        korean = " ".join(korean_terms[:5])
+        return trim_text(korean, limit)
+
     english_terms = []
     for term in re.findall(r"[A-Za-z][A-Za-z0-9+._/-]*", value):
         normalized = term.strip(".,:;()[]{}")
@@ -242,45 +251,42 @@ def title_keyword(text, limit=28):
 def build_title_candidates(day):
     label = plain(day.get("date_label"))
     titles = news_titles(day, 3)
-    first = titles[0] if titles else "오늘의 개발 뉴스"
-    second = titles[1] if len(titles) > 1 else "정처기 문제"
-    first_keyword = title_keyword(first)
-    second_keyword = title_keyword(second)
+    headline = post_title(day)
+    visual = day.get("visual") or {}
+    subject = plain(visual.get("subject"))
+    hook = plain(visual.get("hook"))
+    candidates = [headline]
+    if titles:
+        count_suffix = f" 외 {len(titles) - 1}건" if len(titles) > 1 else ""
+        candidates.append(trim_text(f"{titles[0]}{count_suffix}", 68))
+    if subject and hook:
+        candidates.append(trim_text(f"{subject}: {hook}", 68))
+    elif hook:
+        candidates.append(trim_text(hook, 68))
+    if label:
+        candidates.append(trim_text(f"{headline} ({label})", 70))
 
-    if day.get("quiz"):
-        candidates = [
-            f"[데일리 IT 뉴스] {label} - {first_keyword}, 정처기 문제 정리",
-            f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
-            f"오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 ({label})",
-        ]
-    else:
-        candidates = [
-            f"[데일리 IT 뉴스] {label} - {first_keyword} 외 오늘의 개발 소식",
-            f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
-            f"오늘의 AI/개발 뉴스 핵심 정리 ({label})",
-        ]
-    if len(titles) > 1:
-        candidates.insert(
-            1,
-            f"[개발 뉴스] {first_keyword} · {second_keyword} 핵심 정리",
-        )
-    return candidates[:4]
+    unique = []
+    for candidate in candidates:
+        if candidate and candidate not in unique:
+            unique.append(candidate)
+    return unique[:4]
 
 
 def build_meta_description(day):
-    label = plain(day.get("date_label"))
-    titles = news_titles(day, 2)
-    keywords = [title_keyword(title, 34) for title in titles]
-    keywords = [keyword for keyword in keywords if keyword]
-    topic_text = ", ".join(keywords[:2]) if keywords else "AI/개발 뉴스"
+    editorial = day.get("editorial") or {}
+    opening = plain(editorial.get("opening"))
+    first_blurb = ""
+    if day.get("news"):
+        first_blurb = plain(day["news"][0].get("blurb_kr"))
+    parts = [trim_text(opening or first_blurb or post_title(day), 112)]
     quiz = day.get("quiz") or {}
     if quiz:
         quiz_category = plain(quiz.get("category")) or "정보처리기사"
-        return (
-            f"{label} 데일리 IT 뉴스: {topic_text} 핵심과 "
-            f"{quiz_category} 문제, 개발 용어를 정리했습니다."
-        )
-    return f"{label} 데일리 IT 뉴스: {topic_text}의 핵심 흐름을 짧게 정리했습니다."
+        parts.append(f"{quiz_category} 문제로 개념도 확인합니다.")
+    elif first_blurb and first_blurb not in parts[0]:
+        parts.append(trim_text(first_blurb, 62))
+    return trim_text(" ".join(parts), 160)
 
 
 def build_key_summary(day):
@@ -513,11 +519,8 @@ def render_post(day_id, day):
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
-    composition = (
-        "본문은 핵심 내용 요약과 학습용 문제로 구성했으며"
-        if day.get("quiz")
-        else "본문은 공개 피드에서 확인한 핵심 내용 중심으로 정리했으며"
-    )
+    headline = post_title(day)
+    composition = "확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했으며"
 
     return f"""<!--
 title: {esc(post_title(day))}
@@ -528,7 +531,7 @@ slug: {slugify(day_id + "-daily-digest")}
 <article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
     <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 약 {estimate_read_minutes(day)}분 · 하루 한 시간 개발 기록</p>
-    <h2 class="digest-title"{style(TITLE_STYLE)}>오늘의 IT/개발 읽을거리</h2>
+    <h2 class="digest-title"{style(TITLE_STYLE)}>{esc(headline)}</h2>
     <p class="digest-lead"{style(LEAD_STYLE)}>{esc(lead)}</p>
     <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(composition)} 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.</p>
   </section>
