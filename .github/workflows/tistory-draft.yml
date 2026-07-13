@@ -1,4 +1,4 @@
-name: Tistory draft HTML
+name: News inbox and Tistory draft
 
 on:
   push:
@@ -6,8 +6,12 @@ on:
       - main
     paths:
       - '.github/workflows/tistory-draft.yml'
+      - 'collect_news.py'
+      - 'news_pipeline.py'
+      - 'config/news_sources.json'
       - 'pages_to_tistory.py'
       - 'build_copy_page.py'
+      - 'tests/**'
       - 'docs/**'
   schedule:
     - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST. 원본 07:23 KST schedule 5분 뒤
@@ -36,7 +40,14 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Collect today's news review inbox
+        env:
+          TZ: Asia/Seoul
+        run: python collect_news.py --today
+
       - name: Export today's Tistory HTML from Pages
+        id: tistory_export
+        continue-on-error: true
         env:
           TZ: Asia/Seoul
         run: |
@@ -80,3 +91,9 @@ jobs:
       - id: deployment_retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
+
+      - name: Report Tistory export failure
+        if: steps.tistory_export.outcome == 'failure'
+        run: |
+          echo "뉴스 후보함은 저장했지만 기존 티스토리 초안 변환에 실패했습니다."
+          exit 1
