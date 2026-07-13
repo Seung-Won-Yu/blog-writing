@@ -1,10 +1,10 @@
 {
-  "title": "[데일리 IT 뉴스] 2026. 7. 12 - 오늘의 개발 뉴스와 정처기 문제",
+  "title": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 12 - Show GN, 정처기 문제 정리",
-    "[개발 뉴스] Show GN · 사람이 유지보수할 것처럼 코드를 작성하라 핵심 정리",
-    "2026. 7. 12 개발 뉴스 요약: Show GN 외 오늘의 IT 이슈",
-    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 12)"
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 외 2건",
+    "사진과 AI 연동: 내 사진은 어디까지 연결될까?",
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 (2026. 7. 12)"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -14,40 +14,74 @@
     "정처기",
     "개발용어",
     "데일리다이제스트",
-    "GeekNews",
-    "컨테이너 오케스트레이션 (Container Orchestration)",
-    "백프레셔 (Backpressure)",
-    "그릿 (Grit)"
+    "AI타임스",
+    "GitHub Changelog",
+    "OpenAI News",
+    "프라이버시",
+    "AI 모델",
+    "코딩 벤치마크"
   ],
-  "meta_description": "2026. 7. 12 데일리 IT 뉴스: Show GN, 사람이 유지보수할 것처럼 코드를 작성하라 핵심과 운영체제 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "최근 AI 기술이 우리의 일상과 개발 환경에 큰 영향을 미치고 있습니다. 메타가 인스타그램의 AI 이미지 생성 기능을 중단한 사건과 OpenAI의 GPT-5.6 모델 출시, 그리고 코딩 평가의 신뢰성… 소프트웨어 설계 문제로 개념도 확인합니다.",
   "key_summary": [
-    "오늘의 주요 뉴스: Show GN: 대한민국 제도 100개를 한장씩 체계도로 만들었습니다. / 사람이 유지보수할 것처럼 코드를 작성하라",
-    "정처기 포인트: 운영체제 문제로 개념을 점검합니다.",
-    "함께 익힐 용어: 컨테이너 오케스트레이션 (Container Orchestration), 백프레셔 (Backpressure), 그릿 (Grit)",
-    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
+    "1. 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "2. OpenAI의 GPT-5.6 모델, GitHub Copilot에서 사용 가능",
+    "3. 코딩 평가에서 신호와 잡음 분리하기",
+    "정처기 포인트: 소프트웨어 설계 문제로 개념을 점검합니다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
-    "본문 상단 이미지가 정상 표시되는지 확인하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 12 - Show GN, 정처기 문제 정리"
+    "추천 제목: 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단"
   ],
+  "generation_provider": "github-models",
+  "publish_ready": true,
   "source": "data/days/2026-07-12.json",
-  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-12.html",
+  "source_page": null,
   "html": "docs/tistory/2026-07-12.html",
   "image_assets": [
     {
-      "title": "Show GN: 대한민국 제도 100개를 한장씩 체계도로 만들었습니다.",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/news-01.png",
-      "path": "docs/tistory/assets/2026-07-12/news-01.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/16ec05b4afc2.png"
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png",
+      "path": "docs/tistory/assets/2026-07-12/cover.png",
+      "original_url": "",
+      "alt": "2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지",
+      "width": 1200,
+      "height": 630
     },
     {
-      "title": "사람이 유지보수할 것처럼 코드를 작성하라",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/news-02.png",
-      "path": "docs/tistory/assets/2026-07-12/news-02.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/9592dccf4ddc.png"
+      "kind": "story_1",
+      "title": "본문 1번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png",
+      "path": "docs/tistory/assets/2026-07-12/story-01.png",
+      "original_url": "",
+      "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_2",
+      "title": "본문 2번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-02.png",
+      "path": "docs/tistory/assets/2026-07-12/story-02.png",
+      "original_url": "",
+      "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_3",
+      "title": "본문 3번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-03.png",
+      "path": "docs/tistory/assets/2026-07-12/story-03.png",
+      "original_url": "",
+      "alt": "코딩 방식 · 코딩 방식: 원천 데이터 → 저장·분석 → 판단 근거 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
     }
   ]
 }
