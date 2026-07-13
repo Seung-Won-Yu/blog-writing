@@ -31,66 +31,72 @@ DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
 
 POST_SHELL_STYLE = (
-    "max-width:760px;margin:0 auto;padding:8px 0 28px;color:#334155;"
-    "font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.75;"
+    "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"
+    "font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;"
 )
 HERO_STYLE = (
-    "margin:0 0 28px;padding:28px 26px;border:1px solid #d9e0ea;border-radius:18px;"
-    "background:linear-gradient(135deg,#f8fafc 0%,#eef6f5 52%,#fff7ed 100%);"
-    "box-shadow:0 12px 34px rgba(24,33,47,.06);"
+    "margin:0 0 34px;padding:24px 0 28px;border-top:4px solid #28745a;"
+    "border-bottom:1px solid #d8dedb;background:#fff;"
 )
 KICKER_STYLE = (
-    "margin:0 0 10px;color:#0f9b8e;font-size:13px;font-weight:700;"
-    "letter-spacing:.02em;"
+    "margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;"
+    "letter-spacing:.08em;"
 )
-TITLE_STYLE = "margin:0 0 14px;color:#18212f;font-size:30px;line-height:1.32;font-weight:800;"
-LEAD_STYLE = "margin:0;color:#475569;font-size:16px;line-height:1.75;"
+TITLE_STYLE = "margin:0 0 16px;color:#17211c;font-size:31px;line-height:1.32;font-weight:850;"
+LEAD_STYLE = "margin:0;color:#35433c;font-size:17px;line-height:1.82;font-weight:650;"
 META_INTRO_STYLE = (
-    "margin:0 0 14px;color:#334155;font-size:15px;line-height:1.7;font-weight:700;"
+    "margin:14px 0 0;color:#66716b;font-size:14px;line-height:1.7;"
 )
 SECTION_TITLE_STYLE = (
-    "margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;"
+    "margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;"
 )
 CARD_STYLE = (
-    "margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;"
-    "background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);"
+    "margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;"
 )
 NEWS_IMAGE_STYLE = (
-    "display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;"
-    "border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;"
+    "display:block;width:100%;max-height:300px;object-fit:cover;margin:0 0 20px;"
+    "border-radius:3px;border:1px solid #d8dedb;background:#f5f6f4;"
 )
 BADGE_STYLE = (
-    "display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;"
-    "background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;"
+    "display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;"
+    "letter-spacing:.08em;"
 )
-NEWS_TITLE_STYLE = "margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;"
+NEWS_TITLE_STYLE = "margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;"
 NEWS_BODY_STYLE = (
-    "margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"
+    "margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"
 )
 NEWS_BODY_HEADING_STYLE = (
-    "margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;"
+    "margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;"
 )
-NEWS_BODY_PARAGRAPH_STYLE = "margin:0 0 12px;color:#475569;line-height:1.78;"
+NEWS_BODY_PARAGRAPH_STYLE = "margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;"
 BUTTON_STYLE = (
-    "display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;"
-    "background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;"
+    "display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;"
+    "color:#28745a;text-decoration:none;font-size:13px;font-weight:850;"
 )
 QUIZ_STYLE = (
-    "margin:30px 0;padding:24px 22px;border:1px solid #bddfd9;border-radius:18px;"
-    "background:linear-gradient(135deg,#f8fafc,#effaf7);box-shadow:0 10px 28px rgba(15,155,142,.08);"
+    "margin:40px 0;padding:24px;border:1px solid #cfd8d3;border-radius:4px;"
+    "background:#f4f7f5;"
 )
 TERM_ITEM_STYLE = (
-    "margin:0 0 10px;padding:16px 0;border-bottom:1px solid #d9e0ea;list-style:none;"
+    "margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;"
 )
 NOTE_STYLE = (
-    "margin-top:34px;padding:16px 18px;border-left:4px solid #0f9b8e;border-radius:12px;"
-    "background:#f8fafc;color:#64748b;font-size:14px;line-height:1.7;"
+    "margin-top:38px;padding:16px 0;border-top:1px solid #d8dedb;"
+    "color:#5f6b65;font-size:13px;line-height:1.72;"
 )
 SUMMARY_STYLE = (
-    "margin:0 0 28px;padding:20px 22px;border:1px solid #d9e0ea;border-radius:16px;"
-    "background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);"
+    "margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;"
+    "background:#f7f4ec;"
 )
-SUMMARY_LIST_STYLE = "margin:0;padding-left:20px;color:#475569;line-height:1.75;"
+SUMMARY_LIST_STYLE = "margin:0;padding-left:20px;color:#46534d;line-height:1.8;"
+CLOSING_STYLE = (
+    "margin:42px 0 0;padding:24px 0;border-top:3px solid #28745a;"
+    "border-bottom:1px solid #d8dedb;background:#fff;"
+)
+ACTION_STYLE = (
+    "margin:18px 0 0;padding:16px 18px;border-left:3px solid #c99b43;"
+    "background:#f7f4ec;color:#35433c;"
+)
 
 
 def esc(value):
@@ -170,6 +176,22 @@ def news_titles(day, limit=None):
     titles = [plain(item.get("title_kr")) for item in day.get("news", [])]
     titles = [title for title in titles if title]
     return titles[:limit] if limit else titles
+
+
+def estimate_read_minutes(day):
+    pieces = []
+    editorial = day.get("editorial") or {}
+    pieces.extend(editorial.values())
+    for item in day.get("news", []):
+        pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
+        pieces.extend(block.get("text") for block in item.get("content", []) if isinstance(block, dict))
+    quiz = day.get("quiz") or {}
+    pieces.extend([quiz.get("question"), quiz.get("explain_kr")])
+    pieces.extend(quiz.get("options") or [])
+    for term in day.get("terms", []):
+        pieces.extend([term.get("term"), term.get("meaning_kr")])
+    length = sum(len(plain(piece)) for piece in pieces)
+    return max(2, (length + 449) // 450)
 
 
 def trim_text(text, limit):
@@ -253,16 +275,14 @@ def build_key_summary(day):
     quiz = day.get("quiz") or {}
     terms = [plain(item.get("term")) for item in day.get("terms", []) if item.get("term")]
 
-    rows = []
-    if titles:
-        rows.append("오늘의 주요 뉴스: " + " / ".join(titles))
+    rows = [f"{index}. {trim_text(title, 72)}" for index, title in enumerate(titles, 1)]
     if quiz.get("question"):
         rows.append(f"정처기 포인트: {plain(quiz.get('category')) or '기초상식'} 문제로 개념을 점검합니다.")
-    if terms:
+    elif terms:
         rows.append("함께 익힐 용어: " + ", ".join(terms[:4]))
-    if quiz or terms:
-        rows.append("읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.")
-    else:
+    elif not rows:
+        rows.append("오늘 수집된 뉴스가 없습니다.")
+    elif len(rows) < 4:
         rows.append("각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요.")
     return rows[:4]
 
@@ -297,7 +317,7 @@ def build_summary_section(day):
     rows = "".join(f"<li>{esc(item)}</li>" for item in build_key_summary(day))
     return f"""
 <section class="digest-summary"{style(SUMMARY_STYLE)}>
-  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 핵심 요약</h2>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>먼저 보는 핵심</h2>
   <ul{style(SUMMARY_LIST_STYLE)}>{rows}</ul>
 </section>""".strip()
 
@@ -321,8 +341,8 @@ def build_news_section(news):
             else ""
         )
         summary_html = (
-            f'<p style="margin:0;color:#475569;">{esc(blurb)}</p>'
-            if blurb and not full_content
+            f'<p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">{esc(blurb)}</p>'
+            if blurb
             else ""
         )
 
@@ -336,7 +356,7 @@ def build_news_section(news):
             f"""
 <section class="digest-news-card"{style(CARD_STYLE)}>
   {image_html}
-  <p class="digest-source"{style(BADGE_STYLE)}>{idx}. {esc(source)}</p>
+  <p class="digest-source"{style(BADGE_STYLE)}>NEWS {idx:02d} · {esc(source)}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   {summary_html}
   {full_content}
@@ -352,20 +372,21 @@ def build_quiz_section(quiz):
     options = quiz.get("options") or []
     answer = int(quiz.get("answer", 0))
     option_html = "".join(
-        (
-            f'<li class="digest-option is-answer" style="margin:0 0 8px;color:#0f9b8e;font-weight:800;">정답 · {esc(opt)}</li>'
-            if i == answer
-            else f'<li class="digest-option" style="margin:0 0 8px;">{esc(opt)}</li>'
-        )
-        for i, opt in enumerate(options)
+        f'<li class="digest-option" style="margin:0 0 8px;">{esc(opt)}</li>'
+        for opt in options
     )
+    answer_text = options[answer] if 0 <= answer < len(options) else ""
     return f"""
 <section class="digest-quiz"{style(QUIZ_STYLE)}>
   <p class="digest-source"{style(BADGE_STYLE)}>기초상식 · {esc(quiz.get("category", "정보처리기사"))}</p>
   <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 정처기 문제</h2>
   <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">{esc(quiz.get("question"))}</p>
   <ol class="digest-options" style="margin:12px 0 14px;padding-left:22px;">{option_html}</ol>
-  <p class="digest-explain" style="margin:0;color:#475569;"><b>해설</b> {esc(quiz.get("explain_kr"))}</p>
+  <details class="digest-answer" style="margin-top:16px;padding-top:14px;border-top:1px solid #cfd8d3;">
+    <summary style="cursor:pointer;color:#28745a;font-weight:850;">정답과 해설 보기</summary>
+    <p style="margin:12px 0 6px;color:#27332d;"><b>정답</b> {answer + 1}. {esc(answer_text)}</p>
+    <p class="digest-explain" style="margin:0;color:#46534d;"><b>해설</b> {esc(quiz.get("explain_kr"))}</p>
+  </details>
 </section>""".strip()
 
 
@@ -388,12 +409,34 @@ def build_terms_section(terms):
 </section>""".strip()
 
 
+def build_closing_section(editorial):
+    editorial = editorial or {}
+    closing = plain(editorial.get("closing"))
+    action = plain(editorial.get("action"))
+    if not closing and not action:
+        return ""
+    action_html = (
+        f'<div class="digest-action"{style(ACTION_STYLE)}><b>오늘 해볼 것</b><br>{esc(action)}</div>'
+        if action
+        else ""
+    )
+    return f"""
+<section class="digest-closing"{style(CLOSING_STYLE)}>
+  <p{style(KICKER_STYLE)}>CLOSING NOTE</p>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 메모</h2>
+  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.82;">{esc(closing)}</p>
+  {action_html}
+</section>""".strip()
+
+
 def render_post(day_id, day):
     label = plain(day.get("date_label"))
     weekday = plain(day.get("weekday"))
     date_text = f"{label} ({weekday})" if weekday else label
     news = day.get("news") or []
-    lead = " / ".join(plain(item.get("title_kr")) for item in news[:3])
+    editorial = day.get("editorial") or {}
+    title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
+    lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     composition = (
         "본문은 핵심 내용 요약과 학습용 문제로 구성했으며"
         if day.get("quiz")
@@ -408,23 +451,22 @@ slug: {slugify(day_id + "-daily-digest")}
 -->
 <article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
-    <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(build_meta_description(day))}</p>
-    <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 하루 한 시간 개발 기록</p>
+    <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 약 {estimate_read_minutes(day)}분 · 하루 한 시간 개발 기록</p>
     <h2 class="digest-title"{style(TITLE_STYLE)}>오늘의 IT/개발 읽을거리</h2>
-    <p class="digest-lead"{style(LEAD_STYLE)}>
-      오늘은 {esc(lead)} 흐름을 중심으로 읽어볼 만한 소식을 정리했습니다.
-      {esc(composition)}, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
-    </p>
+    <p class="digest-lead"{style(LEAD_STYLE)}>{esc(lead)}</p>
+    <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(composition)} 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.</p>
   </section>
 
   {build_summary_section(day)}
 
-  <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 3개</h2>
+  <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
   {build_news_section(news)}
 
   {build_quiz_section(day.get("quiz"))}
 
   {build_terms_section(day.get("terms") or [])}
+
+  {build_closing_section(editorial)}
 
   <p class="digest-note"{style(NOTE_STYLE)}>
     이 글은 공개 뉴스 페이지를 기반으로 자동 수집·요약한 학습용 다이제스트입니다.
