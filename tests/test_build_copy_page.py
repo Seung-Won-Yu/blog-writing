@@ -1,9 +1,35 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
-from build_copy_page import json_for_script, render
+from build_copy_page import json_for_script, load_drafts, render
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_copy_page_hides_legacy_drafts_without_local_source_data(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "docs" / "tistory"
+            days = root / "data" / "days"
+            tistory.mkdir(parents=True)
+            days.mkdir(parents=True)
+            for day in ("2026-07-12", "2026-07-13"):
+                (tistory / f"{day}.html").write_text("draft", encoding="utf-8")
+                (tistory / f"{day}.json").write_text(
+                    json.dumps({"title": day, "source": f"data/days/{day}.json"}),
+                    encoding="utf-8",
+                )
+            (days / "2026-07-13.json").write_text("{}", encoding="utf-8")
+
+            with patch("build_copy_page.ROOT", root), patch(
+                "build_copy_page.TISTORY_DIR", tistory
+            ):
+                drafts = load_drafts()
+
+        self.assertEqual([item["day"] for item in drafts], ["2026-07-13"])
+
     def test_explains_manual_generation_without_upstream_copy(self):
         html = render([])
 
@@ -38,6 +64,9 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aria-pressed="false"', html)
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
+        self.assertIn('<label for="htmlCode"', html)
+        self.assertIn('copyText(els.htmlCode.value, "본문 HTML")', html)
+        self.assertNotIn('copyText(currentHtml, "본문 HTML")', html)
 
     def test_selects_named_cover_and_escapes_payload_for_script_context(self):
         unsafe = "뉴스 </script><script>alert(1)</script> & 흐름\u2028다음"

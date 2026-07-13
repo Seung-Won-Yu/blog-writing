@@ -475,11 +475,10 @@ def generate_editorial_images(
         _save_png_atomic(
             _story_image(day, index - 1, regular_font, bold_font), path
         )
-        title = " ".join(str(story.get("title_kr") or "").split())
         assets[f"story_{index}"] = {
             "url": f"{base_url}/{day_id}/story-{index:02d}.png",
             "path": f"{logical_dir}/story-{index:02d}.png",
-            "alt": f"{title} 관련 편집 이미지",
+            "alt": "",
             "width": 1200,
             "height": 630,
         }

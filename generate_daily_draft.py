@@ -12,15 +12,24 @@ from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 from news_pipeline import validate_day_id
+from quiz_bank import select_quiz
 from visual_direction import fallback_visual, validate_visual
 
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
-GENERATION_REVISION = 2
-MAX_PROMPT_INPUT_TOKENS = 6_200
+GENERATION_REVISION = 3
+MAX_PROMPT_INPUT_TOKENS = 6_900
+MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 6
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
+QUIZ_CATEGORIES = {
+    "소프트웨어 설계",
+    "소프트웨어 개발",
+    "데이터베이스 구축",
+    "프로그래밍 언어 활용",
+    "정보시스템 구축관리",
+}
 GENERIC_REWRITES = {
     "기술의 융합이 가속화되고 있습니다": "서로 다른 기술을 한 흐름에서 다루는 사례가 늘고 있습니다",
     "새로운 기회를 제공합니다": "적용할 수 있는 범위를 넓힙니다",
@@ -124,9 +133,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
         )
 
     history_payload = {
-        "recent_questions": [
-            _text(item, 160) for item in history.get("questions", [])[-12:]
-        ],
+        "recent_questions": [],
         "recent_terms": [
             _text(item, 60) for item in history.get("terms", [])[-30:]
         ],
@@ -159,16 +166,18 @@ def build_prompt(inbox, history=None, article_contexts=None):
 - content는 뉴스마다 정확히 6블록으로 만든다. '무엇이 달라졌나'(h+p), '개발자 작업에 닿는 지점'(h+p), '아직 확인할 점'(h+p) 순서다.
 - 각 본문 문단은 180~260자로 쓴다. 첫 문단은 detail과 summary에서 확인한 사실, 둘째는 그 사실에서 읽을 수 있는 개발자 관점의 변화, 셋째는 원문에서 확인되지 않은 점과 직접 검토할 질문을 구분한다.
 - 개발자 관점이나 적용 아이디어는 사실처럼 단정하지 말고 '개발자 관점에서는', '직접 적용한다면'처럼 해석임을 드러낸다.
+- 적용 아이디어를 기사 속 제품이 제공하는 기능처럼 쓰지 않는다. detail이나 summary에 없는 자동 적용·자동 수정·성능 보장은 제품의 기능으로 추가하지 않는다.
 - 근거가 부족하면 짧게 쓰고 추측하지 않는다.
 - 같은 뜻을 반복해 분량을 채우지 않는다. 다음 표현은 쓰지 않는다: '기술의 융합이 가속화되고 있습니다', '새로운 기회를 제공합니다', '중요한 역할을 할 수 있습니다', '응용 가능성을 열어줍니다', '미래를 재정의합니다', '혁신하고 있습니다', '주목할 필요가 있습니다', '살펴보았습니다'.
-- 정보처리기사 4지선다 문제 1개와 IT·개발·기획 용어 3개도 만든다. 최근 항목과 겹치지 않는다.
+- quiz는 빈 객체 {{}}로 둔다. 검증된 정처기 문제은행에서 프로그램이 별도로 붙인다.
+- IT·개발·기획 용어 3개를 만들고 최근 항목과 겹치지 않는다.
 
 반환 구조:
 {{
   "visual": {{"hook":"", "motif":"network|agent|memory|security|data|code|cloud|hardware|research|signal"}},
   "editorial": {{"opening":"", "throughline":"", "closing":"", "action":""}},
   "news": [{{"title_kr":"", "blurb_kr":"", "content":[{{"t":"h", "text":"무엇이 달라졌나"}},{{"t":"p", "text":""}},{{"t":"h", "text":"개발자 작업에 닿는 지점"}},{{"t":"p", "text":""}},{{"t":"h", "text":"아직 확인할 점"}},{{"t":"p", "text":""}}]}}],
-  "quiz": {{"category":"", "question":"", "options":["","","",""], "answer":0, "explain_kr":""}},
+  "quiz": {{}},
   "terms": [{{"term":"", "kind":"IT|개발|기획", "meaning_kr":""}}]
 }}
 
@@ -431,7 +440,7 @@ def _estimated_read_minutes(day):
             if isinstance(block, dict)
         )
     quiz = day.get("quiz") or {}
-    pieces.extend([quiz.get("question"), quiz.get("explain_kr")])
+    pieces.append(quiz.get("question"))
     pieces.extend(quiz.get("options") or [])
     for term in day.get("terms") or []:
         if isinstance(term, dict):
@@ -458,6 +467,8 @@ def _assert_draft_quality(day):
             raise DraftQualityError("뉴스별 본문 구조가 충분하지 않습니다.")
         if [block.get("text") for block in headings] != expected_headings:
             raise DraftQualityError("뉴스별 소제목 구조가 올바르지 않습니다.")
+        if any(len(_text(block.get("text"), 700)) < 120 for block in paragraphs):
+            raise DraftQualityError("뉴스별 본문 문단이 너무 짧습니다.")
         if paragraph_chars < 420:
             raise DraftQualityError("뉴스별 설명이 너무 짧습니다.")
         all_copy.append(item.get("blurb_kr", ""))
@@ -466,6 +477,9 @@ def _assert_draft_quality(day):
     combined = " ".join(str(value) for value in all_copy)
     if any(phrase in combined for phrase in GENERIC_COPY):
         raise DraftQualityError("막연한 요약 표현이 포함되어 있습니다.")
+    quiz = day.get("quiz") or {}
+    if quiz.get("category") not in QUIZ_CATEGORIES:
+        raise DraftQualityError("정처기 문제의 필기 과목이 올바르지 않습니다.")
     if _estimated_read_minutes(day) < MIN_LONGFORM_READ_MINUTES:
         raise DraftQualityError("전체 글이 6분 읽기 분량에 미치지 못합니다.")
 
@@ -545,11 +559,13 @@ def fallback_day(inbox):
     }
 
 
-def load_history(data_dir):
+def load_history(data_dir, exclude_day=None):
     """Load a bounded list of previous quiz questions and terms."""
     questions = []
     terms = []
     for path in sorted(Path(data_dir).glob("*.json")):
+        if exclude_day and path.stem == exclude_day:
+            continue
         try:
             day = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
@@ -594,7 +610,7 @@ def _quality_retry_prompt(prompt, generated, error):
         paragraphs=paragraph_lengths,
     )
     retry_prompt = prompt + feedback
-    if _conservative_token_estimate(retry_prompt) > 7_000:
+    if _conservative_token_estimate(retry_prompt) > MAX_RETRY_INPUT_TOKENS:
         raise DraftQualityError("품질 재작성 입력이 모델 한도를 초과했습니다.")
     return retry_prompt
 
@@ -612,7 +628,8 @@ def generate_and_write(
     """Generate one local day JSON and immediately export its Tistory HTML."""
     inbox = json.loads(Path(inbox_path).read_text(encoding="utf-8"))
     data_dir = Path(data_dir)
-    history = load_history(data_dir)
+    history = load_history(data_dir, exclude_day=inbox["day"])
+    curated_quiz = select_quiz(inbox["day"], history.get("questions"))
     article_contexts = {}
     if reference_loader is not None:
         try:
@@ -623,11 +640,13 @@ def generate_and_write(
     try:
         prompt = build_prompt(inbox, history, article_contexts)
         generated = model_call(prompt, token, model)
+        generated = {**generated, "quiz": curated_quiz}
         try:
             day = build_day(inbox, generated, model=model)
         except DraftQualityError as exc:
             retry_prompt = _quality_retry_prompt(prompt, generated, exc)
             generated = model_call(retry_prompt, token, model)
+            generated = {**generated, "quiz": curated_quiz}
             day = build_day(
                 inbox, _rewrite_generic_phrases(generated), model=model
             )

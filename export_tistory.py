@@ -95,7 +95,9 @@ SUMMARY_STYLE = (
     "margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;"
     "background:#f7f4ec;"
 )
-SUMMARY_LIST_STYLE = "margin:0;padding-left:20px;color:#46534d;line-height:1.8;"
+SUMMARY_LIST_STYLE = (
+    "margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"
+)
 CLOSING_STYLE = (
     "margin:42px 0 0;padding:24px 0;border-top:3px solid #28745a;"
     "border-bottom:1px solid #d8dedb;background:#fff;"
@@ -197,7 +199,7 @@ def estimate_read_minutes(day):
         pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
         pieces.extend(block.get("text") for block in item.get("content", []) if isinstance(block, dict))
     quiz = day.get("quiz") or {}
-    pieces.extend([quiz.get("question"), quiz.get("explain_kr")])
+    pieces.append(quiz.get("question"))
     pieces.extend(quiz.get("options") or [])
     for term in day.get("terms", []):
         pieces.extend([term.get("term"), term.get("meaning_kr")])
@@ -429,21 +431,35 @@ def build_quiz_section(quiz):
     if not quiz:
         return ""
     options = quiz.get("options") or []
-    answer = int(quiz.get("answer", 0))
+    try:
+        answer = int(quiz.get("answer", -1))
+    except (TypeError, ValueError):
+        answer = -1
     option_html = "".join(
-        f'<li class="digest-option" style="margin:0 0 8px;">{esc(opt)}</li>'
-        for opt in options
+        (
+            '<li class="digest-option" '
+            'style="display:grid;grid-template-columns:1.7em minmax(0,1fr);'
+            'gap:4px;margin:0 0 8px;list-style:none;">'
+            f'<span class="digest-option-number">{index}.</span>'
+            f'<span>{esc(opt)}</span></li>'
+        )
+        for index, opt in enumerate(options, 1)
     )
     answer_text = options[answer] if 0 <= answer < len(options) else ""
+    answer_html = (
+        f"<b>정답</b> {answer + 1}번 · {esc(answer_text)}"
+        if answer_text
+        else "<b>정답 확인 필요</b> 저장된 정답 번호가 올바르지 않습니다."
+    )
     return f"""
 <section class="digest-quiz"{style(QUIZ_STYLE)}>
   <p class="digest-source"{style(BADGE_STYLE)}>기초상식 · {esc(quiz.get("category", "정보처리기사"))}</p>
   <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 정처기 문제</h2>
   <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">{esc(quiz.get("question"))}</p>
-  <ol class="digest-options" style="margin:12px 0 14px;padding-left:22px;">{option_html}</ol>
+  <ol class="digest-options" role="list" style="margin:12px 0 14px;padding-left:0;list-style:none;">{option_html}</ol>
   <details class="digest-answer" style="margin-top:16px;padding-top:14px;border-top:1px solid #cfd8d3;">
     <summary style="cursor:pointer;color:#28745a;font-weight:850;">정답과 해설 보기</summary>
-    <p style="margin:12px 0 6px;color:#27332d;"><b>정답</b> {answer + 1}. {esc(answer_text)}</p>
+    <p style="margin:12px 0 6px;color:#27332d;">{answer_html}</p>
     <p class="digest-explain" style="margin:0;color:#46534d;"><b>해설</b> {esc(quiz.get("explain_kr"))}</p>
   </details>
 </section>""".strip()

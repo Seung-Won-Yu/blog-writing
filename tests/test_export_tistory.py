@@ -113,8 +113,67 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("정답과 해설 보기", html)
         self.assertNotIn("class=\"digest-option is-answer\"", html)
 
+    def test_renders_explicit_option_numbers_matching_the_answer_number(self):
+        day = dict(FALLBACK_DAY)
+        day["quiz"] = {
+            "category": "소프트웨어 공학",
+            "question": "형상 관리의 목적은?",
+            "options": ["변경 추적", "광고", "채용", "결제"],
+            "answer": 2,
+            "explain_kr": "산출물의 변경 이력을 관리한다.",
+        }
+
+        html = render_post("2026-07-13", day)
+
+        for number, option in enumerate(day["quiz"]["options"], 1):
+            self.assertIn(
+                f'<span class="digest-option-number">{number}.</span><span>{option}</span>',
+                html,
+            )
+        self.assertIn("<b>정답</b> 3번 · 채용", html)
+        self.assertIn("list-style:none", html)
+        self.assertIn('class="digest-options" role="list"', html)
+
     def test_estimates_a_short_but_nonzero_read_time(self):
         self.assertGreaterEqual(estimate_read_minutes(FALLBACK_DAY), 2)
+
+    def test_hidden_quiz_explanation_does_not_inflate_read_time(self):
+        day = dict(FALLBACK_DAY)
+        day["quiz"] = {
+            "category": "소프트웨어 개발",
+            "question": "형상 관리의 목적은?",
+            "options": ["변경 추적", "광고", "채용", "결제"],
+            "answer": 0,
+            "explain_kr": "",
+        }
+        without_hidden_answer = estimate_read_minutes(day)
+        day["quiz"] = {**day["quiz"], "explain_kr": "숨겨진 해설 " * 500}
+
+        self.assertEqual(estimate_read_minutes(day), without_hidden_answer)
+
+    def test_invalid_legacy_answer_does_not_break_the_export(self):
+        day = dict(FALLBACK_DAY)
+        day["quiz"] = {
+            "category": "소프트웨어 개발",
+            "question": "형상 관리의 목적은?",
+            "options": ["변경 추적", "광고", "채용", "결제"],
+            "answer": "not-a-number",
+            "explain_kr": "변경 이력을 관리한다.",
+        }
+
+        html = render_post("2026-07-13", day)
+
+        self.assertIn("정답 확인 필요", html)
+
+    def test_summary_uses_only_the_explicit_numbering(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [{"title_kr": "첫 뉴스"}, {"title_kr": "두 번째 뉴스"}]
+
+        html = render_post("2026-07-13", day)
+
+        self.assertIn('class="digest-summary"', html)
+        self.assertIn("list-style:none", html)
+        self.assertIn("<li>1. 첫 뉴스</li>", html)
 
 
 class EditorialImageIntegrationTests(unittest.TestCase):

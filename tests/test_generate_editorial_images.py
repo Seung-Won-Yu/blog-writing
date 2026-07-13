@@ -134,7 +134,7 @@ class EditorialImageTests(unittest.TestCase):
                 "https://blog.example/tistory/assets/2026-07-13/cover.png",
             )
             self.assertIn("자동화, 어디까지 믿어도 될까?", assets["cover"]["alt"])
-            self.assertIn("GitHub Actions", assets["story_1"]["alt"])
+            self.assertEqual(assets["story_1"]["alt"], "")
             self.assertEqual(
                 assets["story_2"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/story-02.png",

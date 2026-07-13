@@ -75,7 +75,7 @@ MODEL_OUTPUT = {
         },
     ],
     "quiz": {
-        "category": "소프트웨어 공학",
+        "category": "소프트웨어 개발",
         "question": "형상 관리의 목적으로 알맞은 것은?",
         "options": ["변경 추적", "서버 증설", "화면 설계", "광고 집행"],
         "answer": 0,
@@ -103,6 +103,8 @@ class PromptTests(unittest.TestCase):
         self.assertIn("개발자 작업에 닿는 지점", prompt)
         self.assertIn("아직 확인할 점", prompt)
         self.assertIn("새로운 기회를 제공합니다", prompt)
+        self.assertIn("검증된 정처기 문제은행", prompt)
+        self.assertIn("제품이 제공하는 기능처럼", prompt)
         self.assertIn('"visual"', prompt)
         self.assertIn('"hook"', prompt)
         self.assertIn("network|agent|memory|security|data|code|cloud|hardware|research|signal", prompt)
@@ -224,9 +226,17 @@ class DayValidationTests(unittest.TestCase):
             for block in item["content"]:
                 if block["t"] == "p":
                     block["text"] = paragraph
+        short["quiz"]["explain_kr"] = "숨겨진 해설 " * 500
 
         with self.assertRaisesRegex(DraftQualityError, "6분"):
             build_day(INBOX, short)
+
+    def test_rejects_an_individually_short_news_paragraph(self):
+        uneven = copy.deepcopy(MODEL_OUTPUT)
+        uneven["news"][0]["content"][1]["text"] = "근거는 짧게만 적었다."
+
+        with self.assertRaisesRegex(DraftQualityError, "문단"):
+            build_day(INBOX, uneven)
 
     def test_rejects_wrong_news_block_order_or_heading_names(self):
         wrong_order = copy.deepcopy(MODEL_OUTPUT)
@@ -435,6 +445,40 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(result["generation"]["provider"], "github-models")
         self.assertEqual(len(seen_prompts), 1)
 
+    def test_generation_replaces_model_news_quiz_with_curated_exam_question(self):
+        generated = copy.deepcopy(MODEL_OUTPUT)
+        generated["quiz"] = {
+            "category": "정보처리기사",
+            "question": "기사에 소개된 VEXAIoT의 이름은?",
+            "options": ["VEXAIoT", "제품 B", "제품 C", "제품 D"],
+            "answer": 1,
+            "explain_kr": "기사 내용을 다시 말한다.",
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox = copy.deepcopy(INBOX)
+            inbox["day"] = "2026-07-08"
+            inbox["selected"][0]["title"] = "Round Robin 스케줄러 개선"
+            inbox_path.write_text(json.dumps(inbox, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=lambda _prompt, _token, _model: generated,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertIn(result["quiz"]["category"], {
+            "소프트웨어 설계",
+            "소프트웨어 개발",
+            "데이터베이스 구축",
+            "프로그래밍 언어 활용",
+            "정보시스템 구축관리",
+        })
+        self.assertNotIn("VEXAIoT", json.dumps(result["quiz"], ensure_ascii=False))
+
     def test_retries_once_when_first_model_draft_is_too_shallow(self):
         calls = []
         shallow = copy.deepcopy(MODEL_OUTPUT)
@@ -462,7 +506,7 @@ class DraftFileTests(unittest.TestCase):
         self.assertIn("4~5개의 완결된 문장", calls[1])
         self.assertIn("이전 응답의 본문 문단 길이", calls[1])
         self.assertLessEqual(
-            _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 800
+            _conservative_token_estimate(calls[1]), MAX_PROMPT_INPUT_TOKENS + 900
         )
 
     def test_second_quality_attempt_rewrites_banned_generic_phrases(self):
@@ -511,6 +555,22 @@ class DraftFileTests(unittest.TestCase):
                 load_history(days),
                 {"questions": ["이전 문제"], "terms": ["이전 용어"]},
             )
+
+    def test_history_excludes_the_target_day_during_forced_regeneration(self):
+        with tempfile.TemporaryDirectory() as directory:
+            days = Path(directory)
+            for day, question in (
+                ("2026-07-12", "전날 문제"),
+                ("2026-07-13", "현재 날짜 문제"),
+            ):
+                (days / f"{day}.json").write_text(
+                    json.dumps({"quiz": {"question": question}}, ensure_ascii=False),
+                    encoding="utf-8",
+                )
+
+            history = load_history(days, exclude_day="2026-07-13")
+
+        self.assertEqual(history["questions"], ["전날 문제"])
 
 
 if __name__ == "__main__":

@@ -36,6 +36,9 @@ def load_drafts():
             continue
         with meta_path.open("r", encoding="utf-8") as f:
             meta = json.load(f)
+        source = str(meta.get("source") or "")
+        if not source.startswith("data/days/") or not (ROOT / source).is_file():
+            continue
         day = meta_path.stem
         drafts.append(
             {
@@ -48,7 +51,7 @@ def load_drafts():
                 "key_summary": meta.get("key_summary") or [],
                 "publish_checklist": meta.get("publish_checklist") or [],
                 "image_assets": meta.get("image_assets") or [],
-                "source": meta.get("source") or "",
+                "source": source,
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
                 "meta_path": f"tistory/{day}.json",
@@ -465,7 +468,7 @@ def render(drafts):
           </div>
 
           <div class="code-head">
-            <h2>본문 HTML 코드</h2>
+            <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
           </div>
           <textarea id="htmlCode" spellcheck="false"></textarea>
@@ -479,7 +482,6 @@ def render(drafts):
     const drafts = {payload};
     const latest = {json_for_script(latest)};
     let current = null;
-    let currentHtml = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -618,11 +620,9 @@ def render(drafts):
       try {{
         const response = await fetch(draft.html_path + "?v=" + Date.now());
         if (!response.ok) throw new Error("HTTP " + response.status);
-        currentHtml = await response.text();
-        els.htmlCode.value = currentHtml;
+        els.htmlCode.value = await response.text();
         setStatus(day + " 초안을 불러왔습니다.");
       }} catch (error) {{
-        currentHtml = "";
         els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
         setStatus("초안을 불러오지 못했습니다. 직접 생성 후 다시 시도해 주세요.", "error");
       }}
@@ -652,7 +652,7 @@ def render(drafts):
       const button = event.target.closest("[data-copy]");
       if (!button || !current) return;
       const type = button.dataset.copy;
-      if (type === "html") copyText(currentHtml, "본문 HTML");
+      if (type === "html") copyText(els.htmlCode.value, "본문 HTML");
       if (type === "title") copyText(current.title, "제목");
       if (type === "titles") copyText(numbered(current.title_candidates), "제목 후보");
       if (type === "category") copyText(current.category, "카테고리");
