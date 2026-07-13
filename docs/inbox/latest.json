@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "day": "2026-07-13",
-  "generated_at": "2026-07-13T11:24:52.184669+00:00",
+  "day": "2026-07-12",
+  "generated_at": "2026-07-13T12:19:07.552691+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -1830,6 +1830,414 @@
         "deep": 3
       },
       "topic_tags": []
+    },
+    {
+      "id": "7db767638b3c",
+      "title": "구글이 공개한 AI 에이전트 제작 노하우를 가져다 쓰는 법",
+      "normalized_title": "구글이 공개한 ai 에이전트 제작 노하우를 가져다 쓰는 법",
+      "url": "https://yozm.wishket.com/magazine/detail/3833",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "f8117c100197",
+      "title": "AI 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "normalized_title": "ai 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "url": "https://yozm.wishket.com/magazine/detail/3845",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "0f19fa97a5bb",
+      "title": "990원이 찍혔다: 바이브 코딩이 유료 서비스가 되기까지",
+      "normalized_title": "990원이 찍혔다 바이브 코딩이 유료 서비스가 되기까지",
+      "url": "https://yozm.wishket.com/magazine/detail/3844",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "16eeb94c1a77",
+      "title": "이벤트 기반 MSA, AI 시대엔 더 비싸진다고요?",
+      "normalized_title": "이벤트 기반 msa ai 시대엔 더 비싸진다고요",
+      "url": "https://yozm.wishket.com/magazine/detail/3839",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "2ce3e505b30b",
+      "title": "“이 정도면 직접 만들겠는데?” 바이브 코딩으로 유료 앱 대체하기",
+      "normalized_title": "이 정도면 직접 만들겠는데 바이브 코딩으로 유료 앱 대체하기",
+      "url": "https://yozm.wishket.com/magazine/detail/3838",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "0164f5dfc5ea",
+      "title": "로컬 LLM, 나를 위한 작은 AI 작업대 만들기",
+      "normalized_title": "로컬 llm 나를 위한 작은 ai 작업대 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3835",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "607ef667dc42",
+      "title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "normalized_title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3834",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "bac79aac38a2",
+      "title": "바이브코더를 위한 기초 보안 A to Z",
+      "normalized_title": "바이브코더를 위한 기초 보안 a to z",
+      "url": "https://yozm.wishket.com/magazine/detail/3832",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "c0902b6ef178",
+      "title": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "normalized_title": "페이블 d 2 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "url": "https://yozm.wishket.com/magazine/detail/3848",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "60e46c7d2f00",
+      "title": "같은 주에 나온 GPT-5.6과 Grok 4.5, 정부가 먼저 검토한 모델은",
+      "normalized_title": "같은 주에 나온 gpt 5 6과 grok 4 5 정부가 먼저 검토한 모델은",
+      "url": "https://yozm.wishket.com/magazine/detail/3843",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "564fea386642",
+      "title": "담당자 퇴사하면 업무 못 하는 회사를 위한 AX는?",
+      "normalized_title": "담당자 퇴사하면 업무 못 하는 회사를 위한 ax는",
+      "url": "https://yozm.wishket.com/magazine/detail/3842",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "bf81115f2f29",
+      "title": "사람마다 다른 썸네일이 나온다? GenUI의 빛과 어둠",
+      "normalized_title": "사람마다 다른 썸네일이 나온다 genui의 빛과 어둠",
+      "url": "https://yozm.wishket.com/magazine/detail/3841",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "a7daf90e40e2",
+      "title": "1인 빌더, 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "normalized_title": "1인 빌더 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "url": "https://yozm.wishket.com/magazine/detail/3840",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "88af05dd26b8",
+      "title": "쿠버네티스 7개 주요 게이트웨이 기술 검증(Poc) 다시 하기 (feat. Ingress NGINX 은퇴)",
+      "normalized_title": "쿠버네티스 7개 주요 게이트웨이 기술 검증 poc 다시 하기 feat ingress nginx 은퇴",
+      "url": "https://yozm.wishket.com/magazine/detail/3837",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "46761bb14ea1",
+      "title": "실전 이커머스: 재고 관리 단위 설계로 품절률 10% 낮추기",
+      "normalized_title": "실전 이커머스 재고 관리 단위 설계로 품절률 10 낮추기",
+      "url": "https://yozm.wishket.com/magazine/detail/3836",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
     }
   ],
   "selected": [
@@ -1932,10 +2340,5 @@
       "selection_reason": "deep 독자 적합도 2 · 주제 연결"
     }
   ],
-  "errors": [
-    {
-      "source_id": "yozmit",
-      "message": "HTTP Error 405: Not Allowed"
-    }
-  ]
+  "errors": []
 }
