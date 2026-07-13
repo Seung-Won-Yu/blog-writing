@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T11:24:52.184669+00:00",
+  "generated_at": "2026-07-13T12:36:03.673854+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -1016,6 +1016,37 @@
       ]
     },
     {
+      "id": "cf4af4e548f6",
+      "title": "Show GN: 만든 SaaS를 AI에게 말만 하면 등록되는 MCP 서버",
+      "normalized_title": "show gn 만든 saas를 ai에게 말만 하면 등록되는 mcp 서버",
+      "url": "https://news.hada.io/topic?id=31397",
+      "published_at": "2026-07-13T12:20:18+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
       "id": "26a3bbe87351",
       "title": "Show GN: 정치 커뮤니티에 AI 팩트체크 기능을 붙이며 겪은 시행착오들",
       "normalized_title": "show gn 정치 커뮤니티에 ai 팩트체크 기능을 붙이며 겪은 시행착오들",
@@ -1613,34 +1644,6 @@
       "normalized_title": "책을 더 많이 읽는 방법",
       "url": "https://news.hada.io/topic?id=31382",
       "published_at": "2026-07-13T01:13:24+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "3878a43b9b3f",
-      "title": "Chromium 148부터 Math.tanh로 기반 OS를 식별할 수 있음",
-      "normalized_title": "chromium 148부터 math tanh로 기반 os를 식별할 수 있음",
-      "url": "https://news.hada.io/topic?id=31380",
-      "published_at": "2026-07-13T01:10:24+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
