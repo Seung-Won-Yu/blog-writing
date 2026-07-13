@@ -1,5 +1,7 @@
 """Shared, deterministic visual direction for daily editorial images."""
 
+import re
+
 VISUAL_MOTIFS = {
     "network",
     "agent",
@@ -18,7 +20,7 @@ VISUAL_KEYWORDS = (
     ("memory", ("메모리", "memory", "기억", "context", "컨텍스트", "rag", "검색")),
     ("hardware", ("gpu", "npu", "chip", "칩", "반도체", "하드웨어")),
     ("cloud", ("cloud", "클라우드", "server", "서버", "kubernetes", "인프라")),
-    ("data", ("database", "데이터베이스", "데이터", "분석", "vector", "벡터")),
+    ("data", ("database", "데이터베이스", "데이터", "분석", "vector", "벡터", "clickhouse")),
     ("agent", ("agent", "에이전트", "세션", "session", "autonomous", "자율")),
     ("code", ("코드", "coding", "코딩", "github", "개발", "프레임워크", "cli")),
     ("research", ("논문", "paper", "arxiv", "연구", "benchmark", "벤치마크")),
@@ -53,9 +55,16 @@ BANNED_VISUAL_HOOKS = ("충격", "소름", "무조건", "절대", "대박", "지
 def motif_for_text(text):
     normalized = str(text or "").casefold()
     for motif, keywords in VISUAL_KEYWORDS:
-        if any(keyword in normalized for keyword in keywords):
+        if any(_keyword_matches(normalized, keyword) for keyword in keywords):
             return motif
     return "signal"
+
+
+def _keyword_matches(normalized, keyword):
+    if keyword.isascii():
+        pattern = r"(?<![a-z0-9]){}(?![a-z0-9])".format(re.escape(keyword))
+        return re.search(pattern, normalized) is not None
+    return keyword in normalized
 
 
 def fallback_visual(reference):
