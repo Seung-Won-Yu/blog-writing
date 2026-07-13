@@ -220,7 +220,30 @@ def _source_item_matches(raw, source):
     )
 
 
-def build_inbox(config, fetch_text, now=None, day_id=None):
+def load_recent_selected_urls(output_dir, day_id, lookback_days=7):
+    """Return canonical URLs selected on prior days inside the lookback window."""
+    target_day = dt.date.fromisoformat(validate_day_id(day_id))
+    output = Path(output_dir)
+    urls = set()
+
+    for days_ago in range(1, max(0, int(lookback_days)) + 1):
+        prior_day = target_day - dt.timedelta(days=days_ago)
+        path = output / "{}.json".format(prior_day.isoformat())
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for item in payload.get("selected", []):
+            url = canonicalize_url(item.get("url", ""))
+            if url:
+                urls.add(url)
+
+    return urls
+
+
+def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
     """Collect, rank, and select candidates without publishing anything."""
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -265,9 +288,20 @@ def build_inbox(config, fetch_text, now=None, day_id=None):
         reverse=True,
     )
 
-    selection = config.get("selection", {})
+    canonical_excluded_urls = set()
+    for url in excluded_urls or set():
+        canonical_url = canonicalize_url(url)
+        if canonical_url:
+            canonical_excluded_urls.add(canonical_url)
+    eligible_candidates = [
+        candidate
+        for candidate in candidates
+        if candidate.get("url") not in canonical_excluded_urls
+    ]
+    selection = dict(config.get("selection", {}))
+    selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
     selected = select_candidates(
-        candidates,
+        eligible_candidates,
         max_items=int(selection.get("max_items", 3)),
         max_per_source=int(selection.get("max_per_source", 1)),
         preferred_groups=selection.get("preferred_groups", []),
@@ -472,7 +506,15 @@ def main(argv=None):
         day_id = validate_day_id(args.day or now.date().isoformat())
     except ValueError as exc:
         parser.error(str(exc))
-    inbox = build_inbox(config, fetch_text=fetch_url, now=now, day_id=day_id)
+    lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 7))
+    excluded_urls = load_recent_selected_urls(args.output_dir, day_id, lookback_days)
+    inbox = build_inbox(
+        config,
+        fetch_text=fetch_url,
+        now=now,
+        day_id=day_id,
+        excluded_urls=excluded_urls,
+    )
     paths = write_inbox(inbox, args.output_dir)
     print(
         "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(

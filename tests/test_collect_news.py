@@ -1,7 +1,16 @@
 import datetime as dt
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
-from collect_news import build_inbox, parse_feed, parse_html_links, render_inbox_html
+from collect_news import (
+    build_inbox,
+    load_recent_selected_urls,
+    parse_feed,
+    parse_html_links,
+    render_inbox_html,
+)
 
 
 RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>
@@ -88,6 +97,64 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_excludes_recently_selected_url_from_new_selection(self):
+        config = {
+            "interest_keywords": ["AI"],
+            "selection": {"max_items": 1, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "news",
+                    "name": "News",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://news.example/feed",
+                    "enabled": True,
+                }
+            ],
+        }
+        feed = """<rss><channel>
+          <item><title>AI 어제 기사</title><link>https://news.example/old?utm_source=rss</link></item>
+          <item><title>AI 오늘 기사</title><link>https://news.example/new</link></item>
+        </channel></rss>"""
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda _url: feed,
+            now=NOW,
+            day_id="2026-07-13",
+            excluded_urls={"https://news.example/old"},
+        )
+
+        self.assertEqual([item["url"] for item in result["selected"]], ["https://news.example/new"])
+        self.assertEqual(result["selection"]["recently_selected_excluded"], 1)
+
+    def test_loads_only_selected_urls_from_recent_prior_days(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            (output / "2026-07-12.json").write_text(
+                json.dumps(
+                    {
+                        "selected": [
+                            {"url": "https://news.example/kept?utm_source=rss"},
+                        ],
+                        "candidates": [{"url": "https://news.example/not-selected"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (output / "2026-07-05.json").write_text(
+                json.dumps({"selected": [{"url": "https://news.example/too-old"}]}),
+                encoding="utf-8",
+            )
+            (output / "2026-07-13.json").write_text(
+                json.dumps({"selected": [{"url": "https://news.example/same-day"}]}),
+                encoding="utf-8",
+            )
+
+            urls = load_recent_selected_urls(output, "2026-07-13", lookback_days=7)
+
+        self.assertEqual(urls, {"https://news.example/kept"})
+
     def test_review_inbox_is_not_search_indexable(self):
         page = render_inbox_html(
             {"day": "2026-07-13", "generated_at": "", "selected": [], "candidates": [], "errors": []}
