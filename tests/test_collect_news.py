@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 
-from collect_news import build_inbox, parse_feed, parse_html_links
+from collect_news import build_inbox, parse_feed, parse_html_links, render_inbox_html
 
 
 RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>
@@ -88,6 +88,14 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_review_inbox_is_not_search_indexable(self):
+        page = render_inbox_html(
+            {"day": "2026-07-13", "generated_at": "", "selected": [], "candidates": [], "errors": []}
+        )
+
+        self.assertIn('name="robots" content="noindex,nofollow,noarchive"', page)
+        self.assertNotRegex(page, r"[ \t]+\n")
+
     def test_builds_diverse_selection_and_records_source_errors(self):
         config = {
             "interest_keywords": ["AI", "GitHub Actions"],

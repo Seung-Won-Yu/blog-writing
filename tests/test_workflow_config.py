@@ -3,6 +3,14 @@ from pathlib import Path
 
 
 class WorkflowConfigTests(unittest.TestCase):
+    def test_daily_schedule_runs_after_gemini_daily_quota_reset(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("cron: '10 8 * * *'", workflow)
+        self.assertIn("17:10 KST", workflow)
+
     def test_daily_workflow_generates_own_draft_with_builtin_github_token(self):
         workflow = (
             Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
@@ -26,6 +34,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("models: read", workflow)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", workflow)
         self.assertIn("GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}", workflow)
+        self.assertIn("--fail-on-fallback", workflow)
         self.assertIn("ai_images:", workflow)
         self.assertIn("image_model:", workflow)
         self.assertIn("default: false", workflow)

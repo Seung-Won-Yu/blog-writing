@@ -302,13 +302,14 @@ def _candidate_card(item, featured=False):
         if item.get("requires_manual_review")
         else ""
     )
-    summary_html = '<p class="summary">{}</p>'.format(summary) if summary else ""
+    summary_html = (
+        '\n        <p class="summary">{}</p>'.format(summary) if summary else ""
+    )
     card_class = "card featured" if featured else "card"
     return """
       <article class="{card_class}">
         <div class="meta"><span class="badge">{source}</span><span>{group}</span><span>점수 {score}</span>{review_badge}</div>
-        <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>
-        {summary_html}
+        <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>{summary_html}
         <p class="reasons">{reasons}</p>
       </article>""".format(
         card_class=card_class,
@@ -355,6 +356,7 @@ def render_inbox_html(inbox):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <title>{day} 뉴스 후보함</title>
   <style>
     :root {{ color-scheme: light; --ink:#1f2933; --muted:#65717d; --line:#dfe4e8; --paper:#fff; --wash:#f5f6f4; --accent:#28684a; }}

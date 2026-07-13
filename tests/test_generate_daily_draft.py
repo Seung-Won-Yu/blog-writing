@@ -19,6 +19,7 @@ from generate_daily_draft import (
     build_prompt,
     fallback_day,
     generate_and_write,
+    generation_outcome_exit_code,
     load_history,
     gemini_model_candidates,
     safe_model_failure,
@@ -826,6 +827,14 @@ class GeminiClientTests(unittest.TestCase):
 
 
 class DraftFileTests(unittest.TestCase):
+    def test_can_mark_saved_fallback_as_failed_for_automation(self):
+        fallback = {"generation": {"provider": "deterministic-fallback"}}
+        generated = {"generation": {"provider": "gemini"}}
+
+        self.assertEqual(generation_outcome_exit_code(fallback, True), 2)
+        self.assertEqual(generation_outcome_exit_code(fallback, False), 0)
+        self.assertEqual(generation_outcome_exit_code(generated, True), 0)
+
     def test_generates_local_day_json_and_calls_tistory_exporter(self):
         exported = []
 

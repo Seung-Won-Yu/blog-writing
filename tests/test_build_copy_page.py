@@ -33,6 +33,7 @@ class CopyPageTests(unittest.TestCase):
     def test_explains_manual_generation_without_upstream_copy(self):
         html = render([])
 
+        self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
         self.assertIn("빠진 날짜 직접 생성", html)
         self.assertIn("날짜를 비우면 오늘", html)
         self.assertIn("Run workflow", html)
@@ -199,6 +200,7 @@ class CopyPageTests(unittest.TestCase):
             page = (preview / "2026-07-13.html").read_text(encoding="utf-8")
 
         self.assertIn('<meta charset="utf-8">', page)
+        self.assertIn('name="robots" content="noindex,nofollow,noarchive"', page)
         self.assertIn('Content-Security-Policy', page)
         self.assertIn("script-src 'none'", page)
         self.assertIn("한글 제목 · 본문 미리보기", page)

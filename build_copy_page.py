@@ -76,6 +76,7 @@ def write_preview_pages(drafts):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
   <title>{esc(draft.get("title"))} · 본문 미리보기</title>
   <style>
@@ -106,6 +107,7 @@ def render(drafts):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <title>티스토리 블로그 초안 복사</title>
   <style>
     :root {{

@@ -104,6 +104,13 @@ def safe_model_failure(exc):
     return type(exc).__name__
 
 
+def generation_outcome_exit_code(day, fail_on_fallback=False):
+    """Make automation visibly fail while preserving a review-only fallback."""
+    generation = day.get("generation") if isinstance(day, dict) else {}
+    provider = generation.get("provider") if isinstance(generation, dict) else ""
+    return 2 if fail_on_fallback and provider == "deterministic-fallback" else 0
+
+
 def _text(value, limit):
     text = " ".join(str(value or "").replace("\x00", " ").split())
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
@@ -1323,6 +1330,11 @@ def main(argv=None):
         action="store_true",
         help="모델 장애 시 수집된 요약만으로 최소 초안 생성",
     )
+    parser.add_argument(
+        "--fail-on-fallback",
+        action="store_true",
+        help="검토용 최소 초안은 저장하되 자동화 실행을 실패로 표시",
+    )
     parser.add_argument("--force", action="store_true", help="기존 정상 초안도 다시 생성")
     args = parser.parse_args(argv)
 
@@ -1422,7 +1434,13 @@ def main(argv=None):
 
     provider = day["generation"]["provider"]
     print("자체 초안 생성: {} ({})".format(output_path, provider))
-    return 0
+    exit_code = generation_outcome_exit_code(day, args.fail_on_fallback)
+    if exit_code:
+        print(
+            "발행 가능한 모델 초안을 만들지 못했습니다. 후보함과 검토용 초안만 저장합니다.",
+            file=sys.stderr,
+        )
+    return exit_code
 
 
 if __name__ == "__main__":

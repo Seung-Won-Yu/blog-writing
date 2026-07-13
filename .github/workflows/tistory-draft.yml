@@ -22,7 +22,7 @@ on:
       - 'build_copy_page.py'
       - 'tests/**'
   schedule:
-    - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST
+    - cron: '10 8 * * *'  # 08:10 UTC = 17:10 KST, Gemini 일일 쿼터 초기화 후
   workflow_dispatch:
     inputs:
       day:
@@ -125,9 +125,9 @@ jobs:
             FORCE_FLAG="--force"
           fi
           if [ -n "$REQUESTED_DAY" ]; then
-            python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error $FORCE_FLAG
+            python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error --fail-on-fallback $FORCE_FLAG
           else
-            python generate_daily_draft.py --today --fallback-on-error $FORCE_FLAG
+            python generate_daily_draft.py --today --fallback-on-error --fail-on-fallback $FORCE_FLAG
           fi
 
       - name: Generate branded cover and story images
