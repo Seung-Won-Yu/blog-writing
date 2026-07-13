@@ -115,6 +115,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertIn("도구보다 검증 과정", html)
         self.assertIn('class="digest-throughline"', html)
+        self.assertIn("WHY THESE STORIES", html)
+        self.assertNotIn("WHY THESE THREE", html)
         self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘의 뉴스 1개", html)
         self.assertIn('class="digest-closing"', html)
@@ -128,7 +130,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
         day["news"] = [
             {
                 **FALLBACK_DAY["news"][0],
-                "published_at": "2026-07-12T07:00:00+00:00",
+                "published_at": "2026-07-12T16:00:00+00:00",
                 "audience_lane": "broad",
                 "selection_reason": "일반 독자 적합도 5",
             }
@@ -138,7 +140,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertTrue(html.lstrip().startswith('<article class="daily-digest-post"'))
         self.assertNotIn("<!--", html)
-        self.assertIn("공식 블로그 · 2026. 7. 12 · 일반 독자", html)
+        self.assertIn("공식 블로그 · 2026. 7. 13 · 일반 독자", html)
         self.assertIn("초안 생성에 자동화를 사용", html)
 
     def test_publish_checklist_requires_original_human_review(self):

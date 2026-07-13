@@ -128,6 +128,10 @@ def source_date_label(value):
         published = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
     except ValueError:
         return ""
+    if published.tzinfo is not None:
+        published = published.astimezone(
+            datetime.timezone(datetime.timedelta(hours=9))
+        )
     return f"{published.year}. {published.month}. {published.day}"
 
 
@@ -370,7 +374,7 @@ def build_throughline_section(editorial):
         return ""
     return f"""
 <section class="digest-throughline"{style(THROUGHLINE_STYLE)}>
-  <p{style(KICKER_STYLE)}>WHY THESE THREE</p>
+  <p{style(KICKER_STYLE)}>WHY THESE STORIES</p>
   <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 연결고리</h2>
   <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">{esc(throughline)}</p>
 </section>""".strip()

@@ -80,6 +80,8 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('id="relatedUrl"', html)
         self.assertIn('id="htmlCopyButton"', html)
         self.assertIn('data-copy="html" disabled', html)
+        self.assertIn('<textarea id="htmlCode" spellcheck="false" readonly>', html)
+        self.assertIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
         self.assertIn("function escapeHtml(value)", html)
         self.assertIn("function buildAuthorNoteHtml()", html)
         self.assertIn('class="digest-author-note"', html)

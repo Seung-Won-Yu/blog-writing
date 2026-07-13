@@ -641,7 +641,7 @@ def render(drafts):
               <button class="copy secondary" type="button" id="htmlCopyButton" data-copy="html" disabled>본문 HTML 복사</button>
             </div>
           </div>
-          <textarea id="htmlCode" spellcheck="false"></textarea>
+          <textarea id="htmlCode" spellcheck="false" readonly></textarea>
           <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
             <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
           </section>
@@ -848,7 +848,11 @@ def render(drafts):
       els.htmlCopyButton.disabled = !ready;
       els.reviewGateStatus.textContent = reviewGateMessage();
       els.reviewGateStatus.dataset.ready = String(ready);
-      if (currentBaseHtml) els.htmlCode.value = buildReviewedHtml();
+      if (currentBaseHtml) {{
+        els.htmlCode.value = ready
+          ? buildReviewedHtml()
+          : "검수 완료 후 HTML 코드가 표시됩니다.";
+      }}
       updatePreviewNote();
     }}
 

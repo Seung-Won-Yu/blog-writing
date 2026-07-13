@@ -671,7 +671,7 @@ def _assert_draft_quality(day):
         raise DraftQualityError("발행 제목이 구체적이지 않거나 낚시성입니다.")
     throughline = _text(editorial.get("throughline"), 500)
     if len(throughline) < 160:
-        raise DraftQualityError("세 뉴스를 잇는 연결고리가 충분하지 않습니다.")
+        raise DraftQualityError("뉴스를 잇는 연결고리가 충분하지 않습니다.")
 
     all_copy = list(editorial.values())
     expected_types = ["h", "p", "h", "p", "h", "p"]
