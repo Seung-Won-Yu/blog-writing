@@ -161,7 +161,9 @@ def style(value):
 
 def post_title(day):
     label = plain(day.get("date_label"))
-    return f"[데일리 IT 뉴스] {label} - 오늘의 개발 뉴스와 정처기 문제"
+    if day.get("quiz"):
+        return f"[데일리 IT 뉴스] {label} - 오늘의 개발 뉴스와 정처기 문제"
+    return f"[데일리 IT 뉴스] {label} - 오늘의 AI·개발 소식 정리"
 
 
 def news_titles(day, limit=None):
@@ -210,11 +212,18 @@ def build_title_candidates(day):
     first_keyword = title_keyword(first)
     second_keyword = title_keyword(second)
 
-    candidates = [
-        f"[데일리 IT 뉴스] {label} - {first_keyword}, 정처기 문제 정리",
-        f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
-        f"오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 ({label})",
-    ]
+    if day.get("quiz"):
+        candidates = [
+            f"[데일리 IT 뉴스] {label} - {first_keyword}, 정처기 문제 정리",
+            f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
+            f"오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 ({label})",
+        ]
+    else:
+        candidates = [
+            f"[데일리 IT 뉴스] {label} - {first_keyword} 외 오늘의 개발 소식",
+            f"{label} 개발 뉴스 요약: {first_keyword} 외 오늘의 IT 이슈",
+            f"오늘의 AI/개발 뉴스 핵심 정리 ({label})",
+        ]
     if len(titles) > 1:
         candidates.insert(
             1,
@@ -230,11 +239,13 @@ def build_meta_description(day):
     keywords = [keyword for keyword in keywords if keyword]
     topic_text = ", ".join(keywords[:2]) if keywords else "AI/개발 뉴스"
     quiz = day.get("quiz") or {}
-    quiz_category = plain(quiz.get("category")) or "정보처리기사"
-    return (
-        f"{label} 데일리 IT 뉴스: {topic_text} 핵심과 "
-        f"{quiz_category} 문제, 개발 용어를 정리했습니다."
-    )
+    if quiz:
+        quiz_category = plain(quiz.get("category")) or "정보처리기사"
+        return (
+            f"{label} 데일리 IT 뉴스: {topic_text} 핵심과 "
+            f"{quiz_category} 문제, 개발 용어를 정리했습니다."
+        )
+    return f"{label} 데일리 IT 뉴스: {topic_text}의 핵심 흐름을 짧게 정리했습니다."
 
 
 def build_key_summary(day):
@@ -249,19 +260,24 @@ def build_key_summary(day):
         rows.append(f"정처기 포인트: {plain(quiz.get('category')) or '기초상식'} 문제로 개념을 점검합니다.")
     if terms:
         rows.append("함께 익힐 용어: " + ", ".join(terms[:4]))
-    rows.append("읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.")
+    if quiz or terms:
+        rows.append("읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.")
+    else:
+        rows.append("각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요.")
     return rows[:4]
 
 
 def build_publish_checklist(day):
     titles = build_title_candidates(day)
-    return [
+    checklist = [
         "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
-        "본문 상단 이미지가 정상 표시되는지 확인하기",
         "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
         "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
         f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
     ]
+    if any(item.get("image_url") or item.get("image") for item in day.get("news", [])):
+        checklist.insert(1, "본문 이미지가 정상 표시되는지 확인하기")
+    return checklist
 
 
 def build_recommended_tags(day):
@@ -378,6 +394,11 @@ def render_post(day_id, day):
     date_text = f"{label} ({weekday})" if weekday else label
     news = day.get("news") or []
     lead = " / ".join(plain(item.get("title_kr")) for item in news[:3])
+    composition = (
+        "본문은 핵심 내용 요약과 학습용 문제로 구성했으며"
+        if day.get("quiz")
+        else "본문은 공개 피드에서 확인한 핵심 내용 중심으로 정리했으며"
+    )
 
     return f"""<!--
 title: {esc(post_title(day))}
@@ -388,11 +409,11 @@ slug: {slugify(day_id + "-daily-digest")}
 <article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
     <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(build_meta_description(day))}</p>
-    <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 자동 생성 데일리 다이제스트</p>
+    <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 하루 한 시간 개발 기록</p>
     <h2 class="digest-title"{style(TITLE_STYLE)}>오늘의 IT/개발 읽을거리</h2>
     <p class="digest-lead"{style(LEAD_STYLE)}>
       오늘은 {esc(lead)} 흐름을 중심으로 읽어볼 만한 소식을 정리했습니다.
-      본문은 핵심 내용 요약과 학습용 문제로 구성했으며, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
+      {esc(composition)}, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
     </p>
   </section>
 

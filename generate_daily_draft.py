@@ -1,9 +1,14 @@
 """Generate a local daily blog draft with GitHub Models or a safe fallback."""
 
+import argparse
 import datetime as dt
 import json
+import os
 import re
+import sys
+from pathlib import Path
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
@@ -248,3 +253,113 @@ def fallback_day(inbox):
         "terms": [],
         "generation": {"provider": "deterministic-fallback"},
     }
+
+
+def load_history(data_dir):
+    """Load a bounded list of previous quiz questions and terms."""
+    questions = []
+    terms = []
+    for path in sorted(Path(data_dir).glob("*.json")):
+        try:
+            day = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        question = _text((day.get("quiz") or {}).get("question"), 300)
+        if question:
+            questions.append(question)
+        for item in day.get("terms") or []:
+            term = _text(item.get("term"), 100) if isinstance(item, dict) else ""
+            if term:
+                terms.append(term)
+    return {"questions": questions[-60:], "terms": terms[-160:]}
+
+
+def generate_and_write(
+    inbox_path,
+    data_dir,
+    token,
+    model=DEFAULT_MODEL,
+    fallback_on_error=False,
+    model_call=request_github_model,
+    post_writer=None,
+):
+    """Generate one local day JSON and immediately export its Tistory HTML."""
+    inbox = json.loads(Path(inbox_path).read_text(encoding="utf-8"))
+    data_dir = Path(data_dir)
+    history = load_history(data_dir)
+
+    try:
+        generated = model_call(build_prompt(inbox, history), token, model)
+        day = build_day(inbox, generated, model=model)
+    except Exception:
+        if not fallback_on_error:
+            raise
+        day = fallback_day(inbox)
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+    output_path = data_dir / "{}.json".format(inbox["day"])
+    temporary_path = output_path.with_suffix(".json.tmp")
+    temporary_path.write_text(
+        json.dumps(day, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    temporary_path.replace(output_path)
+
+    if post_writer is None:
+        from export_tistory import write_post
+
+        post_writer = write_post
+    post_writer(inbox["day"], day=day, source_page=None)
+    return day
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="뉴스 후보함을 GitHub Models로 티스토리 초안으로 만듭니다."
+    )
+    day_group = parser.add_mutually_exclusive_group(required=True)
+    day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘")
+    day_group.add_argument("--day", help="생성할 날짜 (YYYY-MM-DD)")
+    parser.add_argument("--inbox", help="후보함 JSON 경로")
+    parser.add_argument("--data-dir", default="data/days")
+    parser.add_argument("--model", default=os.environ.get("GITHUB_MODEL", DEFAULT_MODEL))
+    parser.add_argument(
+        "--fallback-on-error",
+        action="store_true",
+        help="모델 장애 시 수집된 요약만으로 최소 초안 생성",
+    )
+    parser.add_argument("--force", action="store_true", help="기존 정상 초안도 다시 생성")
+    args = parser.parse_args(argv)
+
+    day_id = args.day or dt.datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+    inbox_path = Path(args.inbox or "docs/inbox/{}.json".format(day_id))
+    output_path = Path(args.data_dir) / "{}.json".format(day_id)
+
+    if output_path.exists() and not args.force:
+        existing = json.loads(output_path.read_text(encoding="utf-8"))
+        if (existing.get("generation") or {}).get("provider") == "github-models":
+            from export_tistory import write_post
+
+            write_post(day_id, day=existing, source_page=None)
+            print("이미 생성된 자체 초안 사용: {}".format(output_path))
+            return 0
+
+    try:
+        day = generate_and_write(
+            inbox_path,
+            args.data_dir,
+            token=os.environ.get("GITHUB_TOKEN", "").strip(),
+            model=args.model,
+            fallback_on_error=args.fallback_on_error,
+        )
+    except Exception as exc:
+        print("자체 초안 생성 실패: {}".format(type(exc).__name__), file=sys.stderr)
+        return 1
+
+    provider = day["generation"]["provider"]
+    print("자체 초안 생성: {} ({})".format(output_path, provider))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

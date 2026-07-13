@@ -1,10 +1,14 @@
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from generate_daily_draft import (
     build_day,
     build_prompt,
     fallback_day,
+    generate_and_write,
+    load_history,
     request_github_model,
 )
 
@@ -136,6 +140,79 @@ class GitHubModelsClientTests(unittest.TestCase):
         self.assertEqual(captured["authorization"], "Bearer secret-token")
         self.assertEqual(captured["body"]["response_format"], {"type": "json_object"})
         self.assertNotIn("secret-token", json.dumps(captured["body"]))
+
+
+class DraftFileTests(unittest.TestCase):
+    def test_generates_local_day_json_and_calls_tistory_exporter(self):
+        exported = []
+
+        def model_call(_prompt, token, model):
+            self.assertEqual(token, "workflow-token")
+            self.assertEqual(model, "openai/gpt-4o-mini")
+            return MODEL_OUTPUT
+
+        def post_writer(day_id, day, source_page):
+            exported.append((day_id, day, source_page))
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=post_writer,
+            )
+
+            saved = json.loads((root / "days" / "2026-07-13.json").read_text())
+            self.assertEqual(saved["generation"]["provider"], "github-models")
+            self.assertEqual(result["news"][0]["url"], INBOX["selected"][0]["url"])
+            self.assertEqual(exported[0][0], "2026-07-13")
+            self.assertIsNone(exported[0][2])
+
+    def test_model_failure_writes_fact_only_fallback_when_enabled(self):
+        def unavailable(*_args):
+            raise RuntimeError("service unavailable with internal details")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                fallback_on_error=True,
+                model_call=unavailable,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+            self.assertEqual(result["generation"], {"provider": "deterministic-fallback"})
+            saved_text = (root / "days" / "2026-07-13.json").read_text()
+            self.assertNotIn("internal details", saved_text)
+
+    def test_history_collects_previous_questions_and_terms(self):
+        with tempfile.TemporaryDirectory() as directory:
+            days = Path(directory)
+            (days / "2026-07-12.json").write_text(
+                json.dumps(
+                    {
+                        "quiz": {"question": "이전 문제"},
+                        "terms": [{"term": "이전 용어"}],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            self.assertEqual(
+                load_history(days),
+                {"questions": ["이전 문제"], "terms": ["이전 용어"]},
+            )
 
 
 if __name__ == "__main__":
