@@ -12,7 +12,8 @@
            URL/유사 제목 중복 제거와 최신성·관심 키워드 점수 계산
            출처가 겹치지 않게 추천 뉴스 3건 선정
            docs/inbox/YYYY-MM-DD.html 및 JSON 생성
-           GitHub Models로 담백한 한국어 요약·정처기 문제·용어 생성
+           GitHub Models로 도입·뉴스별 핵심·개발자 관점·마무리·오늘 해볼 것 생성
+           정처기 문제와 개발 용어를 글 뒤쪽 복습 콘텐츠로 구성
            data/days/YYYY-MM-DD.json에 자체 원본 저장
            docs/tistory/YYYY-MM-DD.html 및 JSON 생성
            저장소에 자동 커밋하고 GitHub Pages 배포
@@ -82,7 +83,9 @@ docs/index.html                     # 복사 전용 페이지
 
 ## 실행 방법
 
-가장 간단한 방법은 GitHub의 `Actions → Daily news draft → Run workflow`입니다. 이 경우 기본 `GITHUB_TOKEN`이 자동으로 연결됩니다.
+가장 간단한 방법은 GitHub의 `Actions → Daily news draft → Run workflow`입니다. 이 경우 기본 `GITHUB_TOKEN`이 자동으로 연결됩니다. 날짜 입력을 비우면 오늘 초안을 만들고, 자동화가 빠진 날은 `2026-07-13`처럼 날짜를 넣어 다시 생성할 수 있습니다.
+
+GitHub Pages 복사 화면 상단의 `빠진 날짜 직접 생성` 버튼도 같은 Actions 화면으로 연결됩니다.
 
 로컬에서 후보 수집과 최소 초안을 확인하려면:
 
