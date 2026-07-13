@@ -17,6 +17,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("'collect_news.py'", workflow)
         self.assertIn("'generate_daily_draft.py'", workflow)
         self.assertIn("'generate_editorial_images.py'", workflow)
+        self.assertIn("'visual_direction.py'", workflow)
         self.assertIn("'requirements-images.txt'", workflow)
         self.assertIn("'config/news_sources.json'", workflow)
         self.assertIn("models: read", workflow)

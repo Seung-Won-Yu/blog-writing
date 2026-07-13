@@ -10,6 +10,7 @@ on:
       - 'news_pipeline.py'
       - 'generate_daily_draft.py'
       - 'generate_editorial_images.py'
+      - 'visual_direction.py'
       - 'export_tistory.py'
       - 'requirements-images.txt'
       - 'config/news_sources.json'
