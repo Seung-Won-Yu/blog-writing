@@ -5,6 +5,7 @@ import unittest
 from contextlib import redirect_stderr
 from io import StringIO
 from pathlib import Path
+from urllib.error import HTTPError
 
 from generate_daily_draft import (
     DraftQualityError,
@@ -740,6 +741,21 @@ class GeminiClientTests(unittest.TestCase):
         self.assertIn("본문 문단", quality)
         self.assertEqual(external, "RuntimeError")
         self.assertNotIn("secret response body", external)
+
+    def test_http_failures_include_status_without_url_or_response_body(self):
+        failure = HTTPError(
+            "https://provider.example/generate?key=secret-key",
+            429,
+            "quota exceeded with secret response body",
+            hdrs=None,
+            fp=None,
+        )
+
+        message = safe_model_failure(failure)
+
+        self.assertEqual(message, "HTTPError 429")
+        self.assertNotIn("secret-key", message)
+        self.assertNotIn("quota exceeded", message)
 
     def test_builds_a_deduplicated_free_tier_text_model_fallback_chain(self):
         self.assertEqual(

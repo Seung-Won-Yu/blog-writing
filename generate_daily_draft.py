@@ -8,6 +8,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
@@ -98,6 +99,8 @@ def safe_model_failure(exc):
     """Expose our own quality reason, never an arbitrary provider response body."""
     if isinstance(exc, DraftQualityError):
         return "DraftQualityError: {}".format(_text(exc, 180))
+    if isinstance(exc, HTTPError):
+        return "HTTPError {}".format(exc.code)
     return type(exc).__name__
 
 
