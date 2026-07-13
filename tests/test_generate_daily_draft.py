@@ -162,6 +162,28 @@ class PromptTests(unittest.TestCase):
         self.assertEqual(merged["news"][0]["title_kr"], full_title)
         self.assertEqual(merged["news"][0]["blurb_kr"], "수정 후")
 
+    def test_quality_repair_keeps_model_paragraphs_but_restores_fixed_headings(self):
+        base = copy.deepcopy(MODEL_OUTPUT)
+        repair = copy.deepcopy(MODEL_OUTPUT)
+        repair["news"][0]["content"][0]["text"] = "사건 개요"
+        repair["news"][0]["content"][2]["text"] = "독자 영향"
+        repair["news"][0]["content"][4]["text"] = "검증 방법"
+
+        merged = _merge_quality_repair(base, repair)
+
+        self.assertEqual(
+            [
+                block["text"]
+                for block in merged["news"][0]["content"]
+                if block["t"] == "h"
+            ],
+            ["무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점"],
+        )
+        self.assertEqual(
+            merged["news"][0]["content"][1]["text"],
+            repair["news"][0]["content"][1]["text"],
+        )
+
     def test_marks_news_as_untrusted_reference_data(self):
         prompt = build_prompt(INBOX, {"questions": [], "terms": []})
 
