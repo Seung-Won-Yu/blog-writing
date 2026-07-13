@@ -1,10 +1,10 @@
 {
-  "title": "[데일리 IT 뉴스] 2026. 7. 10 - 오늘의 개발 뉴스와 정처기 문제",
+  "title": "GPT-5.6 출시, 가장 비싼 Sol만 쓰면 될까?",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 10 - OpenAI GPT, 정처기 문제 정리",
-    "[개발 뉴스] OpenAI GPT · Chatto 핵심 정리",
-    "2026. 7. 10 개발 뉴스 요약: OpenAI GPT 외 오늘의 IT 이슈",
-    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 10)"
+    "GPT-5.6 출시, 가장 비싼 Sol만 쓰면 될까?",
+    "GPT-5.6·Chatto·TypeScript 7: 더 빠른 기술의 숨은 비용",
+    "GPT-5.6 모델 선택부터 TypeScript 7 전환까지",
+    "AI 모델·셀프 호스팅·빌드 속도, 무엇을 선택할까?"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -19,7 +19,7 @@
     "아이코닉 디자인 (Iconic Design)",
     "폴리모피즘 (Polymorphism)"
   ],
-  "meta_description": "2026. 7. 10 데일리 IT 뉴스: OpenAI GPT, Chatto 핵심과 데이터베이스 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "GPT-5.6 Sol·Terra·Luna의 비용과 선택 기준, Chatto 셀프 호스팅의 운영 책임, TypeScript 7 전환 시점을 한 흐름으로 정리했습니다.",
   "key_summary": [
     "오늘의 주요 뉴스: OpenAI GPT 5.6 출시 / Chatto, 이제 오픈소스로 공개되어 셀프 호스팅 가능 / TypeScript 7.0 발표",
     "정처기 포인트: 데이터베이스 문제로 개념을 점검합니다.",
@@ -31,7 +31,7 @@
     "본문 상단 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 10 - OpenAI GPT, 정처기 문제 정리"
+    "추천 제목: GPT-5.6 출시, 가장 비싼 Sol만 쓰면 될까?"
   ],
   "source": "data/days/2026-07-10.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-10.html",
