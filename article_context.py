@@ -1,5 +1,6 @@
 """Fetch bounded article context for the model without persisting source text."""
 
+import datetime as dt
 import ipaddress
 import json
 import re
@@ -8,11 +9,16 @@ from html import unescape
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
+from zoneinfo import ZoneInfo
+
+from collect_news import parse_feed
+from news_pipeline import canonicalize_url
 
 
 DEFAULT_MAX_BYTES = 786_432
 DEFAULT_PER_ITEM_CHARS = 1_800
 DEFAULT_TOTAL_CHARS = 5_400
+DEFAULT_FEED_MAX_BYTES = 524_288
 
 
 def _plain(value):
@@ -286,4 +292,75 @@ def collect_article_contexts(
         key = item.get("id") or item.get("url")
         contexts[key] = extracted
         remaining -= len(text)
+    return contexts
+
+
+def fetch_runtime_feed(source, timeout=8, max_bytes=DEFAULT_FEED_MAX_BYTES):
+    """Fetch a trusted configured feed for ephemeral model context only."""
+    request = Request(
+        source["url"],
+        headers={
+            "User-Agent": "blog-writing-context/2.0",
+            "Accept": "application/rss+xml,application/atom+xml,application/xml,text/xml;q=0.9",
+        },
+    )
+    with build_opener().open(request, timeout=timeout) as response:
+        payload = response.read(max_bytes + 1)
+        if len(payload) > max_bytes:
+            raise ValueError("피드가 허용 크기를 초과했습니다.")
+        charset = response.headers.get_content_charset() or "utf-8"
+    return payload.decode(charset, errors="replace")
+
+
+def collect_runtime_feed_contexts(
+    inbox,
+    sources,
+    fetcher=None,
+    per_item_chars=DEFAULT_PER_ITEM_CHARS,
+    total_chars=DEFAULT_TOTAL_CHARS,
+):
+    """Read selected RSS summaries in memory without adding them to public inbox data."""
+    fetcher = fetcher or fetch_runtime_feed
+    remaining = max(0, int(total_chars))
+    selected = (inbox.get("selected") or [])[:3]
+    contexts = {}
+    for source in sources or []:
+        if not source.get("runtime_summary") or remaining <= 0:
+            continue
+        source_items = [
+            item for item in selected if item.get("source_id") == source.get("id")
+        ]
+        if not source_items:
+            continue
+        try:
+            feed_text = fetcher(source)
+            timezone_name = source.get("timezone")
+            timezone = ZoneInfo(timezone_name) if timezone_name else None
+            raw_items = parse_feed(
+                feed_text,
+                source["url"],
+                timezone or dt.timezone.utc,
+            )
+        except Exception:
+            continue
+        feed_by_url = {
+            canonicalize_url(item.get("url")): item for item in raw_items
+        }
+        for selected_item in source_items:
+            raw = feed_by_url.get(canonicalize_url(selected_item.get("url"))) or {}
+            summary = raw.get("summary", "")
+            if not summary:
+                continue
+            text, truncated = _trim(
+                summary, min(max(0, int(per_item_chars)), remaining)
+            )
+            if not text:
+                continue
+            key = selected_item.get("id") or selected_item.get("url")
+            contexts[key] = {
+                "text": text,
+                "method": "rss-runtime",
+                "truncated": truncated,
+            }
+            remaining -= len(text)
     return contexts

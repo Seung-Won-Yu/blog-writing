@@ -23,9 +23,41 @@
     "보안",
     "자동화"
   ],
+  "audience_lanes": {
+    "broad": {
+      "label": "일상에 닿는 큰 변화",
+      "keywords": [
+        "무료", "요금", "가격", "청구", "개인정보", "사진", "일자리", "취업",
+        "교육", "학교", "스마트폰", "인스타", "유튜브", "검색", "의료", "건강",
+        "질환", "로봇", "자동차", "자율주행", "사기", "딥페이크", "저작권", "규제",
+        "중단", "장애", "일반 사용자"
+      ]
+    },
+    "practical": {
+      "label": "바로 써보는 도구와 방법",
+      "keywords": [
+        "GitHub", "VS Code", "Copilot", "코딩", "개발자", "도구", "업데이트",
+        "출시", "오픈소스", "API", "자동화", "프롬프트", "대시보드", "무료"
+      ]
+    },
+    "deep": {
+      "label": "구조와 원리를 파고드는 기술",
+      "keywords": [
+        "API", "database", "DB", "데이터베이스", "보안", "취약점", "인프라", "architecture",
+        "아키텍처", "성능", "benchmark", "벤치마크", "논문", "연구", "framework", "cloud",
+        "클라우드", "모델", "Postgres", "쿼리"
+      ]
+    }
+  },
+  "topic_keywords": {
+    "ai": ["AI", "인공지능", "LLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트"]
+  },
   "selection": {
     "max_items": 3,
     "max_per_source": 1,
+    "audience_lanes": ["broad", "practical", "deep"],
+    "max_topic_items": {"ai": 2},
+    "max_research_items": 0,
     "preferred_groups": [
       "official",
       "community",
@@ -35,12 +67,33 @@
   },
   "sources": [
     {
+      "id": "aitimes",
+      "name": "AI타임스",
+      "group": "korean_general",
+      "type": "rss",
+      "url": "https://www.aitimes.com/rss/clickTop.xml",
+      "timezone": "Asia/Seoul",
+      "weight": 4,
+      "lane_bias": {"broad": 4},
+      "include_summary": false,
+      "runtime_summary": true,
+      "include_title_keywords": [
+        "AI", "인공지능", "GPT", "챗GPT", "로봇", "메타", "인스타", "엔비디아",
+        "OpenAI", "구글", "마이크로소프트", "앤트로픽", "일론 머스크", "샘 알트먼",
+        "자율주행", "딥페이크", "반도체", "의료", "질환"
+      ],
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
       "id": "geeknews",
       "name": "GeekNews",
       "group": "community",
       "type": "rss",
       "url": "https://news.hada.io/rss/news",
       "weight": 3,
+      "lane_bias": {"practical": 1, "deep": 1},
       "manual_review": true,
       "enabled": true
     },
@@ -51,6 +104,15 @@
       "type": "rss",
       "url": "https://yozm.wishket.com/magazine/feed/",
       "weight": 3,
+      "lane_bias": {"practical": 2},
+      "fallbacks": [
+        {
+          "type": "html",
+          "url": "https://yozm.wishket.com/magazine/",
+          "link_pattern": "^/magazine/detail/\\d+/?$",
+          "max_title_chars": 120
+        }
+      ],
       "manual_review": true,
       "enabled": true
     },
@@ -61,6 +123,7 @@
       "type": "rss",
       "url": "https://openai.com/news/rss.xml",
       "weight": 5,
+      "lane_bias": {"deep": 1},
       "enabled": true
     },
     {
@@ -70,6 +133,7 @@
       "type": "rss",
       "url": "https://github.blog/changelog/feed/",
       "weight": 5,
+      "lane_bias": {"practical": 3},
       "enabled": true
     },
     {
@@ -79,6 +143,7 @@
       "type": "atom",
       "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=20",
       "weight": 4,
+      "lane_bias": {"deep": 3},
       "manual_review": true,
       "enabled": true
     }

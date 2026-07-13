@@ -87,7 +87,7 @@ def _parse_datetime(value):
 
 def make_candidate(raw, source):
     canonical_url = canonicalize_url(raw.get("url"))
-    title = " ".join(str(raw.get("title") or "").split())
+    title = " ".join(str(raw.get("title") or "").split())[:300]
     summary = " ".join(str(raw.get("summary") or "").split())
     published = _parse_datetime(raw.get("published_at"))
     identifier = hashlib.sha256(
@@ -105,9 +105,12 @@ def make_candidate(raw, source):
         "source_name": source.get("name") or source.get("id", ""),
         "group": source.get("group", "other"),
         "source_weight": int(source.get("weight", 0)),
+        "lane_bias": dict(source.get("lane_bias") or {}),
         "requires_manual_review": bool(source.get("manual_review", False)),
         "score": 0,
         "score_reasons": [],
+        "lane_scores": {},
+        "topic_tags": [],
     }
 
 
@@ -140,7 +143,23 @@ def deduplicate_candidates(candidates, title_threshold=0.78):
     return kept
 
 
-def score_candidate(candidate, interest_keywords, now=None):
+def _keyword_matches(normalized, keyword):
+    keyword = str(keyword or "").strip().casefold()
+    if not keyword:
+        return False
+    if keyword.isascii():
+        pattern = r"(?<![a-z0-9]){}(?![a-z0-9])".format(re.escape(keyword))
+        return re.search(pattern, normalized) is not None
+    return keyword in normalized
+
+
+def score_candidate(
+    candidate,
+    interest_keywords,
+    now=None,
+    audience_lanes=None,
+    topic_keywords=None,
+):
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -171,7 +190,7 @@ def score_candidate(candidate, interest_keywords, now=None):
     matches = [
         keyword
         for keyword in interest_keywords or []
-        if str(keyword).strip() and str(keyword).casefold() in haystack
+        if _keyword_matches(haystack, keyword)
     ]
     if matches:
         score += min(2, len(matches))
@@ -181,8 +200,28 @@ def score_candidate(candidate, interest_keywords, now=None):
         score -= 1
         reasons.append("짧은 제목")
 
+    lane_scores = {}
+    lane_bias = candidate.get("lane_bias") or {}
+    for lane, lane_config in (audience_lanes or {}).items():
+        if isinstance(lane_config, dict):
+            keywords = lane_config.get("keywords", [])
+        else:
+            keywords = lane_config or []
+        lane_matches = [
+            keyword for keyword in keywords if _keyword_matches(haystack, keyword)
+        ]
+        bias = int(lane_bias.get(lane, 0))
+        lane_scores[lane] = min(5, len(lane_matches)) + bias
+
+    topic_tags = []
+    for topic, keywords in (topic_keywords or {}).items():
+        if any(_keyword_matches(haystack, keyword) for keyword in keywords or []):
+            topic_tags.append(topic)
+
     candidate["score"] = score
     candidate["score_reasons"] = reasons
+    candidate["lane_scores"] = lane_scores
+    candidate["topic_tags"] = topic_tags
     return candidate
 
 
@@ -191,6 +230,9 @@ def select_candidates(
     max_items=3,
     max_per_source=1,
     preferred_groups=None,
+    audience_lanes=None,
+    max_topic_items=None,
+    max_research_items=1,
 ):
     preferred_groups = preferred_groups or []
     ranked = sorted(
@@ -200,6 +242,84 @@ def select_candidates(
     )
     selected = []
     source_counts = {}
+
+    if audience_lanes:
+        topic_limits = max_topic_items or {}
+        topic_counts = {}
+        research_count = 0
+
+        def can_add(item, *, source_limit=True):
+            source_id = item.get("source_id", "")
+            if source_limit and source_counts.get(source_id, 0) >= max_per_source:
+                return False
+            for topic in item.get("topic_tags", []):
+                limit = topic_limits.get(topic)
+                if limit is not None and topic_counts.get(topic, 0) >= int(limit):
+                    return False
+            if (
+                max_research_items is not None
+                and item.get("group") == "research"
+                and research_count >= int(max_research_items)
+            ):
+                return False
+            return True
+
+        def add_for_lane(item, lane):
+            nonlocal research_count
+            selected.append(item)
+            source_id = item.get("source_id", "")
+            source_counts[source_id] = source_counts.get(source_id, 0) + 1
+            for topic in item.get("topic_tags", []):
+                topic_counts[topic] = topic_counts.get(topic, 0) + 1
+            if item.get("group") == "research":
+                research_count += 1
+            item["audience_lane"] = lane
+            lane_score = int((item.get("lane_scores") or {}).get(lane, 0))
+            item["selection_reason"] = f"{lane} 독자 적합도 {lane_score}"
+            return True
+
+        for lane in list(audience_lanes)[:max_items]:
+            lane_ranked = sorted(
+                (item for item in ranked if item not in selected),
+                key=lambda item: (
+                    int((item.get("lane_scores") or {}).get(lane, 0)),
+                    item.get("score", 0),
+                    item.get("published_at", ""),
+                ),
+                reverse=True,
+            )
+            passes = (
+                # First keep all diversity limits. A positive lane match is ideal.
+                (True, True),
+                # If a lane has no direct keyword match, use the best diverse item.
+                (False, True),
+                # The source cap is soft; topic and research caps stay hard.
+                (True, False),
+                (False, False),
+            )
+            for positive_only, source_limit in passes:
+                chosen = next(
+                    (
+                        item
+                        for item in lane_ranked
+                        if (
+                            not positive_only
+                            or int((item.get("lane_scores") or {}).get(lane, 0)) > 0
+                        )
+                        and can_add(item, source_limit=source_limit)
+                    ),
+                    None,
+                )
+                if chosen is not None:
+                    add_for_lane(chosen, lane)
+                    break
+
+        for item in ranked:
+            if len(selected) >= max_items:
+                break
+            if item not in selected and can_add(item):
+                add_for_lane(item, "additional")
+        return selected
 
     def add(item):
         source_id = item.get("source_id", "")
