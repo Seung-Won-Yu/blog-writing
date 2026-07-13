@@ -361,6 +361,17 @@ def _rewrite_generic_phrases(value):
     return value
 
 
+def _rewrite_quality_fields(generated):
+    """Rewrite only model-owned prose while preserving trusted side fields."""
+    if not isinstance(generated, dict):
+        return {}
+    rewritten = dict(generated)
+    for key in ("editorial", "news"):
+        if key in rewritten:
+            rewritten[key] = _rewrite_generic_phrases(rewritten[key])
+    return rewritten
+
+
 def request_github_model(prompt, token, model=DEFAULT_MODEL, opener=urlopen):
     """Call GitHub Models once. The token is sent only in the HTTPS header."""
     if not token:
@@ -677,7 +688,6 @@ def _compact_retry_draft(generated):
     if not isinstance(generated, dict):
         return {}
     editorial = generated.get("editorial") or {}
-    visual = generated.get("visual") or {}
     news = []
     for item in generated.get("news") or []:
         if not isinstance(item, dict):
@@ -697,11 +707,6 @@ def _compact_retry_draft(generated):
             }
         )
     return {
-        "visual": {
-            "subject": _text(visual.get("subject"), 24),
-            "hook": _text(visual.get("hook"), 48),
-            "motif": _text(visual.get("motif"), 20),
-        },
         "editorial": {
             "headline": _text(editorial.get("headline"), 90),
             "opening": _text(editorial.get("opening"), 260),
@@ -710,9 +715,35 @@ def _compact_retry_draft(generated):
             "action": _text(editorial.get("action"), 180),
         },
         "news": news,
-        "quiz": {},
-        "terms": _validated_terms(generated.get("terms")),
     }
+
+
+def _merge_quality_repair(base, repair):
+    """Merge a compact body repair without discarding already valid fields."""
+    merged = dict(base) if isinstance(base, dict) else {}
+    if not isinstance(repair, dict):
+        return merged
+
+    if isinstance(repair.get("editorial"), dict):
+        merged["editorial"] = repair["editorial"]
+    base_news = merged.get("news")
+    repair_news = repair.get("news")
+    if (
+        isinstance(base_news, list)
+        and isinstance(repair_news, list)
+        and len(repair_news) == len(base_news)
+        and len(repair_news) > 0
+        and all(
+            isinstance(base_item, dict)
+            and isinstance(repair_item, dict)
+            and _text(base_item.get("title_kr"), 160)
+            and _text(base_item.get("title_kr"), 160)
+            == _text(repair_item.get("title_kr"), 160)
+            for base_item, repair_item in zip(base_news, repair_news)
+        )
+    ):
+        merged["news"] = repair_news
+    return merged
 
 
 def _quality_retry_prompt(generated, error):
@@ -739,7 +770,8 @@ def _quality_retry_prompt(generated, error):
 안전 규칙:
 - 기존 초안에 없는 수치, 발언, 기능, 출시일, 인물을 추가하지 않는다.
 - 기존 사실을 새 문장으로 풀어 설명하고, 독자 영향과 확인 질문은 해석으로 명확히 구분한다.
-- title_kr·visual·editorial·terms는 품질 사유가 없으면 유지하고, quiz는 빈 객체로 둔다.
+- 응답에는 editorial과 news 두 필드만 반환한다. visual·quiz·terms는 반환하지 않는다.
+- 각 news의 title_kr은 유지하고 blurb_kr과 content를 충분히 고친다.
 
 [분량과 구조를 다시 점검]
 - 이전 응답은 {reason} 사유로 거절됐다.
@@ -747,7 +779,12 @@ def _quality_retry_prompt(generated, error):
 - 이번에는 각 뉴스의 본문 문단 3개를 각각 {paragraph_range}자, 4~6개의 완결된 문장으로 쓴다. 뉴스 하나의 본문 세 문단 합계는 최소 {paragraph_total}자다.
 - 사실 문단에는 구체적 변화와 배경, 영향 문단에는 독자의 시간·비용·개인정보·일·도구 사용과 필요한 개발자 관점, 확인 문단에는 확인되지 않은 범위와 검토 질문을 넣는다.
 - editorial.throughline은 최소 200자, 전체 표시 텍스트는 최소 3,000자다.
-- 같은 말을 바꾸어 반복하지 말고, 이전 초안의 사실·조건·확인 질문을 나눠 풀어 쓴다. 위 분량을 확인한 뒤 JSON 전체를 다시 반환한다.
+- 같은 말을 바꾸어 반복하지 말고, 이전 초안의 사실·조건·확인 질문을 나눠 풀어 쓴다.
+
+[반환 형식]
+아래 두 필드만 반환하고, 각 뉴스의 순서와 개수는 유지한다.
+{{"editorial":{{"headline":"","opening":"","throughline":"","closing":"","action":""}},"news":[{{"title_kr":"","blurb_kr":"","content":[{{"t":"h","text":"무슨 일이 있었나"}},{{"t":"p","text":""}},{{"t":"h","text":"왜 우리에게 중요한가"}},{{"t":"p","text":""}},{{"t":"h","text":"직접 확인할 점"}},{{"t":"p","text":""}}]}}]}}
+위 분량을 먼저 확인한 뒤 JSON 객체 하나만 반환한다.
 
 [previous_draft]
 {previous_draft}
@@ -789,14 +826,13 @@ def generate_and_write(
 
     try:
         base_prompt = build_prompt(inbox, history, article_contexts)
-        attempt_prompt = base_prompt
+        generated = model_call(base_prompt, token, model)
+        generated = {**generated, "quiz": curated_quiz}
         for attempt in range(3):
-            generated = model_call(attempt_prompt, token, model)
-            generated = {**generated, "quiz": curated_quiz}
             candidate = (
                 generated
                 if attempt == 0
-                else _rewrite_generic_phrases(generated)
+                else _rewrite_quality_fields(generated)
             )
             try:
                 day = build_day(inbox, candidate, model=model)
@@ -804,7 +840,10 @@ def generate_and_write(
             except DraftQualityError as exc:
                 if attempt == 2:
                     raise
-                attempt_prompt = _quality_retry_prompt(generated, exc)
+                repair_prompt = _quality_retry_prompt(candidate, exc)
+                repair = model_call(repair_prompt, token, model)
+                generated = _merge_quality_repair(candidate, repair)
+                generated["quiz"] = curated_quiz
     except Exception as exc:
         if not fallback_on_error:
             raise
