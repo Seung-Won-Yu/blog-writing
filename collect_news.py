@@ -355,11 +355,23 @@ def write_inbox(inbox, output_dir):
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     day = inbox["day"]
-    json_text = json.dumps(inbox, ensure_ascii=False, indent=2) + "\n"
-    html_text = render_inbox_html(inbox)
-
     dated_json = output / "{}.json".format(day)
     dated_html = output / "{}.html".format(day)
+    payload = dict(inbox)
+
+    if dated_json.exists():
+        try:
+            previous = json.loads(dated_json.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            previous = None
+        if previous:
+            previous_content = {key: value for key, value in previous.items() if key != "generated_at"}
+            current_content = {key: value for key, value in payload.items() if key != "generated_at"}
+            if previous_content == current_content:
+                payload["generated_at"] = previous.get("generated_at", payload.get("generated_at", ""))
+
+    json_text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    html_text = render_inbox_html(payload)
     dated_json.write_text(json_text, encoding="utf-8")
     dated_html.write_text(html_text, encoding="utf-8")
     (output / "latest.json").write_text(json_text, encoding="utf-8")

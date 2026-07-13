@@ -1,4 +1,5 @@
 import json
+import copy
 import tempfile
 import unittest
 from pathlib import Path
@@ -49,6 +50,18 @@ class ReviewInboxTests(unittest.TestCase):
             self.assertTrue(Path(directory, "index.html").exists())
             self.assertEqual(json.loads(dated_json.read_text())["day"], "2026-07-12")
             self.assertEqual(paths["json"], str(dated_json))
+
+    def test_same_candidates_do_not_change_files_only_for_new_timestamp(self):
+        with tempfile.TemporaryDirectory() as directory:
+            write_inbox(self.inbox, directory)
+            dated_json = Path(directory, "2026-07-12.json")
+            first_text = dated_json.read_text(encoding="utf-8")
+
+            rerun = copy.deepcopy(self.inbox)
+            rerun["generated_at"] = "2026-07-12T10:00:00+00:00"
+            write_inbox(rerun, directory)
+
+            self.assertEqual(dated_json.read_text(encoding="utf-8"), first_text)
 
 
 class SourceConfigTests(unittest.TestCase):
