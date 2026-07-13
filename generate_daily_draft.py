@@ -72,13 +72,18 @@ def build_prompt(inbox, history=None):
 글쓰기 톤:
 - 개발을 배우며 기록하는 사람의 담백한 한국어. 홍보 문구와 과장, '혁신적', '게임 체인저' 같은 표현은 피한다.
 - 실제로 해보지 않은 경험을 1인칭으로 꾸며내지 않는다.
+- editorial은 세 뉴스를 하나의 흐름으로 잇는다. opening은 구체적인 변화나 질문으로 시작하고 제목 목록을 반복하지 않는다.
+- closing은 오늘 뉴스에서 공통으로 읽히는 변화를 한 문장으로 정리한다.
+- action은 독자가 10~15분 안에 직접 해볼 수 있는 작고 구체적인 행동 하나다.
 - 뉴스마다 title_kr, blurb_kr, content를 만든다.
-- content는 '무슨 소식인가', '개발자 관점에서 보기' 흐름의 소제목(h)과 문단(p), 최대 4블록이다.
+- blurb_kr은 다음 내용을 읽고 싶게 만드는 1문장 요약이되 낚시성 표현은 쓰지 않는다.
+- content는 '무슨 소식인가', '왜 봐야 할까' 흐름의 소제목(h)과 문단(p), 최대 4블록이다.
 - 근거가 부족하면 짧게 쓰고 추측하지 않는다.
 - 정보처리기사 4지선다 문제 1개와 IT·개발·기획 용어 3개도 만든다. 최근 항목과 겹치지 않는다.
 
 반환 구조:
 {{
+  "editorial": {{"opening":"", "closing":"", "action":""}},
   "news": [{{"title_kr":"", "blurb_kr":"", "content":[{{"t":"h|p", "text":""}}]}}],
   "quiz": {{"category":"", "question":"", "options":["","","",""], "answer":0, "explain_kr":""}},
   "terms": [{{"term":"", "kind":"IT|개발|기획", "meaning_kr":""}}]
@@ -201,6 +206,34 @@ def _validated_terms(raw_terms):
     return terms
 
 
+def _fallback_editorial(selected):
+    titles = [_text(item.get("title"), 70) for item in selected if item.get("title")]
+    if len(titles) > 1:
+        opening = "오늘은 {}와 {}을 중심으로 개발 흐름을 살펴본다.".format(
+            titles[0], titles[1]
+        )
+    elif titles:
+        opening = "오늘은 {} 소식을 중심으로 개발 흐름을 살펴본다.".format(titles[0])
+    else:
+        opening = "오늘은 새로 나온 개발 소식의 핵심을 짧게 살펴본다."
+    return {
+        "opening": opening,
+        "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+        "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자.",
+    }
+
+
+def _validated_editorial(raw, selected):
+    fallback = _fallback_editorial(selected)
+    if not isinstance(raw, dict):
+        return fallback
+    return {
+        "opening": _text(raw.get("opening"), 500) or fallback["opening"],
+        "closing": _text(raw.get("closing"), 300) or fallback["closing"],
+        "action": _text(raw.get("action"), 240) or fallback["action"],
+    }
+
+
 def build_day(inbox, generated, model=DEFAULT_MODEL):
     """Validate model output and restore source/URL from trusted candidates."""
     selected = _selected(inbox)
@@ -228,6 +261,7 @@ def build_day(inbox, generated, model=DEFAULT_MODEL):
     return {
         "date_label": label,
         "weekday": weekday,
+        "editorial": _validated_editorial(generated.get("editorial"), selected),
         "news": news,
         "quiz": _validated_quiz(generated.get("quiz")),
         "terms": _validated_terms(generated.get("terms")),
@@ -252,6 +286,7 @@ def fallback_day(inbox):
     return {
         "date_label": label,
         "weekday": weekday,
+        "editorial": _fallback_editorial(selected),
         "news": news,
         "quiz": {},
         "terms": [],
