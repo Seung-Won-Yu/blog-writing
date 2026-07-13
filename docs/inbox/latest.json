@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T06:29:18.244902+00:00",
+  "generated_at": "2026-07-13T07:24:53.148940+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -12,9 +12,10 @@
       "deep"
     ],
     "max_topic_items": {
-      "ai": 2
+      "ai": 3
     },
     "max_research_items": 0,
+    "require_topic_coherence": true,
     "preferred_groups": [
       "official",
       "community",
@@ -114,7 +115,9 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "audience_lane": "deep",
+      "selection_reason": "deep 독자 적합도 2 · 주제 연결"
     },
     {
       "id": "3447f8d32f7e",
@@ -238,7 +241,9 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "audience_lane": "practical",
+      "selection_reason": "practical 독자 적합도 5 · 주제 연결"
     },
     {
       "id": "b98a594ec40e",
@@ -358,9 +363,7 @@
         "practical": 6,
         "deep": 0
       },
-      "topic_tags": [],
-      "audience_lane": "practical",
-      "selection_reason": "practical 독자 적합도 6"
+      "topic_tags": []
     },
     {
       "id": "3fb14968493d",
@@ -394,43 +397,12 @@
       ]
     },
     {
-      "id": "26a3bbe87351",
-      "title": "Show GN: 정치 커뮤니티에 AI 팩트체크 기능을 붙이며 겪은 시행착오들",
-      "normalized_title": "show gn 정치 커뮤니티에 ai 팩트체크 기능을 붙이며 겪은 시행착오들",
-      "url": "https://news.hada.io/topic?id=31389",
-      "published_at": "2026-07-13T03:01:28+00:00",
-      "summary": "안녕하세요. 약 6개월 전, 법안을 쉽게 보고 의견을 남길 수 있는 시민 참여 서비스 '어흥'으로 인사드렸던 개발자입니다. 이번에 커뮤니티 내 가짜뉴스와 소모적인 논쟁을 줄여보고자 AI 팩트체크 기능을 도입했는데, 이 과정에서 겪은 고민과 기술적 시행착오들을 공유해보고자 합니",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
       "id": "1bada9753e94",
       "title": "AI 에이전트 시대의 새로운 SaaS 플레이북",
       "normalized_title": "ai 에이전트 시대의 새로운 saas 플레이북",
       "url": "https://news.hada.io/topic?id=31387",
       "published_at": "2026-07-13T02:26:01+00:00",
-      "summary": "소프트웨어 제작 비용이 0에 가까워지면서 기능과 UI는 빠르게 복제 가능한 상품이 되고, SaaS의 가치는 소프트웨어 포장 아래의 희소 자산 으로 이동함 새로운 방어력은 독점 데이터 루프와 행동 권한 , 에이전트의 의사결정 단계에 들어가는 유통, ERP·원장·신원·...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -450,37 +422,6 @@
         "broad": 0,
         "practical": 1,
         "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "7b506526e329",
-      "title": "LLM은 사랑하지만 과대광고는 싫다",
-      "normalized_title": "llm은 사랑하지만 과대광고는 싫다",
-      "url": "https://news.hada.io/topic?id=31378",
-      "published_at": "2026-07-13T01:04:24+00:00",
-      "summary": "LLM, 자율주행차, 영상 생성 모델, 코딩 에이전트는 실제로 유용하고 흥미롭지만, 이를 둘러싼 공포와 종말론적 과대광고 에는 동의하지 않음 기회의 창이 닫히면 영구적 하층민이 된다는 담론은 사실이라기보다 사람을 불안하게 만들어 San Francisco로 끌어들이는 과대광고...",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "practical": 2,
-        "deep": 2
       },
       "topic_tags": [
         "ai"
@@ -1075,12 +1016,12 @@
       ]
     },
     {
-      "id": "fbc263266fcd",
-      "title": "gpt-5.6-sol이 PowerShell의 $HOME 변수 충돌로 사용자 홈 디렉터리를 날려버릴 뻔한 건에 대하여",
-      "normalized_title": "gpt 5 6 sol이 powershell의 home 변수 충돌로 사용자 홈 디렉터리를 날려버릴 뻔한 건에 대하여",
-      "url": "https://news.hada.io/topic?id=31390",
-      "published_at": "2026-07-13T04:17:51+00:00",
-      "summary": "Codex에서 최신 플래그십 모델인 gpt-5.6-sol을 사용하던 중, 방금 겪은 심각한 안전성 결함(Safety Incident)을 공유하고자 합니다. Sol 모델이 에이전트 워크플로우와 도구 실행 벤치마크에서 믿기 힘들 정도로 놀라운 성적을 보여주었음에도 불구하고, 단순한 쉘 환경 격리 부재로 인해 하마터면 대재앙으로 이어질...",
+      "id": "26a3bbe87351",
+      "title": "Show GN: 정치 커뮤니티에 AI 팩트체크 기능을 붙이며 겪은 시행착오들",
+      "normalized_title": "show gn 정치 커뮤니티에 ai 팩트체크 기능을 붙이며 겪은 시행착오들",
+      "url": "https://news.hada.io/topic?id=31389",
+      "published_at": "2026-07-13T03:01:28+00:00",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1098,8 +1039,8 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 2,
-        "deep": 3
+        "practical": 1,
+        "deep": 1
       },
       "topic_tags": [
         "ai"
@@ -1111,7 +1052,7 @@
       "normalized_title": "show gn ai 봇 12개에게 두 달간 주가 방향을 예측시키고 전부 공개 검증해봤습니다",
       "url": "https://news.hada.io/topic?id=31386",
       "published_at": "2026-07-13T02:03:41+00:00",
-      "summary": "LDBD는 한 가지 질문에서 시작한 서비스입니다. 누군가 \"이 주식 오른다\"고 말할 때, 그 사람이 실제로 잘 맞히는 사람인지 어떻게 알 수 있을까요? 결과가 나온 뒤에 \"그럴 줄 알았다\"로 기억이 미화된 건 아닐까요? 사람이든 봇이든, 주식·ETF·크립토가 오를지 내릴지를 1일·1주·1달 중",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1142,7 +1083,7 @@
       "normalized_title": "숏폼 동영상이 b2b 검색 결과와 ai 답변으로 영역을 확장하고 있다",
       "url": "https://news.hada.io/topic?id=31385",
       "published_at": "2026-07-13T02:02:01+00:00",
-      "summary": "유튜브 쇼츠·인스타그램·틱톡의 세로형 동영상이 지난 6개월간 ‘best + software’ 검색 결과 상위권에 진입했으며, 프로젝트 관리·ERP·재고 관리처럼 B2B 구매자가 후보를 추리는 검색어로 범위를 넓히고 있음 Google은 동영상의 트랜스크립트와 메타데이터 를 읽...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1159,7 +1100,7 @@
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 3,
+        "broad": 1,
         "practical": 1,
         "deep": 1
       },
@@ -1173,7 +1114,7 @@
       "normalized_title": "ai 토큰은 데이터센터를 어떻게 여행하는가",
       "url": "https://news.hada.io/topic?id=31381",
       "published_at": "2026-07-13T01:11:02+00:00",
-      "summary": "2026년 AI 추론 은 전체 AI 컴퓨팅의 약 3분의 2까지 확대됐으며, 배포된 모델의 생애 컴퓨팅 비용 중 80~90%를 차지해 토큰 처리 비용과 지연시간이 인프라 경제성을 좌우함 하나의 요청은 토큰화, API 게이트웨이, 인증, 라우팅, 스케줄링, KV 캐시, GPU·HBM, CUDA 커널, NVLink·스...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1191,14 +1132,12 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 2,
-        "deep": 4
+        "practical": 1,
+        "deep": 1
       },
       "topic_tags": [
         "ai"
-      ],
-      "audience_lane": "deep",
-      "selection_reason": "deep 독자 적합도 4"
+      ]
     },
     {
       "id": "4363eb8fe749",
@@ -1448,7 +1387,7 @@
       "normalized_title": "show gn 온나라 리마스터 정부 온나라 문서시스템을 다크모드 가독성으로 바꾸는 크롬 엣지 확장",
       "url": "https://news.hada.io/topic?id=31391",
       "published_at": "2026-07-13T05:32:26+00:00",
-      "summary": "온나라는 전 부처 공무원이 매일 쓰는 전자문서시스템입니다. 그런데 행정안전부가 개발·관리하는 범정부 공동 시스템 이라 각 기관이 화면을 직접 손댈 수 없습니다. 흰 배경에 얇고 흐린 기본 글꼴이라 장시간 문서작업을 하면 눈이 정말 피로합니다. 다만 전 부처가 함께 쓰는 워낙 크고 중요한 시...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1471,12 +1410,12 @@
       "topic_tags": []
     },
     {
-      "id": "98bfd557604e",
-      "title": "앤트로픽, 한국 무료 사용자에 1,660만 달러 '유령 청구서' 발송",
-      "normalized_title": "앤트로픽 한국 무료 사용자에 1 660만 달러 유령 청구서 발송",
-      "url": "https://news.hada.io/topic?id=31388",
-      "published_at": "2026-07-13T02:31:20+00:00",
-      "summary": "API 사용량이 0인 무료 요금제 한국 사용자에게 앤트로픽이 공식 도메인·정식 Stripe로 1,660만 달러(약 230억 원) 청구서를 보냈고, 하루 전 같은 청구서는 167만 달러였다. 7월 8일 결제 시도 - 첫 청구서 $1,669,875.90 → 24시간 뒤 $16,627,739.70(약 230억 원), 하루",
+      "id": "fbc263266fcd",
+      "title": "gpt-5.6-sol이 PowerShell의 $HOME 변수 충돌로 사용자 홈 디렉터리를 날려버릴 뻔한 건에 대하여",
+      "normalized_title": "gpt 5 6 sol이 powershell의 home 변수 충돌로 사용자 홈 디렉터리를 날려버릴 뻔한 건에 대하여",
+      "url": "https://news.hada.io/topic?id=31390",
+      "published_at": "2026-07-13T04:17:51+00:00",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1492,9 +1431,39 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 3,
-        "practical": 3,
-        "deep": 2
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "98bfd557604e",
+      "title": "앤트로픽, 한국 무료 사용자에 1,660만 달러 '유령 청구서' 발송",
+      "normalized_title": "앤트로픽 한국 무료 사용자에 1 660만 달러 유령 청구서 발송",
+      "url": "https://news.hada.io/topic?id=31388",
+      "published_at": "2026-07-13T02:31:20+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "practical": 2,
+        "deep": 1
       },
       "topic_tags": []
     },
@@ -1504,7 +1473,7 @@
       "normalized_title": "고객 이탈을 막는법 10년간 내가 배운 모든 것",
       "url": "https://news.hada.io/topic?id=31384",
       "published_at": "2026-07-13T01:51:01+00:00",
-      "summary": "구독 비즈니스의 고객 이탈률(churn) 은 제품 품질만이 아니라 시장·고객군·사용 빈도에 크게 좌우되며, 오래 남는 고객을 찾아 그들에게 맞춰 제품을 만들고 같은 유형을 더 확보해야 함 월 이탈률이 8%를 넘으면 규모 확장이 어려워지고 , 10%라면 매년 사용자 기...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1532,7 +1501,7 @@
       "normalized_title": "postgres 19의 프로퍼티 그래프 이해하기",
       "url": "https://news.hada.io/topic?id=31383",
       "published_at": "2026-07-13T01:36:02+00:00",
-      "summary": "Postgres 19의 프로퍼티 그래프 는 기존 테이블을 정점과 간선으로 선언하고 MATCH 로 고정된 관계 패턴을 검색하는 SQL/PGQ 기능으로, 데이터를 복사하거나 별도 그래프 실행 엔진을 만들지 않음 그래프 패턴은 관계형 조인으로 컴파일 되어 기존 옵티마...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1548,7 +1517,7 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "practical": 1,
         "deep": 2
       },
@@ -1560,7 +1529,7 @@
       "normalized_title": "책을 더 많이 읽는 방법",
       "url": "https://news.hada.io/topic?id=31382",
       "published_at": "2026-07-13T01:13:24+00:00",
-      "summary": "몇 년간 주 1권가량 읽을 수 있었던 비결은 별도의 독서 시간을 확보하는 대신, 스마트폰이나 화면을 보던 자투리 시간을 책 읽기로 바꾼 데 있음 Instagram·YouTube·Facebook 같은 앱을 삭제하고 항상 책을 휴대하면 기상 직후와 취침 전, 식사·요리·대중교통·대기 시간을",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1576,7 +1545,7 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "practical": 1,
         "deep": 1
       },
@@ -1588,7 +1557,7 @@
       "normalized_title": "chromium 148부터 math tanh로 기반 os를 식별할 수 있음",
       "url": "https://news.hada.io/topic?id=31380",
       "published_at": "2026-07-13T01:10:24+00:00",
-      "summary": "Chrome 148부터 V8의 Math.tanh 가 내장 fdlibm 대신 호스트의 std::tanh 를 호출하면서, 같은 입력도 Linux의 glibc·macOS의 libsystem_m ·Windows의 UCRT에서 서로 다른 마지막 비트 를 반환함 Math.tanh(0.8) 은 Linux에서",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1616,7 +1585,7 @@
       "normalized_title": "ghostel el libghostty 기반 emacs 터미널 에뮬레이터",
       "url": "https://news.hada.io/topic?id=31379",
       "published_at": "2026-07-13T01:07:24+00:00",
-      "summary": "Ghostel 은 Ghostty와 같은 libghostty-vt 엔진을 사용하는 Emacs 터미널 에뮬레이터로, Zig 네이티브 모듈이 터미널 상태·렌더링·로컬 PTY 입출력을 맡고 Elisp가 키맵·버퍼·명령·원격 프로세스를 관리함 Kitty 키보드·그래픽 프로토콜, OSC 8 하이퍼링크, OSC 4/10/1...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1639,12 +1608,42 @@
       "topic_tags": []
     },
     {
+      "id": "7b506526e329",
+      "title": "LLM은 사랑하지만 과대광고는 싫다",
+      "normalized_title": "llm은 사랑하지만 과대광고는 싫다",
+      "url": "https://news.hada.io/topic?id=31378",
+      "published_at": "2026-07-13T01:04:24+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
       "id": "c31669921177",
       "title": "코드베이스를 완전히 이해하지 못해도 괜찮은 이유",
       "normalized_title": "코드베이스를 완전히 이해하지 못해도 괜찮은 이유",
       "url": "https://news.hada.io/topic?id=31377",
       "published_at": "2026-07-13T01:02:23+00:00",
-      "summary": "수천만 줄에 이르는 대규모 시스템은 누구도 전체를 머릿속에 담을 수 없으므로, 엔지니어는 부분적으로 정확한 이해 만으로도 효과적으로 작업할 수 있어야 함 Peter Naur의 Programming as Theory Building 은 기존 팀의 이해가 사라지면 프로그램을 폐기하고 새로...",
+      "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
@@ -1869,12 +1868,12 @@
       "selection_reason": "broad 독자 적합도 7"
     },
     {
-      "id": "532d748877ba",
-      "title": "Enterprise-managed OpenTelemetry export for VS Code and CLI",
-      "normalized_title": "enterprise managed opentelemetry export for vs code and cli",
-      "url": "https://github.blog/changelog/2026-07-08-enterprise-managed-opentelemetry-export-for-vs-code-and-cli",
-      "published_at": "2026-07-08T20:50:07+00:00",
-      "summary": "Organizations can now mandate where GitHub Copilot sends OpenTelemetry (OTel) data, so telemetry flows to an approved collector without each developer setting OTEL_* environment variables. The configuration is delivered through… The post Enterprise-managed OpenTelemetry export for VS Code and CLI appeared first on The GitHub Blog .",
+      "id": "7ed0339e5a52",
+      "title": "OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot",
+      "normalized_title": "openai s gpt 5 6 sol terra and luna are now available in github copilot",
+      "url": "https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot",
+      "published_at": "2026-07-09T16:41:29+00:00",
+      "summary": "OpenAI’s GPT-5.6 family is now rolling out in GitHub Copilot. GPT-5.6 comes in three variants, Sol, Terra, and Luna, so you can match the model to the job, whether that’s… The post OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
       "source_name": "GitHub Changelog",
       "group": "official",
@@ -1892,45 +1891,47 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 6,
+        "practical": 5,
         "deep": 0
       },
-      "topic_tags": [],
+      "topic_tags": [
+        "ai"
+      ],
       "audience_lane": "practical",
-      "selection_reason": "practical 독자 적합도 6"
+      "selection_reason": "practical 독자 적합도 5 · 주제 연결"
     },
     {
-      "id": "5d44b4e8da39",
-      "title": "AI 토큰은 데이터센터를 어떻게 여행하는가",
-      "normalized_title": "ai 토큰은 데이터센터를 어떻게 여행하는가",
-      "url": "https://news.hada.io/topic?id=31381",
-      "published_at": "2026-07-13T01:11:02+00:00",
-      "summary": "2026년 AI 추론 은 전체 AI 컴퓨팅의 약 3분의 2까지 확대됐으며, 배포된 모델의 생애 컴퓨팅 비용 중 80~90%를 차지해 토큰 처리 비용과 지연시간이 인프라 경제성을 좌우함 하나의 요청은 토큰화, API 게이트웨이, 인증, 라우팅, 스케줄링, KV 캐시, GPU·HBM, CUDA 커널, NVLink·스...",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
+      "id": "e9167e656930",
+      "title": "Separating signal from noise in coding evaluations",
+      "normalized_title": "separating signal from noise in coding evaluations",
+      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations",
+      "published_at": "2026-07-08T13:00:00+00:00",
+      "summary": "A new analysis from OpenAI reveals issues in SWE-Bench Pro, a popular coding benchmark, raising concerns about reliability and accuracy in evaluating AI models.",
+      "source_id": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
       "lane_bias": {
-        "practical": 1,
         "deep": 1
       },
-      "requires_manual_review": true,
-      "score": 7,
+      "requires_manual_review": false,
+      "score": 10,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
         "관심 키워드"
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 2,
-        "deep": 4
+        "practical": 0,
+        "deep": 2
       },
       "topic_tags": [
         "ai"
       ],
       "audience_lane": "deep",
-      "selection_reason": "deep 독자 적합도 4"
+      "selection_reason": "deep 독자 적합도 2 · 주제 연결"
     }
   ],
   "errors": [
