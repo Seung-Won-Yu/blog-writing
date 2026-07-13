@@ -16,6 +16,18 @@ def esc(value):
     return html.escape(str(value or ""), quote=True)
 
 
+def json_for_script(value):
+    """Encode JSON so untrusted feed text cannot close the script element."""
+    return (
+        json.dumps(value, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+        .replace("\u2028", "\\u2028")
+        .replace("\u2029", "\\u2029")
+    )
+
+
 def load_drafts():
     drafts = []
     for meta_path in sorted(TISTORY_DIR.glob("*.json"), reverse=True):
@@ -46,7 +58,7 @@ def load_drafts():
 
 
 def render(drafts):
-    payload = json.dumps(drafts, ensure_ascii=False)
+    payload = json_for_script(drafts)
     latest = drafts[0]["day"] if drafts else ""
     buttons = "\n".join(
         f'<button class="draft-btn" type="button" data-day="{esc(item["day"])}" aria-pressed="false">'
@@ -274,7 +286,7 @@ def render(drafts):
     }}
     .cover-preview {{
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 1200 / 630;
       object-fit: cover;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -465,7 +477,7 @@ def render(drafts):
 
   <script>
     const drafts = {payload};
-    const latest = {json.dumps(latest, ensure_ascii=False)};
+    const latest = {json_for_script(latest)};
     let current = null;
     let currentHtml = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
@@ -535,10 +547,16 @@ def render(drafts):
       }}
     }}
 
+    function selectCoverAsset(assets) {{
+      const validAssets = (assets || []).filter((asset) => asset && asset.url);
+      return validAssets.find((asset) => asset.kind === "cover") || validAssets[0];
+    }}
+
     function renderImageAssets(assets) {{
-      const cover = (assets || [])[0];
+      const validAssets = (assets || []).filter((asset) => asset && asset.url);
+      const cover = selectCoverAsset(validAssets);
       els.imageList.innerHTML = "";
-      if (!cover || !cover.url) {{
+      if (!cover) {{
         els.imageCard.hidden = true;
         els.coverPreview.removeAttribute("src");
         return;
@@ -546,18 +564,22 @@ def render(drafts):
 
       els.imageCard.hidden = false;
       els.coverPreview.src = cover.url;
+      els.coverPreview.alt = cover.alt || "대표 이미지 미리보기";
       els.coverTitle.textContent = cover.title || "오늘 글 대표 이미지";
       els.coverDownload.href = cover.url;
       els.coverDownload.download = `${{current.day}}-${{filenameFromUrl(cover.url)}}`;
 
-      (assets || []).forEach((asset, index) => {{
-        if (!asset.url) return;
+      validAssets.forEach((asset, index) => {{
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = asset.url;
         a.target = "_blank";
         a.rel = "noopener";
-        a.textContent = `${{index + 1}}번 이미지 열기`;
+        a.textContent = asset.kind === "cover"
+          ? "대표 이미지 열기"
+          : asset.kind === "flow"
+            ? "본문 흐름 이미지 열기"
+            : `${{index + 1}}번 이미지 열기`;
         li.appendChild(a);
         els.imageList.appendChild(li);
       }});
@@ -628,7 +650,7 @@ def render(drafts):
       if (type === "summary") copyText(numbered(current.key_summary), "핵심 요약");
       if (type === "checklist") copyText(numbered(current.publish_checklist), "체크리스트");
       if (type === "allMeta") copyText(operatingMemo(), "운영 정보");
-      if (type === "coverUrl") copyText((current.image_assets || [])[0]?.url, "대표 이미지 URL");
+      if (type === "coverUrl") copyText(selectCoverAsset(current.image_assets)?.url, "대표 이미지 URL");
       if (type === "source") copyText(current.source || current.source_page, "데이터 경로");
     }});
 

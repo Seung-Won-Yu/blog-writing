@@ -121,6 +121,12 @@ def _news(day):
     return value if isinstance(value, list) else []
 
 
+def _save_png_atomic(image, path):
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    image.save(temporary, "PNG", optimize=True)
+    temporary.replace(path)
+
+
 def _cover(day, font_path, bold_font_path):
     image = Image.new("RGB", (1200, 630), GREEN_DARK)
     draw = ImageDraw.Draw(image)
@@ -240,8 +246,8 @@ def generate_editorial_images(
 
     cover_path = target / "cover.png"
     flow_path = target / "flow.png"
-    _cover(day, regular_font, bold_font).save(cover_path, "PNG", optimize=True)
-    _flow(day, regular_font, bold_font).save(flow_path, "PNG", optimize=True)
+    _save_png_atomic(_cover(day, regular_font, bold_font), cover_path)
+    _save_png_atomic(_flow(day, regular_font, bold_font), flow_path)
 
     base_url = str(public_base_url).rstrip("/")
     logical_dir = f"docs/tistory/assets/{day_id}"

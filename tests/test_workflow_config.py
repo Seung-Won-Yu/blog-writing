@@ -10,10 +10,14 @@ class WorkflowConfigTests(unittest.TestCase):
 
         collect_command = "python collect_news.py --today"
         generate_command = "python generate_daily_draft.py --today --fallback-on-error"
+        image_command = "python generate_editorial_images.py --today"
+        copy_command = "python build_copy_page.py"
         self.assertIn(collect_command, workflow)
         self.assertIn(generate_command, workflow)
         self.assertIn("'collect_news.py'", workflow)
         self.assertIn("'generate_daily_draft.py'", workflow)
+        self.assertIn("'generate_editorial_images.py'", workflow)
+        self.assertIn("'requirements-images.txt'", workflow)
         self.assertIn("'config/news_sources.json'", workflow)
         self.assertIn("models: read", workflow)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", workflow)
@@ -25,9 +29,18 @@ class WorkflowConfigTests(unittest.TestCase):
             'python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error',
             workflow,
         )
+        self.assertIn(image_command, workflow)
+        self.assertIn('python generate_editorial_images.py --day "$REQUESTED_DAY"', workflow)
+        self.assertIn("fonts-noto-cjk", workflow)
+        self.assertIn("requirements-images.txt", workflow)
+        self.assertIn("id: editorial_images", workflow)
+        self.assertIn("Build draft copy page", workflow)
+        self.assertIn("if: always()", workflow)
         self.assertIn("continue-on-error: true", workflow)
         self.assertNotIn("python pages_to_tistory.py --today", workflow)
         self.assertLess(workflow.index(collect_command), workflow.index(generate_command))
+        self.assertLess(workflow.index(generate_command), workflow.index(image_command))
+        self.assertLess(workflow.index(image_command), workflow.index(copy_command))
 
 
 if __name__ == "__main__":

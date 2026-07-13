@@ -164,6 +164,10 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 meta["image_assets"][0]["path"],
                 "docs/tistory/assets/2026-07-13/cover.png",
             )
+            self.assertEqual(
+                (meta["image_assets"][0]["width"], meta["image_assets"][0]["height"]),
+                (1200, 630),
+            )
 
 
 if __name__ == "__main__":

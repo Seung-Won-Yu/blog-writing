@@ -1,6 +1,6 @@
 import unittest
 
-from build_copy_page import render
+from build_copy_page import json_for_script, render
 
 
 class CopyPageTests(unittest.TestCase):
@@ -38,6 +38,20 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aria-pressed="false"', html)
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
+
+    def test_selects_named_cover_and_escapes_payload_for_script_context(self):
+        unsafe = "뉴스 </script><script>alert(1)</script> & 흐름\u2028다음"
+        encoded = json_for_script({"title": unsafe})
+        self.assertNotIn("</script>", encoded)
+        self.assertNotIn("<script>", encoded)
+        self.assertNotIn("\u2028", encoded)
+        self.assertIn("\\u003c/script\\u003e", encoded)
+
+        html = render([])
+        self.assertIn('asset.kind === "cover"', html)
+        self.assertIn('aspect-ratio: 1200 / 630', html)
+        self.assertIn("els.coverPreview.alt =", html)
+        self.assertIn('asset.kind === "flow"', html)
 
 
 if __name__ == "__main__":

@@ -517,6 +517,8 @@ def write_post(day_id, day=None, source_page=None):
             "path": plain(asset.get("path")),
             "original_url": "",
             "alt": plain(asset.get("alt")),
+            "width": int(asset.get("width") or 0),
+            "height": int(asset.get("height") or 0),
         }
         for kind in ("cover", "flow")
         for asset in [images.get(kind)]

@@ -1,11 +1,13 @@
 import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from PIL import Image
 
-from generate_editorial_images import find_font, generate_editorial_images
+from generate_editorial_images import find_font, generate_editorial_images, generate_for_day
 
 
 DAY = {
@@ -83,6 +85,30 @@ class EditorialImageTests(unittest.TestCase):
                 font_path=font_path,
             )
             self.assertEqual(hashlib.sha256(cover.read_bytes()).hexdigest(), first_hash)
+
+    def test_stored_day_generation_updates_json_and_refreshes_export(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            days_dir = root / "days"
+            output_dir = root / "assets"
+            days_dir.mkdir()
+            day_path = days_dir / "2026-07-13.json"
+            day_path.write_text(json.dumps(DAY, ensure_ascii=False), encoding="utf-8")
+
+            with patch("export_tistory.write_post") as write_post:
+                assets = generate_for_day(
+                    "2026-07-13",
+                    days_dir=days_dir,
+                    output_dir=output_dir,
+                    public_base_url="https://blog.example/assets/",
+                )
+
+            stored = json.loads(day_path.read_text(encoding="utf-8"))
+            self.assertEqual(stored["images"], assets)
+            self.assertTrue((output_dir / "2026-07-13" / "cover.png").exists())
+            write_post.assert_called_once()
+            self.assertEqual(write_post.call_args.args[0], "2026-07-13")
+            self.assertEqual(write_post.call_args.kwargs["day"]["images"], assets)
 
 
 if __name__ == "__main__":
