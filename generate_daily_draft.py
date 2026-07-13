@@ -902,12 +902,12 @@ def _compact_retry_draft(generated):
         news.append(
             {
                 "title_kr": _text(item.get("title_kr"), 160),
-                "blurb_kr": _text(item.get("blurb_kr"), 260),
-                "author_note": _text(item.get("author_note"), 300),
+                "blurb_kr": _text(item.get("blurb_kr"), 140),
+                "author_note": _text(item.get("author_note"), 120),
                 "content": [
                     {
                         "t": "h" if block.get("t") == "h" else "p",
-                        "text": _text(block.get("text"), 460),
+                        "text": _text(block.get("text"), 150),
                     }
                     for block in item.get("content") or []
                     if isinstance(block, dict) and block.get("text")
@@ -917,10 +917,10 @@ def _compact_retry_draft(generated):
     return {
         "editorial": {
             "headline": _text(editorial.get("headline"), 90),
-            "opening": _text(editorial.get("opening"), 260),
-            "throughline": _text(editorial.get("throughline"), 420),
-            "closing": _text(editorial.get("closing"), 260),
-            "action": _text(editorial.get("action"), 180),
+            "opening": _text(editorial.get("opening"), 180),
+            "throughline": _text(editorial.get("throughline"), 300),
+            "closing": _text(editorial.get("closing"), 180),
+            "action": _text(editorial.get("action"), 120),
         },
         "news": news,
     }
