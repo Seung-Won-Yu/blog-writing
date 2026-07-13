@@ -1,4 +1,4 @@
-name: News inbox and Tistory draft
+name: Daily news draft
 
 on:
   push:
@@ -8,21 +8,20 @@ on:
       - '.github/workflows/tistory-draft.yml'
       - 'collect_news.py'
       - 'news_pipeline.py'
+      - 'generate_daily_draft.py'
+      - 'export_tistory.py'
       - 'config/news_sources.json'
-      - 'pages_to_tistory.py'
       - 'build_copy_page.py'
       - 'tests/**'
       - 'docs/**'
+      - 'data/**'
   schedule:
-    - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST. 원본 07:23 KST schedule 5분 뒤
-    - cron: '8 23 * * *'   # 23:08 UTC = 08:08 KST. GitHub schedule 지연/원본 반영 확인
-    - cron: '48 23 * * *'  # 23:48 UTC = 08:48 KST. 최근 원본 실제 완료 시간대 이후
-    - cron: '28 0 * * *'   # 00:28 UTC = 09:28 KST. 보강 실행
-    - cron: '38 1 * * *'   # 01:38 UTC = 10:38 KST. 최종 보강 실행
+    - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST
   workflow_dispatch: {}     # 수동 실행
 
 permissions:
   contents: write
+  models: read
   pages: write
   id-token: write
 
@@ -45,32 +44,25 @@ jobs:
           TZ: Asia/Seoul
         run: python collect_news.py --today
 
-      - name: Export today's Tistory HTML from Pages
-        id: tistory_export
+      - name: Generate today's local Tistory draft
+        id: daily_generation
         continue-on-error: true
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           TZ: Asia/Seoul
         run: |
-          for i in 1 2 3; do
-            if python pages_to_tistory.py --today; then
-              python build_copy_page.py
-              exit 0
-            fi
-            echo "Pages export failed. retry=$i"
-            sleep 60
-          done
-          python pages_to_tistory.py --today
+          python generate_daily_draft.py --today --fallback-on-error
           python build_copy_page.py
 
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
+          git add docs data
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 생략"
           else
-            git commit -m "Tistory draft: add $(TZ=Asia/Seoul date +%F) HTML"
+            git commit -m "Daily draft: add $(TZ=Asia/Seoul date +%F)"
             git push
           fi
 
@@ -92,8 +84,8 @@ jobs:
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
 
-      - name: Report Tistory export failure
-        if: steps.tistory_export.outcome == 'failure'
+      - name: Report daily generation failure
+        if: steps.daily_generation.outcome == 'failure'
         run: |
-          echo "뉴스 후보함은 저장했지만 기존 티스토리 초안 변환에 실패했습니다."
+          echo "뉴스 후보함은 저장했지만 자체 티스토리 초안 생성에 실패했습니다."
           exit 1
