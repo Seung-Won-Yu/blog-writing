@@ -29,6 +29,7 @@ OUT_DIR = HERE / "docs" / "tistory"
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
+MIN_PUBLISH_REVISION = 5
 
 POST_SHELL_STYLE = (
     "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"
@@ -631,7 +632,14 @@ def write_post(day_id, day=None, source_page=None):
     meta_path = OUT_DIR / f"{day_id}.json"
     generation = day.get("generation") if isinstance(day.get("generation"), dict) else {}
     generation_provider = plain(generation.get("provider"))
-    publish_ready = generation_provider in {"github-models", "gemini"}
+    try:
+        generation_revision = int(generation.get("revision") or 0)
+    except (TypeError, ValueError):
+        generation_revision = 0
+    publish_ready = (
+        generation_provider in {"github-models", "gemini"}
+        and generation_revision >= MIN_PUBLISH_REVISION
+    )
 
     html_path.write_text(render_post(day_id, day), encoding="utf-8")
     meta_path.write_text(

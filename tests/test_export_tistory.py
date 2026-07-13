@@ -341,6 +341,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 gemini_day["generation"] = {
                     "provider": "gemini",
                     "model": "gemini-3.5-flash",
+                    "revision": 5,
                 }
                 write_post("2026-07-14", day=gemini_day)
                 gemini_meta = json.loads(
@@ -351,6 +352,16 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         self.assertFalse(fallback_meta["publish_ready"])
         self.assertEqual(gemini_meta["generation_provider"], "gemini")
         self.assertTrue(gemini_meta["publish_ready"])
+
+        legacy_day = dict(FALLBACK_DAY)
+        legacy_day["generation"] = {"provider": "github-models", "revision": 4}
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("export_tistory.OUT_DIR", Path(directory)):
+                write_post("2026-07-12", day=legacy_day)
+            legacy_meta = json.loads(
+                Path(directory, "2026-07-12.json").read_text(encoding="utf-8")
+            )
+        self.assertFalse(legacy_meta["publish_ready"])
 
 
 if __name__ == "__main__":
