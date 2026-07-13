@@ -753,6 +753,42 @@ class DraftFileTests(unittest.TestCase):
         self.assertEqual(result["news"][0]["title_kr"], "GitHub Actions 보안 점검 기능")
         self.assertEqual(result["news"][0]["source"], "GitHub Changelog")
 
+    def test_final_retry_focuses_only_on_a_short_editorial_throughline(self):
+        calls = []
+        shallow_body = copy.deepcopy(MODEL_OUTPUT)
+        shallow_body["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
+        repaired_body = copy.deepcopy(MODEL_OUTPUT)
+        repaired_body["editorial"]["throughline"] = "짧은 연결"
+        editorial_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            if len(calls) == 1:
+                return shallow_body
+            if len(calls) == 2:
+                return repaired_body
+            return editorial_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 3)
+        self.assertIn("editorial 한 필드만 반환", calls[2])
+        self.assertNotIn("news 두 필드만 반환", calls[2])
+        self.assertEqual(result["news"], build_day(INBOX, MODEL_OUTPUT)["news"])
+
     def test_uses_a_final_quality_retry_before_falling_back(self):
         calls = []
         almost_long_enough = copy.deepcopy(MODEL_OUTPUT)
