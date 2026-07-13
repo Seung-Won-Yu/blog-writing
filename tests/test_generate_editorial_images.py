@@ -99,7 +99,7 @@ class EditorialImageTests(unittest.TestCase):
 
         self.assertEqual(len(hashes), len(VISUAL_MOTIFS))
 
-    def test_generates_deterministic_cover_and_flow_pngs(self):
+    def test_generates_deterministic_cover_and_one_story_image_per_news(self):
         font_path = find_font()
         self.assertTrue(Path(font_path).exists())
 
@@ -114,24 +114,36 @@ class EditorialImageTests(unittest.TestCase):
             )
 
             cover = Path(directory, "2026-07-13", "cover.png")
-            flow = Path(directory, "2026-07-13", "flow.png")
+            stories = [
+                Path(directory, "2026-07-13", f"story-{index:02d}.png")
+                for index in range(1, 4)
+            ]
             with Image.open(cover) as image:
                 self.assertEqual(image.size, (1200, 630))
                 self.assertEqual(image.format, "PNG")
-            with Image.open(flow) as image:
-                self.assertEqual(image.size, (1200, 675))
-                self.assertEqual(image.format, "PNG")
+            for story in stories:
+                with Image.open(story) as image:
+                    self.assertEqual(image.size, (1200, 630))
+                    self.assertEqual(image.format, "PNG")
 
-            self.assertEqual(set(assets), {"cover", "flow"})
+            self.assertEqual(
+                set(assets), {"cover", "story_1", "story_2", "story_3"}
+            )
             self.assertEqual(
                 assets["cover"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/cover.png",
             )
             self.assertIn("자동화, 어디까지 믿어도 될까?", assets["cover"]["alt"])
-            self.assertIn("자동화 보안", assets["flow"]["alt"])
+            self.assertIn("GitHub Actions", assets["story_1"]["alt"])
+            self.assertEqual(
+                assets["story_2"]["url"],
+                "https://blog.example/tistory/assets/2026-07-13/story-02.png",
+            )
             self.assertEqual(first_day["images"], assets)
 
             first_hash = hashlib.sha256(cover.read_bytes()).hexdigest()
+            story_hashes = {hashlib.sha256(path.read_bytes()).hexdigest() for path in stories}
+            self.assertEqual(len(story_hashes), 3)
             second_day = {**DAY, "news": [dict(item) for item in DAY["news"]]}
             generate_editorial_images(
                 "2026-07-13",
@@ -141,6 +153,35 @@ class EditorialImageTests(unittest.TestCase):
                 font_path=font_path,
             )
             self.assertEqual(hashlib.sha256(cover.read_bytes()).hexdigest(), first_hash)
+
+    def test_generates_story_images_only_for_actual_news_and_caps_them_at_three(self):
+        font_path = find_font()
+        four_story_day = {
+            **DAY,
+            "news": [
+                *[dict(item) for item in DAY["news"]],
+                {
+                    "title_kr": "네 번째 소식은 이미지 대상이 아니다",
+                    "source": "공식 블로그",
+                    "blurb_kr": "본문에는 남지만 대표 이미지 세트에서는 제외한다.",
+                },
+            ],
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            assets = generate_editorial_images(
+                "2026-07-13",
+                four_story_day,
+                directory,
+                "https://blog.example/assets/",
+                font_path=font_path,
+            )
+
+            self.assertEqual(
+                [key for key in assets if key.startswith("story_")],
+                ["story_1", "story_2", "story_3"],
+            )
+            self.assertFalse(Path(directory, "2026-07-13", "story-04.png").exists())
 
     def test_stored_day_generation_updates_json_and_refreshes_export(self):
         with tempfile.TemporaryDirectory() as directory:

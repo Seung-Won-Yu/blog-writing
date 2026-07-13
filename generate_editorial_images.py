@@ -1,8 +1,8 @@
 """Generate deterministic editorial images for a daily Tistory draft.
 
-The images are intentionally rendered from the selected stories instead of
-calling an image-generation API.  This keeps the daily workflow free of an
-extra API key and gives every post a consistent visual identity.
+The cover and story images are rendered from the selected stories instead of
+calling an image-generation API. This keeps the workflow free of an extra API
+key and gives every post a consistent visual identity.
 """
 
 from __future__ import annotations
@@ -139,11 +139,18 @@ def resolve_visual(day):
             {
                 "motif": motif,
                 "label": VISUAL_LABELS[motif],
+                "title": " ".join(str(item.get("title_kr") or "").split()),
+                "source": " ".join(str(item.get("source") or "").split()),
             }
         )
     while len(visual["stories"]) < 3:
         visual["stories"].append(
-            {"motif": "signal", "label": VISUAL_LABELS["signal"]}
+            {
+                "motif": "signal",
+                "label": VISUAL_LABELS["signal"],
+                "title": "",
+                "source": "",
+            }
         )
     return visual
 
@@ -267,41 +274,134 @@ def draw_motif(draw, motif, box, foreground=INK, accent=ORANGE, muted=GREEN):
 
 
 def _cover(day, font_path, bold_font_path):
-    image = Image.new("RGB", (1200, 630), PAPER)
+    image = Image.new("RGB", (1200, 630), "#07131F")
     draw = ImageDraw.Draw(image)
     visual = resolve_visual(day)
 
-    draw.rectangle((0, 0, 16, 630), fill=ORANGE)
-    draw.rounded_rectangle((528, 34, 1166, 596), radius=34, fill=GREEN_DARK)
-    draw.ellipse((804, 168, 1068, 432), fill="#235342")
+    # A full-bleed editorial scene reads as a thumbnail, not a UI card.
+    draw.rectangle((0, 0, 1200, 10), fill="#6FE6D0")
+    for x in range(0, 1200, 80):
+        draw.line((x, 10, x - 210, 630), fill="#102536", width=1)
+    for y in range(90, 630, 90):
+        draw.line((0, y, 1200, y), fill="#102536", width=1)
+    draw.polygon([(740, 10), (1200, 10), (1200, 630), (1000, 630)], fill="#0B2F35")
+    draw.ellipse((760, 72, 1190, 502), outline="#1D5960", width=3)
+    draw.ellipse((822, 134, 1128, 440), outline="#6FE6D0", width=7)
+    draw.arc((714, 28, 1238, 552), 205, 326, fill=ORANGE, width=9)
 
-    label_font = _font(bold_font_path, 19)
-    date_font = _font(font_path, 20)
-    title_font = _font(bold_font_path, 55)
-    footer_font = _font(bold_font_path, 17)
+    label_font = _font(bold_font_path, 18)
+    date_font = _font(font_path, 19)
+    title_font = _font(bold_font_path, 61)
+    footer_font = _font(bold_font_path, 18)
 
-    draw.text((72, 64), "DAILY SIGNAL", font=label_font, fill=GREEN)
     date_label = str(day.get("date_label") or "오늘")
     weekday = str(day.get("weekday") or "").strip()
     date_text = f"{date_label} {weekday}요일" if weekday else date_label
-    draw.text((72, 105), date_text, font=date_font, fill=MUTED)
-    title_lines = wrap_text_by_pixels(draw, visual["hook"], title_font, 405, 3)
-    _draw_multiline(draw, title_lines, (72, 185), title_font, INK, line_gap=16)
-    draw.line((72, 512, 448, 512), fill=LINE, width=2)
-    footer = " / ".join(item["label"] for item in visual["stories"][:3])
-    footer_lines = wrap_text_by_pixels(draw, footer, footer_font, 400, 2)
-    _draw_multiline(draw, footer_lines, (72, 536), footer_font, GREEN, line_gap=5)
+    draw.text((72, 58), "DAILY DEV BRIEF", font=label_font, fill="#6FE6D0")
+    draw.text((72, 96), date_text, font=date_font, fill="#91AAB8")
+    title_lines = wrap_text_by_pixels(draw, visual["hook"], title_font, 590, 3)
+    title_bottom = _draw_multiline(
+        draw, title_lines, (72, 178), title_font, WHITE, line_gap=14
+    )
+    draw.rectangle((72, min(470, title_bottom + 25), 144, min(476, title_bottom + 31)), fill=ORANGE)
 
-    center = (936, 300)
-    satellites = [((632, 88, 800, 256), visual["stories"][0]), ((622, 388, 790, 556), visual["stories"][1]), ((990, 386, 1152, 548), visual["stories"][2])]
-    for box, story in satellites:
-        bx0, by0, bx1, by1 = box
-        satellite_center = ((bx0 + bx1) // 2, (by0 + by1) // 2)
-        draw.line((center, satellite_center), fill="#4A7263", width=5)
-        draw.ellipse(box, fill="#245342", outline="#4A7263", width=2)
-        draw_motif(draw, story["motif"], (bx0 + 30, by0 + 30, bx1 - 30, by1 - 30), foreground=WHITE, accent=GOLD, muted=MINT)
-    draw.ellipse((806, 170, 1066, 430), outline=ORANGE, width=8)
-    draw_motif(draw, visual["motif"], (846, 210, 1026, 390), foreground=WHITE, accent=ORANGE, muted=MINT)
+    draw_motif(
+        draw,
+        visual["motif"],
+        (846, 158, 1104, 416),
+        foreground=WHITE,
+        accent=ORANGE,
+        muted="#6FE6D0",
+    )
+    draw.text(
+        (838, 475),
+        VISUAL_LABELS[visual["motif"]],
+        font=footer_font,
+        fill=WHITE,
+    )
+
+    footer = "  ·  ".join(
+        "{} / {}".format(item.get("source") or "NEWS", item["label"])
+        for item in visual["stories"][1:3]
+        if item.get("title")
+    )
+    if footer:
+        footer_lines = wrap_text_by_pixels(draw, footer, footer_font, 630, 1)
+        _draw_multiline(draw, footer_lines, (72, 560), footer_font, "#91AAB8", 0)
+    return image
+
+
+STORY_PALETTES = (
+    {
+        "background": "#081018",
+        "panel": "#102D3A",
+        "foreground": WHITE,
+        "muted": "#82A5B2",
+        "accent": "#68E0CC",
+        "motif_muted": "#367A83",
+    },
+    {
+        "background": "#F3E6C8",
+        "panel": "#E8D29F",
+        "foreground": "#16211E",
+        "muted": "#665F4F",
+        "accent": ORANGE,
+        "motif_muted": GREEN,
+    },
+    {
+        "background": "#123B31",
+        "panel": "#1B5143",
+        "foreground": WHITE,
+        "muted": "#A8C7BA",
+        "accent": GOLD,
+        "motif_muted": MINT,
+    },
+)
+
+
+def _story_image(day, index, font_path, bold_font_path):
+    """Render one source-grounded story break with a large visual metaphor."""
+    visual = resolve_visual(day)
+    story = visual["stories"][index]
+    palette = STORY_PALETTES[index % len(STORY_PALETTES)]
+    image = Image.new("RGB", (1200, 630), palette["background"])
+    draw = ImageDraw.Draw(image)
+
+    draw.rectangle((0, 0, 1200, 9), fill=palette["accent"])
+    draw.polygon([(710, 9), (1200, 9), (1200, 630), (900, 630)], fill=palette["panel"])
+    for offset in range(-80, 760, 72):
+        draw.line(
+            (760 + offset, 10, 1030 + offset, 630),
+            fill=palette["motif_muted"],
+            width=1,
+        )
+    draw.ellipse((786, 112, 1146, 472), outline=palette["motif_muted"], width=4)
+    draw.ellipse((840, 166, 1092, 418), outline=palette["accent"], width=6)
+
+    kicker_font = _font(bold_font_path, 18)
+    source_font = _font(font_path, 20)
+    title_font = _font(bold_font_path, 47)
+    label_font = _font(bold_font_path, 20)
+    draw.text((70, 60), f"NEWS {index + 1:02d}", font=kicker_font, fill=palette["accent"])
+    source = story["source"] or "오늘의 개발 뉴스"
+    source_lines = wrap_text_by_pixels(draw, source, source_font, 480, 1)
+    _draw_multiline(draw, source_lines, (176, 58), source_font, palette["muted"], 0)
+
+    title_lines = wrap_text_by_pixels(draw, story["title"], title_font, 610, 3)
+    _draw_multiline(
+        draw, title_lines, (70, 164), title_font, palette["foreground"], 14
+    )
+    draw.rectangle((70, 518, 126, 524), fill=palette["accent"])
+    draw.text((70, 550), story["label"], font=label_font, fill=palette["muted"])
+
+    draw_motif(
+        draw,
+        story["motif"],
+        (858, 184, 1074, 400),
+        foreground=palette["foreground"],
+        accent=palette["accent"],
+        muted=palette["motif_muted"],
+    )
     return image
 
 
@@ -348,7 +448,7 @@ def generate_editorial_images(
     *,
     font_path=None,
 ):
-    """Write a cover and reading-flow image, attach their metadata, and return it."""
+    """Write a cover and up to three story images and attach their metadata."""
     day_id = validate_day_id(day_id)
     regular_font = font_path or find_font()
     bold_font = font_path or find_font(bold=True)
@@ -356,10 +456,8 @@ def generate_editorial_images(
     target.mkdir(parents=True, exist_ok=True)
 
     cover_path = target / "cover.png"
-    flow_path = target / "flow.png"
     visual = resolve_visual(day)
     _save_png_atomic(_cover(day, regular_font, bold_font), cover_path)
-    _save_png_atomic(_flow(day, regular_font, bold_font), flow_path)
 
     base_url = str(public_base_url).rstrip("/")
     logical_dir = f"docs/tistory/assets/{day_id}"
@@ -371,17 +469,20 @@ def generate_editorial_images(
             "width": 1200,
             "height": 630,
         },
-        "flow": {
-            "url": f"{base_url}/{day_id}/flow.png",
-            "path": f"{logical_dir}/flow.png",
-            "alt": "{} 오늘의 세 장면: {}".format(
-                day.get("date_label") or day_id,
-                ", ".join(item["label"] for item in visual["stories"][:3]),
-            ),
-            "width": 1200,
-            "height": 675,
-        },
     }
+    for index, story in enumerate(_news(day)[:3], 1):
+        path = target / f"story-{index:02d}.png"
+        _save_png_atomic(
+            _story_image(day, index - 1, regular_font, bold_font), path
+        )
+        title = " ".join(str(story.get("title_kr") or "").split())
+        assets[f"story_{index}"] = {
+            "url": f"{base_url}/{day_id}/story-{index:02d}.png",
+            "path": f"{logical_dir}/story-{index:02d}.png",
+            "alt": f"{title} 관련 편집 이미지",
+            "width": 1200,
+            "height": 630,
+        }
     day["images"] = assets
     return assets
 

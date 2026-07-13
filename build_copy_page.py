@@ -552,6 +552,21 @@ def render(drafts):
       return validAssets.find((asset) => asset.kind === "cover") || validAssets[0];
     }}
 
+    function imageAssetLabel(asset, index) {{
+      if (asset.kind === "cover") return "대표 이미지 열기";
+      if (asset.kind === "flow") return "본문 흐름 이미지 열기";
+      if (asset.kind.startsWith("story_")) {{
+        const storyNumber = asset.kind.slice("story_".length);
+        const labels = {{
+          "1": "본문 1번 이미지 열기",
+          "2": "본문 2번 이미지 열기",
+          "3": "본문 3번 이미지 열기",
+        }};
+        return labels[storyNumber] || "본문 이미지 열기";
+      }}
+      return `${{index + 1}}번 이미지 열기`;
+    }}
+
     function renderImageAssets(assets) {{
       const validAssets = (assets || []).filter((asset) => asset && asset.url);
       const cover = selectCoverAsset(validAssets);
@@ -575,11 +590,7 @@ def render(drafts):
         a.href = asset.url;
         a.target = "_blank";
         a.rel = "noopener";
-        a.textContent = asset.kind === "cover"
-          ? "대표 이미지 열기"
-          : asset.kind === "flow"
-            ? "본문 흐름 이미지 열기"
-            : `${{index + 1}}번 이미지 열기`;
+        a.textContent = imageAssetLabel(asset, index);
         li.appendChild(a);
         els.imageList.appendChild(li);
       }});

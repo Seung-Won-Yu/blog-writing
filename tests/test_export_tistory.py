@@ -120,7 +120,16 @@ class EditorialReadingFlowTests(unittest.TestCase):
 class EditorialImageIntegrationTests(unittest.TestCase):
     def image_day(self):
         day = dict(FALLBACK_DAY)
-        day["news"] = [dict(FALLBACK_DAY["news"][0])]
+        day["news"] = [
+            dict(FALLBACK_DAY["news"][0]),
+            {
+                "title_kr": "두 번째 개발 뉴스",
+                "source": "GeekNews",
+                "url": "https://example.com/news-2",
+                "blurb_kr": "두 번째 소식의 핵심이다.",
+                "content": [],
+            },
+        ]
         day["images"] = {
             "cover": {
                 "url": "https://blog.example/assets/cover.png?a=1&b=2",
@@ -136,22 +145,52 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 "width": 1200,
                 "height": 675,
             },
+            "story_1": {
+                "url": "https://blog.example/assets/story-01.png",
+                "path": "docs/tistory/assets/2026-07-13/story-01.png",
+                "alt": "AI 개발 도구 업데이트 관련 이미지",
+                "width": 1200,
+                "height": 630,
+            },
+            "story_2": {
+                "url": "https://blog.example/assets/story-02.png",
+                "path": "docs/tistory/assets/2026-07-13/story-02.png",
+                "alt": "두 번째 개발 뉴스 관련 이미지",
+                "width": 1200,
+                "height": 630,
+            },
         }
         return day
 
-    def test_places_cover_before_summary_and_flow_after_first_story(self):
+    def test_places_each_generated_story_image_before_its_matching_story(self):
         html = render_post("2026-07-13", self.image_day())
 
         cover_index = html.index('class="digest-cover-image"')
         summary_index = html.index('class="digest-summary"')
-        story_index = html.index('class="digest-news-card"')
-        flow_index = html.index('class="digest-flow-image"')
+        first_image_index = html.index("story-01.png")
+        first_title_index = html.index(">AI 개발 도구 업데이트</h3>")
+        second_image_index = html.index("story-02.png")
+        second_title_index = html.index(">두 번째 개발 뉴스</h3>")
         self.assertLess(cover_index, summary_index)
-        self.assertLess(story_index, flow_index)
+        self.assertLess(first_image_index, first_title_index)
+        self.assertLess(second_image_index, second_title_index)
+        self.assertNotIn('class="digest-flow-image"', html)
         self.assertIn("cover.png?a=1&amp;b=2", html)
         self.assertIn("오늘의 대표 &lt;이미지&gt; &quot;테스트&quot;", html)
-        self.assertEqual(html.count("<img"), 2)
+        self.assertEqual(html.count('class="digest-story-image"'), 2)
+        self.assertEqual(html.count("<img"), 3)
         self.assertTrue(any("이미지" in item for item in build_publish_checklist(self.image_day())))
+
+    def test_keeps_legacy_flow_image_when_story_images_are_absent(self):
+        day = self.image_day()
+        day["images"].pop("story_1")
+        day["images"].pop("story_2")
+
+        html = render_post("2026-07-13", day)
+
+        story_index = html.index('class="digest-news-card"')
+        flow_index = html.index('class="digest-flow-image"')
+        self.assertLess(story_index, flow_index)
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -161,7 +200,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
             meta = json.loads(Path(directory, "2026-07-13.json").read_text(encoding="utf-8"))
             self.assertEqual(
                 [asset["kind"] for asset in meta["image_assets"]],
-                ["cover", "flow"],
+                ["cover", "story_1", "story_2", "flow"],
             )
             self.assertEqual(
                 meta["image_assets"][0]["path"],

@@ -152,7 +152,7 @@ def build_prompt(inbox, history=None, article_contexts=None):
 - editorial은 세 뉴스를 하나의 흐름으로 잇는다. opening은 90~150자로 구체적인 변화나 질문에서 시작하고 제목 목록을 반복하지 않는다.
 - closing은 120~180자의 2~3문장으로 공통 변화와 남은 한계를 함께 정리한다.
 - action은 독자가 10~15분 안에 직접 해볼 수 있는 50~100자의 작고 구체적인 행동 하나다.
-- visual.hook은 대표 이미지에 쓸 18~32자의 질문 또는 짧은 대비다. 제목을 나열하거나 새 사실을 만들지 않고, '충격', '무조건', '지금 안 보면' 같은 낚시 표현을 쓰지 않는다.
+- visual.hook은 대표 이미지에 쓸 18~32자의 질문 또는 짧은 대비다. 첫 뉴스의 구체적 대상 하나와 독자가 확인하고 싶은 변화나 긴장을 함께 넣는다. 제목을 나열하거나 새 사실을 만들지 않고, 'AI의 미래는?', '충격', '무조건', '지금 안 보면' 같은 막연하거나 낚시성인 표현을 쓰지 않는다.
 - visual.motif는 network|agent|memory|security|data|code|cloud|hardware|research|signal 중 하나다.
 - 뉴스마다 title_kr, blurb_kr, content를 만든다.
 - blurb_kr은 다음 내용을 읽고 싶게 만드는 1문장 요약이되 낚시성 표현은 쓰지 않는다.

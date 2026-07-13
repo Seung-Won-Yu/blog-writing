@@ -63,6 +63,7 @@ EDITORIAL_IMAGE_STYLE = (
 )
 COVER_FIGURE_STYLE = "margin:0 0 34px;"
 FLOW_FIGURE_STYLE = "margin:8px 0 36px;"
+STORY_FIGURE_STYLE = "margin:0 0 24px;"
 BADGE_STYLE = (
     "display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;"
     "letter-spacing:.08em;"
@@ -350,23 +351,35 @@ def build_editorial_image(asset, kind):
     if not isinstance(asset, dict) or not plain(asset.get("url")):
         return ""
     width = int(asset.get("width") or 1200)
-    height = int(asset.get("height") or (630 if kind == "cover" else 675))
-    figure_style = COVER_FIGURE_STYLE if kind == "cover" else FLOW_FIGURE_STYLE
+    is_story = str(kind).startswith("story")
+    class_name = "story" if is_story else kind
+    default_height = 630 if kind == "cover" or is_story else 675
+    height = int(asset.get("height") or default_height)
+    if kind == "cover":
+        figure_style = COVER_FIGURE_STYLE
+    elif is_story:
+        figure_style = STORY_FIGURE_STYLE
+    else:
+        figure_style = FLOW_FIGURE_STYLE
     loading = "eager" if kind == "cover" else "lazy"
     return (
-        f'<figure class="digest-{kind}-figure"{style(figure_style)}>'
-        f'<img class="digest-{kind}-image" src="{esc(asset.get("url"))}" '
+        f'<figure class="digest-{class_name}-figure"{style(figure_style)}>'
+        f'<img class="digest-{class_name}-image" src="{esc(asset.get("url"))}" '
         f'alt="{esc(asset.get("alt"))}" width="{width}" height="{height}" '
         f'loading="{loading}"{style(EDITORIAL_IMAGE_STYLE)}>'
         "</figure>"
     )
 
 
-def build_news_section(news, flow_image=None):
+def build_news_section(news, flow_image=None, story_images=None):
     if not news:
         return '<p style="margin:0 0 16px;">오늘 수집된 뉴스가 없습니다.</p>'
 
     parts = []
+    story_images = story_images or []
+    has_story_images = any(
+        isinstance(asset, dict) and asset.get("url") for asset in story_images
+    )
     for idx, item in enumerate(news, 1):
         title = plain(item.get("title_kr"))
         source = plain(item.get("source"))
@@ -375,11 +388,15 @@ def build_news_section(news, flow_image=None):
         image = plain(item.get("image_url") or item.get("image"))
         full_content = render_content_blocks(item.get("content"))
 
-        image_html = (
-            f'<img class="digest-news-image" src="{esc(image)}" alt="" loading="lazy"{style(NEWS_IMAGE_STYLE)}>'
-            if image
-            else ""
-        )
+        story_asset = story_images[idx - 1] if idx <= len(story_images) else None
+        if isinstance(story_asset, dict) and story_asset.get("url"):
+            image_html = build_editorial_image(story_asset, f"story_{idx}")
+        else:
+            image_html = (
+                f'<img class="digest-news-image" src="{esc(image)}" alt="" loading="lazy"{style(NEWS_IMAGE_STYLE)}>'
+                if image
+                else ""
+            )
         summary_html = (
             f'<p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">{esc(blurb)}</p>'
             if blurb
@@ -403,7 +420,7 @@ def build_news_section(news, flow_image=None):
   {source_link}
 </section>""".strip()
         )
-        if idx == 1 and flow_image:
+        if idx == 1 and flow_image and not has_story_images:
             parts.append(build_editorial_image(flow_image, "flow"))
     return "\n".join(parts)
 
@@ -507,7 +524,11 @@ slug: {slugify(day_id + "-daily-digest")}
   {build_throughline_section(editorial)}
 
   <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
-  {build_news_section(news, images.get("flow"))}
+  {build_news_section(
+      news,
+      images.get("flow"),
+      [images.get(f"story_{index}") for index in range(1, 4)],
+  )}
 
   {build_quiz_section(day.get("quiz"))}
 
@@ -527,10 +548,17 @@ def write_post(day_id, day=None, source_page=None):
     day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
+    image_titles = {
+        "cover": "대표 이미지",
+        "story_1": "본문 1번 이미지",
+        "story_2": "본문 2번 이미지",
+        "story_3": "본문 3번 이미지",
+        "flow": "오늘의 흐름 이미지",
+    }
     image_assets = [
         {
             "kind": kind,
-            "title": "대표 이미지" if kind == "cover" else "오늘의 흐름 이미지",
+            "title": image_titles[kind],
             "url": plain(asset.get("url")),
             "path": plain(asset.get("path")),
             "original_url": "",
@@ -538,7 +566,7 @@ def write_post(day_id, day=None, source_page=None):
             "width": int(asset.get("width") or 0),
             "height": int(asset.get("height") or 0),
         }
-        for kind in ("cover", "flow")
+        for kind in ("cover", "story_1", "story_2", "story_3", "flow")
         for asset in [images.get(kind)]
         if isinstance(asset, dict) and asset.get("url")
     ]

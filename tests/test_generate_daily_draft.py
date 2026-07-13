@@ -273,6 +273,15 @@ class DayValidationTests(unittest.TestCase):
         self.assertNotIn("<", visual["hook"])
         self.assertTrue(visual["hook"].endswith("?"))
 
+        generated = copy.deepcopy(MODEL_OUTPUT)
+        generated["visual"] = {
+            "hook": "AI와 개발의 미래는?",
+            "motif": "code",
+        }
+        visual = build_day(INBOX, generated)["visual"]
+        self.assertNotIn("미래는?", visual["hook"])
+        self.assertIn("코드", visual["hook"])
+
     def test_fallback_uses_only_collected_titles_summaries_and_links(self):
         day = fallback_day(INBOX)
 

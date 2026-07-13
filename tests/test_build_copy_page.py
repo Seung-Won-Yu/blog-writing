@@ -52,6 +52,8 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aspect-ratio: 1200 / 630', html)
         self.assertIn("els.coverPreview.alt =", html)
         self.assertIn('asset.kind === "flow"', html)
+        self.assertIn('asset.kind.startsWith("story_")', html)
+        self.assertIn("본문 1번 이미지 열기", html)
 
 
 if __name__ == "__main__":

@@ -15,6 +15,10 @@ class MotifClassificationTests(unittest.TestCase):
         self.assertEqual(motif_for_text("통신망 운영 자동화"), "network")
         self.assertEqual(motif_for_text("보안성을 높이는 권한 검토"), "security")
 
+    def test_ai_vendor_names_select_an_agent_scene(self):
+        self.assertEqual(motif_for_text("앤트로픽의 활용 가이드"), "agent")
+        self.assertEqual(motif_for_text("Anthropic workflow patterns"), "agent")
+
 
 if __name__ == "__main__":
     unittest.main()

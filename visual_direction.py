@@ -21,7 +21,21 @@ VISUAL_KEYWORDS = (
     ("hardware", ("gpu", "npu", "chip", "칩", "반도체", "하드웨어")),
     ("cloud", ("cloud", "클라우드", "server", "서버", "kubernetes", "인프라")),
     ("data", ("database", "데이터베이스", "데이터", "분석", "vector", "벡터", "clickhouse")),
-    ("agent", ("agent", "에이전트", "세션", "session", "autonomous", "자율")),
+    (
+        "agent",
+        (
+            "agent",
+            "에이전트",
+            "세션",
+            "session",
+            "autonomous",
+            "자율",
+            "anthropic",
+            "앤트로픽",
+            "claude",
+            "클로드",
+        ),
+    ),
     ("code", ("코드", "coding", "코딩", "github", "개발", "프레임워크", "cli")),
     ("research", ("논문", "paper", "arxiv", "연구", "benchmark", "벤치마크")),
 )
@@ -49,7 +63,16 @@ VISUAL_LABELS = {
     "research": "연구의 다음 단계",
     "signal": "새로운 신호",
 }
-BANNED_VISUAL_HOOKS = ("충격", "소름", "무조건", "절대", "대박", "지금 안 보면")
+BANNED_VISUAL_HOOKS = (
+    "충격",
+    "소름",
+    "무조건",
+    "절대",
+    "대박",
+    "지금 안 보면",
+    "미래는?",
+    "전망은?",
+)
 
 
 def motif_for_text(text):
@@ -81,6 +104,9 @@ def validate_visual(raw, reference):
     fallback = fallback_visual(reference)
     if not isinstance(raw, dict):
         return fallback
+    motif = _clean_text(raw.get("motif"), 20).lower()
+    if motif not in VISUAL_MOTIFS:
+        motif = fallback["motif"]
     hook = _clean_text(raw.get("hook"), 48)
     lowered = hook.casefold()
     if (
@@ -88,8 +114,5 @@ def validate_visual(raw, reference):
         or any(term in hook for term in BANNED_VISUAL_HOOKS)
         or any(term in lowered for term in ("http://", "https://", "<", ">", "```"))
     ):
-        hook = fallback["hook"]
-    motif = _clean_text(raw.get("motif"), 20).lower()
-    if motif not in VISUAL_MOTIFS:
-        motif = fallback["motif"]
+        hook = VISUAL_HOOKS[motif]
     return {"hook": hook, "motif": motif}
