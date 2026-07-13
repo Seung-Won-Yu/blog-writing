@@ -42,6 +42,17 @@ class ArticleExtractionTests(unittest.TestCase):
         self.assertNotIn("로그인 안내", result["text"])
         self.assertNotIn("prompt injection", result["text"])
 
+    def test_void_elements_inside_navigation_do_not_hide_the_article(self):
+        html = """
+        <nav><img src="logo.png"><a href="/">홈</a></nav>
+        <article><p>닫는 태그가 없는 이미지 뒤의 실제 기사 본문도 수집되어야 한다.</p></article>
+        """
+
+        result = extract_article_text(html)
+
+        self.assertEqual(result["method"], "article")
+        self.assertIn("실제 기사 본문", result["text"])
+
 
 class ArticleFetchBoundaryTests(unittest.TestCase):
     @staticmethod

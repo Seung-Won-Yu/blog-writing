@@ -39,6 +39,22 @@ class _ArticleParser(HTMLParser):
     BLOCK_TAGS = {"p", "li", "blockquote", "h2", "h3"}
     PRIMARY_TAGS = {"article", "main"}
     IGNORED_TAGS = {"script", "style", "nav", "footer", "header", "form", "svg", "noscript"}
+    VOID_TAGS = {
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
+    }
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -59,7 +75,8 @@ class _ArticleParser(HTMLParser):
             self.json_ld_parts = []
             return
         if self.ignored_depth:
-            self.ignored_depth += 1
+            if tag not in self.VOID_TAGS:
+                self.ignored_depth += 1
             return
         if tag in self.IGNORED_TAGS:
             self.ignored_depth = 1
