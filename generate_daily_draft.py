@@ -798,6 +798,21 @@ def build_day(
     for candidate, raw in zip(selected, generated_news):
         if not isinstance(raw, dict):
             raise ValueError("뉴스 응답 형식이 올바르지 않습니다.")
+        content = _validated_content(raw.get("content"))
+        author_note = _validated_author_note(raw.get("author_note"))
+        if len(author_note) < 90:
+            verification = next(
+                (
+                    block.get("text", "")
+                    for block in reversed(content)
+                    if block.get("t") == "p"
+                ),
+                "",
+            )
+            if verification:
+                author_note = _validated_author_note(
+                    "승원의 관점에서는 " + verification
+                )
         news.append(
             {
                 "title_kr": _text(raw.get("title_kr"), 220)
@@ -809,8 +824,8 @@ def build_day(
                 "selection_reason": _text(candidate.get("selection_reason"), 120),
                 "blurb_kr": _text(raw.get("blurb_kr"), 400)
                 or _text(candidate.get("summary"), 400),
-                "author_note": _validated_author_note(raw.get("author_note")),
-                "content": _validated_content(raw.get("content")),
+                "author_note": author_note,
+                "content": content,
             }
         )
 
@@ -901,13 +916,13 @@ def _compact_retry_draft(generated):
             continue
         news.append(
             {
-                "title_kr": _text(item.get("title_kr"), 160),
-                "blurb_kr": _text(item.get("blurb_kr"), 140),
-                "author_note": _text(item.get("author_note"), 120),
+                "title_kr": _text(item.get("title_kr"), 72),
+                "blurb_kr": _text(item.get("blurb_kr"), 90),
+                "author_note": _text(item.get("author_note"), 90),
                 "content": [
                     {
                         "t": "h" if block.get("t") == "h" else "p",
-                        "text": _text(block.get("text"), 150),
+                        "text": _text(block.get("text"), 75),
                     }
                     for block in item.get("content") or []
                     if isinstance(block, dict) and block.get("text")
@@ -916,11 +931,11 @@ def _compact_retry_draft(generated):
         )
     return {
         "editorial": {
-            "headline": _text(editorial.get("headline"), 90),
-            "opening": _text(editorial.get("opening"), 180),
-            "throughline": _text(editorial.get("throughline"), 300),
-            "closing": _text(editorial.get("closing"), 180),
-            "action": _text(editorial.get("action"), 120),
+            "headline": _text(editorial.get("headline"), 65),
+            "opening": _text(editorial.get("opening"), 110),
+            "throughline": _text(editorial.get("throughline"), 160),
+            "closing": _text(editorial.get("closing"), 100),
+            "action": _text(editorial.get("action"), 70),
         },
         "news": news,
     }
@@ -944,14 +959,28 @@ def _merge_quality_repair(base, repair):
         and all(
             isinstance(base_item, dict)
             and isinstance(repair_item, dict)
-            and _text(base_item.get("title_kr"), 160)
-            and _text(base_item.get("title_kr"), 160)
-            == _text(repair_item.get("title_kr"), 160)
+            and _repair_title_matches(
+                base_item.get("title_kr"), repair_item.get("title_kr")
+            )
             for base_item, repair_item in zip(base_news, repair_news)
         )
     ):
-        merged["news"] = repair_news
+        merged["news"] = [
+            {
+                **repair_item,
+                "title_kr": base_item["title_kr"],
+            }
+            for base_item, repair_item in zip(base_news, repair_news)
+        ]
     return merged
+
+
+def _repair_title_matches(base_value, repair_value):
+    base_title = _text(base_value, 220)
+    repair_title = _text(repair_value, 220).rstrip("…").strip()
+    if len(base_title) <= 72:
+        return repair_title == base_title
+    return len(repair_title) >= 60 and base_title.startswith(repair_title)
 
 
 def _merge_editorial_quality_repair(base, repair):
@@ -1103,6 +1132,7 @@ def _quality_retry_prompt(generated, error):
 - 이전 응답은 {reason} 사유로 거절됐다.
 - 이전 응답의 본문 문단 길이는 {paragraphs}자, 연결고리는 {throughline}자였다.
 - 이번에는 각 뉴스의 본문 문단 3개를 각각 {paragraph_range}자, 4~6개의 완결된 문장으로 쓴다. 뉴스 하나의 본문 세 문단 합계는 최소 {paragraph_total}자다.
+- author_note는 각 뉴스마다 100~180자이며 '승원의 관점에서는'으로 시작한다. 설정·권한·버전·비용·로그·테스트 중 확인할 대상을 하나 넣고, 직접 사용했다는 경험은 만들지 않는다.
 - 사실 문단에는 구체적 변화와 배경, 영향 문단에는 독자의 시간·비용·개인정보·일·도구 사용과 필요한 개발자 관점, 확인 문단에는 확인되지 않은 범위와 검토 질문을 넣는다.
 - editorial.throughline은 최소 200자, 전체 표시 텍스트는 최소 3,000자다.
 - 같은 말을 바꾸어 반복하지 말고, 이전 초안의 사실·조건·확인 질문을 나눠 풀어 쓴다.
