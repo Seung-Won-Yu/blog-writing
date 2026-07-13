@@ -12,6 +12,7 @@ on:
       - 'article_context.py'
       - 'quiz_bank.py'
       - 'generate_editorial_images.py'
+      - 'generate_gemini_images.py'
       - 'visual_direction.py'
       - 'export_tistory.py'
       - 'requirements-images.txt'
@@ -32,6 +33,19 @@ on:
         required: false
         type: boolean
         default: false
+      ai_images:
+        description: '유료 Gemini 이미지 4장 사용 (약 US$0.14/회, 과금 계정 필요)'
+        required: false
+        type: boolean
+        default: false
+      image_model:
+        description: '이미지 모델 (Lite 4장 약 $0.14 / Flash 4장 약 $0.27)'
+        required: false
+        type: choice
+        default: 'gemini-3.1-flash-lite-image'
+        options:
+          - 'gemini-3.1-flash-lite-image'
+          - 'gemini-3.1-flash-image'
 
 permissions:
   contents: write
@@ -105,6 +119,22 @@ jobs:
             python generate_editorial_images.py --today
           fi
 
+      - name: Generate opt-in Gemini editorial images (paid)
+        id: gemini_images
+        if: github.event_name == 'workflow_dispatch' && inputs.ai_images == true
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ inputs.image_model }}
+          REQUESTED_DAY: ${{ inputs.day }}
+          TZ: Asia/Seoul
+        run: |
+          if [ -n "$REQUESTED_DAY" ]; then
+            python generate_gemini_images.py --day "$REQUESTED_DAY"
+          else
+            python generate_gemini_images.py --today
+          fi
+
       - name: Build draft copy page
         if: always()
         run: |
@@ -149,3 +179,7 @@ jobs:
       - name: Report image fallback
         if: always() && (steps.image_tools.outcome == 'failure' || steps.editorial_images.outcome == 'failure')
         run: echo "이미지 생성에 실패해 텍스트 초안만 유지했습니다."
+
+      - name: Report Gemini image fallback
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.ai_images == true && steps.gemini_images.outcome == 'failure'
+        run: echo "유료 Gemini 이미지가 실패해 무료 기본 이미지를 유지했습니다."
