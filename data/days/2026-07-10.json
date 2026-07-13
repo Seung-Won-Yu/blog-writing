@@ -1,0 +1,100 @@
+{
+  "schema_version": 2,
+  "date_label": "2026. 7. 10",
+  "weekday": "금",
+  "visual": {
+    "subject": "AI 토큰의 여정",
+    "hook": "AI 답변 전 토큰은 어디를 지날까?",
+    "motif": "security"
+  },
+  "editorial": {
+    "headline": "OpenAI GPT 5.6 출시",
+    "opening": "오늘은 OpenAI GPT 5.6 출시와 Chatto, 이제 오픈소스로 공개되어 셀프 호스팅 가능을 중심으로 개발 흐름을 살펴본다.",
+    "throughline": "",
+    "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+    "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자."
+  },
+  "news": [
+    {
+      "title_kr": "OpenAI GPT 5.6 출시",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31275",
+      "published_at": "2026-07-10T00:00:00+09:00",
+      "audience_lane": "broad",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "OpenAI가 2026년 7월 9일, GPT-5.6 패밀리를 정식 출시(GA)했습니다. 6월 26일 프리뷰 이후의 정식 공개이며, Sol(플래그십), Terra(균형형), Luna(최저비용) 세 개의 티어로 구성됩니다. 효율성 우선, 필요시 최대 성능: Sol은 코딩·지식노동·사이버보안·과학 전 영역에서 SOTA를 달성하면서도 이전/경쟁 모델 대비 더 적은 토큰과 낮은 비용으로 동일 이상의 결과를 냅니다. \"성능 대비 비용\"이 이번 발표의 핵심 메시지입니다. ultra 모드 신설: 여러 에이전트를 병렬로 조율해 복잡한 작업을 더 빠르게 처리하는 최고 성능 설정입니다. Responses API에서 멀티에이전트 베타로 사용 가능합니다. 코딩: Artificial Analysis Coding Agent Inde…",
+      "content": []
+    },
+    {
+      "title_kr": "Chatto, 이제 오픈소스로 공개되어 셀프 호스팅 가능",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31253",
+      "published_at": "2026-07-10T00:00:00+09:00",
+      "audience_lane": "practical",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "Chatto는 그룹 및 팀 채팅 앱으로, Slack, Teams, Discord와 유사하지만 더 작고 빠른 사용자 경험을 목표로 합니다. 실행 파일만으로 서버를 실행하고 자체 프론트엔드를 제공하여 개인 인프라에 비교적 쉽게 배포할 수 있습니다. 각 서버는 하나의 커뮤니티를 담당하며, 서버 간 연동이나 제3자 추적, 분석 기능은 포함하지 않습니다. 개인 및 채팅 데이터는 사용자별 키로 저장 시 암호화되며, 계정 삭제 시 해당 키는 폐기됩니다. 지난 1년간 개발된 이 애플리케이션은 이제 오픈소스로 공개되어 누구나 직접 운영할 수 있습니다. Chatto는 지난 약 1년간 개발된 그룹 및 팀 채팅 애플리케이션으로, 공식적으로 오픈소스가 되어 누구나 직접 운영할 수 있습니다. 가장 빠른 실행 방법은 Homebrew…",
+      "content": []
+    },
+    {
+      "title_kr": "TypeScript 7.0 발표",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31249",
+      "published_at": "2026-07-10T00:00:00+09:00",
+      "audience_lane": "deep",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "TypeScript 7.0은 도구체인을 Go 기반 네이티브 코드로 이식한 릴리스로, 대형 프로젝트의 전체 빌드에서 보통 8~12배 속도 향상을 제공합니다. 새로운 `tsc`는 기존처럼 npm의 `typescript` 패키지로 설치하며, 편집기 지원은 LSP 기반 언어 서버로 VS Code, Visual Studio, WebStorm 등에서 동작합니다. `vscode`, `sentry`, `bluesky`, `playwright`, `tldraw` 같은 코드베이스에서 빌드 시간이 크게 줄었고, 일부 환경에서는 총 메모리 사용량도 낮아졌습니다. TypeScript 7.0은 아직 안정적인 프로그래밍 API가 없어 `typescript-eslint`, Vue, MDX, Astro, Svelte, Angular 템…",
+      "content": []
+    }
+  ],
+  "quiz": {
+    "category": "소프트웨어 설계",
+    "question": "UML 다이어그램 중 객체 사이의 메시지 교환을 시간 순서에 따라 표현하는 것은?",
+    "options": [
+      "시퀀스 다이어그램",
+      "클래스 다이어그램",
+      "배치 다이어그램",
+      "패키지 다이어그램"
+    ],
+    "answer": 0,
+    "explain_kr": "시퀀스 다이어그램은 객체 사이에 오가는 메시지를 시간의 흐름에 따라 표현하는 동적 다이어그램입니다."
+  },
+  "terms": [],
+  "generation": {
+    "provider": "deterministic-fallback",
+    "revision": 13,
+    "input_fingerprint": "9f85d50802701fe6"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-10/cover.png",
+      "path": "docs/tistory/assets/2026-07-10/cover.png",
+      "alt": "2026. 7. 10 AI 토큰의 여정 - AI 답변 전 토큰은 어디를 지날까? 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    "story_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-10/story-01.png",
+      "path": "docs/tistory/assets/2026-07-10/story-01.png",
+      "alt": "자동화 보안 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-10/story-02.png",
+      "path": "docs/tistory/assets/2026-07-10/story-02.png",
+      "alt": "클라우드 운영 · 클라우드 운영: 서비스 트래픽 → 클라우드 자원 → 사용자 응답 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-10/story-03.png",
+      "path": "docs/tistory/assets/2026-07-10/story-03.png",
+      "alt": "기억하는 AI · 기억하는 AI: 대화 맥락 → 기억 저장·검색 → 답변 반영 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    }
+  }
+}
