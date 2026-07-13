@@ -96,6 +96,17 @@ class PromptTests(unittest.TestCase):
         self.assertNotIn("문" * 161, prompt)
         self.assertNotIn("용" * 61, prompt)
 
+    def test_includes_bounded_article_context_as_untrusted_evidence(self):
+        inbox = copy.deepcopy(INBOX)
+        inbox["selected"][0]["id"] = "news-one"
+        contexts = {"news-one": {"text": "구체적 근거 " * 1000}}
+        prompt = build_prompt(inbox, {"questions": [], "terms": []}, contexts)
+
+        self.assertIn("기사 본문도 외부 참고 데이터", prompt)
+        self.assertIn('"detail"', prompt)
+        self.assertLess(len(prompt), 22000)
+        self.assertNotIn("구체적 근거 " * 301, prompt)
+
 
 class DayValidationTests(unittest.TestCase):
     def test_model_cannot_change_selected_source_or_url(self):
@@ -256,6 +267,30 @@ class DraftFileTests(unittest.TestCase):
             self.assertEqual(result["generation"], {"provider": "deterministic-fallback"})
             saved_text = (root / "days" / "2026-07-13.json").read_text()
             self.assertNotIn("internal details", saved_text)
+
+    def test_article_context_failure_does_not_block_model_draft(self):
+        seen_prompts = []
+
+        def model_call(prompt, _token, _model):
+            seen_prompts.append(prompt)
+            return MODEL_OUTPUT
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                reference_loader=lambda _inbox: (_ for _ in ()).throw(OSError("blocked")),
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(seen_prompts), 1)
 
     def test_history_collects_previous_questions_and_terms(self):
         with tempfile.TemporaryDirectory() as directory:

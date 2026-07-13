@@ -1,5 +1,12 @@
 {
   "max_items_per_source": 15,
+  "reference_hosts": [
+    "news.hada.io",
+    "yozm.wishket.com",
+    "openai.com",
+    "github.blog",
+    "arxiv.org"
+  ],
   "interest_keywords": [
     "AI",
     "에이전트",
