@@ -16,7 +16,14 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from news_pipeline import validate_day_id
-from visual_direction import VISUAL_LABELS, motif_for_text, validate_visual
+from visual_direction import (
+    VISUAL_LABELS,
+    motif_for_text,
+    scene_for_text,
+    scene_label,
+    scene_steps,
+    validate_visual,
+)
 
 
 HERE = Path(__file__).resolve().parent
@@ -36,6 +43,18 @@ LINE = "#D8DEDB"
 WHITE = "#FFFFFF"
 ORANGE = "#E57B43"
 MINT = "#A9D8C1"
+MOTIF_ACCENTS = {
+    "network": "#57D3E3",
+    "agent": "#B77CFF",
+    "memory": "#F3B85B",
+    "security": "#FF7A68",
+    "data": "#55D29A",
+    "code": "#6FA8FF",
+    "cloud": "#8BC7FF",
+    "hardware": "#FFB45E",
+    "research": "#D49BFF",
+    "signal": "#6FE6D0",
+}
 
 
 def find_font(bold=False):
@@ -135,10 +154,17 @@ def resolve_visual(day):
         motif = motif_for_text(item.get("title_kr", ""))
         if motif == "signal":
             motif = motif_for_text(item.get("blurb_kr", ""))
+        reference = "{} {}".format(
+            item.get("title_kr", ""), item.get("blurb_kr", "")
+        )
+        scene = scene_for_text(reference)
         visual["stories"].append(
             {
                 "motif": motif,
                 "label": VISUAL_LABELS[motif],
+                "scene": scene,
+                "scene_label": scene_label(scene, motif),
+                "steps": scene_steps(scene, motif),
                 "title": " ".join(str(item.get("title_kr") or "").split()),
                 "source": " ".join(str(item.get("source") or "").split()),
             }
@@ -148,6 +174,9 @@ def resolve_visual(day):
             {
                 "motif": "signal",
                 "label": VISUAL_LABELS["signal"],
+                "scene": "signal",
+                "scene_label": scene_label("signal"),
+                "steps": scene_steps("signal"),
                 "title": "",
                 "source": "",
             }
@@ -273,61 +302,684 @@ def draw_motif(draw, motif, box, foreground=INK, accent=ORANGE, muted=GREEN):
         draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=foreground)
 
 
-def _cover(day, font_path, bold_font_path):
-    image = Image.new("RGB", (1200, 630), "#07131F")
-    draw = ImageDraw.Draw(image)
-    visual = resolve_visual(day)
+def _hex_rgb(value):
+    value = str(value).lstrip("#")
+    return tuple(int(value[index : index + 2], 16) for index in (0, 2, 4))
 
-    # A full-bleed editorial scene reads as a thumbnail, not a UI card.
-    draw.rectangle((0, 0, 1200, 10), fill="#6FE6D0")
-    for x in range(0, 1200, 80):
-        draw.line((x, 10, x - 210, 630), fill="#102536", width=1)
-    for y in range(90, 630, 90):
-        draw.line((0, y, 1200, y), fill="#102536", width=1)
-    draw.polygon([(740, 10), (1200, 10), (1200, 630), (1000, 630)], fill="#0B2F35")
-    draw.ellipse((760, 72, 1190, 502), outline="#1D5960", width=3)
-    draw.ellipse((822, 134, 1128, 440), outline="#6FE6D0", width=7)
-    draw.arc((714, 28, 1238, 552), 205, 326, fill=ORANGE, width=9)
 
-    label_font = _font(bold_font_path, 18)
-    date_font = _font(font_path, 19)
-    title_font = _font(bold_font_path, 61)
-    footer_font = _font(bold_font_path, 18)
-
-    date_label = str(day.get("date_label") or "오늘")
-    weekday = str(day.get("weekday") or "").strip()
-    date_text = f"{date_label} {weekday}요일" if weekday else date_label
-    draw.text((72, 58), "DAILY DEV BRIEF", font=label_font, fill="#6FE6D0")
-    draw.text((72, 96), date_text, font=date_font, fill="#91AAB8")
-    title_lines = wrap_text_by_pixels(draw, visual["hook"], title_font, 590, 3)
-    title_bottom = _draw_multiline(
-        draw, title_lines, (72, 178), title_font, WHITE, line_gap=14
+def _blend(left, right, amount):
+    left_rgb = _hex_rgb(left)
+    right_rgb = _hex_rgb(right)
+    return tuple(
+        int(a + (b - a) * amount) for a, b in zip(left_rgb, right_rgb)
     )
-    draw.rectangle((72, min(470, title_bottom + 25), 144, min(476, title_bottom + 31)), fill=ORANGE)
 
+
+def _gradient(image, start, end):
+    draw = ImageDraw.Draw(image)
+    height = image.height
+    for y in range(height):
+        draw.line((0, y, image.width, y), fill=_blend(start, end, y / max(1, height - 1)))
+
+
+def _arrow(draw, start, end, color, width=8):
+    draw.line((start, end), fill=color, width=width)
+    ex, ey = end
+    draw.polygon(
+        [(ex, ey), (ex - width * 2, ey - width), (ex - width * 2, ey + width)],
+        fill=color,
+    )
+
+
+MOTIF_FLOW_GLYPHS = {
+    "network": ("request", "connection"),
+    "agent": ("goal", "review"),
+    "memory": ("conversation", "answer"),
+    "security": ("access", "decision"),
+    "data": ("records", "insight"),
+    "code": ("intent", "tests"),
+    "cloud": ("traffic", "delivery"),
+    "hardware": ("workload", "speed"),
+    "research": ("question", "evidence"),
+    "signal": ("events", "action"),
+}
+
+
+def _draw_stage_glyph(draw, kind, box, foreground, accent, muted):
+    """Draw a small semantic start or outcome glyph for a motif flow."""
+    width = max(1, box[2] - box[0])
+    stroke = max(3, width // 35)
+
+    if kind == "request":
+        screen = _scaled_box(box, 0.08, 0.18, 0.78, 0.82)
+        draw.rounded_rectangle(
+            screen, radius=width // 18, outline=foreground, width=stroke
+        )
+        draw.line(
+            (_point(screen, 0.0, 0.22), _point(screen, 1.0, 0.22)),
+            fill=muted,
+            width=stroke,
+        )
+        for y, length in ((0.43, 0.56), (0.62, 0.38)):
+            draw.line(
+                (_point(screen, 0.14, y), _point(screen, 0.14 + length, y)),
+                fill=accent,
+                width=stroke,
+            )
+        cx, cy = _point(box, 0.86, 0.5)
+        radius = max(3, width // 22)
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius), fill=accent
+        )
+    elif kind == "goal":
+        cx, cy = _point(box, 0.48, 0.5)
+        for scale, color in ((0.38, muted), (0.25, foreground), (0.1, accent)):
+            radius = int(width * scale)
+            draw.ellipse(
+                (cx - radius, cy - radius, cx + radius, cy + radius),
+                outline=color,
+                width=stroke,
+            )
+        _arrow(
+            draw,
+            _point(box, 0.78, 0.18),
+            _point(box, 0.58, 0.4),
+            accent,
+            stroke,
+        )
+    elif kind == "conversation":
+        bubble = _scaled_box(box, 0.08, 0.19, 0.87, 0.73)
+        draw.rounded_rectangle(
+            bubble, radius=width // 14, outline=foreground, width=stroke
+        )
+        draw.polygon(
+            [
+                _point(box, 0.25, 0.72),
+                _point(box, 0.2, 0.88),
+                _point(box, 0.43, 0.72),
+            ],
+            fill=foreground,
+        )
+        for y, length in ((0.38, 0.58), (0.56, 0.4)):
+            draw.line(
+                (_point(bubble, 0.17, y), _point(bubble, 0.17 + length, y)),
+                fill=accent if y > 0.5 else muted,
+                width=stroke,
+            )
+    elif kind == "access":
+        cx, cy = _point(box, 0.34, 0.5)
+        radius = width // 6
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius),
+            outline=foreground,
+            width=stroke,
+        )
+        draw.line(
+            (cx + radius, cy, *_point(box, 0.84, 0.5)),
+            fill=accent,
+            width=stroke * 2,
+        )
+        for x in (0.68, 0.8):
+            draw.line(
+                (_point(box, x, 0.5), _point(box, x, 0.68)),
+                fill=accent,
+                width=stroke,
+            )
+    elif kind == "records":
+        dots = ((0.16, 0.25), (0.35, 0.2), (0.18, 0.52), (0.4, 0.46), (0.22, 0.78))
+        target = _point(box, 0.82, 0.5)
+        for index, position in enumerate(dots):
+            point = _point(box, *position)
+            draw.line((point, target), fill=muted, width=max(2, stroke // 2))
+            radius = width // 26
+            draw.ellipse(
+                (
+                    point[0] - radius,
+                    point[1] - radius,
+                    point[0] + radius,
+                    point[1] + radius,
+                ),
+                fill=accent if index == 3 else foreground,
+            )
+        radius = width // 12
+        draw.ellipse(
+            (
+                target[0] - radius,
+                target[1] - radius,
+                target[0] + radius,
+                target[1] + radius,
+            ),
+            fill=accent,
+        )
+    elif kind == "intent":
+        draw.line(
+            [
+                _point(box, 0.18, 0.28),
+                _point(box, 0.42, 0.5),
+                _point(box, 0.18, 0.72),
+            ],
+            fill=accent,
+            width=stroke * 2,
+            joint="curve",
+        )
+        draw.line(
+            (_point(box, 0.5, 0.72), _point(box, 0.84, 0.72)),
+            fill=foreground,
+            width=stroke * 2,
+        )
+        draw.line(
+            (_point(box, 0.55, 0.34), _point(box, 0.78, 0.34)),
+            fill=muted,
+            width=stroke,
+        )
+    elif kind == "traffic":
+        target = _point(box, 0.83, 0.5)
+        for index, y in enumerate((0.25, 0.5, 0.75)):
+            start = _point(box, 0.17, y)
+            draw.line((start, target), fill=muted, width=stroke)
+            radius = width // 19
+            draw.ellipse(
+                (
+                    start[0] - radius,
+                    start[1] - radius,
+                    start[0] + radius,
+                    start[1] + radius,
+                ),
+                fill=accent if index == 1 else foreground,
+            )
+        radius = width // 13
+        draw.ellipse(
+            (
+                target[0] - radius,
+                target[1] - radius,
+                target[0] + radius,
+                target[1] + radius,
+            ),
+            outline=accent,
+            width=stroke,
+        )
+    elif kind == "workload":
+        for row in range(3):
+            for column in range(3):
+                tile = _scaled_box(
+                    box,
+                    0.1 + column * 0.27,
+                    0.16 + row * 0.25,
+                    0.29 + column * 0.27,
+                    0.34 + row * 0.25,
+                )
+                draw.rounded_rectangle(
+                    tile,
+                    radius=max(2, width // 45),
+                    fill=accent if (row, column) == (1, 1) else muted,
+                    outline=foreground,
+                    width=max(1, stroke // 2),
+                )
+    elif kind == "question":
+        cx, cy = _point(box, 0.43, 0.43)
+        radius = width // 4
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius),
+            outline=foreground,
+            width=stroke * 2,
+        )
+        draw.line(
+            (cx + radius * 2 // 3, cy + radius * 2 // 3, *_point(box, 0.84, 0.84)),
+            fill=accent,
+            width=stroke * 2,
+        )
+        dot = _point(box, 0.42, 0.52)
+        dot_radius = max(3, width // 30)
+        draw.ellipse(
+            (
+                dot[0] - dot_radius,
+                dot[1] - dot_radius,
+                dot[0] + dot_radius,
+                dot[1] + dot_radius,
+            ),
+            fill=accent,
+        )
+    elif kind == "events":
+        origin = _point(box, 0.15, 0.5)
+        radius = width // 25
+        draw.ellipse(
+            (
+                origin[0] - radius,
+                origin[1] - radius,
+                origin[0] + radius,
+                origin[1] + radius,
+            ),
+            fill=accent,
+        )
+        for scale in (0.28, 0.5, 0.72):
+            reach = int(width * scale)
+            draw.arc(
+                (
+                    origin[0] - reach // 2,
+                    origin[1] - reach,
+                    origin[0] + reach,
+                    origin[1] + reach,
+                ),
+                285,
+                75,
+                fill=foreground if scale == 0.72 else muted,
+                width=stroke,
+            )
+    elif kind == "connection":
+        nodes = ((0.2, 0.3), (0.38, 0.7), (0.66, 0.28), (0.82, 0.65))
+        for left, right in ((0, 1), (0, 2), (1, 3), (2, 3)):
+            draw.line(
+                (_point(box, *nodes[left]), _point(box, *nodes[right])),
+                fill=muted,
+                width=stroke,
+            )
+        for index, node in enumerate(nodes):
+            cx, cy = _point(box, *node)
+            radius = width // 17
+            draw.ellipse(
+                (cx - radius, cy - radius, cx + radius, cy + radius),
+                fill=accent if index == 3 else foreground,
+            )
+    elif kind == "review":
+        cx, cy = _point(box, 0.5, 0.5)
+        radius = width // 3
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius),
+            outline=foreground,
+            width=stroke * 2,
+        )
+        draw.line(
+            (
+                *_point(box, 0.29, 0.52),
+                *_point(box, 0.43, 0.68),
+                *_point(box, 0.75, 0.32),
+            ),
+            fill=accent,
+            width=stroke * 2,
+            joint="curve",
+        )
+    elif kind == "answer":
+        bubble = _scaled_box(box, 0.08, 0.18, 0.87, 0.75)
+        draw.rounded_rectangle(
+            bubble, radius=width // 14, outline=foreground, width=stroke
+        )
+        draw.polygon(
+            [
+                _point(box, 0.64, 0.74),
+                _point(box, 0.82, 0.88),
+                _point(box, 0.76, 0.71),
+            ],
+            fill=foreground,
+        )
+        for y, length in ((0.38, 0.55), (0.57, 0.36)):
+            draw.line(
+                (_point(bubble, 0.16, y), _point(bubble, 0.16 + length, y)),
+                fill=accent if y < 0.5 else muted,
+                width=stroke,
+            )
+    elif kind == "decision":
+        root = _point(box, 0.18, 0.5)
+        allow = _point(box, 0.76, 0.28)
+        block = _point(box, 0.76, 0.72)
+        draw.line((root, allow), fill=muted, width=stroke)
+        draw.line((root, block), fill=muted, width=stroke)
+        radius = width // 8
+        for point in (allow, block):
+            draw.ellipse(
+                (
+                    point[0] - radius,
+                    point[1] - radius,
+                    point[0] + radius,
+                    point[1] + radius,
+                ),
+                outline=foreground,
+                width=stroke,
+            )
+        draw.line(
+            (
+                allow[0] - radius // 2,
+                allow[1],
+                allow[0] - radius // 8,
+                allow[1] + radius // 3,
+                allow[0] + radius // 2,
+                allow[1] - radius // 3,
+            ),
+            fill=accent,
+            width=stroke,
+            joint="curve",
+        )
+        draw.line(
+            (
+                block[0] - radius // 2,
+                block[1] - radius // 2,
+                block[0] + radius // 2,
+                block[1] + radius // 2,
+            ),
+            fill=accent,
+            width=stroke,
+        )
+        draw.line(
+            (
+                block[0] + radius // 2,
+                block[1] - radius // 2,
+                block[0] - radius // 2,
+                block[1] + radius // 2,
+            ),
+            fill=accent,
+            width=stroke,
+        )
+    elif kind == "insight":
+        for index, height in enumerate((0.28, 0.46, 0.7)):
+            bar = _scaled_box(
+                box,
+                0.16 + index * 0.24,
+                0.82 - height,
+                0.32 + index * 0.24,
+                0.82,
+            )
+            draw.rounded_rectangle(
+                bar, radius=max(2, width // 40), fill=accent if index == 2 else muted
+            )
+        draw.line(
+            (_point(box, 0.1, 0.82), _point(box, 0.9, 0.82)),
+            fill=foreground,
+            width=stroke,
+        )
+        _arrow(
+            draw,
+            _point(box, 0.2, 0.68),
+            _point(box, 0.83, 0.22),
+            foreground,
+            stroke,
+        )
+    elif kind == "tests":
+        for index, y in enumerate((0.25, 0.5, 0.75)):
+            start = _point(box, 0.12, y)
+            size = width // 10
+            draw.rounded_rectangle(
+                (
+                    start[0],
+                    start[1] - size // 2,
+                    start[0] + size,
+                    start[1] + size // 2,
+                ),
+                radius=max(2, width // 50),
+                outline=accent,
+                width=stroke,
+            )
+            draw.line(
+                (
+                    start[0] + size // 5,
+                    start[1],
+                    start[0] + size // 2,
+                    start[1] + size // 4,
+                    start[0] + size,
+                    start[1] - size // 3,
+                ),
+                fill=foreground,
+                width=stroke,
+                joint="curve",
+            )
+            draw.line(
+                (_point(box, 0.42, y), _point(box, 0.87 - index * 0.08, y)),
+                fill=muted,
+                width=stroke,
+            )
+    elif kind == "delivery":
+        device = _scaled_box(box, 0.2, 0.12, 0.8, 0.88)
+        draw.rounded_rectangle(
+            device, radius=width // 13, outline=foreground, width=stroke
+        )
+        draw.line(
+            (_point(device, 0.18, 0.2), _point(device, 0.82, 0.2)),
+            fill=muted,
+            width=stroke,
+        )
+        _arrow(
+            draw,
+            _point(device, 0.5, 0.34),
+            _point(device, 0.5, 0.7),
+            accent,
+            stroke,
+        )
+    elif kind == "speed":
+        gauge = _scaled_box(box, 0.12, 0.2, 0.88, 0.9)
+        draw.arc(gauge, 180, 360, fill=foreground, width=stroke * 2)
+        cx, cy = _point(box, 0.5, 0.63)
+        draw.line(
+            (cx, cy, *_point(box, 0.76, 0.32)),
+            fill=accent,
+            width=stroke * 2,
+        )
+        radius = width // 18
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius), fill=accent
+        )
+        for x in (0.22, 0.5, 0.78):
+            draw.line(
+                (_point(box, x, 0.62), _point(box, x, 0.54)),
+                fill=muted,
+                width=stroke,
+            )
+    elif kind == "evidence":
+        paper = _scaled_box(box, 0.14, 0.09, 0.76, 0.88)
+        draw.rounded_rectangle(
+            paper, radius=width // 20, outline=foreground, width=stroke
+        )
+        for y, length in ((0.27, 0.5), (0.43, 0.42), (0.59, 0.3)):
+            draw.line(
+                (_point(paper, 0.16, y), _point(paper, 0.16 + length, y)),
+                fill=muted,
+                width=stroke,
+            )
+        cx, cy = _point(box, 0.72, 0.7)
+        radius = width // 7
+        draw.ellipse(
+            (cx - radius, cy - radius, cx + radius, cy + radius), fill=accent
+        )
+        draw.line(
+            (
+                cx - radius // 2,
+                cy,
+                cx - radius // 8,
+                cy + radius // 3,
+                cx + radius // 2,
+                cy - radius // 3,
+            ),
+            fill=foreground,
+            width=stroke,
+            joint="curve",
+        )
+    else:  # action
+        points = [
+            _point(box, 0.12, 0.78),
+            _point(box, 0.38, 0.78),
+            _point(box, 0.38, 0.58),
+            _point(box, 0.62, 0.58),
+            _point(box, 0.62, 0.36),
+            _point(box, 0.84, 0.36),
+        ]
+        draw.line(points, fill=foreground, width=stroke * 2, joint="curve")
+        _arrow(draw, points[-2], _point(box, 0.88, 0.18), accent, stroke)
+
+
+def _draw_motif_flow(draw, motif, box, foreground, accent, muted):
+    """Draw a motif as a semantic start → process → outcome scene."""
+    motif = motif if motif in MOTIF_FLOW_GLYPHS else "signal"
+    start_kind, outcome_kind = MOTIF_FLOW_GLYPHS[motif]
+    _draw_stage_glyph(
+        draw,
+        start_kind,
+        _scaled_box(box, 0.02, 0.12, 0.25, 0.88),
+        foreground,
+        accent,
+        muted,
+    )
+    _arrow(
+        draw,
+        _point(box, 0.27, 0.5),
+        _point(box, 0.36, 0.5),
+        muted,
+        max(3, (box[2] - box[0]) // 100),
+    )
     draw_motif(
         draw,
-        visual["motif"],
-        (846, 158, 1104, 416),
-        foreground=WHITE,
-        accent=ORANGE,
-        muted="#6FE6D0",
+        motif,
+        _scaled_box(box, 0.37, 0.12, 0.63, 0.88),
+        foreground=foreground,
+        accent=accent,
+        muted=muted,
     )
-    draw.text(
-        (838, 475),
-        VISUAL_LABELS[visual["motif"]],
-        font=footer_font,
-        fill=WHITE,
+    _arrow(
+        draw,
+        _point(box, 0.64, 0.5),
+        _point(box, 0.73, 0.5),
+        muted,
+        max(3, (box[2] - box[0]) // 100),
+    )
+    _draw_stage_glyph(
+        draw,
+        outcome_kind,
+        _scaled_box(box, 0.75, 0.12, 0.98, 0.88),
+        foreground,
+        accent,
+        muted,
     )
 
-    footer = "  ·  ".join(
-        "{} / {}".format(item.get("source") or "NEWS", item["label"])
-        for item in visual["stories"][1:3]
-        if item.get("title")
+
+def draw_scene(draw, scene, motif, box, foreground=WHITE, accent=ORANGE, muted=MINT):
+    """Draw a concrete article scene with a left-to-right visual explanation."""
+    width = max(1, box[2] - box[0])
+    stroke = max(3, width // 85)
+
+    if scene == "privacy_photo":
+        phone = _scaled_box(box, 0.04, 0.15, 0.31, 0.86)
+        draw.rounded_rectangle(phone, radius=width // 28, outline=foreground, width=stroke, fill="#112E3A")
+        for row in range(2):
+            for column in range(2):
+                left = 0.13 + column * 0.36
+                top = 0.2 + row * 0.36
+                tile = _scaled_box(phone, left, top, left + 0.25, top + 0.25)
+                draw.rounded_rectangle(tile, radius=width // 100, fill=muted)
+                draw.ellipse(_scaled_box(tile, 0.58, 0.12, 0.82, 0.36), fill=accent)
+                draw.polygon(
+                    [_point(tile, 0.05, 0.88), _point(tile, 0.42, 0.48), _point(tile, 0.92, 0.88)],
+                    fill=foreground,
+                )
+        _arrow(draw, _point(box, 0.34, 0.5), _point(box, 0.47, 0.5), muted, stroke)
+        cx, cy = _point(box, 0.58, 0.5)
+        radius = width // 10
+        draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), outline=foreground, width=stroke)
+        draw.ellipse((cx - radius // 2, cy - radius // 2, cx + radius // 2, cy + radius // 2), fill=accent)
+        for angle_point in ((0.58, 0.22), (0.76, 0.5), (0.58, 0.78), (0.4, 0.5)):
+            draw.line((cx, cy, *_point(box, *angle_point)), fill=muted, width=max(2, stroke // 2))
+        _arrow(draw, _point(box, 0.7, 0.5), _point(box, 0.79, 0.5), muted, stroke)
+        barrier_x, barrier_top = _point(box, 0.84, 0.22)
+        _, barrier_bottom = _point(box, 0.84, 0.78)
+        draw.line((barrier_x, barrier_top, barrier_x, barrier_bottom), fill=accent, width=stroke * 2)
+        lock = _scaled_box(box, 0.78, 0.4, 0.94, 0.7)
+        draw.rounded_rectangle(_scaled_box(lock, 0.12, 0.35, 0.88, 0.95), radius=width // 60, fill=foreground)
+        draw.arc(_scaled_box(lock, 0.28, 0.02, 0.72, 0.58), 180, 360, fill=foreground, width=stroke)
+    elif scene == "observability":
+        editor = _scaled_box(box, 0.03, 0.18, 0.36, 0.82)
+        draw.rounded_rectangle(editor, radius=width // 35, outline=foreground, width=stroke, fill="#102936")
+        draw.line((_point(editor, 0.0, 0.18), _point(editor, 1.0, 0.18)), fill=muted, width=stroke)
+        for index, length in enumerate((0.65, 0.45, 0.72, 0.38)):
+            draw.line(
+                (_point(editor, 0.12, 0.34 + index * 0.13), _point(editor, 0.12 + length, 0.34 + index * 0.13)),
+                fill=accent if index == 1 else foreground,
+                width=stroke,
+            )
+        points = [_point(box, 0.39 + index * 0.07, 0.5 + (0.09 if index % 2 else -0.09)) for index in range(5)]
+        draw.line(points, fill=accent, width=stroke)
+        for point in points:
+            r = stroke * 2
+            draw.ellipse((point[0] - r, point[1] - r, point[0] + r, point[1] + r), fill=muted)
+        dashboard = _scaled_box(box, 0.72, 0.16, 0.98, 0.84)
+        draw.rounded_rectangle(dashboard, radius=width // 35, outline=foreground, width=stroke, fill="#102936")
+        for index, height in enumerate((0.3, 0.62, 0.45)):
+            bar = _scaled_box(dashboard, 0.16 + index * 0.25, 0.78 - height, 0.31 + index * 0.25, 0.78)
+            draw.rounded_rectangle(bar, radius=stroke, fill=accent if index == 1 else muted)
+    elif scene == "datacenter":
+        for index, y in enumerate((0.3, 0.5, 0.7)):
+            cx, cy = _point(box, 0.12, y)
+            radius = width // 24
+            draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill=accent if index == 1 else foreground)
+        _arrow(draw, _point(box, 0.2, 0.5), _point(box, 0.35, 0.5), muted, stroke)
+        nodes = [(0.4, 0.32), (0.5, 0.5), (0.4, 0.68), (0.62, 0.5)]
+        for left, right in ((0, 1), (2, 1), (1, 3)):
+            draw.line((_point(box, *nodes[left]), _point(box, *nodes[right])), fill=foreground, width=stroke)
+        for node in nodes:
+            cx, cy = _point(box, *node)
+            radius = width // 42
+            draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill=accent)
+        _arrow(draw, _point(box, 0.65, 0.5), _point(box, 0.73, 0.5), muted, stroke)
+        for index in range(3):
+            rack = _scaled_box(box, 0.75 + index * 0.08, 0.18, 0.82 + index * 0.08, 0.82)
+            draw.rounded_rectangle(rack, radius=width // 80, outline=foreground, width=stroke, fill="#102936")
+            for row in range(4):
+                light = _point(rack, 0.5, 0.18 + row * 0.2)
+                radius = max(2, stroke // 2)
+                draw.ellipse((light[0] - radius, light[1] - radius, light[0] + radius, light[1] + radius), fill=accent)
+    elif scene == "code_workflow":
+        draw_motif(draw, "code", _scaled_box(box, 0.03, 0.2, 0.34, 0.8), foreground, accent, muted)
+        _arrow(draw, _point(box, 0.34, 0.5), _point(box, 0.47, 0.5), muted, stroke)
+        branch = [_point(box, 0.5, 0.5), _point(box, 0.63, 0.31), _point(box, 0.63, 0.69)]
+        draw.line((branch[0], branch[1]), fill=foreground, width=stroke)
+        draw.line((branch[0], branch[2]), fill=foreground, width=stroke)
+        for point in branch:
+            radius = width // 36
+            draw.ellipse((point[0] - radius, point[1] - radius, point[0] + radius, point[1] + radius), fill=accent)
+        _arrow(draw, _point(box, 0.69, 0.5), _point(box, 0.8, 0.5), muted, stroke)
+        cx, cy = _point(box, 0.88, 0.5)
+        radius = width // 11
+        draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), outline=foreground, width=stroke)
+        draw.line((cx - radius // 2, cy, cx - radius // 8, cy + radius // 3, cx + radius // 2, cy - radius // 3), fill=accent, width=stroke * 2, joint="curve")
+    else:
+        _draw_motif_flow(draw, motif, box, foreground, accent, muted)
+
+
+def _cover(day, font_path, bold_font_path):
+    image = Image.new("RGB", (1200, 630), "#07131F")
+    visual = resolve_visual(day)
+    accent = MOTIF_ACCENTS.get(visual["motif"], MOTIF_ACCENTS["signal"])
+    _gradient(image, "#06121C", "#12342F")
+    draw = ImageDraw.Draw(image)
+    story = visual["stories"][0]
+
+    # A single visual scene owns most of the frame; copy supports it instead of
+    # turning the thumbnail into a title slide.
+    for radius, amount in ((510, 0.08), (400, 0.13), (300, 0.18)):
+        draw.ellipse(
+            (700 - radius // 2, 315 - radius // 2, 700 + radius, 315 + radius // 2),
+            fill=_blend("#0A2025", accent, amount),
+        )
+    draw_scene(
+        draw,
+        story["scene"],
+        story["motif"],
+        (590, 76, 1160, 554),
+        foreground=WHITE,
+        accent=accent,
+        muted="#76C8B5",
     )
-    if footer:
-        footer_lines = wrap_text_by_pixels(draw, footer, footer_font, 630, 1)
-        _draw_multiline(draw, footer_lines, (72, 560), footer_font, "#91AAB8", 0)
+
+    label_font = _font(bold_font_path, 18)
+    subject_font = _font(bold_font_path, 58)
+    hook_font = _font(font_path, 27)
+    small_font = _font(font_path, 17)
+
+    draw.text((66, 54), "하루 한 시간 나를 DEVELOP", font=label_font, fill=accent)
+    subject_lines = wrap_text_by_pixels(draw, visual["subject"], subject_font, 480, 2)
+    subject_bottom = _draw_multiline(
+        draw, subject_lines, (66, 190), subject_font, WHITE, line_gap=12
+    )
+    hook_lines = wrap_text_by_pixels(draw, visual["hook"], hook_font, 460, 2)
+    _draw_multiline(
+        draw, hook_lines, (66, subject_bottom + 28), hook_font, "#C1D1D6", line_gap=8
+    )
+    draw.line((66, 536, 126, 536), fill=accent, width=6)
+    draw.text((66, 558), story["steps"], font=small_font, fill="#8FAAB2")
     return image
 
 
@@ -360,48 +1012,38 @@ STORY_PALETTES = (
 
 
 def _story_image(day, index, font_path, bold_font_path):
-    """Render one source-grounded story break with a large visual metaphor."""
+    """Render a visual explanation, not a second title card."""
     visual = resolve_visual(day)
     story = visual["stories"][index]
     palette = STORY_PALETTES[index % len(STORY_PALETTES)]
     image = Image.new("RGB", (1200, 630), palette["background"])
+    _gradient(image, palette["background"], palette["panel"])
     draw = ImageDraw.Draw(image)
-
-    draw.rectangle((0, 0, 1200, 9), fill=palette["accent"])
-    draw.polygon([(710, 9), (1200, 9), (1200, 630), (900, 630)], fill=palette["panel"])
-    for offset in range(-80, 760, 72):
-        draw.line(
-            (760 + offset, 10, 1030 + offset, 630),
-            fill=palette["motif_muted"],
-            width=1,
-        )
-    draw.ellipse((786, 112, 1146, 472), outline=palette["motif_muted"], width=4)
-    draw.ellipse((840, 166, 1092, 418), outline=palette["accent"], width=6)
-
-    kicker_font = _font(bold_font_path, 18)
-    source_font = _font(font_path, 20)
-    title_font = _font(bold_font_path, 47)
-    label_font = _font(bold_font_path, 20)
-    draw.text((70, 60), f"NEWS {index + 1:02d}", font=kicker_font, fill=palette["accent"])
-    source = story["source"] or "오늘의 개발 뉴스"
-    source_lines = wrap_text_by_pixels(draw, source, source_font, 480, 1)
-    _draw_multiline(draw, source_lines, (176, 58), source_font, palette["muted"], 0)
-
-    title_lines = wrap_text_by_pixels(draw, story["title"], title_font, 610, 3)
-    _draw_multiline(
-        draw, title_lines, (70, 164), title_font, palette["foreground"], 14
+    accent = MOTIF_ACCENTS.get(story["motif"], palette["accent"])
+    draw.ellipse(
+        (-220, -260, 420, 380),
+        fill=_blend(palette["background"], accent, 0.08),
     )
-    draw.rectangle((70, 518, 126, 524), fill=palette["accent"])
-    draw.text((70, 550), story["label"], font=label_font, fill=palette["muted"])
+    draw.ellipse(
+        (850, 260, 1430, 840),
+        fill=_blend(palette["panel"], accent, 0.07),
+    )
 
-    draw_motif(
+    label_font = _font(bold_font_path, 30)
+    steps_font = _font(font_path, 23)
+
+    draw_scene(
         draw,
+        story["scene"],
         story["motif"],
-        (858, 184, 1074, 400),
+        (82, 48, 1118, 476),
         foreground=palette["foreground"],
-        accent=palette["accent"],
+        accent=accent,
         muted=palette["motif_muted"],
     )
+    draw.text((64, 512), story["scene_label"], font=label_font, fill=palette["foreground"])
+    steps_lines = wrap_text_by_pixels(draw, story["steps"], steps_font, 760, 1)
+    _draw_multiline(draw, steps_lines, (64, 558), steps_font, palette["muted"], 0)
     return image
 
 
@@ -465,7 +1107,7 @@ def generate_editorial_images(
         "cover": {
             "url": f"{base_url}/{day_id}/cover.png",
             "path": f"{logical_dir}/cover.png",
-            "alt": f"{day.get('date_label') or day_id} {visual['hook']} 대표 이미지",
+            "alt": f"{day.get('date_label') or day_id} {visual['subject']} - {visual['hook']} 대표 이미지",
             "width": 1200,
             "height": 630,
         },
@@ -478,7 +1120,11 @@ def generate_editorial_images(
         assets[f"story_{index}"] = {
             "url": f"{base_url}/{day_id}/story-{index:02d}.png",
             "path": f"{logical_dir}/story-{index:02d}.png",
-            "alt": "",
+            "alt": "{} · {}: {} 흐름을 표현한 기사 이해 이미지".format(
+                visual["stories"][index - 1]["label"],
+                visual["stories"][index - 1]["scene_label"],
+                visual["stories"][index - 1]["steps"],
+            ),
             "width": 1200,
             "height": 630,
         }
