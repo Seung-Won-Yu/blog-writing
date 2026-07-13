@@ -17,6 +17,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("'collect_news.py'", workflow)
         self.assertIn("'generate_daily_draft.py'", workflow)
         self.assertIn("'generate_editorial_images.py'", workflow)
+        self.assertIn("'article_context.py'", workflow)
         self.assertIn("'visual_direction.py'", workflow)
         self.assertIn("'requirements-images.txt'", workflow)
         self.assertIn("'config/news_sources.json'", workflow)
@@ -25,6 +26,9 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("git add docs data", workflow)
         self.assertIn("description: '생성할 날짜", workflow)
         self.assertIn("REQUESTED_DAY: ${{ inputs.day }}", workflow)
+        self.assertIn("FORCE_REBUILD: ${{ inputs.force }}", workflow)
+        self.assertIn('FORCE_FLAG="--force"', workflow)
+        self.assertIn("강제로 다시 생성", workflow)
         self.assertIn('python collect_news.py --day "$REQUESTED_DAY"', workflow)
         self.assertIn(
             'python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error',

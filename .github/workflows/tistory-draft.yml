@@ -9,6 +9,7 @@ on:
       - 'collect_news.py'
       - 'news_pipeline.py'
       - 'generate_daily_draft.py'
+      - 'article_context.py'
       - 'generate_editorial_images.py'
       - 'visual_direction.py'
       - 'export_tistory.py'
@@ -26,6 +27,11 @@ on:
         description: '생성할 날짜 (YYYY-MM-DD, 날짜를 비우면 오늘)'
         required: false
         type: string
+      force:
+        description: '기존 초안도 강제로 다시 생성'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -72,12 +78,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REQUESTED_DAY: ${{ inputs.day }}
+          FORCE_REBUILD: ${{ inputs.force }}
           TZ: Asia/Seoul
         run: |
+          FORCE_FLAG=""
+          if [ "$FORCE_REBUILD" = "true" ]; then
+            FORCE_FLAG="--force"
+          fi
           if [ -n "$REQUESTED_DAY" ]; then
-            python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error
+            python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error $FORCE_FLAG
           else
-            python generate_daily_draft.py --today --fallback-on-error
+            python generate_daily_draft.py --today --fallback-on-error $FORCE_FLAG
           fi
 
       - name: Generate branded cover and reading-flow images

@@ -6,12 +6,15 @@ from pathlib import Path
 
 from generate_daily_draft import (
     DraftQualityError,
+    GENERATION_REVISION,
     build_day,
     build_prompt,
     fallback_day,
     generate_and_write,
     load_history,
     request_github_model,
+    selected_fingerprint,
+    should_reuse_existing,
 )
 
 
@@ -142,6 +145,8 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(len(day["news"][0]["content"]), 6)
         self.assertIn("한 줄로 적어보자", day["editorial"]["action"])
         self.assertEqual(day["generation"]["provider"], "github-models")
+        self.assertEqual(day["generation"]["revision"], GENERATION_REVISION)
+        self.assertEqual(day["generation"]["input_fingerprint"], selected_fingerprint(INBOX))
 
     def test_rejects_incomplete_model_news(self):
         incomplete = dict(MODEL_OUTPUT)
@@ -210,6 +215,25 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["visual"]["motif"], "security")
         self.assertTrue(day["visual"]["hook"].endswith("?"))
         self.assertEqual(day["generation"]["provider"], "deterministic-fallback")
+        self.assertEqual(day["generation"]["revision"], GENERATION_REVISION)
+
+    def test_reuses_only_current_revision_with_same_selected_urls(self):
+        existing = {
+            "generation": {
+                "provider": "github-models",
+                "revision": GENERATION_REVISION,
+                "input_fingerprint": selected_fingerprint(INBOX),
+            }
+        }
+        self.assertTrue(should_reuse_existing(existing, INBOX, force=False))
+        self.assertFalse(should_reuse_existing(existing, INBOX, force=True))
+
+        changed = copy.deepcopy(INBOX)
+        changed["selected"][0]["url"] = "https://github.blog/changelog/different"
+        self.assertFalse(should_reuse_existing(existing, changed, force=False))
+
+        existing["generation"]["revision"] = GENERATION_REVISION - 1
+        self.assertFalse(should_reuse_existing(existing, INBOX, force=False))
 
 
 class GitHubModelsClientTests(unittest.TestCase):
@@ -299,7 +323,7 @@ class DraftFileTests(unittest.TestCase):
                 post_writer=lambda *_args, **_kwargs: None,
             )
 
-            self.assertEqual(result["generation"], {"provider": "deterministic-fallback"})
+            self.assertEqual(result["generation"]["provider"], "deterministic-fallback")
             saved_text = (root / "days" / "2026-07-13.json").read_text()
             self.assertNotIn("internal details", saved_text)
 

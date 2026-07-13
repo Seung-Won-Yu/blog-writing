@@ -2,6 +2,7 @@
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -16,6 +17,7 @@ from visual_direction import fallback_visual, validate_visual
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
+GENERATION_REVISION = 2
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
 GENERIC_COPY = (
     "기술의 융합이 가속화되고 있습니다",
@@ -43,6 +45,23 @@ def _selected(inbox):
     if not selected:
         raise ValueError("선택된 뉴스 후보가 없습니다.")
     return selected[:3]
+
+
+def selected_fingerprint(inbox):
+    urls = [str(item.get("url") or "").strip() for item in _selected(inbox)]
+    return hashlib.sha256("\n".join(urls).encode("utf-8")).hexdigest()[:16]
+
+
+def should_reuse_existing(existing, inbox, force=False):
+    if force:
+        return False
+    generation = existing.get("generation") if isinstance(existing, dict) else {}
+    generation = generation if isinstance(generation, dict) else {}
+    return (
+        generation.get("provider") == "github-models"
+        and generation.get("revision") == GENERATION_REVISION
+        and generation.get("input_fingerprint") == selected_fingerprint(inbox)
+    )
 
 
 def _date_fields(day_id):
@@ -337,7 +356,12 @@ def build_day(inbox, generated, model=DEFAULT_MODEL):
         "news": news,
         "quiz": _validated_quiz(generated.get("quiz")),
         "terms": _validated_terms(generated.get("terms")),
-        "generation": {"provider": "github-models", "model": model},
+        "generation": {
+            "provider": "github-models",
+            "model": model,
+            "revision": GENERATION_REVISION,
+            "input_fingerprint": selected_fingerprint(inbox),
+        },
     }
     _assert_draft_quality(day)
     return day
@@ -366,7 +390,11 @@ def fallback_day(inbox):
         "news": news,
         "quiz": {},
         "terms": [],
-        "generation": {"provider": "deterministic-fallback"},
+        "generation": {
+            "provider": "deterministic-fallback",
+            "revision": GENERATION_REVISION,
+            "input_fingerprint": selected_fingerprint(inbox),
+        },
     }
 
 
@@ -473,9 +501,10 @@ def main(argv=None):
     inbox_path = Path(args.inbox or "docs/inbox/{}.json".format(day_id))
     output_path = Path(args.data_dir) / "{}.json".format(day_id)
 
-    if output_path.exists() and not args.force:
+    inbox_preview = json.loads(inbox_path.read_text(encoding="utf-8"))
+    if output_path.exists():
         existing = json.loads(output_path.read_text(encoding="utf-8"))
-        if (existing.get("generation") or {}).get("provider") == "github-models":
+        if should_reuse_existing(existing, inbox_preview, force=args.force):
             from export_tistory import write_post
 
             write_post(day_id, day=existing, source_page=None)
