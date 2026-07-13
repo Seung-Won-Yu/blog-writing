@@ -144,6 +144,7 @@ def render(drafts):
       background: var(--accent);
     }}
     .action-btn:focus-visible,
+    .preview-link:focus-visible,
     button:focus-visible,
     textarea:focus-visible {{
       outline: 3px solid #91c4b0;
@@ -350,10 +351,27 @@ def render(drafts):
     button.copy.secondary {{
       background: #0f9b8e;
     }}
-    button.copy.preview {{
+    .preview-link {{
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
       border: 1px solid #9aa8a1;
+      border-radius: 10px;
       background: #ffffff;
       color: var(--ink);
+      font-weight: 850;
+      text-decoration: none;
+    }}
+    .preview-link:hover:not([aria-disabled="true"]) {{
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }}
+    .preview-link[aria-disabled="true"] {{
+      cursor: not-allowed;
+      opacity: .48;
     }}
     button.copy:hover:not(:disabled) {{
       background: var(--accent);
@@ -406,60 +424,6 @@ def render(drafts):
       padding: 28px;
       color: var(--muted);
     }}
-    .preview-dialog {{
-      width: min(980px, calc(100% - 32px));
-      max-width: none;
-      max-height: calc(100dvh - 32px);
-      padding: 0;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #ffffff;
-      color: var(--ink);
-      box-shadow: 0 18px 50px rgba(15, 23, 42, .22);
-    }}
-    .preview-dialog::backdrop {{
-      background: rgba(15, 23, 42, .62);
-    }}
-    .preview-head {{
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
-      background: var(--soft);
-    }}
-    .preview-heading {{
-      min-width: 0;
-    }}
-    .preview-heading h2 {{
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.4;
-    }}
-    .preview-heading p {{
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }}
-    .preview-close {{
-      min-height: 38px;
-      flex: 0 0 auto;
-      padding: 0 13px;
-      border: 1px solid #9aa8a1;
-      border-radius: 6px;
-      background: #ffffff;
-      color: var(--ink);
-      font-weight: 800;
-      cursor: pointer;
-    }}
-    .preview-frame {{
-      display: block;
-      width: 100%;
-      height: min(74vh, 780px);
-      border: 0;
-      background: #ffffff;
-    }}
     @media (max-width: 820px) {{
       .layout {{ grid-template-columns: 1fr; }}
       .header-row {{ align-items: stretch; flex-direction: column; }}
@@ -468,6 +432,7 @@ def render(drafts):
       .image-card {{ grid-template-columns: 1fr; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
+      .preview-link {{ width: 100%; }}
       .download-link {{ width: 100%; }}
       .code-head {{ align-items: stretch; flex-direction: column; }}
       .code-actions {{
@@ -476,12 +441,6 @@ def render(drafts):
         width: 100%;
       }}
       textarea {{ min-height: 430px; }}
-      .preview-dialog {{
-        width: calc(100% - 16px);
-        max-height: calc(100dvh - 16px);
-      }}
-      .preview-head {{ align-items: flex-start; }}
-      .preview-frame {{ height: calc(100dvh - 104px); }}
     }}
   </style>
 </head>
@@ -554,7 +513,7 @@ def render(drafts):
           <div class="code-head">
             <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <div class="code-actions">
-              <button class="copy preview" type="button" id="previewButton" aria-haspopup="dialog" aria-controls="previewDialog" disabled>본문 미리보기</button>
+              <a class="preview-link" id="previewLink" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">본문 미리보기</a>
               <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
             </div>
           </div>
@@ -565,22 +524,10 @@ def render(drafts):
     </div>
   </div>
 
-  <dialog class="preview-dialog" id="previewDialog" aria-labelledby="previewTitle">
-    <div class="preview-head">
-      <div class="preview-heading">
-        <h2 id="previewTitle">본문 미리보기</h2>
-        <p>티스토리 게시 전 보이는 흐름을 확인하세요. 미리보기에서는 스크립트가 실행되지 않습니다.</p>
-      </div>
-      <button class="preview-close" type="button" id="previewClose">닫기</button>
-    </div>
-    <iframe id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>
-  </dialog>
-
   <script>
     const drafts = {payload};
     const latest = {json_for_script(latest)};
     let current = null;
-    let previewReturnFocus = null;
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -599,10 +546,7 @@ def render(drafts):
       imageList: document.getElementById("imageList"),
       htmlCode: document.getElementById("htmlCode"),
       status: document.getElementById("status"),
-      previewButton: document.getElementById("previewButton"),
-      previewDialog: document.getElementById("previewDialog"),
-      previewFrame: document.getElementById("previewFrame"),
-      previewClose: document.getElementById("previewClose"),
+      previewLink: document.getElementById("previewLink"),
     }};
 
     function setStatus(text, kind = "success") {{
@@ -701,22 +645,6 @@ def render(drafts):
       }});
     }}
 
-    function previewDocument(bodyHtml) {{
-      return '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>html{{background:#fff}}body{{margin:0;padding:12px;overflow-wrap:anywhere}}img{{max-width:100%;height:auto}}</style></head><body>' + bodyHtml + '</body></html>';
-    }}
-
-    function openPreview() {{
-      if (!current || els.previewButton.disabled || !els.htmlCode.value.trim()) return;
-      previewReturnFocus = document.activeElement;
-      els.previewFrame.srcdoc = previewDocument(els.htmlCode.value);
-      els.previewDialog.showModal();
-      els.previewClose.focus();
-    }}
-
-    function closePreview() {{
-      if (els.previewDialog.open) els.previewDialog.close();
-    }}
-
     async function selectDraft(day) {{
       const draft = byDay.get(day);
       if (!draft) return;
@@ -735,13 +663,17 @@ def render(drafts):
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
-      els.previewButton.disabled = true;
+      els.previewLink.href = "#";
+      els.previewLink.setAttribute("aria-disabled", "true");
+      els.previewLink.setAttribute("tabindex", "-1");
       els.htmlCode.value = "불러오는 중...";
       try {{
         const response = await fetch(draft.html_path + "?v=" + Date.now());
         if (!response.ok) throw new Error("HTTP " + response.status);
         els.htmlCode.value = await response.text();
-        els.previewButton.disabled = false;
+        els.previewLink.href = draft.html_path + "?v=" + Date.now();
+        els.previewLink.setAttribute("aria-disabled", "false");
+        els.previewLink.removeAttribute("tabindex");
         setStatus(day + " 초안을 불러왔습니다.");
       }} catch (error) {{
         els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
@@ -764,19 +696,11 @@ def render(drafts):
       setStatus(label + " 복사 완료");
     }}
 
-    els.previewButton.addEventListener("click", openPreview);
-    els.previewClose.addEventListener("click", closePreview);
-    els.previewDialog.addEventListener("cancel", (event) => {{
-      event.preventDefault();
-      closePreview();
-    }});
-    els.previewDialog.addEventListener("close", () => {{
-      els.previewFrame.srcdoc = "";
-      previewReturnFocus?.focus();
-      previewReturnFocus = null;
-    }});
-    els.previewDialog.addEventListener("click", (event) => {{
-      if (event.target === els.previewDialog) closePreview();
+    els.previewLink.addEventListener("click", (event) => {{
+      if (els.previewLink.getAttribute("aria-disabled") === "true") {{
+        event.preventDefault();
+        setStatus("미리볼 본문을 먼저 불러와 주세요.", "error");
+      }}
     }});
 
     document.getElementById("drafts").addEventListener("click", (event) => {{

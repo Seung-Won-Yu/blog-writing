@@ -84,33 +84,23 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('asset.kind.startsWith("story_")', html)
         self.assertIn("본문 1번 이미지 열기", html)
 
-    def test_body_preview_is_sandboxed_accessible_and_keyboard_closeable(self):
+    def test_body_preview_opens_the_actual_draft_next_to_copy_button(self):
         html = render([])
 
         self.assertIn(
-            '<button class="copy preview" type="button" id="previewButton" aria-haspopup="dialog" aria-controls="previewDialog" disabled>본문 미리보기</button>',
+            '<a class="preview-link" id="previewLink" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">본문 미리보기</a>',
             html,
         )
-        self.assertIn(
-            '<dialog class="preview-dialog" id="previewDialog" aria-labelledby="previewTitle">',
-            html,
-        )
-        self.assertIn(
-            '<iframe id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>',
-            html,
-        )
-        self.assertNotIn("allow-scripts", html)
-        self.assertIn(
-            "els.previewFrame.srcdoc = previewDocument(els.htmlCode.value);", html
-        )
-        self.assertIn('<meta name="viewport" content="width=device-width, initial-scale=1">', html)
-        self.assertIn("els.previewDialog.showModal();", html)
-        self.assertIn("els.previewDialog.close();", html)
-        self.assertIn('els.previewDialog.addEventListener("cancel"', html)
-        self.assertIn('els.previewDialog.addEventListener("close"', html)
-        self.assertIn("previewReturnFocus?.focus();", html)
+        self.assertLess(html.index('id="previewLink"'), html.index('data-copy="html"'))
+        self.assertIn('els.previewLink.href = draft.html_path + "?v=" + Date.now();', html)
+        self.assertIn('els.previewLink.setAttribute("aria-disabled", "false");', html)
+        self.assertIn('els.previewLink.removeAttribute("tabindex");', html)
+        self.assertIn('els.previewLink.addEventListener("click"', html)
+        self.assertNotIn("previewDialog", html)
+        self.assertNotIn("previewFrame", html)
+        self.assertNotIn("srcdoc", html)
         self.assertIn(".code-actions {", html)
-        self.assertIn(".preview-dialog {", html)
+        self.assertIn(".preview-link {", html)
 
 
 if __name__ == "__main__":

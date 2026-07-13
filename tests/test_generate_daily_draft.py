@@ -759,8 +759,21 @@ class DraftFileTests(unittest.TestCase):
         shallow_body["news"][0]["content"] = [{"t": "p", "text": "짧은 요약"}]
         repaired_body = copy.deepcopy(MODEL_OUTPUT)
         repaired_body["editorial"]["throughline"] = "짧은 연결"
+        echoed_news = copy.deepcopy(MODEL_OUTPUT["news"])
+        for item in echoed_news:
+            item["content"] = []
         editorial_repair = {
-            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+            "editorial": {
+                "throughline": MODEL_OUTPUT["editorial"]["throughline"],
+            },
+            "news": echoed_news,
+            "terms": [
+                {
+                    "term": "REPAIR_INJECTED",
+                    "kind": "IT",
+                    "meaning_kr": "허용되지 않은 필드다.",
+                }
+            ],
         }
 
         def model_call(prompt, _token, _model):
@@ -788,6 +801,10 @@ class DraftFileTests(unittest.TestCase):
         self.assertIn("editorial 한 필드만 반환", calls[2])
         self.assertNotIn("news 두 필드만 반환", calls[2])
         self.assertEqual(result["news"], build_day(INBOX, MODEL_OUTPUT)["news"])
+        self.assertEqual(
+            result["editorial"]["opening"], MODEL_OUTPUT["editorial"]["opening"]
+        )
+        self.assertEqual(result["terms"], MODEL_OUTPUT["terms"])
 
     def test_uses_a_final_quality_retry_before_falling_back(self):
         calls = []
