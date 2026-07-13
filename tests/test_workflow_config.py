@@ -15,8 +15,11 @@ class WorkflowConfigTests(unittest.TestCase):
             workflow.index("name: Install Python dependencies"),
             workflow.index("name: Run tests"),
         )
+        self.assertLess(
+            workflow.index("name: Install editorial image tools"),
+            workflow.index("name: Run tests"),
+        )
         for step_name in (
-            "Install editorial image tools",
             "Collect today's news review inbox",
             "Generate today's local Tistory draft",
             "Generate branded cover and story images",
