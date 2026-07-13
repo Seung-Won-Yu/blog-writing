@@ -10,7 +10,9 @@ from generate_daily_draft import (
     DraftQualityError,
     GENERATION_REVISION,
     MAX_PROMPT_INPUT_TOKENS,
+    MAX_RETRY_INPUT_TOKENS,
     _conservative_token_estimate,
+    _quality_retry_prompt,
     build_day,
     build_prompt,
     fallback_day,
@@ -106,6 +108,22 @@ MODEL_OUTPUT = {
 
 
 class PromptTests(unittest.TestCase):
+    def test_three_story_quality_retry_stays_inside_the_model_input_limit(self):
+        generated = copy.deepcopy(MODEL_OUTPUT)
+        third = copy.deepcopy(MODEL_OUTPUT["news"][0])
+        third["title_kr"] = "세 번째 자동화 검증 흐름"
+        generated["news"].append(third)
+
+        prompt = _quality_retry_prompt(
+            generated,
+            DraftQualityError("전체 글이 7분 읽기 분량에 미치지 못합니다."),
+        )
+
+        self.assertLessEqual(
+            _conservative_token_estimate(prompt), MAX_RETRY_INPUT_TOKENS
+        )
+        self.assertIn("세 번째 자동화 검증 흐름", prompt)
+
     def test_marks_news_as_untrusted_reference_data(self):
         prompt = build_prompt(INBOX, {"questions": [], "terms": []})
 
