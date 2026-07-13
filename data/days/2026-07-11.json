@@ -1,0 +1,100 @@
+{
+  "schema_version": 2,
+  "date_label": "2026. 7. 11",
+  "weekday": "토",
+  "visual": {
+    "subject": "사진과 AI 연동",
+    "hook": "내 사진은 어디까지 연결될까?",
+    "motif": "security"
+  },
+  "editorial": {
+    "headline": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "opening": "오늘은 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단와 OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHu…을 중심으로 개발 흐름을 살펴본다.",
+    "throughline": "",
+    "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+    "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자."
+  },
+  "news": [
+    {
+      "title_kr": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+      "source": "AI타임스",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212666",
+      "published_at": "2026-07-12T03:20:35+00:00",
+      "audience_lane": "broad",
+      "selection_reason": "broad 독자 적합도 7",
+      "blurb_kr": "",
+      "content": []
+    },
+    {
+      "title_kr": "OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot",
+      "source": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot",
+      "published_at": "2026-07-09T16:41:29+00:00",
+      "audience_lane": "practical",
+      "selection_reason": "practical 독자 적합도 5 · 주제 연결",
+      "blurb_kr": "OpenAI’s GPT-5.6 family is now rolling out in GitHub Copilot. GPT-5.6 comes in three variants, Sol, Terra, and Luna, so you can match the model to the job, whether that’s… The post OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot appeared first on The GitHub Blog .",
+      "content": []
+    },
+    {
+      "title_kr": "Separating signal from noise in coding evaluations",
+      "source": "OpenAI News",
+      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations",
+      "published_at": "2026-07-08T13:00:00+00:00",
+      "audience_lane": "deep",
+      "selection_reason": "deep 독자 적합도 2 · 주제 연결",
+      "blurb_kr": "A new analysis from OpenAI reveals issues in SWE-Bench Pro, a popular coding benchmark, raising concerns about reliability and accuracy in evaluating AI models.",
+      "content": []
+    }
+  ],
+  "quiz": {
+    "category": "정보시스템 구축관리",
+    "question": "OSI 7계층에서 경로 선택과 패킷 전달을 담당하는 계층은?",
+    "options": [
+      "네트워크 계층",
+      "데이터 링크 계층",
+      "전송 계층",
+      "세션 계층"
+    ],
+    "answer": 0,
+    "explain_kr": "네트워크 계층은 논리 주소를 기반으로 통신 경로를 선택하고 패킷을 목적지까지 전달합니다."
+  },
+  "terms": [],
+  "generation": {
+    "provider": "deterministic-fallback",
+    "revision": 13,
+    "input_fingerprint": "14bb7a2296cea1aa"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/cover.png",
+      "path": "docs/tistory/assets/2026-07-11/cover.png",
+      "alt": "2026. 7. 11 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    "story_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-01.png",
+      "path": "docs/tistory/assets/2026-07-11/story-01.png",
+      "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-02.png",
+      "path": "docs/tistory/assets/2026-07-11/story-02.png",
+      "alt": "코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-03.png",
+      "path": "docs/tistory/assets/2026-07-11/story-03.png",
+      "alt": "코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    }
+  }
+}

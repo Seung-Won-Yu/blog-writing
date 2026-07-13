@@ -1,10 +1,10 @@
 {
-  "title": "[데일리 IT 뉴스] 2026. 7. 11 - 오늘의 개발 뉴스와 정처기 문제",
+  "title": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 11 - Ghostty Zig, 정처기 문제 정리",
-    "[개발 뉴스] Ghostty Zig · LLM 핵심 정리",
-    "2026. 7. 11 개발 뉴스 요약: Ghostty Zig 외 오늘의 IT 이슈",
-    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 11)"
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 외 2건",
+    "사진과 AI 연동: 내 사진은 어디까지 연결될까?",
+    "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 (2026. 7. 11)"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -14,46 +14,71 @@
     "정처기",
     "개발용어",
     "데일리다이제스트",
-    "GeekNews",
-    "멱등성 (Idempotency)",
-    "옵저버빌리티 (Observability)",
-    "플랫폼 엔지니어링 (Platform Engineering)"
+    "AI타임스",
+    "GitHub Changelog",
+    "OpenAI News"
   ],
-  "meta_description": "2026. 7. 11 데일리 IT 뉴스: Ghostty Zig, LLM 핵심과 운영체제 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "오늘은 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단와 OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHu…을 중… 정보시스템 구축관리 문제로 개념도 확인합니다.",
   "key_summary": [
-    "오늘의 주요 뉴스: 미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수 / LLM 번아웃이 온 것 같아요 / Show GN: MapNews – 우리 동네 소식을 지도에 핀으로 남기는 시민기자 SNS",
-    "정처기 포인트: 운영체제 문제로 개념을 점검합니다.",
-    "함께 익힐 용어: 멱등성 (Idempotency), 옵저버빌리티 (Observability), 플랫폼 엔지니어링 (Platform Engineering)",
-    "읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다."
+    "1. 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+    "2. OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copil…",
+    "3. Separating signal from noise in coding evaluations",
+    "정처기 포인트: 정보시스템 구축관리 문제로 개념을 점검합니다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
-    "본문 상단 이미지가 정상 표시되는지 확인하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 11 - Ghostty Zig, 정처기 문제 정리"
+    "추천 제목: 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단"
   ],
+  "generation_provider": "deterministic-fallback",
+  "publish_ready": false,
   "source": "data/days/2026-07-11.json",
-  "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-11.html",
+  "source_page": null,
   "html": "docs/tistory/2026-07-11.html",
   "image_assets": [
     {
-      "title": "미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/news-01.png",
-      "path": "docs/tistory/assets/2026-07-11/news-01.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/8bf6a57e193a.png"
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/cover.png",
+      "path": "docs/tistory/assets/2026-07-11/cover.png",
+      "original_url": "",
+      "alt": "2026. 7. 11 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지",
+      "width": 1200,
+      "height": 630
     },
     {
-      "title": "LLM 번아웃이 온 것 같아요",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/news-02.png",
-      "path": "docs/tistory/assets/2026-07-11/news-02.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/f674f78740ed.png"
+      "kind": "story_1",
+      "title": "본문 1번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-01.png",
+      "path": "docs/tistory/assets/2026-07-11/story-01.png",
+      "original_url": "",
+      "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
     },
     {
-      "title": "Show GN: MapNews – 우리 동네 소식을 지도에 핀으로 남기는 시민기자 SNS",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/news-03.png",
-      "path": "docs/tistory/assets/2026-07-11/news-03.png",
-      "original_url": "https://ihan0316.github.io/ai-weekly-newsroom/images/1d1cebc34f4a.png"
+      "kind": "story_2",
+      "title": "본문 2번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-02.png",
+      "path": "docs/tistory/assets/2026-07-11/story-02.png",
+      "original_url": "",
+      "alt": "코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_3",
+      "title": "본문 3번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-03.png",
+      "path": "docs/tistory/assets/2026-07-11/story-03.png",
+      "original_url": "",
+      "alt": "코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630
     }
   ]
 }
