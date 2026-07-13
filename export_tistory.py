@@ -29,6 +29,7 @@ OUT_DIR = HERE / "docs" / "tistory"
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
+MIN_PUBLISH_REVISION = 5
 
 POST_SHELL_STYLE = (
     "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"
@@ -118,6 +119,29 @@ def esc(value):
 
 def plain(value):
     return " ".join(str(value or "").split())
+
+
+def source_date_label(value):
+    text = plain(value)
+    if not text:
+        return ""
+    try:
+        published = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return ""
+    if published.tzinfo is not None:
+        published = published.astimezone(
+            datetime.timezone(datetime.timedelta(hours=9))
+        )
+    return f"{published.year}. {published.month}. {published.day}"
+
+
+def audience_lane_label(value):
+    return {
+        "broad": "일반 독자",
+        "practical": "실무 독자",
+        "deep": "깊이 읽기",
+    }.get(plain(value), "")
 
 
 def slugify(text):
@@ -310,6 +334,8 @@ def build_publish_checklist(day):
     titles = build_title_candidates(day)
     checklist = [
         "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+        "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+        "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
         "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
         "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
         f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
@@ -349,7 +375,7 @@ def build_throughline_section(editorial):
         return ""
     return f"""
 <section class="digest-throughline"{style(THROUGHLINE_STYLE)}>
-  <p{style(KICKER_STYLE)}>WHY THESE THREE</p>
+  <p{style(KICKER_STYLE)}>WHY THESE STORIES</p>
   <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 연결고리</h2>
   <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">{esc(throughline)}</p>
 </section>""".strip()
@@ -391,6 +417,8 @@ def build_news_section(news, flow_image=None, story_images=None):
     for idx, item in enumerate(news, 1):
         title = plain(item.get("title_kr"))
         source = plain(item.get("source"))
+        published = source_date_label(item.get("published_at"))
+        audience_lane = audience_lane_label(item.get("audience_lane"))
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
         image = plain(item.get("image_url") or item.get("image"))
@@ -416,12 +444,15 @@ def build_news_section(news, flow_image=None, story_images=None):
             if url
             else ""
         )
+        source_meta = " · ".join(
+            value for value in (source, published, audience_lane) if value
+        )
 
         parts.append(
             f"""
 <section class="digest-news-card"{style(CARD_STYLE)}>
   {image_html}
-  <p class="digest-source"{style(BADGE_STYLE)}>NEWS {idx:02d} · {esc(source)}</p>
+  <p class="digest-source"{style(BADGE_STYLE)}>NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   {summary_html}
   {full_content}
@@ -522,13 +553,7 @@ def render_post(day_id, day):
     headline = post_title(day)
     composition = "확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했으며"
 
-    return f"""<!--
-title: {esc(post_title(day))}
-category: {esc(DEFAULT_CATEGORY)}
-tags: {", ".join(DEFAULT_TAGS)}
-slug: {slugify(day_id + "-daily-digest")}
--->
-<article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
+    return f"""<article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
     <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 약 {estimate_read_minutes(day)}분 · 하루 한 시간 개발 기록</p>
     <h2 class="digest-title"{style(TITLE_STYLE)}>{esc(headline)}</h2>
@@ -556,8 +581,8 @@ slug: {slugify(day_id + "-daily-digest")}
   {build_closing_section(editorial)}
 
   <p class="digest-note"{style(NOTE_STYLE)}>
-    이 글은 공개 뉴스 페이지를 기반으로 자동 수집·요약한 학습용 다이제스트입니다.
-    수치, 정책, 제품 정보처럼 정확성이 중요한 내용은 반드시 원문을 함께 확인해 주세요.
+    초안 생성에 자동화를 사용했습니다. 공개 전 원문과 문맥을 직접 확인하고,
+    직접 확인한 내용과 운영자의 판단을 덧붙이는 학습 기록입니다.
   </p>
 </article>
 """
@@ -605,6 +630,16 @@ def write_post(day_id, day=None, source_page=None):
 
     html_path = OUT_DIR / f"{day_id}.html"
     meta_path = OUT_DIR / f"{day_id}.json"
+    generation = day.get("generation") if isinstance(day.get("generation"), dict) else {}
+    generation_provider = plain(generation.get("provider"))
+    try:
+        generation_revision = int(generation.get("revision") or 0)
+    except (TypeError, ValueError):
+        generation_revision = 0
+    publish_ready = (
+        generation_provider in {"github-models", "gemini"}
+        and generation_revision >= MIN_PUBLISH_REVISION
+    )
 
     html_path.write_text(render_post(day_id, day), encoding="utf-8")
     meta_path.write_text(
@@ -617,6 +652,8 @@ def write_post(day_id, day=None, source_page=None):
                 "meta_description": build_meta_description(day),
                 "key_summary": build_key_summary(day),
                 "publish_checklist": build_publish_checklist(day),
+                "generation_provider": generation_provider,
+                "publish_ready": publish_ready,
                 "source": f"data/days/{day_id}.json",
                 "source_page": source_page,
                 "html": f"docs/tistory/{day_id}.html",

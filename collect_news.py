@@ -274,6 +274,7 @@ def build_inbox(config, fetch_text, now=None, day_id=None):
         audience_lanes=selection.get("audience_lanes", []),
         max_topic_items=selection.get("max_topic_items", {}),
         max_research_items=selection.get("max_research_items", 1),
+        require_topic_coherence=bool(selection.get("require_topic_coherence", False)),
     )
 
     return {

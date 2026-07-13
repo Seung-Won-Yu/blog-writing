@@ -115,6 +115,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertIn("도구보다 검증 과정", html)
         self.assertIn('class="digest-throughline"', html)
+        self.assertIn("WHY THESE STORIES", html)
+        self.assertNotIn("WHY THESE THREE", html)
         self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘의 뉴스 1개", html)
         self.assertIn('class="digest-closing"', html)
@@ -122,6 +124,31 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("적용 지점을 한 줄", html)
         self.assertNotIn("linear-gradient", html)
         self.assertNotIn("box-shadow", html)
+
+    def test_outputs_clean_fragment_with_source_date_and_reader_lane(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [
+            {
+                **FALLBACK_DAY["news"][0],
+                "published_at": "2026-07-12T16:00:00+00:00",
+                "audience_lane": "broad",
+                "selection_reason": "일반 독자 적합도 5",
+            }
+        ]
+
+        html = render_post("2026-07-13", day)
+
+        self.assertTrue(html.lstrip().startswith('<article class="daily-digest-post"'))
+        self.assertNotIn("<!--", html)
+        self.assertIn("공식 블로그 · 2026. 7. 13 · 일반 독자", html)
+        self.assertIn("초안 생성에 자동화를 사용", html)
+
+    def test_publish_checklist_requires_original_human_review(self):
+        checklist = build_publish_checklist(FALLBACK_DAY)
+
+        self.assertTrue(any("직접 확인한 내용" in item for item in checklist))
+        self.assertTrue(any("내 판단" in item for item in checklist))
+        self.assertTrue(any("원문" in item and "사실" in item for item in checklist))
 
     def test_keeps_blurb_visible_and_hides_quiz_answer_until_expanded(self):
         day = dict(FALLBACK_DAY)
@@ -301,6 +328,40 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 (meta["image_assets"][0]["width"], meta["image_assets"][0]["height"]),
                 (1200, 630),
             )
+
+    def test_marks_only_model_generated_drafts_ready_for_human_review(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("export_tistory.OUT_DIR", Path(directory)):
+                write_post("2026-07-13", day=FALLBACK_DAY)
+                fallback_meta = json.loads(
+                    Path(directory, "2026-07-13.json").read_text(encoding="utf-8")
+                )
+
+                gemini_day = dict(FALLBACK_DAY)
+                gemini_day["generation"] = {
+                    "provider": "gemini",
+                    "model": "gemini-3.5-flash",
+                    "revision": 5,
+                }
+                write_post("2026-07-14", day=gemini_day)
+                gemini_meta = json.loads(
+                    Path(directory, "2026-07-14.json").read_text(encoding="utf-8")
+                )
+
+        self.assertEqual(fallback_meta["generation_provider"], "deterministic-fallback")
+        self.assertFalse(fallback_meta["publish_ready"])
+        self.assertEqual(gemini_meta["generation_provider"], "gemini")
+        self.assertTrue(gemini_meta["publish_ready"])
+
+        legacy_day = dict(FALLBACK_DAY)
+        legacy_day["generation"] = {"provider": "github-models", "revision": 4}
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("export_tistory.OUT_DIR", Path(directory)):
+                write_post("2026-07-12", day=legacy_day)
+            legacy_meta = json.loads(
+                Path(directory, "2026-07-12.json").read_text(encoding="utf-8")
+            )
+        self.assertFalse(legacy_meta["publish_ready"])
 
 
 if __name__ == "__main__":

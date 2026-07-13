@@ -17,6 +17,28 @@ TRACKING_PARAMS = {
     "source",
 }
 
+COHERENCE_STOP_TOKENS = {
+    "ai",
+    "개발",
+    "개발자",
+    "기능",
+    "관련",
+    "발표",
+    "방법",
+    "새",
+    "새로운",
+    "업데이트",
+    "위한",
+    "이유",
+    "이해하기",
+    "출시",
+    "공개",
+    "the",
+    "and",
+    "for",
+    "with",
+}
+
 
 def validate_day_id(value):
     """Return a strict YYYY-MM-DD value that is safe to use in output paths."""
@@ -65,6 +87,22 @@ def _title_similarity(left, right):
     if not left_tokens or not right_tokens:
         return 0.0
     return len(left_tokens & right_tokens) / len(left_tokens | right_tokens)
+
+
+def _coherence_tokens(item):
+    return {
+        token
+        for token in normalize_title(item.get("title", "")).split()
+        if len(token) >= 2 and token not in COHERENCE_STOP_TOKENS
+    }
+
+
+def _is_topic_coherent(anchor, candidate):
+    anchor_topics = set(anchor.get("topic_tags") or [])
+    candidate_topics = set(candidate.get("topic_tags") or [])
+    if anchor_topics & candidate_topics:
+        return True
+    return bool(_coherence_tokens(anchor) & _coherence_tokens(candidate))
 
 
 def _parse_datetime(value):
@@ -233,6 +271,7 @@ def select_candidates(
     audience_lanes=None,
     max_topic_items=None,
     max_research_items=1,
+    require_topic_coherence=False,
 ):
     preferred_groups = preferred_groups or []
     ranked = sorted(
@@ -266,6 +305,7 @@ def select_candidates(
 
         def add_for_lane(item, lane):
             nonlocal research_count
+            is_followup = bool(selected)
             selected.append(item)
             source_id = item.get("source_id", "")
             source_counts[source_id] = source_counts.get(source_id, 0) + 1
@@ -275,7 +315,10 @@ def select_candidates(
                 research_count += 1
             item["audience_lane"] = lane
             lane_score = int((item.get("lane_scores") or {}).get(lane, 0))
-            item["selection_reason"] = f"{lane} 독자 적합도 {lane_score}"
+            reason = f"{lane} 독자 적합도 {lane_score}"
+            if require_topic_coherence and is_followup:
+                reason += " · 주제 연결"
+            item["selection_reason"] = reason
             return True
 
         for lane in list(audience_lanes)[:max_items]:
@@ -307,6 +350,11 @@ def select_candidates(
                             or int((item.get("lane_scores") or {}).get(lane, 0)) > 0
                         )
                         and can_add(item, source_limit=source_limit)
+                        and (
+                            not require_topic_coherence
+                            or not selected
+                            or _is_topic_coherent(selected[0], item)
+                        )
                     ),
                     None,
                 )
@@ -317,7 +365,15 @@ def select_candidates(
         for item in ranked:
             if len(selected) >= max_items:
                 break
-            if item not in selected and can_add(item):
+            if (
+                item not in selected
+                and can_add(item)
+                and (
+                    not require_topic_coherence
+                    or not selected
+                    or _is_topic_coherent(selected[0], item)
+                )
+            ):
                 add_for_lane(item, "additional")
         return selected
 

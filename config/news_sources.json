@@ -56,8 +56,9 @@
     "max_items": 3,
     "max_per_source": 1,
     "audience_lanes": ["broad", "practical", "deep"],
-    "max_topic_items": {"ai": 2},
+    "max_topic_items": {"ai": 3},
     "max_research_items": 0,
+    "require_topic_coherence": true,
     "preferred_groups": [
       "official",
       "community",
@@ -94,6 +95,8 @@
       "url": "https://news.hada.io/rss/news",
       "weight": 3,
       "lane_bias": {"practical": 1, "deep": 1},
+      "include_summary": false,
+      "runtime_summary": true,
       "manual_review": true,
       "enabled": true
     },
@@ -105,6 +108,8 @@
       "url": "https://yozm.wishket.com/magazine/feed/",
       "weight": 3,
       "lane_bias": {"practical": 2},
+      "include_summary": false,
+      "runtime_summary": true,
       "fallbacks": [
         {
           "type": "html",

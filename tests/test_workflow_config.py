@@ -24,6 +24,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("'config/news_sources.json'", workflow)
         self.assertIn("models: read", workflow)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", workflow)
+        self.assertIn("GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}", workflow)
         self.assertIn("git add docs data", workflow)
         self.assertIn("description: '생성할 날짜", workflow)
         self.assertIn("REQUESTED_DAY: ${{ inputs.day }}", workflow)

@@ -58,6 +58,8 @@ class CopyPageTests(unittest.TestCase):
                     "html_path": "tistory/2026-07-13.html",
                     "preview_path": "preview/2026-07-13.html",
                     "meta_path": "tistory/2026-07-13.json",
+                    "generation_provider": "gemini",
+                    "publish_ready": True,
                 }
             ]
         )
@@ -66,8 +68,57 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
         self.assertIn('<label for="htmlCode"', html)
-        self.assertIn('copyText(els.htmlCode.value, "본문 HTML")', html)
+        self.assertIn('copyText(buildReviewedHtml(), "본문 HTML")', html)
         self.assertNotIn('copyText(currentHtml, "본문 HTML")', html)
+
+    def test_requires_human_review_before_html_copy(self):
+        html = render([])
+
+        self.assertIn('id="editorNote"', html)
+        self.assertIn('id="verificationNote"', html)
+        self.assertIn('id="sourceChecked"', html)
+        self.assertIn('id="relatedUrl"', html)
+        self.assertIn('id="htmlCopyButton"', html)
+        self.assertIn('data-copy="html" disabled', html)
+        self.assertIn('<textarea id="htmlCode" spellcheck="false" readonly>', html)
+        self.assertIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
+        self.assertIn("function escapeHtml(value)", html)
+        self.assertIn("function buildAuthorNoteHtml()", html)
+        self.assertIn('class="digest-author-note"', html)
+        self.assertIn("editorNote.length >= 40", html)
+        self.assertIn("verificationNote.length >= 40", html)
+        self.assertIn("Boolean(els.sourceChecked.checked)", html)
+        self.assertIn("current.publish_ready", html)
+        self.assertIn("발행 보류", html)
+
+    def test_loads_generation_readiness_from_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "docs" / "tistory"
+            days = root / "data" / "days"
+            tistory.mkdir(parents=True)
+            days.mkdir(parents=True)
+            (tistory / "2026-07-13.html").write_text("draft", encoding="utf-8")
+            (tistory / "2026-07-13.json").write_text(
+                json.dumps(
+                    {
+                        "title": "오늘의 초안",
+                        "source": "data/days/2026-07-13.json",
+                        "generation_provider": "gemini",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (days / "2026-07-13.json").write_text("{}", encoding="utf-8")
+
+            with patch("build_copy_page.ROOT", root), patch(
+                "build_copy_page.TISTORY_DIR", tistory
+            ):
+                draft = load_drafts()[0]
+
+        self.assertEqual(draft["generation_provider"], "gemini")
+        self.assertTrue(draft["publish_ready"])
 
     def test_selects_named_cover_and_escapes_payload_for_script_context(self):
         unsafe = "뉴스 </script><script>alert(1)</script> & 흐름\u2028다음"
@@ -98,13 +149,15 @@ class CopyPageTests(unittest.TestCase):
             html,
         )
         self.assertIn(
-            '<iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>',
+            '<iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>',
             html,
         )
         self.assertIn('currentPreviewPath = draft.preview_path + "?v=" + Date.now();', html)
         self.assertIn('els.previewFrame.setAttribute("src", currentPreviewPath);', html)
         self.assertIn('showingPreview && !els.previewFrame.hasAttribute("src")', html)
         self.assertIn('els.previewButton.addEventListener("click"', html)
+        self.assertIn('els.previewFrame.addEventListener("load"', html)
+        self.assertIn("updatePreviewNote", html)
         self.assertIn('els.previewPane.hidden = !showingPreview;', html)
         self.assertIn('els.htmlCode.hidden = showingPreview;', html)
         self.assertIn('els.previewButton.textContent = showingPreview', html)

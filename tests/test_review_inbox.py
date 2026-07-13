@@ -81,8 +81,14 @@ class SourceConfigTests(unittest.TestCase):
             ["broad", "practical", "deep"],
         )
         self.assertEqual(config["selection"]["max_research_items"], 0)
+        self.assertTrue(config["selection"]["require_topic_coherence"])
+        self.assertEqual(config["selection"]["max_topic_items"]["ai"], 3)
         yozmit = next(source for source in enabled if source["id"] == "yozmit")
         self.assertTrue(yozmit.get("fallbacks"))
+        for source_id in ("aitimes", "geeknews", "yozmit"):
+            source = next(item for item in enabled if item["id"] == source_id)
+            self.assertFalse(source["include_summary"])
+            self.assertTrue(source["runtime_summary"])
 
 
 if __name__ == "__main__":
