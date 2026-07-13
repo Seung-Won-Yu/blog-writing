@@ -1,3 +1,4 @@
+import copy
 import json
 import tempfile
 import unittest
@@ -79,6 +80,9 @@ class PromptTests(unittest.TestCase):
         self.assertIn('"news"', prompt)
         self.assertIn('"editorial"', prompt)
         self.assertIn("뉴스를 하나의 흐름", prompt)
+        self.assertIn('"visual"', prompt)
+        self.assertIn('"hook"', prompt)
+        self.assertIn("network|agent|memory|security|data|code|cloud|hardware|research|signal", prompt)
 
     def test_bounds_history_to_fit_free_tier_input_limit(self):
         history = {
@@ -114,6 +118,39 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_day(INBOX, incomplete, model="openai/gpt-4o-mini")
 
+    def test_keeps_safe_visual_hook_and_rejects_unknown_motif(self):
+        generated = copy.deepcopy(MODEL_OUTPUT)
+        generated["visual"] = {
+            "hook": "자동화, 어디까지 믿어도 될까?",
+            "motif": "security",
+        }
+        day = build_day(INBOX, generated)
+        self.assertEqual(
+            day["visual"],
+            {"hook": "자동화, 어디까지 믿어도 될까?", "motif": "security"},
+        )
+
+        generated["visual"] = {
+            "hook": "결과를 검증하는 기준은 어디에 있을까?",
+            "motif": "unknown-motif",
+        }
+        day = build_day(INBOX, generated)
+        self.assertEqual(day["visual"]["hook"], "결과를 검증하는 기준은 어디에 있을까?")
+        self.assertEqual(day["visual"]["motif"], "security")
+
+    def test_replaces_clickbait_or_markup_visual_hook_with_grounded_fallback(self):
+        generated = copy.deepcopy(MODEL_OUTPUT)
+        generated["visual"] = {
+            "hook": "충격 <b>지금 안 보면 손해</b>",
+            "motif": "security",
+        }
+
+        visual = build_day(INBOX, generated)["visual"]
+
+        self.assertNotIn("충격", visual["hook"])
+        self.assertNotIn("<", visual["hook"])
+        self.assertTrue(visual["hook"].endswith("?"))
+
     def test_fallback_uses_only_collected_titles_summaries_and_links(self):
         day = fallback_day(INBOX)
 
@@ -124,6 +161,8 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["terms"], [])
         self.assertIn("오늘은", day["editorial"]["opening"])
         self.assertIn("기사 하나", day["editorial"]["action"])
+        self.assertEqual(day["visual"]["motif"], "security")
+        self.assertTrue(day["visual"]["hook"].endswith("?"))
         self.assertEqual(day["generation"]["provider"], "deterministic-fallback")
 
 
