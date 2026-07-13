@@ -50,8 +50,12 @@ def build_prompt(inbox, history=None):
     reference_json = json.dumps(references, ensure_ascii=False, indent=2)
     history_json = json.dumps(
         {
-            "recent_questions": history.get("questions", [])[-30:],
-            "recent_terms": history.get("terms", [])[-80:],
+            "recent_questions": [
+                _text(item, 160) for item in history.get("questions", [])[-12:]
+            ],
+            "recent_terms": [
+                _text(item, 60) for item in history.get("terms", [])[-30:]
+            ],
         },
         ensure_ascii=False,
         indent=2,

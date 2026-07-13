@@ -73,6 +73,18 @@ class PromptTests(unittest.TestCase):
         self.assertIn("AI 시대 개발자의 역할", prompt)
         self.assertIn('"news"', prompt)
 
+    def test_bounds_history_to_fit_free_tier_input_limit(self):
+        history = {
+            "questions": ["문" * 1000 for _ in range(100)],
+            "terms": ["용" * 1000 for _ in range(100)],
+        }
+
+        prompt = build_prompt(INBOX, history)
+
+        self.assertLess(len(prompt), 15000)
+        self.assertNotIn("문" * 161, prompt)
+        self.assertNotIn("용" * 61, prompt)
+
 
 class DayValidationTests(unittest.TestCase):
     def test_model_cannot_change_selected_source_or_url(self):
