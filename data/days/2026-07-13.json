@@ -1,117 +1,46 @@
 {
+  "schema_version": 2,
   "date_label": "2026. 7. 13",
   "weekday": "월",
+  "visual": {
+    "hook": "연결의 중심이 AI로 바뀐다면?",
+    "motif": "network"
+  },
   "editorial": {
-    "opening": "최근 통신 및 AI 기술의 융합이 가속화되고 있습니다. 이러한 변화는 개발자와 기업 모두에게 새로운 기회를 제공합니다.",
-    "closing": "오늘 뉴스에서는 AI와 메모리 기술이 어떻게 개발 환경을 변화시키고 있는지를 살펴보았습니다.",
-    "action": "다양한 AI 코딩 에이전트를 활용해 간단한 프로젝트를 시작해 보세요."
+    "opening": "오늘은 How Deutsche Telekom is rewiring telecommunications with AI와 LLM은 사랑하지만 과대광고는 싫다을 중심으로 개발 흐름을 살펴본다.",
+    "throughline": "",
+    "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+    "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자."
   },
   "news": [
     {
-      "title_kr": "도이치 텔레콤, AI로 통신 산업 재편",
+      "title_kr": "How Deutsche Telekom is rewiring telecommunications with AI",
       "source": "OpenAI News",
       "url": "https://openai.com/index/deutsche-telekom",
-      "blurb_kr": "도이치 텔레콤이 AI를 통해 고객 서비스와 네트워크 운영을 혁신하고 있습니다.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무슨 소식인가"
-        },
-        {
-          "t": "p",
-          "text": "도이치 텔레콤이 OpenAI의 기술을 통해 AI 기반의 통신 서비스로 변화하고 있습니다. 고객 서비스와 직원 업무 흐름, 네트워크 운영을 AI로 개선하고 있으며, 이는 통신 산업의 미래를 재정의할 가능성이 큽니다."
-        },
-        {
-          "t": "h",
-          "text": "왜 봐야 할까"
-        },
-        {
-          "t": "p",
-          "text": "AI를 활용한 통신 서비스의 변화는 기업들이 고객 경험을 향상시키고 운영 효율성을 높이는 데 중요한 역할을 할 수 있습니다. 이러한 변화는 개발자들에게도 새로운 기술을 배우고 적용할 기회를 제공합니다."
-        }
-      ]
+      "blurb_kr": "How Deutsche Telekom is becoming an AI-native telco with OpenAI-transforming customer service, employee workflows, network operations, and the future of voice.",
+      "content": []
     },
     {
-      "title_kr": "AgentsView - AI 코딩 에이전트의 세션 관리 도구",
+      "title_kr": "LLM은 사랑하지만 과대광고는 싫다",
       "source": "GeekNews",
-      "url": "https://news.hada.io/topic?id=31370",
-      "blurb_kr": "다양한 AI 코딩 에이전트를 위한 세션 검색 및 분석 도구가 출시되었습니다.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무슨 소식인가"
-        },
-        {
-          "t": "p",
-          "text": "AgentsView는 Claude Code, Codex 등 여러 AI 코딩 에이전트의 세션을 자동으로 수집하고 분석하는 도구입니다. 로컬 웹 UI와 CLI에서 사용 가능하며, 비용 통계와 활동 분석 기능을 제공합니다."
-        },
-        {
-          "t": "h",
-          "text": "왜 봐야 할까"
-        },
-        {
-          "t": "p",
-          "text": "이 도구는 개발자들이 여러 AI 에이전트를 효율적으로 관리하고, 비용을 추적하며, 작업 흐름을 최적화하는 데 도움을 줄 수 있습니다."
-        }
-      ]
+      "url": "https://news.hada.io/topic?id=31378",
+      "blurb_kr": "LLM, 자율주행차, 영상 생성 모델, 코딩 에이전트는 실제로 유용하고 흥미롭지만, 이를 둘러싼 공포와 종말론적 과대광고 에는 동의하지 않음 기회의 창이 닫히면 영구적 하층민이 된다는 담론은 사실이라기보다 사람을 불안하게 만들어 San Francisco로 끌어들이는 과대광고...",
+      "content": []
     },
     {
-      "title_kr": "장기 과제를 위한 능동적 메모리 에이전트",
-      "source": "arXiv cs.AI",
-      "url": "https://arxiv.org/abs/2607.08716v1",
-      "blurb_kr": "장기 과제에서의 의사결정을 지원하는 새로운 메모리 에이전트가 소개되었습니다.",
-      "content": [
-        {
-          "t": "h",
-          "text": "무슨 소식인가"
-        },
-        {
-          "t": "p",
-          "text": "이 연구는 장기 과제에서 의사결정에 필요한 정보를 효과적으로 관리하기 위한 능동적 메모리 에이전트를 제안합니다. 이 에이전트는 기존의 작업 에이전트와 함께 작동하며, 필요한 정보를 적시에 제공하여 의사결정을 지원합니다."
-        },
-        {
-          "t": "h",
-          "text": "왜 봐야 할까"
-        },
-        {
-          "t": "p",
-          "text": "능동적 메모리 기술은 복잡한 작업을 수행하는 AI 시스템의 성능을 향상시킬 수 있으며, 이는 다양한 분야에서의 응용 가능성을 열어줍니다."
-        }
-      ]
+      "title_kr": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3848",
+      "blurb_kr": "6월 9일 출시된 페이블 5(Fable 5)는 지난 한 달간 롤러코스터 같은 시간을 보냈습니다. 출시 사흘 만인 6월 12일, 미국 상무부의 지시로 서비스가 전면 차단되는 위기를 맞았지만, 6월 30일 규제가 풀리면서 7월 1일 유료 플랜 서비스를 재개했죠. 현재 기존 유료 구독자라면, 주간 사용량 제한의 최대 50%까지 페이블 5를 이용할 수 있는데요. 원래는 7월 7일에 이 구독제 이용도 끝날 예정이었지만, 앤트로픽이 기간을 5일 더 연장했습니다. 변경된 만료일은 7월 12일. 오늘이 7월 10일이니, 이제 딱 이틀 남았습니다. 마침 앤트로픽 클로드 코드(Claude Code) 팀의 타리크 시히파(Thariq Shihipar)가 AI Engineer World Fair에서 발표한 \"Field Guide…",
+      "content": []
     }
   ],
-  "quiz": {
-    "category": "정보처리기사",
-    "question": "장기 과제에서 의사결정에 필요한 정보를 관리하기 위한 메모리 에이전트의 기능은 무엇인가?",
-    "options": [
-      "정보를 자동으로 수집한다.",
-      "정보를 수동으로 입력한다.",
-      "정보를 단순히 저장한다.",
-      "정보를 능동적으로 제공한다."
-    ],
-    "answer": 3,
-    "explain_kr": "능동적 메모리 에이전트는 필요한 정보를 적시에 제공하여 의사결정을 지원하는 기능을 가지고 있습니다."
-  },
-  "terms": [
-    {
-      "term": "능동적 메모리",
-      "kind": "IT",
-      "meaning_kr": "정보를 수동적으로 저장하는 것이 아니라, 필요할 때 능동적으로 제공하는 메모리 시스템."
-    },
-    {
-      "term": "세션 관리",
-      "kind": "개발",
-      "meaning_kr": "사용자 또는 시스템의 활동을 추적하고 분석하는 과정."
-    },
-    {
-      "term": "AI 코딩 에이전트",
-      "kind": "기획",
-      "meaning_kr": "AI를 활용하여 코딩 작업을 지원하는 소프트웨어 도구."
-    }
-  ],
+  "quiz": {},
+  "terms": [],
   "generation": {
-    "provider": "github-models",
-    "model": "openai/gpt-4o-mini"
+    "provider": "deterministic-fallback",
+    "revision": 2,
+    "input_fingerprint": "41abd6208dba17e2"
   },
   "images": {
     "cover": {
@@ -124,7 +53,7 @@
     "flow": {
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/flow.png",
       "path": "docs/tistory/assets/2026-07-13/flow.png",
-      "alt": "2026. 7. 13 오늘의 세 장면: 연결 × AI, AI 에이전트, 기억하는 AI",
+      "alt": "2026. 7. 13 오늘의 세 장면: 연결 × AI, AI 에이전트, 코딩 방식",
       "width": 1200,
       "height": 675
     }

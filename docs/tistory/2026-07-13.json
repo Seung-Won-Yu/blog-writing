@@ -1,10 +1,10 @@
 {
-  "title": "[데일리 IT 뉴스] 2026. 7. 13 - 오늘의 개발 뉴스와 정처기 문제",
+  "title": "[데일리 IT 뉴스] 2026. 7. 13 - 오늘의 AI·개발 소식 정리",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 13 - AI, 정처기 문제 정리",
-    "[개발 뉴스] AI · AI 핵심 정리",
-    "2026. 7. 13 개발 뉴스 요약: AI 외 오늘의 IT 이슈",
-    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 13)"
+    "[데일리 IT 뉴스] 2026. 7. 13 - How Deutsche Telekom 외 오늘의 개발 소식",
+    "[개발 뉴스] How Deutsche Telekom · LLM 핵심 정리",
+    "2026. 7. 13 개발 뉴스 요약: How Deutsche Telekom 외 오늘의 IT 이슈",
+    "오늘의 AI/개발 뉴스 핵심 정리 (2026. 7. 13)"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -16,24 +16,21 @@
     "데일리다이제스트",
     "OpenAI News",
     "GeekNews",
-    "arXiv cs.AI",
-    "능동적 메모리",
-    "세션 관리",
-    "AI 코딩 에이전트"
+    "요즘IT"
   ],
-  "meta_description": "2026. 7. 13 데일리 IT 뉴스: AI, AI 핵심과 정보처리기사 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "2026. 7. 13 데일리 IT 뉴스: How Deutsche Telekom, LLM의 핵심 흐름을 짧게 정리했습니다.",
   "key_summary": [
-    "1. 도이치 텔레콤, AI로 통신 산업 재편",
-    "2. AgentsView - AI 코딩 에이전트의 세션 관리 도구",
-    "3. 장기 과제를 위한 능동적 메모리 에이전트",
-    "정처기 포인트: 정보처리기사 문제로 개념을 점검합니다."
+    "1. How Deutsche Telekom is rewiring telecommunications with AI",
+    "2. LLM은 사랑하지만 과대광고는 싫다",
+    "3. 페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
     "본문 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 13 - AI, 정처기 문제 정리"
+    "추천 제목: [데일리 IT 뉴스] 2026. 7. 13 - How Deutsche Telekom 외 오늘의 개발 소식"
   ],
   "source": "data/days/2026-07-13.json",
   "source_page": null,
@@ -55,7 +52,7 @@
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/flow.png",
       "path": "docs/tistory/assets/2026-07-13/flow.png",
       "original_url": "",
-      "alt": "2026. 7. 13 오늘의 세 장면: 연결 × AI, AI 에이전트, 기억하는 AI",
+      "alt": "2026. 7. 13 오늘의 세 장면: 연결 × AI, AI 에이전트, 코딩 방식",
       "width": 1200,
       "height": 675
     }
