@@ -88,6 +88,16 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn('if [ "$REFRESH_EXISTING" = "true" ]; then', workflow)
         self.assertIn('FORCE_FLAG="--force"', workflow)
 
+    def test_queued_manual_runs_checkout_the_latest_main_revision(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+
+        checkout = workflow.split("uses: actions/checkout@v4", 1)[1].split(
+            "uses: actions/setup-python@v5", 1
+        )[0]
+        self.assertIn("ref: main", checkout)
+
 
 if __name__ == "__main__":
     unittest.main()
