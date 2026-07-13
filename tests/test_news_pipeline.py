@@ -111,6 +111,43 @@ class RankingTests(unittest.TestCase):
 
         self.assertTrue(item["requires_manual_review"])
 
+    def test_scores_reader_impact_above_a_generic_ai_announcement(self):
+        broad = {
+            "keywords": ["무료", "요금", "개인정보", "사진", "일자리"],
+        }
+        practical = {"keywords": ["GitHub", "VS Code", "업데이트", "도구"]}
+        deep = {"keywords": ["API", "데이터베이스", "성능", "논문"]}
+        generic = make_candidate(
+            raw("OpenAI 새 AI 모델 발표", "https://official.example/model"),
+            source("official-ai", "official", weight=5),
+        )
+        reader_impact = make_candidate(
+            raw(
+                "인스타 사진 AI 활용, 개인정보 반발로 자동 연동 중단",
+                "https://news.example/privacy",
+            ),
+            source("korean-news", "korean_general", weight=3),
+        )
+
+        for item in (generic, reader_impact):
+            score_candidate(
+                item,
+                ["AI"],
+                now=NOW,
+                audience_lanes={
+                    "broad": broad,
+                    "practical": practical,
+                    "deep": deep,
+                },
+                topic_keywords={"ai": ["AI", "OpenAI"]},
+            )
+
+        self.assertGreater(
+            reader_impact["lane_scores"]["broad"],
+            generic["lane_scores"]["broad"],
+        )
+        self.assertIn("ai", reader_impact["topic_tags"])
+
 
 class SelectionTests(unittest.TestCase):
     def test_prefers_group_diversity_and_limits_one_per_source(self):
@@ -138,6 +175,126 @@ class SelectionTests(unittest.TestCase):
             ["official", "community", "korean_editorial"],
         )
         self.assertEqual(len({item["source_id"] for item in selected}), 3)
+
+    def test_selects_broad_practical_and_deep_lanes_without_research_overload(self):
+        items = []
+
+        def candidate(title, source_id, group, score, lanes, topics=()):
+            item = make_candidate(
+                raw(title, f"https://{source_id}.example/{len(items)}"),
+                source(source_id, group, weight=3),
+            )
+            item["score"] = score
+            item["lane_scores"] = lanes
+            item["topic_tags"] = list(topics)
+            items.append(item)
+
+        candidate(
+            "인스타 사진 AI 활용 중단",
+            "aitimes",
+            "korean_general",
+            10,
+            {"broad": 5, "practical": 0, "deep": 0},
+            ("ai",),
+        )
+        candidate(
+            "GitHub pull request 대시보드 공개",
+            "github",
+            "official",
+            9,
+            {"broad": 0, "practical": 5, "deep": 1},
+        )
+        candidate(
+            "Postgres 19 그래프 쿼리 이해하기",
+            "geeknews",
+            "community",
+            7,
+            {"broad": 0, "practical": 1, "deep": 5},
+        )
+        candidate(
+            "새 AI 모델 세부 기술 발표",
+            "openai",
+            "official",
+            30,
+            {"broad": 0, "practical": 1, "deep": 3},
+            ("ai",),
+        )
+        candidate(
+            "VEXAIoT 에이전트 논문",
+            "arxiv",
+            "research",
+            25,
+            {"broad": 0, "practical": 0, "deep": 4},
+            ("ai",),
+        )
+
+        selected = select_candidates(
+            items,
+            max_items=3,
+            max_per_source=1,
+            audience_lanes=["broad", "practical", "deep"],
+            max_topic_items={"ai": 2},
+            max_research_items=1,
+        )
+
+        self.assertEqual(
+            [item["audience_lane"] for item in selected],
+            ["broad", "practical", "deep"],
+        )
+        self.assertEqual(
+            [item["source_id"] for item in selected],
+            ["aitimes", "github", "geeknews"],
+        )
+        self.assertNotIn("arxiv", [item["source_id"] for item in selected])
+
+    def test_never_relaxes_hard_topic_or_research_caps_to_fill_slots(self):
+        items = []
+
+        def candidate(title, source_id, group, lanes, topics=()):
+            item = make_candidate(
+                raw(title, f"https://{source_id}.example/{len(items)}"),
+                source(source_id, group, weight=3),
+            )
+            item["score"] = 20 - len(items)
+            item["lane_scores"] = lanes
+            item["topic_tags"] = list(topics)
+            items.append(item)
+
+        candidate(
+            "AI 생활 서비스 변화",
+            "general-ai",
+            "korean_general",
+            {"broad": 5, "practical": 0, "deep": 0},
+            ("ai",),
+        )
+        candidate(
+            "AI 개발 도구 업데이트",
+            "tool-ai",
+            "official",
+            {"broad": 0, "practical": 5, "deep": 0},
+            ("ai",),
+        )
+        for index in range(3):
+            candidate(
+                f"AI 연구 논문 {index}",
+                f"arxiv-{index}",
+                "research",
+                {"broad": 3, "practical": 3, "deep": 5},
+                ("ai",),
+            )
+
+        selected = select_candidates(
+            items,
+            max_items=3,
+            max_per_source=1,
+            audience_lanes=["broad", "practical", "deep"],
+            max_topic_items={"ai": 2},
+            max_research_items=0,
+        )
+
+        self.assertEqual(len(selected), 2)
+        self.assertEqual(sum("ai" in item["topic_tags"] for item in selected), 2)
+        self.assertFalse(any(item["group"] == "research" for item in selected))
 
 
 if __name__ == "__main__":

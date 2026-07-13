@@ -73,7 +73,7 @@ def _strip_html(value):
     return " ".join(unescape(" ".join(parser.parts)).split())
 
 
-def _normalise_date(value):
+def _normalise_date(value, default_timezone=dt.timezone.utc):
     text = str(value or "").strip()
     if not text:
         return ""
@@ -91,11 +91,11 @@ def _normalise_date(value):
             return ""
 
     if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=dt.timezone.utc)
+        parsed = parsed.replace(tzinfo=default_timezone)
     return parsed.astimezone(dt.timezone.utc).isoformat()
 
 
-def parse_feed(text, base_url):
+def parse_feed(text, base_url, default_timezone=dt.timezone.utc):
     """Parse RSS or Atom XML into the pipeline's raw item shape."""
     root = ET.fromstring(text)
     is_atom = _local_name(root.tag) == "feed"
@@ -123,7 +123,7 @@ def parse_feed(text, base_url):
                     "title": _strip_html(title),
                     "url": urljoin(base_url, link),
                     "summary": _strip_html(summary),
-                    "published_at": _normalise_date(published),
+                    "published_at": _normalise_date(published, default_timezone),
                 }
             )
 
@@ -147,7 +147,8 @@ def parse_html_links(text, source):
             continue
         url = canonicalize_url(absolute_url)
         title = " ".join(unescape(raw_title).split())
-        if not title or url in seen:
+        max_title_chars = int(source.get("max_title_chars", 180))
+        if not title or len(title) > max_title_chars or url in seen:
             continue
         seen.add(url)
         items.append(
@@ -162,14 +163,61 @@ def parse_html_links(text, source):
     return items
 
 
-def _collect_source(source, fetch_text):
+def _collect_variant(source, fetch_text):
     text = fetch_text(source["url"])
     source_type = source.get("type", "rss").lower()
     if source_type in {"rss", "atom", "feed"}:
-        return parse_feed(text, source["url"])
+        timezone_name = source.get("timezone")
+        timezone = ZoneInfo(timezone_name) if timezone_name else dt.timezone.utc
+        return parse_feed(text, source["url"], timezone)
     if source_type == "html":
         return parse_html_links(text, source)
     raise ValueError("지원하지 않는 소스 형식: {}".format(source_type))
+
+
+def _collect_source(source, fetch_text):
+    variants = [source]
+    variants.extend(
+        {**source, **fallback}
+        for fallback in source.get("fallbacks", [])
+        if isinstance(fallback, dict)
+    )
+    failures = []
+    for variant in variants:
+        try:
+            items = _collect_variant(variant, fetch_text)
+        except Exception as exc:
+            failures.append(exc)
+            continue
+        if items:
+            return items
+    if failures:
+        raise failures[-1]
+    return []
+
+
+def _title_keyword_matches(title, keyword):
+    normalized = str(title or "").casefold()
+    keyword = str(keyword or "").strip().casefold()
+    if not keyword:
+        return False
+    if keyword.isascii():
+        return re.search(
+            r"(?<![a-z0-9]){}(?![a-z0-9])".format(re.escape(keyword)),
+            normalized,
+        ) is not None
+    return keyword in normalized
+
+
+def _source_item_matches(raw, source):
+    title = raw.get("title", "")
+    excluded = source.get("exclude_title_keywords", [])
+    if any(_title_keyword_matches(title, keyword) for keyword in excluded):
+        return False
+    included = source.get("include_title_keywords", [])
+    return not included or any(
+        _title_keyword_matches(title, keyword) for keyword in included
+    )
 
 
 def build_inbox(config, fetch_text, now=None, day_id=None):
@@ -194,14 +242,24 @@ def build_inbox(config, fetch_text, now=None, day_id=None):
             continue
 
         limit = int(source.get("max_items", default_limit))
-        for raw in raw_items[:limit]:
-            candidate = make_candidate(raw, source)
+        filtered_items = [raw for raw in raw_items if _source_item_matches(raw, source)]
+        for raw in filtered_items[:limit]:
+            candidate_input = dict(raw)
+            if source.get("include_summary") is False:
+                candidate_input["summary"] = ""
+            candidate = make_candidate(candidate_input, source)
             if candidate["title"] and candidate["url"]:
                 candidates.append(candidate)
 
     candidates = deduplicate_candidates(candidates)
     for candidate in candidates:
-        score_candidate(candidate, config.get("interest_keywords", []), now=now)
+        score_candidate(
+            candidate,
+            config.get("interest_keywords", []),
+            now=now,
+            audience_lanes=config.get("audience_lanes", {}),
+            topic_keywords=config.get("topic_keywords", {}),
+        )
     candidates.sort(
         key=lambda item: (item.get("score", 0), item.get("published_at", "")),
         reverse=True,
@@ -213,6 +271,9 @@ def build_inbox(config, fetch_text, now=None, day_id=None):
         max_items=int(selection.get("max_items", 3)),
         max_per_source=int(selection.get("max_per_source", 1)),
         preferred_groups=selection.get("preferred_groups", []),
+        audience_lanes=selection.get("audience_lanes", []),
+        max_topic_items=selection.get("max_topic_items", {}),
+        max_research_items=selection.get("max_research_items", 1),
     )
 
     return {

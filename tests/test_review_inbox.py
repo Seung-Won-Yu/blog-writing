@@ -75,6 +75,14 @@ class SourceConfigTests(unittest.TestCase):
         ))
         self.assertEqual(len({source["id"] for source in enabled}), len(enabled))
         self.assertEqual(config["selection"]["max_items"], 3)
+        self.assertIn("aitimes", {source["id"] for source in enabled})
+        self.assertEqual(
+            config["selection"]["audience_lanes"],
+            ["broad", "practical", "deep"],
+        )
+        self.assertEqual(config["selection"]["max_research_items"], 0)
+        yozmit = next(source for source in enabled if source["id"] == "yozmit")
+        self.assertTrue(yozmit.get("fallbacks"))
 
 
 if __name__ == "__main__":

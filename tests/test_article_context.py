@@ -4,6 +4,7 @@ from urllib.request import Request
 from article_context import (
     _SafeRedirectHandler,
     collect_article_contexts,
+    collect_runtime_feed_contexts,
     extract_article_text,
     validate_public_article_url,
 )
@@ -135,6 +136,41 @@ class ArticleFetchBoundaryTests(unittest.TestCase):
         self.assertLessEqual(sum(len(item["text"]) for item in result.values()), 300)
         self.assertNotIn("broken", result)
         self.assertNotIn("not-selected", result)
+
+    def test_runtime_feed_context_is_matched_in_memory_without_changing_inbox(self):
+        inbox = {
+            "selected": [
+                {
+                    "id": "broad-one",
+                    "source_id": "aitimes",
+                    "url": "https://www.aitimes.com/news/articleView.html?idxno=1",
+                    "summary": "",
+                }
+            ]
+        }
+        sources = [
+            {
+                "id": "aitimes",
+                "type": "rss",
+                "url": "https://www.aitimes.com/rss/clickTop.xml",
+                "runtime_summary": True,
+            }
+        ]
+        feed = """<rss><channel><item>
+          <title>인스타 사진 AI 연동 중단</title>
+          <link>https://www.aitimes.com/news/articleView.html?idxno=1</link>
+          <description>메타가 사진 AI 활용 방침에 대한 반발 뒤 자동 연동을 중단했다.</description>
+        </item></channel></rss>"""
+
+        contexts = collect_runtime_feed_contexts(
+            inbox,
+            sources,
+            fetcher=lambda _source: feed,
+        )
+
+        self.assertEqual(contexts["broad-one"]["method"], "rss-runtime")
+        self.assertIn("자동 연동을 중단", contexts["broad-one"]["text"])
+        self.assertEqual(inbox["selected"][0]["summary"], "")
 
 
 if __name__ == "__main__":

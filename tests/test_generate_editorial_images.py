@@ -5,9 +5,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 from generate_editorial_images import (
+    draw_scene,
     find_font,
     generate_editorial_images,
     generate_for_day,
@@ -51,6 +52,73 @@ DAY = {
 
 
 class EditorialImageTests(unittest.TestCase):
+    def test_every_generic_motif_draws_a_three_stage_scene_across_the_frame(self):
+        for motif in sorted(VISUAL_MOTIFS):
+            with self.subTest(motif=motif):
+                image = Image.new("RGB", (900, 300), "#000000")
+                draw_scene(
+                    ImageDraw.Draw(image),
+                    motif,
+                    motif,
+                    (0, 0, 900, 300),
+                    foreground="#FFFFFF",
+                    accent="#FF7A68",
+                    muted="#55D29A",
+                )
+
+                for left, right in ((0, 270), (315, 585), (630, 900)):
+                    region = image.crop((left, 0, right, 300))
+                    background = Image.new("RGB", region.size, "#000000")
+                    self.assertIsNotNone(ImageChops.difference(region, background).getbbox())
+
+    def test_maps_article_subjects_to_explanatory_visual_scenes(self):
+        day = {
+            "news": [
+                {
+                    "title_kr": "인스타 사진 AI 자동 연동 중단",
+                    "blurb_kr": "개인정보 반발 뒤 기능을 멈췄다.",
+                },
+                {
+                    "title_kr": "VS Code와 CLI의 OpenTelemetry export",
+                    "blurb_kr": "기업 관측 데이터 관리 기능이다.",
+                },
+                {
+                    "title_kr": "AI 토큰은 데이터센터를 어떻게 여행하는가",
+                    "blurb_kr": "요청이 네트워크와 GPU를 지나는 흐름을 설명한다.",
+                },
+            ]
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(
+            [item["scene"] for item in visual["stories"]],
+            ["privacy_photo", "observability", "datacenter"],
+        )
+        self.assertEqual(
+            [item["steps"] for item in visual["stories"]],
+            [
+                "사진 → AI 연동 → 사용자 통제",
+                "개발 도구 → 관측 데이터 → 관리",
+                "요청 토큰 → 데이터센터 → 응답",
+            ],
+        )
+
+    def test_keeps_a_short_subject_separate_from_the_curiosity_hook(self):
+        day = {
+            **DAY,
+            "visual": {
+                "subject": "인스타 사진 AI",
+                "hook": "반발 뒤 자동 연동은 왜 멈췄나?",
+                "motif": "security",
+            },
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(visual["subject"], "인스타 사진 AI")
+        self.assertEqual(visual["hook"], "반발 뒤 자동 연동은 왜 멈췄나?")
+
     def test_legacy_day_resolves_short_hook_and_story_motifs_without_opening_copy(self):
         visual = resolve_visual(DAY)
 
@@ -133,8 +201,9 @@ class EditorialImageTests(unittest.TestCase):
                 assets["cover"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/cover.png",
             )
+            self.assertIn("코드 변경의 흐름", assets["cover"]["alt"])
             self.assertIn("자동화, 어디까지 믿어도 될까?", assets["cover"]["alt"])
-            self.assertEqual(assets["story_1"]["alt"], "")
+            self.assertIn("자동화 보안", assets["story_1"]["alt"])
             self.assertEqual(
                 assets["story_2"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/story-02.png",
