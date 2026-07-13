@@ -14,6 +14,7 @@ from generate_daily_draft import (
     fallback_day,
     generate_and_write,
     load_history,
+    request_gemini_model,
     request_github_model,
     selected_fingerprint,
     should_reuse_existing,
@@ -433,6 +434,33 @@ class DayValidationTests(unittest.TestCase):
         existing["generation"]["revision"] = GENERATION_REVISION - 1
         self.assertFalse(should_reuse_existing(existing, INBOX, force=False))
 
+    def test_reuse_respects_the_preferred_provider_and_model(self):
+        existing = {
+            "generation": {
+                "provider": "gemini",
+                "model": "gemini-3.5-flash",
+                "revision": GENERATION_REVISION,
+                "input_fingerprint": selected_fingerprint(INBOX),
+            }
+        }
+
+        self.assertTrue(
+            should_reuse_existing(
+                existing,
+                INBOX,
+                provider="gemini",
+                model="gemini-3.5-flash",
+            )
+        )
+        self.assertFalse(
+            should_reuse_existing(
+                existing,
+                INBOX,
+                provider="github-models",
+                model="openai/gpt-4o-mini",
+            )
+        )
+
 
 class GitHubModelsClientTests(unittest.TestCase):
     def test_sends_token_in_header_and_parses_json_response(self):
@@ -470,6 +498,59 @@ class GitHubModelsClientTests(unittest.TestCase):
         self.assertEqual(captured["authorization"], "Bearer secret-token")
         self.assertEqual(captured["body"]["response_format"], {"type": "json_object"})
         self.assertNotIn("secret-token", json.dumps(captured["body"]))
+
+
+class GeminiClientTests(unittest.TestCase):
+    def test_sends_key_only_in_header_and_parses_structured_json(self):
+        captured = {}
+
+        class Response:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self):
+                payload = {
+                    "candidates": [
+                        {
+                            "content": {
+                                "parts": [
+                                    {
+                                        "text": json.dumps(
+                                            MODEL_OUTPUT, ensure_ascii=False
+                                        )
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+                return json.dumps(payload).encode("utf-8")
+
+        def opener(request, timeout):
+            captured["key"] = request.get_header("X-goog-api-key")
+            captured["body"] = json.loads(request.data.decode("utf-8"))
+            captured["url"] = request.full_url
+            captured["timeout"] = timeout
+            return Response()
+
+        result = request_gemini_model(
+            "프롬프트",
+            token="gemini-secret",
+            model="gemini-3.5-flash",
+            opener=opener,
+        )
+
+        self.assertEqual(result["news"][0]["title_kr"], "GitHub Actions 보안 점검 기능")
+        self.assertEqual(captured["key"], "gemini-secret")
+        self.assertEqual(
+            captured["body"]["generationConfig"]["responseMimeType"],
+            "application/json",
+        )
+        self.assertNotIn("gemini-secret", captured["url"])
+        self.assertNotIn("gemini-secret", json.dumps(captured["body"]))
 
 
 class DraftFileTests(unittest.TestCase):

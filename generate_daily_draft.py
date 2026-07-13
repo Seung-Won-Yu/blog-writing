@@ -17,7 +17,9 @@ from visual_direction import fallback_visual
 
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
+GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
+DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GENERATION_REVISION = 4
 MAX_PROMPT_INPUT_TOKENS = 6_900
 MAX_RETRY_INPUT_TOKENS = 7_800
@@ -94,13 +96,20 @@ def selected_fingerprint(inbox):
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
 
 
-def should_reuse_existing(existing, inbox, force=False):
+def should_reuse_existing(
+    existing,
+    inbox,
+    force=False,
+    provider="github-models",
+    model=None,
+):
     if force:
         return False
     generation = existing.get("generation") if isinstance(existing, dict) else {}
     generation = generation if isinstance(generation, dict) else {}
     return (
-        generation.get("provider") == "github-models"
+        generation.get("provider") == provider
+        and (not model or generation.get("model") == model)
         and generation.get("revision") == GENERATION_REVISION
         and generation.get("input_fingerprint") == selected_fingerprint(inbox)
     )
@@ -409,6 +418,55 @@ def request_github_model(prompt, token, model=DEFAULT_MODEL, opener=urlopen):
     return _parse_json_content(content)
 
 
+def request_gemini_model(
+    prompt,
+    token,
+    model=DEFAULT_GEMINI_MODEL,
+    opener=urlopen,
+):
+    """Call Gemini with a header-only API key and structured JSON output."""
+    if not token:
+        raise ValueError("GEMINI_API_KEY가 없습니다.")
+    if not re.fullmatch(r"[A-Za-z0-9._-]+", str(model or "")):
+        raise ValueError("Gemini 모델 이름이 올바르지 않습니다.")
+    body = {
+        "systemInstruction": {
+            "parts": [
+                {
+                    "text": "근거가 제공된 범위만 사용하는 한국어 개발 블로그 편집자다."
+                }
+            ]
+        },
+        "contents": [
+            {"role": "user", "parts": [{"text": prompt}]},
+        ],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "maxOutputTokens": 8192,
+        },
+    }
+    request = Request(
+        GEMINI_ENDPOINT.format(model=model),
+        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+        headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "X-goog-api-key": token,
+        },
+        method="POST",
+    )
+    with opener(request, timeout=120) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+    try:
+        parts = payload["candidates"][0]["content"]["parts"]
+        content = "".join(
+            part.get("text", "") for part in parts if isinstance(part, dict)
+        )
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ValueError("Gemini 응답 형식이 올바르지 않습니다.") from exc
+    return _parse_json_content(content)
+
+
 def _validated_content(blocks):
     content = []
     for block in blocks or []:
@@ -588,7 +646,7 @@ def _assert_draft_quality(day):
         raise DraftQualityError("전체 글이 6분 읽기 분량에 미치지 못합니다.")
 
 
-def build_day(inbox, generated, model=DEFAULT_MODEL):
+def build_day(inbox, generated, model=DEFAULT_MODEL, provider="github-models"):
     """Validate model output and restore source/URL from trusted candidates."""
     selected = _selected(inbox)
     generated_news = generated.get("news") if isinstance(generated, dict) else None
@@ -622,7 +680,7 @@ def build_day(inbox, generated, model=DEFAULT_MODEL):
         "quiz": _validated_quiz(generated.get("quiz")),
         "terms": _validated_terms(generated.get("terms")),
         "generation": {
-            "provider": "github-models",
+            "provider": provider,
             "model": model,
             "revision": GENERATION_REVISION,
             "input_fingerprint": selected_fingerprint(inbox),
@@ -922,6 +980,7 @@ def generate_and_write(
     model=DEFAULT_MODEL,
     fallback_on_error=False,
     model_call=request_github_model,
+    provider="github-models",
     reference_loader=None,
     post_writer=None,
 ):
@@ -948,7 +1007,12 @@ def generate_and_write(
                 else _rewrite_quality_fields(generated)
             )
             try:
-                day = build_day(inbox, candidate, model=model)
+                day = build_day(
+                    inbox,
+                    candidate,
+                    model=model,
+                    provider=provider,
+                )
                 break
             except DraftQualityError as exc:
                 if attempt == 2:
@@ -1003,6 +1067,10 @@ def main(argv=None):
     parser.add_argument("--sources-config", default="config/news_sources.json")
     parser.add_argument("--model", default=os.environ.get("GITHUB_MODEL", DEFAULT_MODEL))
     parser.add_argument(
+        "--gemini-model",
+        default=os.environ.get("GEMINI_TEXT_MODEL", DEFAULT_GEMINI_MODEL),
+    )
+    parser.add_argument(
         "--fallback-on-error",
         action="store_true",
         help="모델 장애 시 수집된 요약만으로 최소 초안 생성",
@@ -1020,9 +1088,18 @@ def main(argv=None):
     output_path = Path(args.data_dir) / "{}.json".format(day_id)
 
     inbox_preview = json.loads(inbox_path.read_text(encoding="utf-8"))
+    gemini_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    preferred_provider = "gemini" if gemini_key else "github-models"
+    preferred_model = args.gemini_model if gemini_key else args.model
     if output_path.exists():
         existing = json.loads(output_path.read_text(encoding="utf-8"))
-        if should_reuse_existing(existing, inbox_preview, force=args.force):
+        if should_reuse_existing(
+            existing,
+            inbox_preview,
+            force=args.force,
+            provider=preferred_provider,
+            model=preferred_model,
+        ):
             from export_tistory import write_post
 
             write_post(day_id, day=existing, source_page=None)
@@ -1039,19 +1116,53 @@ def main(argv=None):
             Path(args.sources_config).read_text(encoding="utf-8")
         )
         allowed_hosts = set(sources_config.get("reference_hosts") or [])
-        day = generate_and_write(
-            inbox_path,
-            args.data_dir,
-            token=os.environ.get("GITHUB_TOKEN", "").strip(),
-            model=args.model,
-            fallback_on_error=args.fallback_on_error,
-            reference_loader=lambda inbox: {
+        def reference_loader(inbox):
+            return {
                 **collect_runtime_feed_contexts(
                     inbox, sources_config.get("sources") or [], total_chars=1_800
                 ),
                 **collect_article_contexts(inbox, allowed_hosts, total_chars=3_600),
-            },
-        )
+            }
+        if gemini_key:
+            try:
+                day = generate_and_write(
+                    inbox_path,
+                    args.data_dir,
+                    token=gemini_key,
+                    model=args.gemini_model,
+                    fallback_on_error=False,
+                    model_call=request_gemini_model,
+                    provider="gemini",
+                    reference_loader=reference_loader,
+                )
+            except Exception as exc:
+                print(
+                    "Gemini 초안 생성 실패({}); GitHub Models로 재시도합니다.".format(
+                        type(exc).__name__
+                    ),
+                    file=sys.stderr,
+                )
+                day = generate_and_write(
+                    inbox_path,
+                    args.data_dir,
+                    token=os.environ.get("GITHUB_TOKEN", "").strip(),
+                    model=args.model,
+                    fallback_on_error=args.fallback_on_error,
+                    model_call=request_github_model,
+                    provider="github-models",
+                    reference_loader=reference_loader,
+                )
+        else:
+            day = generate_and_write(
+                inbox_path,
+                args.data_dir,
+                token=os.environ.get("GITHUB_TOKEN", "").strip(),
+                model=args.model,
+                fallback_on_error=args.fallback_on_error,
+                model_call=request_github_model,
+                provider="github-models",
+                reference_loader=reference_loader,
+            )
     except Exception as exc:
         print("자체 초안 생성 실패: {}".format(type(exc).__name__), file=sys.stderr)
         return 1
