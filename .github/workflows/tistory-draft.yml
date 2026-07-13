@@ -33,6 +33,11 @@ on:
         required: false
         type: boolean
         default: false
+      refresh_existing:
+        description: '과거 후보함을 다시 수집하지 않고 현재 장문 구조로 보강'
+        required: false
+        type: boolean
+        default: false
       ai_images:
         description: '유료 Gemini 이미지 4장 사용 (약 US$0.14/회, 과금 계정 필요)'
         required: false
@@ -76,6 +81,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
 
       - name: Collect today's news review inbox
+        if: github.event_name != 'workflow_dispatch' || inputs.refresh_existing != true
         env:
           REQUESTED_DAY: ${{ inputs.day }}
           TZ: Asia/Seoul
@@ -86,6 +92,14 @@ jobs:
             python collect_news.py --today
           fi
 
+      - name: Verify historical review inbox
+        if: github.event_name == 'workflow_dispatch' && inputs.refresh_existing == true
+        env:
+          REQUESTED_DAY: ${{ inputs.day }}
+        run: |
+          test -n "$REQUESTED_DAY"
+          test -f "docs/inbox/$REQUESTED_DAY.json"
+
       - name: Generate today's local Tistory draft
         id: daily_generation
         continue-on-error: true
@@ -94,10 +108,14 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           REQUESTED_DAY: ${{ inputs.day }}
           FORCE_REBUILD: ${{ inputs.force }}
+          REFRESH_EXISTING: ${{ inputs.refresh_existing }}
           TZ: Asia/Seoul
         run: |
           FORCE_FLAG=""
           if [ "$FORCE_REBUILD" = "true" ]; then
+            FORCE_FLAG="--force"
+          fi
+          if [ "$REFRESH_EXISTING" = "true" ]; then
             FORCE_FLAG="--force"
           fi
           if [ -n "$REQUESTED_DAY" ]; then

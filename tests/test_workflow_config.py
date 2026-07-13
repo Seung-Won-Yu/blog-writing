@@ -67,6 +67,26 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("- 'docs/**'", push_paths)
         self.assertNotIn("- 'data/**'", push_paths)
 
+    def test_manual_refresh_can_reuse_historical_inbox_without_recollecting_news(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("refresh_existing:", workflow)
+        self.assertIn("REFRESH_EXISTING: ${{ inputs.refresh_existing }}", workflow)
+        self.assertIn("Verify historical review inbox", workflow)
+        self.assertIn('test -n "$REQUESTED_DAY"', workflow)
+        self.assertIn('test -f "docs/inbox/$REQUESTED_DAY.json"', workflow)
+        self.assertIn("inputs.refresh_existing != true", workflow)
+
+    def test_historical_refresh_always_forces_a_new_draft(self):
+        workflow = (
+            Path(__file__).parents[1] / ".github" / "workflows" / "tistory-draft.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('if [ "$REFRESH_EXISTING" = "true" ]; then', workflow)
+        self.assertIn('FORCE_FLAG="--force"', workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
