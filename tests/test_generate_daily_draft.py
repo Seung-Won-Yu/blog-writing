@@ -12,6 +12,7 @@ from generate_daily_draft import (
     MAX_PROMPT_INPUT_TOKENS,
     MAX_RETRY_INPUT_TOKENS,
     _conservative_token_estimate,
+    _merge_quality_repair,
     _quality_retry_prompt,
     build_day,
     build_prompt,
@@ -113,6 +114,20 @@ class PromptTests(unittest.TestCase):
         third = copy.deepcopy(MODEL_OUTPUT["news"][0])
         third["title_kr"] = "세 번째 자동화 검증 흐름"
         generated["news"].append(third)
+        generated["editorial"] = {
+            "headline": "제" * 100,
+            "opening": "도" * 500,
+            "throughline": "연" * 500,
+            "closing": "마" * 400,
+            "action": "행" * 300,
+        }
+        for item in generated["news"]:
+            item["title_kr"] = "제" * 220
+            item["blurb_kr"] = "요" * 400
+            item["author_note"] = "메" * 300
+            for block in item["content"]:
+                if block["t"] == "p":
+                    block["text"] = "본" * 600
 
         prompt = _quality_retry_prompt(
             generated,
@@ -122,7 +137,30 @@ class PromptTests(unittest.TestCase):
         self.assertLessEqual(
             _conservative_token_estimate(prompt), MAX_RETRY_INPUT_TOKENS
         )
-        self.assertIn("세 번째 자동화 검증 흐름", prompt)
+        self.assertIn("제" * 60, prompt)
+
+    def test_compact_repair_matches_a_long_title_without_losing_it(self):
+        full_title = "긴 제목 " + "가" * 100
+        base = {
+            "editorial": {},
+            "news": [{"title_kr": full_title, "blurb_kr": "수정 전"}],
+        }
+        repair = {
+            "editorial": {},
+            "news": [
+                {
+                    "title_kr": full_title[:72],
+                    "blurb_kr": "수정 후",
+                    "author_note": "승원의 관점에서는 설정을 확인한다.",
+                    "content": [],
+                }
+            ],
+        }
+
+        merged = _merge_quality_repair(base, repair)
+
+        self.assertEqual(merged["news"][0]["title_kr"], full_title)
+        self.assertEqual(merged["news"][0]["blurb_kr"], "수정 후")
 
     def test_marks_news_as_untrusted_reference_data(self):
         prompt = build_prompt(INBOX, {"questions": [], "terms": []})
@@ -304,11 +342,14 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaises(DraftQualityError):
             build_day(INBOX, generic)
 
-    def test_rejects_missing_or_fabricated_personal_author_notes(self):
+    def test_derives_a_missing_note_from_verification_but_rejects_fake_experience(self):
         missing = copy.deepcopy(MODEL_OUTPUT)
         missing["news"][0].pop("author_note")
-        with self.assertRaisesRegex(DraftQualityError, "승원의 메모"):
-            build_day(INBOX, missing)
+        day = build_day(INBOX, missing)
+
+        self.assertTrue(day["news"][0]["author_note"].startswith("승원의 관점에서는"))
+        self.assertIn("설정", day["news"][0]["author_note"])
+        self.assertGreaterEqual(len(day["news"][0]["author_note"]), 90)
 
         fabricated = copy.deepcopy(MODEL_OUTPUT)
         fabricated["news"][0]["author_note"] = (
