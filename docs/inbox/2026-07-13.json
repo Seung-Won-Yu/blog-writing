@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T14:25:55.325636+00:00",
+  "generated_at": "2026-07-13T14:40:28.256421+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
     "max_per_source": 1,
+    "exclude_recent_days": 7,
     "audience_lanes": [
       "broad",
       "practical",
@@ -21,7 +22,8 @@
       "community",
       "korean_editorial",
       "research"
-    ]
+    ],
+    "recently_selected_excluded": 3
   },
   "candidates": [
     {
@@ -115,9 +117,7 @@
       },
       "topic_tags": [
         "ai"
-      ],
-      "audience_lane": "deep",
-      "selection_reason": "deep 독자 적합도 2 · 주제 연결"
+      ]
     },
     {
       "id": "3447f8d32f7e",
@@ -210,7 +210,9 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "audience_lane": "practical",
+      "selection_reason": "practical 독자 적합도 4 · 주제 연결"
     },
     {
       "id": "aa67bf587bd0",
@@ -272,9 +274,7 @@
       },
       "topic_tags": [
         "ai"
-      ],
-      "audience_lane": "practical",
-      "selection_reason": "practical 독자 적합도 5 · 주제 연결"
+      ]
     },
     {
       "id": "b98a594ec40e",
@@ -516,7 +516,9 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "audience_lane": "broad",
+      "selection_reason": "broad 독자 적합도 5"
     },
     {
       "id": "0d66356532d5",
@@ -576,9 +578,7 @@
       },
       "topic_tags": [
         "ai"
-      ],
-      "audience_lane": "broad",
-      "selection_reason": "broad 독자 적합도 7"
+      ]
     },
     {
       "id": "8056c611370c",
@@ -1014,7 +1014,9 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "audience_lane": "deep",
+      "selection_reason": "deep 독자 적합도 2 · 주제 연결"
     },
     {
       "id": "cf4af4e548f6",
@@ -1831,15 +1833,425 @@
         "deep": 3
       },
       "topic_tags": []
+    },
+    {
+      "id": "7db767638b3c",
+      "title": "구글이 공개한 AI 에이전트 제작 노하우를 가져다 쓰는 법",
+      "normalized_title": "구글이 공개한 ai 에이전트 제작 노하우를 가져다 쓰는 법",
+      "url": "https://yozm.wishket.com/magazine/detail/3833",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "165b690500d9",
+      "title": "중소기업 AI 도입률 23.4%, 왜 나중으로 미룰까?",
+      "normalized_title": "중소기업 ai 도입률 23 4 왜 나중으로 미룰까",
+      "url": "https://yozm.wishket.com/magazine/detail/3846",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "f8117c100197",
+      "title": "AI 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "normalized_title": "ai 답변 복붙이 우리 팀을 피곤하게 만드는 이유",
+      "url": "https://yozm.wishket.com/magazine/detail/3845",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "0f19fa97a5bb",
+      "title": "990원이 찍혔다: 바이브 코딩이 유료 서비스가 되기까지",
+      "normalized_title": "990원이 찍혔다 바이브 코딩이 유료 서비스가 되기까지",
+      "url": "https://yozm.wishket.com/magazine/detail/3844",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "16eeb94c1a77",
+      "title": "이벤트 기반 MSA, AI 시대엔 더 비싸진다고요?",
+      "normalized_title": "이벤트 기반 msa ai 시대엔 더 비싸진다고요",
+      "url": "https://yozm.wishket.com/magazine/detail/3839",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "2ce3e505b30b",
+      "title": "“이 정도면 직접 만들겠는데?” 바이브 코딩으로 유료 앱 대체하기",
+      "normalized_title": "이 정도면 직접 만들겠는데 바이브 코딩으로 유료 앱 대체하기",
+      "url": "https://yozm.wishket.com/magazine/detail/3838",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "0164f5dfc5ea",
+      "title": "로컬 LLM, 나를 위한 작은 AI 작업대 만들기",
+      "normalized_title": "로컬 llm 나를 위한 작은 ai 작업대 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3835",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "607ef667dc42",
+      "title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "normalized_title": "바이브 코딩으로 나만의 프로필 링크 페이지 만들기",
+      "url": "https://yozm.wishket.com/magazine/detail/3834",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 3,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "c0902b6ef178",
+      "title": "페이블 D-2, 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "normalized_title": "페이블 d 2 앤트로픽 엔지니어가 알려주는 활용 가이드",
+      "url": "https://yozm.wishket.com/magazine/detail/3848",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "60e46c7d2f00",
+      "title": "같은 주에 나온 GPT-5.6과 Grok 4.5, 정부가 먼저 검토한 모델은",
+      "normalized_title": "같은 주에 나온 gpt 5 6과 grok 4 5 정부가 먼저 검토한 모델은",
+      "url": "https://yozm.wishket.com/magazine/detail/3843",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "564fea386642",
+      "title": "담당자 퇴사하면 업무 못 하는 회사를 위한 AX는?",
+      "normalized_title": "담당자 퇴사하면 업무 못 하는 회사를 위한 ax는",
+      "url": "https://yozm.wishket.com/magazine/detail/3842",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "bf81115f2f29",
+      "title": "사람마다 다른 썸네일이 나온다? GenUI의 빛과 어둠",
+      "normalized_title": "사람마다 다른 썸네일이 나온다 genui의 빛과 어둠",
+      "url": "https://yozm.wishket.com/magazine/detail/3841",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "a7daf90e40e2",
+      "title": "1인 빌더, 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "normalized_title": "1인 빌더 클로드 코드로 프로젝트 9개 동시 운영한 방법",
+      "url": "https://yozm.wishket.com/magazine/detail/3840",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "88af05dd26b8",
+      "title": "쿠버네티스 7개 주요 게이트웨이 기술 검증(Poc) 다시 하기 (feat. Ingress NGINX 은퇴)",
+      "normalized_title": "쿠버네티스 7개 주요 게이트웨이 기술 검증 poc 다시 하기 feat ingress nginx 은퇴",
+      "url": "https://yozm.wishket.com/magazine/detail/3837",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "46761bb14ea1",
+      "title": "실전 이커머스: 재고 관리 단위 설계로 품절률 10% 낮추기",
+      "normalized_title": "실전 이커머스 재고 관리 단위 설계로 품절률 10 낮추기",
+      "url": "https://yozm.wishket.com/magazine/detail/3836",
+      "published_at": "",
+      "summary": "",
+      "source_id": "yozmit",
+      "source_name": "요즘IT",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": []
     }
   ],
   "selected": [
     {
-      "id": "6c0bb3455553",
-      "title": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
-      "normalized_title": "메타 인스타 사진 ai 활용 반발에 사흘 만에 자동 연동 중단",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212666",
-      "published_at": "2026-07-12T03:20:35+00:00",
+      "id": "fc562b506566",
+      "title": "트럼프 행정부, 중국산 오픈소스 AI 규제 '행정명령' 검토",
+      "normalized_title": "트럼프 행정부 중국산 오픈소스 ai 규제 행정명령 검토",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212674",
+      "published_at": "2026-07-12T03:57:09+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_name": "AI타임스",
@@ -1856,23 +2268,23 @@
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 7,
-        "practical": 0,
+        "broad": 5,
+        "practical": 1,
         "deep": 0
       },
       "topic_tags": [
         "ai"
       ],
       "audience_lane": "broad",
-      "selection_reason": "broad 독자 적합도 7"
+      "selection_reason": "broad 독자 적합도 5"
     },
     {
-      "id": "7ed0339e5a52",
-      "title": "OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot",
-      "normalized_title": "openai s gpt 5 6 sol terra and luna are now available in github copilot",
-      "url": "https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot",
-      "published_at": "2026-07-09T16:41:29+00:00",
-      "summary": "OpenAI’s GPT-5.6 family is now rolling out in GitHub Copilot. GPT-5.6 comes in three variants, Sol, Terra, and Luna, so you can match the model to the job, whether that’s… The post OpenAI’s GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot appeared first on The GitHub Blog .",
+      "id": "cd5027de226c",
+      "title": "CodeQL 2.26.0 adds Kotlin 2.4.0 support and AI prompt injection detection",
+      "normalized_title": "codeql 2 26 0 adds kotlin 2 4 0 support and ai prompt injection detection",
+      "url": "https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection",
+      "published_at": "2026-07-10T20:40:56+00:00",
+      "summary": "CodeQL is the static analysis engine behind GitHub code scanning, which finds and remediates security issues in your code. We’ve recently released CodeQL 2.26.0, which adds support for Kotlin 2.4.0,… The post CodeQL 2.26.0 adds Kotlin 2.4.0 support and AI prompt injection detection appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
       "source_name": "GitHub Changelog",
       "group": "official",
@@ -1890,22 +2302,22 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 5,
+        "practical": 4,
         "deep": 0
       },
       "topic_tags": [
         "ai"
       ],
       "audience_lane": "practical",
-      "selection_reason": "practical 독자 적합도 5 · 주제 연결"
+      "selection_reason": "practical 독자 적합도 4 · 주제 연결"
     },
     {
-      "id": "e9167e656930",
-      "title": "Separating signal from noise in coding evaluations",
-      "normalized_title": "separating signal from noise in coding evaluations",
-      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations",
-      "published_at": "2026-07-08T13:00:00+00:00",
-      "summary": "A new analysis from OpenAI reveals issues in SWE-Bench Pro, a popular coding benchmark, raising concerns about reliability and accuracy in evaluating AI models.",
+      "id": "0b8dc2473cab",
+      "title": "Introducing GeneBench-Pro",
+      "normalized_title": "introducing genebench pro",
+      "url": "https://openai.com/index/introducing-genebench-pro",
+      "published_at": "2026-06-30T00:00:00+00:00",
+      "summary": "Introducing GeneBench-Pro, a new benchmark testing AI performance in genomics, biology, and scientific research using complex, real-world datasets.",
       "source_id": "openai",
       "source_name": "OpenAI News",
       "group": "official",
@@ -1914,11 +2326,10 @@
         "deep": 1
       },
       "requires_manual_review": false,
-      "score": 10,
+      "score": 8,
       "score_reasons": [
         "출처 가중치 5",
         "공식 출처",
-        "7일 이내",
         "관심 키워드"
       ],
       "lane_scores": {
@@ -1933,10 +2344,5 @@
       "selection_reason": "deep 독자 적합도 2 · 주제 연결"
     }
   ],
-  "errors": [
-    {
-      "source_id": "yozmit",
-      "message": "HTTP Error 405: Not Allowed"
-    }
-  ]
+  "errors": []
 }
