@@ -112,5 +112,21 @@
   "generation": {
     "provider": "github-models",
     "model": "openai/gpt-4o-mini"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/cover.png",
+      "path": "docs/tistory/assets/2026-07-13/cover.png",
+      "alt": "2026. 7. 13 오늘의 AI 개발 뉴스 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    "flow": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/flow.png",
+      "path": "docs/tistory/assets/2026-07-13/flow.png",
+      "alt": "2026. 7. 13 오늘의 뉴스 흐름 요약",
+      "width": 1200,
+      "height": 675
+    }
   }
 }

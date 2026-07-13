@@ -30,6 +30,7 @@
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
     "추천 제목: [데일리 IT 뉴스] 2026. 7. 13 - AI, 정처기 문제 정리"
@@ -37,5 +38,26 @@
   "source": "data/days/2026-07-13.json",
   "source_page": null,
   "html": "docs/tistory/2026-07-13.html",
-  "image_assets": []
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/cover.png",
+      "path": "docs/tistory/assets/2026-07-13/cover.png",
+      "original_url": "",
+      "alt": "2026. 7. 13 오늘의 AI 개발 뉴스 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "flow",
+      "title": "오늘의 흐름 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/flow.png",
+      "path": "docs/tistory/assets/2026-07-13/flow.png",
+      "original_url": "",
+      "alt": "2026. 7. 13 오늘의 뉴스 흐름 요약",
+      "width": 1200,
+      "height": 675
+    }
+  ]
 }
