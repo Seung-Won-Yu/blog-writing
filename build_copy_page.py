@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DOCS_DIR = ROOT / "docs"
 TISTORY_DIR = DOCS_DIR / "tistory"
+PREVIEW_DIR = DOCS_DIR / "preview"
 OUT_PATH = DOCS_DIR / "index.html"
 WORKFLOW_URL = "https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/tistory-draft.yml"
 
@@ -54,10 +55,40 @@ def load_drafts():
                 "source": source,
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
+                "preview_path": f"preview/{day}.html",
                 "meta_path": f"tistory/{day}.json",
             }
         )
     return drafts
+
+
+def write_preview_pages(drafts):
+    """Write UTF-8 standalone previews without changing copy-ready fragments."""
+    PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
+    for draft in drafts:
+        day = draft["day"]
+        fragment_path = TISTORY_DIR / f"{day}.html"
+        fragment = fragment_path.read_text(encoding="utf-8")
+        page = f"""<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>{esc(draft.get("title"))} · 본문 미리보기</title>
+  <style>
+    html {{ background: #f3f4f1; }}
+    body {{ margin: 0; padding: 28px 16px 56px; overflow-wrap: anywhere; }}
+    img {{ max-width: 100%; height: auto; }}
+    @media (max-width: 560px) {{ body {{ padding: 16px 12px 40px; }} }}
+  </style>
+</head>
+<body>
+{fragment}
+</body>
+</html>
+"""
+        (PREVIEW_DIR / f"{day}.html").write_text(page, encoding="utf-8")
 
 
 def render(drafts):
@@ -144,7 +175,6 @@ def render(drafts):
       background: var(--accent);
     }}
     .action-btn:focus-visible,
-    .preview-link:focus-visible,
     button:focus-visible,
     textarea:focus-visible {{
       outline: 3px solid #91c4b0;
@@ -351,27 +381,10 @@ def render(drafts):
     button.copy.secondary {{
       background: #0f9b8e;
     }}
-    .preview-link {{
-      display: inline-flex;
-      min-height: 36px;
-      align-items: center;
-      justify-content: center;
-      padding: 0 12px;
+    button.copy.preview-toggle {{
       border: 1px solid #9aa8a1;
-      border-radius: 10px;
       background: #ffffff;
       color: var(--ink);
-      font-weight: 850;
-      text-decoration: none;
-    }}
-    .preview-link:hover:not([aria-disabled="true"]) {{
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #ffffff;
-    }}
-    .preview-link[aria-disabled="true"] {{
-      cursor: not-allowed;
-      opacity: .48;
     }}
     button.copy:hover:not(:disabled) {{
       background: var(--accent);
@@ -412,6 +425,23 @@ def render(drafts):
       resize: vertical;
       white-space: pre;
     }}
+    .preview-pane {{
+      width: 100%;
+      min-height: 720px;
+      border: 1px solid #cfdbe7;
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+    }}
+    .preview-frame {{
+      display: block;
+      width: 100%;
+      height: min(82vh, 1080px);
+      min-height: 720px;
+      border: 0;
+      background: #ffffff;
+    }}
+    textarea[hidden], .preview-pane[hidden] {{ display: none; }}
     .status {{
       min-height: 22px;
       margin-top: 10px;
@@ -432,7 +462,6 @@ def render(drafts):
       .image-card {{ grid-template-columns: 1fr; }}
       .field {{ grid-template-columns: 1fr; }}
       button.copy {{ width: 100%; }}
-      .preview-link {{ width: 100%; }}
       .download-link {{ width: 100%; }}
       .code-head {{ align-items: stretch; flex-direction: column; }}
       .code-actions {{
@@ -441,6 +470,7 @@ def render(drafts):
         width: 100%;
       }}
       textarea {{ min-height: 430px; }}
+      .preview-pane, .preview-frame {{ min-height: 620px; }}
     }}
   </style>
 </head>
@@ -513,11 +543,14 @@ def render(drafts):
           <div class="code-head">
             <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <div class="code-actions">
-              <a class="preview-link" id="previewLink" href="#" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">본문 미리보기</a>
+              <button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
               <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
             </div>
           </div>
           <textarea id="htmlCode" spellcheck="false"></textarea>
+          <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
+            <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="" referrerpolicy="no-referrer"></iframe>
+          </section>
           <div class="status" id="status" role="status" aria-live="polite"></div>
         </div>
       </main>
@@ -528,6 +561,7 @@ def render(drafts):
     const drafts = {payload};
     const latest = {json_for_script(latest)};
     let current = null;
+    let currentPreviewPath = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -546,7 +580,9 @@ def render(drafts):
       imageList: document.getElementById("imageList"),
       htmlCode: document.getElementById("htmlCode"),
       status: document.getElementById("status"),
-      previewLink: document.getElementById("previewLink"),
+      previewButton: document.getElementById("previewButton"),
+      previewPane: document.getElementById("previewPane"),
+      previewFrame: document.getElementById("previewFrame"),
     }};
 
     function setStatus(text, kind = "success") {{
@@ -645,6 +681,15 @@ def render(drafts):
       }});
     }}
 
+    function setPreviewMode(showingPreview) {{
+      els.previewPane.hidden = !showingPreview;
+      els.htmlCode.hidden = showingPreview;
+      els.previewButton.setAttribute("aria-expanded", String(showingPreview));
+      els.previewButton.textContent = showingPreview
+        ? "HTML 코드 보기"
+        : "본문 미리보기";
+    }}
+
     async function selectDraft(day) {{
       const draft = byDay.get(day);
       if (!draft) return;
@@ -663,17 +708,17 @@ def render(drafts):
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
-      els.previewLink.href = "#";
-      els.previewLink.setAttribute("aria-disabled", "true");
-      els.previewLink.setAttribute("tabindex", "-1");
+      setPreviewMode(false);
+      els.previewButton.disabled = true;
+      els.previewFrame.removeAttribute("src");
+      currentPreviewPath = "";
       els.htmlCode.value = "불러오는 중...";
       try {{
         const response = await fetch(draft.html_path + "?v=" + Date.now());
         if (!response.ok) throw new Error("HTTP " + response.status);
         els.htmlCode.value = await response.text();
-        els.previewLink.href = draft.html_path + "?v=" + Date.now();
-        els.previewLink.setAttribute("aria-disabled", "false");
-        els.previewLink.removeAttribute("tabindex");
+        currentPreviewPath = draft.preview_path + "?v=" + Date.now();
+        els.previewButton.disabled = false;
         setStatus(day + " 초안을 불러왔습니다.");
       }} catch (error) {{
         els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
@@ -696,11 +741,12 @@ def render(drafts):
       setStatus(label + " 복사 완료");
     }}
 
-    els.previewLink.addEventListener("click", (event) => {{
-      if (els.previewLink.getAttribute("aria-disabled") === "true") {{
-        event.preventDefault();
-        setStatus("미리볼 본문을 먼저 불러와 주세요.", "error");
+    els.previewButton.addEventListener("click", () => {{
+      const showingPreview = els.previewButton.getAttribute("aria-expanded") !== "true";
+      if (showingPreview && !els.previewFrame.hasAttribute("src")) {{
+        els.previewFrame.setAttribute("src", currentPreviewPath);
       }}
+      setPreviewMode(showingPreview);
     }});
 
     document.getElementById("drafts").addEventListener("click", (event) => {{
@@ -735,7 +781,9 @@ def render(drafts):
 def main():
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     TISTORY_DIR.mkdir(parents=True, exist_ok=True)
-    OUT_PATH.write_text(render(load_drafts()), encoding="utf-8")
+    drafts = load_drafts()
+    write_preview_pages(drafts)
+    OUT_PATH.write_text(render(drafts), encoding="utf-8")
     print(f"built: {OUT_PATH}")
 
 

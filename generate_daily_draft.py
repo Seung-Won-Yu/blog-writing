@@ -751,10 +751,10 @@ def _merge_editorial_quality_repair(base, repair):
     merged = dict(base) if isinstance(base, dict) else {}
     base_editorial = merged.get("editorial")
     repair_editorial = repair.get("editorial") if isinstance(repair, dict) else None
-    if not isinstance(base_editorial, dict) or not isinstance(repair_editorial, dict):
+    if not isinstance(repair_editorial, dict):
         return merged
 
-    editorial = dict(base_editorial)
+    editorial = dict(base_editorial) if isinstance(base_editorial, dict) else {}
     for key in ("headline", "opening", "throughline", "closing", "action"):
         value = repair_editorial.get(key)
         if isinstance(value, str) and value.strip():

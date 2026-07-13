@@ -806,6 +806,37 @@ class DraftFileTests(unittest.TestCase):
         )
         self.assertEqual(result["terms"], MODEL_OUTPUT["terms"])
 
+    def test_editorial_retry_repairs_a_missing_base_editorial(self):
+        calls = []
+        missing_editorial = copy.deepcopy(MODEL_OUTPUT)
+        missing_editorial.pop("editorial")
+        editorial_repair = {
+            "editorial": copy.deepcopy(MODEL_OUTPUT["editorial"]),
+        }
+
+        def model_call(prompt, _token, _model):
+            calls.append(prompt)
+            return missing_editorial if len(calls) == 1 else editorial_repair
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inbox_path = root / "inbox.json"
+            inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
+            result = generate_and_write(
+                inbox_path,
+                root / "days",
+                token="workflow-token",
+                model_call=model_call,
+                post_writer=lambda *_args, **_kwargs: None,
+            )
+
+        self.assertEqual(result["generation"]["provider"], "github-models")
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(
+            result["editorial"]["throughline"], MODEL_OUTPUT["editorial"]["throughline"]
+        )
+        self.assertEqual(result["news"], build_day(INBOX, MODEL_OUTPUT)["news"])
+
     def test_uses_a_final_quality_retry_before_falling_back(self):
         calls = []
         almost_long_enough = copy.deepcopy(MODEL_OUTPUT)
