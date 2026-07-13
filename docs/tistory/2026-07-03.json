@@ -1,10 +1,10 @@
 {
-  "title": "[데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제",
+  "title": "OpenAI가 Codex 전용 키보드를 만드는 이유",
   "title_candidates": [
-    "[데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리",
-    "[개발 뉴스] ADBC CLI · OpenAI Codex Micro 핵심 정리",
-    "2026. 7. 3 개발 뉴스 요약: ADBC CLI 외 오늘의 IT 이슈",
-    "오늘의 AI/개발 뉴스와 정보처리기사 문제 정리 (2026. 7. 3)"
+    "OpenAI가 Codex 전용 키보드를 만드는 이유",
+    "AI 코딩도 물리 버튼이 필요할까? Codex Micro 티저",
+    "Codex Micro와 databow가 줄이려는 반복 작업",
+    "AI 코딩 키보드와 데이터베이스 CLI를 함께 본 이유"
   ],
   "category": "데일리IT뉴스",
   "tags": [
@@ -19,7 +19,7 @@
     "데이터 레이크 (Data Lake)",
     "싱글 사인온 (Single Sign-On, SSO)"
   ],
-  "meta_description": "2026. 7. 3 데일리 IT 뉴스: ADBC CLI, OpenAI Codex Micro 핵심과 운영체제 문제, 개발 용어를 정리했습니다.",
+  "meta_description": "OpenAI Codex Micro 티저에서 확인된 사실과 아직 추정인 기능, ADBC 기반 databow CLI가 반복 작업을 줄이는 방식을 함께 정리했습니다.",
   "key_summary": [
     "오늘의 주요 뉴스: databow - ADBC로 데이터베이스를 조회하는 CLI 도구 / OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개",
     "정처기 포인트: 운영체제 문제로 개념을 점검합니다.",
@@ -31,7 +31,7 @@
     "본문 상단 이미지가 정상 표시되는지 확인하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: [데일리 IT 뉴스] 2026. 7. 3 - ADBC CLI, 정처기 문제 정리"
+    "추천 제목: OpenAI가 Codex 전용 키보드를 만드는 이유"
   ],
   "source": "data/days/2026-07-03.json",
   "source_page": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-03.html",

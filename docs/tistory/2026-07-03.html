@@ -1,49 +1,54 @@
 <!--
-title: [데일리 IT 뉴스] 2026. 7. 3 - 오늘의 개발 뉴스와 정처기 문제
+title: OpenAI가 Codex 전용 키보드를 만드는 이유
 category: 데일리IT뉴스
 tags: AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트
 slug: 2026-07-03-daily-digest
 -->
-<article class="daily-digest-post" style="max-width:760px;margin:0 auto;padding:8px 0 28px;color:#334155;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.75;">
-  <section class="digest-hero" style="margin:0 0 28px;padding:28px 26px;border:1px solid #d9e0ea;border-radius:18px;background:linear-gradient(135deg,#f8fafc 0%,#eef6f5 52%,#fff7ed 100%);box-shadow:0 12px 34px rgba(24,33,47,.06);">
-    <p class="digest-meta-intro" style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.7;font-weight:700;">2026. 7. 3 데일리 IT 뉴스: ADBC CLI, OpenAI Codex Micro 핵심과 운영체제 문제, 개발 용어를 정리했습니다.</p>
-    <p class="digest-kicker" style="margin:0 0 10px;color:#0f9b8e;font-size:13px;font-weight:700;letter-spacing:.02em;">2026. 7. 3 (금) · 자동 생성 데일리 다이제스트</p>
-    <h2 class="digest-title" style="margin:0 0 14px;color:#18212f;font-size:30px;line-height:1.32;font-weight:800;">오늘의 IT/개발 읽을거리</h2>
-    <p class="digest-lead" style="margin:0;color:#475569;font-size:16px;line-height:1.75;">
-      오늘은 databow - ADBC로 데이터베이스를 조회하는 CLI 도구 / OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개 흐름을 중심으로 읽어볼 만한 소식을 정리했습니다.
-      본문은 핵심 내용 요약과 학습용 문제로 구성했으며, 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.
+<article class="daily-digest-post" style="max-width:720px;margin:0 auto;padding:8px 0 28px;color:#334155;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.82;">
+  <section class="digest-hero" style="margin:0 0 32px;padding:24px 0 26px;border-top:5px solid #0f766e;border-bottom:1px solid #d8e2e0;background:#fff;">
+    <p class="digest-kicker" style="margin:0 0 12px;color:#0f766e;font-size:13px;font-weight:800;letter-spacing:.02em;">2026. 7. 3 · 약 9분 · 도구가 손에 가까워지는 순간</p>
+    <h2 class="digest-title" style="margin:0 0 16px;color:#17211c;font-size:30px;line-height:1.32;font-weight:850;">AI 코딩도 결국 ‘자주 누르는 버튼’이 생겼다</h2>
+    <p class="digest-lead" style="margin:0;color:#46534d;font-size:17px;line-height:1.82;">
+      OpenAI가 예고한 Codex Micro는 AI 코딩이 채팅창을 넘어 물리 버튼으로 이동하는 장면을 보여줍니다. databow는 여러 데이터베이스를 하나의 CLI 흐름으로 다루게 합니다. 둘은 전혀 다른 제품처럼 보이지만, 반복 작업을 짧고 예측 가능한 인터페이스로 바꾼다는 공통점이 있습니다. 다만 티저 단계의 추정과 실제 공개 기능은 구분해서 봐야 합니다.
     </p>
   </section>
 
-  <section class="digest-summary" style="margin:0 0 28px;padding:20px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);">
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;margin-top:0;">오늘의 핵심 요약</h2>
-  <ul style="margin:0;padding-left:20px;color:#475569;line-height:1.75;"><li>오늘의 주요 뉴스: databow - ADBC로 데이터베이스를 조회하는 CLI 도구 / OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개</li><li>정처기 포인트: 운영체제 문제로 개념을 점검합니다.</li><li>함께 익힐 용어: 플랫폼 엔지니어링 (Platform Engineering), 데이터 레이크 (Data Lake), 싱글 사인온 (Single Sign-On, SSO)</li><li>읽는 순서: 뉴스 흐름을 먼저 보고, 마지막에 문제와 용어로 복습하면 좋습니다.</li></ul>
+  <section class="digest-summary" style="margin:0 0 30px;padding:20px 22px;border-left:4px solid #0f766e;background:#f4f8f6;">
+  <h2 style="margin:0 0 14px;color:#17211c;font-size:21px;line-height:1.4;font-weight:850;">먼저 보는 결론</h2>
+  <ul style="margin:0;padding-left:20px;color:#46534d;line-height:1.82;"><li><b>Codex Micro:</b> 확정된 제품 기능보다 AI 작업을 물리 단축키로 다루려는 방향이 흥미롭습니다.</li><li><b>databow:</b> ADBC를 이용해 SQL 실행과 결과 내보내기를 일관된 CLI로 묶습니다.</li><li><b>공통점:</b> 좋은 도구는 새로운 기능을 늘리기보다 반복 동작의 마찰을 줄입니다.</li></ul>
 </section>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;">오늘의 뉴스 3개</h2>
-  <section class="digest-news-card" style="margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);">
-  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-01.png" alt="" loading="lazy" style="display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;">
+  <section style="margin:0 0 34px;padding:0 0 26px;border-bottom:1px solid #d8e2e0;">
+    <h2 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.4;font-weight:850;">무엇이 사실이고 무엇이 추정인가</h2>
+    <p style="margin:0;color:#46534d;">Codex Micro는 티저에 등장한 형태와 공개일이 확인된 상태이고, 구체적인 버튼 기능·IDE 연동·커스터마이즈 범위는 정식 발표 전 추정입니다. 반면 databow는 지원 명령과 출력 형식이 공개된 실행 가능한 도구입니다. 기사에서 ‘보였다’와 ‘지원한다’를 구분하면 기대를 과장하지 않고 읽을 수 있습니다.</p>
+  </section>
+
+  <h2 style="margin:34px 0 16px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">오늘의 뉴스 2개</h2>
+  <section class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8e2e0;background:#fff;">
+  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-01.png" alt="ADBC로 여러 데이터베이스를 조회하는 databow CLI 화면" loading="lazy" style="display:block;width:100%;height:auto;max-height:360px;object-fit:cover;margin:0 0 18px;border-radius:4px;background:#f8fafc;">
   <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">1. GeekNews</p>
   <h3 style="margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;">databow - ADBC로 데이터베이스를 조회하는 CLI 도구</h3>
+  <p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.82;"><b>누가 써볼 만한가:</b> 여러 데이터베이스를 오가며 같은 형태로 조회·내보내기를 반복하는 사람에게 맞습니다. 단순 조회만 한다면 기존 클라이언트가 더 익숙할 수 있고, 대량 컬럼 분석에서 Arrow 형식을 그대로 이어갈 때 장점이 커집니다.</p>
   
   <div class="digest-full-content" style="margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"><h4 style="margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;">databow - ADBC로 데이터베이스를 조회하는 CLI 도구</h4><p style="margin:0 0 12px;color:#475569;line-height:1.78;">ADBC(Arrow Database Connectivity)를 통해 데이터베이스에 연결하고 SQL을 실행하는 커맨드라인 도구입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">호환되는 ADBC 드라이버가 있는 모든 데이터베이스에 연결할 수 있습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">명령 히스토리와 직관적인 네비게이션을 지원하는 대화형 SQL 셸을 제공하며, SQL 쿼리 하이라이팅 기능도 있습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">동적인 컬럼 너비로 깔끔하게 정렬된 테이블 형태로 결과를 표시하고, 쿼리 결과를 JSON, CSV, Arrow IPC 파일로 익스포트할 수 있습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">대화형 사용 외에도 `--query`로 쿼리를 직접 실행하거나, stdin 입력 또는 `--file`로 파일을 실행하고 `--output`으로 결과 파일을 저장하는 등 비대화형 사용도 지원합니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">Apache-2.0 라이선스로 Rust로 구현되었습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">ADBC(Arrow Database Connectivity)는 Apache Arrow 프로젝트의 하위 표준으로, 서로 다른 데이터베이스에서 Arrow 데이터를 넣고 빼기 위한 단일 API입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">JDBC/ODBC의 컬럼 지향 대안으로, 결과를 행(row) 단위가 아닌 컬럼 단위 Arrow 데이터로 반환합니다. 이는 대량 컬럼 분석 워크플로우에서 행 지향 형식으로 변환했다가 되돌리는 비용을 피할 수 있어 ODBC/JDBC 대비 효율적입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">2023년에 1.0.0이 발표되었고 현재 버전은 1.1.0입니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">지원하는 데이터베이스(드라이버)로는 공식적으로 PostgreSQL, SQLite, DuckDB, Snowflake, BigQuery, Flight SQL 지원 DB가 있으며, ADBC Driver Foundry 확장을 통해 Amazon Redshift, Apache DataFusion, Apache Spark, ClickHouse, Databricks, Exasol, Microsoft SQL Server도 지원합니다.</p></div>
   <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://news.hada.io/topic?id=31069" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;">원문 보기</a></p>
 </section>
-<section class="digest-news-card" style="margin:18px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(24,33,47,.055);">
-  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-02.png" alt="" loading="lazy" style="display:block;width:100%;max-height:270px;object-fit:cover;margin:0 0 16px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;">
+<section class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8e2e0;background:#fff;">
+  <img class="digest-news-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-03/news-02.png" alt="OpenAI가 티저로 공개한 Codex 전용 미니 키보드 Codex Micro" loading="lazy" style="display:block;width:100%;height:auto;max-height:360px;object-fit:cover;margin:0 0 18px;border-radius:4px;background:#f8fafc;">
   <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">2. GeekNews</p>
   <h3 style="margin:0 0 10px;color:#18212f;font-size:20px;line-height:1.45;font-weight:800;">OpenAI, Codex 전용 미니 키보드 ‘Codex Micro’ 티저 공개</h3>
+  <p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.82;"><b>왜 궁금한가:</b> AI 코딩에서 반복되는 승인·테스트·리뷰 동작이 물리 키로 고정되면 사용 습관도 달라집니다. 다만 현재 공개된 것은 티저이므로 구체적인 액션과 지원 IDE는 정식 발표 뒤 확인해야 합니다.</p>
   
   <div class="digest-full-content" style="margin:18px 0 0;padding:18px 0 0;border-top:1px solid #e2e8f0;"><p style="margin:0 0 12px;color:#475569;line-height:1.78;">OpenAI가 Codex 사용자를 위한 전용 하드웨어 Codex Micro를 예고했습니다. OpenAI Developers 계정에 올라온 티저에는 “Your favorite Codex shortcuts are getting an upgrade”라는 문구와 함께 작은 매크로패드 형태의 장치가 등장했으며, 정식 공개일은 2026년 7월 15일로 표시됐습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">이 제품은 일반 키보드라기보다는 Codex용 단축키 컨트롤러에 가까운 장치로 보입니다. 티저에 등장한 실루엣은 키보드·매크로패드 제조사 Work Louder의 Creator Micro 2와 유사하며, OpenAI와 Work Louder의 로고가 함께 노출됐습니다.</p><h4 style="margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;">주요 내용</h4><p style="margin:0 0 12px;color:#475569;line-height:1.78;">OpenAI가 Codex용 전용 입력 장치 Codex Micro를 티저 공개</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">정식 공개 예정일은 2026년 7월 15일</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">Work Louder와 협업한 제품으로 보이며, 기존 Creator Micro 2와 비슷한 매크로패드 형태</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">여러 개의 물리 버튼, 조이스틱/다이얼류 입력 장치를 활용해 Codex 관련 액션을 빠르게 실행하는 용도로 추정</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">OpenAI가 Jony Ive와 개발 중인 소비자용 AI 디바이스와는 별개의 제품</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">Figma가 Work Louder와 협업해 전용 매크로패드를 만든 사례처럼, 특정 소프트웨어 워크플로우에 맞춘 물리 인터페이스 전략으로 볼 수 있음</p><h4 style="margin:20px 0 8px;color:#18212f;font-size:17px;line-height:1.45;font-weight:800;">흥미로운 점</h4><p style="margin:0 0 12px;color:#475569;line-height:1.78;">Codex Micro는 “AI 코딩 도구를 위한 물리적 인터페이스”라는 점에서 의미가 있습니다. 지금까지 AI 코딩 에이전트는 IDE, 터미널, 웹 UI 안에서만 주로 사용됐지만, OpenAI가 자주 쓰는 Codex 액션을 별도 하드웨어 버튼으로 분리하려는 시도를 하고 있습니다.</p><p style="margin:0 0 12px;color:#475569;line-height:1.78;">개발자 입장에서는 단순한 굿즈가 아니라, Codex 호출·작업 승인·리팩터링·테스트 실행·PR 생성 같은 반복 작업을 물리 버튼에 매핑하는 장치가 될 가능성이 있습니다. 실제로 어느 정도까지 커스터마이즈가 가능한지, VS Code/Cursor/JetBrains 같은 IDE와 어떻게 연동되는지, 표준 HID 장치로 동작하는지는 아직 공개되지 않았습니다.</p></div>
   <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://news.hada.io/topic?id=31049" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#18212f;color:#fff;text-decoration:none;font-size:13px;font-weight:800;">원문 보기</a></p>
 </section>
 
-  <section class="digest-quiz" style="margin:30px 0;padding:24px 22px;border:1px solid #bddfd9;border-radius:18px;background:linear-gradient(135deg,#f8fafc,#effaf7);box-shadow:0 10px 28px rgba(15,155,142,.08);">
+  <section class="digest-quiz" style="margin:34px 0;padding:24px 22px;border:1px solid #bddfd9;background:#f4f8f6;">
   <p class="digest-source" style="display:inline-block;margin:0 0 10px;padding:4px 9px;border-radius:999px;background:#effaf7;color:#0f9b8e;font-size:12px;font-weight:800;">기초상식 · 운영체제</p>
   <h2 style="margin:34px 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:800;margin-top:0;">오늘의 정처기 문제</h2>
   <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">운영체제에서 메모리 단편화(Fragmentation) 문제를 해결하기 위한 기법으로 가장 거리가 먼 것은?</p>
-  <ol class="digest-options" style="margin:12px 0 14px;padding-left:22px;"><li class="digest-option" style="margin:0 0 8px;">페이징(Paging)</li><li class="digest-option" style="margin:0 0 8px;">세그멘테이션(Segmentation)</li><li class="digest-option" style="margin:0 0 8px;">메모리 압축(Compaction)</li><li class="digest-option is-answer" style="margin:0 0 8px;color:#0f9b8e;font-weight:800;">정답 · 가상 메모리(Virtual Memory)</li></ol>
-  <p class="digest-explain" style="margin:0;color:#475569;"><b>해설</b> 가상 메모리는 실제 물리 메모리보다 큰 메모리 공간을 사용할 수 있도록 하는 기법입니다. 이는 메모리 단편화 문제 해결보다는 메모리 확장 및 효율적인 사용에 중점을 둡니다. 페이징, 세그멘테이션, 메모리 압축은 모두 단편화 문제를 완화하거나 해결하는 데 기여하는 기법들입니다.</p>
+  <ul class="digest-options" style="margin:12px 0 16px;padding:0;list-style:none;"><li class="digest-option" style="margin:0 0 8px;"><b>1.</b> 페이징(Paging)</li><li class="digest-option" style="margin:0 0 8px;"><b>2.</b> 세그멘테이션(Segmentation)</li><li class="digest-option" style="margin:0 0 8px;"><b>3.</b> 메모리 압축(Compaction)</li><li class="digest-option" style="margin:0 0 8px;"><b>4.</b> 가상 메모리(Virtual Memory)</li></ul>
+  <details style="margin-top:12px;padding-top:12px;border-top:1px solid #bddfd9;"><summary style="cursor:pointer;color:#0f766e;font-weight:850;">정답과 해설 보기</summary><p class="digest-explain" style="margin:12px 0 0;color:#475569;"><b>정답 4번 · 가상 메모리</b><br>가상 메모리는 물리 메모리보다 큰 주소 공간을 제공하는 데 초점이 있습니다. 페이징·세그멘테이션·압축은 단편화의 종류를 바꾸거나 빈 공간을 모으는 방식으로 단편화 문제와 더 직접 관련됩니다.</p></details>
 </section>
 
   <section class="digest-terms">
@@ -63,8 +68,7 @@ slug: 2026-07-03-daily-digest
 </li></ul>
 </section>
 
-  <p class="digest-note" style="margin-top:34px;padding:16px 18px;border-left:4px solid #0f9b8e;border-radius:12px;background:#f8fafc;color:#64748b;font-size:14px;line-height:1.7;">
-    이 글은 공개 뉴스 페이지를 기반으로 자동 수집·요약한 학습용 다이제스트입니다.
-    수치, 정책, 제품 정보처럼 정확성이 중요한 내용은 반드시 원문을 함께 확인해 주세요.
+  <p class="digest-note" style="margin-top:34px;padding:16px 18px;border-left:4px solid #0f766e;background:#f8fafc;color:#64748b;font-size:14px;line-height:1.72;">
+    공개 원문을 바탕으로 확인된 사실과 제 해석을 분리해 정리했습니다. Codex Micro의 상세 기능은 티저 이후 바뀌거나 추가될 수 있으므로 정식 발표와 공식 문서를 다시 확인해 주세요.
   </p>
 </article>
