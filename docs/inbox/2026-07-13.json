@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T07:24:53.148940+00:00",
+  "generated_at": "2026-07-13T09:07:36.216079+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -1382,6 +1382,62 @@
       "topic_tags": []
     },
     {
+      "id": "f750f743883d",
+      "title": "Tiny Emulators - 작은 에뮬레이터 모음",
+      "normalized_title": "tiny emulators 작은 에뮬레이터 모음",
+      "url": "https://news.hada.io/topic?id=31395",
+      "published_at": "2026-07-13T08:37:23+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": []
+    },
+    {
+      "id": "71012f487996",
+      "title": "Show GN: 귀찮음이 만든 게시판 변경사항 추적기",
+      "normalized_title": "show gn 귀찮음이 만든 게시판 변경사항 추적기",
+      "url": "https://news.hada.io/topic?id=31394",
+      "published_at": "2026-07-13T07:49:28+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": []
+    },
+    {
       "id": "fe469a017416",
       "title": "Show GN: 온나라 리마스터 – 정부 온나라 문서시스템을 다크모드·가독성으로 바꾸는 크롬(엣지) 확장",
       "normalized_title": "show gn 온나라 리마스터 정부 온나라 문서시스템을 다크모드 가독성으로 바꾸는 크롬 엣지 확장",
@@ -1585,64 +1641,6 @@
       "normalized_title": "ghostel el libghostty 기반 emacs 터미널 에뮬레이터",
       "url": "https://news.hada.io/topic?id=31379",
       "published_at": "2026-07-13T01:07:24+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "7b506526e329",
-      "title": "LLM은 사랑하지만 과대광고는 싫다",
-      "normalized_title": "llm은 사랑하지만 과대광고는 싫다",
-      "url": "https://news.hada.io/topic?id=31378",
-      "published_at": "2026-07-13T01:04:24+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "c31669921177",
-      "title": "코드베이스를 완전히 이해하지 못해도 괜찮은 이유",
-      "normalized_title": "코드베이스를 완전히 이해하지 못해도 괜찮은 이유",
-      "url": "https://news.hada.io/topic?id=31377",
-      "published_at": "2026-07-13T01:02:23+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_name": "GeekNews",
