@@ -2,6 +2,8 @@ import copy
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stderr
+from io import StringIO
 from pathlib import Path
 
 from generate_daily_draft import (
@@ -15,6 +17,7 @@ from generate_daily_draft import (
     generate_and_write,
     load_history,
     gemini_model_candidates,
+    safe_model_failure,
     request_gemini_model,
     request_github_model,
     selected_fingerprint,
@@ -577,6 +580,14 @@ class GitHubModelsClientTests(unittest.TestCase):
 
 
 class GeminiClientTests(unittest.TestCase):
+    def test_quality_failures_are_explained_without_logging_arbitrary_errors(self):
+        quality = safe_model_failure(DraftQualityError("본문 문단이 너무 짧습니다."))
+        external = safe_model_failure(RuntimeError("secret response body"))
+
+        self.assertIn("본문 문단", quality)
+        self.assertEqual(external, "RuntimeError")
+        self.assertNotIn("secret response body", external)
+
     def test_builds_a_deduplicated_free_tier_text_model_fallback_chain(self):
         self.assertEqual(
             gemini_model_candidates("gemini-3.5-flash"),
@@ -679,20 +690,23 @@ class DraftFileTests(unittest.TestCase):
             inbox_path = root / "inbox.json"
             inbox_path.write_text(json.dumps(INBOX, ensure_ascii=False), encoding="utf-8")
 
-            result = generate_and_write(
-                inbox_path,
-                root / "days",
-                token="workflow-token",
-                fallback_on_error=True,
-                model_call=unavailable,
-                post_writer=lambda *_args, **_kwargs: None,
-            )
+            error_output = StringIO()
+            with redirect_stderr(error_output):
+                result = generate_and_write(
+                    inbox_path,
+                    root / "days",
+                    token="workflow-token",
+                    fallback_on_error=True,
+                    model_call=unavailable,
+                    post_writer=lambda *_args, **_kwargs: None,
+                )
 
             self.assertEqual(result["generation"]["provider"], "deterministic-fallback")
             self.assertEqual(len(result["quiz"]["options"]), 4)
             self.assertIn(result["quiz"]["answer"], range(4))
             saved_text = (root / "days" / "2026-07-13.json").read_text()
             self.assertNotIn("internal details", saved_text)
+            self.assertNotIn("internal details", error_output.getvalue())
 
     def test_article_context_failure_does_not_block_model_draft(self):
         seen_prompts = []

@@ -73,6 +73,13 @@ class DraftQualityError(ValueError):
     """Raised when a model response is valid JSON but too shallow to publish."""
 
 
+def safe_model_failure(exc):
+    """Expose our own quality reason, never an arbitrary provider response body."""
+    if isinstance(exc, DraftQualityError):
+        return "DraftQualityError: {}".format(_text(exc, 180))
+    return type(exc).__name__
+
+
 def _text(value, limit):
     text = " ".join(str(value or "").replace("\x00", " ").split())
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
@@ -1180,8 +1187,8 @@ def generate_and_write(
         if not fallback_on_error:
             raise
         print(
-            "모델 초안이 품질 기준을 통과하지 못해 최소 초안으로 전환: {}: {}".format(
-                type(exc).__name__, _text(exc, 240)
+            "모델 초안이 품질 기준을 통과하지 못해 최소 초안으로 전환: {}".format(
+                safe_model_failure(exc)
             ),
             file=sys.stderr,
         )
@@ -1290,7 +1297,7 @@ def main(argv=None):
                 except Exception as exc:
                     print(
                         "Gemini 텍스트 모델 {} 실패({}).".format(
-                            gemini_model, type(exc).__name__
+                            gemini_model, safe_model_failure(exc)
                         ),
                         file=sys.stderr,
                     )
