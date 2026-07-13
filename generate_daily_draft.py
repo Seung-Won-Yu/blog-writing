@@ -21,7 +21,7 @@ GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{mode
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 GEMINI_TEXT_FALLBACK_MODELS = ("gemini-3-flash-preview", "gemini-3.1-flash-lite")
-GENERATION_REVISION = 11
+GENERATION_REVISION = 12
 MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
@@ -51,7 +51,6 @@ AI_TONE_PHRASES = (
     "실무적 이점",
     "다각적인 검증",
     "함을 시사한다",
-    "함을 의미한다",
     "을 의미한다",
     "효율적으로 제어",
     "효율적인",
@@ -97,7 +96,6 @@ GENERIC_REWRITES = {
     **AI_TONE_REWRITES,
 }
 GENERIC_COPY = tuple(GENERIC_REWRITES)
-AI_TONE_COPY = tuple(AI_TONE_REWRITES) + AI_TONE_PHRASES
 AUTHOR_NOTE_AI_COPY = (
     "개발자 관점에서는",
     "파이프라인",
@@ -826,7 +824,11 @@ def _assert_draft_quality(day):
     combined = " ".join(str(value) for value in all_copy)
     if combined.count("개발자 관점에서는") > 1:
         raise DraftQualityError("반복되는 AI식 해석 표지문이 포함되어 있습니다.")
-    if any(phrase in combined for phrase in AI_TONE_COPY):
+    strong_ai_tone = any(phrase in combined for phrase in AI_TONE_REWRITES)
+    broad_ai_tone_hits = sum(
+        combined.count(phrase) for phrase in AI_TONE_PHRASES
+    )
+    if strong_ai_tone or broad_ai_tone_hits >= 2:
         raise DraftQualityError("보도자료·AI식 훈계 문체가 포함되어 있습니다.")
     if any(phrase in combined for phrase in GENERIC_COPY):
         raise DraftQualityError("막연한 요약 표현이 포함되어 있습니다.")

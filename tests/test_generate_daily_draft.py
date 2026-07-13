@@ -393,6 +393,16 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(DraftQualityError, "AI식"):
             build_day(INBOX, marketing)
 
+    def test_accepts_one_residual_editorial_word_after_stronger_checks(self):
+        single = copy.deepcopy(MODEL_OUTPUT)
+        single["news"][0]["content"][3]["text"] += (
+            " 이때 필요한 것은 필수적인 확인 항목을 하나 정하는 일이다."
+        )
+
+        day = build_day(INBOX, single)
+
+        self.assertEqual(day["generation"]["provider"], "github-models")
+
     def test_rejects_abstract_author_note_instead_of_a_personal_check(self):
         abstract = copy.deepcopy(MODEL_OUTPUT)
         abstract["news"][0]["author_note"] = (
