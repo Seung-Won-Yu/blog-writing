@@ -1,0 +1,100 @@
+{
+  "schema_version": 2,
+  "date_label": "2026. 7. 8",
+  "weekday": "수",
+  "visual": {
+    "subject": "코드 변경의 흐름",
+    "hook": "AI의 속도는 결국 칩에서 갈릴까?",
+    "motif": "hardware"
+  },
+  "editorial": {
+    "headline": "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
+    "opening": "오늘은 AI 시대에 취미가 곧 비즈니스 기회가 되는 이유와 Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기을 중심으로 개발 흐름을 살펴본다.",
+    "throughline": "",
+    "closing": "새 도구의 이름보다 내 작업에서 무엇이 달라지는지 확인하는 편이 오래 남는다.",
+    "action": "가장 관심 가는 기사 하나를 골라 내 작업에 적용할 지점을 한 줄로 적어보자."
+  },
+  "news": [
+    {
+      "title_kr": "AI 시대에 취미가 곧 비즈니스 기회가 되는 이유",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31207",
+      "published_at": "2026-07-08T00:00:00+09:00",
+      "audience_lane": "broad",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "LLM이 지식 노동을 평준화하면서 경쟁 우위는 '도메인 지식'으로 이동했습니다. 개인 맥락 데이터는 LLM 간에 쉽게 마이그레이션되므로 경쟁 우위가 될 수 없습니다. 진정한 방어력은 언어화하기 어려운 암묵지와 인간 의존도가 높은 분야에서 나옵니다. (예: Karrot=물리적 관계, Anduril=방산) 취미는 결과가 아니라 과정이 목적이며, 실행 주체가 '나'여야만 가치가 발생하는 체득형·물리적 활동입니다. 이는 휴머노이드/AI가 대체할 수 없습니다. 오히려 AI는 노동을 줄여 취미 시간을 늘려줍니다. '배우기 쉽지만 마스터하기 어려운' 구조이므로 진입 장벽을 낮추는 것이 곧 비즈니스 기회가 됩니다. AI가 보완재인 단계에서는 노동 시간이 오히려 늘어납니다(NBER에 따르면 주당 3.15시간 증가). 하지…",
+      "content": []
+    },
+    {
+      "title_kr": "Show GN: gh-attach – CLI로 GitHub 이슈/PR에 이미지, 파일 첨부하기",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31216",
+      "published_at": "2026-07-08T00:00:00+09:00",
+      "audience_lane": "practical",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "GitHub 이슈나 PR에 이미지를 첨부하려면 웹 UI에 직접 접속해서 업로드해야 했습니다. 첨부 파일 업로드를 지원하는 공식 API가 없기 때문입니다. gh-attach는 로컬 브라우저에 저장된 로그인 쿠키를 읽어 웹과 동일한 업로드 API를 호출하는 gh CLI 확장입니다. $ gh extension install sudosubin/gh-attach $ gh attach ./image.png -R owner/repo # https://github.com/user-attachments/assets/... Chrome, Firefox, Safari 등 주요 브라우저 쿠키 지원 (Profile/Container 지정 가능) 로그인된 GitHub 계정과 일치하는 세션을 자동 선택 --json, --jq, --…",
+      "content": []
+    },
+    {
+      "title_kr": "Show GN: 대본(YAML) 한 장이면 나레이션·자막·BGM 입힌 영상이 나오는 도구를 만들었습니다",
+      "source": "GeekNews",
+      "url": "https://news.hada.io/topic?id=31215",
+      "published_at": "2026-07-08T00:00:00+09:00",
+      "audience_lane": "deep",
+      "selection_reason": "과거 발행 글의 원문과 주제를 유지해 보강",
+      "blurb_kr": "영상 편집이 처음이라 한 편에 반나절씩 걸려서, 편집 과정을 코드로 자동화했습니다. 입력은 장면별로 narration / visual / callout을 적은 YAML 한 장이 전부입니다. python3 src/pipeline.py scenario.yaml config.yaml 한 줄이면 완성된 mp4가 나옵니다. 파이프라인 (Python): 대본 → TTS 나레이션 (say / Supertone / ElevenLabs 교체식, 결과 캐싱) 나레이션 길이에 맞춰 자막 타이밍 자동 배분, 내레이션=자막 동일 자막·콜아웃을 PNG로 렌더해 overlay (이 ffmpeg 빌드에 libass/drawtext가 없어 택한 방식 — 한글 외곽선·위치 픽셀 제어가 오히려 쉬움) 세로로 찍은 폰 영상은 배경 블러 패딩…",
+      "content": []
+    }
+  ],
+  "quiz": {
+    "category": "프로그래밍 언어 활용",
+    "question": "프로세스 스케줄링 방식 중 비선점 방식에 해당하는 것은?",
+    "options": [
+      "HRN",
+      "Round Robin",
+      "SRT",
+      "다단계 피드백 큐"
+    ],
+    "answer": 0,
+    "explain_kr": "HRN은 대기 시간과 서비스 시간을 이용해 우선순위를 정하는 비선점 스케줄링 방식입니다."
+  },
+  "terms": [],
+  "generation": {
+    "provider": "deterministic-fallback",
+    "revision": 13,
+    "input_fingerprint": "a3a3f63b6b4aeaca"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/cover.png",
+      "path": "docs/tistory/assets/2026-07-08/cover.png",
+      "alt": "2026. 7. 8 코드 변경의 흐름 - AI의 속도는 결국 칩에서 갈릴까? 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    "story_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-01.png",
+      "path": "docs/tistory/assets/2026-07-08/story-01.png",
+      "alt": "데이터 흐름 · 데이터 흐름: 원천 데이터 → 저장·분석 → 판단 근거 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-02.png",
+      "path": "docs/tistory/assets/2026-07-08/story-02.png",
+      "alt": "코딩 방식 · 코딩 방식: 작업 목표 → 에이전트 수행 → 사람의 검토 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    },
+    "story_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-08/story-03.png",
+      "path": "docs/tistory/assets/2026-07-08/story-03.png",
+      "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지",
+      "width": 1200,
+      "height": 630,
+      "style": "text-free-editorial-scene"
+    }
+  }
+}
