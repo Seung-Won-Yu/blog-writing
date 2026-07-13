@@ -7,7 +7,13 @@ from unittest.mock import patch
 
 from PIL import Image
 
-from generate_editorial_images import find_font, generate_editorial_images, generate_for_day
+from generate_editorial_images import (
+    find_font,
+    generate_editorial_images,
+    generate_for_day,
+    resolve_visual,
+)
+from visual_direction import VISUAL_MOTIFS
 
 
 DAY = {
@@ -45,6 +51,54 @@ DAY = {
 
 
 class EditorialImageTests(unittest.TestCase):
+    def test_legacy_day_resolves_short_hook_and_story_motifs_without_opening_copy(self):
+        visual = resolve_visual(DAY)
+
+        self.assertEqual(visual["motif"], "security")
+        self.assertEqual(visual["hook"], "자동화, 어디까지 믿어도 될까?")
+        self.assertNotEqual(visual["hook"], DAY["editorial"]["opening"])
+        self.assertEqual(len(visual["stories"]), 3)
+        self.assertEqual(visual["stories"][0]["label"], "자동화 보안")
+        self.assertTrue(all(len(item["label"]) <= 12 for item in visual["stories"]))
+
+    def test_story_motifs_prefer_each_title_before_supporting_summary(self):
+        day = {
+            "news": [
+                {"title_kr": "AI로 통신 산업 재편", "blurb_kr": "네트워크 운영 변화"},
+                {"title_kr": "AI 코딩 에이전트의 세션 관리", "blurb_kr": "세션 검색 도구"},
+                {"title_kr": "장기 과제를 위한 메모리 에이전트", "blurb_kr": "기억과 검색"},
+            ]
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(
+            [item["motif"] for item in visual["stories"]],
+            ["network", "agent", "memory"],
+        )
+
+    def test_every_supported_motif_renders_a_distinct_cover(self):
+        font_path = find_font()
+        hashes = set()
+        with tempfile.TemporaryDirectory() as directory:
+            for motif in sorted(VISUAL_MOTIFS):
+                day = {
+                    **DAY,
+                    "visual": {"hook": "기술의 다음 장면은 어디일까?", "motif": motif},
+                    "news": [dict(item) for item in DAY["news"]],
+                }
+                generate_editorial_images(
+                    "2026-07-13",
+                    day,
+                    directory,
+                    "https://blog.example/tistory/assets/",
+                    font_path=font_path,
+                )
+                cover = Path(directory, "2026-07-13", "cover.png")
+                hashes.add(hashlib.sha256(cover.read_bytes()).hexdigest())
+
+        self.assertEqual(len(hashes), len(VISUAL_MOTIFS))
+
     def test_generates_deterministic_cover_and_flow_pngs(self):
         font_path = find_font()
         self.assertTrue(Path(font_path).exists())
@@ -73,6 +127,8 @@ class EditorialImageTests(unittest.TestCase):
                 assets["cover"]["url"],
                 "https://blog.example/tistory/assets/2026-07-13/cover.png",
             )
+            self.assertIn("자동화, 어디까지 믿어도 될까?", assets["cover"]["alt"])
+            self.assertIn("자동화 보안", assets["flow"]["alt"])
             self.assertEqual(first_day["images"], assets)
 
             first_hash = hashlib.sha256(cover.read_bytes()).hexdigest()
