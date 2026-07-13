@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-13",
-  "generated_at": "2026-07-13T12:49:22.886882+00:00",
+  "generated_at": "2026-07-13T13:59:59.152155+00:00",
   "review_required": true,
   "selection": {
     "max_items": 3,
@@ -207,6 +207,37 @@
         "broad": 0,
         "practical": 4,
         "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ]
+    },
+    {
+      "id": "aa67bf587bd0",
+      "title": "Getting started with ChatGPT",
+      "normalized_title": "getting started with chatgpt",
+      "url": "https://openai.com/academy/getting-started",
+      "published_at": "2026-07-10T00:00:00+00:00",
+      "summary": "Learn how to use ChatGPT, start your first conversation, and discover simple ways to write, brainstorm, and solve problems with AI.",
+      "source_id": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
       },
       "topic_tags": [
         "ai"
@@ -932,36 +963,6 @@
       "url": "https://openai.com/index/how-chatgpt-adoption-has-expanded",
       "published_at": "2026-06-30T09:00:00+00:00",
       "summary": "New OpenAI Signals data shows how ChatGPT adoption is growing globally, with users increasing usage, exploring more capabilities, and driving growth across regions and languages.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
-      },
-      "requires_manual_review": false,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "f1f7d4f8001b",
-      "title": "Core dump epidemiology: fixing an 18-year-old bug",
-      "normalized_title": "core dump epidemiology fixing an 18 year old bug",
-      "url": "https://openai.com/index/core-dump-epidemiology-data-infrastructure-bug",
-      "published_at": "2026-06-30T00:00:00+00:00",
-      "summary": "OpenAI engineers used large-scale core dump analysis to debug rare infrastructure crashes, uncovering both a hardware fault and a long-standing software bug.",
       "source_id": "openai",
       "source_name": "OpenAI News",
       "group": "official",
