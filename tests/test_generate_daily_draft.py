@@ -404,6 +404,20 @@ class DayValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(DraftQualityError, "승원의 메모"):
             build_day(INBOX, abstract)
 
+    def test_accepts_a_concrete_author_check_without_a_fixed_keyword(self):
+        concrete = copy.deepcopy(MODEL_OUTPUT)
+        concrete["news"][0]["author_note"] = (
+            "이 소식에서 내가 먼저 볼 것은 공개 계정과 비공개 계정에서 보이는 동의 화면의 차이다. "
+            "같은 사진을 올렸을 때 자동 연동 안내가 어느 시점에 나타나는지 나란히 적어본다. "
+            "결과는 발행 전 메모 한 줄로 남긴다."
+        )
+
+        day = build_day(INBOX, concrete)
+
+        self.assertEqual(
+            day["news"][0]["author_note"], concrete["news"][0]["author_note"]
+        )
+
     def test_derives_a_missing_note_from_verification_but_rejects_fake_experience(self):
         missing = copy.deepcopy(MODEL_OUTPUT)
         missing["news"][0].pop("author_note")
