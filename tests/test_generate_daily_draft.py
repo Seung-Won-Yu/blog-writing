@@ -125,6 +125,7 @@ class PromptTests(unittest.TestCase):
         self.assertIn("빠진 정보의 이름", prompt)
         self.assertIn("구체적인 확인 방법", prompt)
         self.assertIn("차이와 긴장", prompt)
+        self.assertIn("10단어 이상 연속", prompt)
 
     def test_bounds_history_to_fit_free_tier_input_limit(self):
         history = {
@@ -267,6 +268,14 @@ class DayValidationTests(unittest.TestCase):
         generic["editorial"]["opening"] = "이 기술은 새로운 기회를 제공합니다."
         with self.assertRaises(DraftQualityError):
             build_day(INBOX, generic)
+
+    def test_rejects_verbatim_passages_from_the_source_material(self):
+        inbox = copy.deepcopy(INBOX)
+        copied = MODEL_OUTPUT["news"][0]["content"][1]["text"]
+        inbox["selected"][0]["summary"] = copied
+
+        with self.assertRaisesRegex(DraftQualityError, "원문 문장"):
+            build_day(inbox, MODEL_OUTPUT)
 
     def test_rejects_a_structured_draft_that_still_reads_under_six_minutes(self):
         short = copy.deepcopy(MODEL_OUTPUT)

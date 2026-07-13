@@ -81,6 +81,8 @@ class SourceConfigTests(unittest.TestCase):
             ["broad", "practical", "deep"],
         )
         self.assertEqual(config["selection"]["max_research_items"], 0)
+        self.assertTrue(config["selection"]["require_topic_coherence"])
+        self.assertEqual(config["selection"]["max_topic_items"]["ai"], 3)
         yozmit = next(source for source in enabled if source["id"] == "yozmit")
         self.assertTrue(yozmit.get("fallbacks"))
 

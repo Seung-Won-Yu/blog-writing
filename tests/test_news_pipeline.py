@@ -296,6 +296,79 @@ class SelectionTests(unittest.TestCase):
         self.assertEqual(sum("ai" in item["topic_tags"] for item in selected), 2)
         self.assertFalse(any(item["group"] == "research" for item in selected))
 
+    def test_topic_coherence_does_not_force_unrelated_lane_articles(self):
+        items = []
+
+        def candidate(title, source_id, score, lanes, topics=()):
+            item = make_candidate(
+                raw(title, f"https://{source_id}.example/{len(items)}"),
+                source(source_id, "official", weight=3),
+            )
+            item["score"] = score
+            item["lane_scores"] = lanes
+            item["topic_tags"] = list(topics)
+            items.append(item)
+
+        candidate(
+            "인스타 사진 AI 활용 중단",
+            "aitimes",
+            10,
+            {"broad": 5, "practical": 0, "deep": 0},
+            ("ai",),
+        )
+        candidate(
+            "GitHub pull request 대시보드 공개",
+            "github",
+            9,
+            {"broad": 0, "practical": 5, "deep": 1},
+        )
+        candidate(
+            "Postgres 19 그래프 쿼리 이해하기",
+            "postgres",
+            8,
+            {"broad": 0, "practical": 1, "deep": 5},
+        )
+
+        selected = select_candidates(
+            items,
+            max_items=3,
+            audience_lanes=["broad", "practical", "deep"],
+            require_topic_coherence=True,
+        )
+
+        self.assertEqual([item["source_id"] for item in selected], ["aitimes"])
+
+    def test_topic_coherence_keeps_related_general_and_developer_angles(self):
+        items = []
+
+        def candidate(title, source_id, lanes):
+            item = make_candidate(
+                raw(title, f"https://{source_id}.example/{len(items)}"),
+                source(source_id, "official", weight=3),
+            )
+            item["score"] = 10 - len(items)
+            item["lane_scores"] = lanes
+            item["topic_tags"] = ["ai"]
+            items.append(item)
+
+        candidate("인스타 사진 AI 활용 중단", "aitimes", {"broad": 5, "practical": 0, "deep": 0})
+        candidate("AI 코딩 도구 검증 기능", "tool", {"broad": 0, "practical": 5, "deep": 1})
+        candidate("AI 추론 비용의 구조", "deep", {"broad": 0, "practical": 1, "deep": 5})
+
+        selected = select_candidates(
+            items,
+            max_items=3,
+            audience_lanes=["broad", "practical", "deep"],
+            max_topic_items={"ai": 3},
+            require_topic_coherence=True,
+        )
+
+        self.assertEqual(
+            [item["audience_lane"] for item in selected],
+            ["broad", "practical", "deep"],
+        )
+        self.assertTrue(all("주제 연결" in item["selection_reason"] for item in selected[1:]))
+
 
 if __name__ == "__main__":
     unittest.main()
