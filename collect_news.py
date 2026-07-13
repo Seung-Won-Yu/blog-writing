@@ -1,12 +1,17 @@
 """Collect news candidates from RSS, Atom, and simple HTML source pages."""
 
+import argparse
 import datetime as dt
 import email.utils
+import json
 import re
-from html import unescape
+from html import escape, unescape
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.parse import urljoin
+from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
+from zoneinfo import ZoneInfo
 
 from news_pipeline import (
     canonicalize_url,
@@ -219,3 +224,186 @@ def build_inbox(config, fetch_text, now=None, day_id=None):
         "selected": selected,
         "errors": errors,
     }
+
+
+def _candidate_card(item, featured=False):
+    title = escape(str(item.get("title", "")))
+    url = escape(str(item.get("url", "")), quote=True)
+    summary = escape(str(item.get("summary", "")))
+    source = escape(str(item.get("source_name", "")))
+    group = escape(str(item.get("group", "other")))
+    score = escape(str(item.get("score", 0)))
+    reasons = " · ".join(escape(str(reason)) for reason in item.get("score_reasons", []))
+    review_badge = (
+        '<span class="badge badge-review">맥락 확인 필요</span>'
+        if item.get("requires_manual_review")
+        else ""
+    )
+    summary_html = '<p class="summary">{}</p>'.format(summary) if summary else ""
+    card_class = "card featured" if featured else "card"
+    return """
+      <article class="{card_class}">
+        <div class="meta"><span class="badge">{source}</span><span>{group}</span><span>점수 {score}</span>{review_badge}</div>
+        <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>
+        {summary_html}
+        <p class="reasons">{reasons}</p>
+      </article>""".format(
+        card_class=card_class,
+        source=source,
+        group=group,
+        score=score,
+        review_badge=review_badge,
+        url=url,
+        title=title,
+        summary_html=summary_html,
+        reasons=reasons,
+    )
+
+
+def render_inbox_html(inbox):
+    """Render a small editorial review page. External text is always escaped."""
+    selected = inbox.get("selected", [])
+    selected_ids = {item.get("id") for item in selected}
+    remaining = [
+        item for item in inbox.get("candidates", []) if item.get("id") not in selected_ids
+    ]
+    selected_html = "".join(_candidate_card(item, featured=True) for item in selected)
+    if not selected_html:
+        selected_html = '<p class="empty">추천 후보가 없습니다. 수집 오류를 확인해 주세요.</p>'
+    remaining_html = "".join(_candidate_card(item) for item in remaining)
+    if not remaining_html:
+        remaining_html = '<p class="empty">추가 후보가 없습니다.</p>'
+
+    errors = inbox.get("errors", [])
+    error_html = "".join(
+        "<li><strong>{}</strong> — {}</li>".format(
+            escape(str(error.get("source_id", ""))),
+            escape(str(error.get("message", ""))),
+        )
+        for error in errors
+    )
+    if not error_html:
+        error_html = "<li>모든 출처를 정상적으로 확인했습니다.</li>"
+
+    day = escape(str(inbox.get("day", "")))
+    generated_at = escape(str(inbox.get("generated_at", "")))
+    return """<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{day} 뉴스 후보함</title>
+  <style>
+    :root {{ color-scheme: light; --ink:#1f2933; --muted:#65717d; --line:#dfe4e8; --paper:#fff; --wash:#f5f6f4; --accent:#28684a; }}
+    * {{ box-sizing:border-box; }}
+    body {{ margin:0; color:var(--ink); background:var(--wash); font:15px/1.65 -apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif; }}
+    main {{ width:min(860px,calc(100% - 32px)); margin:0 auto; padding:56px 0 80px; }}
+    header {{ margin-bottom:36px; }}
+    h1 {{ margin:0 0 8px; font-size:clamp(28px,5vw,42px); letter-spacing:-.045em; }}
+    h2 {{ margin:44px 0 14px; font-size:20px; letter-spacing:-.025em; }}
+    h3 {{ margin:10px 0 6px; font-size:19px; line-height:1.45; letter-spacing:-.02em; }}
+    a {{ color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }}
+    .intro,.generated,.summary,.reasons,.empty {{ color:var(--muted); }}
+    .generated {{ font-size:12px; }}
+    .grid {{ display:grid; gap:12px; }}
+    .card {{ padding:20px 22px; background:var(--paper); border:1px solid var(--line); border-radius:12px; }}
+    .featured {{ border-left:4px solid var(--accent); }}
+    .meta {{ display:flex; flex-wrap:wrap; gap:7px 12px; align-items:center; color:var(--muted); font-size:12px; }}
+    .badge {{ color:var(--accent); font-weight:700; }}
+    .badge-review {{ padding:1px 7px; border:1px solid #d7a64a; border-radius:999px; color:#835a0a; }}
+    .summary,.reasons {{ margin:6px 0 0; }}
+    .reasons {{ font-size:12px; }}
+    .errors {{ padding:16px 20px 16px 38px; background:#fff; border:1px solid var(--line); border-radius:12px; color:var(--muted); }}
+    footer {{ margin-top:40px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="generated">{day} · 생성 {generated_at}</p>
+    <h1>뉴스 후보함</h1>
+    <p class="intro">자동 수집과 점수 계산까지만 했습니다. 원문을 읽고 내 관점 한두 문장을 더한 뒤 글감으로 사용하세요.</p>
+  </header>
+  <section>
+    <h2>오늘의 추천 {selected_count}건</h2>
+    <div class="grid">{selected_html}</div>
+  </section>
+  <section>
+    <h2>추가 후보 {remaining_count}건</h2>
+    <div class="grid">{remaining_html}</div>
+  </section>
+  <section>
+    <h2>수집 상태</h2>
+    <ul class="errors">{error_html}</ul>
+  </section>
+  <footer>후보함은 게시물이 아닙니다. 사실관계·출처·인용 범위를 확인한 뒤 직접 발행하세요.</footer>
+</main>
+</body>
+</html>
+""".format(
+        day=day,
+        generated_at=generated_at,
+        selected_count=len(selected),
+        selected_html=selected_html,
+        remaining_count=len(remaining),
+        remaining_html=remaining_html,
+        error_html=error_html,
+    )
+
+
+def write_inbox(inbox, output_dir):
+    output = Path(output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+    day = inbox["day"]
+    json_text = json.dumps(inbox, ensure_ascii=False, indent=2) + "\n"
+    html_text = render_inbox_html(inbox)
+
+    dated_json = output / "{}.json".format(day)
+    dated_html = output / "{}.html".format(day)
+    dated_json.write_text(json_text, encoding="utf-8")
+    dated_html.write_text(html_text, encoding="utf-8")
+    (output / "latest.json").write_text(json_text, encoding="utf-8")
+    (output / "index.html").write_text(html_text, encoding="utf-8")
+    return {"json": str(dated_json), "html": str(dated_html)}
+
+
+def fetch_url(url, timeout=20):
+    request = Request(
+        url,
+        headers={
+            "User-Agent": "blog-writing-news-review/1.0",
+            "Accept": "application/rss+xml, application/atom+xml, application/xml, text/html;q=0.9, */*;q=0.5",
+        },
+    )
+    with urlopen(request, timeout=timeout) as response:
+        charset = response.headers.get_content_charset() or "utf-8"
+        return response.read().decode(charset, errors="replace")
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="여러 출처의 뉴스 후보함을 생성합니다.")
+    day_group = parser.add_mutually_exclusive_group()
+    day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘 날짜 사용")
+    day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")
+    parser.add_argument("--config", default="config/news_sources.json")
+    parser.add_argument("--output-dir", default="docs/inbox")
+    args = parser.parse_args(argv)
+
+    config = json.loads(Path(args.config).read_text(encoding="utf-8"))
+    now = dt.datetime.now(ZoneInfo("Asia/Seoul"))
+    day_id = args.day or now.date().isoformat()
+    inbox = build_inbox(config, fetch_text=fetch_url, now=now, day_id=day_id)
+    paths = write_inbox(inbox, args.output_dir)
+    print(
+        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(
+            len(inbox["selected"]),
+            len(inbox["candidates"]),
+            len(inbox["errors"]),
+            paths["html"],
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

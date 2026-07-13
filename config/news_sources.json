@@ -1,0 +1,79 @@
+{
+  "max_items_per_source": 15,
+  "interest_keywords": [
+    "AI",
+    "에이전트",
+    "agent",
+    "개발자",
+    "developer",
+    "코딩",
+    "GitHub Actions",
+    "OpenAI",
+    "Claude",
+    "Gemini",
+    "Python",
+    "TypeScript",
+    "보안",
+    "자동화"
+  ],
+  "selection": {
+    "max_items": 3,
+    "max_per_source": 1,
+    "preferred_groups": [
+      "official",
+      "community",
+      "korean_editorial",
+      "research"
+    ]
+  },
+  "sources": [
+    {
+      "id": "geeknews",
+      "name": "GeekNews",
+      "group": "community",
+      "type": "rss",
+      "url": "https://news.hada.io/rss/news",
+      "weight": 3,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "yozmit",
+      "name": "요즘IT",
+      "group": "korean_editorial",
+      "type": "rss",
+      "url": "https://yozm.wishket.com/magazine/feed/",
+      "weight": 3,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI News",
+      "group": "official",
+      "type": "rss",
+      "url": "https://openai.com/news/rss.xml",
+      "weight": 5,
+      "enabled": true
+    },
+    {
+      "id": "github-changelog",
+      "name": "GitHub Changelog",
+      "group": "official",
+      "type": "rss",
+      "url": "https://github.blog/changelog/feed/",
+      "weight": 5,
+      "enabled": true
+    },
+    {
+      "id": "arxiv-ai",
+      "name": "arXiv cs.AI",
+      "group": "research",
+      "type": "atom",
+      "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=20",
+      "weight": 4,
+      "manual_review": true,
+      "enabled": true
+    }
+  ]
+}
