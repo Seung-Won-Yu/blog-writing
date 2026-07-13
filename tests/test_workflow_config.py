@@ -18,6 +18,13 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("models: read", workflow)
         self.assertIn("GITHUB_TOKEN: ${{ github.token }}", workflow)
         self.assertIn("git add docs data", workflow)
+        self.assertIn("description: '생성할 날짜", workflow)
+        self.assertIn("REQUESTED_DAY: ${{ inputs.day }}", workflow)
+        self.assertIn('python collect_news.py --day "$REQUESTED_DAY"', workflow)
+        self.assertIn(
+            'python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error',
+            workflow,
+        )
         self.assertIn("continue-on-error: true", workflow)
         self.assertNotIn("python pages_to_tistory.py --today", workflow)
         self.assertLess(workflow.index(collect_command), workflow.index(generate_command))

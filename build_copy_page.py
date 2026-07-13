@@ -36,6 +36,7 @@ def load_drafts():
                 "key_summary": meta.get("key_summary") or [],
                 "publish_checklist": meta.get("publish_checklist") or [],
                 "image_assets": meta.get("image_assets") or [],
+                "source": meta.get("source") or "",
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
                 "meta_path": f"tistory/{day}.json",
@@ -48,7 +49,7 @@ def render(drafts):
     payload = json.dumps(drafts, ensure_ascii=False)
     latest = drafts[0]["day"] if drafts else ""
     buttons = "\n".join(
-        f'<button class="draft-btn" type="button" data-day="{esc(item["day"])}">'
+        f'<button class="draft-btn" type="button" data-day="{esc(item["day"])}" aria-pressed="false">'
         f'<span>{esc(item["day"])}</span><small>{esc(item["title"])}</small></button>'
         for item in drafts
     )
@@ -63,15 +64,15 @@ def render(drafts):
       color-scheme: light;
       --ink: #111827;
       --muted: #64748b;
-      --line: #dbe5ee;
-      --soft: #f8fafc;
-      --accent: #0f9b8e;
-      --accent-weak: #e8f7f4;
+      --line: #d8dedb;
+      --soft: #f7f4ec;
+      --accent: #28745a;
+      --accent-weak: #eef4f0;
     }}
     * {{ box-sizing: border-box; }}
     body {{
       margin: 0;
-      background: #f5f7fb;
+      background: #f3f4f1;
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       line-height: 1.6;
@@ -85,9 +86,9 @@ def render(drafts):
       margin-bottom: 24px;
       padding: 26px 28px;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ffffff 0%, #f1faf8 64%, #fff7ed 100%);
-      box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07);
+      border-top: 4px solid var(--accent);
+      border-radius: 6px;
+      background: #ffffff;
     }}
     h1 {{
       margin: 0 0 8px;
@@ -116,7 +117,7 @@ def render(drafts):
       align-items: center;
       justify-content: center;
       padding: 0 16px;
-      border-radius: 12px;
+      border-radius: 6px;
       background: #111827;
       color: #ffffff;
       font-size: 14px;
@@ -125,7 +126,21 @@ def render(drafts):
       white-space: nowrap;
     }}
     .action-btn:hover {{
-      background: #0f9b8e;
+      background: var(--accent);
+    }}
+    .action-btn:focus-visible,
+    button:focus-visible,
+    textarea:focus-visible {{
+      outline: 3px solid #91c4b0;
+      outline-offset: 2px;
+    }}
+    .manual-help {{
+      margin: 18px 0 0;
+      padding: 13px 15px;
+      border-left: 3px solid #c99b43;
+      background: var(--soft);
+      color: #46534d;
+      font-size: 13px;
     }}
     .layout {{
       display: grid;
@@ -135,9 +150,8 @@ def render(drafts):
     }}
     .panel {{
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 6px;
       background: #ffffff;
-      box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
       overflow: hidden;
     }}
     .side-head, .main-head {{
@@ -222,8 +236,8 @@ def render(drafts):
       min-width: 0;
       padding: 15px;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border-radius: 6px;
+      background: #ffffff;
     }}
     .assist-card h2 {{
       margin: 0 0 10px;
@@ -354,6 +368,7 @@ def render(drafts):
       font-size: 13px;
       font-weight: 800;
     }}
+    .status[data-kind="error"] {{ color: #a33b2b; }}
     .empty {{
       padding: 28px;
       color: var(--muted);
@@ -377,10 +392,11 @@ def render(drafts):
       <div class="header-row">
         <div class="header-copy">
           <h1>티스토리 블로그 초안 복사</h1>
-          <p class="lead">조이한 데일리 뉴스룸에서 가져온 글을 티스토리 HTML 모드에 바로 붙여넣을 수 있게 보여줍니다.</p>
+          <p class="lead">직접 수집하고 정리한 뉴스 초안을 확인한 뒤 티스토리 HTML 모드에 붙여넣을 수 있습니다.</p>
         </div>
-        <a class="action-btn" href="{esc(WORKFLOW_URL)}" target="_blank" rel="noopener" title="GitHub Actions에서 Run workflow를 누르면 오늘 초안을 생성하고 복사 페이지 배포까지 실행합니다.">초안 수동 생성/배포</a>
+        <a class="action-btn" href="{esc(WORKFLOW_URL)}" target="_blank" rel="noopener" title="GitHub Actions에서 Run workflow를 눌러 오늘 또는 지정 날짜 초안을 생성합니다.">빠진 날짜 직접 생성</a>
       </div>
+      <p class="manual-help"><strong>자동화가 안 돌았나요?</strong> 위 버튼을 열고 <b>Run workflow</b>를 누르세요. 날짜를 비우면 오늘 초안을 만들고, 과거 글이 빠졌다면 <code>YYYY-MM-DD</code>를 입력하면 됩니다.</p>
     </header>
 
     <div class="layout">
@@ -397,7 +413,7 @@ def render(drafts):
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="copy" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="copy" type="button" data-copy="tags">복사</button></div>
             <div class="field"><span class="label">첫 문단/메타</span><span class="value long" id="metaDescription"></span><button class="copy" type="button" data-copy="meta">복사</button></div>
-            <div class="field"><span class="label">원본</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
+            <div class="field"><span class="label">데이터</span><span class="value" id="source"></span><button class="copy" type="button" data-copy="source">복사</button></div>
           </div>
 
           <section class="image-card" id="imageCard" hidden>
@@ -441,7 +457,7 @@ def render(drafts):
             <button class="copy secondary" type="button" data-copy="html">본문 HTML 복사</button>
           </div>
           <textarea id="htmlCode" spellcheck="false"></textarea>
-          <div class="status" id="status"></div>
+          <div class="status" id="status" role="status" aria-live="polite"></div>
         </div>
       </main>
     </div>
@@ -472,9 +488,12 @@ def render(drafts):
       status: document.getElementById("status"),
     }};
 
-    function setStatus(text) {{
+    function setStatus(text, kind = "success") {{
       els.status.textContent = text;
-      if (text) setTimeout(() => {{ if (els.status.textContent === text) els.status.textContent = ""; }}, 1800);
+      els.status.dataset.kind = kind;
+      if (text && kind !== "error") setTimeout(() => {{
+        if (els.status.textContent === text) els.status.textContent = "";
+      }}, 2200);
     }}
 
     function renderList(target, rows) {{
@@ -549,26 +568,38 @@ def render(drafts):
       if (!draft) return;
       current = draft;
       document.querySelectorAll(".draft-btn").forEach((button) => {{
-        button.classList.toggle("is-active", button.dataset.day === day);
+        const selected = button.dataset.day === day;
+        button.classList.toggle("is-active", selected);
+        button.setAttribute("aria-pressed", String(selected));
       }});
       els.title.textContent = draft.title || "";
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
       els.metaDescription.textContent = draft.meta_description || "";
-      els.source.textContent = draft.source_page || "";
+      els.source.textContent = draft.source || draft.source_page || "";
       renderList(els.titleCandidates, draft.title_candidates);
       renderList(els.keySummary, draft.key_summary);
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
       els.htmlCode.value = "불러오는 중...";
-      const response = await fetch(draft.html_path + "?v=" + Date.now());
-      currentHtml = await response.text();
-      els.htmlCode.value = currentHtml;
-      setStatus(day + " 초안을 불러왔습니다.");
+      try {{
+        const response = await fetch(draft.html_path + "?v=" + Date.now());
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        currentHtml = await response.text();
+        els.htmlCode.value = currentHtml;
+        setStatus(day + " 초안을 불러왔습니다.");
+      }} catch (error) {{
+        currentHtml = "";
+        els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
+        setStatus("초안을 불러오지 못했습니다. 직접 생성 후 다시 시도해 주세요.", "error");
+      }}
     }}
 
     async function copyText(text, label) {{
-      if (!text) return;
+      if (!text) {{
+        setStatus("복사할 내용이 없습니다.", "error");
+        return;
+      }}
       try {{
         await navigator.clipboard.writeText(text);
       }} catch (error) {{
@@ -598,7 +629,7 @@ def render(drafts):
       if (type === "checklist") copyText(numbered(current.publish_checklist), "체크리스트");
       if (type === "allMeta") copyText(operatingMemo(), "운영 정보");
       if (type === "coverUrl") copyText((current.image_assets || [])[0]?.url, "대표 이미지 URL");
-      if (type === "source") copyText(current.source_page, "원본 링크");
+      if (type === "source") copyText(current.source || current.source_page, "데이터 경로");
     }});
 
     if (latest) selectDraft(latest);

@@ -18,6 +18,18 @@ TRACKING_PARAMS = {
 }
 
 
+def validate_day_id(value):
+    """Return a strict YYYY-MM-DD value that is safe to use in output paths."""
+    text = str(value or "").strip()
+    try:
+        parsed = dt.date.fromisoformat(text)
+    except ValueError as exc:
+        raise ValueError("날짜는 YYYY-MM-DD 형식이어야 합니다.") from exc
+    if parsed.isoformat() != text:
+        raise ValueError("날짜는 YYYY-MM-DD 형식이어야 합니다.")
+    return text
+
+
 def canonicalize_url(url):
     value = str(url or "").strip()
     if not value:

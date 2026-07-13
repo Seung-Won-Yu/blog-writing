@@ -10,6 +10,8 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
+from news_pipeline import validate_day_id
+
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
@@ -370,7 +372,12 @@ def main(argv=None):
     parser.add_argument("--force", action="store_true", help="기존 정상 초안도 다시 생성")
     args = parser.parse_args(argv)
 
-    day_id = args.day or dt.datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+    try:
+        day_id = validate_day_id(
+            args.day or dt.datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
     inbox_path = Path(args.inbox or "docs/inbox/{}.json".format(day_id))
     output_path = Path(args.data_dir) / "{}.json".format(day_id)
 

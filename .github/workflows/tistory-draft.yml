@@ -17,7 +17,12 @@ on:
       - 'data/**'
   schedule:
     - cron: '28 22 * * *'  # 22:28 UTC = 07:28 KST
-  workflow_dispatch: {}     # 수동 실행
+  workflow_dispatch:
+    inputs:
+      day:
+        description: '생성할 날짜 (YYYY-MM-DD, 날짜를 비우면 오늘)'
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -41,17 +46,28 @@ jobs:
 
       - name: Collect today's news review inbox
         env:
+          REQUESTED_DAY: ${{ inputs.day }}
           TZ: Asia/Seoul
-        run: python collect_news.py --today
+        run: |
+          if [ -n "$REQUESTED_DAY" ]; then
+            python collect_news.py --day "$REQUESTED_DAY"
+          else
+            python collect_news.py --today
+          fi
 
       - name: Generate today's local Tistory draft
         id: daily_generation
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          REQUESTED_DAY: ${{ inputs.day }}
           TZ: Asia/Seoul
         run: |
-          python generate_daily_draft.py --today --fallback-on-error
+          if [ -n "$REQUESTED_DAY" ]; then
+            python generate_daily_draft.py --day "$REQUESTED_DAY" --fallback-on-error
+          else
+            python generate_daily_draft.py --today --fallback-on-error
+          fi
           python build_copy_page.py
 
       - name: Commit & push

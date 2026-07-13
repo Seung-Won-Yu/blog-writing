@@ -19,6 +19,7 @@ from news_pipeline import (
     make_candidate,
     score_candidate,
     select_candidates,
+    validate_day_id,
 )
 
 
@@ -403,7 +404,10 @@ def main(argv=None):
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
     now = dt.datetime.now(ZoneInfo("Asia/Seoul"))
-    day_id = args.day or now.date().isoformat()
+    try:
+        day_id = validate_day_id(args.day or now.date().isoformat())
+    except ValueError as exc:
+        parser.error(str(exc))
     inbox = build_inbox(config, fetch_text=fetch_url, now=now, day_id=day_id)
     paths = write_inbox(inbox, args.output_dir)
     print(

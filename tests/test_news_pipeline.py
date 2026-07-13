@@ -7,6 +7,7 @@ from news_pipeline import (
     make_candidate,
     score_candidate,
     select_candidates,
+    validate_day_id,
 )
 
 
@@ -39,6 +40,13 @@ class CanonicalUrlTests(unittest.TestCase):
         )
 
         self.assertEqual(value, "https://example.com/news/item?id=7")
+
+    def test_validates_strict_iso_day_ids_for_output_paths(self):
+        self.assertEqual(validate_day_id("2026-07-13"), "2026-07-13")
+        for invalid in ("../../main", "2026-7-13", "2026-02-30", ""):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    validate_day_id(invalid)
 
 
 class DeduplicationTests(unittest.TestCase):
