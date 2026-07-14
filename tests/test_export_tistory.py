@@ -417,6 +417,12 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         self.assertIn("font-size:15px !important", guide)
         self.assertIn("01&nbsp;·&nbsp;", guide)
         self.assertNotIn("width:28px", guide)
+        self.assertIn('role="list"', guide)
+        self.assertIn('role="listitem"', guide)
+        self.assertIn("text-indent:0 !important", guide)
+        self.assertIn("text-decoration:none !important", guide)
+        self.assertNotIn("<ol", guide)
+        self.assertNotIn("<li", guide)
 
     def test_terms_use_the_same_card_gutter_as_the_quiz(self):
         day = self.image_day()

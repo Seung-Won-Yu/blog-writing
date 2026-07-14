@@ -407,16 +407,18 @@ def build_reading_guide(news):
     rows = []
     for index, item in enumerate(news, 1):
         rows.append(
-            '<li style="margin:0;padding:7px 0;border-bottom:1px solid #edf0ee;'
-            'font-size:15px !important;line-height:1.6 !important;list-style:none;">'
-            f'<a href="#digest-news-{index}" style="color:#27332d;text-decoration:none;">'
-            f'<b style="color:#28745a;">{index:02d}&nbsp;·&nbsp;</b>'
-            f'{esc(item.get("title_kr"))}</a></li>'
+            '<div role="listitem" style="margin:0;padding:0;border-bottom:1px solid #edf0ee;">'
+            f'<a href="#digest-news-{index}" style="display:block !important;margin:0 !important;'
+            'padding:7px 0 !important;color:#27332d;font-size:15px !important;'
+            'line-height:1.6 !important;text-indent:0 !important;text-decoration:none !important;'
+            'border:0 !important;word-break:keep-all;overflow-wrap:anywhere;">'
+            f'<span style="color:#28745a;font-weight:800;">{index:02d}&nbsp;·&nbsp;</span>'
+            f'{esc(item.get("title_kr"))}</a></div>'
         )
     return f"""
 <nav class="digest-reading-guide" aria-label="글 순서"{style(READING_GUIDE_STYLE)}>
   <p style="margin:0 0 6px;color:#17211c;font-size:15px !important;line-height:1.5 !important;font-weight:850;">3분 미리보기</p>
-  <ol style="margin:0;padding:0;list-style:none;">{''.join(rows)}</ol>
+  <div role="list" style="margin:0;padding:0;">{''.join(rows)}</div>
 </nav>""".strip()
 
 
