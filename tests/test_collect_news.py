@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from collect_news import (
+from blog_pipeline.collection.collect_news import (
     build_inbox,
     load_recent_selected_urls,
     parse_feed,

@@ -10,7 +10,7 @@ import re
 from pathlib import Path
 from urllib.parse import urlparse
 
-from news_pipeline import normalize_title
+from blog_pipeline.collection.news_pipeline import normalize_title
 
 
 CARD_PATTERN = re.compile(

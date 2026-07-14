@@ -1,7 +1,7 @@
 import datetime as dt
 import unittest
 
-from news_pipeline import (
+from blog_pipeline.collection.news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
     make_candidate,

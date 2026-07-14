@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
 
-from news_pipeline import (
+from .news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
     make_candidate,

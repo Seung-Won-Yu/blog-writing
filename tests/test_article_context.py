@@ -1,7 +1,7 @@
 import unittest
 from urllib.request import Request
 
-from article_context import (
+from blog_pipeline.legacy.article_context import (
     _SafeRedirectHandler,
     collect_article_contexts,
     collect_runtime_feed_contexts,

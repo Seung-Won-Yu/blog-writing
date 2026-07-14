@@ -11,8 +11,8 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from zoneinfo import ZoneInfo
 
-from collect_news import parse_feed
-from news_pipeline import canonicalize_url
+from blog_pipeline.collection.collect_news import parse_feed
+from blog_pipeline.collection.news_pipeline import canonicalize_url
 
 
 DEFAULT_MAX_BYTES = 786_432

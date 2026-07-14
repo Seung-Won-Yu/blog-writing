@@ -19,11 +19,11 @@ from urllib.request import Request, urlopen
 
 from PIL import Image, ImageOps
 
-from generate_editorial_images import _atomic_write_json
-from news_pipeline import validate_day_id
+from blog_pipeline.collection.news_pipeline import validate_day_id
+from blog_pipeline.publishing.generate_editorial_images import _atomic_write_json
 
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parents[2]
 DEFAULT_DAYS_DIR = HERE / "data" / "days"
 DEFAULT_OUTPUT_DIR = HERE / "docs" / "tistory" / "assets"
 DEFAULT_PUBLIC_BASE_URL = "https://seung-won-yu.github.io/blog-writing/tistory/assets/"
@@ -246,7 +246,7 @@ def generate_for_day(
         model=model,
     )
     _atomic_write_json(day_path, day)
-    from export_tistory import write_post
+    from blog_pipeline.publishing.export_tistory import write_post
 
     write_post(day_id, day=day)
     return assets

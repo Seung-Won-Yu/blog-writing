@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from restore_review_inbox import restore_review_inbox
+from blog_pipeline.legacy.restore_review_inbox import restore_review_inbox
 
 
 LEGACY_HTML = """

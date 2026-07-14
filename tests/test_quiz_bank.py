@@ -1,6 +1,6 @@
 import unittest
 
-from quiz_bank import QUIZ_BANK, select_quiz
+from blog_pipeline.publishing.quiz_bank import QUIZ_BANK, select_quiz
 
 
 class QuizBankTests(unittest.TestCase):

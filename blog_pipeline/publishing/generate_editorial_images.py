@@ -15,8 +15,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from news_pipeline import validate_day_id
-from visual_direction import (
+from blog_pipeline.collection.news_pipeline import validate_day_id
+from .visual_direction import (
     VISUAL_LABELS,
     motif_for_text,
     scene_for_text,
@@ -26,7 +26,7 @@ from visual_direction import (
 )
 
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parents[2]
 DEFAULT_DAYS_DIR = HERE / "data" / "days"
 DEFAULT_OUTPUT_DIR = HERE / "docs" / "tistory" / "assets"
 DEFAULT_PUBLIC_BASE_URL = (
@@ -1353,7 +1353,7 @@ def generate_for_day(
     _atomic_write_json(day_path, day)
 
     # Imported lazily so the pure image generator remains reusable in tests.
-    from export_tistory import write_post
+    from .export_tistory import write_post
 
     write_post(day_id, day=day)
     return assets

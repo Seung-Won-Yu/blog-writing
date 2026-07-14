@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from collect_news import render_inbox_html, write_inbox
+from blog_pipeline.collection.collect_news import render_inbox_html, write_inbox
 
 
 class ReviewInboxTests(unittest.TestCase):

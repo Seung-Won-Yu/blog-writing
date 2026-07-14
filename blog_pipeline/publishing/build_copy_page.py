@@ -5,12 +5,14 @@ import json
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 DOCS_DIR = ROOT / "docs"
 TISTORY_DIR = DOCS_DIR / "tistory"
 PREVIEW_DIR = DOCS_DIR / "preview"
 OUT_PATH = DOCS_DIR / "index.html"
-WORKFLOW_URL = "https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/tistory-draft.yml"
+EDITOR_GUIDE_URL = (
+    "https://github.com/Seung-Won-Yu/blog-writing/blob/main/agent/DAILY_EDITOR.md"
+)
 
 
 def esc(value):
@@ -493,9 +495,9 @@ def render(drafts):
           <h1>티스토리 블로그 초안 복사</h1>
           <p class="lead">직접 수집하고 정리한 뉴스 초안을 확인한 뒤 티스토리 HTML 모드에 붙여넣을 수 있습니다.</p>
         </div>
-        <a class="action-btn" href="{esc(WORKFLOW_URL)}" target="_blank" rel="noopener" title="GitHub Actions에서 Run workflow를 눌러 오늘 또는 지정 날짜 초안을 생성합니다.">빠진 날짜 직접 생성</a>
+        <a class="action-btn" href="{esc(EDITOR_GUIDE_URL)}" target="_blank" rel="noopener">수동 작성 방법</a>
       </div>
-      <p class="manual-help"><strong>자동화가 안 돌았나요?</strong> 위 버튼을 열고 <b>Run workflow</b>를 누르세요. 날짜를 비우면 오늘 초안을 만들고, 과거 글이 빠졌다면 <code>YYYY-MM-DD</code>를 입력하면 됩니다.</p>
+      <p class="manual-help"><strong>자동 작업이 빠졌나요?</strong> Codex에서 이 저장소를 열고 <b>“오늘 뉴스 작성”</b>이라고 요청하세요. Python 수집부터 원문 확인, 글 작성, 미리보기와 Git 업로드까지 같은 편집 기준으로 진행됩니다.</p>
     </header>
 
     <div class="layout">
@@ -771,8 +773,8 @@ def render(drafts):
       }} catch (error) {{
         currentBaseHtml = "";
         updateCopyState();
-        els.htmlCode.value = "초안을 불러오지 못했습니다. 직접 생성 버튼으로 다시 만든 뒤 새로고침해 주세요.";
-        setStatus("초안을 불러오지 못했습니다. 직접 생성 후 다시 시도해 주세요.", "error");
+        els.htmlCode.value = "초안을 불러오지 못했습니다. Codex에서 오늘 뉴스 작성을 요청한 뒤 새로고침해 주세요.";
+        setStatus("초안을 불러오지 못했습니다. Codex 작성 후 다시 시도해 주세요.", "error");
       }}
     }}
 

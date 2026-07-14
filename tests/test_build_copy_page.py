@@ -4,7 +4,12 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from build_copy_page import json_for_script, load_drafts, render, write_preview_pages
+from blog_pipeline.publishing.build_copy_page import (
+    json_for_script,
+    load_drafts,
+    render,
+    write_preview_pages,
+)
 
 
 class CopyPageTests(unittest.TestCase):
@@ -23,20 +28,22 @@ class CopyPageTests(unittest.TestCase):
                 )
             (days / "2026-07-13.json").write_text("{}", encoding="utf-8")
 
-            with patch("build_copy_page.ROOT", root), patch(
-                "build_copy_page.TISTORY_DIR", tistory
+            with patch("blog_pipeline.publishing.build_copy_page.ROOT", root), patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
             ):
                 drafts = load_drafts()
 
         self.assertEqual([item["day"] for item in drafts], ["2026-07-13"])
 
-    def test_explains_manual_generation_without_upstream_copy(self):
+    def test_explains_manual_codex_generation_without_github_model_runner(self):
         html = render([])
 
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
-        self.assertIn("빠진 날짜 직접 생성", html)
-        self.assertIn("날짜를 비우면 오늘", html)
-        self.assertIn("Run workflow", html)
+        self.assertIn("수동 작성 방법", html)
+        self.assertIn("Codex에서", html)
+        self.assertIn("오늘 뉴스 작성", html)
+        self.assertNotIn("Run workflow", html)
+        self.assertNotIn("tistory-draft.yml", html)
         self.assertNotIn("조이한", html)
         self.assertIn('role="status"', html)
         self.assertIn('aria-live="polite"', html)
@@ -115,8 +122,8 @@ class CopyPageTests(unittest.TestCase):
             )
             (days / "2026-07-13.json").write_text("{}", encoding="utf-8")
 
-            with patch("build_copy_page.ROOT", root), patch(
-                "build_copy_page.TISTORY_DIR", tistory
+            with patch("blog_pipeline.publishing.build_copy_page.ROOT", root), patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
             ):
                 draft = load_drafts()[0]
 
@@ -190,8 +197,10 @@ class CopyPageTests(unittest.TestCase):
                 }
             ]
 
-            with patch("build_copy_page.TISTORY_DIR", tistory), patch(
-                "build_copy_page.PREVIEW_DIR", preview
+            with patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ), patch(
+                "blog_pipeline.publishing.build_copy_page.PREVIEW_DIR", preview
             ):
                 write_preview_pages(drafts)
 

@@ -22,7 +22,7 @@ import os
 import re
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
 OUT_DIR = HERE / "docs" / "tistory"
 
@@ -544,16 +544,21 @@ def build_closing_section(editorial):
     action = plain(editorial.get("action"))
     if not closing and not action:
         return ""
+    closing_html = (
+        '<p style="margin:0;color:#35433c;font-size:17px;line-height:1.82;">'
+        f"{esc(closing)}</p>"
+        if closing
+        else ""
+    )
     action_html = (
-        f'<div class="digest-action"{style(ACTION_STYLE)}><b>오늘 해볼 것</b><br>{esc(action)}</div>'
+        f'<div class="digest-action"{style(ACTION_STYLE)}>'
+        f"<b>직접 확인해보려면</b><br>{esc(action)}</div>"
         if action
         else ""
     )
     return f"""
 <section class="digest-closing"{style(CLOSING_STYLE)}>
-  <p{style(KICKER_STYLE)}>CLOSING NOTE</p>
-  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 메모</h2>
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.82;">{esc(closing)}</p>
+  {closing_html}
   {action_html}
 </section>""".strip()
 

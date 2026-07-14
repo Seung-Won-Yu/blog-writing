@@ -7,7 +7,7 @@ from io import StringIO
 from pathlib import Path
 from urllib.error import HTTPError
 
-from generate_daily_draft import (
+from blog_pipeline.legacy.generate_daily_draft import (
     DraftQualityError,
     GENERATION_REVISION,
     MAX_PROMPT_INPUT_TOKENS,

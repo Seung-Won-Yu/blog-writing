@@ -7,7 +7,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from generate_gemini_images import (
+from blog_pipeline.legacy.generate_gemini_images import (
     DEFAULT_GEMINI_IMAGE_MODEL,
     build_image_jobs,
     generate_gemini_images,

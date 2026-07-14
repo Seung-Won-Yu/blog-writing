@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from export_tistory import (
+from blog_pipeline.publishing.export_tistory import (
     build_key_summary,
     build_meta_description,
     build_publish_checklist,
@@ -154,7 +154,9 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘의 뉴스 1개", html)
         self.assertIn('class="digest-closing"', html)
-        self.assertIn("오늘 해볼 것", html)
+        self.assertIn("직접 확인해보려면", html)
+        self.assertNotIn("CLOSING NOTE", html)
+        self.assertNotIn("오늘의 메모", html)
         self.assertIn("적용 지점을 한 줄", html)
         self.assertNotIn("linear-gradient", html)
         self.assertNotIn("box-shadow", html)
@@ -347,7 +349,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
-            with patch("export_tistory.OUT_DIR", Path(directory)):
+            with patch("blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)):
                 write_post("2026-07-13", day=self.image_day())
 
             meta = json.loads(Path(directory, "2026-07-13.json").read_text(encoding="utf-8"))
@@ -366,7 +368,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
 
     def test_marks_only_model_generated_drafts_ready_for_human_review(self):
         with tempfile.TemporaryDirectory() as directory:
-            with patch("export_tistory.OUT_DIR", Path(directory)):
+            with patch("blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)):
                 write_post("2026-07-13", day=FALLBACK_DAY)
                 fallback_meta = json.loads(
                     Path(directory, "2026-07-13.json").read_text(encoding="utf-8")
@@ -391,7 +393,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         legacy_day = dict(FALLBACK_DAY)
         legacy_day["generation"] = {"provider": "github-models", "revision": 4}
         with tempfile.TemporaryDirectory() as directory:
-            with patch("export_tistory.OUT_DIR", Path(directory)):
+            with patch("blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)):
                 write_post("2026-07-12", day=legacy_day)
             legacy_meta = json.loads(
                 Path(directory, "2026-07-12.json").read_text(encoding="utf-8")

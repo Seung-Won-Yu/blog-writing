@@ -1,6 +1,6 @@
 import unittest
 
-from visual_direction import (
+from blog_pipeline.publishing.visual_direction import (
     VISUAL_MOTIFS,
     fallback_visual,
     motif_for_text,

@@ -12,9 +12,9 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
-from news_pipeline import validate_day_id
-from quiz_bank import select_quiz
-from visual_direction import fallback_visual
+from blog_pipeline.collection.news_pipeline import validate_day_id
+from blog_pipeline.publishing.quiz_bank import select_quiz
+from blog_pipeline.publishing.visual_direction import fallback_visual
 
 
 MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
@@ -27,7 +27,9 @@ MAX_PROMPT_INPUT_TOKENS = 7_600
 MAX_RETRY_INPUT_TOKENS = 7_800
 MIN_LONGFORM_READ_MINUTES = 7
 NEWS_HEADINGS = ("무슨 일이 있었나", "왜 우리에게 중요한가", "직접 확인할 점")
-PERSONA_PATH = Path(__file__).resolve().parent / "config" / "editorial_persona.json"
+PERSONA_PATH = (
+    Path(__file__).resolve().parents[2] / "config" / "editorial_persona.json"
+)
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]
 QUIZ_CATEGORIES = {
     "소프트웨어 설계",
@@ -1252,7 +1254,7 @@ def generate_and_write(
     temporary_path.replace(output_path)
 
     if post_writer is None:
-        from export_tistory import write_post
+        from blog_pipeline.publishing.export_tistory import write_post
 
         post_writer = write_post
     post_writer(inbox["day"], day=day, source_page=None)
@@ -1309,14 +1311,14 @@ def main(argv=None):
             provider=preferred_provider,
             model=preferred_model,
         ):
-            from export_tistory import write_post
+            from blog_pipeline.publishing.export_tistory import write_post
 
             write_post(day_id, day=existing, source_page=None)
             print("이미 생성된 자체 초안 사용: {}".format(output_path))
             return 0
 
     try:
-        from article_context import (
+        from blog_pipeline.legacy.article_context import (
             collect_article_contexts,
             collect_runtime_feed_contexts,
         )

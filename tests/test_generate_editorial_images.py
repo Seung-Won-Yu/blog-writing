@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from PIL import Image, ImageChops, ImageDraw
 
-from generate_editorial_images import (
+from blog_pipeline.publishing.generate_editorial_images import (
     _arrow,
     draw_scene,
     find_font,
@@ -15,7 +15,7 @@ from generate_editorial_images import (
     generate_for_day,
     resolve_visual,
 )
-from visual_direction import VISUAL_MOTIFS
+from blog_pipeline.publishing.visual_direction import VISUAL_MOTIFS
 
 
 DAY = {
@@ -303,7 +303,9 @@ class EditorialImageTests(unittest.TestCase):
             day_path = days_dir / "2026-07-13.json"
             day_path.write_text(json.dumps(DAY, ensure_ascii=False), encoding="utf-8")
 
-            with patch("export_tistory.write_post") as write_post:
+            with patch(
+                "blog_pipeline.publishing.export_tistory.write_post"
+            ) as write_post:
                 assets = generate_for_day(
                     "2026-07-13",
                     days_dir=days_dir,
