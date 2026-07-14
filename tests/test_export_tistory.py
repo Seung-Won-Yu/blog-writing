@@ -59,6 +59,12 @@ class OptionalLearningSectionsTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_uses_plain_recording_voice_in_the_intro_note(self):
+        html = render_post("2026-07-13", FALLBACK_DAY)
+
+        self.assertIn("세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.", html)
+        self.assertNotIn("권장합니다", html)
+
     def test_renders_an_in_page_reading_guide_and_source_based_author_note(self):
         day = dict(FALLBACK_DAY)
         day["news"] = [

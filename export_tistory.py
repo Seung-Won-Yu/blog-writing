@@ -589,14 +589,17 @@ def render_post(day_id, day):
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     headline = post_title(day)
-    composition = "확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했으며"
+    composition = (
+        "확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했다. "
+        "세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다."
+    )
 
     return f"""<article class="daily-digest-post"{style(POST_SHELL_STYLE)}>
   <section class="digest-hero"{style(HERO_STYLE)}>
     <p class="digest-kicker"{style(KICKER_STYLE)}>{esc(date_text)} · 약 {estimate_read_minutes(day)}분 · 하루 한 시간 개발 기록</p>
     <h2 class="digest-title"{style(TITLE_STYLE)}>{esc(headline)}</h2>
     <p class="digest-lead"{style(LEAD_STYLE)}>{esc(lead)}</p>
-    <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(composition)} 세부 내용은 각 원문 링크에서 확인하는 것을 권장합니다.</p>
+    <p class="digest-meta-intro"{style(META_INTRO_STYLE)}>{esc(composition)}</p>
   </section>
 
   {build_editorial_image(images.get("cover"), "cover")}
