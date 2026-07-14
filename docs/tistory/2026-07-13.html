@@ -1,55 +1,55 @@
-<article class="daily-digest-post editorial-post" style="max-width:720px !important;margin:0 auto;padding:12px clamp(18px,4vw,28px) 36px !important;box-sizing:border-box;color:#303942;font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;">
-<p style="margin:0 0 24px;color:#46534d;font-size:17px;line-height:1.82;" data-ke-size="size18"><b>러닝 대회는 한 번 참가하려면 일정과 장소를 맞춰야 하고 비용도 적지 않습니다.</b> 한 1인 개발자는 이 불편을 그냥 넘기지 않고, 등록된 코스를 원하는 시간에 달리며 기록을 겨룰 수 있는 무료 러닝앱 <b>LLRUN</b>을 만들었습니다. 기능 목록보다 더 흥미로운 건 &ldquo;대회가 꼭 같은 날 열려야 할까?&rdquo;라는 질문에서 제품이 시작됐다는 점입니다.</p>
-<figure style="margin: 28px 0 34px;"><img style="display: block; width: 100%; height: auto; border-radius: 12px;" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png" alt="러닝앱 LLRUN 소개 화면과 GPS 경로 기능" />
-<figcaption style="margin-top: 10px; color: #64748b; font-size: 13px; line-height: 1.6;">LLRUN은 코스 기록 경쟁, GPS 경로 재생, 아트런, 크루 기능을 한 앱에 묶었습니다. 이미지 속 제품 화면은 개발자가 공개한 소개 페이지를 바탕으로 구성됐습니다.</figcaption>
+<article class="daily-digest-post editorial-post" data-digest-version="2">
+<p data-ke-size="size18"><b>러닝 대회는 한 번 참가하려면 일정과 장소를 맞춰야 하고 비용도 적지 않습니다.</b> 한 1인 개발자는 이 불편을 그냥 넘기지 않고, 등록된 코스를 원하는 시간에 달리며 기록을 겨룰 수 있는 무료 러닝앱 <b>LLRUN</b>을 만들었습니다. 기능 목록보다 더 흥미로운 건 &ldquo;대회가 꼭 같은 날 열려야 할까?&rdquo;라는 질문에서 제품이 시작됐다는 점입니다.</p>
+<figure><img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png" alt="러닝앱 LLRUN 소개 화면과 GPS 경로 기능" />
+<figcaption>LLRUN은 코스 기록 경쟁, GPS 경로 재생, 아트런, 크루 기능을 한 앱에 묶었습니다. 이미지 속 제품 화면은 개발자가 공개한 소개 페이지를 바탕으로 구성됐습니다.</figcaption>
 </figure>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">먼저 핵심만 보면</h2>
-<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<h2 data-ke-size="size26">먼저 핵심만 보면</h2>
+<ul data-ke-list-type="disc">
 <li><b>문제:</b> 오프라인 러닝 대회는 신청 경쟁, 정해진 일정, 참가비라는 장벽이 있습니다.</li>
 <li><b>해결:</b> 등록된 코스를 각자 원하는 시간에 달리고 개인 기록과 코스 순위를 비교합니다.</li>
 <li><b>차별점:</b> 기록만 쌓는 대신 3D 경로 영상, 지도에 그림을 그리는 아트런, 크루 대항전으로 다시 달릴 이유를 만듭니다.</li>
 <li><b>기술:</b> React 18&middot;Capacitor, MapLibre GL, Spring Boot를 사용했고 Android 걸음 수는 TYPE_STEP_COUNTER와 포그라운드 서비스로 처리했다고 개발자가 밝혔습니다.</li>
 </ul>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">왜 또 하나의 러닝앱을 만들었을까</h2>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">이미 러닝 기록 앱은 많습니다. 그래서 &ldquo;GPS를 기록한다&rdquo;만으로는 새 앱을 설치할 이유가 약합니다. LLRUN이 잡은 문제는 기록 자체가 아니라 <b>대회 경험의 접근성</b>입니다. 원문에서 개발자는 선착순 마감과 10만~15만원 수준의 참가비가 답답해 직접 만들었다고 설명합니다.</p>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">이 출발점은 1인 개발에서 특히 중요합니다. 거대한 시장 전체를 상대하기보다, 사용자가 반복해서 겪는 한 장면을 정확히 고르면 작은 제품도 설명이 쉬워집니다. &ldquo;모든 운동을 관리하는 앱&rdquo;보다 &ldquo;오늘 혼자 달려도 대회처럼 기록을 겨루는 앱&rdquo;이 훨씬 선명합니다.</p>
-<blockquote style="margin: 26px 0; padding: 18px 20px; border-left: 4px solid #0f766e; background: #f8fafc; color: #334155;" data-ke-style="style1">
-<p style="margin: 0;" data-ke-size="size16"><b>제가 보는 핵심:</b> LLRUN의 경쟁력은 기능 수보다 시간과 장소를 분리해 대회 경험을 다시 설계한 데 있습니다.</p>
+<h2 data-ke-size="size26">왜 또 하나의 러닝앱을 만들었을까</h2>
+<p data-ke-size="size16">이미 러닝 기록 앱은 많습니다. 그래서 &ldquo;GPS를 기록한다&rdquo;만으로는 새 앱을 설치할 이유가 약합니다. LLRUN이 잡은 문제는 기록 자체가 아니라 <b>대회 경험의 접근성</b>입니다. 원문에서 개발자는 선착순 마감과 10만~15만원 수준의 참가비가 답답해 직접 만들었다고 설명합니다.</p>
+<p data-ke-size="size16">이 출발점은 1인 개발에서 특히 중요합니다. 거대한 시장 전체를 상대하기보다, 사용자가 반복해서 겪는 한 장면을 정확히 고르면 작은 제품도 설명이 쉬워집니다. &ldquo;모든 운동을 관리하는 앱&rdquo;보다 &ldquo;오늘 혼자 달려도 대회처럼 기록을 겨루는 앱&rdquo;이 훨씬 선명합니다.</p>
+<blockquote data-ke-style="style1">
+<p data-ke-size="size16"><b>제가 보는 핵심:</b> LLRUN의 경쟁력은 기능 수보다 시간과 장소를 분리해 대회 경험을 다시 설계한 데 있습니다.</p>
 </blockquote>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">사람을 다시 뛰게 만드는 세 가지 장치</h2>
-<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">1. 기록 경쟁: 목표가 눈에 보인다</h3>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">챌린지런은 같은 코스를 달린 기록을 비교합니다. 개인 최고 기록을 갱신하는 동기와 다른 러너의 순위를 따라가는 동기를 함께 만듭니다. 단순 누적 거리보다 &ldquo;다음에는 이 기록을 넘는다&rdquo;는 목표가 구체적입니다.</p>
-<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">2. 경로비행과 아트런: 결과를 공유하고 싶어진다</h3>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">달린 GPS 경로를 위성지도 위 3D 영상으로 재생하거나, 지도 위에 그림을 그리는 아트런은 기록을 콘텐츠로 바꿉니다. 숫자 한 줄보다 결과물이 눈에 보이면 완주 뒤 공유할 이유가 생깁니다. 자연스러운 공유는 광고보다 강한 유입 경로가 될 수 있습니다.</p>
-<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">3. 크루: 혼자 쓰는 도구에서 관계가 있는 서비스로</h3>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">크루 누적 거리와 크루 대항전은 개인 기록 앱에 팀 목표를 더합니다. 다만 커뮤니티 기능은 초기 사용자가 적으면 비어 보이기 쉽습니다. 지역 코스, 학교&middot;회사 러닝 모임처럼 밀도가 높은 작은 집단부터 채우는 전략이 중요해 보입니다.</p>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">겉보다 어려운 기술 문제</h2>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">러닝앱은 화면을 만드는 것으로 끝나지 않습니다. 앱이 백그라운드로 내려가도 센서와 GPS 기록이 이어져야 하고, 배터리 사용량과 정확도 사이에서 균형을 잡아야 합니다. 개발자는 Android에서 포그라운드 서비스가 걸음 센서를 유지하도록 구현했고, 자정을 넘길 때 걸음 수가 꼬이는 문제와 GPS 부정 기록 검증도 겪었다고 설명합니다.</p>
-<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<h2 data-ke-size="size26">사람을 다시 뛰게 만드는 세 가지 장치</h2>
+<h3 data-ke-size="size23">1. 기록 경쟁: 목표가 눈에 보인다</h3>
+<p data-ke-size="size16">챌린지런은 같은 코스를 달린 기록을 비교합니다. 개인 최고 기록을 갱신하는 동기와 다른 러너의 순위를 따라가는 동기를 함께 만듭니다. 단순 누적 거리보다 &ldquo;다음에는 이 기록을 넘는다&rdquo;는 목표가 구체적입니다.</p>
+<h3 data-ke-size="size23">2. 경로비행과 아트런: 결과를 공유하고 싶어진다</h3>
+<p data-ke-size="size16">달린 GPS 경로를 위성지도 위 3D 영상으로 재생하거나, 지도 위에 그림을 그리는 아트런은 기록을 콘텐츠로 바꿉니다. 숫자 한 줄보다 결과물이 눈에 보이면 완주 뒤 공유할 이유가 생깁니다. 자연스러운 공유는 광고보다 강한 유입 경로가 될 수 있습니다.</p>
+<h3 data-ke-size="size23">3. 크루: 혼자 쓰는 도구에서 관계가 있는 서비스로</h3>
+<p data-ke-size="size16">크루 누적 거리와 크루 대항전은 개인 기록 앱에 팀 목표를 더합니다. 다만 커뮤니티 기능은 초기 사용자가 적으면 비어 보이기 쉽습니다. 지역 코스, 학교&middot;회사 러닝 모임처럼 밀도가 높은 작은 집단부터 채우는 전략이 중요해 보입니다.</p>
+<h2 data-ke-size="size26">겉보다 어려운 기술 문제</h2>
+<p data-ke-size="size16">러닝앱은 화면을 만드는 것으로 끝나지 않습니다. 앱이 백그라운드로 내려가도 센서와 GPS 기록이 이어져야 하고, 배터리 사용량과 정확도 사이에서 균형을 잡아야 합니다. 개발자는 Android에서 포그라운드 서비스가 걸음 센서를 유지하도록 구현했고, 자정을 넘길 때 걸음 수가 꼬이는 문제와 GPS 부정 기록 검증도 겪었다고 설명합니다.</p>
+<ul data-ke-list-type="disc">
 <li><b>백그라운드 기록:</b> OS 절전 정책 때문에 데이터가 끊기지 않는지 확인해야 합니다.</li>
 <li><b>날짜 경계:</b> 누적 센서 값을 하루 단위 기록으로 바꿀 때 자정 롤오버 처리가 필요합니다.</li>
 <li><b>기록 신뢰도:</b> 비정상 속도, 순간 이동, GPS 오차를 실제 달리기와 구분해야 합니다.</li>
 <li><b>개인정보:</b> 위치 데이터는 생활 반경을 드러낼 수 있어 저장 범위와 공개 설정이 중요합니다.</li>
 </ul>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">React와 Capacitor로 두 플랫폼을 함께 가져가더라도 센서, 백그라운드 실행, 웨어러블 연동은 결국 운영체제별 예외를 만납니다. 크로스플랫폼의 장점은 코드 공유지만, 제품 품질은 네이티브 경계에서 결정되는 경우가 많습니다.</p>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">설치 전에 제가 확인할 항목</h2>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">아직 직접 장거리 테스트를 한 사용 후기는 아닙니다. 실제로 써본다면 아래 순서로 확인하겠습니다.</p>
-<ol style="margin:0 0 22px;padding-left:24px;color:#46534d;line-height:1.85;" data-ke-list-type="decimal">
+<p data-ke-size="size16">React와 Capacitor로 두 플랫폼을 함께 가져가더라도 센서, 백그라운드 실행, 웨어러블 연동은 결국 운영체제별 예외를 만납니다. 크로스플랫폼의 장점은 코드 공유지만, 제품 품질은 네이티브 경계에서 결정되는 경우가 많습니다.</p>
+<h2 data-ke-size="size26">설치 전에 제가 확인할 항목</h2>
+<p data-ke-size="size16">아직 직접 장거리 테스트를 한 사용 후기는 아닙니다. 실제로 써본다면 아래 순서로 확인하겠습니다.</p>
+<ol data-ke-list-type="decimal">
 <li>화면을 끄고 30분 이상 달렸을 때 경로와 걸음 수가 빠지지 않는가</li>
 <li>GPS 오차가 큰 도심에서 기록이 튀었을 때 자동 보정되는가</li>
 <li>위치 기록의 공개 범위와 삭제 방법이 명확한가</li>
 <li>3D 경로 영상 생성 시간이 길지 않고 공유 결과가 보기 좋은가</li>
 <li>Android와 iOS에서 핵심 기능 차이가 어느 정도인가</li>
 </ol>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">1인 개발자가 배울 점</h2>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">LLRUN 사례에서 가져갈 수 있는 건 특정 기술 스택보다 문제를 고르는 방식입니다. 불편을 넓게 정의하지 않고, &ldquo;비싼 대회와 맞지 않는 일정&rdquo;이라는 장면으로 좁혔습니다. 그다음 기록 경쟁으로 재방문 이유를, 경로 영상으로 공유 이유를, 크루로 관계의 이유를 붙였습니다.</p>
-<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">반대로 무료 서비스가 오래 운영되려면 서버&middot;지도&middot;영상 처리 비용을 감당할 구조가 필요합니다. 유료 기능을 무리하게 앞세우기보다 대회 주최사 코스 등록, 브랜드 챌린지, 크루용 운영 기능처럼 핵심 경험을 해치지 않는 수익 모델이 잘 맞아 보입니다. 이 부분은 개발자가 공개한 계획이 아니라 제품 구조를 보고 한 제 판단입니다.</p>
-<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">직접 확인하기</h2>
-<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<h2 data-ke-size="size26">1인 개발자가 배울 점</h2>
+<p data-ke-size="size16">LLRUN 사례에서 가져갈 수 있는 건 특정 기술 스택보다 문제를 고르는 방식입니다. 불편을 넓게 정의하지 않고, &ldquo;비싼 대회와 맞지 않는 일정&rdquo;이라는 장면으로 좁혔습니다. 그다음 기록 경쟁으로 재방문 이유를, 경로 영상으로 공유 이유를, 크루로 관계의 이유를 붙였습니다.</p>
+<p data-ke-size="size16">반대로 무료 서비스가 오래 운영되려면 서버&middot;지도&middot;영상 처리 비용을 감당할 구조가 필요합니다. 유료 기능을 무리하게 앞세우기보다 대회 주최사 코스 등록, 브랜드 챌린지, 크루용 운영 기능처럼 핵심 경험을 해치지 않는 수익 모델이 잘 맞아 보입니다. 이 부분은 개발자가 공개한 계획이 아니라 제품 구조를 보고 한 제 판단입니다.</p>
+<h2 data-ke-size="size26">직접 확인하기</h2>
+<ul data-ke-list-type="disc">
 <li><a href="https://news.hada.io/topic?id=31369" target="_blank" rel="noopener noreferrer">GeekNews 원문과 개발자 설명</a></li>
 <li><a href="https://www.finiteorder.com/download" target="_blank" rel="noopener noreferrer">LLRUN 공식 다운로드 안내</a></li>
 <li><a href="https://won0322.tistory.com/105">같이 읽기: AIVIS 프로젝트 최종 회고</a></li>
 </ul>
-<hr style="margin: 34px 0; border: 0; border-top: 1px solid #e2e8f0;" data-ke-style="style1" />
-<p style="color: #64748b;" data-ke-size="size14">이 글은 공개된 개발자 소개와 제품 페이지를 바탕으로 기능을 정리하고, 제품&middot;기술 관점의 분석을 덧붙였습니다. 직접 사용한 것처럼 표현하지 않았으며 세부 기능과 정책은 원문에서 다시 확인했습니다.</p>
+<hr data-ke-style="style1" />
+<p data-ke-size="size14">이 글은 공개된 개발자 소개와 제품 페이지를 바탕으로 기능을 정리하고, 제품&middot;기술 관점의 분석을 덧붙였습니다. 직접 사용한 것처럼 표현하지 않았으며 세부 기능과 정책은 원문에서 다시 확인했습니다.</p>
 </article>

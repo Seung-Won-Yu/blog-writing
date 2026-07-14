@@ -9,6 +9,8 @@
   <style>
     /*
   won0322.tistory.com · canonical custom layer
+  IMPORTANT: Do not paste this file over the whole Tistory CSS editor.
+  Use style.css for a complete replacement. This file is the custom suffix only.
   Replace every previous custom block from
   "Tistory skin custom layer" to EOF with this file.
 
@@ -45,6 +47,11 @@ body {
   font-family: "IBM Plex Sans KR", AppleSDGothicNeo, "Malgun Gothic", sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -65,6 +72,17 @@ summary:focus-visible {
 #container .content-wrap::before {
   display: none !important;
   content: none !important;
+}
+
+/* Let the custom post cover size itself; long mobile titles must not overlap content. */
+#tt-body-page #container {
+  padding-top: 0;
+}
+
+#tt-body-page .post-cover {
+  position: relative;
+  top: auto;
+  left: auto;
 }
 
 #header {
@@ -395,6 +413,46 @@ body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
   margin: auto 0 0;
   color: var(--sw-muted);
   font-size: 0.76em;
+}
+
+/* Pagination stays visible and usable on every list page. */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 34px 0 60px;
+}
+
+.pagination a,
+.pagination .prev,
+.pagination .next {
+  display: inline-flex;
+  min-width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid var(--sw-line);
+  border-radius: 5px;
+  background: var(--sw-surface);
+  color: var(--sw-muted);
+  line-height: 1;
+  text-indent: 0;
+}
+
+.pagination a:has(.selected),
+.pagination a:hover,
+.pagination a:focus-visible {
+  border-color: var(--sw-accent);
+  color: var(--sw-accent);
+}
+
+.pagination .selected {
+  color: inherit;
+  font-weight: 750;
 }
 
 /* 4. Sidebar and secondary UI */
@@ -1031,6 +1089,169 @@ body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
   display: none !important;
 }
 
+/* Archived/editorial fallback
+   Semantic post HTML stays clean; this skin owns every visual rule. */
+.daily-digest-post > p {
+  margin: 0 0 18px;
+  color: var(--sw-text);
+  font-size: 16px;
+  line-height: 1.86;
+}
+
+.daily-digest-post > p:first-child {
+  color: var(--sw-ink);
+  font-size: 17px;
+  line-height: 1.82;
+}
+
+.daily-digest-post > h2 {
+  margin: 44px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-ink);
+  font-size: 23px;
+  line-height: 1.42;
+  font-weight: 800;
+}
+
+.daily-digest-post > h3,
+.daily-digest-post section > h3 {
+  margin: 28px 0 10px;
+  color: var(--sw-ink);
+  font-size: 19px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.daily-digest-post :is(ul, ol) {
+  margin: 0 0 24px;
+  padding-left: 24px;
+  color: var(--sw-text);
+  line-height: 1.82;
+}
+
+.daily-digest-post li + li {
+  margin-top: 7px;
+}
+
+.daily-digest-post > figure,
+.daily-digest-post section > figure {
+  margin: 26px 0 32px;
+}
+
+.daily-digest-post figure img,
+.daily-digest-post > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+  background: var(--sw-paper);
+}
+
+.daily-digest-post figcaption {
+  margin-top: 9px;
+  color: var(--sw-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.daily-digest-post > blockquote,
+.daily-digest-post section > blockquote {
+  margin: 28px 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--sw-accent);
+  background: var(--sw-paper-deep);
+  color: var(--sw-text);
+}
+
+.daily-digest-post blockquote p {
+  margin: 0;
+}
+
+.daily-digest-post table {
+  display: block;
+  width: 100%;
+  margin: 22px 0 28px;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-top: 2px solid var(--sw-ink);
+  border-bottom: 1px solid var(--sw-line-strong);
+  background: var(--sw-surface);
+}
+
+.daily-digest-post :is(th, td) {
+  min-width: 86px;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-text);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.daily-digest-post th {
+  color: var(--sw-ink);
+  font-weight: 800;
+  background: var(--sw-paper);
+}
+
+.daily-digest-post code {
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--sw-paper-deep);
+  color: var(--sw-ink);
+  font-size: .92em;
+}
+
+.daily-digest-post > section:not(.digest-hero, .digest-summary, .digest-throughline, .digest-reading-guide, .digest-news-card, .digest-quiz, .digest-terms, .digest-closing) {
+  margin: 0 0 34px;
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--sw-line);
+}
+
+.daily-digest-post > section:first-child:not(.digest-hero) {
+  padding-top: 24px;
+  border-top: 4px solid var(--sw-accent);
+}
+
+.daily-digest-post > section:first-child > p:first-child {
+  margin-bottom: 10px;
+  color: var(--sw-accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.daily-digest-post > section:first-child > h2 {
+  margin: 0 0 14px;
+  color: var(--sw-ink);
+  font-size: clamp(24px, 4vw, 30px);
+  line-height: 1.36;
+  font-weight: 850;
+}
+
+.daily-digest-post > section:first-child > p:last-child {
+  color: var(--sw-text);
+  font-size: 17px;
+  line-height: 1.82;
+}
+
+.codex-model-guide > section > div {
+  padding: 20px 0;
+  border-top: 1px solid var(--sw-line);
+}
+
+.codex-model-guide > section > div:first-child {
+  border-top: 0;
+}
+
+.editorial-post > hr {
+  margin: 38px 0;
+  border: 0;
+  border-top: 1px solid var(--sw-line);
+}
+
 /* 8. Forms and secondary pages */
 #tt-body-tag #content > .tags {
   display: flex;
@@ -1063,7 +1284,7 @@ body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
 
 @media screen and (max-width: 767px) {
   body {
-    background: #ffffff !important;
+    background: var(--sw-canvas) !important;
   }
 
   #header h1 {
@@ -1096,7 +1317,25 @@ body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
 
   body #content > .inner:has(> .post-item) {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 22px;
+  }
+
+  #tt-body-index .pagination,
+  #tt-body-category .pagination,
+  #tt-body-tag .pagination,
+  #tt-body-archive .pagination {
+    display: flex !important;
+    margin: 32px 20px 44px !important;
+    gap: 5px;
+  }
+
+  .pagination a,
+  .pagination .prev,
+  .pagination .next {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 7px;
+    font-size: 13px;
   }
 
   body #content > .inner:has(> .post-item) > .post-item:first-child a {

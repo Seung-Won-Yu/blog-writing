@@ -8,12 +8,12 @@ from blog_pipeline.publishing.repair_archived_posts import (
 
 class RepairArchivedPostsTests(unittest.TestCase):
     def test_normalizes_archived_posts_to_class_only_v2_markup(self):
-        source = """<article style="padding:0"><section class="digest-news-card" style="padding:0">첫째</section><section class="digest-news-card" style="padding:0">둘째</section><section class="digest-quiz">문제</section><section class="digest-terms">용어</section></article>"""
+        source = """<article class="editorial-post" style="padding:0"><section class="digest-news-card" style="padding:0"><p style='margin:0'>첫째</p></section><section class="digest-news-card" style="padding:0">둘째</section><section class="digest-quiz">문제</section><section class="digest-terms">용어</section></article>"""
 
         html = normalize_archived_html(source)
 
         self.assertIn(
-            '<article class="daily-digest-post" data-digest-version="2">', html
+            '<article class="editorial-post daily-digest-post" data-digest-version="2">', html
         )
         self.assertIn('id="digest-news-1"', html)
         self.assertIn('id="digest-news-2"', html)

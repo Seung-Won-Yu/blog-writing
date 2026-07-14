@@ -4,21 +4,21 @@ category: 나만의 정리
 tags: Codex, GPT-5.6, OpenAI, AI모델, Sol, Terra, Luna, 개발도구, 크레딧, 토큰
 slug: codex-gpt-5-6-sol-terra-luna-guide
 -->
-<article class="codex-model-guide" style="max-width:720px !important;margin:0 auto;padding:12px clamp(18px,4vw,28px) 36px !important;box-sizing:border-box;color:#303942;font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;">
-  <section style="margin:0 0 28px;padding:28px 26px;border:1px solid #d9e0ea;border-radius:18px;background:linear-gradient(135deg,#f8fafc 0%,#edf7f5 55%,#fff7ed 100%);box-shadow:0 12px 34px rgba(24,33,47,.06);">
-    <p style="margin:0 0 10px;color:#0f9b8e;font-size:13px;font-weight:800;letter-spacing:.02em;">2026. 7. 10 기준 · Codex 모델 선택 가이드</p>
-    <h2 style="margin:0 0 14px;color:#18212f;font-size:30px;line-height:1.34;font-weight:850;">GPT-5.6 Sol·Terra·Luna, 어떤 모델을 고르면 될까?</h2>
-    <p style="margin:0;color:#475569;font-size:16px;line-height:1.75;">Codex에서 GPT-5.6 계열 모델을 고를 때 가장 헷갈리는 지점은 “성능이 좋은 모델을 쓰면 되는가?”입니다. 결론부터 말하면 대부분은 <b>Terra Medium</b>으로 시작하고, 단순 반복 작업은 <b>Luna Medium</b>, 어렵고 중요한 작업은 <b>Sol Medium</b>으로 올리면 됩니다.</p>
+<article class="codex-model-guide daily-digest-post" data-digest-version="2">
+  <section>
+    <p>2026. 7. 10 기준 · Codex 모델 선택 가이드</p>
+    <h2>GPT-5.6 Sol·Terra·Luna, 어떤 모델을 고르면 될까?</h2>
+    <p>Codex에서 GPT-5.6 계열 모델을 고를 때 가장 헷갈리는 지점은 “성능이 좋은 모델을 쓰면 되는가?”입니다. 결론부터 말하면 대부분은 <b>Terra Medium</b>으로 시작하고, 단순 반복 작업은 <b>Luna Medium</b>, 어렵고 중요한 작업은 <b>Sol Medium</b>으로 올리면 됩니다.</p>
   </section>
 
-  <figure style="margin:0 0 28px;">
-    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/model-family.png" alt="Codex GPT-5.6 Sol Terra Luna 모델 비교" loading="lazy" style="display:block;width:100%;border:1px solid #d9e0ea;border-radius:16px;background:#0b1526;box-shadow:0 12px 30px rgba(15,23,42,.08);">
-    <figcaption style="margin-top:8px;color:#64748b;font-size:13px;text-align:center;">Sol은 최고 성능, Terra는 균형형, Luna는 최저 비용에 가까운 선택입니다.</figcaption>
+  <figure>
+    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/model-family.png" alt="Codex GPT-5.6 Sol Terra Luna 모델 비교" loading="lazy">
+    <figcaption>Sol은 최고 성능, Terra는 균형형, Luna는 최저 비용에 가까운 선택입니다.</figcaption>
   </figure>
 
-  <section style="margin:0 0 28px;padding:20px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);">
-    <h2 style="margin:0 0 14px;color:#18212f;font-size:22px;line-height:1.35;font-weight:850;">가장 짧은 결론</h2>
-    <ul style="margin:0;padding-left:20px;color:#475569;line-height:1.8;">
+  <section>
+    <h2>가장 짧은 결론</h2>
+    <ul>
       <li><b>평소 작업</b>: Terra Medium</li>
       <li><b>명확하고 반복되는 작업</b>: Luna Medium</li>
       <li><b>복잡하거나 중요한 작업</b>: Sol Medium</li>
@@ -26,124 +26,124 @@ slug: codex-gpt-5-6-sol-terra-luna-guide
     </ul>
   </section>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">무엇이 바뀐 걸까?</h2>
-  <p style="margin:0 0 14px;color:#475569;">예전에는 Codex 안에서 <code style="padding:2px 6px;border-radius:6px;background:#eef2f7;color:#18212f;font-size:90%;">GPT-5-Codex</code>, <code style="padding:2px 6px;border-radius:6px;background:#eef2f7;color:#18212f;font-size:90%;">GPT-5.1-Codex</code>, <code style="padding:2px 6px;border-radius:6px;background:#eef2f7;color:#18212f;font-size:90%;">GPT-5.2-Codex</code>, <code style="padding:2px 6px;border-radius:6px;background:#eef2f7;color:#18212f;font-size:90%;">GPT-5.3-Codex</code>처럼 코딩 에이전트에 특화된 모델 이름을 볼 수 있었습니다.</p>
-  <p style="margin:0 0 14px;color:#475569;">이후 GPT-5.4부터는 범용 GPT 모델 계열이 Codex 안에서도 코딩, 추론, 도구 사용, 컴퓨터 조작을 함께 담당하는 방향으로 정리됐습니다. 쉽게 말하면 “Codex 전용 엔진”에서 “최신 GPT 엔진을 Codex·ChatGPT·API가 함께 쓰는 방향”으로 옮겨간 것입니다.</p>
-  <div style="margin:18px 0;padding:16px 18px;border-left:4px solid #0f9b8e;border-radius:12px;background:#f8fafc;color:#475569;">
-    <b style="color:#18212f;">단, Codex와 ChatGPT가 완전히 같은 제품이라는 뜻은 아닙니다.</b><br>
+  <h2>무엇이 바뀐 걸까?</h2>
+  <p>예전에는 Codex 안에서 <code>GPT-5-Codex</code>, <code>GPT-5.1-Codex</code>, <code>GPT-5.2-Codex</code>, <code>GPT-5.3-Codex</code>처럼 코딩 에이전트에 특화된 모델 이름을 볼 수 있었습니다.</p>
+  <p>이후 GPT-5.4부터는 범용 GPT 모델 계열이 Codex 안에서도 코딩, 추론, 도구 사용, 컴퓨터 조작을 함께 담당하는 방향으로 정리됐습니다. 쉽게 말하면 “Codex 전용 엔진”에서 “최신 GPT 엔진을 Codex·ChatGPT·API가 함께 쓰는 방향”으로 옮겨간 것입니다.</p>
+  <div>
+    <b>단, Codex와 ChatGPT가 완전히 같은 제품이라는 뜻은 아닙니다.</b><br>
     Codex에는 파일 읽기, 명령어 실행, 코드 수정, 테스트, 패치 적용 같은 개발 작업 도구가 연결됩니다. 같은 모델을 쓰더라도 작업 환경은 다릅니다.
   </div>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">Sol, Terra, Luna를 쉽게 비유하면</h2>
-  <section style="display:block;margin:0 0 26px;">
-    <div style="margin:0 0 14px;padding:20px 20px;border:1px solid #ead7ba;border-radius:16px;background:#fffaf2;">
-      <p style="display:inline-block;margin:0 0 10px;padding:4px 10px;border-radius:999px;background:#ffedd5;color:#b45309;font-size:12px;font-weight:850;">Sol</p>
-      <h3 style="margin:0 0 8px;color:#18212f;font-size:20px;line-height:1.45;font-weight:850;">중요한 일을 맡기는 전문가</h3>
-      <p style="margin:0;color:#475569;">원인이 불분명한 버그, 여러 파일을 건드리는 큰 수정, 중요한 설계 판단, 깊은 리서치처럼 실패 비용이 큰 작업에 어울립니다. 비용은 가장 높지만 품질과 성공 가능성을 우선합니다.</p>
+  <h2>Sol, Terra, Luna를 쉽게 비유하면</h2>
+  <section>
+    <div>
+      <p>Sol</p>
+      <h3>중요한 일을 맡기는 전문가</h3>
+      <p>원인이 불분명한 버그, 여러 파일을 건드리는 큰 수정, 중요한 설계 판단, 깊은 리서치처럼 실패 비용이 큰 작업에 어울립니다. 비용은 가장 높지만 품질과 성공 가능성을 우선합니다.</p>
     </div>
-    <div style="margin:0 0 14px;padding:20px 20px;border:1px solid #bddfd9;border-radius:16px;background:#f4fbfa;">
-      <p style="display:inline-block;margin:0 0 10px;padding:4px 10px;border-radius:999px;background:#dcf7f2;color:#0f766e;font-size:12px;font-weight:850;">Terra</p>
-      <h3 style="margin:0 0 8px;color:#18212f;font-size:20px;line-height:1.45;font-weight:850;">평소 가장 많이 쓰는 만능 실무자</h3>
-      <p style="margin:0;color:#475569;">일반적인 코드 작성, 리팩터링, 테스트 추가, 문서 작성, 자료 정리처럼 대부분의 일상 작업에 잘 맞습니다. 성능과 비용의 균형이 좋아 기본값으로 쓰기 좋습니다.</p>
+    <div>
+      <p>Terra</p>
+      <h3>평소 가장 많이 쓰는 만능 실무자</h3>
+      <p>일반적인 코드 작성, 리팩터링, 테스트 추가, 문서 작성, 자료 정리처럼 대부분의 일상 작업에 잘 맞습니다. 성능과 비용의 균형이 좋아 기본값으로 쓰기 좋습니다.</p>
     </div>
-    <div style="margin:0;padding:20px 20px;border:1px solid #d8cff8;border-radius:16px;background:#f7f4ff;">
-      <p style="display:inline-block;margin:0 0 10px;padding:4px 10px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:12px;font-weight:850;">Luna</p>
-      <h3 style="margin:0 0 8px;color:#18212f;font-size:20px;line-height:1.45;font-weight:850;">반복 작업을 빠르게 처리하는 실무 보조</h3>
-      <p style="margin:0;color:#475569;">추출, 분류, 형식 변환, 정해진 양식의 요약, 단순한 코드 수정처럼 기준이 명확한 작업에 어울립니다. 무엇을 해야 하는지 분명할수록 장점이 커집니다.</p>
+    <div>
+      <p>Luna</p>
+      <h3>반복 작업을 빠르게 처리하는 실무 보조</h3>
+      <p>추출, 분류, 형식 변환, 정해진 양식의 요약, 단순한 코드 수정처럼 기준이 명확한 작업에 어울립니다. 무엇을 해야 하는지 분명할수록 장점이 커집니다.</p>
     </div>
   </section>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">성능 차이는 어느 정도일까?</h2>
-  <p style="margin:0 0 14px;color:#475569;">공식 발표에 포함된 대표 평가를 기준으로 보면 Sol이 가장 높고, Terra가 그 뒤를 잇고, Luna는 비용을 낮추면서도 코딩 작업에서는 꽤 가까운 성능을 보여줍니다.</p>
-  <table style="width:100%;margin:16px 0 22px;border-collapse:separate;border-spacing:0;border:1px solid #d9e0ea;border-radius:14px;overflow:hidden;background:#fff;">
+  <h2>성능 차이는 어느 정도일까?</h2>
+  <p>공식 발표에 포함된 대표 평가를 기준으로 보면 Sol이 가장 높고, Terra가 그 뒤를 잇고, Luna는 비용을 낮추면서도 코딩 작업에서는 꽤 가까운 성능을 보여줍니다.</p>
+  <table>
     <thead>
       <tr>
-        <th style="padding:12px 10px;background:#f8fafc;color:#18212f;text-align:left;border-bottom:1px solid #d9e0ea;">평가</th>
-        <th style="padding:12px 10px;background:#f8fafc;color:#18212f;text-align:right;border-bottom:1px solid #d9e0ea;">Sol</th>
-        <th style="padding:12px 10px;background:#f8fafc;color:#18212f;text-align:right;border-bottom:1px solid #d9e0ea;">Terra</th>
-        <th style="padding:12px 10px;background:#f8fafc;color:#18212f;text-align:right;border-bottom:1px solid #d9e0ea;">Luna</th>
-        <th style="padding:12px 10px;background:#f8fafc;color:#18212f;text-align:right;border-bottom:1px solid #d9e0ea;">GPT-5.5</th>
+        <th>평가</th>
+        <th>Sol</th>
+        <th>Terra</th>
+        <th>Luna</th>
+        <th>GPT-5.5</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="padding:12px 10px;border-bottom:1px solid #edf2f7;">종합 지능 지수</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;"><b>58.9</b></td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">55.0</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">51.2</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">54.8</td>
+        <td>종합 지능 지수</td>
+        <td><b>58.9</b></td>
+        <td>55.0</td>
+        <td>51.2</td>
+        <td>54.8</td>
       </tr>
       <tr>
-        <td style="padding:12px 10px;border-bottom:1px solid #edf2f7;">코딩 에이전트 지수</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;"><b>80.0</b></td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">77.4</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">74.6</td>
-        <td style="padding:12px 10px;text-align:right;border-bottom:1px solid #edf2f7;">76.4</td>
+        <td>코딩 에이전트 지수</td>
+        <td><b>80.0</b></td>
+        <td>77.4</td>
+        <td>74.6</td>
+        <td>76.4</td>
       </tr>
       <tr>
-        <td style="padding:12px 10px;">실제 코드 문제 해결</td>
-        <td style="padding:12px 10px;text-align:right;"><b>64.6%</b></td>
-        <td style="padding:12px 10px;text-align:right;">63.4%</td>
-        <td style="padding:12px 10px;text-align:right;">62.7%</td>
-        <td style="padding:12px 10px;text-align:right;">59.4%</td>
+        <td>실제 코드 문제 해결</td>
+        <td><b>64.6%</b></td>
+        <td>63.4%</td>
+        <td>62.7%</td>
+        <td>59.4%</td>
       </tr>
     </tbody>
   </table>
-  <p style="margin:0 0 14px;color:#64748b;font-size:14px;">출처: <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">OpenAI GPT-5.6 공식 발표</a></p>
+  <p>출처: <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">OpenAI GPT-5.6 공식 발표</a></p>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">비용은 어떻게 다를까?</h2>
-  <p style="margin:0 0 14px;color:#475569;">같은 양의 토큰을 쓴다고 가정하면 Terra는 Sol의 절반, Luna는 Sol의 20% 수준으로 크레딧을 사용합니다. 그래서 단순 작업을 모두 Sol로 처리하면 품질은 안정적일 수 있지만 비용 효율은 떨어질 수 있습니다.</p>
-  <figure style="margin:18px 0 22px;">
-    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/cost-comparison.png" alt="Codex 모델별 동일 토큰 기준 비용 비교" loading="lazy" style="display:block;width:100%;border:1px solid #d9e0ea;border-radius:16px;background:#0b1526;box-shadow:0 12px 30px rgba(15,23,42,.08);">
-    <figcaption style="margin-top:8px;color:#64748b;font-size:13px;text-align:center;">토큰 수가 완전히 같다는 가정의 비교입니다. 실제 작업에서는 모델별 도구 호출과 추론 길이에 따라 총사용량이 달라질 수 있습니다.</figcaption>
+  <h2>비용은 어떻게 다를까?</h2>
+  <p>같은 양의 토큰을 쓴다고 가정하면 Terra는 Sol의 절반, Luna는 Sol의 20% 수준으로 크레딧을 사용합니다. 그래서 단순 작업을 모두 Sol로 처리하면 품질은 안정적일 수 있지만 비용 효율은 떨어질 수 있습니다.</p>
+  <figure>
+    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/cost-comparison.png" alt="Codex 모델별 동일 토큰 기준 비용 비교" loading="lazy">
+    <figcaption>토큰 수가 완전히 같다는 가정의 비교입니다. 실제 작업에서는 모델별 도구 호출과 추론 길이에 따라 총사용량이 달라질 수 있습니다.</figcaption>
   </figure>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">Medium은 모델 크기가 아니다</h2>
-  <p style="margin:0 0 14px;color:#475569;">여기서 Medium은 모델 자체의 크기라기보다, 문제를 어느 정도 깊이 생각하게 할지 정하는 추론 단계에 가깝습니다. 처음부터 High, Extra High, Max를 고를 필요는 없습니다.</p>
-  <ul style="margin:0 0 22px;padding-left:20px;color:#475569;line-height:1.8;">
+  <h2>Medium은 모델 크기가 아니다</h2>
+  <p>여기서 Medium은 모델 자체의 크기라기보다, 문제를 어느 정도 깊이 생각하게 할지 정하는 추론 단계에 가깝습니다. 처음부터 High, Extra High, Max를 고를 필요는 없습니다.</p>
+  <ul>
     <li><b>Low / Light</b>: 빠른 확인이나 단순 작업</li>
     <li><b>Medium</b>: 대부분의 일상 작업</li>
     <li><b>High</b>: 복잡한 버그, 설계, 검증</li>
     <li><b>Extra High / Max</b>: 비용보다 품질이 중요하고 깊은 검토가 필요한 작업</li>
     <li><b>Ultra</b>: 여러 에이전트가 나눠서 처리하는 큰 작업</li>
   </ul>
-  <p style="margin:0 0 14px;color:#64748b;font-size:14px;">추론 토큰도 사용량에 포함됩니다. 참고: <a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">OpenAI 추론 모델 가이드</a></p>
+  <p>추론 토큰도 사용량에 포함됩니다. 참고: <a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener">OpenAI 추론 모델 가이드</a></p>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">그래서 실제로는 이렇게 고르면 된다</h2>
-  <figure style="margin:18px 0 22px;">
-    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/model-choice.png" alt="30초 Codex 모델 선택 가이드" loading="lazy" style="display:block;width:100%;border:1px solid #d9e0ea;border-radius:16px;background:#0b1526;box-shadow:0 12px 30px rgba(15,23,42,.08);">
-    <figcaption style="margin-top:8px;color:#64748b;font-size:13px;text-align:center;">잘 모르겠다면 Terra Medium이 가장 무난한 시작점입니다.</figcaption>
+  <h2>그래서 실제로는 이렇게 고르면 된다</h2>
+  <figure>
+    <img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/codex-gpt-5.6/model-choice.png" alt="30초 Codex 모델 선택 가이드" loading="lazy">
+    <figcaption>잘 모르겠다면 Terra Medium이 가장 무난한 시작점입니다.</figcaption>
   </figure>
-  <ol style="margin:0 0 26px;padding-left:22px;color:#475569;line-height:1.85;">
+  <ol>
     <li>작업 방법과 결과가 명확하고 반복된다면 <b>Luna Medium</b></li>
     <li>일반적인 코딩, 문서, 테스트 작업이라면 <b>Terra Medium</b></li>
     <li>문제가 애매하거나 어렵고 실패 비용이 크다면 <b>Sol Medium</b></li>
     <li>결과가 부족하면 모델을 올리거나 추론 단계를 높이기</li>
   </ol>
 
-  <section style="margin:30px 0;padding:22px 22px;border:1px solid #d9e0ea;border-radius:16px;background:#ffffff;box-shadow:0 10px 26px rgba(24,33,47,.045);">
-    <h2 style="margin:0 0 16px;color:#18212f;font-size:22px;line-height:1.35;font-weight:850;">자주 헷갈리는 질문</h2>
-    <h3 style="margin:18px 0 8px;color:#18212f;font-size:18px;line-height:1.45;font-weight:850;">Luna는 성능이 많이 떨어지는 모델인가?</h3>
-    <p style="margin:0 0 14px;color:#475569;">그렇게 단순히 말하기는 어렵습니다. 복잡한 판단이 필요한 작업에서는 차이가 날 수 있지만, 기준이 명확한 추출·분류·요약·형식 변환 작업에서는 충분히 실용적일 수 있습니다.</p>
-    <h3 style="margin:18px 0 8px;color:#18212f;font-size:18px;line-height:1.45;font-weight:850;">가성비가 가장 좋은 모델은?</h3>
-    <p style="margin:0 0 14px;color:#475569;">절대 단가만 보면 더 저렴한 모델이 있을 수 있지만, GPT-5.6 계열 안에서는 Luna가 가장 저렴하고 Terra가 가장 무난한 균형점입니다.</p>
-    <h3 style="margin:18px 0 8px;color:#18212f;font-size:18px;line-height:1.45;font-weight:850;">이전 Codex 모델을 계속 써도 될까?</h3>
-    <p style="margin:0;color:#475569;">deprecated로 표시되는 모델은 당장 완전히 사라졌다는 뜻은 아니지만, 앞으로 지원이 줄어들 수 있다는 뜻입니다. 새 작업은 Terra나 Sol부터 시험하는 편이 안전합니다.</p>
+  <section>
+    <h2>자주 헷갈리는 질문</h2>
+    <h3>Luna는 성능이 많이 떨어지는 모델인가?</h3>
+    <p>그렇게 단순히 말하기는 어렵습니다. 복잡한 판단이 필요한 작업에서는 차이가 날 수 있지만, 기준이 명확한 추출·분류·요약·형식 변환 작업에서는 충분히 실용적일 수 있습니다.</p>
+    <h3>가성비가 가장 좋은 모델은?</h3>
+    <p>절대 단가만 보면 더 저렴한 모델이 있을 수 있지만, GPT-5.6 계열 안에서는 Luna가 가장 저렴하고 Terra가 가장 무난한 균형점입니다.</p>
+    <h3>이전 Codex 모델을 계속 써도 될까?</h3>
+    <p>deprecated로 표시되는 모델은 당장 완전히 사라졌다는 뜻은 아니지만, 앞으로 지원이 줄어들 수 있다는 뜻입니다. 새 작업은 Terra나 Sol부터 시험하는 편이 안전합니다.</p>
   </section>
 
-  <h2 style="margin:34px 0 16px;color:#18212f;font-size:23px;line-height:1.35;font-weight:850;">마지막으로 이것만 기억하자</h2>
-  <blockquote style="margin:0 0 26px;padding:20px 22px;border-left:5px solid #0f9b8e;border-radius:14px;background:#f4fbfa;color:#18212f;font-size:20px;line-height:1.65;font-weight:850;">
+  <h2>마지막으로 이것만 기억하자</h2>
+  <blockquote>
     반복 작업은 Luna Medium,<br>
     평범한 작업은 Terra Medium,<br>
     어려운 작업은 Sol Medium.
   </blockquote>
-  <p style="margin:0;color:#475569;">처음부터 가장 비싼 모델이나 가장 깊은 추론 단계를 고를 필요는 없습니다. Medium으로 시작하고, 실제 결과가 부족할 때만 모델이나 추론 단계를 올리는 방식이 가장 이해하기 쉽고 경제적입니다.</p>
+  <p>처음부터 가장 비싼 모델이나 가장 깊은 추론 단계를 고를 필요는 없습니다. Medium으로 시작하고, 실제 결과가 부족할 때만 모델이나 추론 단계를 올리는 방식이 가장 이해하기 쉽고 경제적입니다.</p>
 
-  <section style="margin-top:34px;padding:16px 18px;border:1px solid #d9e0ea;border-radius:14px;background:#f8fafc;color:#64748b;font-size:14px;line-height:1.75;">
-    <b style="color:#18212f;">참고 자료</b><br>
-    <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">GPT-5.6 공식 출시 발표</a><br>
-    <a href="https://learn.chatgpt.com/docs/models" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">Codex 모델 선택 가이드</a><br>
-    <a href="https://help.openai.com/en/articles/20001106-codex-rate-card-2" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">Codex 크레딧 요금표</a><br>
-    <a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener" style="color:#0f766e;font-weight:800;">OpenAI 추론 모델 가이드</a>
+  <section>
+    <b>참고 자료</b><br>
+    <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">GPT-5.6 공식 출시 발표</a><br>
+    <a href="https://learn.chatgpt.com/docs/models" target="_blank" rel="noopener">Codex 모델 선택 가이드</a><br>
+    <a href="https://help.openai.com/en/articles/20001106-codex-rate-card-2" target="_blank" rel="noopener">Codex 크레딧 요금표</a><br>
+    <a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener">OpenAI 추론 모델 가이드</a>
   </section>
 </article>

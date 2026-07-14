@@ -28,6 +28,13 @@ ARCHIVED_POSTS = {
         "file": "2026-07-10-codex-gpt-5.6.html",
         "direct_heading": "무엇이 바뀐 걸까?",
     },
+    "2026-07-11": {"file": "2026-07-11.html"},
+    "2026-07-12": {"file": "2026-07-12.html"},
+    "2026-07-13": {
+        "file": "2026-07-13.html",
+        "direct_heading": "사람을 다시 뛰게 만드는 세 가지 장치",
+    },
+    "2026-07-14": {"file": "2026-07-14.html"},
 }
 
 ADFIT_RE = re.compile(
@@ -68,6 +75,10 @@ def _strip_class_style(html_text, class_name):
 def normalize_archived_html(html_text):
     """Move archived posts to the class-only v2 design contract."""
     cleaned = ADFIT_RE.sub("", str(html_text))
+    # The skin is the only design owner. Historical inline declarations,
+    # especially !important width and padding, caused every post to render
+    # differently and overrode the canonical skin layer.
+    cleaned = re.sub(r"\s+style=(?:\"[^\"]*\"|'[^']*')", "", cleaned)
     cleaned = _replace_first_article(cleaned)
     counter = 0
 
@@ -80,6 +91,7 @@ def normalize_archived_html(html_text):
     cleaned = _strip_class_style(cleaned, "digest-quiz")
     cleaned = _strip_class_style(cleaned, "digest-terms")
     cleaned = cleaned.replace("오늘의 메모", "이번 글에서 남는 것")
+    cleaned = re.sub(r"[ \t]+$", "", cleaned, flags=re.MULTILINE)
     return cleaned
 
 

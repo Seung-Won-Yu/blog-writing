@@ -18,8 +18,9 @@
 | 영역 | 소유 파일 | 규칙 |
 |---|---|---|
 | 전체 스킨 HTML | `skin.html` | 티스토리 HTML 편집기의 단일 원본 |
+| 전체 스킨 CSS | `style.css` | 기본 스킨 CSS와 사용자 레이어를 합친 안전한 전체 교체본 |
 | 홈·사이드바 HTML 조각 | `skin-components.html` | `skin.html`에서 찾기 쉬운 참조용 조각 |
-| 헤더·홈·목록·사이드바·글 제목 | `skin-layer.css` | 스킨만 스타일링 |
+| 헤더·홈·목록·사이드바·글 제목 | `skin-layer.css` | `style.css` 끝에 한 번만 들어가는 사용자 레이어 |
 | 뉴스 본문 구조 | `blog_pipeline/publishing/export_tistory.py` | 클래스와 의미 구조만 출력 |
 | 뉴스 본문 시각 디자인 | `skin-layer.css`의 `.daily-digest-post` 구역 | 반드시 이 네임스페이스 안에서만 지정 |
 | 초안 미리보기 | `build_copy_page.py` | 같은 `skin-layer.css`를 읽어 렌더링 |
@@ -43,12 +44,13 @@
 ## 티스토리 적용
 
 1. 관리자 → 꾸미기 → 스킨 편집 → CSS로 이동한다.
-2. 기존 CSS에서 `Tistory skin custom layer` 주석부터 파일 끝까지 삭제한다.
-3. `skin-layer.css` 전체를 붙여넣는다.
-4. HTML 전체를 바꿀 때는 `skin.html`을 사용한다. 부분 수정만 할 때는 `dev-hero`, `dev-profile-card` 블록을 `skin-components.html`과 대조한다.
-5. 저장 전 현재 HTML/CSS를 별도 백업한다.
+2. CSS 편집기 전체를 교체할 때는 반드시 `style.css` 전체를 붙여넣는다.
+3. `skin-layer.css`는 기본 CSS가 이미 남아 있을 때 사용자 레이어만 교체하는 파일이다. 이 파일만 CSS 편집기 전체에 붙여넣으면 모바일·목록 레이아웃이 깨진다.
+4. 사용자 레이어만 갱신할 때는 `won0322.tistory.com · canonical custom layer` 주석부터 파일 끝까지만 `skin-layer.css`로 교체한다.
+5. HTML 전체를 바꿀 때는 `skin.html`을 사용한다. 부분 수정만 할 때는 `dev-hero`, `dev-profile-card` 블록을 `skin-components.html`과 대조한다.
+6. 저장 전 현재 HTML/CSS를 별도 백업한다.
 
-기본 스킨 CSS는 건드리지 않고 마지막 사용자 레이어만 교체한다. 이후 디자인 변경도 이 파일 한 곳에서만 한다.
+`style.css`에는 기본 CSS가 정확히 한 번, `skin-layer.css` 내용도 정확히 한 번 있어야 한다. 이후 디자인 변경은 먼저 `skin-layer.css`에서 하고, 같은 레이어를 `style.css` 끝에 반영한다.
 
 ## 성장 지표와 운영 원칙
 
