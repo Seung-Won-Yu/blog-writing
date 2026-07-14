@@ -42,6 +42,8 @@
   "source": "data/days/2026-07-12.json",
   "source_page": null,
   "html": "docs/tistory/2026-07-12.html",
+  "before_ad_html": "docs/tistory/2026-07-12-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-12-after-ad.html",
   "image_assets": [
     {
       "kind": "cover",

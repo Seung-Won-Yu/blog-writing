@@ -12,6 +12,7 @@ from blog_pipeline.publishing.export_tistory import (
     estimate_read_minutes,
     post_title,
     render_post,
+    split_post_around_first_story,
     write_post,
 )
 
@@ -59,6 +60,27 @@ class OptionalLearningSectionsTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_splits_copy_ready_html_into_valid_before_and_after_ad_fragments(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [
+            {"title_kr": "첫 뉴스", "content": []},
+            {"title_kr": "둘째 뉴스", "content": []},
+            {"title_kr": "셋째 뉴스", "content": []},
+        ]
+
+        before_ad, after_ad = split_post_around_first_story(
+            render_post("2026-07-13", day)
+        )
+
+        self.assertIn("첫 뉴스", before_ad)
+        self.assertNotIn('id="digest-news-2"', before_ad)
+        self.assertTrue(before_ad.rstrip().endswith("</article>"))
+        self.assertNotIn('id="digest-news-1"', after_ad)
+        self.assertIn("둘째 뉴스", after_ad)
+        self.assertIn("셋째 뉴스", after_ad)
+        self.assertTrue(after_ad.lstrip().startswith('<div class="daily-digest-continuation"'))
+        self.assertTrue(after_ad.rstrip().endswith("</div>"))
+
     def test_uses_plain_recording_voice_in_the_intro_note(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
 
@@ -347,6 +369,15 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         flow_index = html.index('class="digest-flow-image"')
         self.assertLess(story_index, flow_index)
 
+    def test_news_cards_keep_horizontal_reading_space(self):
+        html = render_post("2026-07-13", self.image_day())
+
+        self.assertIn(
+            "padding:30px clamp(18px,4vw,28px) 32px;",
+            html,
+        )
+        self.assertNotIn("padding:30px 0 32px;", html)
+
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch("blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)):
@@ -365,6 +396,10 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                 (meta["image_assets"][0]["width"], meta["image_assets"][0]["height"]),
                 (1200, 630),
             )
+            self.assertTrue(Path(directory, "2026-07-13-before-ad.html").is_file())
+            self.assertTrue(Path(directory, "2026-07-13-after-ad.html").is_file())
+            self.assertEqual(meta["before_ad_html"], "docs/tistory/2026-07-13-before-ad.html")
+            self.assertEqual(meta["after_ad_html"], "docs/tistory/2026-07-13-after-ad.html")
 
     def test_marks_only_model_generated_drafts_ready_for_human_review(self):
         with tempfile.TemporaryDirectory() as directory:

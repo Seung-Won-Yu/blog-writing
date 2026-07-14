@@ -59,6 +59,8 @@ def load_drafts():
                 "source": source,
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{day}.html",
+                "before_ad_html_path": f"tistory/{day}-before-ad.html",
+                "after_ad_html_path": f"tistory/{day}-after-ad.html",
                 "preview_path": f"preview/{day}.html",
                 "meta_path": f"tistory/{day}.json",
             }
@@ -559,9 +561,11 @@ def render(drafts):
             <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <div class="code-actions">
               <button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
-              <button class="copy secondary" type="button" id="htmlCopyButton" data-copy="html" disabled>본문 HTML 복사</button>
+              <button class="copy secondary" type="button" id="beforeAdCopyButton" data-copy="beforeAd" disabled>1번 뉴스까지 복사</button>
+              <button class="copy secondary" type="button" id="afterAdCopyButton" data-copy="afterAd" disabled>광고 뒤 본문 복사</button>
             </div>
           </div>
+          <p class="manual-help"><strong>본문 중간 AdFit 순서</strong> · 1단계 HTML을 붙여넣고 기본모드로 전환 → 글 끝에서 더보기(…) &gt; 광고 &gt; 애드핏 → HTML 모드로 돌아와 맨 끝에 2단계 HTML을 붙여넣으세요.</p>
           <textarea id="htmlCode" spellcheck="false" readonly></textarea>
           <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
             <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
@@ -578,6 +582,8 @@ def render(drafts):
     let current = null;
     let currentPreviewPath = "";
     let currentBaseHtml = "";
+    let currentBeforeAdHtml = "";
+    let currentAfterAdHtml = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -599,7 +605,8 @@ def render(drafts):
       previewButton: document.getElementById("previewButton"),
       previewPane: document.getElementById("previewPane"),
       previewFrame: document.getElementById("previewFrame"),
-      htmlCopyButton: document.getElementById("htmlCopyButton"),
+      beforeAdCopyButton: document.getElementById("beforeAdCopyButton"),
+      afterAdCopyButton: document.getElementById("afterAdCopyButton"),
       reviewGateStatus: document.getElementById("reviewGateStatus"),
     }};
 
@@ -644,7 +651,8 @@ def render(drafts):
 
     function updateCopyState() {{
       const ready = isDraftCopyReady();
-      els.htmlCopyButton.disabled = !ready;
+      els.beforeAdCopyButton.disabled = !ready || !currentBeforeAdHtml;
+      els.afterAdCopyButton.disabled = !ready || !currentAfterAdHtml;
       els.reviewGateStatus.textContent = reviewGateMessage();
       els.reviewGateStatus.dataset.ready = String(ready);
       if (currentBaseHtml) {{
@@ -755,6 +763,8 @@ def render(drafts):
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
       currentBaseHtml = "";
+      currentBeforeAdHtml = "";
+      currentAfterAdHtml = "";
       updateCopyState();
       setPreviewMode(false);
       els.previewButton.disabled = true;
@@ -762,9 +772,16 @@ def render(drafts):
       currentPreviewPath = "";
       els.htmlCode.value = "불러오는 중...";
       try {{
-        const response = await fetch(draft.html_path + "?v=" + Date.now());
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        currentBaseHtml = await response.text();
+        const cacheBust = "?v=" + Date.now();
+        const [response, beforeResponse, afterResponse] = await Promise.all([
+          fetch(draft.html_path + cacheBust),
+          fetch(draft.before_ad_html_path + cacheBust),
+          fetch(draft.after_ad_html_path + cacheBust),
+        ]);
+        if (!response.ok || !beforeResponse.ok || !afterResponse.ok) throw new Error("HTML fetch failed");
+        [currentBaseHtml, currentBeforeAdHtml, currentAfterAdHtml] = await Promise.all([
+          response.text(), beforeResponse.text(), afterResponse.text(),
+        ]);
         els.htmlCode.value = currentBaseHtml;
         currentPreviewPath = draft.preview_path + "?v=" + Date.now();
         els.previewButton.disabled = false;
@@ -810,12 +827,13 @@ def render(drafts):
       const button = event.target.closest("[data-copy]");
       if (!button || !current) return;
       const type = button.dataset.copy;
-      if (type === "html") {{
+      if (type === "beforeAd" || type === "afterAd") {{
         if (!isDraftCopyReady()) {{
           setStatus(reviewGateMessage(), "error");
           return;
         }}
-        copyText(currentBaseHtml, "본문 HTML");
+        if (type === "beforeAd") copyText(currentBeforeAdHtml, "1단계 HTML");
+        if (type === "afterAd") copyText(currentAfterAdHtml, "2단계 HTML");
       }}
       if (type === "title") copyText(current.title, "제목");
       if (type === "titles") copyText(numbered(current.title_candidates), "제목 후보");

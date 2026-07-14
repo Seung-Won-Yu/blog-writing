@@ -76,7 +76,10 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
         self.assertIn('<label for="htmlCode"', html)
-        self.assertIn('copyText(currentBaseHtml, "본문 HTML")', html)
+        self.assertIn('copyText(currentBeforeAdHtml, "1단계 HTML")', html)
+        self.assertIn('copyText(currentAfterAdHtml, "2단계 HTML")', html)
+        self.assertIn("1번 뉴스까지 복사", html)
+        self.assertIn("광고 뒤 본문 복사", html)
 
     def test_allows_publish_ready_copy_without_required_manual_review(self):
         html = render([])
@@ -85,8 +88,10 @@ class CopyPageTests(unittest.TestCase):
         self.assertNotIn('id="verificationNote"', html)
         self.assertNotIn('id="sourceChecked"', html)
         self.assertNotIn('id="relatedUrl"', html)
-        self.assertIn('id="htmlCopyButton"', html)
-        self.assertIn('data-copy="html" disabled', html)
+        self.assertIn('id="beforeAdCopyButton"', html)
+        self.assertIn('id="afterAdCopyButton"', html)
+        self.assertIn('data-copy="beforeAd" disabled', html)
+        self.assertIn('data-copy="afterAd" disabled', html)
         self.assertIn('<textarea id="htmlCode" spellcheck="false" readonly>', html)
         self.assertNotIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
         self.assertNotIn("function buildAuthorNoteHtml()", html)
@@ -153,7 +158,7 @@ class CopyPageTests(unittest.TestCase):
             '<button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>',
             html,
         )
-        self.assertLess(html.index('id="previewButton"'), html.index('data-copy="html"'))
+        self.assertLess(html.index('id="previewButton"'), html.index('data-copy="beforeAd"'))
         self.assertIn(
             '<section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>',
             html,

@@ -52,7 +52,8 @@ SECTION_TITLE_STYLE = (
     "margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;"
 )
 CARD_STYLE = (
-    "margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;"
+    "margin:0;padding:30px clamp(18px,4vw,28px) 32px;"
+    "border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;"
 )
 NEWS_IMAGE_STYLE = (
     "display:block;width:100%;max-height:300px;object-fit:cover;margin:0 0 20px;"
@@ -610,6 +611,26 @@ def render_post(day_id, day):
 """
 
 
+def split_post_around_first_story(post_html):
+    """Return valid fragments for Tistory's editor-only mid-article ad flow."""
+    marker = '<section id="digest-news-2"'
+    split_at = post_html.find(marker)
+    if split_at < 0:
+        return post_html, ""
+
+    before_ad = post_html[:split_at].rstrip() + "\n</article>\n"
+    after_body = post_html[split_at:].strip()
+    closing = "</article>"
+    if not after_body.endswith(closing):
+        raise ValueError("Tistory post fragment is missing the article closing tag")
+    after_body = after_body[: -len(closing)].rstrip()
+    after_ad = (
+        '<div class="daily-digest-continuation"'
+        f'{style(POST_SHELL_STYLE)}>\n{after_body}\n</div>\n'
+    )
+    return before_ad, after_ad
+
+
 def write_post(day_id, day=None, source_page=None):
     day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -663,7 +684,13 @@ def write_post(day_id, day=None, source_page=None):
         and generation_revision >= MIN_PUBLISH_REVISION
     )
 
-    html_path.write_text(render_post(day_id, day), encoding="utf-8")
+    post_html = render_post(day_id, day)
+    before_ad_html, after_ad_html = split_post_around_first_story(post_html)
+    before_ad_path = OUT_DIR / f"{day_id}-before-ad.html"
+    after_ad_path = OUT_DIR / f"{day_id}-after-ad.html"
+    html_path.write_text(post_html, encoding="utf-8")
+    before_ad_path.write_text(before_ad_html, encoding="utf-8")
+    after_ad_path.write_text(after_ad_html, encoding="utf-8")
     meta_path.write_text(
         json.dumps(
             {
@@ -679,6 +706,8 @@ def write_post(day_id, day=None, source_page=None):
                 "source": f"data/days/{day_id}.json",
                 "source_page": source_page,
                 "html": f"docs/tistory/{day_id}.html",
+                "before_ad_html": f"docs/tistory/{day_id}-before-ad.html",
+                "after_ad_html": f"docs/tistory/{day_id}-after-ad.html",
                 "image_assets": image_assets,
             },
             ensure_ascii=False,
