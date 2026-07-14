@@ -7,23 +7,19 @@ from blog_pipeline.publishing.repair_archived_posts import (
 
 
 class RepairArchivedPostsTests(unittest.TestCase):
-    def test_normalizes_shell_cards_and_learning_sections(self):
+    def test_normalizes_archived_posts_to_class_only_v2_markup(self):
         source = """<article style="padding:0"><section class="digest-news-card" style="padding:0">첫째</section><section class="digest-news-card" style="padding:0">둘째</section><section class="digest-quiz">문제</section><section class="digest-terms">용어</section></article>"""
 
         html = normalize_archived_html(source)
 
-        self.assertIn("max-width:728px !important", html)
-        self.assertIn("padding:12px 0 36px !important", html)
+        self.assertIn(
+            '<article class="daily-digest-post" data-digest-version="2">', html
+        )
         self.assertIn('id="digest-news-1"', html)
         self.assertIn('id="digest-news-2"', html)
-        self.assertIn(
-            'class="digest-quiz" style="margin:36px 0;padding:22px clamp(18px,4vw,28px)',
-            html,
-        )
-        self.assertIn(
-            'class="digest-terms" style="margin:36px 0;padding:22px clamp(18px,4vw,28px)',
-            html,
-        )
+        self.assertIn('<section class="digest-quiz">', html)
+        self.assertIn('<section class="digest-terms">', html)
+        self.assertNotIn("style=", html)
 
     def test_inserts_one_ad_before_second_story(self):
         source = normalize_archived_html(

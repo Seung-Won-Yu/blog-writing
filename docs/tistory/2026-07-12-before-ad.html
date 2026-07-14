@@ -1,37 +1,32 @@
-<article class="daily-digest-post" style="max-width:720px !important;margin:0 auto;padding:12px clamp(18px,4vw,28px) 36px !important;box-sizing:border-box;color:#303942;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.8;">
-  <section class="digest-hero" style="margin:0 0 34px;padding:24px 0 28px;border-top:4px solid #28745a;border-bottom:1px solid #d8dedb;background:#fff;">
-    <p class="digest-kicker" style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">2026. 7. 12 (일) · 약 9분 · 하루 한 시간 개발 기록</p>
-    <h2 class="digest-title" style="margin:0 0 16px;color:#17211c;font-size:31px;line-height:1.32;font-weight:850;">메타, &#x27;인스타 사진 AI 활용&#x27; 반발에 사흘 만에 자동 연동 중단</h2>
-    <p class="digest-lead" style="margin:0;color:#35433c;font-size:17px;line-height:1.82;font-weight:650;">아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려다 거센 반발에 부딪혔다. 개인의 일상이 플랫폼의 자산으로 치환되는 과정에서 발생한 이번 충돌은 데이터 활용의 경계를 다시 묻게 만든다.</p>
-    <p class="digest-meta-intro" style="margin:14px 0 0;color:#66716b;font-size:14px;line-height:1.7;">확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했다. 세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.</p>
+<article class="daily-digest-post" data-digest-version="2">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 12 (일) · 약 9분</p>
+    <p class="digest-lead">아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려다 거센 반발에 부딪혔다. 개인의 일상이 플랫폼의 자산으로 치환되는 과정에서 발생한 이번 충돌은 데이터 활용의 경계를 다시 묻게 만든다.</p>
+    <p class="digest-meta-intro">확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.</p>
   </section>
 
-  <figure class="digest-cover-figure" style="margin:0 0 34px;"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png" alt="2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지" width="1200" height="630" loading="eager" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png" alt="2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지" width="1200" height="630" loading="eager"></figure>
 
-  <section class="digest-summary" style="margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;background:#f7f4ec;">
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">먼저 보는 핵심</h2>
-  <ul style="margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"><li>1. 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</li><li>2. 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</li><li>3. 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</li><li>정처기 포인트: 소프트웨어 설계 문제로 개념을 점검합니다.</li></ul>
+  <section class="digest-throughline">
+  <p class="digest-section-label">오늘의 관점</p>
+  <h2>이 소식들이 연결되는 지점</h2>
+  <p>데이터를 둘러싼 갈등은 서비스 중단이라는 극단적인 결과로 이어졌지만, 다른 한편에서는 그 데이터를 먹고 자란 모델들이 더 세분화된 성능으로 개발 환경에 침투하고 있다. 깃허브 코파일럿에 탑재된 GPT-5.6 제품군은 작업의 경중에 따라 모델을 골라 쓰는 효율성을 제안한다. 하지만 이러한 기술적 진보의 밑바탕이 되는 성능 지표들이 과연 믿을만한 것인지에 대한 의구심도 함께 고개를 든다. 오픈AI가 기존 코딩 벤치마크의 허점을 지적하며 신호와 소음을 구분해야 한다고 주장하는 배경에는, 기술의 확산 속도만큼이나 정교한 검증 체계가 절실하다는 긴장감이 흐르고 있다.</p>
 </section>
 
-  <section class="digest-throughline" style="margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;border-top:4px solid #28745a;background:#f4f7f5;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">WHY THESE STORIES</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 연결고리</h2>
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">데이터를 둘러싼 갈등은 서비스 중단이라는 극단적인 결과로 이어졌지만, 다른 한편에서는 그 데이터를 먹고 자란 모델들이 더 세분화된 성능으로 개발 환경에 침투하고 있다. 깃허브 코파일럿에 탑재된 GPT-5.6 제품군은 작업의 경중에 따라 모델을 골라 쓰는 효율성을 제안한다. 하지만 이러한 기술적 진보의 밑바탕이 되는 성능 지표들이 과연 믿을만한 것인지에 대한 의구심도 함께 고개를 든다. 오픈AI가 기존 코딩 벤치마크의 허점을 지적하며 신호와 소음을 구분해야 한다고 주장하는 배경에는, 기술의 확산 속도만큼이나 정교한 검증 체계가 절실하다는 긴장감이 흐르고 있다.</p>
-</section>
-
-  <nav class="digest-reading-guide" aria-label="글 순서" style="margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;background:#fff;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">READING GUIDE</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">이 글에서 볼 것</h2>
-  <ol style="margin:0;padding:0;list-style:none;"><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-1" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">오늘의 메인 이슈</b> · 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-2" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-3" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</a></li></ol>
+  <nav class="digest-reading-guide" aria-label="글 순서">
+  <p class="digest-reading-title">이 글에서 볼 것</p>
+  <div class="digest-reading-list" role="list"><div class="digest-reading-item" role="listitem"><a href="#digest-news-1"><span class="digest-reading-index">01</span>메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-2"><span class="digest-reading-index">02</span>깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-3"><span class="digest-reading-index">03</span>오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</a></div></div>
 </nav>
 
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">오늘의 뉴스 3개</h2>
-  <section id="digest-news-1" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png" alt="자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 12 · 일반 독자</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">이용자 동의 없이 공개 계정 데이터를 AI 학습에 쓰려던 계획이 프라이버시 논란으로 중단되었다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타가 공개 인스타그램 계정의 사진을 AI 이미지 생성에 활용하려던 계획을 출시 사흘 만에 중단했다. 이용자 동의를 구하지 않고 자동으로 연동되도록 설계한 점이 화근이었다. 창작자들은 자신의 저작물이 무단으로 학습 데이터가 되는 상황에 거세게 반발했다. 메타는 유용한 창작 도구를 제공하려는 의도였다고 해명했으나, 프라이버시 침해 논란이 확산되자 서비스를 중단하기로 결정했다. 이는 플랫폼 기업이 사용자 데이터를 다루는 방식에 대한 사회적 경계심이 얼마나 높은지 보여주는 사례다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">예를 들면 평소 풍경 사진을 올리던 작가가 자신의 화풍이 AI에 의해 복제되는 것을 원치 않더라도, 공개 계정이라는 이유만으로 학습을 강요받는 장면이 연출될 수 있었다. 개발자 입장에서는 대규모 데이터 확보가 모델 성능 향상에 필수적이지만, 그 과정에서 신뢰를 잃으면 서비스 지속 자체가 불가능해진다는 점을 시사한다. 기본 설정이 &#x27;동의&#x27;로 되어 있는 옵트아웃 방식의 위험성을 확인한 셈이다. 사용자의 창작물에 대한 권리와 기술 발전 사이의 균형점이 어디인지 고민하게 만든다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타가 성명에서 언급한 &#x27;기대에 미치지 못한 의견&#x27;의 구체적인 통계나 지역별 반발 수치는 공개되지 않았다. 인스타그램 설정 메뉴 내 &#x27;개인정보 보호&#x27; 섹션에서 내 콘텐츠가 AI 학습에 사용되는지 여부를 선택하는 버튼이 여전히 남아있는지 확인해야 한다. 또한 메타 뉴스룸의 공식 성명 원문을 통해 이번 중단이 영구적인 폐기인지, 아니면 동의 절차를 강화한 재출시를 염두에 둔 일시적 조치인지 문구의 뉘앙스를 살피는 과정이 필요하다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://www.aitimes.com/news/articleView.html?idxno=212666" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
+  <h2 class="digest-news-heading">오늘의 뉴스 3개</h2>
+  <section id="digest-news-1" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png" alt="자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 12 · 일반 독자</p>
+    <h3>메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</h3>
+    <p class="digest-blurb">이용자 동의 없이 공개 계정 데이터를 AI 학습에 쓰려던 계획이 프라이버시 논란으로 중단되었다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>메타가 공개 인스타그램 계정의 사진을 AI 이미지 생성에 활용하려던 계획을 출시 사흘 만에 중단했다. 이용자 동의를 구하지 않고 자동으로 연동되도록 설계한 점이 화근이었다. 창작자들은 자신의 저작물이 무단으로 학습 데이터가 되는 상황에 거세게 반발했다. 메타는 유용한 창작 도구를 제공하려는 의도였다고 해명했으나, 프라이버시 침해 논란이 확산되자 서비스를 중단하기로 결정했다. 이는 플랫폼 기업이 사용자 데이터를 다루는 방식에 대한 사회적 경계심이 얼마나 높은지 보여주는 사례다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>예를 들면 평소 풍경 사진을 올리던 작가가 자신의 화풍이 AI에 의해 복제되는 것을 원치 않더라도, 공개 계정이라는 이유만으로 학습을 강요받는 장면이 연출될 수 있었다. 개발자 입장에서는 대규모 데이터 확보가 모델 성능 향상에 필수적이지만, 그 과정에서 신뢰를 잃으면 서비스 지속 자체가 불가능해진다는 점을 시사한다. 기본 설정이 &#x27;동의&#x27;로 되어 있는 옵트아웃 방식의 위험성을 확인한 셈이다. 사용자의 창작물에 대한 권리와 기술 발전 사이의 균형점이 어디인지 고민하게 만든다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>메타가 성명에서 언급한 &#x27;기대에 미치지 못한 의견&#x27;의 구체적인 통계나 지역별 반발 수치는 공개되지 않았다. 인스타그램 설정 메뉴 내 &#x27;개인정보 보호&#x27; 섹션에서 내 콘텐츠가 AI 학습에 사용되는지 여부를 선택하는 버튼이 여전히 남아있는지 확인해야 한다. 또한 메타 뉴스룸의 공식 성명 원문을 통해 이번 중단이 영구적인 폐기인지, 아니면 동의 절차를 강화한 재출시를 염두에 둔 일시적 조치인지 문구의 뉘앙스를 살피는 과정이 필요하다.</p></div>
+    <p class="digest-source-link"><a href="https://www.aitimes.com/news/articleView.html?idxno=212666" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
 </section>
 </article>

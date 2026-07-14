@@ -1,87 +1,86 @@
-<article class="daily-digest-post" style="max-width:720px !important;margin:0 auto;padding:12px clamp(18px,4vw,28px) 36px !important;box-sizing:border-box;color:#303942;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.8;">
-  <section class="digest-hero" style="margin:0 0 34px;padding:24px 0 28px;border-top:4px solid #28745a;border-bottom:1px solid #d8dedb;background:#fff;">
-    <p class="digest-kicker" style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">2026. 7. 12 (일) · 약 9분 · 하루 한 시간 개발 기록</p>
-    <h2 class="digest-title" style="margin:0 0 16px;color:#17211c;font-size:31px;line-height:1.32;font-weight:850;">메타, &#x27;인스타 사진 AI 활용&#x27; 반발에 사흘 만에 자동 연동 중단</h2>
-    <p class="digest-lead" style="margin:0;color:#35433c;font-size:17px;line-height:1.82;font-weight:650;">아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려다 거센 반발에 부딪혔다. 개인의 일상이 플랫폼의 자산으로 치환되는 과정에서 발생한 이번 충돌은 데이터 활용의 경계를 다시 묻게 만든다.</p>
-    <p class="digest-meta-intro" style="margin:14px 0 0;color:#66716b;font-size:14px;line-height:1.7;">확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했다. 세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.</p>
+<article class="daily-digest-post" data-digest-version="2">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 12 (일) · 약 9분</p>
+    <p class="digest-lead">아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려다 거센 반발에 부딪혔다. 개인의 일상이 플랫폼의 자산으로 치환되는 과정에서 발생한 이번 충돌은 데이터 활용의 경계를 다시 묻게 만든다.</p>
+    <p class="digest-meta-intro">확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.</p>
   </section>
 
-  <figure class="digest-cover-figure" style="margin:0 0 34px;"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png" alt="2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지" width="1200" height="630" loading="eager" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png" alt="2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지" width="1200" height="630" loading="eager"></figure>
 
-  <section class="digest-summary" style="margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;background:#f7f4ec;">
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">먼저 보는 핵심</h2>
-  <ul style="margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"><li>1. 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</li><li>2. 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</li><li>3. 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</li><li>정처기 포인트: 소프트웨어 설계 문제로 개념을 점검합니다.</li></ul>
+  <section class="digest-throughline">
+  <p class="digest-section-label">오늘의 관점</p>
+  <h2>이 소식들이 연결되는 지점</h2>
+  <p>데이터를 둘러싼 갈등은 서비스 중단이라는 극단적인 결과로 이어졌지만, 다른 한편에서는 그 데이터를 먹고 자란 모델들이 더 세분화된 성능으로 개발 환경에 침투하고 있다. 깃허브 코파일럿에 탑재된 GPT-5.6 제품군은 작업의 경중에 따라 모델을 골라 쓰는 효율성을 제안한다. 하지만 이러한 기술적 진보의 밑바탕이 되는 성능 지표들이 과연 믿을만한 것인지에 대한 의구심도 함께 고개를 든다. 오픈AI가 기존 코딩 벤치마크의 허점을 지적하며 신호와 소음을 구분해야 한다고 주장하는 배경에는, 기술의 확산 속도만큼이나 정교한 검증 체계가 절실하다는 긴장감이 흐르고 있다.</p>
 </section>
 
-  <section class="digest-throughline" style="margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;border-top:4px solid #28745a;background:#f4f7f5;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">WHY THESE STORIES</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 연결고리</h2>
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">데이터를 둘러싼 갈등은 서비스 중단이라는 극단적인 결과로 이어졌지만, 다른 한편에서는 그 데이터를 먹고 자란 모델들이 더 세분화된 성능으로 개발 환경에 침투하고 있다. 깃허브 코파일럿에 탑재된 GPT-5.6 제품군은 작업의 경중에 따라 모델을 골라 쓰는 효율성을 제안한다. 하지만 이러한 기술적 진보의 밑바탕이 되는 성능 지표들이 과연 믿을만한 것인지에 대한 의구심도 함께 고개를 든다. 오픈AI가 기존 코딩 벤치마크의 허점을 지적하며 신호와 소음을 구분해야 한다고 주장하는 배경에는, 기술의 확산 속도만큼이나 정교한 검증 체계가 절실하다는 긴장감이 흐르고 있다.</p>
-</section>
-
-  <nav class="digest-reading-guide" aria-label="글 순서" style="margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;background:#fff;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">READING GUIDE</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">이 글에서 볼 것</h2>
-  <ol style="margin:0;padding:0;list-style:none;"><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-1" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">오늘의 메인 이슈</b> · 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-2" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-3" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</a></li></ol>
+  <nav class="digest-reading-guide" aria-label="글 순서">
+  <p class="digest-reading-title">이 글에서 볼 것</p>
+  <div class="digest-reading-list" role="list"><div class="digest-reading-item" role="listitem"><a href="#digest-news-1"><span class="digest-reading-index">01</span>메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-2"><span class="digest-reading-index">02</span>깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-3"><span class="digest-reading-index">03</span>오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</a></div></div>
 </nav>
 
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">오늘의 뉴스 3개</h2>
-  <section id="digest-news-1" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png" alt="자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 12 · 일반 독자</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">이용자 동의 없이 공개 계정 데이터를 AI 학습에 쓰려던 계획이 프라이버시 논란으로 중단되었다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타가 공개 인스타그램 계정의 사진을 AI 이미지 생성에 활용하려던 계획을 출시 사흘 만에 중단했다. 이용자 동의를 구하지 않고 자동으로 연동되도록 설계한 점이 화근이었다. 창작자들은 자신의 저작물이 무단으로 학습 데이터가 되는 상황에 거세게 반발했다. 메타는 유용한 창작 도구를 제공하려는 의도였다고 해명했으나, 프라이버시 침해 논란이 확산되자 서비스를 중단하기로 결정했다. 이는 플랫폼 기업이 사용자 데이터를 다루는 방식에 대한 사회적 경계심이 얼마나 높은지 보여주는 사례다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">예를 들면 평소 풍경 사진을 올리던 작가가 자신의 화풍이 AI에 의해 복제되는 것을 원치 않더라도, 공개 계정이라는 이유만으로 학습을 강요받는 장면이 연출될 수 있었다. 개발자 입장에서는 대규모 데이터 확보가 모델 성능 향상에 필수적이지만, 그 과정에서 신뢰를 잃으면 서비스 지속 자체가 불가능해진다는 점을 시사한다. 기본 설정이 &#x27;동의&#x27;로 되어 있는 옵트아웃 방식의 위험성을 확인한 셈이다. 사용자의 창작물에 대한 권리와 기술 발전 사이의 균형점이 어디인지 고민하게 만든다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타가 성명에서 언급한 &#x27;기대에 미치지 못한 의견&#x27;의 구체적인 통계나 지역별 반발 수치는 공개되지 않았다. 인스타그램 설정 메뉴 내 &#x27;개인정보 보호&#x27; 섹션에서 내 콘텐츠가 AI 학습에 사용되는지 여부를 선택하는 버튼이 여전히 남아있는지 확인해야 한다. 또한 메타 뉴스룸의 공식 성명 원문을 통해 이번 중단이 영구적인 폐기인지, 아니면 동의 절차를 강화한 재출시를 염두에 둔 일시적 조치인지 문구의 뉘앙스를 살피는 과정이 필요하다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://www.aitimes.com/news/articleView.html?idxno=212666" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
+  <h2 class="digest-news-heading">오늘의 뉴스 3개</h2>
+  <section id="digest-news-1" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png" alt="자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 12 · 일반 독자</p>
+    <h3>메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회</h3>
+    <p class="digest-blurb">이용자 동의 없이 공개 계정 데이터를 AI 학습에 쓰려던 계획이 프라이버시 논란으로 중단되었다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>메타가 공개 인스타그램 계정의 사진을 AI 이미지 생성에 활용하려던 계획을 출시 사흘 만에 중단했다. 이용자 동의를 구하지 않고 자동으로 연동되도록 설계한 점이 화근이었다. 창작자들은 자신의 저작물이 무단으로 학습 데이터가 되는 상황에 거세게 반발했다. 메타는 유용한 창작 도구를 제공하려는 의도였다고 해명했으나, 프라이버시 침해 논란이 확산되자 서비스를 중단하기로 결정했다. 이는 플랫폼 기업이 사용자 데이터를 다루는 방식에 대한 사회적 경계심이 얼마나 높은지 보여주는 사례다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>예를 들면 평소 풍경 사진을 올리던 작가가 자신의 화풍이 AI에 의해 복제되는 것을 원치 않더라도, 공개 계정이라는 이유만으로 학습을 강요받는 장면이 연출될 수 있었다. 개발자 입장에서는 대규모 데이터 확보가 모델 성능 향상에 필수적이지만, 그 과정에서 신뢰를 잃으면 서비스 지속 자체가 불가능해진다는 점을 시사한다. 기본 설정이 &#x27;동의&#x27;로 되어 있는 옵트아웃 방식의 위험성을 확인한 셈이다. 사용자의 창작물에 대한 권리와 기술 발전 사이의 균형점이 어디인지 고민하게 만든다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>메타가 성명에서 언급한 &#x27;기대에 미치지 못한 의견&#x27;의 구체적인 통계나 지역별 반발 수치는 공개되지 않았다. 인스타그램 설정 메뉴 내 &#x27;개인정보 보호&#x27; 섹션에서 내 콘텐츠가 AI 학습에 사용되는지 여부를 선택하는 버튼이 여전히 남아있는지 확인해야 한다. 또한 메타 뉴스룸의 공식 성명 원문을 통해 이번 중단이 영구적인 폐기인지, 아니면 동의 절차를 강화한 재출시를 염두에 둔 일시적 조치인지 문구의 뉘앙스를 살피는 과정이 필요하다.</p></div>
+    <p class="digest-source-link"><a href="https://www.aitimes.com/news/articleView.html?idxno=212666" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
 </section>
-<section id="digest-news-2" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-02.png" alt="코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">함께 볼 흐름 · NEWS 02 · GitHub Changelog · 2026. 7. 10 · 실무 독자</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">작업 난이도와 비용에 따라 추론형, 균형형, 경량형 모델을 선택해 코딩 효율을 높일 수 있게 되었다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">깃허브 코파일럿에 오픈AI의 최신 모델인 GPT-5.6 제품군이 도입되었다. 이번 업데이트는 솔, 테라, 루나 세 가지 모델로 구성되어 작업 성격에 맞춰 선택할 수 있다. 복잡한 코드베이스를 분석하거나 장시간 실행되는 에이전트 작업에는 추론 능력이 가장 뛰어난 솔이 적합하다. 일상적인 대화형 코딩에는 균형 잡힌 성능의 테라를, 가볍고 빠른 작업이나 비용 효율이 중요한 상황에는 루나를 활용한다. 개발자는 이제 작업의 난이도와 예산에 맞춰 모델을 직접 골라 쓸 수 있게 되었다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">예를 들면 수천 줄의 레거시 코드를 리팩토링할 때는 솔을 선택해 깊은 추론을 유도하고, 간단한 단위 테스트 코드를 짤 때는 루나를 써서 비용과 시간을 아끼는 식의 전략적 코딩이 가능해진다. 모든 작업에 고성능 모델을 쓰는 낭비를 줄이고 목적에 맞는 도구를 배치하는 능력이 중요해졌다. 이는 단순한 기능 추가를 넘어 개발 환경의 비용 최적화와 직결된다. 비주얼 스튜디오 코드나 깃허브 모바일 등 다양한 환경에서 모델 선택기가 제공되므로 접근성도 높아졌다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">각 모델의 구체적인 토큰 제한 수치와 모델별 사용량 기반 과금 상세 내역은 본문에 명시되지 않았다. 깃허브 코파일럿의 가격 정책 페이지에서 &#x27;Usage Based Billing&#x27; 항목을 찾아 솔 모델 사용 시 추가되는 비용이 얼마인지 확인해야 한다. 또한 본인의 구독 등급인 프로, 비즈니스, 엔터프라이즈에 따라 접근 가능한 모델이 다르므로, 설정 창의 모델 선택 목록에 솔, 테라, 루나가 모두 활성화되어 있는지 직접 체크하는 것이 확실하다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
+<section id="digest-news-2" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-02.png" alt="코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">함께 볼 흐름 · NEWS 02 · GitHub Changelog · 2026. 7. 10 · 실무 독자</p>
+    <h3>깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재</h3>
+    <p class="digest-blurb">작업 난이도와 비용에 따라 추론형, 균형형, 경량형 모델을 선택해 코딩 효율을 높일 수 있게 되었다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>깃허브 코파일럿에 오픈AI의 최신 모델인 GPT-5.6 제품군이 도입되었다. 이번 업데이트는 솔, 테라, 루나 세 가지 모델로 구성되어 작업 성격에 맞춰 선택할 수 있다. 복잡한 코드베이스를 분석하거나 장시간 실행되는 에이전트 작업에는 추론 능력이 가장 뛰어난 솔이 적합하다. 일상적인 대화형 코딩에는 균형 잡힌 성능의 테라를, 가볍고 빠른 작업이나 비용 효율이 중요한 상황에는 루나를 활용한다. 개발자는 이제 작업의 난이도와 예산에 맞춰 모델을 직접 골라 쓸 수 있게 되었다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>예를 들면 수천 줄의 레거시 코드를 리팩토링할 때는 솔을 선택해 깊은 추론을 유도하고, 간단한 단위 테스트 코드를 짤 때는 루나를 써서 비용과 시간을 아끼는 식의 전략적 코딩이 가능해진다. 모든 작업에 고성능 모델을 쓰는 낭비를 줄이고 목적에 맞는 도구를 배치하는 능력이 중요해졌다. 이는 단순한 기능 추가를 넘어 개발 환경의 비용 최적화와 직결된다. 비주얼 스튜디오 코드나 깃허브 모바일 등 다양한 환경에서 모델 선택기가 제공되므로 접근성도 높아졌다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>각 모델의 구체적인 토큰 제한 수치와 모델별 사용량 기반 과금 상세 내역은 본문에 명시되지 않았다. 깃허브 코파일럿의 가격 정책 페이지에서 &#x27;Usage Based Billing&#x27; 항목을 찾아 솔 모델 사용 시 추가되는 비용이 얼마인지 확인해야 한다. 또한 본인의 구독 등급인 프로, 비즈니스, 엔터프라이즈에 따라 접근 가능한 모델이 다르므로, 설정 창의 모델 선택 목록에 솔, 테라, 루나가 모두 활성화되어 있는지 직접 체크하는 것이 확실하다.</p></div>
+    <p class="digest-source-link"><a href="https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
 </section>
-<section id="digest-news-3" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-03.png" alt="코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">함께 볼 흐름 · NEWS 03 · OpenAI News · 2026. 7. 8 · 깊이 읽기</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">성능 평가 지표에 포함된 노이즈가 AI 모델의 실제 실력을 왜곡할 수 있다는 분석 결과가 나왔다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">오픈AI가 코딩 성능 평가 지표인 SWE-벤치 프로의 신뢰성 문제를 지적하는 분석 보고서를 내놓았다. 연구 결과에 따르면 해당 벤치마크 데이터에 포함된 노이즈가 AI 모델의 실제 능력을 정확히 측정하는 데 방해가 되고 있다. 평가 항목 중 일부가 실제 코딩 실력보다는 우연이나 데이터의 특이성에 의존해 점수가 매겨지는 현상이 발견된 것이다. 이는 모델의 성능을 과대평가하거나 왜곡할 위험이 있음을 시사한다. 오픈AI는 신호와 소음을 분리하여 더 정밀한 평가 체계를 구축해야 한다고 강조했다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">예를 들면 어떤 모델이 벤치마크에서 높은 점수를 받았음에도 실제 프로젝트에 투입했을 때 엉뚱한 코드를 짜는 이유가 이러한 평가 지표의 허점 때문일 수 있다. 개발자가 새로운 AI 도구를 도입할 때 벤치마크 수치만 믿고 의사결정을 내리는 것이 위험할 수 있다는 경고다. 지표의 숫자가 실제 문제 해결 능력과 일치하지 않는다면 기술 선택의 기준 자체가 흔들리게 된다. 벤치마크의 한계를 이해하는 것은 모델의 실제 활용 가치를 객관적으로 판단하는 데 필수적인 과정이다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">오픈AI가 노이즈로 규정한 구체적인 데이터 샘플의 예시나 정확한 오류 발생 비율은 요약본에 포함되지 않았다. 오픈AI 공식 블로그의 &#x27;Separating signal from noise&#x27; 게시물에 첨부된 기술 분석 리포트를 열어 어떤 유형의 코딩 문제가 부적절하다고 판명되었는지 상세 목록을 확인해야 한다. 또한 SWE-벤치 프로 측이 이러한 지적에 대해 내놓은 반박이나 개선 계획이 있는지 관련 깃허브 저장소의 이슈 트래커를 살펴보는 것이 균형 잡힌 시각을 갖는 방법이다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
+<section id="digest-news-3" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-03.png" alt="코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">함께 볼 흐름 · NEWS 03 · OpenAI News · 2026. 7. 8 · 깊이 읽기</p>
+    <h3>오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기</h3>
+    <p class="digest-blurb">성능 평가 지표에 포함된 노이즈가 AI 모델의 실제 실력을 왜곡할 수 있다는 분석 결과가 나왔다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>오픈AI가 코딩 성능 평가 지표인 SWE-벤치 프로의 신뢰성 문제를 지적하는 분석 보고서를 내놓았다. 연구 결과에 따르면 해당 벤치마크 데이터에 포함된 노이즈가 AI 모델의 실제 능력을 정확히 측정하는 데 방해가 되고 있다. 평가 항목 중 일부가 실제 코딩 실력보다는 우연이나 데이터의 특이성에 의존해 점수가 매겨지는 현상이 발견된 것이다. 이는 모델의 성능을 과대평가하거나 왜곡할 위험이 있음을 시사한다. 오픈AI는 신호와 소음을 분리하여 더 정밀한 평가 체계를 구축해야 한다고 강조했다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>예를 들면 어떤 모델이 벤치마크에서 높은 점수를 받았음에도 실제 프로젝트에 투입했을 때 엉뚱한 코드를 짜는 이유가 이러한 평가 지표의 허점 때문일 수 있다. 개발자가 새로운 AI 도구를 도입할 때 벤치마크 수치만 믿고 의사결정을 내리는 것이 위험할 수 있다는 경고다. 지표의 숫자가 실제 문제 해결 능력과 일치하지 않는다면 기술 선택의 기준 자체가 흔들리게 된다. 벤치마크의 한계를 이해하는 것은 모델의 실제 활용 가치를 객관적으로 판단하는 데 필수적인 과정이다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>오픈AI가 노이즈로 규정한 구체적인 데이터 샘플의 예시나 정확한 오류 발생 비율은 요약본에 포함되지 않았다. 오픈AI 공식 블로그의 &#x27;Separating signal from noise&#x27; 게시물에 첨부된 기술 분석 리포트를 열어 어떤 유형의 코딩 문제가 부적절하다고 판명되었는지 상세 목록을 확인해야 한다. 또한 SWE-벤치 프로 측이 이러한 지적에 대해 내놓은 반박이나 개선 계획이 있는지 관련 깃허브 저장소의 이슈 트래커를 살펴보는 것이 균형 잡힌 시각을 갖는 방법이다.</p></div>
+    <p class="digest-source-link"><a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
 </section>
 
-  <section class="digest-quiz" style="margin:40px 0;padding:24px;border:1px solid #cfd8d3;border-radius:4px;background:#f4f7f5;">
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">기초상식 · 소프트웨어 설계</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 정처기 문제</h2>
-  <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">한 모듈이 다른 모듈의 내부 데이터를 직접 참조하거나 수정할 때의 결합도는?</p>
-  <ol class="digest-options" role="list" style="margin:12px 0 14px;padding-left:0;list-style:none;"><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">1.</span><span>외부 결합도</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">2.</span><span>스탬프 결합도</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">3.</span><span>내용 결합도</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">4.</span><span>공통 결합도</span></li></ol>
-  <details class="digest-answer" style="margin-top:16px;padding-top:14px;border-top:1px solid #cfd8d3;">
-    <summary style="cursor:pointer;color:#28745a;font-weight:850;">정답과 해설 보기</summary>
-    <p style="margin:12px 0 6px;color:#27332d;"><b>정답</b> 3번 · 내용 결합도</p>
-    <p class="digest-explain" style="margin:0;color:#46534d;"><b>해설</b> 내용 결합도는 한 모듈이 다른 모듈의 내부 자료나 내부 기능을 직접 사용하는 가장 강한 결합도입니다.</p>
+  <section class="digest-quiz">
+  <p class="digest-source">기초상식 · 소프트웨어 설계</p>
+  <h2>오늘의 정처기 문제</h2>
+  <p class="digest-question">한 모듈이 다른 모듈의 내부 데이터를 직접 참조하거나 수정할 때의 결합도는?</p>
+  <ol class="digest-options" role="list"><li class="digest-option"><span class="digest-option-number">1.</span><span>외부 결합도</span></li><li class="digest-option"><span class="digest-option-number">2.</span><span>스탬프 결합도</span></li><li class="digest-option"><span class="digest-option-number">3.</span><span>내용 결합도</span></li><li class="digest-option"><span class="digest-option-number">4.</span><span>공통 결합도</span></li></ol>
+  <details class="digest-answer">
+    <summary>정답과 해설 보기</summary>
+    <p class="digest-answer-line"><b>정답</b> 3번 · 내용 결합도</p>
+    <p class="digest-explain"><b>해설</b> 내용 결합도는 한 모듈이 다른 모듈의 내부 자료나 내부 기능을 직접 사용하는 가장 강한 결합도입니다.</p>
   </details>
 </section>
 
-  <section class="digest-terms" style="margin:40px 0;padding:24px;border:1px solid #d8dedb;border-radius:4px;background:#fff;">
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 IT · 개발 · 기획 용어</h2>
-  <ul style="margin:0;padding:0;list-style:none;"><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">Opt-out</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">기획</span><br>
-  <em style="color:#475569;font-style:normal;">당사자가 거부 의사를 밝히기 전까지는 동의한 것으로 간주하여 서비스를 제공하는 방식.</em>
-</li><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">Agentic Coding</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">개발</span><br>
-  <em style="color:#475569;font-style:normal;">AI가 단순한 코드 생성을 넘어 스스로 목표를 설정하고 도구를 사용하며 복잡한 개발 과업을 수행하는 방식.</em>
-</li><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">Benchmark Noise</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">IT</span><br>
-  <em style="color:#475569;font-style:normal;">성능 측정 지표에서 실제 실력과 무관하게 결과값에 영향을 주는 무작위적이거나 잘못된 데이터 요소.</em>
+  <section class="digest-terms">
+  <h2>오늘의 IT · 개발 · 기획 용어</h2>
+  <ul><li>
+  <b>Opt-out</b>
+  <span>기획</span>
+  <em>당사자가 거부 의사를 밝히기 전까지는 동의한 것으로 간주하여 서비스를 제공하는 방식.</em>
+</li><li>
+  <b>Agentic Coding</b>
+  <span>개발</span>
+  <em>AI가 단순한 코드 생성을 넘어 스스로 목표를 설정하고 도구를 사용하며 복잡한 개발 과업을 수행하는 방식.</em>
+</li><li>
+  <b>Benchmark Noise</b>
+  <span>IT</span>
+  <em>성능 측정 지표에서 실제 실력과 무관하게 결과값에 영향을 주는 무작위적이거나 잘못된 데이터 요소.</em>
 </li></ul>
 </section>
 
-  <section class="digest-closing" style="margin:42px 0 0;padding:24px 0;border-top:3px solid #28745a;border-bottom:1px solid #d8dedb;background:#fff;">
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.82;">사용자의 거부감과 기술의 효율성, 그리고 평가의 정확성이라는 세 가지 축이 동시에 흔들리고 있다. 메타의 철회는 플랫폼이 독점하던 데이터 권력이 사용자에게 일부 돌아가는 장면을 보여주었다. 하지만 개발 도구에 깊숙이 들어온 AI 모델들과 그 성능을 측정하는 불완전한 지표들은 우리가 여전히 과도기에 있음을 증명한다. 기술이 일상과 업무에 안착하려면 기능의 고도화보다 신뢰의 구축이 선행되어야 한다.</p>
-  <div class="digest-action" style="margin:18px 0 0;padding:16px 18px;border-left:3px solid #c99b43;background:#f7f4ec;color:#35433c;"><b>직접 확인해보려면</b><br>인스타그램 설정의 개인정보 보호 항목에서 내 데이터의 AI 학습 활용 여부를 확인하고, IDE에서 사용 중인 코파일럿 모델을 작업 성격에 맞춰 변경해 본다.</div>
+  <section class="digest-closing">
+  <p class="digest-closing-copy">사용자의 거부감과 기술의 효율성, 그리고 평가의 정확성이라는 세 가지 축이 동시에 흔들리고 있다. 메타의 철회는 플랫폼이 독점하던 데이터 권력이 사용자에게 일부 돌아가는 장면을 보여주었다. 하지만 개발 도구에 깊숙이 들어온 AI 모델들과 그 성능을 측정하는 불완전한 지표들은 우리가 여전히 과도기에 있음을 증명한다. 기술이 일상과 업무에 안착하려면 기능의 고도화보다 신뢰의 구축이 선행되어야 한다.</p>
+  <div class="digest-action"><b>직접 확인해보려면</b><span>인스타그램 설정의 개인정보 보호 항목에서 내 데이터의 AI 학습 활용 여부를 확인하고, IDE에서 사용 중인 코파일럿 모델을 작업 성격에 맞춰 변경해 본다.</span></div>
 </section>
 </article>

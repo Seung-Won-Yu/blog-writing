@@ -32,7 +32,7 @@ Python 수집기
 2. `daily_guard`가 당일 결과를 확인합니다. `COMPLETE`면 아무 작업 없이 종료하고, `PARTIAL`이면 누락 단계만 재개합니다.
 3. 새 글일 때만 Actions가 커밋한 당일 후보함을 읽습니다. 누락된 날만 Python 수집기를 직접 실행합니다.
 4. Codex `gpt-5.6-terra`를 Medium reasoning으로 사용해 후보 원문을 확인하고, 최근 14일 중복 검사를 통과한 기사 3건을 집필합니다.
-5. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·인라인 미리보기를 만듭니다.
+5. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·격리 미리보기를 만듭니다.
 6. 최종 가드와 테스트를 통과한 결과만 하나의 커밋으로 한 번 푸시합니다.
 7. GitHub Actions가 초안 페이지를 배포합니다.
 
@@ -107,6 +107,7 @@ docs/tistory/              복사할 본문 HTML과 메타데이터
 docs/preview/              격리된 본문 미리보기
 docs/index.html            GitHub Pages 초안 도구
 tests/                     수집·출력·금칙어·워크플로 회귀 테스트
+design/tistory/            스킨 HTML 조각·CSS·게시물 디자인 단일 기준
 ```
 
 `blog_pipeline/legacy/`는 과거 결과를 복구할 때 참고할 수 있도록 보존했지만 일일 작업과 GitHub Actions에서는 호출하지 않습니다.

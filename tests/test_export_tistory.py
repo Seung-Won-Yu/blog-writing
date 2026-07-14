@@ -13,6 +13,7 @@ from blog_pipeline.publishing.export_tistory import (
     estimate_read_minutes,
     post_title,
     render_post,
+    should_preserve_published_export,
     split_post_around_first_story,
     write_post,
 )
@@ -60,6 +61,33 @@ class OptionalLearningSectionsTests(unittest.TestCase):
         self.assertIn("소프트웨어 공학", build_meta_description(day))
 
 
+class ExportProtectionTests(unittest.TestCase):
+    def test_all_export_preserves_a_snapshot_linked_to_a_published_post(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            (output / "2026-07-13.html").write_text("수동 특집", encoding="utf-8")
+            (output / "2026-07-13.json").write_text(
+                json.dumps({"source_page": "https://won0322.tistory.com/121"}),
+                encoding="utf-8",
+            )
+
+            self.assertTrue(
+                should_preserve_published_export("2026-07-13", output_dir=output)
+            )
+
+    def test_all_export_may_rebuild_an_unpublished_draft(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            (output / "2026-07-14.html").write_text("초안", encoding="utf-8")
+            (output / "2026-07-14.json").write_text(
+                json.dumps({"source_page": None}), encoding="utf-8"
+            )
+
+            self.assertFalse(
+                should_preserve_published_export("2026-07-14", output_dir=output)
+            )
+
+
 class EditorialReadingFlowTests(unittest.TestCase):
     def test_splits_copy_ready_html_into_valid_before_and_after_ad_fragments(self):
         day = dict(FALLBACK_DAY)
@@ -79,7 +107,11 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn('id="digest-news-1"', after_ad)
         self.assertIn("둘째 뉴스", after_ad)
         self.assertIn("셋째 뉴스", after_ad)
-        self.assertTrue(after_ad.lstrip().startswith('<div class="daily-digest-continuation"'))
+        self.assertTrue(
+            after_ad.lstrip().startswith(
+                '<div class="daily-digest-continuation daily-digest-post"'
+            )
+        )
         self.assertTrue(after_ad.rstrip().endswith("</div>"))
 
     def test_builds_one_paste_html_with_adfit_between_first_and_second_story(self):
@@ -102,7 +134,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
     def test_uses_plain_recording_voice_in_the_intro_note(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
 
-        self.assertIn("세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.", html)
+        self.assertIn("확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.", html)
         self.assertNotIn("권장합니다", html)
 
     def test_renders_an_in_page_reading_guide_without_internal_editor_notes(self):
@@ -123,7 +155,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn("3분 미리보기", html)
+        self.assertIn("이 글에서 볼 것", html)
         self.assertIn('href="#digest-news-1"', html)
         self.assertIn('id="digest-news-1"', html)
         self.assertIn("오늘의 메인 이슈", html)
@@ -133,7 +165,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("승원의 메모", html)
         self.assertNotIn("실제 설정과 권한 범위", html)
 
-    def test_uses_a_specific_editorial_headline_in_search_and_the_hero(self):
+    def test_uses_a_specific_editorial_headline_for_publish_metadata_without_body_duplication(self):
         day = dict(FALLBACK_DAY)
         day["editorial"] = {
             "headline": "인스타 사진을 가져가던 AI, 반발 뒤 무엇이 멈췄나",
@@ -161,7 +193,9 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertEqual(candidates[0], day["editorial"]["headline"])
         self.assertFalse(any(title.startswith("2026") for title in candidates))
         self.assertNotIn("핵심 정리", " ".join(candidates))
-        self.assertIn(day["editorial"]["headline"], html)
+        self.assertNotIn(day["editorial"]["headline"], html)
+        self.assertNotIn('class="digest-title"', html)
+        self.assertIn('data-digest-version="2"', html)
         self.assertIn("내 사진이 어디에 쓰이는지", build_meta_description(day))
 
     def test_key_summary_splits_news_into_scannable_rows(self):
@@ -267,8 +301,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
                 html,
             )
         self.assertIn("<b>정답</b> 3번 · 채용", html)
-        self.assertIn("list-style:none", html)
         self.assertIn('class="digest-options" role="list"', html)
+        self.assertNotIn("style=", html)
 
     def test_estimates_a_short_but_nonzero_read_time(self):
         self.assertGreaterEqual(estimate_read_minutes(FALLBACK_DAY), 2)
@@ -301,15 +335,15 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertIn("정답 확인 필요", html)
 
-    def test_summary_uses_only_the_explicit_numbering(self):
+    def test_body_uses_one_reading_guide_instead_of_duplicate_summary(self):
         day = dict(FALLBACK_DAY)
         day["news"] = [{"title_kr": "첫 뉴스"}, {"title_kr": "두 번째 뉴스"}]
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn('class="digest-summary"', html)
-        self.assertIn("list-style:none", html)
-        self.assertIn("<li>1. 첫 뉴스</li>", html)
+        self.assertNotIn('class="digest-summary"', html)
+        self.assertEqual(html.count('class="digest-reading-guide"'), 1)
+        self.assertIn('<span class="digest-reading-index">01</span>첫 뉴스', html)
 
 
 class EditorialImageIntegrationTests(unittest.TestCase):
@@ -361,12 +395,12 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         html = render_post("2026-07-13", self.image_day())
 
         cover_index = html.index('class="digest-cover-image"')
-        summary_index = html.index('class="digest-summary"')
+        guide_index = html.index('class="digest-reading-guide"')
         first_image_index = html.index("story-01.png")
         first_title_index = html.index(">AI 개발 도구 업데이트</h3>")
         second_image_index = html.index("story-02.png")
         second_title_index = html.index(">두 번째 개발 뉴스</h3>")
-        self.assertLess(cover_index, summary_index)
+        self.assertLess(cover_index, guide_index)
         self.assertLess(first_image_index, first_title_index)
         self.assertLess(second_image_index, second_title_index)
         self.assertNotIn('class="digest-flow-image"', html)
@@ -387,44 +421,33 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         flow_index = html.index('class="digest-flow-image"')
         self.assertLess(story_index, flow_index)
 
-    def test_structural_sections_are_full_width_and_only_copy_is_indented(self):
+    def test_structural_sections_are_class_only_and_do_not_embed_competing_styles(self):
         html = render_post("2026-07-13", self.image_day())
 
-        self.assertIn(
-            "max-width:728px !important;margin:0 auto;padding:12px 0 36px !important;",
-            html,
-        )
-        self.assertIn(
-            'class="digest-news-card" style="margin:0;padding:0 0 32px;', html
-        )
-        self.assertIn(
-            'class="digest-news-copy" style="padding:0 clamp(18px,4vw,28px);"',
-            html,
-        )
-        self.assertIn('class="digest-hero" style="margin:0 0 30px;', html)
-        self.assertIn('class="digest-summary" style="margin:0 0 30px;', html)
+        self.assertIn('class="daily-digest-post" data-digest-version="2"', html)
+        self.assertIn('class="digest-news-card"', html)
+        self.assertIn('class="digest-news-copy"', html)
+        self.assertIn('class="digest-hero" aria-label="글 소개"', html)
         self.assertIn('class="digest-reading-guide"', html)
-        self.assertIn("padding:14px clamp(18px,4vw,28px) 8px;", html)
-        self.assertNotIn("margin:0 clamp(18px,4vw,28px) 28px", html)
+        self.assertNotIn('style="', html)
+        self.assertNotIn('class="digest-title"', html)
+        self.assertNotIn('class="digest-summary"', html)
 
     def test_reading_guide_is_compact_and_does_not_repeat_landing_page_headings(self):
         html = render_post("2026-07-13", self.image_day())
 
         guide = html[html.index('class="digest-reading-guide"') : html.index("</nav>")]
-        self.assertIn("3분 미리보기", guide)
+        self.assertIn("이 글에서 볼 것", guide)
         self.assertNotIn("READING GUIDE", guide)
         self.assertNotIn("<h2", guide)
-        self.assertIn("font-size:15px !important", guide)
-        self.assertIn("01&nbsp;·&nbsp;", guide)
-        self.assertNotIn("width:28px", guide)
+        self.assertIn('<span class="digest-reading-index">01</span>', guide)
         self.assertIn('role="list"', guide)
         self.assertIn('role="listitem"', guide)
-        self.assertIn("text-indent:0 !important", guide)
-        self.assertIn("text-decoration:none !important", guide)
+        self.assertNotIn("style=", guide)
         self.assertNotIn("<ol", guide)
         self.assertNotIn("<li", guide)
 
-    def test_terms_use_the_same_card_gutter_as_the_quiz(self):
+    def test_terms_and_quiz_are_structural_components_without_inline_gutters(self):
         day = self.image_day()
         day["terms"] = [
             {"term": "회귀 테스트", "kind": "개발", "meaning_kr": "변경 뒤 기존 기능을 확인한다."}
@@ -432,8 +455,8 @@ class EditorialImageIntegrationTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn('class="digest-terms" style="margin:36px 0;', html)
-        self.assertIn("padding:22px clamp(18px,4vw,28px);", html)
+        self.assertIn('class="digest-terms"', html)
+        self.assertNotIn("style=", html)
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:

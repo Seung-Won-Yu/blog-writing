@@ -12,6 +12,7 @@ DOCS_DIR = ROOT / "docs"
 TISTORY_DIR = DOCS_DIR / "tistory"
 PREVIEW_DIR = DOCS_DIR / "preview"
 OUT_PATH = DOCS_DIR / "index.html"
+SKIN_CSS_PATH = ROOT / "design" / "tistory" / "skin-layer.css"
 EDITOR_GUIDE_URL = (
     "https://github.com/Seung-Won-Yu/blog-writing/blob/main/agent/DAILY_EDITOR.md"
 )
@@ -74,6 +75,7 @@ def load_drafts():
 def write_preview_pages(drafts):
     """Write UTF-8 standalone previews without changing copy-ready fragments."""
     PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
+    skin_css = SKIN_CSS_PATH.read_text(encoding="utf-8")
     for draft in drafts:
         day = draft["day"]
         fragment_path = TISTORY_DIR / f"{day}.html"
@@ -87,14 +89,46 @@ def write_preview_pages(drafts):
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
   <title>{esc(draft.get("title"))} · 본문 미리보기</title>
   <style>
-    html {{ background: #f3f4f1; }}
-    body {{ margin: 0; padding: 28px 16px 56px; overflow-wrap: anywhere; }}
+    {skin_css}
+    html {{ background: #f5f7f9; }}
+    body {{ margin: 0; padding: 0 16px 56px; overflow-wrap: anywhere; }}
+    .preview-post-cover {{
+      width: min(760px, 100%);
+      margin: 0 auto 34px;
+      padding: 34px 0 26px;
+      border-bottom: 1px solid var(--sw-line);
+    }}
+    .preview-post-cover p {{
+      margin: 0 0 9px;
+      color: var(--sw-accent);
+      font-size: 12px;
+      font-weight: 760;
+    }}
+    .preview-post-cover h1 {{
+      margin: 0;
+      color: var(--sw-ink);
+      font-size: 32px;
+      line-height: 1.36;
+      letter-spacing: -.03em;
+      word-break: keep-all;
+    }}
+    .entry-content {{ width: min(820px, 100%); margin: 0 auto; padding: 0 20px; }}
     img {{ max-width: 100%; height: auto; }}
-    @media (max-width: 560px) {{ body {{ padding: 16px 12px 40px; }} }}
+    @media (max-width: 560px) {{
+      body {{ padding: 0 0 40px; }}
+      .preview-post-cover {{ padding: 26px 18px 22px; }}
+      .preview-post-cover h1 {{ font-size: 24px; }}
+    }}
   </style>
 </head>
 <body>
-{fragment}
+<header class="preview-post-cover">
+  <p>티스토리 글 제목</p>
+  <h1>{esc(draft.get("title"))}</h1>
+</header>
+<main class="entry-content">
+  {fragment}
+</main>
 </body>
 </html>
 """

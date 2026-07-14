@@ -6,13 +6,7 @@ import argparse
 import re
 from pathlib import Path
 
-from .export_tistory import (
-    CARD_STYLE,
-    POST_SHELL_STYLE,
-    QUIZ_STYLE,
-    TERMS_STYLE,
-    TISTORY_ADFIT_MARKER,
-)
+from .export_tistory import TISTORY_ADFIT_MARKER
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,28 +46,27 @@ def _replace_first_article(html_text):
     def replacement(match):
         tag = match.group(0)
         class_match = re.search(r'class="([^"]+)"', tag)
-        class_attr = (
-            f' class="{class_match.group(1)}"'
-            if class_match
-            else ' class="daily-digest-post"'
+        classes = class_match.group(1).split() if class_match else []
+        if "daily-digest-post" not in classes:
+            classes.append("daily-digest-post")
+        return (
+            f'<article class="{" ".join(classes)}" '
+            'data-digest-version="2">'
         )
-        return f'<article{class_attr} style="{POST_SHELL_STYLE}">'
 
     return re.sub(r"<article\b[^>]*>", replacement, html_text, count=1)
 
 
-def _replace_class_style(html_text, class_name, style_text):
+def _strip_class_style(html_text, class_name):
     pattern = re.compile(
         rf'<section\s+class="{re.escape(class_name)}"(?:\s+style="[^"]*")?>',
         re.IGNORECASE,
     )
-    return pattern.sub(
-        f'<section class="{class_name}" style="{style_text}">', html_text
-    )
+    return pattern.sub(f'<section class="{class_name}">', html_text)
 
 
 def normalize_archived_html(html_text):
-    """Apply current gutters and section cards without rewriting article copy."""
+    """Move archived posts to the class-only v2 design contract."""
     cleaned = ADFIT_RE.sub("", str(html_text))
     cleaned = _replace_first_article(cleaned)
     counter = 0
@@ -81,14 +74,11 @@ def normalize_archived_html(html_text):
     def news_card(match):
         nonlocal counter
         counter += 1
-        return (
-            f'<section id="digest-news-{counter}" class="digest-news-card" '
-            f'style="{CARD_STYLE}">'
-        )
+        return f'<section id="digest-news-{counter}" class="digest-news-card">'
 
     cleaned = NEWS_CARD_RE.sub(news_card, cleaned)
-    cleaned = _replace_class_style(cleaned, "digest-quiz", QUIZ_STYLE)
-    cleaned = _replace_class_style(cleaned, "digest-terms", TERMS_STYLE)
+    cleaned = _strip_class_style(cleaned, "digest-quiz")
+    cleaned = _strip_class_style(cleaned, "digest-terms")
     cleaned = cleaned.replace("오늘의 메모", "이번 글에서 남는 것")
     return cleaned
 
