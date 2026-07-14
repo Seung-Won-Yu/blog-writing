@@ -44,7 +44,7 @@ POST_SHELL_STYLE = (
     "font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;"
 )
 HERO_STYLE = (
-    f"margin:0 {CONTENT_GUTTER} 30px;padding:22px 0 24px;"
+    f"margin:0 0 30px;padding:22px {CONTENT_GUTTER} 24px;"
     "border-top:4px solid #28745a;"
     "border-bottom:1px solid #d8dedb;background:#fff;"
 )
@@ -65,9 +65,10 @@ TOP_LEVEL_SECTION_TITLE_STYLE = (
     SECTION_TITLE_STYLE + f"padding-left:{CONTENT_GUTTER};padding-right:{CONTENT_GUTTER};"
 )
 CARD_STYLE = (
-    f"margin:0;padding:30px {CONTENT_GUTTER} 32px;"
+    "margin:0;padding:0 0 32px;"
     "border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;"
 )
+NEWS_COPY_STYLE = f"padding:0 {CONTENT_GUTTER};"
 NEWS_IMAGE_STYLE = (
     "display:block;width:100%;max-height:300px;object-fit:cover;margin:0 0 20px;"
     "border-radius:3px;border:1px solid #d8dedb;background:#f5f6f4;"
@@ -76,8 +77,8 @@ EDITORIAL_IMAGE_STYLE = (
     "display:block;width:100%;height:auto;border:1px solid #d8dedb;"
     "border-radius:4px;background:#f5f6f4;"
 )
-COVER_FIGURE_STYLE = f"margin:0 {CONTENT_GUTTER} 32px;"
-FLOW_FIGURE_STYLE = f"margin:8px {CONTENT_GUTTER} 34px;"
+COVER_FIGURE_STYLE = "margin:0 0 32px;"
+FLOW_FIGURE_STYLE = "margin:8px 0 34px;"
 STORY_FIGURE_STYLE = "margin:0 0 24px;"
 BADGE_STYLE = (
     "display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;"
@@ -96,7 +97,7 @@ BUTTON_STYLE = (
     "color:#28745a;text-decoration:none;font-size:13px;font-weight:850;"
 )
 QUIZ_STYLE = (
-    f"margin:36px {CONTENT_GUTTER};padding:22px;border:1px solid #cfd8d3;"
+    f"margin:36px 0;padding:22px {CONTENT_GUTTER};border:1px solid #cfd8d3;"
     "border-radius:4px;"
     "background:#f4f7f5;"
 )
@@ -104,12 +105,12 @@ TERM_ITEM_STYLE = (
     "margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;"
 )
 TERMS_STYLE = (
-    f"margin:36px {CONTENT_GUTTER};padding:22px;border:1px solid #d8dedb;"
+    f"margin:36px 0;padding:22px {CONTENT_GUTTER};border:1px solid #d8dedb;"
     "border-radius:4px;"
     "background:#fff;"
 )
 SUMMARY_STYLE = (
-    f"margin:0 {CONTENT_GUTTER} 30px;padding:18px 20px;"
+    f"margin:0 0 30px;padding:18px {CONTENT_GUTTER};"
     "border-left:4px solid #c99b43;"
     "background:#f7f4ec;"
 )
@@ -117,7 +118,7 @@ SUMMARY_LIST_STYLE = (
     "margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"
 )
 CLOSING_STYLE = (
-    f"margin:40px {CONTENT_GUTTER} 0;padding:22px 0;"
+    f"margin:40px 0 0;padding:22px {CONTENT_GUTTER};"
     "border-top:3px solid #28745a;"
     "border-bottom:1px solid #d8dedb;background:#fff;"
 )
@@ -126,11 +127,11 @@ ACTION_STYLE = (
     "background:#f7f4ec;color:#35433c;"
 )
 THROUGHLINE_STYLE = (
-    f"margin:30px {CONTENT_GUTTER} 34px;padding:18px 0 0;"
+    f"margin:30px 0 34px;padding:18px {CONTENT_GUTTER} 0;"
     "border-top:3px solid #28745a;background:#fff;"
 )
 READING_GUIDE_STYLE = (
-    f"margin:0 {CONTENT_GUTTER} 28px;padding:14px 0 8px;"
+    f"margin:0 0 28px;padding:14px {CONTENT_GUTTER} 8px;"
     "border-top:1px solid #d8dedb;border-bottom:1px solid #d8dedb;background:#fff;"
 )
 def esc(value):
@@ -493,11 +494,13 @@ def build_news_section(news, flow_image=None, story_images=None):
             f"""
 <section id="digest-news-{idx}" class="digest-news-card"{style(CARD_STYLE)}>
   {image_html}
-  <p class="digest-source"{style(BADGE_STYLE)}>{esc(lane_label)} · NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
-  <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
-  {summary_html}
-  {full_content}
-  {source_link}
+  <div class="digest-news-copy"{style(NEWS_COPY_STYLE)}>
+    <p class="digest-source"{style(BADGE_STYLE)}>{esc(lane_label)} · NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
+    <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
+    {summary_html}
+    {full_content}
+    {source_link}
+  </div>
 </section>""".strip()
         )
         if idx == 1 and flow_image and not has_story_images:
@@ -718,7 +721,7 @@ def write_post(day_id, day=None, source_page=None):
     except (TypeError, ValueError):
         generation_revision = 0
     publish_ready = (
-        generation_provider in {"github-models", "gemini"}
+        generation_provider in {"codex-agent", "github-models", "gemini"}
         and generation_revision >= MIN_PUBLISH_REVISION
     )
 

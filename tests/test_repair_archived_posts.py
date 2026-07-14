@@ -17,11 +17,11 @@ class RepairArchivedPostsTests(unittest.TestCase):
         self.assertIn('id="digest-news-1"', html)
         self.assertIn('id="digest-news-2"', html)
         self.assertIn(
-            'class="digest-quiz" style="margin:36px clamp(18px,4vw,28px);padding:22px',
+            'class="digest-quiz" style="margin:36px 0;padding:22px clamp(18px,4vw,28px)',
             html,
         )
         self.assertIn(
-            'class="digest-terms" style="margin:36px clamp(18px,4vw,28px);padding:22px',
+            'class="digest-terms" style="margin:36px 0;padding:22px clamp(18px,4vw,28px)',
             html,
         )
 

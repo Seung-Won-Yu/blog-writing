@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "publish-drafts.yml"
 COLLECT_WORKFLOW = ROOT / ".github" / "workflows" / "collect-news.yml"
+EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -52,10 +53,22 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "blog_pipeline" / "collection" / "news_pipeline.py",
             ROOT / "blog_pipeline" / "publishing" / "export_tistory.py",
             ROOT / "blog_pipeline" / "publishing" / "build_copy_page.py",
+            ROOT / "blog_pipeline" / "publishing" / "daily_guard.py",
             ROOT / "blog_pipeline" / "legacy" / "generate_daily_draft.py",
         )
         for path in expected:
             self.assertTrue(path.is_file(), str(path))
+
+    def test_editor_contract_enforces_single_run_and_recent_deduplication(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("daily_guard --today", contract)
+        self.assertIn("daily_guard --today --check-duplicates", contract)
+        self.assertIn("daily_guard --today --require-complete", contract)
+        self.assertIn("`COMPLETE`: 즉시 종료", contract)
+        self.assertIn("최근 14일", contract)
+        self.assertIn("하나의 커밋", contract)
+        self.assertIn("digest-news-copy", contract)
 
 
 if __name__ == "__main__":

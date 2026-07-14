@@ -29,11 +29,12 @@ Python 수집기
 매일 `07:17 KST`에는 GitHub Actions가 뉴스 후보를 수집하고, `09:00 KST`에는 Codex 데스크톱 자동 작업이 다음 흐름을 실행합니다. 예약 지연에 대비해 1시간 43분의 버퍼를 둡니다.
 
 1. 최신 `main`을 받습니다.
-2. Actions가 커밋한 당일 후보함을 읽습니다. 누락된 날만 Python 수집기를 직접 실행합니다.
-3. Codex `gpt-5.6-terra`를 Medium reasoning으로 사용해 후보 원문을 확인하고 기사 3건을 집필합니다.
-4. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·인라인 미리보기를 만듭니다.
-5. 테스트와 콘텐츠 금칙어 검사를 통과한 결과만 GitHub에 푸시합니다.
-6. GitHub Actions가 초안 페이지를 배포합니다.
+2. `daily_guard`가 당일 결과를 확인합니다. `COMPLETE`면 아무 작업 없이 종료하고, `PARTIAL`이면 누락 단계만 재개합니다.
+3. 새 글일 때만 Actions가 커밋한 당일 후보함을 읽습니다. 누락된 날만 Python 수집기를 직접 실행합니다.
+4. Codex `gpt-5.6-terra`를 Medium reasoning으로 사용해 후보 원문을 확인하고, 최근 14일 중복 검사를 통과한 기사 3건을 집필합니다.
+5. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·인라인 미리보기를 만듭니다.
+6. 최종 가드와 테스트를 통과한 결과만 하나의 커밋으로 한 번 푸시합니다.
+7. GitHub Actions가 초안 페이지를 배포합니다.
 
 GitHub Actions Secret에 `GEMINI_API_KEY`를 둘 필요가 없습니다. 키가 브라우저나 GitHub Pages에 노출될 경로도 없습니다.
 
@@ -49,6 +50,12 @@ python3 -m pip install -r requirements-images.txt
 
 ```bash
 python3 -m blog_pipeline.collection.collect_news --today
+```
+
+중복 실행 방지 상태 확인:
+
+```bash
+python3 -m blog_pipeline.publishing.daily_guard --today
 ```
 
 Codex가 `data/days/YYYY-MM-DD.json`을 작성한 뒤 결과 생성:
@@ -87,6 +94,7 @@ agent/
 blog_pipeline/
   collection/              RSS·Atom·HTML 수집, 정규화, 중복 제거, 후보 선정
   publishing/              이미지·티스토리 HTML·미리보기 생성
+    daily_guard.py          당일 중복 실행·최근 기사 중복 차단
   legacy/                  더 이상 실행하지 않는 과거 모델 API 생성기
 
 config/

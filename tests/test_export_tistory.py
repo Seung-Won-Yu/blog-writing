@@ -387,18 +387,25 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         flow_index = html.index('class="digest-flow-image"')
         self.assertLess(story_index, flow_index)
 
-    def test_post_shell_leaves_full_width_for_ad_and_pads_article_sections(self):
+    def test_structural_sections_are_full_width_and_only_copy_is_indented(self):
         html = render_post("2026-07-13", self.image_day())
 
         self.assertIn(
             "max-width:728px !important;margin:0 auto;padding:12px 0 36px !important;",
             html,
         )
-        self.assertIn("padding:30px clamp(18px,4vw,28px) 32px;", html)
-        self.assertNotIn(
-            "padding:12px clamp(18px,4vw,28px) 36px !important;",
+        self.assertIn(
+            'class="digest-news-card" style="margin:0;padding:0 0 32px;', html
+        )
+        self.assertIn(
+            'class="digest-news-copy" style="padding:0 clamp(18px,4vw,28px);"',
             html,
         )
+        self.assertIn('class="digest-hero" style="margin:0 0 30px;', html)
+        self.assertIn('class="digest-summary" style="margin:0 0 30px;', html)
+        self.assertIn('class="digest-reading-guide"', html)
+        self.assertIn("padding:14px clamp(18px,4vw,28px) 8px;", html)
+        self.assertNotIn("margin:0 clamp(18px,4vw,28px) 28px", html)
 
     def test_reading_guide_is_compact_and_does_not_repeat_landing_page_headings(self):
         html = render_post("2026-07-13", self.image_day())
@@ -417,10 +424,8 @@ class EditorialImageIntegrationTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn(
-            'class="digest-terms" style="margin:36px clamp(18px,4vw,28px);padding:22px;',
-            html,
-        )
+        self.assertIn('class="digest-terms" style="margin:36px 0;', html)
+        self.assertIn("padding:22px clamp(18px,4vw,28px);", html)
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -466,10 +471,23 @@ class EditorialImageIntegrationTests(unittest.TestCase):
                     Path(directory, "2026-07-14.json").read_text(encoding="utf-8")
                 )
 
+                codex_day = dict(FALLBACK_DAY)
+                codex_day["generation"] = {
+                    "provider": "codex-agent",
+                    "model": "gpt-5.6-terra",
+                    "revision": 7,
+                }
+                write_post("2026-07-15", day=codex_day)
+                codex_meta = json.loads(
+                    Path(directory, "2026-07-15.json").read_text(encoding="utf-8")
+                )
+
         self.assertEqual(fallback_meta["generation_provider"], "deterministic-fallback")
         self.assertFalse(fallback_meta["publish_ready"])
         self.assertEqual(gemini_meta["generation_provider"], "gemini")
         self.assertTrue(gemini_meta["publish_ready"])
+        self.assertEqual(codex_meta["generation_provider"], "codex-agent")
+        self.assertTrue(codex_meta["publish_ready"])
 
         legacy_day = dict(FALLBACK_DAY)
         legacy_day["generation"] = {"provider": "github-models", "revision": 4}
