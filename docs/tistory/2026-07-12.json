@@ -1,5 +1,5 @@
 {
-  "title": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
+  "title": "메타는 왜 '인스타 사진 AI 연동'을 사흘 만에 멈췄을까",
   "title_candidates": [
     "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
     "메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회 외 2건",
@@ -44,6 +44,7 @@
   "html": "docs/tistory/2026-07-12.html",
   "before_ad_html": "docs/tistory/2026-07-12-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-12-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-12-adfit.html",
   "image_assets": [
     {
       "kind": "cover",

@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from blog_pipeline.publishing.export_tistory import (
     build_key_summary,
+    build_adfit_ready_html,
     build_meta_description,
     build_publish_checklist,
     build_title_candidates,
@@ -80,6 +81,23 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("셋째 뉴스", after_ad)
         self.assertTrue(after_ad.lstrip().startswith('<div class="daily-digest-continuation"'))
         self.assertTrue(after_ad.rstrip().endswith("</div>"))
+
+    def test_builds_one_paste_html_with_adfit_between_first_and_second_story(self):
+        day = dict(FALLBACK_DAY)
+        day["news"] = [
+            {"title_kr": "첫 뉴스", "content": []},
+            {"title_kr": "둘째 뉴스", "content": []},
+        ]
+
+        html = build_adfit_ready_html(render_post("2026-07-13", day))
+
+        first_end = html.index("</section>", html.index('id="digest-news-1"'))
+        adfit = html.index('data-ad-vendor="adfit"')
+        second = html.index('id="digest-news-2"')
+        self.assertLess(first_end, adfit)
+        self.assertLess(adfit, second)
+        self.assertLess(second, html.rindex("</article>"))
+        self.assertEqual(html.count('data-ad-vendor="adfit"'), 1)
 
     def test_uses_plain_recording_voice_in_the_intro_note(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
@@ -369,14 +387,24 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         flow_index = html.index('class="digest-flow-image"')
         self.assertLess(story_index, flow_index)
 
-    def test_news_cards_keep_horizontal_reading_space(self):
+    def test_post_shell_keeps_horizontal_reading_space(self):
         html = render_post("2026-07-13", self.image_day())
 
         self.assertIn(
-            "padding:30px clamp(18px,4vw,28px) 32px;",
+            "padding:12px clamp(18px,4vw,28px) 36px !important;",
             html,
         )
-        self.assertNotIn("padding:30px 0 32px;", html)
+        self.assertIn("padding:30px 0 32px;", html)
+
+    def test_terms_use_the_same_card_gutter_as_the_quiz(self):
+        day = self.image_day()
+        day["terms"] = [
+            {"term": "회귀 테스트", "kind": "개발", "meaning_kr": "변경 뒤 기존 기능을 확인한다."}
+        ]
+
+        html = render_post("2026-07-13", day)
+
+        self.assertIn('class="digest-terms" style="margin:40px 0;padding:24px;', html)
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -398,8 +426,10 @@ class EditorialImageIntegrationTests(unittest.TestCase):
             )
             self.assertTrue(Path(directory, "2026-07-13-before-ad.html").is_file())
             self.assertTrue(Path(directory, "2026-07-13-after-ad.html").is_file())
+            self.assertTrue(Path(directory, "2026-07-13-adfit.html").is_file())
             self.assertEqual(meta["before_ad_html"], "docs/tistory/2026-07-13-before-ad.html")
             self.assertEqual(meta["after_ad_html"], "docs/tistory/2026-07-13-after-ad.html")
+            self.assertEqual(meta["adfit_html"], "docs/tistory/2026-07-13-adfit.html")
 
     def test_marks_only_model_generated_drafts_ready_for_human_review(self):
         with tempfile.TemporaryDirectory() as directory:

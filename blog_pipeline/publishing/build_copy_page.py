@@ -61,6 +61,7 @@ def load_drafts():
                 "html_path": f"tistory/{day}.html",
                 "before_ad_html_path": f"tistory/{day}-before-ad.html",
                 "after_ad_html_path": f"tistory/{day}-after-ad.html",
+                "adfit_html_path": f"tistory/{day}-adfit.html",
                 "preview_path": f"preview/{day}.html",
                 "meta_path": f"tistory/{day}.json",
             }
@@ -561,11 +562,10 @@ def render(drafts):
             <h2><label for="htmlCode">본문 HTML 코드</label></h2>
             <div class="code-actions">
               <button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
-              <button class="copy secondary" type="button" id="beforeAdCopyButton" data-copy="beforeAd" disabled>1번 뉴스까지 복사</button>
-              <button class="copy secondary" type="button" id="afterAdCopyButton" data-copy="afterAd" disabled>광고 뒤 본문 복사</button>
+              <button class="copy secondary" type="button" id="adfitCopyButton" data-copy="adfit" disabled>AdFit 포함 HTML 복사</button>
             </div>
           </div>
-          <p class="manual-help"><strong>본문 중간 AdFit 순서</strong> · 1단계 HTML을 붙여넣고 기본모드로 전환 → 글 끝에서 더보기(…) &gt; 광고 &gt; 애드핏 → HTML 모드로 돌아와 맨 끝에 2단계 HTML을 붙여넣으세요.</p>
+          <p class="manual-help"><strong>본문 중간 AdFit</strong> · 광고 마커가 NEWS 01 종료 직후 포함되어 있습니다. 티스토리 HTML 모드에 한 번 붙여넣고 기본모드로 다시 전환하지 마세요.</p>
           <textarea id="htmlCode" spellcheck="false" readonly></textarea>
           <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
             <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
@@ -582,8 +582,7 @@ def render(drafts):
     let current = null;
     let currentPreviewPath = "";
     let currentBaseHtml = "";
-    let currentBeforeAdHtml = "";
-    let currentAfterAdHtml = "";
+    let currentAdfitHtml = "";
     const byDay = new Map(drafts.map((item) => [item.day, item]));
 
     const els = {{
@@ -605,8 +604,7 @@ def render(drafts):
       previewButton: document.getElementById("previewButton"),
       previewPane: document.getElementById("previewPane"),
       previewFrame: document.getElementById("previewFrame"),
-      beforeAdCopyButton: document.getElementById("beforeAdCopyButton"),
-      afterAdCopyButton: document.getElementById("afterAdCopyButton"),
+      adfitCopyButton: document.getElementById("adfitCopyButton"),
       reviewGateStatus: document.getElementById("reviewGateStatus"),
     }};
 
@@ -651,12 +649,11 @@ def render(drafts):
 
     function updateCopyState() {{
       const ready = isDraftCopyReady();
-      els.beforeAdCopyButton.disabled = !ready || !currentBeforeAdHtml;
-      els.afterAdCopyButton.disabled = !ready || !currentAfterAdHtml;
+      els.adfitCopyButton.disabled = !ready || !currentAdfitHtml;
       els.reviewGateStatus.textContent = reviewGateMessage();
       els.reviewGateStatus.dataset.ready = String(ready);
       if (currentBaseHtml) {{
-        els.htmlCode.value = currentBaseHtml;
+        els.htmlCode.value = currentAdfitHtml || currentBaseHtml;
       }}
     }}
 
@@ -763,8 +760,7 @@ def render(drafts):
       renderList(els.publishChecklist, draft.publish_checklist);
       renderImageAssets(draft.image_assets);
       currentBaseHtml = "";
-      currentBeforeAdHtml = "";
-      currentAfterAdHtml = "";
+      currentAdfitHtml = "";
       updateCopyState();
       setPreviewMode(false);
       els.previewButton.disabled = true;
@@ -773,16 +769,15 @@ def render(drafts):
       els.htmlCode.value = "불러오는 중...";
       try {{
         const cacheBust = "?v=" + Date.now();
-        const [response, beforeResponse, afterResponse] = await Promise.all([
+        const [response, adfitResponse] = await Promise.all([
           fetch(draft.html_path + cacheBust),
-          fetch(draft.before_ad_html_path + cacheBust),
-          fetch(draft.after_ad_html_path + cacheBust),
+          fetch(draft.adfit_html_path + cacheBust),
         ]);
-        if (!response.ok || !beforeResponse.ok || !afterResponse.ok) throw new Error("HTML fetch failed");
-        [currentBaseHtml, currentBeforeAdHtml, currentAfterAdHtml] = await Promise.all([
-          response.text(), beforeResponse.text(), afterResponse.text(),
+        if (!response.ok || !adfitResponse.ok) throw new Error("HTML fetch failed");
+        [currentBaseHtml, currentAdfitHtml] = await Promise.all([
+          response.text(), adfitResponse.text(),
         ]);
-        els.htmlCode.value = currentBaseHtml;
+        els.htmlCode.value = currentAdfitHtml;
         currentPreviewPath = draft.preview_path + "?v=" + Date.now();
         els.previewButton.disabled = false;
         updateCopyState();
@@ -827,13 +822,12 @@ def render(drafts):
       const button = event.target.closest("[data-copy]");
       if (!button || !current) return;
       const type = button.dataset.copy;
-      if (type === "beforeAd" || type === "afterAd") {{
+      if (type === "adfit") {{
         if (!isDraftCopyReady()) {{
           setStatus(reviewGateMessage(), "error");
           return;
         }}
-        if (type === "beforeAd") copyText(currentBeforeAdHtml, "1단계 HTML");
-        if (type === "afterAd") copyText(currentAfterAdHtml, "2단계 HTML");
+        copyText(currentAdfitHtml, "AdFit 포함 HTML");
       }}
       if (type === "title") copyText(current.title, "제목");
       if (type === "titles") copyText(numbered(current.title_candidates), "제목 후보");

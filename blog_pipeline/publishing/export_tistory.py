@@ -30,9 +30,16 @@ DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
 MIN_PUBLISH_REVISION = 7
+TISTORY_ADFIT_MARKER = (
+    '<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" '
+    'data-ad-vendor="adfit" data-ad-id-pc="713977" '
+    'data-ad-id-mobile="713980"></figure>'
+)
 
 POST_SHELL_STYLE = (
-    "max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;"
+    "max-width:720px !important;margin:0 auto;"
+    "padding:12px clamp(18px,4vw,28px) 36px !important;"
+    "box-sizing:border-box;color:#303942;"
     "font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;"
 )
 HERO_STYLE = (
@@ -52,7 +59,7 @@ SECTION_TITLE_STYLE = (
     "margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;"
 )
 CARD_STYLE = (
-    "margin:0;padding:30px clamp(18px,4vw,28px) 32px;"
+    "margin:0;padding:30px 0 32px;"
     "border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;"
 )
 NEWS_IMAGE_STYLE = (
@@ -88,6 +95,10 @@ QUIZ_STYLE = (
 )
 TERM_ITEM_STYLE = (
     "margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;"
+)
+TERMS_STYLE = (
+    "margin:40px 0;padding:24px;border:1px solid #d8dedb;border-radius:4px;"
+    "background:#fff;"
 )
 SUMMARY_STYLE = (
     "margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;"
@@ -533,8 +544,8 @@ def build_terms_section(terms):
         for t in terms
     )
     return f"""
-<section class="digest-terms">
-  <h2{style(SECTION_TITLE_STYLE)}>오늘의 IT · 개발 · 기획 용어</h2>
+<section class="digest-terms"{style(TERMS_STYLE)}>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 IT · 개발 · 기획 용어</h2>
   <ul style="margin:0;padding:0;list-style:none;">{rows}</ul>
 </section>""".strip()
 
@@ -631,6 +642,21 @@ def split_post_around_first_story(post_html):
     return before_ad, after_ad
 
 
+def build_adfit_ready_html(post_html):
+    """Return one-paste Tistory HTML with AdFit after NEWS 01."""
+    marker = '<section id="digest-news-2"'
+    split_at = post_html.find(marker)
+    if split_at < 0:
+        return post_html
+    return (
+        post_html[:split_at].rstrip()
+        + "\n"
+        + TISTORY_ADFIT_MARKER
+        + '\n<p data-ke-size="size16">&nbsp;</p>\n'
+        + post_html[split_at:].lstrip()
+    )
+
+
 def write_post(day_id, day=None, source_page=None):
     day = day or load_day(day_id)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -688,9 +714,11 @@ def write_post(day_id, day=None, source_page=None):
     before_ad_html, after_ad_html = split_post_around_first_story(post_html)
     before_ad_path = OUT_DIR / f"{day_id}-before-ad.html"
     after_ad_path = OUT_DIR / f"{day_id}-after-ad.html"
+    adfit_path = OUT_DIR / f"{day_id}-adfit.html"
     html_path.write_text(post_html, encoding="utf-8")
     before_ad_path.write_text(before_ad_html, encoding="utf-8")
     after_ad_path.write_text(after_ad_html, encoding="utf-8")
+    adfit_path.write_text(build_adfit_ready_html(post_html), encoding="utf-8")
     meta_path.write_text(
         json.dumps(
             {
@@ -708,6 +736,7 @@ def write_post(day_id, day=None, source_page=None):
                 "html": f"docs/tistory/{day_id}.html",
                 "before_ad_html": f"docs/tistory/{day_id}-before-ad.html",
                 "after_ad_html": f"docs/tistory/{day_id}-after-ad.html",
+                "adfit_html": f"docs/tistory/{day_id}-adfit.html",
                 "image_assets": image_assets,
             },
             ensure_ascii=False,

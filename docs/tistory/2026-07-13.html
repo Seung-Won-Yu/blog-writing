@@ -1,87 +1,55 @@
-<article class="daily-digest-post" style="max-width:720px;margin:0 auto;padding:12px 0 36px;color:#303942;font-family:AppleSDGothicNeo,&#x27;Malgun Gothic&#x27;,sans-serif;line-height:1.8;">
-  <section class="digest-hero" style="margin:0 0 34px;padding:24px 0 28px;border-top:4px solid #28745a;border-bottom:1px solid #d8dedb;background:#fff;">
-    <p class="digest-kicker" style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">2026. 7. 13 (월) · 약 8분 · 하루 한 시간 개발 기록</p>
-    <h2 class="digest-title" style="margin:0 0 16px;color:#17211c;font-size:31px;line-height:1.32;font-weight:850;">메타, &#x27;인스타 사진 AI 활용&#x27; 반발에 사흘 만에 자동 연동 중단</h2>
-    <p class="digest-lead" style="margin:0;color:#35433c;font-size:17px;line-height:1.82;font-weight:650;">인스타그램에 올린 일상 사진이 나도 모르는 사이에 AI의 이미지 생성 소스로 쓰이고 있다면 어떨까. 메타가 공개 계정 데이터를 AI 학습에 자동으로 연동하려다 거센 반발을 마주했다. 개인정보와 창작물 보호라는 민감한 경계선에서 사용자들이 즉각적인 거부 의사를 표시하며 서비스는 사흘 만에 멈춰 섰다.</p>
-    <p class="digest-meta-intro" style="margin:14px 0 0;color:#66716b;font-size:14px;line-height:1.7;">확인된 사실, 나에게 닿는 변화, 직접 확인할 점 순으로 정리했다. 세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.</p>
-  </section>
-
-  <figure class="digest-cover-figure" style="margin:0 0 34px;"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/cover.png" alt="2026. 7. 13 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지" width="1200" height="630" loading="eager" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-
-  <section class="digest-summary" style="margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;background:#f7f4ec;">
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">먼저 보는 핵심</h2>
-  <ul style="margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"><li>1. 메타, 인스타그램 공개 사진의 AI 자동 연동 기능 사흘 만에 철회</li><li>2. GitHub Copilot에 탑재된 OpenAI GPT-5.6 제품군, 세 가지 모델로 개발 환경 맞춤 지원</li><li>3. OpenAI, 코딩 벤치마크 SWE-Bench Pro의 한계 지적하며 평가 신뢰성 개선 요구</li><li>정처기 포인트: 프로그래밍 언어 활용 문제로 개념을 점검합니다.</li></ul>
-</section>
-
-  <section class="digest-throughline" style="margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;border-top:4px solid #28745a;background:#f4f7f5;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">WHY THESE STORIES</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 연결고리</h2>
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">메타의 연동 중단은 AI 서비스가 사용자 데이터를 다루는 방식에 대한 긴장을 보여준다. 한편 개발 현장에서는 GitHub Copilot에 들어온 GPT-5.6 제품군처럼 더 세분화된 도구로 빠른 작업을 기대하고 있다. AI가 일상과 개발 도구에 들어올수록 모델 성능을 재는 벤치마크도 믿을 만한지 따져봐야 한다. 데이터의 권리, 도구의 선택, 평가의 정확성이 이제 함께 확인해야 할 기준이 됐다.</p>
-</section>
-
-  <nav class="digest-reading-guide" aria-label="글 순서" style="margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;background:#fff;">
-  <p style="margin:0 0 12px;color:#28745a;font-size:12px;font-weight:800;letter-spacing:.08em;">READING GUIDE</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">이 글에서 볼 것</h2>
-  <ol style="margin:0;padding:0;list-style:none;"><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-1" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">오늘의 메인 이슈</b> · 메타, 인스타그램 공개 사진의 AI 자동 연동 기능 사흘 만에 철회</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-2" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · GitHub Copilot에 탑재된 OpenAI GPT-5.6 제품군, 세 가지 모델로 개발 환경 맞춤 지원</a></li><li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;"><a href="#digest-news-3" style="color:#27332d;text-decoration:none;"><b style="color:#28745a;">함께 볼 흐름</b> · OpenAI, 코딩 벤치마크 SWE-Bench Pro의 한계 지적하며 평가 신뢰성 개선 요구</a></li></ol>
-</nav>
-
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">오늘의 뉴스 3개</h2>
-  <section id="digest-news-1" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-01.png" alt="자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 12 · 일반 독자</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">메타, 인스타그램 공개 사진의 AI 자동 연동 기능 사흘 만에 철회</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">메타가 사용자 동의 없이 공개 계정 이미지를 AI 생성 기능에 자동으로 활용하려다 프라이버시 논란으로 서비스를 사흘 만에 중단했다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타가 인스타그램의 공개 계정 콘텐츠를 기반으로 AI 이미지를 생성할 수 있도록 설계한 신규 기능을 출시한 지 사흘 만에 잠정 중단했다. 이 기능은 이용자의 별도 동의 절차 없이 공개 계정의 사진과 게시물을 AI 이미지 생성에 자동으로 활용하도록 설정되어 프라이버시 침해와 저작권 침해 우려를 동시에 낳았다. 메타는 공식 성명을 통해 창작 도구를 제공하고 공개 콘텐츠 활용 여부를 선택할 수 있도록 하려는 의도였으나, 이용자들의 피드백이 기대에 미치지 못해 서비스를 철회한다고 밝혔다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">일상 사진을 올린 사람은 별도 동의를 했다는 기억도 없이 자신의 얼굴이나 창작물이 AI 이미지 생성에 쓰이는 상황을 마주할 수 있다. 서비스 설계 쪽에서 보면 공개 게시물을 곧바로 활용 동의로 해석한 기본값이 문제의 출발점이었다. 사용자가 나중에 끄는 옵트아웃 방식만으로는 신뢰가 며칠 만에 무너질 수 있다는 점도 드러났다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">메타의 공식 성명서에는 구체적으로 어떤 국가와 지역에서 이 기능이 먼저 배포되었는지, 그리고 향후 재출시 시 동의 절차를 어떻게 개선할 것인지에 대한 세부 계획이 누락되어 있다. 사용자는 인스타그램 앱 내의 개인정보 보호 설정 메뉴를 열고 자신의 공개 계정 데이터가 AI 학습이나 콘텐츠 생성에 활용되는 것을 차단하는 옵션이 존재하는지 직접 확인해야 한다. 또한 메타 공식 블로그의 업데이트 게시판을 통해 서비스 재개 여부와 약관 변경 사항을 주기적으로 모니터링할 필요가 있다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://www.aitimes.com/news/articleView.html?idxno=212666" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
-</section>
-<section id="digest-news-2" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-02.png" alt="코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">함께 볼 흐름 · NEWS 02 · GitHub Changelog · 2026. 7. 10 · 실무 독자</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">GitHub Copilot에 탑재된 OpenAI GPT-5.6 제품군, 세 가지 모델로 개발 환경 맞춤 지원</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">OpenAI의 최신 GPT-5.6 모델인 Sol, Terra, Luna가 GitHub Copilot에 도입되어 작업 규모와 비용에 맞춘 선택적 코드 작성이 가능해졌다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">GitHub이 자사의 개발 비서 서비스인 GitHub Copilot에 OpenAI의 최신 AI 모델 제품군인 GPT-5.6을 공식 도입하기 시작했다. 이번에 추가된 모델은 추론 능력이 가장 뛰어난 Sol, 균형 잡힌 기본 모델인 Terra, 가볍고 비용 효율적인 Luna 등 세 가지 변형으로 구성되어 개발자가 작업 성격에 맞춰 선택할 수 있다. GPT-5.6 Sol은 대규모 코드베이스 분석과 장시간 실행되는 에이전트 작업에 적합하며, Terra는 일상적인 대화형 코딩을, Luna는 빠르고 간단한 작업을 지원한다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">복잡한 시스템 아키텍처를 리팩터링할 때는 Sol을, 단순 API 호출 코드를 작성할 때는 Luna를 고르는 식으로 작업을 나눌 수 있다. 한 모델만 쓰던 방식에서 벗어나 작업 난도와 예산에 맞춰 선택할 수 있게 된 셈이다. 같은 작업을 세 모델에 맡겨보면 응답 시간, 수정 횟수, 추가 비용을 직접 비교할 수 있다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">GitHub의 발표 자료에는 각 모델별 구체적인 토큰당 단가나 사용량 기반 과금의 세부 요율표가 명시되어 있지 않다. 사용자는 GitHub Copilot의 공식 가격 정책 페이지를 방문하여 Pro, Business, Enterprise 등 자신이 사용하는 구독 등급별로 허용되는 모델 범위와 추가 요금 체계를 확인해야 한다. 또한 Visual Studio Code나 Visual Studio의 확장 프로그램 업데이트를 실행한 후 모델 선택기 창에 GPT-5.6 제품군이 정상적으로 표시되는지 점검해야 한다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
-</section>
-<section id="digest-news-3" class="digest-news-card" style="margin:0;padding:30px 0 32px;border-top:1px solid #d8dedb;background:#fff;">
-  <figure class="digest-story-figure" style="margin:0 0 24px;"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/story-03.png" alt="코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지" width="1200" height="630" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid #d8dedb;border-radius:4px;background:#f5f6f4;"></figure>
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">함께 볼 흐름 · NEWS 03 · OpenAI News · 2026. 7. 8 · 깊이 읽기</p>
-  <h3 style="margin:0 0 12px;color:#17211c;font-size:22px;line-height:1.48;font-weight:850;">OpenAI, 코딩 벤치마크 SWE-Bench Pro의 한계 지적하며 평가 신뢰성 개선 요구</h3>
-  <p style="margin:0;color:#46534d;font-size:16px;line-height:1.8;font-weight:700;">OpenAI가 널리 쓰이는 코딩 평가 도구인 SWE-Bench Pro의 분석을 통해 평가의 부정확성과 소음 문제를 제기하며 벤치마크의 신뢰성 개선을 촉구했다.</p>
-  <div class="digest-full-content" style="margin:22px 0 0;padding:18px 0 0;border-top:1px solid #e5e8e6;"><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">무슨 일이 있었나</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">OpenAI가 코딩 성능 평가 기준인 SWE-Bench Pro의 신뢰성과 정확성에 문제를 제기했다. 분석에 따르면 일부 테스트에는 모델의 코딩 능력과 무관한 오류나 모호한 조건이 섞여 있어 결과를 흐릴 수 있다. OpenAI는 평가 조건과 실패 사례를 함께 공개해야 점수를 제대로 해석할 수 있다고 지적했다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">왜 우리에게 중요한가</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">벤치마크에서 높은 점수를 받은 모델도 실제 저장소에서는 기대만큼 문제를 풀지 못할 수 있다. 모델을 평가하는 팀이라면 점수표만 보기보다 같은 이슈와 테스트를 다시 실행해 결과가 재현되는지 확인해야 한다. 그렇지 않으면 도입을 결정하는 사람이 잘못된 점수를 기준으로 삼을 수 있다.</p><h4 style="margin:20px 0 8px;color:#27332d;font-size:16px;line-height:1.5;font-weight:850;">직접 확인할 점</h4><p style="margin:0 0 14px;color:#46534d;font-size:16px;line-height:1.85;">OpenAI의 발표에는 SWE-Bench Pro의 구체적인 테스트 케이스 중 어떤 부분이 오류로 판명되었는지에 대한 상세한 리스트나 데이터셋 원본의 수정본이 완전히 포함되어 있지 않다. 사용자는 OpenAI 연구 블로그와 깃허브 저장소를 방문하여 이들이 제안한 평가 필터링 방법론과 소음 제거 알고리즘의 세부 코드를 확인해야 한다. 또한 기존 코딩 평가 도구들과의 점수 차이를 비교 분석한 기술 문서를 검토하여 자사 모델 평가 프레임워크에 적용할 수 있는지 따져봐야 한다.</p></div>
-  <p class="digest-source-link" style="margin:14px 0 0;"><a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:5px 0;border-bottom:1px solid #28745a;color:#28745a;text-decoration:none;font-size:13px;font-weight:850;">원문 보기</a></p>
-</section>
-
-  <section class="digest-quiz" style="margin:40px 0;padding:24px;border:1px solid #cfd8d3;border-radius:4px;background:#f4f7f5;">
-  <p class="digest-source" style="display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;letter-spacing:.08em;">기초상식 · 프로그래밍 언어 활용</p>
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;margin-top:0;">오늘의 정처기 문제</h2>
-  <p class="digest-question" style="margin:0 0 12px;color:#18212f;font-weight:700;">C 언어에서 헤더 파일의 내용을 소스에 포함할 때 사용하는 전처리기 지시어는?</p>
-  <ol class="digest-options" role="list" style="margin:12px 0 14px;padding-left:0;list-style:none;"><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">1.</span><span>#pragma</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">2.</span><span>#include</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">3.</span><span>#define</span></li><li class="digest-option" style="display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:4px;margin:0 0 8px;list-style:none;"><span class="digest-option-number">4.</span><span>#ifdef</span></li></ol>
-  <details class="digest-answer" style="margin-top:16px;padding-top:14px;border-top:1px solid #cfd8d3;">
-    <summary style="cursor:pointer;color:#28745a;font-weight:850;">정답과 해설 보기</summary>
-    <p style="margin:12px 0 6px;color:#27332d;"><b>정답</b> 2번 · #include</p>
-    <p class="digest-explain" style="margin:0;color:#46534d;"><b>해설</b> #include 지시어는 지정한 헤더 파일의 내용을 현재 소스 파일에 포함하도록 전처리기에 지시합니다.</p>
-  </details>
-</section>
-
-  <section class="digest-terms">
-  <h2 style="margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;">오늘의 IT · 개발 · 기획 용어</h2>
-  <ul style="margin:0;padding:0;list-style:none;"><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">옵트아웃 (Opt-out)</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">기획</span><br>
-  <em style="color:#475569;font-style:normal;">당사자가 거부 의사를 밝히기 전까지는 동의한 것으로 간주하여 데이터를 수집하거나 서비스를 제공하고, 사후에 거부할 수 있도록 하는 방식.</em>
-</li><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">리팩토링 (Refactoring)</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">개발</span><br>
-  <em style="color:#475569;font-style:normal;">소프트웨어의 겉으로 드러나는 기능이나 동작은 바꾸지 않으면서, 내부 코드의 구조를 개선하여 가독성을 높이고 유지보수를 용이하게 만드는 작업.</em>
-</li><li style="margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;">
-  <b style="color:#18212f;">벤치마크 (Benchmark)</b>
-  <span style="display:inline-block;margin-left:8px;color:#b7791f;font-size:12px;font-weight:800;">IT</span><br>
-  <em style="color:#475569;font-style:normal;">특정 시스템, 소프트웨어, 또는 AI 모델의 성능을 객관적으로 비교하고 평가하기 위해 사용하는 표준화된 테스트나 기준 지표.</em>
-</li></ul>
-</section>
-
-  <section class="digest-closing" style="margin:42px 0 0;padding:24px 0;border-top:3px solid #28745a;border-bottom:1px solid #d8dedb;background:#fff;">
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.82;">기술은 빠르게 바뀌지만 사용자의 신뢰와 평가의 객관성이 빠지면 성과를 오래 쌓기 어렵다. 데이터 수집 과정을 공개하고 모델 점수의 근거를 다시 확인하는 일은, 속도를 늦추더라도 빼기 어려운 확인 절차다.</p>
-  <div class="digest-action" style="margin:18px 0 0;padding:16px 18px;border-left:3px solid #c99b43;background:#f7f4ec;color:#35433c;"><b>직접 확인해보려면</b><br>인스타그램 설정 메뉴에서 공개 범위와 데이터 공유 옵션을 검토하고, GitHub Copilot의 모델 선택기에서 새롭게 추가된 GPT-5.6 모델의 옵션을 확인해 본다.</div>
-</section>
+<article class="daily-digest-post editorial-post" style="max-width:720px !important;margin:0 auto;padding:12px clamp(18px,4vw,28px) 36px !important;box-sizing:border-box;color:#303942;font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;">
+<p style="margin:0 0 24px;color:#46534d;font-size:17px;line-height:1.82;" data-ke-size="size18"><b>러닝 대회는 한 번 참가하려면 일정과 장소를 맞춰야 하고 비용도 적지 않습니다.</b> 한 1인 개발자는 이 불편을 그냥 넘기지 않고, 등록된 코스를 원하는 시간에 달리며 기록을 겨룰 수 있는 무료 러닝앱 <b>LLRUN</b>을 만들었습니다. 기능 목록보다 더 흥미로운 건 &ldquo;대회가 꼭 같은 날 열려야 할까?&rdquo;라는 질문에서 제품이 시작됐다는 점입니다.</p>
+<figure style="margin: 28px 0 34px;"><img style="display: block; width: 100%; height: auto; border-radius: 12px;" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png" alt="러닝앱 LLRUN 소개 화면과 GPS 경로 기능" />
+<figcaption style="margin-top: 10px; color: #64748b; font-size: 13px; line-height: 1.6;">LLRUN은 코스 기록 경쟁, GPS 경로 재생, 아트런, 크루 기능을 한 앱에 묶었습니다. 이미지 속 제품 화면은 개발자가 공개한 소개 페이지를 바탕으로 구성됐습니다.</figcaption>
+</figure>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">먼저 핵심만 보면</h2>
+<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<li><b>문제:</b> 오프라인 러닝 대회는 신청 경쟁, 정해진 일정, 참가비라는 장벽이 있습니다.</li>
+<li><b>해결:</b> 등록된 코스를 각자 원하는 시간에 달리고 개인 기록과 코스 순위를 비교합니다.</li>
+<li><b>차별점:</b> 기록만 쌓는 대신 3D 경로 영상, 지도에 그림을 그리는 아트런, 크루 대항전으로 다시 달릴 이유를 만듭니다.</li>
+<li><b>기술:</b> React 18&middot;Capacitor, MapLibre GL, Spring Boot를 사용했고 Android 걸음 수는 TYPE_STEP_COUNTER와 포그라운드 서비스로 처리했다고 개발자가 밝혔습니다.</li>
+</ul>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">왜 또 하나의 러닝앱을 만들었을까</h2>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">이미 러닝 기록 앱은 많습니다. 그래서 &ldquo;GPS를 기록한다&rdquo;만으로는 새 앱을 설치할 이유가 약합니다. LLRUN이 잡은 문제는 기록 자체가 아니라 <b>대회 경험의 접근성</b>입니다. 원문에서 개발자는 선착순 마감과 10만~15만원 수준의 참가비가 답답해 직접 만들었다고 설명합니다.</p>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">이 출발점은 1인 개발에서 특히 중요합니다. 거대한 시장 전체를 상대하기보다, 사용자가 반복해서 겪는 한 장면을 정확히 고르면 작은 제품도 설명이 쉬워집니다. &ldquo;모든 운동을 관리하는 앱&rdquo;보다 &ldquo;오늘 혼자 달려도 대회처럼 기록을 겨루는 앱&rdquo;이 훨씬 선명합니다.</p>
+<blockquote style="margin: 26px 0; padding: 18px 20px; border-left: 4px solid #0f766e; background: #f8fafc; color: #334155;" data-ke-style="style1">
+<p style="margin: 0;" data-ke-size="size16"><b>제가 보는 핵심:</b> LLRUN의 경쟁력은 기능 수보다 시간과 장소를 분리해 대회 경험을 다시 설계한 데 있습니다.</p>
+</blockquote>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">사람을 다시 뛰게 만드는 세 가지 장치</h2>
+<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">1. 기록 경쟁: 목표가 눈에 보인다</h3>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">챌린지런은 같은 코스를 달린 기록을 비교합니다. 개인 최고 기록을 갱신하는 동기와 다른 러너의 순위를 따라가는 동기를 함께 만듭니다. 단순 누적 거리보다 &ldquo;다음에는 이 기록을 넘는다&rdquo;는 목표가 구체적입니다.</p>
+<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">2. 경로비행과 아트런: 결과를 공유하고 싶어진다</h3>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">달린 GPS 경로를 위성지도 위 3D 영상으로 재생하거나, 지도 위에 그림을 그리는 아트런은 기록을 콘텐츠로 바꿉니다. 숫자 한 줄보다 결과물이 눈에 보이면 완주 뒤 공유할 이유가 생깁니다. 자연스러운 공유는 광고보다 강한 유입 경로가 될 수 있습니다.</p>
+<h3 style="margin:24px 0 10px;color:#1f2b25;font-size:19px;line-height:1.5;font-weight:800;" data-ke-size="size23">3. 크루: 혼자 쓰는 도구에서 관계가 있는 서비스로</h3>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">크루 누적 거리와 크루 대항전은 개인 기록 앱에 팀 목표를 더합니다. 다만 커뮤니티 기능은 초기 사용자가 적으면 비어 보이기 쉽습니다. 지역 코스, 학교&middot;회사 러닝 모임처럼 밀도가 높은 작은 집단부터 채우는 전략이 중요해 보입니다.</p>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">겉보다 어려운 기술 문제</h2>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">러닝앱은 화면을 만드는 것으로 끝나지 않습니다. 앱이 백그라운드로 내려가도 센서와 GPS 기록이 이어져야 하고, 배터리 사용량과 정확도 사이에서 균형을 잡아야 합니다. 개발자는 Android에서 포그라운드 서비스가 걸음 센서를 유지하도록 구현했고, 자정을 넘길 때 걸음 수가 꼬이는 문제와 GPS 부정 기록 검증도 겪었다고 설명합니다.</p>
+<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<li><b>백그라운드 기록:</b> OS 절전 정책 때문에 데이터가 끊기지 않는지 확인해야 합니다.</li>
+<li><b>날짜 경계:</b> 누적 센서 값을 하루 단위 기록으로 바꿀 때 자정 롤오버 처리가 필요합니다.</li>
+<li><b>기록 신뢰도:</b> 비정상 속도, 순간 이동, GPS 오차를 실제 달리기와 구분해야 합니다.</li>
+<li><b>개인정보:</b> 위치 데이터는 생활 반경을 드러낼 수 있어 저장 범위와 공개 설정이 중요합니다.</li>
+</ul>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">React와 Capacitor로 두 플랫폼을 함께 가져가더라도 센서, 백그라운드 실행, 웨어러블 연동은 결국 운영체제별 예외를 만납니다. 크로스플랫폼의 장점은 코드 공유지만, 제품 품질은 네이티브 경계에서 결정되는 경우가 많습니다.</p>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">설치 전에 제가 확인할 항목</h2>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">아직 직접 장거리 테스트를 한 사용 후기는 아닙니다. 실제로 써본다면 아래 순서로 확인하겠습니다.</p>
+<ol style="margin:0 0 22px;padding-left:24px;color:#46534d;line-height:1.85;" data-ke-list-type="decimal">
+<li>화면을 끄고 30분 이상 달렸을 때 경로와 걸음 수가 빠지지 않는가</li>
+<li>GPS 오차가 큰 도심에서 기록이 튀었을 때 자동 보정되는가</li>
+<li>위치 기록의 공개 범위와 삭제 방법이 명확한가</li>
+<li>3D 경로 영상 생성 시간이 길지 않고 공유 결과가 보기 좋은가</li>
+<li>Android와 iOS에서 핵심 기능 차이가 어느 정도인가</li>
+</ol>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">1인 개발자가 배울 점</h2>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">LLRUN 사례에서 가져갈 수 있는 건 특정 기술 스택보다 문제를 고르는 방식입니다. 불편을 넓게 정의하지 않고, &ldquo;비싼 대회와 맞지 않는 일정&rdquo;이라는 장면으로 좁혔습니다. 그다음 기록 경쟁으로 재방문 이유를, 경로 영상으로 공유 이유를, 크루로 관계의 이유를 붙였습니다.</p>
+<p style="margin:0 0 16px;color:#46534d;font-size:16px;line-height:1.85;" data-ke-size="size16">반대로 무료 서비스가 오래 운영되려면 서버&middot;지도&middot;영상 처리 비용을 감당할 구조가 필요합니다. 유료 기능을 무리하게 앞세우기보다 대회 주최사 코스 등록, 브랜드 챌린지, 크루용 운영 기능처럼 핵심 경험을 해치지 않는 수익 모델이 잘 맞아 보입니다. 이 부분은 개발자가 공개한 계획이 아니라 제품 구조를 보고 한 제 판단입니다.</p>
+<h2 style="margin:38px 0 16px;padding-bottom:10px;border-bottom:1px solid #d8dedb;color:#17211c;font-size:23px;line-height:1.4;font-weight:850;" data-ke-size="size26">직접 확인하기</h2>
+<ul style="margin:0 0 22px;padding-left:22px;color:#46534d;line-height:1.85;" data-ke-list-type="disc">
+<li><a href="https://news.hada.io/topic?id=31369" target="_blank" rel="noopener noreferrer">GeekNews 원문과 개발자 설명</a></li>
+<li><a href="https://www.finiteorder.com/download" target="_blank" rel="noopener noreferrer">LLRUN 공식 다운로드 안내</a></li>
+<li><a href="https://won0322.tistory.com/105">같이 읽기: AIVIS 프로젝트 최종 회고</a></li>
+</ul>
+<hr style="margin: 34px 0; border: 0; border-top: 1px solid #e2e8f0;" data-ke-style="style1" />
+<p style="color: #64748b;" data-ke-size="size14">이 글은 공개된 개발자 소개와 제품 페이지를 바탕으로 기능을 정리하고, 제품&middot;기술 관점의 분석을 덧붙였습니다. 직접 사용한 것처럼 표현하지 않았으며 세부 기능과 정책은 원문에서 다시 확인했습니다.</p>
 </article>

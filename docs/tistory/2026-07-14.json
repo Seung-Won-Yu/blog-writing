@@ -1,5 +1,5 @@
 {
-  "title": "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까",
+  "title": "딥페이크 얼굴 판별, 1시간 훈련으로 정확도가 두 배 오를까?",
   "title_candidates": [
     "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까",
     "AI 얼굴은 너무 완벽하다? 1시간 훈련 뒤 식별 정확도 40%에서 80%대로 외 2건",
@@ -44,6 +44,7 @@
   "html": "docs/tistory/2026-07-14.html",
   "before_ad_html": "docs/tistory/2026-07-14-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-14-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-14-adfit.html",
   "image_assets": [
     {
       "kind": "cover",
