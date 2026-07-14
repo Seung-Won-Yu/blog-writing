@@ -14,7 +14,7 @@
 
 ```text
 Python 수집기
-  → GitHub Actions가 08:30 KST에 뉴스 후보함 생성·커밋
+  → GitHub Actions가 07:17 KST에 뉴스 후보함 생성·커밋
   → Codex Terra가 09:00 KST에 원문 확인·기사 선정·집필·이미지 생성·검수
   → 결정적 Python 도구가 HTML·미리보기 생성
   → Git commit / push
@@ -26,7 +26,7 @@ Python 수집기
 
 ## 일일 운영
 
-매일 `08:30 KST`에는 GitHub Actions가 뉴스 후보를 수집하고, `09:00 KST`에는 Codex 데스크톱 자동 작업이 다음 흐름을 실행합니다.
+매일 `07:17 KST`에는 GitHub Actions가 뉴스 후보를 수집하고, `09:00 KST`에는 Codex 데스크톱 자동 작업이 다음 흐름을 실행합니다. 예약 지연에 대비해 1시간 43분의 버퍼를 둡니다.
 
 1. 최신 `main`을 받습니다.
 2. Actions가 커밋한 당일 후보함을 읽습니다. 누락된 날만 Python 수집기를 직접 실행합니다.
@@ -77,7 +77,7 @@ python3 -m unittest discover -s tests
 
 ```text
 .github/workflows/
-  collect-news.yml         08:30 KST 뉴스 후보 수집·커밋
+  collect-news.yml         07:17 KST 뉴스 후보 수집·커밋
   publish-drafts.yml       테스트와 GitHub Pages 배포 전용
 
 agent/

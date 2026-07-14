@@ -5,7 +5,7 @@
 ## 운영 흐름
 
 1. `git pull --ff-only origin main`으로 최신 상태를 받습니다.
-2. GitHub Actions가 08:30 KST에 만든 `docs/inbox/YYYY-MM-DD.json`을 읽습니다. 당일 파일이 없을 때만 수집기를 직접 실행합니다.
+2. GitHub Actions가 07:17 KST에 만든 `docs/inbox/YYYY-MM-DD.json`을 읽습니다. 당일 파일이 없을 때만 수집기를 직접 실행합니다.
 3. `selected` 3건과 필요할 때만 `candidates`의 대체 후보를 확인합니다. 후보의 원문을 직접 열어 제목, 날짜, 핵심 수치, 조건, 한계를 교차 확인합니다.
 4. 최근 7일의 제목과 URL만 비교해 중복을 거릅니다. 과거 본문 전체는 중복 판단에 필요할 때만 읽습니다.
 5. `data/days/YYYY-MM-DD.json`을 한 번에 작성합니다.

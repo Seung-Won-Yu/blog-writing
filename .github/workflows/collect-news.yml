@@ -2,8 +2,8 @@ name: Collect daily news
 
 on:
   schedule:
-    # 08:30 KST. Codex editor starts at 09:00 KST.
-    - cron: '30 23 * * *'
+    # 07:17 KST. Avoid common :00/:30 congestion and leave a buffer before 09:00.
+    - cron: '17 22 * * *'
   workflow_dispatch:
 
 permissions:
