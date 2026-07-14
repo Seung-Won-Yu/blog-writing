@@ -88,10 +88,6 @@ QUIZ_STYLE = (
 TERM_ITEM_STYLE = (
     "margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;"
 )
-NOTE_STYLE = (
-    "margin-top:38px;padding:16px 0;border-top:1px solid #d8dedb;"
-    "color:#5f6b65;font-size:13px;line-height:1.72;"
-)
 SUMMARY_STYLE = (
     "margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;"
     "background:#f7f4ec;"
@@ -115,12 +111,6 @@ READING_GUIDE_STYLE = (
     "margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;"
     "background:#fff;"
 )
-AUTHOR_NOTE_STYLE = (
-    "margin:20px 0 0;padding:16px 18px;border-left:3px solid #28745a;"
-    "background:#f4f7f5;color:#35433c;font-size:15px;line-height:1.78;"
-)
-
-
 def esc(value):
     return html.escape(html.unescape(str(value or "")), quote=True)
 
@@ -233,7 +223,6 @@ def estimate_read_minutes(day):
     pieces.extend(editorial.values())
     for item in day.get("news", []):
         pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
-        pieces.append(item.get("author_note"))
         pieces.extend(block.get("text") for block in item.get("content", []) if isinstance(block, dict))
     quiz = day.get("quiz") or {}
     pieces.append(quiz.get("question"))
@@ -449,7 +438,6 @@ def build_news_section(news, flow_image=None, story_images=None):
         audience_lane = audience_lane_label(item.get("audience_lane"))
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
-        author_note = plain(item.get("author_note"))
         image = plain(item.get("image_url") or item.get("image"))
         full_content = render_content_blocks(item.get("content"))
 
@@ -477,14 +465,6 @@ def build_news_section(news, flow_image=None, story_images=None):
             value for value in (source, published, audience_lane) if value
         )
         lane_label = "오늘의 메인 이슈" if idx == 1 else "함께 볼 흐름"
-        author_note_html = (
-            f'<aside class="digest-author-note"{style(AUTHOR_NOTE_STYLE)}>'
-            '<b style="display:block;margin-bottom:5px;color:#28745a;font-size:12px;letter-spacing:.04em;">'
-            f'승원의 메모 · 자료 기반 해석</b>{esc(author_note)}</aside>'
-            if author_note
-            else ""
-        )
-
         parts.append(
             f"""
 <section id="digest-news-{idx}" class="digest-news-card"{style(CARD_STYLE)}>
@@ -493,7 +473,6 @@ def build_news_section(news, flow_image=None, story_images=None):
   <h3{style(NEWS_TITLE_STYLE)}>{esc(title)}</h3>
   {summary_html}
   {full_content}
-  {author_note_html}
   {source_link}
 </section>""".strip()
         )
@@ -622,11 +601,6 @@ def render_post(day_id, day):
   {build_terms_section(day.get("terms") or [])}
 
   {build_closing_section(editorial)}
-
-  <p class="digest-note"{style(NOTE_STYLE)}>
-    초안 생성에 자동화를 사용했습니다. 공개 전 원문과 문맥을 직접 확인하고,
-    직접 확인한 내용과 운영자의 판단을 덧붙이는 학습 기록입니다.
-  </p>
 </article>
 """
 

@@ -216,16 +216,19 @@ class PromptTests(unittest.TestCase):
         self.assertIn("판단합니다", prompt)
         self.assertIn("~다", prompt)
         self.assertIn("구체적인 장면", prompt)
+        self.assertIn("앞의 장면으로 돌아온다", prompt)
+        self.assertIn("역할 이름을 본문에 직접 쓰지 않는다", prompt)
+        self.assertIn("같은 종결을 세 문장 연속", prompt)
 
     def test_applies_the_blog_persona_without_fabricating_firsthand_experience(self):
         prompt = build_prompt(INBOX)
 
-        self.assertIn("승원", prompt)
+        self.assertIn("쑥쑥자라나라", prompt)
+        self.assertIn("개발자 편집자", prompt)
         self.assertIn("7~9분", prompt)
-        self.assertIn("승원의 메모", prompt)
-        self.assertIn("자료 기반 해석", prompt)
         self.assertIn("직접 해보니", prompt)
-        self.assertIn('"author_note"', prompt)
+        self.assertNotIn('"author_note"', prompt)
+        self.assertNotIn("이 소식에서 내가 먼저 볼 것은", prompt)
 
     def test_bounds_history_to_fit_free_tier_input_limit(self):
         history = {
@@ -337,7 +340,7 @@ class DayValidationTests(unittest.TestCase):
         self.assertEqual(day["news"][0]["published_at"], INBOX["selected"][0]["published_at"])
         self.assertEqual(day["news"][0]["audience_lane"], "practical")
         self.assertEqual(day["news"][0]["selection_reason"], "실무 독자 적합도 5")
-        self.assertIn("이 소식에서 내가 먼저 볼 것은", day["news"][0]["author_note"])
+        self.assertNotIn("author_note", day["news"][0])
         self.assertEqual(day["quiz"]["answer"], 0)
         self.assertEqual(len(day["terms"]), 3)
         self.assertIn("검증하는 과정", day["editorial"]["opening"])
@@ -372,8 +375,8 @@ class DayValidationTests(unittest.TestCase):
 
     def test_rejects_press_release_ai_tone(self):
         formal = copy.deepcopy(MODEL_OUTPUT)
-        formal["news"][0]["author_note"] = (
-            "이 소식에서 내가 먼저 볼 것은 이 기능이 중요하다고 봅니다. 저장소 설정을 확인하십시오. "
+        formal["news"][0]["content"][3]["text"] += (
+            " 이 기능이 중요하다고 봅니다. 저장소 설정을 확인하십시오. "
             "모든 팀에 적용할 것을 권장합니다. 권한과 로그를 점검해 보십시오. "
             "이 변화는 개발자에게 도움이 될 것입니다."
         )
@@ -405,70 +408,13 @@ class DayValidationTests(unittest.TestCase):
 
         self.assertEqual(day["generation"]["provider"], "github-models")
 
-    def test_rejects_abstract_author_note_instead_of_a_personal_check(self):
-        abstract = copy.deepcopy(MODEL_OUTPUT)
-        abstract["news"][0]["author_note"] = (
-            "이 소식에서 내가 먼저 볼 것은 권한 설정이다. 개발자 관점에서는 장기적인 "
-            "서비스 운영을 위해 검증 파이프라인을 구성하는 연습이 필요하다. "
-            "관련 프로세스를 마련해야 한다."
-        )
+    def test_drops_legacy_author_note_fields_from_public_day_data(self):
+        legacy = copy.deepcopy(MODEL_OUTPUT)
+        legacy["news"][0]["author_note"] = "승원의 메모 · 자료 기반 해석"
 
-        with self.assertRaisesRegex(DraftQualityError, "승원의 메모"):
-            build_day(INBOX, abstract)
+        day = build_day(INBOX, legacy)
 
-    def test_accepts_a_concrete_author_check_without_a_fixed_keyword(self):
-        concrete = copy.deepcopy(MODEL_OUTPUT)
-        concrete["news"][0]["author_note"] = (
-            "이 소식에서 내가 먼저 볼 것은 공개 계정과 비공개 계정에서 보이는 동의 화면의 차이다. "
-            "같은 사진을 올렸을 때 자동 연동 안내가 어느 시점에 나타나는지 나란히 적어본다. "
-            "결과는 발행 전 메모 한 줄로 남긴다."
-        )
-
-        day = build_day(INBOX, concrete)
-
-        self.assertEqual(
-            day["news"][0]["author_note"], concrete["news"][0]["author_note"]
-        )
-
-    def test_derives_a_missing_note_from_verification_but_rejects_fake_experience(self):
-        missing = copy.deepcopy(MODEL_OUTPUT)
-        missing["news"][0].pop("author_note")
-        day = build_day(INBOX, missing)
-
-        self.assertTrue(
-            day["news"][0]["author_note"].startswith(
-                "이 소식에서 내가 먼저 볼 것은"
-            )
-        )
-        self.assertIn("설정", day["news"][0]["author_note"])
-        self.assertGreaterEqual(len(day["news"][0]["author_note"]), 90)
-
-        fabricated = copy.deepcopy(MODEL_OUTPUT)
-        fabricated["news"][0]["author_note"] = (
-            "직접 해보니 성능이 아주 좋았고 현업 프로젝트에서도 문제없이 쓸 수 있었다. "
-            "그래서 모든 개발자에게 추천할 수 있다고 느꼈다. 구체적인 설정이나 테스트 결과가 없어도 "
-            "내 경험만으로 충분히 판단할 수 있으며 당장 적용해도 된다고 생각한다."
-        )
-        with self.assertRaisesRegex(DraftQualityError, "직접 경험"):
-            build_day(INBOX, fabricated)
-
-    def test_strips_a_repeated_author_note_label_and_caps_the_copy(self):
-        labeled = copy.deepcopy(MODEL_OUTPUT)
-        labeled["news"][0]["author_note"] = (
-            "승원의 메모 · 자료 기반 해석 "
-            + labeled["news"][0]["author_note"]
-            + " 추가 설명을 길게 반복한다."
-        )
-
-        day = build_day(INBOX, labeled)
-
-        self.assertTrue(
-            day["news"][0]["author_note"].startswith(
-                "이 소식에서 내가 먼저 볼 것은"
-            )
-        )
-        self.assertNotIn("승원의 메모", day["news"][0]["author_note"])
-        self.assertLessEqual(len(day["news"][0]["author_note"]), 220)
+        self.assertNotIn("author_note", day["news"][0])
 
     def test_rejects_a_vague_verification_paragraph(self):
         vague = copy.deepcopy(MODEL_OUTPUT)

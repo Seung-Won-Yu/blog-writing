@@ -65,18 +65,18 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("세부 내용과 최신 변경 사항은 각 원문 링크에서 다시 확인할 수 있다.", html)
         self.assertNotIn("권장합니다", html)
 
-    def test_renders_an_in_page_reading_guide_and_source_based_author_note(self):
+    def test_renders_an_in_page_reading_guide_without_internal_editor_notes(self):
         day = dict(FALLBACK_DAY)
         day["news"] = [
             {
                 **FALLBACK_DAY["news"][0],
-                "author_note": "승원의 관점에서는 실제 설정과 권한 범위를 먼저 비교해볼 만하다.",
+                "author_note": "개발자 관점에서는 실제 설정과 권한 범위를 먼저 비교해볼 만하다.",
             },
             {
                 "title_kr": "두 번째 흐름",
                 "source": "공식 블로그",
                 "url": "https://example.com/2",
-                "author_note": "승원의 관점에서는 버전별 차이를 표로 남겨볼 만하다.",
+                "author_note": "개발자 관점에서는 버전별 차이를 표로 남겨볼 만하다.",
                 "content": [],
             },
         ]
@@ -88,8 +88,10 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn('id="digest-news-1"', html)
         self.assertIn("오늘의 메인 이슈", html)
         self.assertIn("함께 볼 흐름", html)
-        self.assertIn("승원의 메모 · 자료 기반 해석", html)
-        self.assertIn("실제 설정과 권한 범위", html)
+        self.assertNotIn("digest-author-note", html)
+        self.assertNotIn("개발자 편집자의 체크포인트", html)
+        self.assertNotIn("승원의 메모", html)
+        self.assertNotIn("실제 설정과 권한 범위", html)
 
     def test_uses_a_specific_editorial_headline_in_search_and_the_hero(self):
         day = dict(FALLBACK_DAY)
@@ -173,7 +175,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertTrue(html.lstrip().startswith('<article class="daily-digest-post"'))
         self.assertNotIn("<!--", html)
         self.assertIn("공식 블로그 · 2026. 7. 13 · 일반 독자", html)
-        self.assertIn("초안 생성에 자동화를 사용", html)
+        self.assertNotIn("초안 생성에 자동화를 사용", html)
+        self.assertNotIn('class="digest-note"', html)
 
     def test_publish_checklist_requires_original_human_review(self):
         checklist = build_publish_checklist(FALLBACK_DAY)
