@@ -123,7 +123,7 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn("이 글에서 볼 것", html)
+        self.assertIn("3분 미리보기", html)
         self.assertIn('href="#digest-news-1"', html)
         self.assertIn('id="digest-news-1"', html)
         self.assertIn("오늘의 메인 이슈", html)
@@ -189,8 +189,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertIn("도구보다 검증 과정", html)
         self.assertIn('class="digest-throughline"', html)
-        self.assertIn("WHY THESE STORIES", html)
-        self.assertNotIn("WHY THESE THREE", html)
+        self.assertIn("이 소식들이 연결되는 지점", html)
+        self.assertNotIn("WHY THESE STORIES", html)
         self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘의 뉴스 1개", html)
         self.assertIn('class="digest-closing"', html)
@@ -387,14 +387,27 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         flow_index = html.index('class="digest-flow-image"')
         self.assertLess(story_index, flow_index)
 
-    def test_post_shell_keeps_horizontal_reading_space(self):
+    def test_post_shell_leaves_full_width_for_ad_and_pads_article_sections(self):
         html = render_post("2026-07-13", self.image_day())
 
         self.assertIn(
+            "max-width:728px !important;margin:0 auto;padding:12px 0 36px !important;",
+            html,
+        )
+        self.assertIn("padding:30px clamp(18px,4vw,28px) 32px;", html)
+        self.assertNotIn(
             "padding:12px clamp(18px,4vw,28px) 36px !important;",
             html,
         )
-        self.assertIn("padding:30px 0 32px;", html)
+
+    def test_reading_guide_is_compact_and_does_not_repeat_landing_page_headings(self):
+        html = render_post("2026-07-13", self.image_day())
+
+        guide = html[html.index('class="digest-reading-guide"') : html.index("</nav>")]
+        self.assertIn("3분 미리보기", guide)
+        self.assertNotIn("READING GUIDE", guide)
+        self.assertNotIn("<h2", guide)
+        self.assertIn("font-size:15px !important", guide)
 
     def test_terms_use_the_same_card_gutter_as_the_quiz(self):
         day = self.image_day()
@@ -404,7 +417,10 @@ class EditorialImageIntegrationTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn('class="digest-terms" style="margin:40px 0;padding:24px;', html)
+        self.assertIn(
+            'class="digest-terms" style="margin:36px clamp(18px,4vw,28px);padding:22px;',
+            html,
+        )
 
     def test_writes_generated_images_first_in_copy_page_metadata(self):
         with tempfile.TemporaryDirectory() as directory:

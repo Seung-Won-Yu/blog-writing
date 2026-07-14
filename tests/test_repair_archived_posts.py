@@ -12,11 +12,18 @@ class RepairArchivedPostsTests(unittest.TestCase):
 
         html = normalize_archived_html(source)
 
-        self.assertIn("padding:12px clamp(18px,4vw,28px) 36px", html)
+        self.assertIn("max-width:728px !important", html)
+        self.assertIn("padding:12px 0 36px !important", html)
         self.assertIn('id="digest-news-1"', html)
         self.assertIn('id="digest-news-2"', html)
-        self.assertIn('class="digest-quiz" style="margin:40px 0;padding:24px', html)
-        self.assertIn('class="digest-terms" style="margin:40px 0;padding:24px', html)
+        self.assertIn(
+            'class="digest-quiz" style="margin:36px clamp(18px,4vw,28px);padding:22px',
+            html,
+        )
+        self.assertIn(
+            'class="digest-terms" style="margin:36px clamp(18px,4vw,28px);padding:22px',
+            html,
+        )
 
     def test_inserts_one_ad_before_second_story(self):
         source = normalize_archived_html(

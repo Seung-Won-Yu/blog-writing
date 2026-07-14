@@ -35,13 +35,13 @@ class CopyPageTests(unittest.TestCase):
 
         self.assertEqual([item["day"] for item in drafts], ["2026-07-13"])
 
-    def test_explains_manual_codex_generation_without_github_model_runner(self):
+    def test_explains_the_minimal_daily_publish_flow(self):
         html = render([])
 
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
-        self.assertIn("수동 작성 방법", html)
-        self.assertIn("Codex에서", html)
-        self.assertIn("오늘 뉴스 작성", html)
+        self.assertIn("오늘 글 발행 준비", html)
+        self.assertIn("09:00 Codex Terra / Medium", html)
+        self.assertIn("HTML 모드에 한 번 붙여넣고", html)
         self.assertNotIn("Run workflow", html)
         self.assertNotIn("tistory-draft.yml", html)
         self.assertNotIn("조이한", html)
@@ -75,10 +75,13 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aria-pressed="false"', html)
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
-        self.assertIn('<label for="htmlCode"', html)
-        self.assertIn('copyText(currentAdfitHtml, "AdFit 포함 HTML")', html)
-        self.assertIn("AdFit 포함 HTML 복사", html)
+        self.assertIn('for="htmlCode"', html)
+        self.assertIn('copyText(currentFinalHtml, "최종 HTML")', html)
+        self.assertIn("최종 HTML 복사", html)
         self.assertIn("기본모드로 다시 전환하지 마세요", html)
+        self.assertIn('id="adMarkup"', html)
+        self.assertIn('id="buildFinalButton"', html)
+        self.assertIn("function buildFinalHtml(showMessage = true)", html)
 
     def test_allows_publish_ready_copy_without_required_manual_review(self):
         html = render([])
@@ -87,9 +90,9 @@ class CopyPageTests(unittest.TestCase):
         self.assertNotIn('id="verificationNote"', html)
         self.assertNotIn('id="sourceChecked"', html)
         self.assertNotIn('id="relatedUrl"', html)
-        self.assertIn('id="adfitCopyButton"', html)
-        self.assertIn('data-copy="adfit" disabled', html)
-        self.assertIn('<textarea id="htmlCode" spellcheck="false" readonly>', html)
+        self.assertIn('id="finalCopyButton"', html)
+        self.assertIn('data-copy="final" disabled', html)
+        self.assertIn('id="htmlCode" spellcheck="false" readonly', html)
         self.assertNotIn("검수 완료 후 HTML 코드가 표시됩니다.", html)
         self.assertNotIn("function buildAuthorNoteHtml()", html)
         self.assertNotIn('class="digest-author-note"', html)
@@ -99,9 +102,24 @@ class CopyPageTests(unittest.TestCase):
         self.assertNotIn("Boolean(els.sourceChecked.checked)", html)
         self.assertIn("current.publish_ready", html)
         self.assertIn("currentBaseHtml", html)
-        self.assertIn("바로 복사 가능", html)
+        self.assertIn("최종 HTML 준비 완료", html)
         self.assertNotIn("메모는 선택", html)
         self.assertIn("발행 보류", html)
+
+    def test_shows_only_information_needed_to_publish(self):
+        html = render([])
+
+        self.assertIn("추천 제목", html)
+        self.assertIn("카테고리", html)
+        self.assertIn("태그", html)
+        self.assertIn("대표 이미지", html)
+        self.assertIn("광고 HTML 태그", html)
+        self.assertNotIn("검색형 제목 후보", html)
+        self.assertNotIn("오늘의 핵심 요약", html)
+        self.assertNotIn("발행 체크리스트", html)
+        self.assertNotIn("운영 정보 전체 복사", html)
+        self.assertNotIn("첫 문단/메타", html)
+        self.assertNotIn("데이터 경로", html)
 
     def test_loads_generation_readiness_from_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -144,18 +162,18 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('asset.kind === "cover"', html)
         self.assertIn('aspect-ratio: 1200 / 630', html)
         self.assertIn("els.coverPreview.alt =", html)
-        self.assertIn('asset.kind === "flow"', html)
-        self.assertIn('asset.kind.startsWith("story_")', html)
-        self.assertIn("본문 1번 이미지 열기", html)
+        self.assertNotIn('asset.kind === "flow"', html)
+        self.assertNotIn('asset.kind.startsWith("story_")', html)
+        self.assertNotIn("본문 1번 이미지 열기", html)
 
     def test_body_preview_toggles_inline_next_to_copy_button(self):
         html = render([])
 
         self.assertIn(
-            '<button class="copy preview-toggle" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>',
+            '<button class="btn" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>',
             html,
         )
-        self.assertLess(html.index('id="previewButton"'), html.index('data-copy="adfit"'))
+        self.assertLess(html.index('id="previewButton"'), html.index('data-copy="final"'))
         self.assertIn(
             '<section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>',
             html,
@@ -176,7 +194,7 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('els.previewButton.setAttribute("aria-expanded"', html)
         self.assertNotIn("previewDialog", html)
         self.assertNotIn("showModal", html)
-        self.assertIn(".code-actions {", html)
+        self.assertIn(".action-row {", html)
         self.assertIn(".preview-pane {", html)
         self.assertIn("textarea[hidden], .preview-pane[hidden] { display: none; }", html)
 

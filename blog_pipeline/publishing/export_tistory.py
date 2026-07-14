@@ -30,6 +30,7 @@ DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
 MIN_PUBLISH_REVISION = 7
+CONTENT_GUTTER = "clamp(18px,4vw,28px)"
 TISTORY_ADFIT_MARKER = (
     '<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" '
     'data-ad-vendor="adfit" data-ad-id-pc="713977" '
@@ -37,13 +38,14 @@ TISTORY_ADFIT_MARKER = (
 )
 
 POST_SHELL_STYLE = (
-    "max-width:720px !important;margin:0 auto;"
-    "padding:12px clamp(18px,4vw,28px) 36px !important;"
+    "width:100%;max-width:728px !important;margin:0 auto;"
+    "padding:12px 0 36px !important;overflow:visible;"
     "box-sizing:border-box;color:#303942;"
     "font-family:AppleSDGothicNeo,'Malgun Gothic',sans-serif;line-height:1.8;"
 )
 HERO_STYLE = (
-    "margin:0 0 34px;padding:24px 0 28px;border-top:4px solid #28745a;"
+    f"margin:0 {CONTENT_GUTTER} 30px;padding:22px 0 24px;"
+    "border-top:4px solid #28745a;"
     "border-bottom:1px solid #d8dedb;background:#fff;"
 )
 KICKER_STYLE = (
@@ -56,10 +58,14 @@ META_INTRO_STYLE = (
     "margin:14px 0 0;color:#66716b;font-size:14px;line-height:1.7;"
 )
 SECTION_TITLE_STYLE = (
-    "margin:42px 0 14px;color:#17211c;font-size:22px;line-height:1.35;font-weight:850;"
+    "margin:38px 0 14px;color:#17211c;font-size:22px !important;"
+    "line-height:1.4 !important;font-weight:850;"
+)
+TOP_LEVEL_SECTION_TITLE_STYLE = (
+    SECTION_TITLE_STYLE + f"padding-left:{CONTENT_GUTTER};padding-right:{CONTENT_GUTTER};"
 )
 CARD_STYLE = (
-    "margin:0;padding:30px 0 32px;"
+    f"margin:0;padding:30px {CONTENT_GUTTER} 32px;"
     "border-top:1px solid #d8dedb;background:#fff;box-sizing:border-box;"
 )
 NEWS_IMAGE_STYLE = (
@@ -70,8 +76,8 @@ EDITORIAL_IMAGE_STYLE = (
     "display:block;width:100%;height:auto;border:1px solid #d8dedb;"
     "border-radius:4px;background:#f5f6f4;"
 )
-COVER_FIGURE_STYLE = "margin:0 0 34px;"
-FLOW_FIGURE_STYLE = "margin:8px 0 36px;"
+COVER_FIGURE_STYLE = f"margin:0 {CONTENT_GUTTER} 32px;"
+FLOW_FIGURE_STYLE = f"margin:8px {CONTENT_GUTTER} 34px;"
 STORY_FIGURE_STYLE = "margin:0 0 24px;"
 BADGE_STYLE = (
     "display:block;margin:0 0 9px;color:#28745a;font-size:12px;font-weight:850;"
@@ -90,25 +96,29 @@ BUTTON_STYLE = (
     "color:#28745a;text-decoration:none;font-size:13px;font-weight:850;"
 )
 QUIZ_STYLE = (
-    "margin:40px 0;padding:24px;border:1px solid #cfd8d3;border-radius:4px;"
+    f"margin:36px {CONTENT_GUTTER};padding:22px;border:1px solid #cfd8d3;"
+    "border-radius:4px;"
     "background:#f4f7f5;"
 )
 TERM_ITEM_STYLE = (
     "margin:0;padding:16px 0;border-bottom:1px solid #d8dedb;list-style:none;"
 )
 TERMS_STYLE = (
-    "margin:40px 0;padding:24px;border:1px solid #d8dedb;border-radius:4px;"
+    f"margin:36px {CONTENT_GUTTER};padding:22px;border:1px solid #d8dedb;"
+    "border-radius:4px;"
     "background:#fff;"
 )
 SUMMARY_STYLE = (
-    "margin:0 0 34px;padding:20px 22px;border-left:4px solid #c99b43;"
+    f"margin:0 {CONTENT_GUTTER} 30px;padding:18px 20px;"
+    "border-left:4px solid #c99b43;"
     "background:#f7f4ec;"
 )
 SUMMARY_LIST_STYLE = (
     "margin:0;padding-left:0;color:#46534d;line-height:1.8;list-style:none;"
 )
 CLOSING_STYLE = (
-    "margin:42px 0 0;padding:24px 0;border-top:3px solid #28745a;"
+    f"margin:40px {CONTENT_GUTTER} 0;padding:22px 0;"
+    "border-top:3px solid #28745a;"
     "border-bottom:1px solid #d8dedb;background:#fff;"
 )
 ACTION_STYLE = (
@@ -116,12 +126,12 @@ ACTION_STYLE = (
     "background:#f7f4ec;color:#35433c;"
 )
 THROUGHLINE_STYLE = (
-    "margin:34px 0 40px;padding:24px 26px;border:1px solid #cfd8d3;"
-    "border-top:4px solid #28745a;background:#f4f7f5;"
+    f"margin:30px {CONTENT_GUTTER} 34px;padding:18px 0 0;"
+    "border-top:3px solid #28745a;background:#fff;"
 )
 READING_GUIDE_STYLE = (
-    "margin:0 0 34px;padding:20px 22px;border:1px solid #d8dedb;"
-    "background:#fff;"
+    f"margin:0 {CONTENT_GUTTER} 28px;padding:14px 0 8px;"
+    "border-top:1px solid #d8dedb;border-bottom:1px solid #d8dedb;background:#fff;"
 )
 def esc(value):
     return html.escape(html.unescape(str(value or "")), quote=True)
@@ -385,9 +395,8 @@ def build_throughline_section(editorial):
         return ""
     return f"""
 <section class="digest-throughline"{style(THROUGHLINE_STYLE)}>
-  <p{style(KICKER_STYLE)}>WHY THESE STORIES</p>
-  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>오늘의 연결고리</h2>
-  <p style="margin:0;color:#35433c;font-size:17px;line-height:1.88;">{esc(throughline)}</p>
+  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;margin-bottom:10px;")}>이 소식들이 연결되는 지점</h2>
+  <p style="margin:0;color:#35433c;font-size:16px !important;line-height:1.85 !important;">{esc(throughline)}</p>
 </section>""".strip()
 
 
@@ -396,16 +405,16 @@ def build_reading_guide(news):
         return ""
     rows = []
     for index, item in enumerate(news, 1):
-        lane = "오늘의 메인 이슈" if index == 1 else "함께 볼 흐름"
         rows.append(
-            '<li style="margin:0;padding:9px 0;border-bottom:1px solid #e5e8e6;list-style:none;">'
+            '<li style="margin:0;padding:7px 0;border-bottom:1px solid #edf0ee;'
+            'font-size:15px !important;line-height:1.6 !important;list-style:none;">'
             f'<a href="#digest-news-{index}" style="color:#27332d;text-decoration:none;">'
-            f'<b style="color:#28745a;">{esc(lane)}</b> · {esc(item.get("title_kr"))}</a></li>'
+            f'<b style="display:inline-block;width:28px;color:#28745a;">{index:02d}</b>'
+            f'{esc(item.get("title_kr"))}</a></li>'
         )
     return f"""
 <nav class="digest-reading-guide" aria-label="글 순서"{style(READING_GUIDE_STYLE)}>
-  <p{style(KICKER_STYLE)}>READING GUIDE</p>
-  <h2{style(SECTION_TITLE_STYLE + "margin-top:0;")}>이 글에서 볼 것</h2>
+  <p style="margin:0 0 6px;color:#17211c;font-size:15px !important;line-height:1.5 !important;font-weight:850;">3분 미리보기</p>
   <ol style="margin:0;padding:0;list-style:none;">{''.join(rows)}</ol>
 </nav>""".strip()
 
@@ -436,7 +445,10 @@ def build_editorial_image(asset, kind):
 
 def build_news_section(news, flow_image=None, story_images=None):
     if not news:
-        return '<p style="margin:0 0 16px;">오늘 수집된 뉴스가 없습니다.</p>'
+        return (
+            f'<p style="margin:0 {CONTENT_GUTTER} 16px;">'
+            "오늘 수집된 뉴스가 없습니다.</p>"
+        )
 
     parts = []
     story_images = story_images or []
@@ -606,7 +618,7 @@ def render_post(day_id, day):
 
   {build_reading_guide(news)}
 
-  <h2{style(SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
+  <h2{style(TOP_LEVEL_SECTION_TITLE_STYLE)}>오늘의 뉴스 {len(news)}개</h2>
   {build_news_section(
       news,
       images.get("flow"),
