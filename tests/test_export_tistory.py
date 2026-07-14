@@ -415,6 +415,8 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         self.assertNotIn("READING GUIDE", guide)
         self.assertNotIn("<h2", guide)
         self.assertIn("font-size:15px !important", guide)
+        self.assertIn("01&nbsp;·&nbsp;", guide)
+        self.assertNotIn("width:28px", guide)
 
     def test_terms_use_the_same_card_gutter_as_the_quiz(self):
         day = self.image_day()

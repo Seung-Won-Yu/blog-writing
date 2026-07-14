@@ -410,7 +410,7 @@ def build_reading_guide(news):
             '<li style="margin:0;padding:7px 0;border-bottom:1px solid #edf0ee;'
             'font-size:15px !important;line-height:1.6 !important;list-style:none;">'
             f'<a href="#digest-news-{index}" style="color:#27332d;text-decoration:none;">'
-            f'<b style="display:inline-block;width:28px;color:#28745a;">{index:02d}</b>'
+            f'<b style="color:#28745a;">{index:02d}&nbsp;·&nbsp;</b>'
             f'{esc(item.get("title_kr"))}</a></li>'
         )
     return f"""

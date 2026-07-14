@@ -447,7 +447,7 @@
         return "발행 보류 · 품질 검사를 통과한 초안이 아닙니다.";
       }
       if (!currentFinalHtml) return "광고 태그 확인 후 최종 HTML을 만들어 주세요.";
-      return "최종 HTML 준비 완료";
+      return "최종 HTML 준비 완료 · " + currentFinalHtml.length.toLocaleString() + "자";
     }
 
     function updateCopyState() {
@@ -487,17 +487,34 @@
       els.coverDownload.download = current.day + "-" + filenameFromUrl(cover.url);
     }
 
+    function extractRevenueMarkup(value) {
+      const matches = String(value || "").match(revenueMarkerPattern) || [];
+      return matches.length === 1 ? matches[0] : "";
+    }
+
+    function isFinalHtmlStructurallyValid(value) {
+      if (!value || value.length < 1000) return false;
+      const parsed = new DOMParser().parseFromString(value, "text/html");
+      const articles = parsed.querySelectorAll(".daily-digest-post");
+      const news = parsed.querySelectorAll(".digest-news-card");
+      const ads = parsed.querySelectorAll('[data-ad-vendor="adfit"]');
+      if (articles.length !== 1 || news.length !== 3 || ads.length !== 1) return false;
+      const firstBeforeAd = Boolean(news[0].compareDocumentPosition(ads[0]) & 4);
+      const adBeforeSecond = Boolean(ads[0].compareDocumentPosition(news[1]) & 4);
+      return firstBeforeAd && adBeforeSecond;
+    }
+
     function buildFinalHtml(showMessage = true) {
       if (!isDraftCopyReady()) {
         if (showMessage) setStatus(reviewGateMessage(), "error");
         return false;
       }
-      const markup = els.adMarkup.value.trim();
+      const markup = extractRevenueMarkup(els.adMarkup.value);
       if (!markup) {
         currentFinalHtml = "";
         els.htmlCode.value = currentAdfitHtml;
         updateCopyState();
-        if (showMessage) setStatus("광고 HTML 태그를 입력해 주세요.", "error");
+        if (showMessage) setStatus("AdFit 광고 태그 1개를 찾을 수 없습니다.", "error");
         return false;
       }
       const markers = currentAdfitHtml.match(revenueMarkerPattern) || [];
@@ -508,6 +525,14 @@
         return false;
       }
       currentFinalHtml = currentAdfitHtml.replace(revenueMarkerPattern, markup);
+      if (!isFinalHtmlStructurallyValid(currentFinalHtml)) {
+        currentFinalHtml = "";
+        els.htmlCode.value = currentAdfitHtml;
+        updateCopyState();
+        if (showMessage) setStatus("최종 본문 구조 검사에 실패했습니다. 복사하지 않았습니다.", "error");
+        return false;
+      }
+      els.adMarkup.value = markup;
       els.htmlCode.value = currentFinalHtml;
       window.localStorage.setItem("tistory-ad-markup", markup);
       updateCopyState();
@@ -574,16 +599,37 @@
     async function copyText(text, label) {
       if (!text) {
         setStatus("복사할 내용이 없습니다.", "error");
-        return;
+        return false;
       }
+      let copied = false;
       try {
-        await navigator.clipboard.writeText(text);
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          copied = true;
+        }
       } catch (error) {
-        els.htmlCode.focus();
-        els.htmlCode.select();
-        document.execCommand("copy");
+        copied = false;
       }
-      setStatus(label + " 복사 완료");
+      if (!copied) {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.left = "-9999px";
+        helper.style.top = "0";
+        document.body.appendChild(helper);
+        helper.focus();
+        helper.select();
+        helper.setSelectionRange(0, helper.value.length);
+        copied = document.execCommand("copy");
+        helper.remove();
+      }
+      if (!copied) {
+        setStatus("복사에 실패했습니다. HTML 코드 보기에서 전체 코드를 직접 복사해 주세요.", "error");
+        return false;
+      }
+      setStatus(label + " 복사 완료 · " + text.length.toLocaleString() + "자");
+      return true;
     }
 
     els.adMarkup.value = window.localStorage.getItem("tistory-ad-markup") || defaultAdMarkup;
@@ -615,8 +661,8 @@
       if (!button || !current) return;
       const type = button.dataset.copy;
       if (type === "final") {
-        if (!isDraftCopyReady() || !currentFinalHtml) {
-          setStatus(reviewGateMessage(), "error");
+        if (!isDraftCopyReady() || !isFinalHtmlStructurallyValid(currentFinalHtml)) {
+          setStatus("전체 본문 구조가 확인되지 않아 복사하지 않았습니다.", "error");
           return;
         }
         copyText(currentFinalHtml, "최종 HTML");

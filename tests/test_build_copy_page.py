@@ -82,6 +82,12 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('id="adMarkup"', html)
         self.assertIn('id="buildFinalButton"', html)
         self.assertIn("function buildFinalHtml(showMessage = true)", html)
+        self.assertIn("function extractRevenueMarkup(value)", html)
+        self.assertIn("function isFinalHtmlStructurallyValid(value)", html)
+        self.assertIn('document.createElement("textarea")', html)
+        self.assertIn('document.execCommand("copy")', html)
+        self.assertIn('helper.setSelectionRange(0, helper.value.length)', html)
+        self.assertIn("복사에 실패했습니다", html)
 
     def test_allows_publish_ready_copy_without_required_manual_review(self):
         html = render([])
