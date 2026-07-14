@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "publish-drafts.yml"
+COLLECT_WORKFLOW = ROOT / ".github" / "workflows" / "collect-news.yml"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -26,6 +27,22 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("GITHUB_TOKEN", workflow)
         self.assertNotIn("git push", workflow)
         self.assertNotIn("contents: write", workflow)
+        self.assertNotIn("models: read", workflow)
+
+    def test_collection_workflow_only_collects_ranked_candidates(self):
+        workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("name: Collect daily news", workflow)
+        self.assertIn("cron: '30 23 * * *'", workflow)
+        self.assertIn("contents: write", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.collection.collect_news --today", workflow
+        )
+        self.assertIn("git add docs/inbox", workflow)
+        self.assertIn("git push origin HEAD:main", workflow)
+        self.assertNotIn("generate_daily_draft", workflow)
+        self.assertNotIn("generate_editorial_images", workflow)
+        self.assertNotIn("GEMINI_API_KEY", workflow)
         self.assertNotIn("models: read", workflow)
 
     def test_agent_contract_and_clean_package_layout_exist(self):
