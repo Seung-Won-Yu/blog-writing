@@ -6,10 +6,9 @@ from pathlib import Path
 
 from blog_pipeline.collection.collect_news import (
     build_inbox,
-    load_recent_selected_urls,
+    load_recent_processed_urls,
     parse_feed,
     parse_html_links,
-    prune_old_inbox_files,
     render_inbox_html,
 )
 
@@ -98,34 +97,6 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
-    def test_prunes_only_dated_inbox_files_outside_retention_window(self):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            output = Path(temp_dir)
-            for filename in (
-                "2026-06-24.json",
-                "2026-06-24.html",
-                "2026-06-25.json",
-                "2026-06-25.html",
-                "2026-07-15.json",
-                "2026-07-15.html",
-                "latest.json",
-                "index.html",
-            ):
-                (output / filename).write_text(filename, encoding="utf-8")
-
-            removed = prune_old_inbox_files(
-                output, "2026-07-15", retention_days=21
-            )
-
-            self.assertEqual(
-                {path.name for path in removed},
-                {"2026-06-24.json", "2026-06-24.html"},
-            )
-            self.assertTrue((output / "2026-06-25.json").exists())
-            self.assertTrue((output / "2026-07-15.html").exists())
-            self.assertTrue((output / "latest.json").exists())
-            self.assertTrue((output / "index.html").exists())
-
     def test_excludes_recently_selected_url_from_new_selection(self):
         config = {
             "interest_keywords": ["AI"],
@@ -157,30 +128,30 @@ class InboxTests(unittest.TestCase):
         self.assertEqual([item["url"] for item in result["selected"]], ["https://news.example/new"])
         self.assertEqual(result["selection"]["recently_selected_excluded"], 1)
 
-    def test_loads_only_selected_urls_from_recent_prior_days(self):
+    def test_loads_only_processed_urls_from_recent_prior_days(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir)
             (output / "2026-07-12.json").write_text(
                 json.dumps(
                     {
-                        "selected": [
+                        "news": [
                             {"url": "https://news.example/kept?utm_source=rss"},
                         ],
-                        "candidates": [{"url": "https://news.example/not-selected"}],
+                        "references": [{"url": "https://news.example/not-published"}],
                     }
                 ),
                 encoding="utf-8",
             )
-            (output / "2026-07-05.json").write_text(
-                json.dumps({"selected": [{"url": "https://news.example/too-old"}]}),
+            (output / "2026-06-28.json").write_text(
+                json.dumps({"news": [{"url": "https://news.example/too-old"}]}),
                 encoding="utf-8",
             )
             (output / "2026-07-13.json").write_text(
-                json.dumps({"selected": [{"url": "https://news.example/same-day"}]}),
+                json.dumps({"news": [{"url": "https://news.example/same-day"}]}),
                 encoding="utf-8",
             )
 
-            urls = load_recent_selected_urls(output, "2026-07-13", lookback_days=7)
+            urls = load_recent_processed_urls(output, "2026-07-13", lookback_days=14)
 
         self.assertEqual(urls, {"https://news.example/kept"})
 

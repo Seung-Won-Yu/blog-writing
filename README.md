@@ -30,7 +30,7 @@ Python 수집기
 
 1. 최신 `main`을 받습니다.
 2. `daily_guard`가 당일 결과를 확인합니다. `COMPLETE`면 아무 작업 없이 종료하고, `PARTIAL`이면 누락 단계만 재개합니다.
-3. 새 글일 때만 Actions가 커밋한 당일 후보함을 읽습니다. 누락된 날만 Python 수집기를 직접 실행합니다.
+3. 새 글일 때만 Actions가 갱신한 `docs/inbox/latest.json`을 읽습니다. 날짜가 오늘이 아니면 Python 수집기를 한 번만 직접 실행합니다.
 4. Codex `gpt-5.6-terra`를 Medium reasoning으로 사용해 후보 원문을 확인하고, 최근 14일 중복 검사를 통과한 기사 3건을 집필합니다.
 5. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·격리 미리보기를 만듭니다.
 6. 최종 가드와 테스트를 통과한 결과만 하나의 커밋으로 한 번 푸시합니다.
@@ -69,7 +69,7 @@ python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m unittest discover -s tests
 ```
 
-이미지는 Git에 들어가기 전에 `1200×630 WebP`로 변환하며 장당 256KB, 하루 4장 총 1MB를 넘지 않습니다. 뉴스 후보함의 날짜별 원본은 최근 21일만 현재 브랜치에 남기고, 실제 발행에 사용한 `data/days`와 최종 초안은 장기 보관합니다.
+이미지는 Git에 들어가기 전에 `1200×630 WebP`로 변환하며 장당 256KB, 하루 4장 총 1MB를 넘지 않습니다. 뉴스 후보함은 `latest.json`과 `index.html`만 교체하며 과거 원뉴스를 쌓지 않습니다. 실제 발행에 사용한 `data/days`, 최종 HTML, 압축 WebP만 장기 자산으로 보관합니다.
 
 특정 날짜는 `--today` 대신 `--day YYYY-MM-DD`를 사용합니다.
 
@@ -105,8 +105,8 @@ config/
   news_sources.json        출처, 독자 층위, 중복 제외 규칙
   editorial_persona.json   레거시 생성기 복구용 문체 설정
 
-data/days/                 날짜별 편집 원본 JSON
-docs/inbox/                수집된 뉴스 후보함
+data/days/                 장기 보관하는 날짜별 가공 원본 JSON
+docs/inbox/                latest.json·index.html만 유지하는 임시 뉴스 후보함
 docs/tistory/              복사할 본문 HTML과 메타데이터
 docs/preview/              격리된 본문 미리보기
 docs/index.html            GitHub Pages 초안 도구

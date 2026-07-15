@@ -220,10 +220,10 @@ def _source_item_matches(raw, source):
     )
 
 
-def load_recent_selected_urls(output_dir, day_id, lookback_days=7):
-    """Return canonical URLs selected on prior days inside the lookback window."""
+def load_recent_processed_urls(days_dir, day_id, lookback_days=14):
+    """Return canonical URLs saved in recent processed daily articles."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
-    output = Path(output_dir)
+    output = Path(days_dir)
     urls = set()
 
     for days_ago in range(1, max(0, int(lookback_days)) + 1):
@@ -235,7 +235,7 @@ def load_recent_selected_urls(output_dir, day_id, lookback_days=7):
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        for item in payload.get("selected", []):
+        for item in payload.get("news", []):
             url = canonicalize_url(item.get("url", ""))
             if url:
                 urls.add(url)
@@ -453,14 +453,14 @@ def render_inbox_html(inbox):
 def write_inbox(inbox, output_dir):
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
-    day = inbox["day"]
-    dated_json = output / "{}.json".format(day)
-    dated_html = output / "{}.html".format(day)
+    validate_day_id(inbox["day"])
+    latest_json = output / "latest.json"
+    index_html = output / "index.html"
     payload = dict(inbox)
 
-    if dated_json.exists():
+    if latest_json.exists():
         try:
-            previous = json.loads(dated_json.read_text(encoding="utf-8"))
+            previous = json.loads(latest_json.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             previous = None
         if previous:
@@ -471,31 +471,25 @@ def write_inbox(inbox, output_dir):
 
     json_text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     html_text = render_inbox_html(payload)
-    dated_json.write_text(json_text, encoding="utf-8")
-    dated_html.write_text(html_text, encoding="utf-8")
-    (output / "latest.json").write_text(json_text, encoding="utf-8")
-    (output / "index.html").write_text(html_text, encoding="utf-8")
-    return {"json": str(dated_json), "html": str(dated_html)}
+    latest_json.write_text(json_text, encoding="utf-8")
+    index_html.write_text(html_text, encoding="utf-8")
 
-
-def prune_old_inbox_files(output_dir, day_id, retention_days=21):
-    """Remove dated review files older than the rolling retention window."""
-    output = Path(output_dir)
-    current_day = dt.date.fromisoformat(validate_day_id(day_id))
-    keep_days = max(1, int(retention_days))
-    cutoff = current_day - dt.timedelta(days=keep_days - 1)
     removed = []
     for path in output.iterdir() if output.is_dir() else ():
         if not path.is_file() or path.suffix not in {".json", ".html"}:
             continue
         try:
-            file_day = dt.date.fromisoformat(validate_day_id(path.stem))
+            validate_day_id(path.stem)
         except ValueError:
             continue
-        if file_day < cutoff:
-            path.unlink()
-            removed.append(path)
-    return removed
+        path.unlink()
+        removed.append(path)
+
+    return {
+        "json": str(latest_json),
+        "html": str(index_html),
+        "removed": [str(path) for path in removed],
+    }
 
 
 def fetch_url(url, timeout=20):
@@ -518,6 +512,7 @@ def main(argv=None):
     day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")
     parser.add_argument("--config", default="config/news_sources.json")
     parser.add_argument("--output-dir", default="docs/inbox")
+    parser.add_argument("--published-days-dir", default="data/days")
     args = parser.parse_args(argv)
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
@@ -526,8 +521,10 @@ def main(argv=None):
         day_id = validate_day_id(args.day or now.date().isoformat())
     except ValueError as exc:
         parser.error(str(exc))
-    lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 7))
-    excluded_urls = load_recent_selected_urls(args.output_dir, day_id, lookback_days)
+    lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 14))
+    excluded_urls = load_recent_processed_urls(
+        args.published_days_dir, day_id, lookback_days
+    )
     inbox = build_inbox(
         config,
         fetch_text=fetch_url,
@@ -536,18 +533,12 @@ def main(argv=None):
         excluded_urls=excluded_urls,
     )
     paths = write_inbox(inbox, args.output_dir)
-    retention_days = int(
-        config.get("selection", {}).get("inbox_retention_days", 21)
-    )
-    removed = prune_old_inbox_files(
-        args.output_dir, day_id, retention_days=retention_days
-    )
     print(
-        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건 / 오래된 파일 {}개 정리\n{}".format(
+        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건 / 과거 원뉴스 {}개 정리\n{}".format(
             len(inbox["selected"]),
             len(inbox["candidates"]),
             len(inbox["errors"]),
-            len(removed),
+            len(paths["removed"]),
             paths["html"],
         )
     )

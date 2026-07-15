@@ -39,29 +39,39 @@ class ReviewInboxTests(unittest.TestCase):
         self.assertIn("broken", html)
         self.assertIn("timeout &lt;60s&gt;", html)
 
-    def test_writes_dated_and_latest_json_and_html(self):
+    def test_writes_only_latest_files_and_removes_legacy_dated_files(self):
         with tempfile.TemporaryDirectory() as directory:
+            Path(directory, "2026-07-11.json").write_text("{}", encoding="utf-8")
+            Path(directory, "2026-07-11.html").write_text("legacy", encoding="utf-8")
             paths = write_inbox(self.inbox, directory)
 
-            dated_json = Path(directory, "2026-07-12.json")
-            self.assertTrue(dated_json.exists())
-            self.assertTrue(Path(directory, "2026-07-12.html").exists())
-            self.assertTrue(Path(directory, "latest.json").exists())
-            self.assertTrue(Path(directory, "index.html").exists())
-            self.assertEqual(json.loads(dated_json.read_text())["day"], "2026-07-12")
-            self.assertEqual(paths["json"], str(dated_json))
+            latest_json = Path(directory, "latest.json")
+            index_html = Path(directory, "index.html")
+            self.assertFalse(Path(directory, "2026-07-11.json").exists())
+            self.assertFalse(Path(directory, "2026-07-11.html").exists())
+            self.assertFalse(Path(directory, "2026-07-12.json").exists())
+            self.assertFalse(Path(directory, "2026-07-12.html").exists())
+            self.assertTrue(latest_json.exists())
+            self.assertTrue(index_html.exists())
+            self.assertEqual(json.loads(latest_json.read_text())["day"], "2026-07-12")
+            self.assertEqual(paths["json"], str(latest_json))
+            self.assertEqual(paths["html"], str(index_html))
+            self.assertEqual(
+                {Path(path).name for path in paths["removed"]},
+                {"2026-07-11.json", "2026-07-11.html"},
+            )
 
     def test_same_candidates_do_not_change_files_only_for_new_timestamp(self):
         with tempfile.TemporaryDirectory() as directory:
             write_inbox(self.inbox, directory)
-            dated_json = Path(directory, "2026-07-12.json")
-            first_text = dated_json.read_text(encoding="utf-8")
+            latest_json = Path(directory, "latest.json")
+            first_text = latest_json.read_text(encoding="utf-8")
 
             rerun = copy.deepcopy(self.inbox)
             rerun["generated_at"] = "2026-07-12T10:00:00+00:00"
             write_inbox(rerun, directory)
 
-            self.assertEqual(dated_json.read_text(encoding="utf-8"), first_text)
+            self.assertEqual(latest_json.read_text(encoding="utf-8"), first_text)
 
 
 class SourceConfigTests(unittest.TestCase):
@@ -81,6 +91,8 @@ class SourceConfigTests(unittest.TestCase):
             ["broad", "practical", "deep"],
         )
         self.assertEqual(config["selection"]["max_research_items"], 0)
+        self.assertEqual(config["selection"]["exclude_recent_days"], 14)
+        self.assertNotIn("inbox_retention_days", config["selection"])
         self.assertTrue(config["selection"]["require_topic_coherence"])
         self.assertEqual(config["selection"]["max_topic_items"]["ai"], 3)
         yozmit = next(source for source in enabled if source["id"] == "yozmit")
