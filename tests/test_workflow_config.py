@@ -14,6 +14,10 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("name: Publish reviewed drafts", workflow)
         self.assertIn("python3 -m unittest discover -s tests", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.publishing.optimize_images --check-all",
+            workflow,
+        )
         self.assertIn("python3 -m blog_pipeline.publishing.build_copy_page", workflow)
         self.assertIn("actions/upload-pages-artifact@v3", workflow)
         self.assertIn("actions/deploy-pages@v5", workflow)
@@ -65,6 +69,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("daily_guard --today", contract)
         self.assertIn("daily_guard --today --check-duplicates", contract)
         self.assertIn("daily_guard --today --require-complete", contract)
+        self.assertIn("optimize_images --today", contract)
+        self.assertIn("webp-v1", contract)
         self.assertIn("`COMPLETE`: 즉시 종료", contract)
         self.assertIn("최근 14일", contract)
         self.assertIn("하나의 커밋", contract)

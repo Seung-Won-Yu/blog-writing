@@ -24,11 +24,11 @@
    ```
 
    실패하면 중복 기사만 대체하고 다시 검사합니다. 중복 상태로 이미지·HTML을 만들지 않습니다.
-6. 기사 이해를 돕는 대표 이미지 1장과 기사별 본문 이미지 3장을 Codex 이미지 생성으로 한 번씩 만듭니다. **물건·화면·문서·작업 공간처럼 기사에 남은 증거가 중심인 자연스러운 다큐멘터리 사진**을 기본값으로 삼습니다. 인물이 필요하면 정면 얼굴보다 손이나 어깨 너머 장면을 우선합니다. 영화 같은 조명, 초현실 합성, 네온, 광택 나는 스톡 사진, 노트북을 보는 정면 인물, PPT 카드, 큰 문구 중심 썸네일은 쓰지 않습니다. 실패한 이미지만 다시 만들며 정상 이미지를 전부 재생성하지 않습니다.
-7. 아래 명령으로 HTML과 미리보기를 한 번 만듭니다.
+6. 기사 이해를 돕는 대표 이미지 1장과 기사별 본문 이미지 3장을 Codex 이미지 생성으로 한 번씩 만들어 당일 assets 폴더에 저장하고 `images` 경로를 기록합니다. **물건·화면·문서·작업 공간처럼 기사에 남은 증거가 중심인 자연스러운 다큐멘터리 사진**을 기본값으로 삼습니다. 인물이 필요하면 정면 얼굴보다 손이나 어깨 너머 장면을 우선합니다. 영화 같은 조명, 초현실 합성, 네온, 광택 나는 스톡 사진, 노트북을 보는 정면 인물, PPT 카드, 큰 문구 중심 썸네일은 쓰지 않습니다. 실패한 이미지만 다시 만들며 정상 이미지를 전부 재생성하지 않습니다. Codex 이미지 생성 자체가 실패했을 때만 `generate_editorial_images --today`를 대체 이미지 생성기로 한 번 사용합니다.
+7. 원본 이미지를 Git에 올리기 전에 아래 명령으로 `1200×630 WebP`, 장당 최대 256KB, 하루 총 1MB의 `webp-v1` 정책으로 변환한 뒤 HTML과 미리보기를 한 번 만듭니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.generate_editorial_images --today
+   python3 -m blog_pipeline.publishing.optimize_images --today
    python3 -m blog_pipeline.publishing.export_tistory --today
    python3 -m blog_pipeline.publishing.build_copy_page
    ```
@@ -104,7 +104,7 @@
 - `news` 3건: `title_kr`, `source`, `url`, `published_at`, `audience_lane`, `selection_reason`, `blurb_kr`, `content`
 - `quiz`, `terms`, `generation`, `images`
 
-`generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID를 기록합니다. `author_note` 필드는 금지합니다.
+`generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID를 기록합니다. 이미지 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
 
 ## HTML 디자인 계약
 
@@ -124,6 +124,7 @@
 - 같은 내용을 제목·요약·본문·마무리에서 반복하지 않았는가
 - 정처기 선택지에 `1.`부터 `4.`까지 번호가 실제 HTML에 보이는가
 - 대표 이미지와 본문 이미지가 글 이해를 돕고, 같은 구도를 반복하지 않는가
+- 이미지가 모두 WebP이고 장당 256KB, 하루 총 1MB 이내인가
 - `승원의 메모`, 역할명, 자동화 고지문, 가짜 체험이 없는가
 - 데스크톱과 모바일 미리보기에서 제목·이미지·본문·정답이 깨지지 않는가
 - 본문·이미지·구분선·광고가 같은 720px 기준선에 있고 중첩 패딩이 없는가

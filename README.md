@@ -61,11 +61,15 @@ python3 -m blog_pipeline.publishing.daily_guard --today
 Codex가 `data/days/YYYY-MM-DD.json`을 작성한 뒤 결과 생성:
 
 ```bash
+# Codex 이미지 생성이 불가능할 때만 대체 이미지 생성
 python3 -m blog_pipeline.publishing.generate_editorial_images --today
+python3 -m blog_pipeline.publishing.optimize_images --today
 python3 -m blog_pipeline.publishing.export_tistory --today
 python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m unittest discover -s tests
 ```
+
+이미지는 Git에 들어가기 전에 `1200×630 WebP`로 변환하며 장당 256KB, 하루 4장 총 1MB를 넘지 않습니다. 뉴스 후보함의 날짜별 원본은 최근 21일만 현재 브랜치에 남기고, 실제 발행에 사용한 `data/days`와 최종 초안은 장기 보관합니다.
 
 특정 날짜는 `--today` 대신 `--day YYYY-MM-DD`를 사용합니다.
 

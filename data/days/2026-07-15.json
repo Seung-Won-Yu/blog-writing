@@ -171,44 +171,57 @@
     "provider": "codex-agent",
     "model": "gpt-5",
     "revision": 7,
-    "input_fingerprint": "manual-editorial-2026-07-15"
+    "input_fingerprint": "manual-editorial-2026-07-15",
+    "image_policy": "webp-v1"
   },
   "images": {
     "cover": {
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.png",
-      "path": "docs/tistory/assets/2026-07-15/cover.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.webp",
+      "path": "docs/tistory/assets/2026-07-15/cover.webp",
       "alt": "청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면",
       "width": 1200,
       "height": 630,
       "style": "ai-editorial-photography",
-      "provider": "codex-imagegen-built-in"
+      "provider": "codex-imagegen-built-in",
+      "format": "webp",
+      "bytes": 38972,
+      "quality": 82
     },
     "story_1": {
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.png",
-      "path": "docs/tistory/assets/2026-07-15/story-01.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-01.webp",
       "alt": "사용자가 청구 내역과 카드 결제 정보를 대조하는 장면",
       "width": 1200,
       "height": 630,
       "style": "ai-editorial-photography",
-      "provider": "codex-imagegen-built-in"
+      "provider": "codex-imagegen-built-in",
+      "format": "webp",
+      "bytes": 44724,
+      "quality": 82
     },
     "story_2": {
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.png",
-      "path": "docs/tistory/assets/2026-07-15/story-02.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-02.webp",
       "alt": "개발팀이 풀 리퀘스트의 AI 보안 탐지 결과를 함께 검토하는 장면",
       "width": 1200,
       "height": 630,
       "style": "ai-editorial-photography",
-      "provider": "codex-imagegen-built-in"
+      "provider": "codex-imagegen-built-in",
+      "format": "webp",
+      "bytes": 48440,
+      "quality": 82
     },
     "story_3": {
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.png",
-      "path": "docs/tistory/assets/2026-07-15/story-03.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-03.webp",
       "alt": "연구자가 AI 답변과 근거 자료를 나란히 점검하는 장면",
       "width": 1200,
       "height": 630,
       "style": "ai-editorial-photography",
-      "provider": "codex-imagegen-built-in"
+      "provider": "codex-imagegen-built-in",
+      "format": "webp",
+      "bytes": 51712,
+      "quality": 82
     }
   }
 }

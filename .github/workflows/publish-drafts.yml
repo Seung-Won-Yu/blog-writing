@@ -39,6 +39,9 @@ jobs:
       - name: Run tests
         run: python3 -m unittest discover -s tests
 
+      - name: Verify optimized editorial images
+        run: python3 -m blog_pipeline.publishing.optimize_images --check-all
+
       - name: Build committed draft previews
         run: python3 -m blog_pipeline.publishing.build_copy_page
 

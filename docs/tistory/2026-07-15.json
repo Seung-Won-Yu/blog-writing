@@ -49,8 +49,8 @@
     {
       "kind": "cover",
       "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.png",
-      "path": "docs/tistory/assets/2026-07-15/cover.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.webp",
+      "path": "docs/tistory/assets/2026-07-15/cover.webp",
       "original_url": "",
       "alt": "청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면",
       "width": 1200,
@@ -59,8 +59,8 @@
     {
       "kind": "story_1",
       "title": "본문 1번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.png",
-      "path": "docs/tistory/assets/2026-07-15/story-01.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-01.webp",
       "original_url": "",
       "alt": "사용자가 청구 내역과 카드 결제 정보를 대조하는 장면",
       "width": 1200,
@@ -69,8 +69,8 @@
     {
       "kind": "story_2",
       "title": "본문 2번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.png",
-      "path": "docs/tistory/assets/2026-07-15/story-02.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-02.webp",
       "original_url": "",
       "alt": "개발팀이 풀 리퀘스트의 AI 보안 탐지 결과를 함께 검토하는 장면",
       "width": 1200,
@@ -79,8 +79,8 @@
     {
       "kind": "story_3",
       "title": "본문 3번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.png",
-      "path": "docs/tistory/assets/2026-07-15/story-03.png",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.webp",
+      "path": "docs/tistory/assets/2026-07-15/story-03.webp",
       "original_url": "",
       "alt": "연구자가 AI 답변과 근거 자료를 나란히 점검하는 장면",
       "width": 1200,

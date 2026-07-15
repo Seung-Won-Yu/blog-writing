@@ -80,6 +80,38 @@ class DailyGuardTests(unittest.TestCase):
         self.assertIn("news_count", result["reasons"])
         self.assertIn("missing_publish_meta", result["reasons"])
 
+    def test_new_daily_runs_require_the_webp_image_policy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_json(
+                root / "data" / "days" / "2026-07-16.json",
+                {
+                    "generation": {"provider": "codex-agent"},
+                    "news": [
+                        {"title_kr": "첫 뉴스", "url": "https://example.com/1"},
+                        {"title_kr": "둘째 뉴스", "url": "https://example.com/2"},
+                        {"title_kr": "셋째 뉴스", "url": "https://example.com/3"},
+                    ],
+                },
+            )
+
+            result = inspect_daily_state("2026-07-16", root=root)
+
+        self.assertIn("missing_image_policy", result["reasons"])
+
+    def test_invalid_new_day_json_reports_partial_instead_of_crashing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "data" / "days" / "2026-07-16.json"
+            path.parent.mkdir(parents=True)
+            path.write_text("{invalid", encoding="utf-8")
+
+            result = inspect_daily_state("2026-07-16", root=root)
+
+        self.assertEqual(result["status"], "PARTIAL")
+        self.assertIn("missing_or_invalid_source", result["reasons"])
+        self.assertIn("invalid_image_manifest", result["reasons"])
+
     def test_blocks_same_canonical_url_from_recent_days(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

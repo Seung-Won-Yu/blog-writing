@@ -125,6 +125,16 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
     if not isinstance(news, list) or len(news) != 3:
         reasons.append("news_count")
 
+    if date.fromisoformat(day_id) >= date(2026, 7, 16):
+        from .optimize_images import inspect_day_images
+
+        try:
+            image_result = inspect_day_images(day_id, root=root)
+        except (OSError, TypeError, ValueError):
+            reasons.append("invalid_image_manifest")
+        else:
+            reasons.extend(image_result["reasons"])
+
     duplicates = find_recent_duplicates(
         day_id, source, root=root, window_days=window_days
     )
