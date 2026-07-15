@@ -12,30 +12,42 @@
 */
 
 :root {
-  --sw-canvas: #f5f7f9;
+  --sw-canvas: #f4f6f5;
   --sw-surface: #ffffff;
-  --sw-ink: #17211c;
-  --sw-text: #46534d;
-  --sw-muted: #6b7871;
-  --sw-line: #dbe2de;
-  --sw-line-strong: #bdcbc4;
-  --sw-accent: #28745a;
-  --sw-accent-soft: #edf5f1;
-  --sw-warm: #f7f4ec;
-  --sw-code: #15251e;
+  --sw-surface-subtle: #f0f3f1;
+  --sw-surface-tint: #e9f2ee;
+  --sw-ink: #16201b;
+  --sw-text: #3f4b45;
+  --sw-muted: #68736e;
+  --sw-line: #d9e0dc;
+  --sw-line-strong: #b8c5be;
+  --sw-accent: #1f6b50;
+  --sw-accent-hover: #16543f;
+  --sw-accent-soft: #e9f2ee;
+  --sw-warm: #f7f2e8;
+  --sw-warning: #9b6a24;
+  --sw-code: #15231d;
+  --sw-code-text: #dce9e3;
+  --sw-paper: var(--sw-surface-subtle);
+  --sw-paper-deep: #e8eeeb;
+  --sw-focus: rgba(31, 107, 80, 0.56);
+  --sw-focus-soft: rgba(31, 107, 80, 0.12);
+  --sw-accent-line: rgba(31, 107, 80, 0.4);
+  --sw-font-body: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --sw-font-brand: Georgia, "Noto Serif KR", "Nanum Myeongjo", serif;
   --sw-radius: 8px;
   --sw-content: 760px;
 }
 
 ::selection {
-  background: #dceee6;
-  color: #17332a;
+  background: var(--sw-accent-soft);
+  color: var(--sw-ink);
 }
 
 body {
   background: var(--sw-canvas) !important;
   color: var(--sw-text);
-  font-family: "IBM Plex Sans KR", AppleSDGothicNeo, "Malgun Gothic", sans-serif;
+  font-family: var(--sw-font-body);
 }
 
 html,
@@ -48,7 +60,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 summary:focus-visible {
-  outline: 2px solid rgba(40, 116, 90, 0.58);
+  outline: 2px solid var(--sw-focus);
   outline-offset: 3px;
 }
 
@@ -78,13 +90,13 @@ summary:focus-visible {
 
 #header {
   border-bottom: 1px solid var(--sw-line);
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
 }
 
 #header h1 {
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Georgia, "Noto Serif KR", "Nanum Myeongjo", serif;
+  font-family: var(--sw-font-brand);
   font-size: 1.34em;
   font-weight: 760;
   letter-spacing: -0.025em;
@@ -234,9 +246,9 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   margin: 0 -18px 15px;
   padding: 0 0 56.25%;
   overflow: hidden;
-  border-bottom: 1px solid #eef2ef;
+  border-bottom: 1px solid var(--sw-surface-subtle);
   border-radius: 0;
-  background: #edf1ef;
+  background: var(--sw-surface-subtle);
 }
 
 .post-item .thum img {
@@ -383,7 +395,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   margin: 0 5px 7px 0;
   padding: 4px 7px;
   border-radius: 5px;
-  background: #edf1ef;
+  background: var(--sw-surface-subtle);
 }
 
 #aside .tags a::after,
@@ -396,20 +408,25 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 /* 5. Post cover: Tistory owns the only visible article title */
 .post-cover {
   display: block !important;
-  min-height: 220px !important;
+  min-height: 0 !important;
   height: auto !important;
-  border-top: 3px solid var(--sw-accent) !important;
+  border-top: 2px solid var(--sw-accent) !important;
   border-bottom: 1px solid var(--sw-line) !important;
-  background: var(--sw-warm) !important;
+  background: var(--sw-surface-tint) !important;
   color: var(--sw-ink) !important;
+}
+
+.post-cover::before {
+  display: none !important;
+  content: none !important;
 }
 
 .post-cover .inner {
   display: flex !important;
   width: min(1080px, calc(100% - 48px)) !important;
-  min-height: 217px !important;
+  min-height: 0 !important;
   margin: 0 auto !important;
-  padding: 32px 0 36px !important;
+  padding: 38px 0 40px !important;
   flex-direction: column !important;
   align-items: flex-start !important;
   justify-content: center !important;
@@ -436,7 +453,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   max-width: 900px !important;
   margin: 0 !important;
   color: var(--sw-ink) !important;
-  font-size: 32px !important;
+  font-size: 34px !important;
   font-weight: 800 !important;
   line-height: 1.34 !important;
   letter-spacing: -0.03em !important;
@@ -492,7 +509,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 18px;
   border-radius: var(--sw-radius);
   background: var(--sw-code);
-  color: #dce9e3;
+  color: var(--sw-code-text);
 }
 
 /* 7. Daily digest isolation boundary */
@@ -510,7 +527,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   margin: 0 auto !important;
   padding: 0 0 52px !important;
   color: var(--sw-text) !important;
-  font-family: "IBM Plex Sans KR", AppleSDGothicNeo, "Malgun Gothic", sans-serif !important;
+  font-family: var(--sw-font-body) !important;
   font-size: 16.5px !important;
   line-height: 1.82 !important;
   word-break: keep-all !important;
@@ -519,6 +536,11 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post :is(h2, h3, h4, p, figure, ul, ol) {
   max-width: none;
+}
+
+.daily-digest-post :is(h2, h3, h4, p, a, li, summary, figcaption),
+.daily-digest-continuation :is(h2, h3, h4, p, a, li, summary, figcaption) {
+  font-family: var(--sw-font-body) !important;
 }
 
 /* Intro has no title: Tistory post-cover already rendered the H1. */
@@ -578,7 +600,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   margin: 0 !important;
   border: 1px solid var(--sw-line) !important;
   border-radius: var(--sw-radius) !important;
-  background: #edf1ef !important;
+  background: var(--sw-surface-subtle) !important;
   object-fit: cover !important;
 }
 
@@ -632,7 +654,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 }
 
 .daily-digest-post .digest-reading-item + .digest-reading-item {
-  border-top: 1px solid #e8ecea !important;
+  border-top: 1px solid var(--sw-line) !important;
 }
 
 .daily-digest-post .digest-reading-item a {
@@ -708,7 +730,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-blurb {
   margin: 0 !important;
-  color: #34443c !important;
+  color: var(--sw-text) !important;
   font-size: 16.5px !important;
   font-weight: 680 !important;
   line-height: 1.78 !important;
@@ -717,7 +739,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .daily-digest-post .digest-full-content {
   margin: 22px 0 0 !important;
   padding: 18px 0 0 !important;
-  border-top: 1px solid #e5eae7 !important;
+  border-top: 1px solid var(--sw-line) !important;
 }
 
 .daily-digest-post .digest-full-content p {
@@ -729,11 +751,10 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-full-content h4 {
   margin: 28px 0 9px !important;
-  padding: 0 0 0 11px !important;
+  padding: 0 !important;
   border: 0 !important;
-  border-left: 3px solid var(--sw-accent) !important;
   color: var(--sw-ink) !important;
-  font-size: 17px !important;
+  font-size: 18px !important;
   font-weight: 780 !important;
   line-height: 1.48 !important;
 }
@@ -752,7 +773,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 0 !important;
   align-items: center !important;
   border: 0 !important;
-  border-bottom: 1px solid rgba(40, 116, 90, 0.42) !important;
+  border-bottom: 1px solid var(--sw-accent-line) !important;
   color: var(--sw-accent) !important;
   font-size: 13px !important;
   font-weight: 760 !important;
@@ -796,7 +817,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 }
 
 .daily-digest-post .digest-quiz {
-  border-color: #c9ddd4 !important;
+  border-color: var(--sw-line-strong) !important;
   background: var(--sw-accent-soft) !important;
 }
 
@@ -832,9 +853,9 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   gap: 5px !important;
   margin: 0 !important;
   padding: 11px 13px !important;
-  border: 1px solid #d7e3dd !important;
+  border: 1px solid var(--sw-line) !important;
   border-radius: 6px !important;
-  background: #ffffff !important;
+  background: var(--sw-surface) !important;
   color: var(--sw-text) !important;
   font-size: 15.5px !important;
   line-height: 1.55 !important;
@@ -855,7 +876,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .daily-digest-post .digest-answer {
   margin-top: 15px !important;
   padding-top: 14px !important;
-  border-top: 1px solid #c9ddd4 !important;
+  border-top: 1px solid var(--sw-line-strong) !important;
 }
 
 .daily-digest-post .digest-answer summary {
@@ -907,7 +928,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-terms span {
   margin: 0 0 7px !important;
-  color: #9a661d !important;
+  color: var(--sw-warning) !important;
   font-size: 12px !important;
   font-weight: 760 !important;
 }
@@ -938,7 +959,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .daily-digest-post .digest-action {
   margin: 18px 0 0 !important;
   padding: 16px 18px !important;
-  border-left: 3px solid #b58532 !important;
+  border-left: 3px solid var(--sw-warning) !important;
   background: var(--sw-warm) !important;
   color: var(--sw-text) !important;
 }
@@ -1135,14 +1156,14 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .tt-comments-wrap textarea {
   border: 1px solid var(--sw-line) !important;
   border-radius: 6px !important;
-  background: #ffffff !important;
+  background: var(--sw-surface) !important;
 }
 
 .comment-form input:focus,
 .comment-form textarea:focus,
 .tt-comments-wrap textarea:focus {
   border-color: var(--sw-accent) !important;
-  box-shadow: 0 0 0 3px rgba(40, 116, 90, 0.1) !important;
+  box-shadow: 0 0 0 3px var(--sw-focus-soft) !important;
 }
 
 @media screen and (max-width: 1080px) {
@@ -1195,17 +1216,17 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 
   .post-cover {
-    min-height: 184px !important;
+    min-height: 0 !important;
   }
 
   .post-cover .inner {
     width: calc(100% - 36px) !important;
-    min-height: 181px !important;
-    padding: 25px 0 28px !important;
+    min-height: 0 !important;
+    padding: 27px 0 30px !important;
   }
 
   .post-cover h1 {
-    font-size: 24px !important;
+    font-size: 25px !important;
     line-height: 1.4 !important;
   }
 
