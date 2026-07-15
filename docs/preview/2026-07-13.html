@@ -272,48 +272,6 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   margin: 0;
 }
 
-/* The newest post is the editorial lead, not another equal card. */
-body #content > .inner:has(> .post-item) > .post-item:first-child {
-  grid-column: 1 / -1;
-}
-
-body #content > .inner:has(> .post-item) > .post-item:first-child a {
-  display: grid;
-  height: 360px;
-  min-height: 360px;
-  padding: 0 28px 0 0;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
-  grid-template-rows: auto auto 1fr auto;
-  column-gap: 30px;
-}
-
-body #content > .inner:has(> .post-item) > .post-item:first-child .thum {
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  margin: 0;
-  padding: 0;
-  grid-column: 1;
-  grid-row: 1 / 5;
-  border-right: 1px solid var(--sw-line);
-  border-bottom: 0;
-}
-
-body #content > .inner:has(> .post-item) > .post-item:first-child .title {
-  margin-top: 34px;
-  font-size: 1.38em;
-  line-height: 1.48;
-}
-
-body #content > .inner:has(> .post-item) > .post-item:first-child .excerpt {
-  font-size: 0.94em;
-  -webkit-line-clamp: 5;
-}
-
-body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
-  margin-bottom: 28px;
-}
-
 .post-header h1 {
   margin-bottom: 22px;
   color: var(--sw-ink);
@@ -1336,37 +1294,6 @@ body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
     height: 36px;
     padding: 0 7px;
     font-size: 13px;
-  }
-
-  body #content > .inner:has(> .post-item) > .post-item:first-child a {
-    display: flex;
-    height: auto;
-    min-height: 0;
-    padding: 0 18px 17px;
-  }
-
-  body #content > .inner:has(> .post-item) > .post-item:first-child .thum {
-    width: auto;
-    height: auto;
-    min-height: 0;
-    margin: 0 -18px 15px;
-    padding: 0 0 56.25%;
-    border-right: 0;
-    border-bottom: 1px solid #eef2ef;
-  }
-
-  body #content > .inner:has(> .post-item) > .post-item:first-child .title {
-    margin-top: 0;
-    font-size: 1.06em;
-  }
-
-  body #content > .inner:has(> .post-item) > .post-item:first-child .excerpt {
-    font-size: 0.89em;
-    -webkit-line-clamp: 3;
-  }
-
-  body #content > .inner:has(> .post-item) > .post-item:first-child .meta {
-    margin-bottom: 0;
   }
 
   .post-cover {

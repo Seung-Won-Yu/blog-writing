@@ -26,6 +26,13 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("#tt-body-index .pagination", layer_css)
         self.assertIn("gap: 22px;", layer_css)
 
+    def test_home_uses_six_equal_cards_instead_of_a_broken_lead_card(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", layer_css)
+        self.assertNotIn("> .post-item:first-child {\n  grid-column: 1 / -1;", layer_css)
+        self.assertNotIn("> .post-item:first-child a {", layer_css)
+
 
 if __name__ == "__main__":
     unittest.main()
