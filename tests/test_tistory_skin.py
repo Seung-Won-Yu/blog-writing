@@ -5,6 +5,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 STYLE_PATH = ROOT / "design" / "tistory" / "style.css"
 LAYER_PATH = ROOT / "design" / "tistory" / "skin-layer.css"
+SKIN_PATH = ROOT / "design" / "tistory" / "skin.html"
+COMPONENTS_PATH = ROOT / "design" / "tistory" / "skin-components.html"
 LAYER_MARKER = "/*\n  won0322.tistory.com · canonical custom layer"
 
 
@@ -32,6 +34,15 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", layer_css)
         self.assertNotIn("> .post-item:first-child {\n  grid-column: 1 / -1;", layer_css)
         self.assertNotIn("> .post-item:first-child a {", layer_css)
+
+    def test_home_starts_with_articles_not_a_marketing_hero(self):
+        skin_html = SKIN_PATH.read_text(encoding="utf-8")
+        components_html = COMPONENTS_PATH.read_text(encoding="utf-8")
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn('class="dev-hero"', skin_html)
+        self.assertNotIn('class="dev-hero"', components_html)
+        self.assertNotIn(".dev-hero", layer_css)
 
 
 if __name__ == "__main__":
