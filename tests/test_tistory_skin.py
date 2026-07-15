@@ -86,6 +86,14 @@ class TistorySkinTests(unittest.TestCase):
 
         self.assertIn('aria-label="글 분류"', skin_html)
         self.assertIn('class="post-list tab-ui"', skin_html)
+        self.assertIn('class="visitor-count"', skin_html)
+        self.assertIn("[##_count_total_##]", skin_html)
+        self.assertIn("[##_count_today_##]", skin_html)
+        self.assertIn("[##_count_yesterday_##]", skin_html)
+        self.assertGreater(
+            skin_html.index('class="visitor-count"'),
+            skin_html.index('class="post-list tab-ui"'),
+        )
         self.assertNotIn('class="recent-comment"', skin_html)
         self.assertNotIn("<s_random_tags>", skin_html)
         self.assertNotIn('class="count"', skin_html)

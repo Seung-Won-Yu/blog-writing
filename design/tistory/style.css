@@ -5066,6 +5066,58 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   color: var(--sw-muted);
 }
 
+.visitor-count {
+  margin-top: 34px;
+  padding-top: 17px;
+  border-top: 2px solid var(--sw-ink);
+}
+
+.visitor-count__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-muted);
+  font-size: 12px;
+}
+
+.visitor-count__total strong {
+  color: var(--sw-ink);
+  font-size: 24px;
+  font-weight: 780;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.visitor-count dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.visitor-count dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.visitor-count dt,
+.visitor-count dd {
+  margin: 0;
+  color: var(--sw-muted);
+  font-size: 12px;
+}
+
+.visitor-count dd {
+  color: var(--sw-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .dev-profile-card__eyebrow {
   margin: 0 0 6px;
   color: var(--sw-accent);
