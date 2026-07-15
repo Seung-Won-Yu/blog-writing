@@ -9,6 +9,7 @@ from blog_pipeline.collection.collect_news import (
     load_recent_selected_urls,
     parse_feed,
     parse_html_links,
+    prune_old_inbox_files,
     render_inbox_html,
 )
 
@@ -97,6 +98,34 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_prunes_only_dated_inbox_files_outside_retention_window(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            for filename in (
+                "2026-06-24.json",
+                "2026-06-24.html",
+                "2026-06-25.json",
+                "2026-06-25.html",
+                "2026-07-15.json",
+                "2026-07-15.html",
+                "latest.json",
+                "index.html",
+            ):
+                (output / filename).write_text(filename, encoding="utf-8")
+
+            removed = prune_old_inbox_files(
+                output, "2026-07-15", retention_days=21
+            )
+
+            self.assertEqual(
+                {path.name for path in removed},
+                {"2026-06-24.json", "2026-06-24.html"},
+            )
+            self.assertTrue((output / "2026-06-25.json").exists())
+            self.assertTrue((output / "2026-07-15.html").exists())
+            self.assertTrue((output / "latest.json").exists())
+            self.assertTrue((output / "index.html").exists())
+
     def test_excludes_recently_selected_url_from_new_selection(self):
         config = {
             "interest_keywords": ["AI"],

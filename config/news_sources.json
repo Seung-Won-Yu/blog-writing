@@ -56,6 +56,7 @@
     "max_items": 3,
     "max_per_source": 1,
     "exclude_recent_days": 7,
+    "inbox_retention_days": 21,
     "audience_lanes": ["broad", "practical", "deep"],
     "max_topic_items": {"ai": 3},
     "max_research_items": 0,

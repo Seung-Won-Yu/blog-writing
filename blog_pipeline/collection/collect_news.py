@@ -478,6 +478,26 @@ def write_inbox(inbox, output_dir):
     return {"json": str(dated_json), "html": str(dated_html)}
 
 
+def prune_old_inbox_files(output_dir, day_id, retention_days=21):
+    """Remove dated review files older than the rolling retention window."""
+    output = Path(output_dir)
+    current_day = dt.date.fromisoformat(validate_day_id(day_id))
+    keep_days = max(1, int(retention_days))
+    cutoff = current_day - dt.timedelta(days=keep_days - 1)
+    removed = []
+    for path in output.iterdir() if output.is_dir() else ():
+        if not path.is_file() or path.suffix not in {".json", ".html"}:
+            continue
+        try:
+            file_day = dt.date.fromisoformat(validate_day_id(path.stem))
+        except ValueError:
+            continue
+        if file_day < cutoff:
+            path.unlink()
+            removed.append(path)
+    return removed
+
+
 def fetch_url(url, timeout=20):
     request = Request(
         url,
@@ -516,11 +536,18 @@ def main(argv=None):
         excluded_urls=excluded_urls,
     )
     paths = write_inbox(inbox, args.output_dir)
+    retention_days = int(
+        config.get("selection", {}).get("inbox_retention_days", 21)
+    )
+    removed = prune_old_inbox_files(
+        args.output_dir, day_id, retention_days=retention_days
+    )
     print(
-        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(
+        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건 / 오래된 파일 {}개 정리\n{}".format(
             len(inbox["selected"]),
             len(inbox["candidates"]),
             len(inbox["errors"]),
+            len(removed),
             paths["html"],
         )
     )
