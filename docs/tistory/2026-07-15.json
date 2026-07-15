@@ -1,0 +1,90 @@
+{
+  "title": "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법",
+  "title_candidates": [
+    "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법",
+    "무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까 외 2건",
+    "AI 서비스의 청구·검사·자기점검: 자동화 결과를 어디까지 믿을 것인가",
+    "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법 (2026. 7. 15)"
+  ],
+  "category": "데일리IT뉴스",
+  "tags": [
+    "AI",
+    "IT뉴스",
+    "개발뉴스",
+    "정처기",
+    "개발용어",
+    "데일리다이제스트",
+    "AI타임스",
+    "GitHub Changelog",
+    "arXiv",
+    "사용량 기반 과금 (Usage-based Billing)",
+    "코드 스캐닝 (Code Scanning)",
+    "메타인지 (Metacognition)"
+  ],
+  "meta_description": "무료로 쓰던 서비스의 청구 화면에 250억 원이 찍힌다면 무엇부터 해야 할까. 금액이 터무니없다는 감각은 출발점일 뿐이고, 사용 기록·결제 수단·고객 지원 답변을 차례로 맞춰봐야 한다. 오늘의 세 소… 소프트웨어 개발 문제로 개념도 확인합니다.",
+  "key_summary": [
+    "1. 무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까",
+    "2. GitHub, PR에 AI 보안 탐지 표시…병합 전 확인할 조건은",
+    "3. LLM도 자신의 답을 점검할 수 있을까…메타인지 연구가 정리한 질문들",
+    "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
+    "추천 제목: 250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법"
+  ],
+  "generation_provider": "codex-agent",
+  "publish_ready": true,
+  "source": "data/days/2026-07-15.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-15.html",
+  "before_ad_html": "docs/tistory/2026-07-15-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-15-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-15-adfit.html",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.png",
+      "path": "docs/tistory/assets/2026-07-15/cover.png",
+      "original_url": "",
+      "alt": "청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_1",
+      "title": "본문 1번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.png",
+      "path": "docs/tistory/assets/2026-07-15/story-01.png",
+      "original_url": "",
+      "alt": "사용자가 청구 내역과 카드 결제 정보를 대조하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_2",
+      "title": "본문 2번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.png",
+      "path": "docs/tistory/assets/2026-07-15/story-02.png",
+      "original_url": "",
+      "alt": "개발팀이 풀 리퀘스트의 AI 보안 탐지 결과를 함께 검토하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "story_3",
+      "title": "본문 3번 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.png",
+      "path": "docs/tistory/assets/2026-07-15/story-03.png",
+      "original_url": "",
+      "alt": "연구자가 AI 답변과 근거 자료를 나란히 점검하는 장면",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

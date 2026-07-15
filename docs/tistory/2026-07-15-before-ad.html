@@ -1,0 +1,32 @@
+<article class="daily-digest-post" data-digest-version="2">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 15 (수) · 약 9분</p>
+    <p class="digest-lead">무료로 쓰던 서비스의 청구 화면에 250억 원이 찍힌다면 무엇부터 해야 할까. 금액이 터무니없다는 감각은 출발점일 뿐이고, 사용 기록·결제 수단·고객 지원 답변을 차례로 맞춰봐야 한다. 오늘의 세 소식은 AI가 낸 결과를 그대로 믿기보다, 결과가 나온 경로와 그것의 한계를 확인하는 일이 왜 필요한지 보여준다.</p>
+    <p class="digest-meta-intro">확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.png" alt="청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-throughline">
+  <p class="digest-section-label">오늘의 관점</p>
+  <h2>이 소식들이 연결되는 지점</h2>
+  <p>앤트로픽 이용자에게 표시된 거액 청구는 요금 화면도 검증 대상이라는 사실을 드러냈다. GitHub의 새 보안 탐지는 병합 전 더 넓은 코드 영역에서 신호를 찾지만, 경고가 곧 차단이나 확정 판정은 아니다. LLM 메타인지 연구는 모델이 자신의 답을 얼마나 잘 점검하는지 아직 답이 정리되지 않았다고 짚는다. 금액, 보안 경고, 모델의 자신감은 모두 숫자나 문구 하나보다 근거·조건·후속 확인을 함께 봐야 한다.</p>
+</section>
+
+  <nav class="digest-reading-guide" aria-label="글 순서">
+  <p class="digest-reading-title">이 글에서 볼 것</p>
+  <div class="digest-reading-list" role="list"><div class="digest-reading-item" role="listitem"><a href="#digest-news-1"><span class="digest-reading-index">01</span>무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-2"><span class="digest-reading-index">02</span>GitHub, PR에 AI 보안 탐지 표시…병합 전 확인할 조건은</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-3"><span class="digest-reading-index">03</span>LLM도 자신의 답을 점검할 수 있을까…메타인지 연구가 정리한 질문들</a></div></div>
+</nav>
+
+  <h2 class="digest-news-heading">오늘의 뉴스 3개</h2>
+  <section id="digest-news-1" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.png" alt="사용자가 청구 내역과 카드 결제 정보를 대조하는 장면" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">오늘의 메인 이슈 · NEWS 01 · AI타임스 · 2026. 7. 14 · 일반 독자</p>
+    <h3>무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까</h3>
+    <p class="digest-blurb">AI타임스는 국내 한 무료 이용자에게 앤트로픽 서비스에서 2차례 거액 청구가 표시됐고, 회사가 당사자와 해결했다고 보도했다. 표시 금액은 실제 결제 여부와 별도로 사용 기록과 결제 수단을 대조해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>AI타임스는 국내의 한 앤트로픽 무료 이용자에게 두 차례의 거액 청구가 표시됐다고 14일 보도했다. 보도에 따르면 처음에는 167만 달러, 뒤에는 1,660만 달러가 청구서에 나타났고, 원화 환산 약 250억 원이라는 숫자가 논란을 키웠다. 앤트로픽은 해당 이용자와 문제를 해결했다고 밝혔지만, 공개 보도만으로 오류가 어느 단계에서 생겼는지와 실제 카드 결제가 진행됐는지는 확인되지 않는다. 그래서 ‘청구서에 보인 금액’과 ‘실제로 빠져나간 금액’을 같은 뜻으로 놓으면 안 된다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>AI 도구는 무료 체험, 구독 한도, API 종량제처럼 과금 방식이 섞여 있어 사용자가 비용이 계산되는 경로를 한눈에 보기 어렵다. 특히 자동화 작업이 길게 돌거나 키가 여러 환경에 남아 있으면 대시보드의 수치만 보고 원인을 짐작하기 쉽다. 이상한 금액을 발견했을 때는 먼저 서비스의 사용량 로그와 청구 기간을 저장하고, 카드·계좌의 실제 승인 내역을 확인한 뒤, 시간대와 계정 ID를 적어 고객 지원에 문의하는 편이 낫다. 화면을 삭제하거나 키를 성급히 폐기하면 이후 사용량을 대조할 단서도 줄어든다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>이번 사례는 한 이용자와 서비스 사이의 분쟁 보도이며, 모든 AI 서비스의 과금 오류 빈도를 보여주는 통계는 아니다. 계정을 점검할 때는 무료 플랜인지 API 결제 계정인지, 청구 통화와 기간이 무엇인지, 사용량 내보내기와 결제 영수증의 단위가 같은지를 먼저 확인한다. API를 쓰는 경우에는 프로젝트별 예산 한도와 사용량 알림을 켜고, 키별·환경별 사용량을 나눠 보는 것이 좋다. 낯선 청구가 실제 승인으로 보인다면 서비스 지원 문의와 별도로 카드사에도 즉시 확인해야 한다.</p></div>
+    <p class="digest-source-link"><a href="https://www.aitimes.com/news/articleView.html?idxno=212760" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
+</section>
+</article>
