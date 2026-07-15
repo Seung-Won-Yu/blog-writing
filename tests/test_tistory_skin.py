@@ -71,6 +71,43 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("color: var(--sw-ink) !important;", detail_heading)
         self.assertNotIn("border-left", detail_heading)
 
+    def test_secondary_pages_share_editorial_hierarchy(self):
+        skin_html = SKIN_PATH.read_text(encoding="utf-8")
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('class="post-header guestbook-header"', skin_html)
+        self.assertEqual(skin_html.count('class="page-description"'), 2)
+        self.assertIn("#tt-body-tag #content > .tags", layer_css)
+        self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", layer_css)
+        self.assertIn("#tt-body-guestbook #content > .tt-comments-wrap", layer_css)
+
+    def test_sidebar_keeps_navigation_and_removes_low_value_clutter(self):
+        skin_html = SKIN_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('aria-label="글 분류"', skin_html)
+        self.assertIn('class="post-list tab-ui"', skin_html)
+        self.assertNotIn('class="recent-comment"', skin_html)
+        self.assertNotIn("<s_random_tags>", skin_html)
+        self.assertNotIn('class="count"', skin_html)
+
+    def test_footer_uses_blog_identity_instead_of_stock_skin_credit(self):
+        skin_html = SKIN_PATH.read_text(encoding="utf-8")
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('class="footer-brand"', skin_html)
+        self.assertIn("© 2026 쑥쑥자라나라.", skin_html)
+        self.assertNotIn("[##_var_footer-text-1_##]", skin_html)
+        self.assertNotIn("[##_var_footer-text-2_##]", skin_html)
+        self.assertIn("#footer .footer-brand", layer_css)
+
+    def test_article_secondary_content_uses_same_reading_width(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("#tt-body-page #content .related-articles", layer_css)
+        self.assertIn("#tt-body-page #content > .inner > .tags", layer_css)
+        self.assertIn("max-width: var(--sw-content);", layer_css)
+        self.assertIn(".related-articles ul", layer_css)
+
 
 if __name__ == "__main__":
     unittest.main()

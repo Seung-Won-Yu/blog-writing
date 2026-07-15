@@ -530,6 +530,7 @@
             <s_tag>
               <div class="post-header">
                 <h1>태그</h1>
+                <p class="page-description">관심 있는 주제를 골라 관련 기록을 모아보세요.</p>
               </div>
               <div class="tags">
                 <s_tag_rep>
@@ -539,6 +540,10 @@
             </s_tag>
 
             <s_guest>
+              <div class="post-header guestbook-header">
+                <h1>방명록</h1>
+                <p class="page-description">질문이나 의견을 남겨주세요. 확인한 뒤 답변하겠습니다.</p>
+              </div>
               <div class="tt-comments-wrap">
                 [##_guestbook_group_##]
               </div>
@@ -573,7 +578,7 @@
               <s_sidebar>
                 <s_sidebar_element>
                   <!-- 카테고리 -->
-                  <nav class="category">
+                  <nav class="category" aria-label="글 분류">
                     [##_category_list_##]
                   </nav>
                 </s_sidebar_element>
@@ -644,85 +649,6 @@
                     </div>
                   </div>
                 </s_sidebar_element>
-                <s_sidebar_element>
-                  <!-- 최근댓글 -->
-                  <div class="recent-comment">
-                    <h2>최근댓글</h2>
-                    <ul>
-                      <s_rctrp_rep>
-                        <li><a href="[##_rctrp_rep_link_##]">[##_rctrp_rep_desc_##]</a></li>
-                      </s_rctrp_rep>
-                    </ul>
-                  </div>
-                </s_sidebar_element>
-                <s_sidebar_element>
-                  <!-- Facebook/Twitter -->
-                  <div class="social-list tab-ui">
-                    <s_if_var_facebook-timeline>
-                      <div id="facebook" class="tab-list">
-                        <h2>Facebook</h2>
-                        <div id="fb-root"></div>
-                        <script>(function (d, s, id) {
-                            var js, fjs = d.getElementsByTagName(s)[0];
-                            if (d.getElementById(id)) return;
-                            js = d.createElement(s); js.id = id;
-                            js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2';
-                            fjs.parentNode.insertBefore(js, fjs);
-                          }(document, 'script', 'facebook-jssdk'));</script>
-                        <div class="fb-page" data-href="[##_var_facebook-timeline_##]" data-tabs="timeline"
-                          data-width="230" data-height="400" data-small-header="true" data-adapt-container-width="true"
-                          data-hide-cover="true" data-show-facepile="false"></div>
-                      </div>
-                    </s_if_var_facebook-timeline>
-                    <s_if_var_twitter-timeline>
-                      <div id="twitter" class="tab-list">
-                        <h2>Twitter</h2>
-                        <a class="twitter-timeline" data-width="230" data-height="400"
-                          href="[##_var_twitter-timeline_##]?ref_src=twsrc%5Etfw">[##_var_twitter-timeline_##]</a>
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                      </div>
-                    </s_if_var_twitter-timeline>
-                  </div>
-                </s_sidebar_element>
-              </s_sidebar>
-              <s_sidebar>
-                <s_sidebar_element>
-                  <!-- 태그 -->
-                  <div class="tags">
-                    <h2>태그</h2>
-                    <s_random_tags>
-                      <a href="[##_tag_link_##]">[##_tag_name_##]</a>
-                    </s_random_tags>
-                  </div>
-                </s_sidebar_element>
-                <s_sidebar_element>
-                  <!-- 전체 방문자 -->
-                  <div class="count">
-                    <h2>전체 방문자</h2>
-                    <p class="total">[##_count_total_##]</p>
-                    <p>Today : [##_count_today_##]</p>
-                    <p>Yesterday : [##_count_yesterday_##]</p>
-                  </div>
-                </s_sidebar_element>
-                <s_sidebar_element>
-                  <!-- 소셜 채널 -->
-                  <div class="social-channel">
-                    <ul>
-                      <s_if_var_facebook-link>
-                        <li class="facebook"><a href="[##_var_facebook-link_##]">페이스북</a></li>
-                      </s_if_var_facebook-link>
-                      <s_if_var_instagram-link>
-                        <li class="instagram"><a href="[##_var_instagram-link_##]">인스타그램</a></li>
-                      </s_if_var_instagram-link>
-                      <s_if_var_twitter-link>
-                        <li class="twitter"><a href="[##_var_twitter-link_##]">트위터</a></li>
-                      </s_if_var_twitter-link>
-                      <s_if_var_youtube-link>
-                        <li class="youtube"><a href="[##_var_youtube-link_##]">유투브</a></li>
-                      </s_if_var_youtube-link>
-                    </ul>
-                  </div>
-                </s_sidebar_element>
               </s_sidebar>
             </div>
           </aside>
@@ -746,8 +672,9 @@
             </s_if_var_order-link-4-title>
           </div>
           <a href="#" class="page-top">TOP</a>
-          <p class="meta"><s_if_var_footer-text-1>[##_var_footer-text-1_##]</s_if_var_footer-text-1></p>
-          <p class="copyright"><s_if_var_footer-text-2>[##_var_footer-text-2_##]</s_if_var_footer-text-2></p>
+          <p class="footer-brand">하루 한 시간 나를 Develop!</p>
+          <p class="meta">기술을 읽고, 직접 확인하고, 다시 꺼내 쓰는 개발 기록.</p>
+          <p class="copyright">© 2026 쑥쑥자라나라.</p>
         </div>
       </footer>
     </div>
