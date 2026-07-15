@@ -1,131 +1,88 @@
-# Blog Writing Desk
+# Blog News Radar
 
-[![Publish reviewed drafts](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/publish-drafts.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/publish-drafts.yml)
+[![Collect daily news](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
 
-`쑥쑥자라나라`의 AI·IT 뉴스 편집 저장소입니다.
+`쑥쑥자라나라` 블로그를 위한 AI·IT 뉴스 탐색 프로젝트입니다. 여러 출처의 새 글을 모으고, 중복을 정리한 뒤 독자 관점에 따라 읽어볼 후보를 선별합니다.
 
 - 블로그: [하루 한 시간 나를 Develop!](https://won0322.tistory.com/)
-- 초안 미리보기·복사: [GitHub Pages](https://seung-won-yu.github.io/blog-writing/)
-- 뉴스 후보함: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
+- 뉴스 레이더: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
 
-이 프로젝트는 모델 API로 글을 자동 생성하지 않습니다. Python은 뉴스 후보만 수집하고, Codex 편집자가 원문을 확인해 글을 작성합니다. GitHub Actions는 커밋된 결과를 테스트하고 GitHub Pages에 배포하는 역할만 맡습니다. 티스토리 발행은 미리보기 확인 후 직접 진행합니다.
+## 주요 기능
 
-## 운영 구조
+- RSS·Atom·HTML 출처를 하나의 후보 형식으로 정규화
+- 추적 파라미터를 제거한 canonical URL 기반 중복 방지
+- 공식 발표·개발 커뮤니티·국내 기술 매체를 함께 탐색
+- `일상에 닿는 변화`, `바로 쓰는 도구`, `깊이 읽는 기술` 관점으로 후보 분류
+- 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
+- 한 출처의 장애가 전체 수집을 막지 않는 독립 오류 처리
+- GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
+
+## 수집 흐름
 
 ```text
-Python 수집기
-  → GitHub Actions가 07:17 KST에 뉴스 후보함 생성·커밋
-  → Codex Terra / Medium이 09:00 KST에 원문 확인·기사 선정·집필·이미지 생성·검수
-  → 결정적 Python 도구가 본문·AdFit 삽입 지점·미리보기 생성
-  → Git commit / push
-  → GitHub Actions가 테스트·Pages 배포
-  → 운영자가 티스토리에 직접 발행
+GitHub Actions
+  → RSS·Atom·HTML 수집
+  → URL·제목 정규화
+  → 최근 사용 기사와 중복 확인
+  → 출처·신선도·독자 관점 점수 계산
+  → 오늘의 추천 후보 3건과 추가 후보 저장
+  → GitHub Pages 뉴스 레이더 갱신
 ```
 
-매일 글의 역할 분담과 문체·사실 확인 기준은 [`agent/DAILY_EDITOR.md`](agent/DAILY_EDITOR.md)가 단일 기준입니다.
+수집기는 글을 자동 발행하지 않습니다. 후보 페이지는 원문 확인을 돕는 편집용 레이더이며, 각 기사에 대한 사실 확인과 해석은 별도 과정으로 남겨둡니다.
 
-## 일일 운영
+## 직접 실행
 
-매일 `07:17 KST`에는 GitHub Actions가 뉴스 후보를 수집하고, `09:00 KST`에는 Codex 데스크톱 자동 작업이 다음 흐름을 실행합니다. 예약 지연에 대비해 1시간 43분의 버퍼를 둡니다.
-
-1. 최신 `main`을 받습니다.
-2. `daily_guard`가 당일 결과를 확인합니다. `COMPLETE`면 아무 작업 없이 종료하고, `PARTIAL`이면 누락 단계만 재개합니다.
-3. 새 글일 때만 Actions가 갱신한 `docs/inbox/latest.json`을 읽습니다. 날짜가 오늘이 아니면 Python 수집기를 한 번만 직접 실행합니다.
-4. Codex `gpt-5.6-terra`를 Medium reasoning으로 사용해 후보 원문을 확인하고, 최근 14일 중복 검사를 통과한 기사 3건을 집필합니다.
-5. Codex가 대표·본문 이미지를 만들고, Python 도구가 `NEWS 01` 뒤에 광고가 정확히 한 번 들어갈 티스토리 HTML·격리 미리보기를 만듭니다.
-6. 최종 가드와 테스트를 통과한 결과만 하나의 커밋으로 한 번 푸시합니다.
-7. GitHub Actions가 초안 페이지를 배포합니다.
-
-GitHub Actions Secret에 `GEMINI_API_KEY`를 둘 필요가 없습니다. 키가 브라우저나 GitHub Pages에 노출될 경로도 없습니다.
-
-## 수동 실행
-
-Python 3.12를 권장합니다. 이미지 도구와 테스트 의존성을 설치합니다.
-
-```bash
-python3 -m pip install -r requirements-images.txt
-```
-
-오늘의 뉴스 후보 수집:
+Python 3.12를 권장합니다.
 
 ```bash
 python3 -m blog_pipeline.collection.collect_news --today
 ```
 
-중복 실행 방지 상태 확인:
+결과는 다음 두 파일에 최신본으로 저장됩니다.
 
-```bash
-python3 -m blog_pipeline.publishing.daily_guard --today
+```text
+docs/inbox/latest.json
+docs/inbox/index.html
 ```
 
-Codex가 `data/days/YYYY-MM-DD.json`을 작성한 뒤 결과 생성:
+수집 관련 테스트만 실행하려면 다음 명령을 사용합니다.
 
 ```bash
-# Codex 이미지 생성이 불가능할 때만 대체 이미지 생성
-python3 -m blog_pipeline.publishing.generate_editorial_images --today
-python3 -m blog_pipeline.publishing.optimize_images --today
-python3 -m blog_pipeline.publishing.export_tistory --today
-python3 -m blog_pipeline.publishing.build_copy_page
-python3 -m unittest discover -s tests
+python3 -m unittest \
+  tests.test_collect_news \
+  tests.test_news_pipeline \
+  tests.test_review_inbox
 ```
 
-이미지는 Git에 들어가기 전에 `1200×630 WebP`로 변환하며 장당 256KB, 하루 4장 총 1MB를 넘지 않습니다. 뉴스 후보함은 `latest.json`과 `index.html`만 교체하며 과거 원뉴스를 쌓지 않습니다. 실제 발행에 사용한 `data/days`, 최종 HTML, 압축 WebP만 장기 자산으로 보관합니다.
+## 출처와 선정 기준
 
-특정 날짜는 `--today` 대신 `--day YYYY-MM-DD`를 사용합니다.
+출처와 키워드, 독자 관점별 규칙은 [`config/news_sources.json`](config/news_sources.json)에서 관리합니다. 현재 다음 범주의 출처를 함께 확인합니다.
 
-## 글 품질 기준
+- AI·IT 전문 매체
+- 개발자 커뮤니티
+- 제품·플랫폼 공식 변경 기록
+- 기술 연구 피드
 
-- 제목은 주제·핵심 키워드·독자가 확인할 변화를 담고, 날짜나 `데일리 IT 뉴스`만 반복하는 제목은 쓰지 않습니다.
-- 첫 기사는 일반 독자도 궁금해할 생활·사회·일자리·개인정보 이슈를 우선합니다.
-- 둘째 기사는 바로 활용할 개발 도구·보안·제품 변화, 셋째 기사는 깊이 읽을 기술 이야기를 고릅니다.
-- 기사별로 확인된 사실, 독자에게 생기는 변화, 한계와 확인 방법을 한 흐름으로 씁니다.
-- 별도 `승원의 메모`, `개발자 편집자의 체크포인트`, 자동화 고지문을 넣지 않습니다.
-- 개인적 해석은 근거 다음 문장에 자연스럽게 녹이고, 가짜 체험담은 쓰지 않습니다.
-- 정처기 선택지는 티스토리 스킨과 무관하게 `1.`부터 `4.`까지 실제 숫자가 보이게 출력합니다.
-- 대표·본문 이미지는 글 이해를 도와야 합니다. 큰 문구와 카드가 가득한 PPT형 이미지는 기본값으로 쓰지 않습니다.
-- 모든 기사에 원문 링크를 두고 원문 문장을 길게 복제하지 않습니다.
+원문 제목과 링크는 외부 입력으로 취급합니다. 후보 페이지를 만들 때 HTML 이스케이프를 적용하고, 페이지에는 검색 제외 메타데이터를 사용합니다.
 
 ## 프로젝트 구조
 
 ```text
-.github/workflows/
-  collect-news.yml         07:17 KST 뉴스 후보 수집·커밋
-  publish-drafts.yml       테스트와 GitHub Pages 배포 전용
-
-agent/
-  DAILY_EDITOR.md          Codex 집필·검수 계약
-
-blog_pipeline/
-  collection/              RSS·Atom·HTML 수집, 정규화, 중복 제거, 후보 선정
-  publishing/              이미지·티스토리 HTML·미리보기 생성
-    daily_guard.py          당일 중복 실행·최근 기사 중복 차단
-  legacy/                  더 이상 실행하지 않는 과거 모델 API 생성기
-
-config/
-  news_sources.json        출처, 독자 층위, 중복 제외 규칙
-  editorial_persona.json   레거시 생성기 복구용 문체 설정
-
-data/days/                 장기 보관하는 날짜별 가공 원본 JSON
-docs/inbox/                latest.json·index.html만 유지하는 임시 뉴스 후보함
-docs/tistory/              복사할 본문 HTML과 메타데이터
-docs/preview/              격리된 본문 미리보기
-docs/index.html            GitHub Pages 초안 도구
-tests/                     수집·출력·금칙어·워크플로 회귀 테스트
-design/tistory/            스킨 HTML 조각·CSS·게시물 디자인 단일 기준
+.github/workflows/collect-news.yml   정기 뉴스 수집
+blog_pipeline/collection/            수집·정규화·중복 제거·선정
+config/news_sources.json             출처와 선정 규칙
+docs/inbox/                           최신 뉴스 후보 JSON·페이지
+tests/                                수집 파이프라인 회귀 테스트
 ```
 
-`blog_pipeline/legacy/`는 과거 결과를 복구할 때 참고할 수 있도록 보존했지만 일일 작업과 GitHub Actions에서는 호출하지 않습니다.
+## 데이터 원칙
 
-## 발행 방법
+- 원뉴스 후보는 `latest` 두 파일만 유지합니다.
+- 실제 활용한 기사의 URL은 최근 기록과 비교해 반복 선정을 줄입니다.
+- 수집 과정에는 생성형 AI API 키가 필요하지 않습니다.
+- 로그인 정보와 외부 서비스 API 키를 저장소에 저장하지 않습니다.
 
-1. [초안 페이지](https://seung-won-yu.github.io/blog-writing/)에서 날짜를 고릅니다.
-2. 첫 화면의 본문 미리보기로 글과 이미지를 확인합니다.
-3. 추천 제목·카테고리·태그·대표 이미지를 확인합니다.
-4. `광고 HTML 태그`에는 기본 AdFit 태그가 미리 들어 있습니다. 새 태그를 쓸 때만 교체하고 `최종 HTML 만들기`를 누릅니다.
-5. `최종 HTML 복사` 후 티스토리 HTML 모드에 본문을 한 번 붙여넣습니다. 광고는 `NEWS 01` 종료 뒤, 본문 여백 밖의 728px 영역에 정확히 한 번 들어갑니다.
-6. 서식 손실을 막기 위해 기본 모드로 전환하지 않고, HTML 모드에서 저장합니다.
-7. 대표 이미지·카테고리·공개 상태를 확인해 발행합니다.
+## 이용 안내
 
-날짜별 완성본은 `docs/tistory/YYYY-MM-DD-adfit.html`입니다. 이 파일을 하나의 본문으로 취급하며, 광고 위치를 맞추기 위해 본문을 둘로 나누지 않습니다.
-
-티스토리 로그인 정보와 API 키는 저장소에 넣지 않습니다. 저장소 쓰기 권한이 없는 사람은 일일 Codex 작업이나 GitHub 배포 결과를 변경할 수 없습니다.
+이 저장소는 프로젝트 구조와 뉴스 탐색 결과를 공개하기 위한 개인 프로젝트입니다. 별도의 오픈소스 라이선스를 부여하지 않으며, 코드와 콘텐츠의 재사용·재배포에는 작성자의 허락이 필요합니다.
