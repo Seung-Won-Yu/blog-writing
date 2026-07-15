@@ -59,14 +59,6 @@ def source_date_label(value):
     return f"{published.year}. {published.month}. {published.day}"
 
 
-def audience_lane_label(value):
-    return {
-        "broad": "일반 독자",
-        "practical": "실무 독자",
-        "deep": "깊이 읽기",
-    }.get(plain(value), "")
-
-
 def slugify(text):
     text = re.sub(r"[^0-9A-Za-z가-힣._-]+", "-", text.strip())
     return re.sub(r"-{2,}", "-", text).strip("-") or "daily-digest"
@@ -286,7 +278,7 @@ def build_throughline_section(editorial):
     return f"""
 <section class="digest-throughline">
   <p class="digest-section-label">오늘의 관점</p>
-  <h2>이 소식들이 연결되는 지점</h2>
+  <h2>세 소식을 함께 보면</h2>
   <p>{esc(throughline)}</p>
 </section>""".strip()
 
@@ -304,7 +296,7 @@ def build_reading_guide(news):
         )
     return f"""
 <nav class="digest-reading-guide" aria-label="글 순서">
-  <p class="digest-reading-title">이 글에서 볼 것</p>
+  <p class="digest-reading-title">글 순서</p>
   <div class="digest-reading-list" role="list">{''.join(rows)}</div>
 </nav>""".strip()
 
@@ -340,7 +332,6 @@ def build_news_section(news, flow_image=None, story_images=None):
         title = plain(item.get("title_kr"))
         source = plain(item.get("source"))
         published = source_date_label(item.get("published_at"))
-        audience_lane = audience_lane_label(item.get("audience_lane"))
         url = plain(item.get("url"))
         blurb = plain(item.get("blurb_kr"))
         image = plain(item.get("image_url") or item.get("image"))
@@ -367,15 +358,14 @@ def build_news_section(news, flow_image=None, story_images=None):
             else ""
         )
         source_meta = " · ".join(
-            value for value in (source, published, audience_lane) if value
+            value for value in (source, published) if value
         )
-        lane_label = "오늘의 메인 이슈" if idx == 1 else "함께 볼 흐름"
         parts.append(
             f"""
 <section id="digest-news-{idx}" class="digest-news-card">
   {image_html}
   <div class="digest-news-copy">
-    <p class="digest-source">{esc(lane_label)} · NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
+    <p class="digest-source">NEWS {idx:02d}{' · ' + esc(source_meta) if source_meta else ''}</p>
     <h3>{esc(title)}</h3>
     {summary_html}
     {full_content}
@@ -477,13 +467,10 @@ def render_post(day_id, day):
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
-    composition = "확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다."
-
     return f"""<article class="daily-digest-post" data-digest-version="2">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
     <p class="digest-lead">{esc(lead)}</p>
-    <p class="digest-meta-intro">{esc(composition)}</p>
   </section>
 
   {build_editorial_image(images.get("cover"), "cover")}
@@ -492,7 +479,7 @@ def render_post(day_id, day):
 
   {build_reading_guide(news)}
 
-  <h2 class="digest-news-heading">오늘의 뉴스 {len(news)}개</h2>
+  <h2 class="digest-news-heading">오늘 고른 뉴스</h2>
   {build_news_section(
       news,
       images.get("flow"),

@@ -63,13 +63,32 @@ class TistorySkinTests(unittest.TestCase):
         story_heading = layer_css.split(".daily-digest-post .digest-news-card h3 {", 1)[1].split("}", 1)[0]
         detail_heading = layer_css.split(".daily-digest-post .digest-full-content h4 {", 1)[1].split("}", 1)[0]
 
-        self.assertIn("background: var(--sw-surface-tint) !important;", cover)
+        self.assertIn("background: var(--sw-surface) !important;", cover)
+        self.assertIn("border-top: 0 !important;", cover)
         self.assertNotIn("var(--sw-warm)", cover)
         self.assertIn("display: none !important;", cover_overlay)
         self.assertIn("content: none !important;", cover_overlay)
         self.assertIn("color: var(--sw-ink) !important;", story_heading)
         self.assertIn("color: var(--sw-ink) !important;", detail_heading)
         self.assertNotIn("border-left", detail_heading)
+
+    def test_article_uses_flat_editorial_sections_and_preserves_revenue_slots(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+        automatic_ad = layer_css.split(
+            "#tt-body-page #article-view > .revenue_unit_wrap {", 1
+        )[1].split("}", 1)[0]
+        title_ad = layer_css.split(
+            "#tt-body-page #article-view > ins.adsbygoogle {", 1
+        )[1].split("}", 1)[0]
+
+        self.assertIn("#tt-body-page #article-view > .revenue_unit_wrap", layer_css)
+        self.assertIn("#tt-body-page #article-view > ins.adsbygoogle", layer_css)
+        self.assertIn(".daily-digest-post > .ad-wp", layer_css)
+        self.assertIn(".daily-digest-post .digest-meta-intro", layer_css)
+        self.assertIn("display: block !important;", automatic_ad)
+        self.assertIn("display: block !important;", title_ad)
+        self.assertIn("display: none !important;", layer_css)
+        self.assertIn("--sw-content: 720px;", layer_css)
 
     def test_secondary_pages_share_editorial_hierarchy(self):
         skin_html = SKIN_PATH.read_text(encoding="utf-8")
@@ -113,6 +132,8 @@ class TistorySkinTests(unittest.TestCase):
 
         self.assertIn("#tt-body-page #content .related-articles", layer_css)
         self.assertIn("#tt-body-page #content > .inner > .tags", layer_css)
+        self.assertIn("#tt-body-page .entry-content > .another_category", layer_css)
+        self.assertIn("padding: 0 !important;", layer_css)
         self.assertIn("max-width: var(--sw-content);", layer_css)
         self.assertIn(".related-articles ul", layer_css)
 

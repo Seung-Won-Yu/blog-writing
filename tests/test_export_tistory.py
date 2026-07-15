@@ -134,7 +134,9 @@ class EditorialReadingFlowTests(unittest.TestCase):
     def test_uses_plain_recording_voice_in_the_intro_note(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
 
-        self.assertIn("확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.", html)
+        self.assertIn('class="digest-lead"', html)
+        self.assertNotIn("확인한 사실과 의미, 직접 살펴볼 지점을 차례로 정리했다.", html)
+        self.assertNotIn("digest-meta-intro", html)
         self.assertNotIn("권장합니다", html)
 
     def test_renders_an_in_page_reading_guide_without_internal_editor_notes(self):
@@ -155,11 +157,13 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         html = render_post("2026-07-13", day)
 
-        self.assertIn("이 글에서 볼 것", html)
+        self.assertIn("글 순서", html)
         self.assertIn('href="#digest-news-1"', html)
         self.assertIn('id="digest-news-1"', html)
-        self.assertIn("오늘의 메인 이슈", html)
-        self.assertIn("함께 볼 흐름", html)
+        self.assertIn("NEWS 01", html)
+        self.assertIn("NEWS 02", html)
+        self.assertNotIn("오늘의 메인 이슈", html)
+        self.assertNotIn("함께 볼 흐름", html)
         self.assertNotIn("digest-author-note", html)
         self.assertNotIn("개발자 편집자의 체크포인트", html)
         self.assertNotIn("승원의 메모", html)
@@ -223,10 +227,10 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertIn("도구보다 검증 과정", html)
         self.assertIn('class="digest-throughline"', html)
-        self.assertIn("이 소식들이 연결되는 지점", html)
+        self.assertIn("세 소식을 함께 보면", html)
         self.assertNotIn("WHY THESE STORIES", html)
         self.assertIn("자동화 결과를 어떻게 확인", html)
-        self.assertIn("오늘의 뉴스 1개", html)
+        self.assertIn("오늘 고른 뉴스", html)
         self.assertIn('class="digest-closing"', html)
         self.assertIn("직접 확인해보려면", html)
         self.assertNotIn("CLOSING NOTE", html)
@@ -250,7 +254,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertTrue(html.lstrip().startswith('<article class="daily-digest-post"'))
         self.assertNotIn("<!--", html)
-        self.assertIn("공식 블로그 · 2026. 7. 13 · 일반 독자", html)
+        self.assertIn("NEWS 01 · 공식 블로그 · 2026. 7. 13", html)
+        self.assertNotIn("일반 독자", html)
         self.assertNotIn("초안 생성에 자동화를 사용", html)
         self.assertNotIn('class="digest-note"', html)
 
@@ -437,7 +442,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         html = render_post("2026-07-13", self.image_day())
 
         guide = html[html.index('class="digest-reading-guide"') : html.index("</nav>")]
-        self.assertIn("이 글에서 볼 것", guide)
+        self.assertIn("글 순서", guide)
         self.assertNotIn("READING GUIDE", guide)
         self.assertNotIn("<h2", guide)
         self.assertIn('<span class="digest-reading-index">01</span>', guide)

@@ -4642,19 +4642,19 @@ hr[data-ke-style='style8'],
 */
 
 :root {
-  --sw-canvas: #f4f6f5;
+  --sw-canvas: #ffffff;
   --sw-surface: #ffffff;
-  --sw-surface-subtle: #f0f3f1;
-  --sw-surface-tint: #e9f2ee;
-  --sw-ink: #16201b;
-  --sw-text: #3f4b45;
-  --sw-muted: #68736e;
-  --sw-line: #d9e0dc;
-  --sw-line-strong: #b8c5be;
-  --sw-accent: #1f6b50;
-  --sw-accent-hover: #16543f;
-  --sw-accent-soft: #e9f2ee;
-  --sw-warm: #f7f2e8;
+  --sw-surface-subtle: #f6f7f5;
+  --sw-surface-tint: #ffffff;
+  --sw-ink: #171b18;
+  --sw-text: #343a36;
+  --sw-muted: #6f7672;
+  --sw-line: #e4e7e5;
+  --sw-line-strong: #c7ceca;
+  --sw-accent: #17694e;
+  --sw-accent-hover: #0f563e;
+  --sw-accent-soft: #eef5f1;
+  --sw-warm: #f7f5ef;
   --sw-warning: #9b6a24;
   --sw-code: #15231d;
   --sw-code-text: #dce9e3;
@@ -4665,10 +4665,16 @@ hr[data-ke-style='style8'],
   --sw-accent-line: rgba(31, 107, 80, 0.4);
   --sw-font-body: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --sw-font-brand: Georgia, "Noto Serif KR", "Nanum Myeongjo", serif;
-  --sw-radius: 8px;
-  --sw-content: 760px;
-  --sw-shell: 1080px;
+  --sw-radius: 4px;
+  --sw-content: 720px;
+  --sw-shell: 1100px;
   --sw-control: 40px;
+  --sw-space-1: 6px;
+  --sw-space-2: 12px;
+  --sw-space-3: 20px;
+  --sw-space-4: 32px;
+  --sw-space-5: 52px;
+  --sw-motion: 150ms ease;
 }
 
 ::selection {
@@ -4728,16 +4734,26 @@ summary:focus-visible {
 
 #header {
   border-bottom: 1px solid var(--sw-line);
-  background: rgba(255, 255, 255, 0.97);
+  background: var(--sw-surface);
+}
+
+#header .inner {
+  display: grid;
+  min-height: 72px;
+  max-width: var(--sw-shell);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
 }
 
 #header h1 {
-  padding-top: 18px;
-  padding-bottom: 18px;
-  font-family: var(--sw-font-brand);
-  font-size: 1.34em;
-  font-weight: 760;
-  letter-spacing: -0.025em;
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sw-font-body);
+  font-size: 1.15em;
+  font-weight: 800;
+  letter-spacing: -0.035em;
 }
 
 #header h1 a {
@@ -4745,23 +4761,22 @@ summary:focus-visible {
 }
 
 #header h1 a::after {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 4px 0 0 8px;
-  border-radius: 2px;
-  background: var(--sw-accent);
-  content: "";
-  vertical-align: top;
+  display: none;
+  content: none;
 }
 
 #header .util {
-  top: 18px;
+  position: static;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
 }
 
-#gnb,
-#gnb ul li a {
-  height: 52px;
+#gnb {
+  height: 72px;
+  margin-left: 44px;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 #gnb ul {
@@ -4783,6 +4798,7 @@ summary:focus-visible {
 
 #gnb ul li a {
   display: flex;
+  height: 72px;
   align-items: center;
   padding: 0 4px;
   color: var(--sw-muted);
@@ -4819,7 +4835,7 @@ summary:focus-visible {
 body #content > .inner:has(> .post-item) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  gap: 28px 24px;
 }
 
 body #content > .inner:has(> .post-item)::after {
@@ -4862,7 +4878,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   display: flex;
   height: 100%;
   min-height: 100%;
-  padding: 0 18px 17px;
+  padding: 0 20px 20px;
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--sw-line);
@@ -4870,31 +4886,25 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   background: var(--sw-surface);
   box-shadow: none;
   text-decoration: none;
-  transition: border-color 160ms ease, transform 160ms ease;
+  transition: border-color var(--sw-motion), background-color var(--sw-motion);
 }
 
 .post-item a::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 2;
-  height: 3px;
-  background: var(--sw-accent);
-  content: "";
+  display: none;
+  content: none;
 }
 
 .post-item a:hover,
 .post-item a:focus-visible {
   border-color: var(--sw-line-strong);
-  transform: translateY(-2px);
+  background: var(--sw-surface-subtle);
 }
 
 .post-item .thum {
   position: relative;
   display: block;
   width: auto;
-  margin: 0 -18px 15px;
+  margin: 0 -20px 17px;
   padding: 0 0 56.25%;
   overflow: hidden;
   border-bottom: 1px solid var(--sw-surface-subtle);
@@ -4922,8 +4932,8 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 0;
   overflow: hidden;
   color: var(--sw-ink);
-  font-size: 1.06em;
-  font-weight: 760;
+  font-size: 1.08em;
+  font-weight: 780;
   line-height: 1.52;
   white-space: normal;
   -webkit-box-orient: vertical;
@@ -4995,7 +5005,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .sidebar .post-list {
   padding: 17px 0 0;
   border: 0;
-  border-top: 2px solid var(--sw-ink);
+  border-top: 1px solid var(--sw-line-strong);
   border-radius: 0;
   background: transparent;
 }
@@ -5069,7 +5079,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .visitor-count {
   margin-top: 34px;
   padding-top: 17px;
-  border-top: 2px solid var(--sw-ink);
+  border-top: 1px solid var(--sw-line-strong);
 }
 
 .visitor-count__total {
@@ -5184,9 +5194,9 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   display: block !important;
   min-height: 0 !important;
   height: auto !important;
-  border-top: 2px solid var(--sw-accent) !important;
+  border-top: 0 !important;
   border-bottom: 1px solid var(--sw-line) !important;
-  background: var(--sw-surface-tint) !important;
+  background: var(--sw-surface) !important;
   color: var(--sw-ink) !important;
 }
 
@@ -5197,10 +5207,10 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .post-cover .inner {
   display: flex !important;
-  width: min(1080px, calc(100% - 48px)) !important;
+  width: 100% !important;
   min-height: 0 !important;
   margin: 0 auto !important;
-  padding: 38px 0 40px !important;
+  padding: 4px 0 34px !important;
   flex-direction: column !important;
   align-items: flex-start !important;
   justify-content: center !important;
@@ -5209,7 +5219,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .post-cover .category {
   width: auto !important;
-  margin: 0 0 13px !important;
+  margin: 0 0 16px !important;
   padding: 0 !important;
   background: transparent !important;
   color: var(--sw-accent) !important;
@@ -5218,16 +5228,15 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 }
 
 .post-cover .category::before {
-  margin-right: 5px;
-  content: "분류 ·";
-  color: var(--sw-muted);
+  display: none;
+  content: none;
 }
 
 .post-cover h1 {
   max-width: 900px !important;
   margin: 0 !important;
   color: var(--sw-ink) !important;
-  font-size: 34px !important;
+  font-size: 38px !important;
   font-weight: 800 !important;
   line-height: 1.34 !important;
   letter-spacing: -0.03em !important;
@@ -5247,8 +5256,20 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 /* 6. Ordinary posts: only direct editor children */
 .entry-content {
   color: var(--sw-text);
-  font-size: 16px;
-  line-height: 1.82;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+/* Revenue is part of the publishing system: keep automatic title/footer ads,
+   the manually inserted mid-article AdFit unit, and sidebar inventory. */
+#tt-body-page #article-view > .revenue_unit_wrap {
+  display: block !important;
+  margin: var(--sw-space-4) 0 var(--sw-space-5) !important;
+}
+
+#tt-body-page #article-view > ins.adsbygoogle {
+  display: block !important;
+  margin: 0 0 var(--sw-space-5) !important;
 }
 
 .entry-content > h2,
@@ -5299,12 +5320,12 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   width: 100% !important;
   max-width: var(--sw-content) !important;
   margin: 0 auto !important;
-  padding: 0 0 52px !important;
+  padding: 0 0 56px !important;
   color: var(--sw-text) !important;
   font-family: var(--sw-font-body) !important;
-  font-size: 16.5px !important;
-  line-height: 1.82 !important;
-  word-break: keep-all !important;
+  font-size: 17px !important;
+  line-height: 1.9 !important;
+  word-break: normal !important;
   overflow-wrap: break-word !important;
 }
 
@@ -5319,10 +5340,10 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 /* Intro has no title: Tistory post-cover already rendered the H1. */
 .daily-digest-post .digest-hero {
-  margin: 0 0 34px !important;
-  padding: 0 0 26px !important;
+  margin: 0 0 40px !important;
+  padding: 0 !important;
   border: 0 !important;
-  border-bottom: 1px solid var(--sw-line) !important;
+  border-bottom: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -5336,11 +5357,17 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 0 !important;
   border: 0 !important;
   background: transparent !important;
-  color: var(--sw-accent) !important;
-  font-size: 12px !important;
-  font-weight: 760 !important;
+  color: var(--sw-muted) !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
   line-height: 1.45 !important;
   letter-spacing: 0.02em !important;
+}
+
+.daily-digest-post .digest-news-card .digest-source {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 .daily-digest-post .digest-lead {
@@ -5349,16 +5376,13 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   border: 0 !important;
   background: transparent !important;
   color: var(--sw-ink) !important;
-  font-size: 19px !important;
-  font-weight: 680 !important;
-  line-height: 1.7 !important;
+  font-size: 20px !important;
+  font-weight: 560 !important;
+  line-height: 1.78 !important;
 }
 
 .daily-digest-post .digest-meta-intro {
-  margin: 12px 0 0 !important;
-  color: var(--sw-muted) !important;
-  font-size: 14px !important;
-  line-height: 1.7 !important;
+  display: none !important;
 }
 
 .daily-digest-post .digest-cover-figure,
@@ -5372,18 +5396,18 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   width: 100% !important;
   height: auto !important;
   margin: 0 !important;
-  border: 1px solid var(--sw-line) !important;
-  border-radius: var(--sw-radius) !important;
+  border: 0 !important;
+  border-radius: 2px !important;
   background: var(--sw-surface-subtle) !important;
   object-fit: cover !important;
 }
 
 .daily-digest-post .digest-throughline {
-  margin: 0 0 30px !important;
-  padding: 18px 20px !important;
+  margin: 0 0 42px !important;
+  padding: 26px 0 0 !important;
   border: 0 !important;
-  border-left: 3px solid var(--sw-accent) !important;
-  background: var(--sw-accent-soft) !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  background: transparent !important;
 }
 
 .daily-digest-post .digest-throughline h2 {
@@ -5391,7 +5415,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 0 !important;
   border: 0 !important;
   color: var(--sw-ink) !important;
-  font-size: 19px !important;
+  font-size: 22px !important;
   font-weight: 780 !important;
   line-height: 1.45 !important;
 }
@@ -5399,15 +5423,15 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .daily-digest-post .digest-throughline > p:last-child {
   margin: 0 !important;
   color: var(--sw-text) !important;
-  font-size: 15.5px !important;
-  line-height: 1.8 !important;
+  font-size: 17px !important;
+  line-height: 1.9 !important;
 }
 
 .daily-digest-post .digest-reading-guide {
-  margin: 0 0 42px !important;
-  padding: 17px 0 8px !important;
+  margin: 0 0 52px !important;
+  padding: 20px 0 0 !important;
   border-top: 1px solid var(--sw-line) !important;
-  border-bottom: 1px solid var(--sw-line) !important;
+  border-bottom: 0 !important;
   background: transparent !important;
 }
 
@@ -5456,20 +5480,19 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 }
 
 .daily-digest-post > .digest-news-heading {
-  margin: 0 0 14px !important;
-  padding: 0 0 12px !important;
+  margin: 0 0 26px !important;
+  padding: 0 !important;
   border: 0 !important;
-  border-bottom: 2px solid var(--sw-ink) !important;
   color: var(--sw-ink) !important;
-  font-size: 24px !important;
+  font-size: 28px !important;
   font-weight: 800 !important;
   line-height: 1.4 !important;
 }
 
 /* Editorial sections, not nested cards. */
 .daily-digest-post .digest-news-card {
-  margin: 0 0 44px !important;
-  padding: 28px 0 0 !important;
+  margin: 0 0 64px !important;
+  padding: 38px 0 0 !important;
   border: 0 !important;
   border-top: 1px solid var(--sw-line) !important;
   border-radius: 0 !important;
@@ -5479,6 +5502,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-news-card:first-of-type {
   border-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .daily-digest-post .digest-news-card .digest-story-figure {
@@ -5496,7 +5520,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   padding: 0 !important;
   border: 0 !important;
   color: var(--sw-ink) !important;
-  font-size: 24px !important;
+  font-size: 27px !important;
   font-weight: 800 !important;
   line-height: 1.45 !important;
   letter-spacing: -0.025em !important;
@@ -5505,30 +5529,30 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .daily-digest-post .digest-blurb {
   margin: 0 !important;
   color: var(--sw-text) !important;
-  font-size: 16.5px !important;
-  font-weight: 680 !important;
-  line-height: 1.78 !important;
+  font-size: 17px !important;
+  font-weight: 620 !important;
+  line-height: 1.82 !important;
 }
 
 .daily-digest-post .digest-full-content {
-  margin: 22px 0 0 !important;
-  padding: 18px 0 0 !important;
+  margin: 26px 0 0 !important;
+  padding: 22px 0 0 !important;
   border-top: 1px solid var(--sw-line) !important;
 }
 
 .daily-digest-post .digest-full-content p {
-  margin: 0 0 15px !important;
+  margin: 0 0 20px !important;
   color: var(--sw-text) !important;
-  font-size: 16.5px !important;
-  line-height: 1.85 !important;
+  font-size: 17px !important;
+  line-height: 1.92 !important;
 }
 
 .daily-digest-post .digest-full-content h4 {
-  margin: 28px 0 9px !important;
+  margin: 34px 0 10px !important;
   padding: 0 !important;
   border: 0 !important;
   color: var(--sw-ink) !important;
-  font-size: 18px !important;
+  font-size: 18.5px !important;
   font-weight: 780 !important;
   line-height: 1.48 !important;
 }
@@ -5582,17 +5606,19 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-quiz,
 .daily-digest-post .digest-terms {
-  margin: 42px 0 0 !important;
-  padding: 22px !important;
-  border: 1px solid var(--sw-line) !important;
-  border-radius: var(--sw-radius) !important;
-  background: var(--sw-surface) !important;
+  margin: 56px 0 0 !important;
+  padding: 30px 0 !important;
+  border: 0 !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
   box-shadow: none !important;
 }
 
 .daily-digest-post .digest-quiz {
-  border-color: var(--sw-line-strong) !important;
-  background: var(--sw-accent-soft) !important;
+  border-color: var(--sw-ink) !important;
+  background: transparent !important;
 }
 
 .daily-digest-post :is(.digest-quiz, .digest-terms) > h2 {
@@ -5626,10 +5652,11 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   grid-template-columns: 1.8em minmax(0, 1fr) !important;
   gap: 5px !important;
   margin: 0 !important;
-  padding: 11px 13px !important;
-  border: 1px solid var(--sw-line) !important;
-  border-radius: 6px !important;
-  background: var(--sw-surface) !important;
+  padding: 11px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
   color: var(--sw-text) !important;
   font-size: 15.5px !important;
   line-height: 1.55 !important;
@@ -5732,9 +5759,9 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .daily-digest-post .digest-action {
   margin: 18px 0 0 !important;
-  padding: 16px 18px !important;
+  padding: 2px 0 2px 18px !important;
   border-left: 3px solid var(--sw-warning) !important;
-  background: var(--sw-warm) !important;
+  background: transparent !important;
   color: var(--sw-text) !important;
 }
 
@@ -6036,40 +6063,53 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   line-height: 30px;
 }
 
+/* Tistory injects a category list inside the editor body. The skin already
+   renders a visual related-post section, so showing both is duplicate UI. */
+#tt-body-page .entry-content > .another_category {
+  display: none !important;
+}
+
 .related-articles {
   margin-top: 0;
   margin-bottom: 52px;
-  padding-top: 22px;
-  border-top: 2px solid var(--sw-ink);
+  padding-top: 26px;
+  border-top: 1px solid var(--sw-line-strong);
 }
 
 .related-articles ul {
   display: grid;
+  margin: 0 !important;
+  padding: 0 !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 20px 24px;
 }
 
 .related-articles ul li {
   float: none;
   width: auto;
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .related-articles ul li a {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 13px;
+  min-height: 80px;
+  padding: 0 0 18px;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 15px;
   align-items: center;
+  border-bottom: 1px solid var(--sw-line);
   color: var(--sw-text);
   text-decoration: none;
 }
 
 .related-articles ul li figure {
-  width: 112px;
-  height: 72px;
-  margin: 0;
+  width: 124px;
+  height: 78px;
+  margin: 0 !important;
+  padding: 0 !important;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 3px;
   background: var(--sw-surface-subtle);
 }
 
@@ -6081,13 +6121,15 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
 .related-articles ul li .title {
   display: -webkit-box;
+  min-width: 0;
   overflow: hidden;
   color: var(--sw-text);
-  font-size: 14px;
-  font-weight: 680;
-  line-height: 1.55;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: normal !important;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
 .related-articles ul li a:hover .title,
@@ -6145,6 +6187,11 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 }
 
 @media screen and (max-width: 1080px) {
+  #header .inner {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
   #container .content-wrap {
     padding-right: 20px;
     padding-left: 20px;
@@ -6156,14 +6203,45 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
     background: var(--sw-canvas) !important;
   }
 
+  #header .inner {
+    display: block;
+    min-height: 0;
+    padding: 0;
+  }
+
   #header h1 {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    font-size: 1.14em;
+    position: relative;
+    padding: 16px 64px 16px 18px;
+    font-size: 1.05em;
   }
 
   #header .util {
-    top: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 16px 58px 16px 18px;
+    box-sizing: border-box;
+  }
+
+  #gnb {
+    height: 50px;
+    margin-left: 0;
+    border-top: 1px solid var(--sw-line);
+  }
+
+  #gnb ul {
+    gap: 20px;
+    padding: 0 18px !important;
+  }
+
+  #gnb ul li {
+    padding: 0 !important;
+  }
+
+  #gnb ul li a {
+    height: 50px;
+    padding: 0 !important;
   }
 
   #content {
@@ -6209,8 +6287,8 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 
   .post-cover h1 {
-    font-size: 25px !important;
-    line-height: 1.4 !important;
+    font-size: 28px !important;
+    line-height: 1.38 !important;
   }
 
   .entry-content {
@@ -6221,28 +6299,32 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   .entry-content > .daily-digest-post,
   .entry-content > .daily-digest-continuation {
     max-width: none !important;
-    font-size: 15.8px !important;
+    font-size: 16.5px !important;
   }
 
   .daily-digest-post .digest-lead {
-    font-size: 17.5px !important;
+    font-size: 18.5px !important;
   }
 
   .daily-digest-post .digest-throughline,
   .daily-digest-post .digest-quiz,
-  .daily-digest-post .digest-terms,
+  .daily-digest-post .digest-terms {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
   .daily-digest-post .digest-action {
-    padding-right: 16px !important;
+    padding-right: 0 !important;
     padding-left: 16px !important;
   }
 
   .daily-digest-post .digest-news-card h3 {
-    font-size: 21px !important;
+    font-size: 23px !important;
   }
 
   .daily-digest-post .digest-full-content p {
-    font-size: 15.8px !important;
-    line-height: 1.82 !important;
+    font-size: 16.5px !important;
+    line-height: 1.88 !important;
   }
 
   .daily-digest-post .digest-reading-item a {
@@ -6272,7 +6354,19 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 
   .related-articles ul {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
+  }
+
+  .related-articles ul li a {
+    min-height: 68px;
+    padding-bottom: 16px;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .related-articles ul li figure {
+    width: 104px;
+    height: 68px;
   }
 
   #footer {

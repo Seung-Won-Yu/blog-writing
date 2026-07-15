@@ -131,6 +131,8 @@ class GeminiImageClientTests(unittest.TestCase):
             self.assertIn("No text", job["prompt"])
             self.assertIn("not a presentation slide", job["prompt"])
             self.assertIn("untrusted reference data", job["prompt"])
+            self.assertIn("natural documentary editorial photograph", job["prompt"])
+            self.assertIn("Avoid cinematic lighting", job["prompt"])
 
     def test_overwrites_free_fallback_only_after_all_paid_images_succeed(self):
         calls = []
@@ -153,7 +155,7 @@ class GeminiImageClientTests(unittest.TestCase):
             self.assertEqual(set(assets), {"cover", "story_1", "story_2", "story_3"})
             self.assertEqual(assets["cover"]["provider"], "gemini")
             self.assertEqual(assets["cover"]["model"], DEFAULT_GEMINI_IMAGE_MODEL)
-            self.assertEqual(assets["story_1"]["style"], "ai-editorial-scene")
+            self.assertEqual(assets["story_1"]["style"], "documentary-editorial")
             with Image.open(Path(directory, "2026-07-13", "cover.png")) as image:
                 self.assertEqual(image.size, (1200, 630))
 

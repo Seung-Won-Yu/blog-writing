@@ -93,7 +93,7 @@ def write_preview_pages(drafts):
     html {{ background: #f5f7f9; }}
     body {{ margin: 0; padding: 0 16px 56px; overflow-wrap: anywhere; }}
     .preview-post-cover {{
-      width: min(760px, 100%);
+      width: min(720px, 100%);
       margin: 0 auto 34px;
       padding: 34px 0 26px;
       border-bottom: 1px solid var(--sw-line);
@@ -112,7 +112,7 @@ def write_preview_pages(drafts):
       letter-spacing: -.03em;
       word-break: keep-all;
     }}
-    .entry-content {{ width: min(820px, 100%); margin: 0 auto; padding: 0 20px; }}
+    .entry-content {{ width: min(760px, 100%); margin: 0 auto; padding: 0 20px; }}
     img {{ max-width: 100%; height: auto; }}
     @media (max-width: 560px) {{
       body {{ padding: 0 0 40px; }}
