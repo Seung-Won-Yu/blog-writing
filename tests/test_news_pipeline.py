@@ -6,6 +6,8 @@ from blog_pipeline.collection.news_pipeline import (
     deduplicate_candidates,
     make_candidate,
     score_candidate,
+    score_lead_candidate,
+    select_lead_shortlist,
     select_candidates,
     validate_day_id,
 )
@@ -82,6 +84,22 @@ class DeduplicationTests(unittest.TestCase):
 
 
 class RankingTests(unittest.TestCase):
+    def test_scores_lead_story_value_with_explainable_components(self):
+        item = make_candidate(
+            raw("GitHub PR AI 보안 탐지 기능 출시", "https://github.example/security"),
+            source("github", "official", weight=5),
+        )
+        item["lane_scores"] = {"broad": 1, "practical": 5, "deep": 4}
+        item["score_reasons"] = ["48시간 이내", "공식 출처"]
+
+        score_lead_candidate(item)
+
+        self.assertEqual(
+            set(item["lead_score_breakdown"]),
+            {"reader_relevance", "actionability", "explanatory_depth", "evidence", "freshness"},
+        )
+        self.assertEqual(item["lead_score"], sum(item["lead_score_breakdown"].values()))
+
     def test_official_recent_keyword_item_scores_higher(self):
         official = make_candidate(
             raw("GitHub Actions AI 보안 기능 출시", "https://official.example/1"),
@@ -150,6 +168,41 @@ class RankingTests(unittest.TestCase):
 
 
 class SelectionTests(unittest.TestCase):
+    def test_selects_five_ranked_leads_with_source_family_diversity(self):
+        items = []
+        for index, (source_id, family) in enumerate(
+            [
+                ("openai", "openai"),
+                ("github-changelog", "github"),
+                ("github-engineering", "github"),
+                ("cloudflare", "cloudflare"),
+                ("huggingface", "huggingface"),
+                ("geeknews", "geeknews"),
+            ]
+        ):
+            source_config = source(source_id, "official", weight=5)
+            source_config["source_family"] = family
+            item = make_candidate(
+                raw(f"핵심 기술 뉴스 {index}", f"https://{source_id}.example/post"),
+                source_config,
+            )
+            item["lead_score"] = 20 - index
+            items.append(item)
+
+        selected = select_lead_shortlist(
+            items,
+            max_items=5,
+            max_per_source=1,
+            max_per_family=1,
+        )
+
+        self.assertEqual(len(selected), 5)
+        self.assertEqual([item["lead_rank"] for item in selected], [1, 2, 3, 4, 5])
+        self.assertEqual(
+            len([item for item in selected if item["source_family"] == "github"]),
+            1,
+        )
+
     def test_hard_limits_two_feeds_from_the_same_source_family(self):
         items = []
         for source_id, lane in (

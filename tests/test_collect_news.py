@@ -130,6 +130,59 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_builds_a_five_item_lead_shortlist_instead_of_lane_slots(self):
+        sources = []
+        feeds = {}
+        for index in range(6):
+            source_id = f"source-{index}"
+            url = f"https://{source_id}.example/feed"
+            sources.append(
+                {
+                    "id": source_id,
+                    "name": source_id,
+                    "group": "official",
+                    "type": "rss",
+                    "url": url,
+                    "weight": 5,
+                    "enabled": True,
+                }
+            )
+            feeds[url] = RSS_XML.replace(
+                "GitHub Actions 보안 업데이트",
+                f"AI 개발 도구 핵심 변화 {index}",
+            ).replace(
+                "https://example.com/actions?utm_source=rss",
+                f"https://{source_id}.example/article",
+            )
+        config = {
+            "interest_keywords": ["AI", "개발 도구"],
+            "audience_lanes": {
+                "broad": {"keywords": ["AI"]},
+                "practical": {"keywords": ["개발 도구"]},
+                "deep": {"keywords": ["보안"]},
+            },
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 5,
+                "max_per_source": 1,
+                "max_per_family": 1,
+                "min_lead_score": 0,
+            },
+            "sources": sources,
+        }
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda url: feeds[url],
+            now=NOW,
+            day_id="2026-07-12",
+        )
+
+        self.assertEqual(len(result["selected"]), 5)
+        self.assertEqual(result["lead_shortlist"], result["selected"])
+        self.assertTrue(all(item.get("lead_rank") for item in result["selected"]))
+        self.assertTrue(all("audience_lane" not in item for item in result["selected"]))
+
     def test_filters_items_older_than_the_collection_age_limit(self):
         config = {
             "max_age_days": 14,

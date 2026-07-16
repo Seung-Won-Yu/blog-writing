@@ -18,6 +18,8 @@ from .news_pipeline import (
     deduplicate_candidates,
     make_candidate,
     score_candidate,
+    score_lead_candidate,
+    select_lead_shortlist,
     select_candidates,
     validate_day_id,
 )
@@ -325,6 +327,7 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
             audience_lanes=config.get("audience_lanes", {}),
             topic_keywords=config.get("topic_keywords", {}),
         )
+        score_lead_candidate(candidate)
     candidates.sort(
         key=lambda item: (item.get("score", 0), item.get("published_at", "")),
         reverse=True,
@@ -342,17 +345,31 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
     ]
     selection = dict(config.get("selection", {}))
     selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
-    selected = select_candidates(
-        eligible_candidates,
-        max_items=int(selection.get("max_items", 3)),
-        max_per_source=int(selection.get("max_per_source", 1)),
-        max_per_family=selection.get("max_per_family"),
-        preferred_groups=selection.get("preferred_groups", []),
-        audience_lanes=selection.get("audience_lanes", []),
-        max_topic_items=selection.get("max_topic_items", {}),
-        max_research_items=selection.get("max_research_items", 1),
-        require_topic_coherence=bool(selection.get("require_topic_coherence", False)),
-    )
+    if selection.get("mode") == "lead_shortlist":
+        minimum = int(selection.get("min_lead_score", 0))
+        lead_pool = [
+            candidate
+            for candidate in eligible_candidates
+            if int(candidate.get("lead_score", 0)) >= minimum
+        ]
+        selected = select_lead_shortlist(
+            lead_pool,
+            max_items=int(selection.get("max_items", 5)),
+            max_per_source=int(selection.get("max_per_source", 1)),
+            max_per_family=selection.get("max_per_family", 1),
+        )
+    else:
+        selected = select_candidates(
+            eligible_candidates,
+            max_items=int(selection.get("max_items", 3)),
+            max_per_source=int(selection.get("max_per_source", 1)),
+            max_per_family=selection.get("max_per_family"),
+            preferred_groups=selection.get("preferred_groups", []),
+            audience_lanes=selection.get("audience_lanes", []),
+            max_topic_items=selection.get("max_topic_items", {}),
+            max_research_items=selection.get("max_research_items", 1),
+            require_topic_coherence=bool(selection.get("require_topic_coherence", False)),
+        )
 
     return {
         "schema_version": 1,
@@ -362,6 +379,7 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
         "selection": selection,
         "candidates": candidates,
         "selected": selected,
+        "lead_shortlist": selected if selection.get("mode") == "lead_shortlist" else [],
         "errors": errors,
     }
 

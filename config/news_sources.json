@@ -47,20 +47,12 @@
     "ai": ["AI", "인공지능", "LLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트"]
   },
   "selection": {
-    "max_items": 3,
+    "mode": "lead_shortlist",
+    "max_items": 5,
     "max_per_source": 1,
     "max_per_family": 1,
-    "exclude_recent_days": 14,
-    "audience_lanes": ["broad", "practical", "deep"],
-    "max_topic_items": {"ai": 3},
-    "max_research_items": 0,
-    "require_topic_coherence": true,
-    "preferred_groups": [
-      "official",
-      "community",
-      "korean_editorial",
-      "research"
-    ]
+    "min_lead_score": 8,
+    "exclude_recent_days": 60
   },
   "sources": [
     {

@@ -84,19 +84,16 @@ class SourceConfigTests(unittest.TestCase):
             {source["group"] for source in enabled}
         ))
         self.assertEqual(len({source["id"] for source in enabled}), len(enabled))
-        self.assertEqual(config["selection"]["max_items"], 3)
+        self.assertEqual(config["selection"]["mode"], "lead_shortlist")
+        self.assertEqual(config["selection"]["max_items"], 5)
         self.assertIn("aitimes", {source["id"] for source in enabled})
-        self.assertEqual(
-            config["selection"]["audience_lanes"],
-            ["broad", "practical", "deep"],
-        )
-        self.assertEqual(config["selection"]["max_research_items"], 0)
-        self.assertEqual(config["selection"]["exclude_recent_days"], 14)
+        self.assertNotIn("audience_lanes", config["selection"])
+        self.assertNotIn("max_research_items", config["selection"])
+        self.assertEqual(config["selection"]["exclude_recent_days"], 60)
         self.assertEqual(config["max_age_days"], 14)
         self.assertEqual(config["selection"]["max_per_family"], 1)
+        self.assertEqual(config["selection"]["min_lead_score"], 8)
         self.assertNotIn("inbox_retention_days", config["selection"])
-        self.assertTrue(config["selection"]["require_topic_coherence"])
-        self.assertEqual(config["selection"]["max_topic_items"]["ai"], 3)
         self.assertTrue(
             {
                 "cloudflare-blog",

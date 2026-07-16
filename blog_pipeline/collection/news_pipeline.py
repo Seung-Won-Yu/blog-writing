@@ -264,6 +264,68 @@ def score_candidate(
     return candidate
 
 
+def score_lead_candidate(candidate):
+    """Add an explainable score used only to build the five-story shortlist."""
+    lanes = candidate.get("lane_scores") or {}
+    reasons = set(candidate.get("score_reasons") or [])
+    group = candidate.get("group")
+    breakdown = {
+        "reader_relevance": min(5, max((int(value) for value in lanes.values()), default=0)),
+        "actionability": min(5, int(lanes.get("practical", 0))),
+        "explanatory_depth": min(5, int(lanes.get("deep", 0))),
+        "evidence": {
+            "official": 5,
+            "research": 4,
+            "korean_editorial": 3,
+            "community": 3,
+            "korean_general": 2,
+        }.get(group, 2),
+        "freshness": 5 if "48시간 이내" in reasons else 3 if "7일 이내" in reasons else 1,
+    }
+    candidate["lead_score_breakdown"] = breakdown
+    candidate["lead_score"] = sum(breakdown.values())
+    return candidate
+
+
+def select_lead_shortlist(
+    candidates,
+    max_items=5,
+    max_per_source=1,
+    max_per_family=1,
+):
+    """Return the strongest diverse stories for the 09:00 editorial review."""
+    ranked = sorted(
+        candidates,
+        key=lambda item: (
+            int(item.get("lead_score", 0)),
+            int(item.get("score", 0)),
+            item.get("published_at", ""),
+        ),
+        reverse=True,
+    )
+    selected = []
+    source_counts = {}
+    family_counts = {}
+    for item in ranked:
+        source_id = item.get("source_id", "")
+        family = item.get("source_family") or source_id
+        if source_counts.get(source_id, 0) >= int(max_per_source):
+            continue
+        if max_per_family is not None and family_counts.get(family, 0) >= int(max_per_family):
+            continue
+        selected.append(item)
+        source_counts[source_id] = source_counts.get(source_id, 0) + 1
+        family_counts[family] = family_counts.get(family, 0) + 1
+        if len(selected) >= int(max_items):
+            break
+    for rank, item in enumerate(selected, 1):
+        item["lead_rank"] = rank
+        item["selection_reason"] = "핵심뉴스 후보 {} · 점수 {}".format(
+            rank, item.get("lead_score", 0)
+        )
+    return selected
+
+
 def select_candidates(
     candidates,
     max_items=3,
