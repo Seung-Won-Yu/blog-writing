@@ -6,12 +6,10 @@ Official Tistory Open API publishing has been retired, so this script generates
 reviewable HTML that can be pasted into the Tistory editor's HTML mode.
 
 usage:
-  python pages_to_tistory.py --day 2026-07-01
-  python draft_tistory_post.py --day 2026-07-01 --from-pages
-  python export_tistory.py --today
-  python export_tistory.py --latest
-  python export_tistory.py --day 2026-07-01
-  python export_tistory.py --all
+  python -m blog_pipeline.publishing.export_tistory --today
+  python -m blog_pipeline.publishing.export_tistory --latest
+  python -m blog_pipeline.publishing.export_tistory --day 2026-07-01
+  python -m blog_pipeline.publishing.export_tistory --all
 """
 import argparse
 import datetime

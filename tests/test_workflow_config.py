@@ -60,8 +60,10 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "blog_pipeline" / "collection" / "news_pipeline.py",
             ROOT / "blog_pipeline" / "publishing" / "export_tistory.py",
             ROOT / "blog_pipeline" / "publishing" / "build_copy_page.py",
+            ROOT / "blog_pipeline" / "publishing" / "build_integration_page.py",
             ROOT / "blog_pipeline" / "publishing" / "daily_guard.py",
-            ROOT / "blog_pipeline" / "legacy" / "generate_daily_draft.py",
+            ROOT / "blog_pipeline" / "publishing" / "generate_editorial_images.py",
+            ROOT / "blog_pipeline" / "publishing" / "optimize_images.py",
         )
         for path in expected:
             self.assertTrue(path.is_file(), str(path))
