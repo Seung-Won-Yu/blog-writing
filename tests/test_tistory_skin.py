@@ -137,6 +137,18 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("max-width: var(--sw-content);", layer_css)
         self.assertIn(".related-articles ul", layer_css)
 
+    def test_deep_story_visuals_and_tables_are_scoped_and_mobile_safe(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn(".daily-digest-post .digest-content-figure", layer_css)
+        self.assertIn(".daily-digest-post .digest-table-wrap", layer_css)
+        self.assertIn("overflow-x: auto !important;", layer_css)
+        self.assertIn(".daily-digest-post .digest-data-table", layer_css)
+        self.assertIn("min-width: 560px !important;", layer_css)
+        self.assertIn(".daily-digest-post .digest-related-posts", layer_css)
+        self.assertIn(".daily-digest-post .digest-reference-list", layer_css)
+        self.assertNotIn("body .digest-data-table", layer_css)
+
 
 if __name__ == "__main__":
     unittest.main()

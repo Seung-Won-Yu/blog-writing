@@ -68,7 +68,7 @@ class WorkflowConfigTests(unittest.TestCase):
         for path in expected:
             self.assertTrue(path.is_file(), str(path))
 
-    def test_editor_contract_enforces_single_run_and_recent_deduplication(self):
+    def test_editor_contract_enforces_one_deep_story_single_run_and_deduplication(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
         self.assertIn("daily_guard --today", contract)
@@ -80,23 +80,33 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`docs/inbox/latest.json`", contract)
         self.assertIn("당일 날짜와 다르면", contract)
         self.assertNotIn("`docs/inbox/YYYY-MM-DD.json`", contract)
-        self.assertIn("최근 14일", contract)
+        self.assertIn("최근 60일", contract)
+        self.assertIn("`lead-story-v1`", contract)
+        self.assertIn("핵심뉴스 1건", contract)
+        self.assertIn("`primary_query`", contract)
+        self.assertIn("후보 5건", contract)
+        self.assertIn("관련 글 2개", contract)
+        self.assertIn("35~45%", contract)
         self.assertIn("하나의 커밋", contract)
         self.assertIn("digest-news-copy", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("대표 이미지는 첫 기사 하나만", contract)
+        self.assertIn("대표 이미지 1장", contract)
+        self.assertIn("설명 이미지 2~6장", contract)
         self.assertIn("기사 고유 시각 단서", contract)
         self.assertIn("원인 → 결과", contract)
         self.assertIn("노트북 앞 사람", contract)
         self.assertIn("1초 안에", contract)
         self.assertIn("curiosity_hook", contract)
         self.assertIn("시각적 질문", contract)
-        self.assertIn("제목과 출처를 가렸을 때", contract)
+        self.assertIn("제목을 가렸을 때", contract)
         self.assertIn("45~70%", contract)
         self.assertIn("클릭베이트", contract)
+        self.assertIn("짧은 한국어 설명", contract)
+        self.assertIn("한글 파일명", contract)
+        self.assertIn("표·차트·타임라인·비교·동작 흐름", contract)
         self.assertIn("실패한 이미지만 다시", contract)
 
 

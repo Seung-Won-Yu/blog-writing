@@ -2,7 +2,7 @@
 
 [![Collect daily news](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
 
-`쑥쑥자라나라` 블로그를 위한 AI·IT 뉴스 탐색 프로젝트입니다. 여러 출처의 새 글을 모으고, 중복을 정리한 뒤 독자 관점에 따라 읽어볼 후보를 선별합니다.
+`쑥쑥자라나라` 블로그를 위한 AI·IT 심층뉴스 제작 프로젝트입니다. 여러 출처의 새 글을 모아 후보를 정리하고, 매일 핵심뉴스 한 건을 추가 조사해 설명 이미지와 함께 읽을 만한 글로 만듭니다.
 
 - 블로그: [하루 한 시간 나를 Develop!](https://won0322.tistory.com/)
 - 뉴스 레이더: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
@@ -26,17 +26,19 @@
   → URL·제목 정규화
   → 최근 사용 기사와 중복 확인
   → 출처·신선도·독자 관점 점수 계산
-  → 오늘의 추천 후보 3건과 추가 후보 저장
+  → 오늘의 추천 후보 5건과 추가 후보 저장
   → GitHub Pages 뉴스 레이더 갱신
 
 09:00 KST · Codex 예약 작업
-  → 추천 원문 직접 확인
-  → 블로그 글 작성
-  → 기사별 이미지 생성·검수
+  → 핵심뉴스 1건 선정·추가 검색
+  → 공식 문서와 독립 자료 교차 확인
+  → 8~12분 심층글 작성
+  → 한국어 설명 도식·표·차트 생성·검수
   → 티스토리 복사용 결과 제작
+  → 테스트·GitHub Pages 배포 확인
 ```
 
-GitHub Actions는 뉴스 수집·중복 제거·우선순위 계산까지만 수행하며 글과 이미지를 생성하지 않습니다. 후보 페이지는 원문 확인을 돕는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않습니다.
+GitHub Actions의 정기 작업은 뉴스 수집·중복 제거·우선순위 계산까지만 수행하며 글과 이미지를 생성하지 않습니다. 후보 페이지는 심층 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
 
 ## 직접 실행
 

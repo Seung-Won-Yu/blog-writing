@@ -1,3 +1,4 @@
+import copy
 import json
 import tempfile
 import unittest
@@ -34,6 +35,123 @@ FALLBACK_DAY = {
     "quiz": {},
     "terms": [],
     "generation": {"provider": "deterministic-fallback"},
+}
+
+
+LEAD_DAY = {
+    "schema_version": 3,
+    "format": "lead-story-v1",
+    "date_label": "2026. 7. 17",
+    "weekday": "금",
+    "primary_query": "GitHub Copilot agent mode 보안 변경",
+    "tags": ["Dependabot", "GitHub", "의존성 관리"],
+    "editorial": {
+        "headline": "GitHub Copilot 에이전트 모드, 개발 흐름은 어떻게 바뀐나",
+        "opening": "코드를 제안하던 도구가 작업 단위를 스스로 수행하는 단계로 넘어갔다.",
+        "closing": "자동화 범위가 커질수록 검증 기준도 더 명확해져야 한다.",
+        "action": "팀 저장소에서 에이전트가 바꿔도 되는 파일 범위를 먼저 정해보자.",
+    },
+    "news": [
+        {
+            "title_kr": "GitHub Copilot 에이전트 모드 보안 제어 강화",
+            "source": "GitHub Blog",
+            "url": "https://github.blog/example",
+            "published_at": "2026-07-16T01:00:00+00:00",
+            "blurb_kr": "자동 작업과 권한 제어의 변화를 실제 개발 흐름 기준으로 살펴봤다.",
+            "references": [
+                {
+                    "title": "GitHub 공식 발표",
+                    "url": "https://github.blog/example",
+                    "kind": "official",
+                },
+                {
+                    "title": "GitHub Docs 권한 설명",
+                    "url": "https://docs.github.com/example",
+                    "kind": "documentation",
+                },
+                {
+                    "title": "보안 전문가 분석",
+                    "url": "https://security.example/analysis",
+                    "kind": "independent",
+                },
+            ],
+            "content": [
+                {"t": "h", "text": "정확히 무슨 일이 있었나"},
+                {"t": "p", "text": "에이전트가 다룰 수 있는 작업과 확인 절차가 바뀌었다."},
+                {
+                    "t": "visual",
+                    "image": "visual_1",
+                    "caption": "요청에서 검증까지의 에이전트 작업 흐름",
+                },
+                {"t": "h", "text": "기존 방식과 무엇이 다른가"},
+                {
+                    "t": "table",
+                    "caption": "코드 제안과 에이전트 모드 비교",
+                    "headers": ["구분", "코드 제안", "에이전트 모드"],
+                    "rows": [
+                        ["작업 범위", "현재 파일", "여러 파일과 도구"],
+                        ["확인 지점", "수락 전", "작업 단계별"],
+                    ],
+                },
+                {"t": "ad_break"},
+                {"t": "h", "text": "실제 팀에 무슨 의미인가"},
+                {
+                    "t": "code",
+                    "language": "yaml",
+                    "text": "cooldown:\n  default-days: 5\n  semver-major-days: 30",
+                },
+                {"t": "p", "text": "속도보다 수정 범위와 로그를 보는 규칙이 먼저다."},
+                {
+                    "t": "visual",
+                    "image": "visual_2",
+                    "caption": "권한·실행·검증의 세 단계",
+                },
+                {"t": "h", "text": "지금 확인할 것"},
+                {
+                    "t": "ul",
+                    "items": ["작업 허용 범위", "실행 로그", "리뷰 책임자"],
+                },
+                {"t": "p", "text": "권한 변경은 팀에 사전 공유한다."},
+                {"t": "p", "text": "문제가 생기면 되돌릴 경로도 함께 정한다."},
+            ],
+        }
+    ],
+    "related_posts": [
+        {
+            "title": "GitHub Actions 기초",
+            "url": "https://won0322.tistory.com/120",
+            "reason": "자동화 실행 단위를 함께 보기 좋다.",
+        },
+        {
+            "title": "AI 코딩 도구 선택 기준",
+            "url": "https://won0322.tistory.com/121",
+            "reason": "권한과 검증 기준을 이어서 비교할 수 있다.",
+        },
+    ],
+    "images": {
+        "cover": {
+            "url": "https://blog.example/cover.webp",
+            "path": "docs/tistory/assets/2026-07-17/cover.webp",
+            "alt": "GitHub Copilot 에이전트 모드 대표 이미지",
+            "width": 1200,
+            "height": 630,
+        },
+        "visual_1": {
+            "url": "https://blog.example/visual-01.webp",
+            "path": "docs/tistory/assets/2026-07-17/visual-01.webp",
+            "alt": "에이전트 작업 흐름도",
+            "width": 1200,
+            "height": 630,
+        },
+        "visual_2": {
+            "url": "https://blog.example/visual-02.webp",
+            "path": "docs/tistory/assets/2026-07-17/visual-02.webp",
+            "alt": "권한 실행 검증 도식",
+            "width": 1200,
+            "height": 630,
+        },
+    },
+    "generation": {"provider": "codex-agent", "revision": 8},
 }
 
 
@@ -89,6 +207,65 @@ class ExportProtectionTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_renders_one_deep_story_with_variable_visuals_table_and_related_posts(self):
+        html = render_post("2026-07-17", LEAD_DAY)
+
+        self.assertIn('data-digest-version="3"', html)
+        self.assertEqual(html.count('class="digest-news-card digest-lead-story"'), 1)
+        self.assertIn("오늘의 핵심뉴스", html)
+        self.assertIn('class="digest-data-table"', html)
+        self.assertIn("코드 제안과 에이전트 모드 비교", html)
+        self.assertIn('class="digest-code-block language-yaml"', html)
+        self.assertIn("semver-major-days: 30", html)
+        self.assertIn("visual-01.webp", html)
+        self.assertIn("visual-02.webp", html)
+        self.assertEqual(html.count('class="digest-content-image"'), 2)
+        self.assertIn('class="digest-related-posts"', html)
+        self.assertIn('href="https://won0322.tistory.com/120"', html)
+        self.assertIn('href="https://won0322.tistory.com/121"', html)
+        self.assertIn('class="digest-reference-list"', html)
+        self.assertIn("<span>공식</span>", html)
+        self.assertIn("<span>공식 문서</span>", html)
+        self.assertNotIn("<span>official</span>", html)
+        self.assertNotIn("세 소식을 함께 보면", html)
+        self.assertNotIn("글 순서", html)
+        self.assertNotIn("오늘의 정처기 문제", html)
+        self.assertNotIn("오늘의 IT · 개발 · 기획 용어", html)
+
+    def test_deep_links_ignore_non_http_reference_and_related_urls(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["news"][0]["references"].append(
+            {"title": "실행 링크", "url": "javascript:alert(1)", "kind": "bad"}
+        )
+        day["related_posts"].append(
+            {"title": "위험한 관련 글", "url": "data:text/html,bad"}
+        )
+
+        html = render_post("2026-07-17", day)
+
+        self.assertNotIn("javascript:", html)
+        self.assertNotIn("data:text/html", html)
+        self.assertNotIn("실행 링크", html)
+        self.assertNotIn("위험한 관련 글", html)
+
+    def test_places_one_adfit_marker_at_the_explicit_deep_story_break(self):
+        post_html = render_post("2026-07-17", LEAD_DAY)
+        html = build_adfit_ready_html(post_html)
+
+        before = html.index("기존 방식과 무엇이 다른가")
+        adfit = html.index('data-ad-vendor="adfit"')
+        after = html.index("실제 팀에 무슨 의미인가")
+        self.assertLess(before, adfit)
+        self.assertLess(adfit, after)
+        self.assertEqual(html.count('data-ad-vendor="adfit"'), 1)
+        self.assertNotIn("data-digest-ad-break", html)
+
+        before_ad, after_ad = split_post_around_first_story(post_html)
+        self.assertIn("기존 방식과 무엇이 다른가", before_ad)
+        self.assertNotIn("실제 팀에 무슨 의미인가", before_ad)
+        self.assertIn("실제 팀에 무슨 의미인가", after_ad)
+        self.assertNotIn("data-digest-ad-break", before_ad + after_ad)
+
     def test_splits_copy_ready_html_into_valid_before_and_after_ad_fragments(self):
         day = dict(FALLBACK_DAY)
         day["news"] = [
@@ -312,6 +489,28 @@ class EditorialReadingFlowTests(unittest.TestCase):
     def test_estimates_a_short_but_nonzero_read_time(self):
         self.assertGreaterEqual(estimate_read_minutes(FALLBACK_DAY), 2)
 
+    def test_deep_read_time_counts_tables_lists_captions_and_code(self):
+        day = {
+            "editorial": {},
+            "news": [
+                {
+                    "content": [
+                        {"t": "ul", "items": ["가" * 900, "나" * 900]},
+                        {
+                            "t": "table",
+                            "caption": "비교표 " * 150,
+                            "headers": ["항목", "설명"],
+                            "rows": [["조건", "다" * 900]],
+                        },
+                        {"t": "visual", "caption": "라" * 450},
+                        {"t": "code", "text": "마" * 450},
+                    ]
+                }
+            ],
+        }
+
+        self.assertGreaterEqual(estimate_read_minutes(day), 9)
+
     def test_hidden_quiz_explanation_does_not_inflate_read_time(self):
         day = dict(FALLBACK_DAY)
         day["quiz"] = {
@@ -487,6 +686,28 @@ class EditorialImageIntegrationTests(unittest.TestCase):
             self.assertEqual(meta["before_ad_html"], "docs/tistory/2026-07-13-before-ad.html")
             self.assertEqual(meta["after_ad_html"], "docs/tistory/2026-07-13-after-ad.html")
             self.assertEqual(meta["adfit_html"], "docs/tistory/2026-07-13-adfit.html")
+
+    def test_writes_every_declared_deep_story_visual_to_copy_metadata(self):
+        day = json.loads(json.dumps(LEAD_DAY))
+        day["images"]["visual_3"] = {
+            "url": "https://blog.example/visual-03.webp",
+            "path": "docs/tistory/assets/2026-07-17/visual-03.webp",
+            "alt": "추가 비교 차트",
+            "width": 1200,
+            "height": 630,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)):
+                write_post("2026-07-17", day=day)
+
+            meta = json.loads(Path(directory, "2026-07-17.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            [asset["kind"] for asset in meta["image_assets"]],
+            ["cover", "visual_1", "visual_2", "visual_3"],
+        )
+        self.assertEqual(meta["tags"], LEAD_DAY["tags"])
+        self.assertFalse(any("관련된 정처기" in item for item in meta["publish_checklist"]))
 
     def test_marks_only_model_generated_drafts_ready_for_human_review(self):
         with tempfile.TemporaryDirectory() as directory:

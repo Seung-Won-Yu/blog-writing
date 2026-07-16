@@ -8,12 +8,30 @@ from PIL import Image
 from blog_pipeline.publishing.optimize_images import (
     IMAGE_FILE_BUDGET,
     IMAGE_SET_BUDGET,
+    LEAD_IMAGE_SET_BUDGET,
     inspect_day_images,
     optimize_day_images,
+    save_bounded_webp,
 )
 
 
 class OptimizeImagesTests(unittest.TestCase):
+    def test_deep_diagram_can_preserve_the_full_frame_instead_of_cropping(self):
+        image = Image.new("RGB", (600, 600), "#00aa00")
+        for y in range(150):
+            for x in range(600):
+                image.putpixel((x, y), (220, 30, 30))
+                image.putpixel((x, 599 - y), (30, 30, 220))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "diagram.webp"
+            save_bounded_webp(image, path, preserve_full_frame=True)
+            with Image.open(path) as optimized:
+                top = optimized.getpixel((600, 10))
+                bottom = optimized.getpixel((600, 620))
+
+        self.assertGreater(top[0], top[2])
+        self.assertGreater(bottom[2], bottom[0])
+
     def _write_day(self, root):
         day_id = "2026-07-16"
         asset_dir = root / "docs" / "tistory" / "assets" / day_id
@@ -95,6 +113,48 @@ class OptimizeImagesTests(unittest.TestCase):
             after = json.loads(day_path.read_text(encoding="utf-8"))
             for kind, asset in after["images"].items():
                 self.assertEqual((root / asset["path"]).read_bytes(), before[kind])
+
+    def test_deep_story_optimizes_every_declared_visual_with_a_larger_set_budget(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id = "2026-07-17"
+            asset_dir = root / "docs" / "tistory" / "assets" / day_id
+            asset_dir.mkdir(parents=True)
+            images = {}
+            for index, kind in enumerate(("cover", "visual_1", "visual_2", "visual_3")):
+                filename = f"{kind.replace('_', '-')}.png"
+                Image.effect_noise((600, 315), 50 + index).convert("RGB").save(
+                    asset_dir / filename, "PNG"
+                )
+                images[kind] = {
+                    "path": f"docs/tistory/assets/{day_id}/{filename}",
+                    "url": f"https://blog.example/{filename}",
+                    "alt": kind,
+                }
+            day_path = root / "data" / "days" / f"{day_id}.json"
+            day_path.parent.mkdir(parents=True)
+            day_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 3,
+                        "format": "lead-story-v1",
+                        "generation": {"provider": "codex-agent"},
+                        "images": images,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = optimize_day_images(day_id, root=root)
+            stored = json.loads(day_path.read_text(encoding="utf-8"))
+
+            self.assertLessEqual(result["total_bytes"], LEAD_IMAGE_SET_BUDGET)
+            self.assertEqual(
+                list(stored["images"]),
+                ["cover", "visual_1", "visual_2", "visual_3"],
+            )
+            self.assertTrue(all(asset["path"].endswith(".webp") for asset in stored["images"].values()))
+            self.assertEqual(inspect_day_images(day_id, root=root)["reasons"], [])
 
 
 if __name__ == "__main__":

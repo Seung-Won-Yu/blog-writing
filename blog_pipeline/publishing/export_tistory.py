@@ -19,6 +19,9 @@ import json
 import os
 import re
 from pathlib import Path
+from urllib.parse import urlsplit
+
+from .editorial_format import image_kinds_for_day, is_lead_story
 
 HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
@@ -27,12 +30,21 @@ OUT_DIR = HERE / "docs" / "tistory"
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
 DEFAULT_CATEGORY = "데일리IT뉴스"
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
+REFERENCE_KIND_LABELS = {
+    "official": "공식",
+    "documentation": "공식 문서",
+    "independent": "독립 자료",
+    "reference": "참고 자료",
+    "research": "연구",
+}
 MIN_PUBLISH_REVISION = 7
 TISTORY_ADFIT_MARKER = (
     '<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" '
     'data-ad-vendor="adfit" data-ad-id-pc="713977" '
     'data-ad-id-mobile="713980"></figure>'
 )
+AD_BREAK_MARKER = '<div class="digest-ad-break" data-digest-ad-break="true"></div>'
+
 
 def esc(value):
     return html.escape(html.unescape(str(value or "")), quote=True)
@@ -40,6 +52,17 @@ def esc(value):
 
 def plain(value):
     return " ".join(str(value or "").split())
+
+
+def safe_http_url(value):
+    text = plain(value)
+    try:
+        parsed = urlsplit(text)
+    except ValueError:
+        return ""
+    if parsed.scheme.lower() not in {"http", "https"} or not parsed.netloc:
+        return ""
+    return text
 
 
 def source_date_label(value):
@@ -96,14 +119,71 @@ def latest_or_today():
     return latest
 
 
-def render_content_blocks(blocks):
+def render_content_blocks(blocks, images=None):
     rows = []
+    images = images if isinstance(images, dict) else {}
     for block in blocks or []:
+        if not isinstance(block, dict):
+            continue
+        block_type = plain(block.get("t")).lower()
+        if block_type == "ad_break":
+            rows.append(AD_BREAK_MARKER)
+            continue
+        if block_type == "visual":
+            asset = images.get(plain(block.get("image")))
+            visual = build_content_visual(asset, block.get("caption"))
+            if visual:
+                rows.append(visual)
+            continue
+        if block_type == "table":
+            headers = block.get("headers") if isinstance(block.get("headers"), list) else []
+            table_rows = block.get("rows") if isinstance(block.get("rows"), list) else []
+            if not headers or not table_rows:
+                continue
+            caption = plain(block.get("caption"))
+            head_html = "".join(f'<th scope="col">{esc(value)}</th>' for value in headers)
+            body_html = "".join(
+                "<tr>"
+                + "".join(
+                    f"<td>{esc(value)}</td>" for value in row
+                )
+                + "</tr>"
+                for row in table_rows
+                if isinstance(row, list)
+            )
+            if not body_html:
+                continue
+            caption_html = f"<caption>{esc(caption)}</caption>" if caption else ""
+            aria = f' aria-label="{esc(caption)}"' if caption else ""
+            rows.append(
+                f'<div class="digest-table-wrap" role="region"{aria} tabindex="0">'
+                f'<table class="digest-data-table">{caption_html}'
+                f"<thead><tr>{head_html}</tr></thead><tbody>{body_html}</tbody></table></div>"
+            )
+            continue
+        if block_type in {"ul", "list"}:
+            items = block.get("items") if isinstance(block.get("items"), list) else []
+            item_html = "".join(f"<li>{esc(item)}</li>" for item in items if plain(item))
+            if item_html:
+                rows.append(f'<ul class="digest-bullet-list">{item_html}</ul>')
+            continue
+        if block_type == "code":
+            code = str(block.get("text") or "").strip("\n")
+            if not code:
+                continue
+            language = re.sub(r"[^a-z0-9_-]+", "", plain(block.get("language")).lower())
+            language_class = f" language-{language}" if language else ""
+            rows.append(
+                f'<pre class="digest-code-block{language_class}"><code>{esc(code)}</code></pre>'
+            )
+            continue
         text = plain(block.get("text"))
         if not text:
             continue
-        if block.get("t") == "h":
+        if block_type == "h":
             rows.append(f'<h4 class="digest-subheading">{esc(text)}</h4>')
+        elif block_type == "quote":
+            rows.append(f'<blockquote class="digest-evidence-quote">{esc(text)}</blockquote>')
         else:
             rows.append(f'<p>{esc(text)}</p>')
     if not rows:
@@ -134,7 +214,21 @@ def estimate_read_minutes(day):
     pieces.extend(editorial.values())
     for item in day.get("news", []):
         pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
-        pieces.extend(block.get("text") for block in item.get("content", []) if isinstance(block, dict))
+        for block in item.get("content", []):
+            if not isinstance(block, dict):
+                continue
+            pieces.extend([block.get("text"), block.get("caption")])
+            if isinstance(block.get("items"), list):
+                pieces.extend(block["items"])
+            if isinstance(block.get("headers"), list):
+                pieces.extend(block["headers"])
+            if isinstance(block.get("rows"), list):
+                for row in block["rows"]:
+                    if isinstance(row, list):
+                        pieces.extend(row)
+    for post in day.get("related_posts", []):
+        if isinstance(post, dict):
+            pieces.extend([post.get("title"), post.get("reason")])
     quiz = day.get("quiz") or {}
     pieces.append(quiz.get("question"))
     pieces.extend(quiz.get("options") or [])
@@ -246,9 +340,12 @@ def build_publish_checklist(day):
         "원문 링크와 핵심 사실을 직접 대조해 확인하기",
         "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
         "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
-        "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
         f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
     ]
+    if is_lead_story(day):
+        checklist.insert(4, "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기")
+    else:
+        checklist.insert(4, "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기")
     if day.get("images") or any(
         item.get("image_url") or item.get("image") for item in day.get("news", [])
     ):
@@ -257,6 +354,14 @@ def build_publish_checklist(day):
 
 
 def build_recommended_tags(day):
+    custom_tags = day.get("tags") if isinstance(day.get("tags"), list) else []
+    if is_lead_story(day) and custom_tags:
+        unique = []
+        for value in custom_tags:
+            tag = plain(value).lstrip("#")
+            if tag and tag not in unique:
+                unique.append(tag)
+        return unique[:12]
     tags = list(DEFAULT_TAGS)
     for item in day.get("news", []):
         source = plain(item.get("source"))
@@ -315,6 +420,115 @@ def build_editorial_image(asset, kind):
         f'loading="{loading}">'
         "</figure>"
     )
+
+
+def build_content_visual(asset, caption=""):
+    if not isinstance(asset, dict) or not plain(asset.get("url")):
+        return ""
+    width = int(asset.get("width") or 1200)
+    height = int(asset.get("height") or 630)
+    caption_text = plain(caption)
+    caption_html = (
+        f'<figcaption>{esc(caption_text)}</figcaption>' if caption_text else ""
+    )
+    return (
+        '<figure class="digest-content-figure">'
+        f'<img class="digest-content-image" src="{esc(asset.get("url"))}" '
+        f'alt="{esc(asset.get("alt"))}" width="{width}" height="{height}" loading="lazy">'
+        f"{caption_html}</figure>"
+    )
+
+
+def build_reference_section(references):
+    rows = []
+    for reference in references or []:
+        if not isinstance(reference, dict):
+            continue
+        title = plain(reference.get("title"))
+        url = safe_http_url(reference.get("url"))
+        if not title or not url:
+            continue
+        kind = plain(reference.get("kind"))
+        kind_label = REFERENCE_KIND_LABELS.get(kind.lower(), kind)
+        label = f'<span>{esc(kind_label)}</span>' if kind_label else ""
+        rows.append(
+            f'<li><a href="{esc(url)}" target="_blank" rel="noopener">{esc(title)}</a>{label}</li>'
+        )
+    if not rows:
+        return ""
+    return (
+        '<section class="digest-references" aria-label="참고한 자료">'
+        '<h4>참고한 자료</h4>'
+        f'<ul class="digest-reference-list">{"".join(rows)}</ul></section>'
+    )
+
+
+def build_related_posts(related_posts):
+    rows = []
+    for item in related_posts or []:
+        if not isinstance(item, dict):
+            continue
+        title = plain(item.get("title"))
+        url = safe_http_url(item.get("url"))
+        reason = plain(item.get("reason"))
+        if not title or not url:
+            continue
+        reason_html = f"<span>{esc(reason)}</span>" if reason else ""
+        rows.append(f'<li><a href="{esc(url)}"><b>{esc(title)}</b>{reason_html}</a></li>')
+    if not rows:
+        return ""
+    return f"""
+<section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul>{''.join(rows)}</ul>
+</section>""".strip()
+
+
+def build_lead_news_section(item, images):
+    if not isinstance(item, dict):
+        return '<p class="digest-empty">오늘 수집된 뉴스가 없습니다.</p>'
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    break_indexes = [
+        index
+        for index, block in enumerate(content)
+        if isinstance(block, dict) and block.get("t") == "ad_break"
+    ]
+    if break_indexes:
+        split_at = break_indexes[0]
+        before_blocks = content[:split_at]
+        after_blocks = content[split_at + 1 :]
+        break_html = AD_BREAK_MARKER
+    else:
+        before_blocks = content
+        after_blocks = []
+        break_html = ""
+
+    source = plain(item.get("source"))
+    published = source_date_label(item.get("published_at"))
+    source_meta = " · ".join(value for value in (source, published) if value)
+    blurb = plain(item.get("blurb_kr"))
+    summary_html = f'<p class="digest-blurb">{esc(blurb)}</p>' if blurb else ""
+    before_content = render_content_blocks(before_blocks, images)
+    after_content = render_content_blocks(after_blocks, images)
+    references = build_reference_section(item.get("references"))
+    continuation = ""
+    if after_content or references:
+        continuation = (
+            '<section class="digest-lead-continuation">'
+            f'<div class="digest-news-copy">{after_content}{references}</div></section>'
+        )
+    return f"""
+<section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석{' · ' + esc(source_meta) if source_meta else ''}</p>
+    <h3>{esc(item.get('title_kr'))}</h3>
+    {summary_html}
+    {before_content}
+  </div>
+</section>
+{break_html}
+{continuation}""".strip()
 
 
 def build_news_section(news, flow_image=None, story_images=None):
@@ -465,6 +679,24 @@ def render_post(day_id, day):
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
+    if is_lead_story(day):
+        lead_story = news[0] if news else {}
+        return f"""<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
+    <p class="digest-lead">{esc(lead)}</p>
+  </section>
+
+  {build_editorial_image(images.get("cover"), "cover")}
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  {build_lead_news_section(lead_story, images)}
+
+  {build_related_posts(day.get("related_posts"))}
+
+  {build_closing_section(editorial)}
+</article>
+"""
     return f"""<article class="daily-digest-post" data-digest-version="2">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
@@ -495,13 +727,13 @@ def render_post(day_id, day):
 
 def split_post_around_first_story(post_html):
     """Return valid fragments for Tistory's editor-only mid-article ad flow."""
-    marker = '<section id="digest-news-2"'
+    marker = AD_BREAK_MARKER if AD_BREAK_MARKER in post_html else '<section id="digest-news-2"'
     split_at = post_html.find(marker)
     if split_at < 0:
         return post_html, ""
 
     before_ad = post_html[:split_at].rstrip() + "\n</article>\n"
-    after_body = post_html[split_at:].strip()
+    after_body = post_html[split_at + (len(marker) if marker == AD_BREAK_MARKER else 0) :].strip()
     closing = "</article>"
     if not after_body.endswith(closing):
         raise ValueError("Tistory post fragment is missing the article closing tag")
@@ -512,6 +744,12 @@ def split_post_around_first_story(post_html):
 
 def build_adfit_ready_html(post_html):
     """Return one-paste Tistory HTML with AdFit after NEWS 01."""
+    if AD_BREAK_MARKER in post_html:
+        return post_html.replace(
+            AD_BREAK_MARKER,
+            TISTORY_ADFIT_MARKER + '\n<p data-ke-size="size16">&nbsp;</p>',
+            1,
+        )
     marker = '<section id="digest-news-2"'
     split_at = post_html.find(marker)
     if split_at < 0:
@@ -536,10 +774,15 @@ def write_post(day_id, day=None, source_page=None):
         "story_3": "본문 3번 이미지",
         "flow": "오늘의 흐름 이미지",
     }
+    image_kinds = image_kinds_for_day(day)
+    if not is_lead_story(day):
+        image_kinds.append("flow")
     image_assets = [
         {
             "kind": kind,
-            "title": image_titles[kind],
+            "title": image_titles.get(
+                kind, f"본문 이해 이미지 {kind.removeprefix('visual_')}"
+            ),
             "url": plain(asset.get("url")),
             "path": plain(asset.get("path")),
             "original_url": "",
@@ -547,7 +790,7 @@ def write_post(day_id, day=None, source_page=None):
             "width": int(asset.get("width") or 0),
             "height": int(asset.get("height") or 0),
         }
-        for kind in ("cover", "story_1", "story_2", "story_3", "flow")
+        for kind in image_kinds
         for asset in [images.get(kind)]
         if isinstance(asset, dict) and asset.get("url")
     ]

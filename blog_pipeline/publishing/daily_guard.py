@@ -11,6 +11,8 @@ from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
+from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
+
 
 ROOT = Path(__file__).resolve().parents[2]
 TRACKING_QUERY_PREFIXES = ("utm_",)
@@ -44,11 +46,84 @@ def normalized_title(value):
     return re.sub(r"[^0-9a-z가-힣]+", "", str(value or "").lower())
 
 
+def _is_http_url(value):
+    try:
+        parsed = urlsplit(str(value or "").strip())
+    except ValueError:
+        return False
+    return parsed.scheme.lower() in {"http", "https"} and bool(parsed.netloc)
+
+
 def _read_json(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError, TypeError):
         return None
+
+
+def _lead_source_reasons(source):
+    reasons = []
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    if not str(source.get("primary_query") or "").strip():
+        reasons.append("lead_primary_query")
+
+    references = item.get("references") if isinstance(item.get("references"), list) else []
+    valid_references = [
+        reference
+        for reference in references
+        if isinstance(reference, dict)
+        and str(reference.get("title") or "").strip()
+        and _is_http_url(reference.get("url"))
+    ]
+    reference_kinds = {
+        str(reference.get("kind") or "").strip().lower()
+        for reference in valid_references
+    }
+    if len(valid_references) < 2 or not reference_kinds.intersection(
+        {"official", "documentation"}
+    ):
+        reasons.append("lead_references")
+
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    blocks = [block for block in content if isinstance(block, dict)]
+    headings = [block for block in blocks if block.get("t") == "h"]
+    if len(headings) < 4:
+        reasons.append("lead_structure")
+    visual_blocks = [block for block in blocks if block.get("t") == "visual"]
+    visual_keys = {
+        str(block.get("image") or "").strip() for block in visual_blocks
+    }
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    declared_visual_keys = set(lead_visual_kinds(images))
+    if (
+        not 2 <= len(visual_keys) <= 6
+        or not {"visual_1", "visual_2"}.issubset(visual_keys)
+        or not visual_keys.issubset(images)
+        or declared_visual_keys != visual_keys
+    ):
+        reasons.append("lead_explanatory_visuals")
+
+    ad_indexes = [index for index, block in enumerate(blocks) if block.get("t") == "ad_break"]
+    if len(ad_indexes) != 1:
+        reasons.append("lead_ad_break")
+    else:
+        content_count = max(1, len(blocks) - 1)
+        position = ad_indexes[0] / content_count
+        if not 0.35 <= position <= 0.45:
+            reasons.append("lead_ad_break_position")
+
+    related = source.get("related_posts") if isinstance(source.get("related_posts"), list) else []
+    valid_related = [
+        post
+        for post in related
+        if isinstance(post, dict)
+        and str(post.get("title") or "").strip()
+        and _is_http_url(post.get("url"))
+    ]
+    if len(valid_related) < 2:
+        reasons.append("related_posts")
+    return reasons
 
 
 def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
@@ -122,8 +197,12 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
         reasons.append("missing_or_invalid_source")
         source = {}
     news = source.get("news")
-    if not isinstance(news, list) or len(news) != 3:
+    lead_story = is_lead_story(source)
+    expected_news_count = 1 if lead_story else 3
+    if not isinstance(news, list) or len(news) != expected_news_count:
         reasons.append("news_count")
+    if lead_story:
+        reasons.extend(_lead_source_reasons(source))
 
     if date.fromisoformat(day_id) >= date(2026, 7, 16):
         from .optimize_images import inspect_day_images
@@ -136,7 +215,10 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
             reasons.extend(image_result["reasons"])
 
     duplicates = find_recent_duplicates(
-        day_id, source, root=root, window_days=window_days
+        day_id,
+        source,
+        root=root,
+        window_days=max(window_days, 60) if lead_story else window_days,
     )
     if duplicates:
         reasons.append("recent_duplicate")
@@ -153,7 +235,9 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
         for item in meta.get("image_assets", [])
         if isinstance(item, dict)
     }
-    required_images = {"cover", "story_1", "story_2", "story_3"}
+    required_images = set(image_kinds_for_day(source))
+    if lead_story:
+        required_images.update({"cover", "visual_1", "visual_2"})
     if not required_images.issubset(image_kinds):
         reasons.append("missing_editorial_images")
 
@@ -163,8 +247,15 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
         body_html = ""
     if body_html.count('class="daily-digest-post"') != 1:
         reasons.append("body_count")
-    if body_html.count('class="digest-news-card"') != 3:
+    rendered_news_marker = (
+        'class="digest-news-card digest-lead-story"'
+        if lead_story
+        else 'class="digest-news-card"'
+    )
+    if body_html.count(rendered_news_marker) != expected_news_count:
         reasons.append("rendered_news_count")
+    if lead_story and body_html.count('data-digest-ad-break="true"') != 1:
+        reasons.append("rendered_ad_break")
 
     try:
         adfit_html = adfit_path.read_text(encoding="utf-8")
@@ -172,7 +263,11 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
         adfit_html = ""
     ad_at = adfit_html.find('data-ad-vendor="adfit"')
     first_at = adfit_html.find('id="digest-news-1"')
-    second_at = adfit_html.find('id="digest-news-2"')
+    second_at = (
+        adfit_html.find('class="digest-lead-continuation"')
+        if lead_story
+        else adfit_html.find('id="digest-news-2"')
+    )
     if adfit_html.count('data-ad-vendor="adfit"') != 1:
         reasons.append("adfit_count")
     elif not (0 <= first_at < ad_at < second_at):

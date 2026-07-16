@@ -336,6 +336,62 @@ class EditorialImageTests(unittest.TestCase):
             )
             self.assertFalse(Path(directory, "2026-07-13", "story-04.png").exists())
 
+    def test_deep_story_fallback_generates_one_image_per_visual_brief(self):
+        font_path = find_font()
+        day = {
+            **DAY,
+            "format": "lead-story-v1",
+            "news": [dict(DAY["news"][0])],
+            "visual": {
+                "subject": "자동화 보안",
+                "hook": "실행 전후에 무엇을 확인할까?",
+                "assets": [
+                    {"label": "실행 흐름", "steps": "요청 → 실행 → 검증"},
+                    {"label": "권한 비교", "steps": "읽기 → 수정 → 승인"},
+                    {"label": "위험 대응", "steps": "감지 → 차단 → 복구"},
+                ],
+            },
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            assets = generate_editorial_images(
+                "2026-07-17",
+                day,
+                directory,
+                "https://blog.example/assets/",
+                font_path=font_path,
+            )
+
+            self.assertEqual(
+                list(assets), ["cover", "visual_1", "visual_2", "visual_3"]
+            )
+            for index in range(1, 4):
+                self.assertTrue(
+                    Path(directory, "2026-07-17", f"visual-{index:02d}.png").is_file()
+                )
+                self.assertIn(
+                    day["visual"]["assets"][index - 1]["label"],
+                    assets[f"visual_{index}"]["alt"],
+                )
+
+    def test_deep_story_visual_briefs_are_capped_at_six(self):
+        day = {
+            **DAY,
+            "format": "lead-story-v1",
+            "news": [dict(DAY["news"][0])],
+            "visual": {
+                "assets": [
+                    {"label": f"설명 {index}", "steps": "입력 → 검증"}
+                    for index in range(1, 9)
+                ]
+            },
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(len(visual["stories"]), 6)
+        self.assertEqual(visual["stories"][-1]["label"], "설명 6")
+
     def test_stored_day_generation_updates_json_and_refreshes_export(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

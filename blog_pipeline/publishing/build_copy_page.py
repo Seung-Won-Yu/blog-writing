@@ -92,6 +92,7 @@ def write_preview_pages(drafts):
     {skin_css}
     html {{ background: #f5f7f9; }}
     body {{ margin: 0; padding: 0 16px 56px; overflow-wrap: anywhere; }}
+    .preview-post-cover, .entry-content {{ box-sizing: border-box; }}
     .preview-post-cover {{
       width: min(720px, 100%);
       margin: 0 auto 34px;

@@ -241,6 +241,10 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn("한글 제목 · 본문 미리보기", page)
         self.assertIn('class="preview-post-cover"', page)
         self.assertIn('<main class="entry-content">', page)
+        self.assertIn(
+            ".preview-post-cover, .entry-content { box-sizing: border-box; }",
+            page,
+        )
         self.assertIn("--sw-content: 720px", page)
         self.assertIn(".entry-content > .daily-digest-post", page)
         self.assertIn("<article><h2>한글 제목</h2>", page)

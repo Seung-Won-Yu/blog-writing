@@ -1,32 +1,26 @@
 {
-  "title": "낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유",
+  "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
   "title_candidates": [
-    "낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유",
-    "호주의 낮 3시간 무료 전기, 요금표보다 먼저 확인할 조건 외 2건",
-    "낮 시간의 전력·의존성·AI 에이전트 안전 점검: 자동화가 움직이는 시간과 범위를 설계하는 법",
-    "낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유 (2026. 7. 16)"
+    "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
+    "Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나",
+    "Dependabot 3일 쿨다운: 새 패키지를 바로 받지 않는 이유와 설정법",
+    "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지 (2026. 7. 16)"
   ],
   "category": "데일리IT뉴스",
   "tags": [
-    "AI",
-    "IT뉴스",
-    "개발뉴스",
-    "정처기",
-    "개발용어",
-    "데일리다이제스트",
-    "ABC News",
-    "GitHub Changelog",
-    "OpenAI",
-    "시간대별 요금 (Time-of-use Tariff)",
-    "패키지 쿨다운 (Package Cooldown)",
-    "레드팀 (Red Teaming)"
+    "Dependabot",
+    "GitHub",
+    "dependabot.yml",
+    "의존성 관리",
+    "패키지 쿨다운",
+    "소프트웨어 공급망",
+    "보안 업데이트",
+    "개발 자동화"
   ],
-  "meta_description": "세탁기를 지금 돌릴지, 점심시간에 예약할지 판단하는 일이 전기요금표와 연결되는 때가 있다. 소프트웨어에서도 새 패키지가 나왔다는 알림을 곧바로 병합할지 잠시 기다릴지 같은 선택을 한다. 오늘의 세 소… 소프트웨어 개발 문제로 개념도 확인합니다.",
+  "meta_description": "새 패키지가 공개됐다는 알림은 빠를수록 좋아 보인다. 그러나 릴리스 직후에는 깨진 배포나 악성 패키지 신호가 아직 드러나지 않았을 수 있다. GitHub이 Dependabot의 일반 버전 업데이트에… Dependabot의 일반 버전 업데이트 PR은 새 릴리스가 레지스트리에 공개된 뒤…",
   "key_summary": [
-    "1. 호주의 낮 3시간 무료 전기, 요금표보다 먼저 확인할 조건",
-    "2. Dependabot이 일반 업데이트를 3일 기다리는 이유와 예외",
-    "3. GPT-Red가 보여준 자동 레드팀의 범위와 남는 검증",
-    "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."
+    "1. Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -34,8 +28,8 @@
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
-    "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
-    "추천 제목: 낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유"
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지"
   ],
   "generation_provider": "codex-agent",
   "publish_ready": true,
@@ -49,40 +43,40 @@
     {
       "kind": "cover",
       "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/cover.webp",
-      "path": "docs/tistory/assets/2026-07-16/cover.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp",
+      "path": "docs/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp",
       "original_url": "",
-      "alt": "낮 전력 요금표와 의존성 점검 기록, 보안 테스트 자료가 놓인 작업대",
+      "alt": "새 패키지 공개부터 3일 관찰 창과 업데이트 PR 검토까지 보여주는 Dependabot 쿨다운 도식",
       "width": 1200,
       "height": 630
     },
     {
-      "kind": "story_1",
-      "title": "본문 1번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-01.webp",
-      "path": "docs/tistory/assets/2026-07-16/story-01.webp",
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp",
+      "path": "docs/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp",
       "original_url": "",
-      "alt": "낮 시간의 요금표와 스마트 미터를 곁에 둔 세탁기",
+      "alt": "일반 버전 업데이트의 3일 관찰 경로와 보안 업데이트의 즉시 처리 경로 비교",
       "width": 1200,
       "height": 630
     },
     {
-      "kind": "story_2",
-      "title": "본문 2번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-02.webp",
-      "path": "docs/tistory/assets/2026-07-16/story-02.webp",
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp",
+      "path": "docs/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp",
       "original_url": "",
-      "alt": "일반 패키지 업데이트의 대기 기간을 검토하는 개발 작업대",
+      "alt": "패치 마이너 메이저 업데이트의 변경 폭과 권장 대기 기간 비교",
       "width": 1200,
       "height": 630
     },
     {
-      "kind": "story_3",
-      "title": "본문 3번 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-03.webp",
-      "path": "docs/tistory/assets/2026-07-16/story-03.webp",
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp",
+      "path": "docs/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp",
       "original_url": "",
-      "alt": "도구 호출 기록과 위협 모델을 함께 살피는 AI 안전 테스트 작업대",
+      "alt": "3일 관찰 창 이후 CI와 잠금 파일 검토와 사람 승인을 거치는 검증 게이트",
       "width": 1200,
       "height": 630
     }

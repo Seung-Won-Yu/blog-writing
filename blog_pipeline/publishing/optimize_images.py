@@ -13,15 +13,16 @@ from zoneinfo import ZoneInfo
 from PIL import Image, ImageOps
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
+from .editorial_format import image_kinds_for_day, is_lead_story
 
 
 ROOT = Path(__file__).resolve().parents[2]
 IMAGE_SIZE = (1200, 630)
 IMAGE_FILE_BUDGET = 256 * 1024
 IMAGE_SET_BUDGET = 1024 * 1024
+LEAD_IMAGE_SET_BUDGET = 2 * 1024 * 1024
 IMAGE_POLICY = "webp-v1"
 IMAGE_POLICY_START = dt.date(2026, 7, 16)
-REQUIRED_IMAGE_KINDS = ("cover", "story_1", "story_2", "story_3")
 QUALITY_STEPS = tuple(range(82, 9, -4))
 
 
@@ -49,11 +50,28 @@ def _webp_url(value):
     return urlunsplit((parts.scheme, parts.netloc, path, parts.query, parts.fragment))
 
 
-def save_bounded_webp(image, target, max_bytes=IMAGE_FILE_BUDGET):
+def save_bounded_webp(
+    image,
+    target,
+    max_bytes=IMAGE_FILE_BUDGET,
+    *,
+    preserve_full_frame=False,
+):
     """Write one 1200x630 WebP within the configured byte budget."""
-    normalized = ImageOps.fit(
-        image.convert("RGB"), IMAGE_SIZE, method=Image.Resampling.LANCZOS
-    )
+    source = image.convert("RGB")
+    if preserve_full_frame:
+        contained = ImageOps.contain(
+            source, IMAGE_SIZE, method=Image.Resampling.LANCZOS
+        )
+        normalized = Image.new("RGB", IMAGE_SIZE, "#fcfbf7")
+        normalized.paste(
+            contained,
+            ((IMAGE_SIZE[0] - contained.width) // 2, (IMAGE_SIZE[1] - contained.height) // 2),
+        )
+    else:
+        normalized = ImageOps.fit(
+            source, IMAGE_SIZE, method=Image.Resampling.LANCZOS
+        )
     payload = None
     selected_quality = None
     for quality in QUALITY_STEPS:
@@ -91,7 +109,8 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
 
     original_paths = []
     total_bytes = 0
-    for kind in REQUIRED_IMAGE_KINDS:
+    required_image_kinds = image_kinds_for_day(day)
+    for kind in required_image_kinds:
         asset = images.get(kind)
         if not isinstance(asset, dict):
             raise ValueError(f"missing image asset: {kind}")
@@ -115,7 +134,11 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
                 "quality": asset.get("quality"),
             }
         else:
-            result = save_bounded_webp(source_image, target)
+            result = save_bounded_webp(
+                source_image,
+                target,
+                preserve_full_frame=is_lead_story(day),
+            )
         total_bytes += result["bytes"]
         asset.update(
             {
@@ -131,9 +154,10 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
         if source != target:
             original_paths.append(source)
 
-    if total_bytes > IMAGE_SET_BUDGET:
+    set_budget = LEAD_IMAGE_SET_BUDGET if is_lead_story(day) else IMAGE_SET_BUDGET
+    if total_bytes > set_budget:
         raise ValueError(
-            f"daily image set exceeds {IMAGE_SET_BUDGET} bytes: {total_bytes}"
+            f"daily image set exceeds {set_budget} bytes: {total_bytes}"
         )
     generation = day.setdefault("generation", {})
     generation["image_policy"] = IMAGE_POLICY
@@ -155,7 +179,7 @@ def inspect_day_images(day_id, *, root=ROOT):
         reasons.append("missing_image_policy")
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     total_bytes = 0
-    for kind in REQUIRED_IMAGE_KINDS:
+    for kind in image_kinds_for_day(day):
         asset = images.get(kind)
         if not isinstance(asset, dict):
             reasons.append(f"missing_image:{kind}")
@@ -174,7 +198,8 @@ def inspect_day_images(day_id, *, root=ROOT):
         total_bytes += size
         if size > IMAGE_FILE_BUDGET:
             reasons.append(f"oversized_image:{kind}")
-    if total_bytes > IMAGE_SET_BUDGET:
+    set_budget = LEAD_IMAGE_SET_BUDGET if is_lead_story(day) else IMAGE_SET_BUDGET
+    if total_bytes > set_budget:
         reasons.append("oversized_image_set")
     return {
         "day": day_id,

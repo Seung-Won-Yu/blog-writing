@@ -16,6 +16,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
+from .editorial_format import is_lead_story
 from .visual_direction import (
     VISUAL_LABELS,
     motif_for_text,
@@ -161,27 +162,42 @@ def resolve_visual(day):
     first = stories[0] if stories else {}
     reference = "{} {}".format(first.get("title_kr", ""), first.get("blurb_kr", ""))
     raw_visual = day.get("visual") if isinstance(day.get("visual"), dict) else {}
+    lead_story = is_lead_story(day)
+    brief_key = "assets" if lead_story else "stories"
     raw_story_briefs = (
-        raw_visual.get("stories")
-        if isinstance(raw_visual.get("stories"), list)
+        raw_visual.get(brief_key)
+        if isinstance(raw_visual.get(brief_key), list)
         else []
     )
+    if lead_story:
+        visual_count = min(6, max(2, len(raw_story_briefs)))
+        stories = [first for _ in range(visual_count)]
     visual = validate_visual(raw_visual, reference)
     visual["stories"] = []
     for index, item in enumerate(stories):
-        motif = motif_for_text(item.get("title_kr", ""))
-        if motif == "signal":
-            motif = motif_for_text(item.get("blurb_kr", ""))
-        reference = "{} {}".format(
-            item.get("title_kr", ""), item.get("blurb_kr", "")
-        )
-        scene = scene_for_text(reference)
         brief = (
             raw_story_briefs[index]
             if index < len(raw_story_briefs)
             and isinstance(raw_story_briefs[index], dict)
             else {}
         )
+        brief_reference = "{} {} {}".format(
+            brief.get("label", ""), brief.get("scene_label", ""), brief.get("steps", "")
+        )
+        motif = str(brief.get("motif") or "").strip().lower()
+        if motif not in MOTIF_ACCENTS:
+            motif = motif_for_text(
+                "{} {}".format(item.get("title_kr", ""), brief_reference)
+            )
+        if motif == "signal":
+            motif = motif_for_text(
+                "{} {}".format(item.get("blurb_kr", ""), brief_reference)
+            )
+        reference = "{} {}".format(
+            "{} {}".format(item.get("title_kr", ""), item.get("blurb_kr", "")),
+            brief_reference,
+        )
+        scene = scene_for_text(reference)
         fallback_label = VISUAL_LABELS[motif]
         fallback_scene_label = scene_label(scene, motif)
         fallback_steps = scene_steps(scene, motif)
@@ -198,7 +214,7 @@ def resolve_visual(day):
                 "source": " ".join(str(item.get("source") or "").split()),
             }
         )
-    while len(visual["stories"]) < 3:
+    while not lead_story and len(visual["stories"]) < 3:
         visual["stories"].append(
             {
                 "motif": "signal",
@@ -1312,7 +1328,7 @@ def generate_editorial_images(
     *,
     font_path=None,
 ):
-    """Write a cover and up to three story images and attach their metadata."""
+    """Write a cover and format-specific explanatory images."""
     day_id = validate_day_id(day_id)
     regular_font = font_path or find_font()
     bold_font = font_path or find_font(bold=True)
@@ -1334,14 +1350,24 @@ def generate_editorial_images(
             "height": 630,
         },
     }
-    for index, story in enumerate(_news(day)[:3], 1):
-        path = target / f"story-{index:02d}.png"
+    if is_lead_story(day):
+        image_rows = [
+            (index, f"visual_{index}", f"visual-{index:02d}.png")
+            for index in range(1, len(visual["stories"]) + 1)
+        ]
+    else:
+        image_rows = [
+            (index, f"story_{index}", f"story-{index:02d}.png")
+            for index, _ in enumerate(_news(day)[:3], 1)
+        ]
+    for index, kind, filename in image_rows:
+        path = target / filename
         _save_png_atomic(
             _story_image(day, index - 1, regular_font, bold_font), path
         )
-        assets[f"story_{index}"] = {
-            "url": f"{base_url}/{day_id}/story-{index:02d}.png",
-            "path": f"{logical_dir}/story-{index:02d}.png",
+        assets[kind] = {
+            "url": f"{base_url}/{day_id}/{filename}",
+            "path": f"{logical_dir}/{filename}",
             "alt": "{} · {}: {} 흐름을 표현한 기사 이해 이미지".format(
                 visual["stories"][index - 1]["label"],
                 visual["stories"][index - 1]["scene_label"],
