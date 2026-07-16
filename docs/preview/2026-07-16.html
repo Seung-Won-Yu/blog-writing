@@ -1,0 +1,1895 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유 · 본문 미리보기</title>
+  <style>
+    /*
+  won0322.tistory.com · canonical custom layer
+  IMPORTANT: Do not paste this file over the whole Tistory CSS editor.
+  Use style.css for a complete replacement. This file is the custom suffix only.
+  Replace every previous custom block from
+  "Tistory skin custom layer" to EOF with this file.
+
+  Ownership:
+  - Skin shell: header, navigation, lists, sidebar, post cover
+  - Post system: only descendants of .daily-digest-post
+  - Tistory base/editor: never redefined globally unless unavoidable
+*/
+
+:root {
+  --sw-canvas: #ffffff;
+  --sw-surface: #ffffff;
+  --sw-surface-subtle: #f6f7f5;
+  --sw-surface-tint: #ffffff;
+  --sw-ink: #171b18;
+  --sw-text: #343a36;
+  --sw-muted: #6f7672;
+  --sw-line: #e4e7e5;
+  --sw-line-strong: #c7ceca;
+  --sw-accent: #17694e;
+  --sw-accent-hover: #0f563e;
+  --sw-accent-soft: #eef5f1;
+  --sw-warm: #f7f5ef;
+  --sw-warning: #9b6a24;
+  --sw-code: #15231d;
+  --sw-code-text: #dce9e3;
+  --sw-paper: var(--sw-surface-subtle);
+  --sw-paper-deep: #e8eeeb;
+  --sw-focus: rgba(31, 107, 80, 0.56);
+  --sw-focus-soft: rgba(31, 107, 80, 0.12);
+  --sw-accent-line: rgba(31, 107, 80, 0.4);
+  --sw-font-body: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --sw-font-brand: Georgia, "Noto Serif KR", "Nanum Myeongjo", serif;
+  --sw-radius: 4px;
+  --sw-content: 720px;
+  --sw-shell: 1100px;
+  --sw-control: 40px;
+  --sw-space-1: 6px;
+  --sw-space-2: 12px;
+  --sw-space-3: 20px;
+  --sw-space-4: 32px;
+  --sw-space-5: 52px;
+  --sw-motion: 150ms ease;
+}
+
+::selection {
+  background: var(--sw-accent-soft);
+  color: var(--sw-ink);
+}
+
+body {
+  background: var(--sw-canvas) !important;
+  color: var(--sw-text);
+  font-family: var(--sw-font-body);
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--sw-focus);
+  outline-offset: 3px;
+}
+
+#acc-nav a {
+  background: var(--sw-ink);
+  color: var(--sw-surface);
+  font-weight: 700;
+}
+
+/* 1. Site shell */
+#wrap,
+#container,
+.content-wrap,
+#content {
+  background-color: transparent;
+}
+
+#container .content-wrap::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Let the custom post cover size itself; long mobile titles must not overlap content. */
+#tt-body-page #container {
+  padding-top: 0;
+}
+
+#tt-body-page .post-cover {
+  position: relative;
+  top: auto;
+  left: auto;
+}
+
+#header {
+  border-bottom: 1px solid var(--sw-line);
+  background: var(--sw-surface);
+}
+
+#header .inner {
+  display: grid;
+  min-height: 72px;
+  max-width: var(--sw-shell);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+#header h1 {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sw-font-body);
+  font-size: 1.15em;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+#header h1 a {
+  color: var(--sw-ink);
+}
+
+#header h1 a::after {
+  display: none;
+  content: none;
+}
+
+#header .util {
+  position: static;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+
+#gnb {
+  height: 72px;
+  margin-left: 44px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#gnb ul {
+  display: flex !important;
+  align-items: stretch;
+  gap: 28px;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
+}
+
+#gnb ul li {
+  display: block;
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+#gnb ul li a {
+  display: flex;
+  height: 72px;
+  align-items: center;
+  padding: 0 4px;
+  color: var(--sw-muted);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+#gnb ul li.current a,
+#gnb ul li a:hover,
+#gnb ul li a:focus-visible {
+  color: var(--sw-ink);
+}
+
+#gnb ul li.current a::after,
+#gnb ul li a:hover::after,
+#gnb ul li a:focus-visible::after {
+  left: 4px;
+  width: calc(100% - 8px);
+  height: 2px;
+  background: var(--sw-accent);
+}
+
+#content {
+  padding-top: 48px;
+}
+
+#tt-body-index #container::before,
+#tt-body-index #container::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* 2. Home/category cards */
+body #content > .inner:has(> .post-item) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 24px;
+}
+
+body #content > .inner:has(> .post-item)::after {
+  display: none;
+}
+
+body #content > .inner:has(> .post-item) > .post-item,
+body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
+  float: none;
+  width: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.post-header {
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--sw-line);
+}
+
+.post-header h1 {
+  margin-bottom: 0;
+  color: var(--sw-ink);
+  font-weight: 780;
+}
+
+.post-header h1 em {
+  color: var(--sw-accent);
+}
+
+.post-header .page-description {
+  margin: 9px 0 0;
+  color: var(--sw-muted);
+  font-size: 0.9em;
+  line-height: 1.65;
+}
+
+.post-item a {
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  padding: 0 20px 20px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--sw-line);
+  border-radius: var(--sw-radius);
+  background: var(--sw-surface);
+  box-shadow: none;
+  text-decoration: none;
+  transition: border-color var(--sw-motion), background-color var(--sw-motion);
+}
+
+.post-item a::before {
+  display: none;
+  content: none;
+}
+
+.post-item a:hover,
+.post-item a:focus-visible {
+  border-color: var(--sw-line-strong);
+  background: var(--sw-surface-subtle);
+}
+
+.post-item .thum {
+  position: relative;
+  display: block;
+  width: auto;
+  margin: 0 -20px 17px;
+  padding: 0 0 56.25%;
+  overflow: hidden;
+  border-bottom: 1px solid var(--sw-surface-subtle);
+  border-radius: 0;
+  background: var(--sw-surface-subtle);
+}
+
+.post-item .thum img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+}
+
+.post-item .thum:not(:has(img)) {
+  display: none;
+}
+
+.post-item .title {
+  display: -webkit-box;
+  max-width: none;
+  margin: 0 0 8px;
+  padding: 0;
+  overflow: hidden;
+  color: var(--sw-ink);
+  font-size: 1.08em;
+  font-weight: 780;
+  line-height: 1.52;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.post-item .excerpt {
+  display: -webkit-box;
+  max-width: none;
+  margin: 0 0 15px;
+  overflow: hidden;
+  color: var(--sw-text);
+  font-size: 0.89em;
+  line-height: 1.68;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.post-item .meta {
+  margin: auto 0 0;
+  color: var(--sw-muted);
+  font-size: 0.76em;
+}
+
+/* Pagination stays visible and usable on every list page. */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 34px 0 60px;
+}
+
+.pagination a,
+.pagination .prev,
+.pagination .next {
+  display: inline-flex;
+  min-width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid var(--sw-line);
+  border-radius: 5px;
+  background: var(--sw-surface);
+  color: var(--sw-muted);
+  line-height: 1;
+  text-indent: 0;
+}
+
+.pagination a:has(.selected),
+.pagination a:hover,
+.pagination a:focus-visible {
+  border-color: var(--sw-accent);
+  color: var(--sw-accent);
+}
+
+.pagination .selected {
+  color: inherit;
+  font-weight: 750;
+}
+
+/* 4. Sidebar and secondary UI */
+.sidebar .category,
+.dev-profile-card,
+.sidebar .notice,
+.sidebar .post-list {
+  padding: 17px 0 0;
+  border: 0;
+  border-top: 1px solid var(--sw-line-strong);
+  border-radius: 0;
+  background: transparent;
+}
+
+.dev-profile-card {
+  margin-bottom: 26px;
+}
+
+.sidebar .sidebar-2 {
+  margin-top: 32px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.sidebar .notice,
+.sidebar .post-list {
+  margin-bottom: 34px;
+}
+
+.sidebar h2,
+.sidebar .post-list h2,
+.sidebar .notice h2 {
+  margin: 0 0 13px;
+  color: var(--sw-ink);
+  font-size: 0.82em;
+  font-weight: 780;
+}
+
+.sidebar ul li a,
+.sidebar .category ul li a {
+  color: var(--sw-text);
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a:focus-visible,
+.sidebar .category ul li a:hover,
+.sidebar .category ul li a:focus-visible {
+  color: var(--sw-accent);
+}
+
+.sidebar .post-list ul li {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--sw-line);
+}
+
+.sidebar .post-list ul li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.sidebar .post-list ul li img {
+  width: 52px;
+  height: 52px;
+  margin-left: 14px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.sidebar .post-list ul li .title {
+  color: var(--sw-text);
+  font-size: 0.98em;
+  line-height: 1.5;
+}
+
+.sidebar .post-list ul li .date {
+  color: var(--sw-muted);
+}
+
+.visitor-count {
+  margin-top: 34px;
+  padding-top: 17px;
+  border-top: 1px solid var(--sw-line-strong);
+}
+
+.visitor-count__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-muted);
+  font-size: 12px;
+}
+
+.visitor-count__total strong {
+  color: var(--sw-ink);
+  font-size: 24px;
+  font-weight: 780;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.visitor-count dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.visitor-count dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.visitor-count dt,
+.visitor-count dd {
+  margin: 0;
+  color: var(--sw-muted);
+  font-size: 12px;
+}
+
+.visitor-count dd {
+  color: var(--sw-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.dev-profile-card__eyebrow {
+  margin: 0 0 6px;
+  color: var(--sw-accent);
+  font-size: 0.75em;
+  font-weight: 750;
+}
+
+.dev-profile-card h2 {
+  margin: 0 0 6px;
+  color: var(--sw-ink);
+  font-size: 1em;
+  font-weight: 760;
+}
+
+.dev-profile-card p {
+  margin: 0;
+  color: var(--sw-text);
+  font-size: 0.875em;
+  line-height: 1.65;
+}
+
+.dev-profile-card nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 13px;
+}
+
+.dev-profile-card nav a,
+#aside .tags a {
+  color: var(--sw-text);
+  font-size: 0.81em;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.dev-profile-card nav a {
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--sw-accent-line);
+}
+
+.dev-profile-card nav a:hover,
+.dev-profile-card nav a:focus-visible {
+  color: var(--sw-accent);
+}
+
+#aside .tags a {
+  display: inline-block;
+  margin: 0 5px 7px 0;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--sw-surface-subtle);
+}
+
+#aside .tags a::after,
+#aside .notice:not(:has(li)),
+#aside .recent-comment {
+  display: none;
+  content: none;
+}
+
+/* 5. Post cover: Tistory owns the only visible article title */
+.post-cover {
+  display: block !important;
+  min-height: 0 !important;
+  height: auto !important;
+  border-top: 0 !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  background: var(--sw-surface) !important;
+  color: var(--sw-ink) !important;
+}
+
+.post-cover::before {
+  display: none !important;
+  content: none !important;
+}
+
+.post-cover .inner {
+  display: flex !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: 4px 0 34px !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+}
+
+.post-cover .category {
+  width: auto !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--sw-accent) !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+}
+
+.post-cover .category::before {
+  display: none;
+  content: none;
+}
+
+.post-cover h1 {
+  max-width: 900px !important;
+  margin: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 38px !important;
+  font-weight: 800 !important;
+  line-height: 1.34 !important;
+  letter-spacing: -0.03em !important;
+  word-break: keep-all !important;
+}
+
+.post-cover .meta {
+  display: flex !important;
+  width: auto !important;
+  margin: 17px 0 0 !important;
+  gap: 9px !important;
+  color: var(--sw-muted) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+/* 6. Ordinary posts: only direct editor children */
+.entry-content {
+  color: var(--sw-text);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+/* Revenue is part of the publishing system: keep automatic title/footer ads,
+   the manually inserted mid-article AdFit unit, and sidebar inventory. */
+#tt-body-page #article-view > .revenue_unit_wrap {
+  display: block !important;
+  margin: var(--sw-space-4) 0 var(--sw-space-5) !important;
+}
+
+#tt-body-page #article-view > ins.adsbygoogle {
+  display: block !important;
+  margin: 0 0 var(--sw-space-5) !important;
+}
+
+.entry-content > h2,
+.entry-content > h3,
+.entry-content > h4 {
+  color: var(--sw-ink);
+  font-weight: 760;
+  line-height: 1.42;
+}
+
+.entry-content > h2 {
+  margin: 40px 0 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--sw-line);
+}
+
+.entry-content > p {
+  margin: 0 0 18px;
+}
+
+.entry-content > blockquote {
+  border-left-color: var(--sw-accent);
+  background: var(--sw-accent-soft);
+}
+
+.entry-content pre,
+.entry-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.entry-content pre {
+  padding: 18px;
+  border-radius: var(--sw-radius);
+  background: var(--sw-code);
+  color: var(--sw-code-text);
+}
+
+/* 7. Daily digest isolation boundary */
+.entry-content > .daily-digest-post,
+.entry-content > .daily-digest-post *,
+.entry-content > .daily-digest-continuation,
+.entry-content > .daily-digest-continuation * {
+  box-sizing: border-box !important;
+}
+
+.entry-content > .daily-digest-post,
+.entry-content > .daily-digest-continuation {
+  width: 100% !important;
+  max-width: var(--sw-content) !important;
+  margin: 0 auto !important;
+  padding: 0 0 56px !important;
+  color: var(--sw-text) !important;
+  font-family: var(--sw-font-body) !important;
+  font-size: 17px !important;
+  line-height: 1.9 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+.daily-digest-post :is(h2, h3, h4, p, figure, ul, ol) {
+  max-width: none;
+}
+
+.daily-digest-post :is(h2, h3, h4, p, a, li, summary, figcaption),
+.daily-digest-continuation :is(h2, h3, h4, p, a, li, summary, figcaption) {
+  font-family: var(--sw-font-body) !important;
+}
+
+/* Intro has no title: Tistory post-cover already rendered the H1. */
+.daily-digest-post .digest-hero {
+  margin: 0 0 40px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.daily-digest-post .digest-kicker,
+.daily-digest-post .digest-source,
+.daily-digest-post .digest-section-label {
+  display: block !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--sw-muted) !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.daily-digest-post .digest-news-card .digest-source {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.daily-digest-post .digest-lead {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--sw-ink) !important;
+  font-size: 20px !important;
+  font-weight: 560 !important;
+  line-height: 1.78 !important;
+}
+
+.daily-digest-post .digest-meta-intro {
+  display: none !important;
+}
+
+.daily-digest-post .digest-cover-figure,
+.daily-digest-post .digest-flow-figure,
+.daily-digest-post .digest-story-figure {
+  margin: 0 0 34px !important;
+}
+
+.daily-digest-post :is(.digest-cover-image, .digest-flow-image, .digest-story-image, .digest-news-image) {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  background: var(--sw-surface-subtle) !important;
+  object-fit: cover !important;
+}
+
+.daily-digest-post .digest-throughline {
+  margin: 0 0 42px !important;
+  padding: 26px 0 0 !important;
+  border: 0 !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  background: transparent !important;
+}
+
+.daily-digest-post .digest-throughline h2 {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 22px !important;
+  font-weight: 780 !important;
+  line-height: 1.45 !important;
+}
+
+.daily-digest-post .digest-throughline > p:last-child {
+  margin: 0 !important;
+  color: var(--sw-text) !important;
+  font-size: 17px !important;
+  line-height: 1.9 !important;
+}
+
+.daily-digest-post .digest-reading-guide {
+  margin: 0 0 52px !important;
+  padding: 20px 0 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+  border-bottom: 0 !important;
+  background: transparent !important;
+}
+
+.daily-digest-post .digest-reading-title {
+  margin: 0 0 8px !important;
+  color: var(--sw-ink) !important;
+  font-size: 15px !important;
+  font-weight: 780 !important;
+  line-height: 1.5 !important;
+}
+
+.daily-digest-post .digest-reading-list,
+.daily-digest-post .digest-reading-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-indent: 0 !important;
+}
+
+.daily-digest-post .digest-reading-item + .digest-reading-item {
+  border-top: 1px solid var(--sw-line) !important;
+}
+
+.daily-digest-post .digest-reading-item a {
+  display: grid !important;
+  grid-template-columns: 34px minmax(0, 1fr) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 9px 0 !important;
+  border: 0 !important;
+  color: var(--sw-text) !important;
+  font-size: 15px !important;
+  line-height: 1.58 !important;
+  text-decoration: none !important;
+  text-indent: 0 !important;
+}
+
+.daily-digest-post .digest-reading-item a:hover,
+.daily-digest-post .digest-reading-item a:focus-visible {
+  color: var(--sw-accent) !important;
+}
+
+.daily-digest-post .digest-reading-index {
+  color: var(--sw-accent) !important;
+  font-weight: 780 !important;
+}
+
+.daily-digest-post > .digest-news-heading {
+  margin: 0 0 26px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+}
+
+/* Editorial sections, not nested cards. */
+.daily-digest-post .digest-news-card {
+  margin: 0 0 64px !important;
+  padding: 38px 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.daily-digest-post .digest-news-card:first-of-type {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.daily-digest-post .digest-news-card .digest-story-figure {
+  margin: 0 0 24px !important;
+}
+
+.daily-digest-post .digest-news-copy {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.daily-digest-post .digest-news-card h3 {
+  margin: 0 0 13px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 27px !important;
+  font-weight: 800 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.daily-digest-post .digest-blurb {
+  margin: 0 !important;
+  color: var(--sw-text) !important;
+  font-size: 17px !important;
+  font-weight: 620 !important;
+  line-height: 1.82 !important;
+}
+
+.daily-digest-post .digest-full-content {
+  margin: 26px 0 0 !important;
+  padding: 22px 0 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+}
+
+.daily-digest-post .digest-full-content p {
+  margin: 0 0 20px !important;
+  color: var(--sw-text) !important;
+  font-size: 17px !important;
+  line-height: 1.92 !important;
+}
+
+.daily-digest-post .digest-full-content h4 {
+  margin: 34px 0 10px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 18.5px !important;
+  font-weight: 780 !important;
+  line-height: 1.48 !important;
+}
+
+.daily-digest-post .digest-full-content h4:first-child {
+  margin-top: 4px !important;
+}
+
+.daily-digest-post .digest-source-link {
+  margin: 20px 0 0 !important;
+}
+
+.daily-digest-post .digest-source-link a {
+  display: inline-flex !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  align-items: center !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sw-accent-line) !important;
+  color: var(--sw-accent) !important;
+  font-size: 13px !important;
+  font-weight: 760 !important;
+  text-decoration: none !important;
+}
+
+.daily-digest-post .digest-source-link a::after {
+  margin-left: 5px;
+  content: "↗";
+}
+
+/* Ad is a sibling between NEWS 01 and NEWS 02, never inside article padding. */
+.daily-digest-post > .ad-wp,
+.daily-digest-post > .revenue_unit_wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 8px 0 42px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.daily-digest-post > .ad-wp iframe,
+.daily-digest-post > .revenue_unit_wrap iframe {
+  max-width: 100% !important;
+}
+
+.daily-digest-post > p[data-ke-size="size16"]:has(+ .digest-news-card) {
+  display: none !important;
+}
+
+.daily-digest-post .digest-quiz,
+.daily-digest-post .digest-terms {
+  margin: 56px 0 0 !important;
+  padding: 30px 0 !important;
+  border: 0 !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.daily-digest-post .digest-quiz {
+  border-color: var(--sw-ink) !important;
+  background: transparent !important;
+}
+
+.daily-digest-post :is(.digest-quiz, .digest-terms) > h2 {
+  margin: 0 0 17px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+}
+
+.daily-digest-post .digest-question {
+  margin: 0 0 16px !important;
+  color: var(--sw-ink) !important;
+  font-size: 17px !important;
+  font-weight: 720 !important;
+  line-height: 1.72 !important;
+}
+
+.daily-digest-post .digest-options {
+  display: grid !important;
+  gap: 8px !important;
+  margin: 0 0 17px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.daily-digest-post .digest-option {
+  display: grid !important;
+  grid-template-columns: 1.8em minmax(0, 1fr) !important;
+  gap: 5px !important;
+  margin: 0 !important;
+  padding: 11px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--sw-text) !important;
+  font-size: 15.5px !important;
+  line-height: 1.55 !important;
+  list-style: none !important;
+  text-indent: 0 !important;
+}
+
+.daily-digest-post .digest-option::before {
+  display: none !important;
+  content: none !important;
+}
+
+.daily-digest-post .digest-option-number {
+  color: var(--sw-accent);
+  font-weight: 780;
+}
+
+.daily-digest-post .digest-answer {
+  margin-top: 15px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid var(--sw-line-strong) !important;
+}
+
+.daily-digest-post .digest-answer summary {
+  color: var(--sw-accent) !important;
+  font-weight: 780 !important;
+  cursor: pointer !important;
+}
+
+.daily-digest-post .digest-answer-line {
+  margin: 13px 0 6px !important;
+  color: var(--sw-ink) !important;
+}
+
+.daily-digest-post .digest-explain {
+  margin: 0 !important;
+  color: var(--sw-text) !important;
+}
+
+.daily-digest-post .digest-terms ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.daily-digest-post .digest-terms li {
+  margin: 0 !important;
+  padding: 15px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  list-style: none !important;
+}
+
+.daily-digest-post .digest-terms li:last-child {
+  border-bottom: 0 !important;
+}
+
+.daily-digest-post .digest-terms b,
+.daily-digest-post .digest-terms span,
+.daily-digest-post .digest-terms em {
+  display: block !important;
+}
+
+.daily-digest-post .digest-terms b {
+  margin: 0 0 4px !important;
+  color: var(--sw-ink) !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+
+.daily-digest-post .digest-terms span {
+  margin: 0 0 7px !important;
+  color: var(--sw-warning) !important;
+  font-size: 12px !important;
+  font-weight: 760 !important;
+}
+
+.daily-digest-post .digest-terms em {
+  color: var(--sw-text) !important;
+  font-size: 14.5px !important;
+  font-style: normal !important;
+  line-height: 1.72 !important;
+}
+
+.daily-digest-post .digest-closing {
+  margin: 44px 0 0 !important;
+  padding: 24px 0 0 !important;
+  border: 0 !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  background: transparent !important;
+}
+
+.daily-digest-post .digest-closing-copy {
+  margin: 0 !important;
+  color: var(--sw-ink) !important;
+  font-size: 17px !important;
+  font-weight: 650 !important;
+  line-height: 1.82 !important;
+}
+
+.daily-digest-post .digest-action {
+  margin: 18px 0 0 !important;
+  padding: 2px 0 2px 18px !important;
+  border-left: 3px solid var(--sw-warning) !important;
+  background: transparent !important;
+  color: var(--sw-text) !important;
+}
+
+.daily-digest-post .digest-action b,
+.daily-digest-post .digest-action span {
+  display: block;
+}
+
+.daily-digest-post .digest-action b {
+  margin-bottom: 5px;
+  color: var(--sw-ink);
+}
+
+/* Legacy fragments: neutralize removed duplicate blocks if an old post remains. */
+.daily-digest-post[data-digest-version="2"] .digest-summary,
+.daily-digest-post[data-digest-version="2"] .digest-title {
+  display: none !important;
+}
+
+/* Archived/editorial fallback
+   Semantic post HTML stays clean; this skin owns every visual rule. */
+.daily-digest-post > p {
+  margin: 0 0 18px;
+  color: var(--sw-text);
+  font-size: 16px;
+  line-height: 1.86;
+}
+
+.daily-digest-post > p:first-child {
+  color: var(--sw-ink);
+  font-size: 17px;
+  line-height: 1.82;
+}
+
+.daily-digest-post > h2 {
+  margin: 44px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-ink);
+  font-size: 23px;
+  line-height: 1.42;
+  font-weight: 800;
+}
+
+.daily-digest-post > h3,
+.daily-digest-post section > h3 {
+  margin: 28px 0 10px;
+  color: var(--sw-ink);
+  font-size: 19px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.daily-digest-post :is(ul, ol) {
+  margin: 0 0 24px;
+  padding-left: 24px;
+  color: var(--sw-text);
+  line-height: 1.82;
+}
+
+.daily-digest-post li + li {
+  margin-top: 7px;
+}
+
+.daily-digest-post > figure,
+.daily-digest-post section > figure {
+  margin: 26px 0 32px;
+}
+
+.daily-digest-post figure img,
+.daily-digest-post > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+  background: var(--sw-paper);
+}
+
+.daily-digest-post figcaption {
+  margin-top: 9px;
+  color: var(--sw-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.daily-digest-post > blockquote,
+.daily-digest-post section > blockquote {
+  margin: 28px 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--sw-accent);
+  background: var(--sw-paper-deep);
+  color: var(--sw-text);
+}
+
+.daily-digest-post blockquote p {
+  margin: 0;
+}
+
+.daily-digest-post table {
+  display: block;
+  width: 100%;
+  margin: 22px 0 28px;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-top: 2px solid var(--sw-ink);
+  border-bottom: 1px solid var(--sw-line-strong);
+  background: var(--sw-surface);
+}
+
+.daily-digest-post :is(th, td) {
+  min-width: 86px;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-text);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.daily-digest-post th {
+  color: var(--sw-ink);
+  font-weight: 800;
+  background: var(--sw-paper);
+}
+
+.daily-digest-post code {
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--sw-paper-deep);
+  color: var(--sw-ink);
+  font-size: .92em;
+}
+
+.daily-digest-post > section:not(.digest-hero, .digest-summary, .digest-throughline, .digest-reading-guide, .digest-news-card, .digest-quiz, .digest-terms, .digest-closing) {
+  margin: 0 0 34px;
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--sw-line);
+}
+
+.daily-digest-post > section:first-child:not(.digest-hero) {
+  padding-top: 24px;
+  border-top: 4px solid var(--sw-accent);
+}
+
+.daily-digest-post > section:first-child > p:first-child {
+  margin-bottom: 10px;
+  color: var(--sw-accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.daily-digest-post > section:first-child > h2 {
+  margin: 0 0 14px;
+  color: var(--sw-ink);
+  font-size: clamp(24px, 4vw, 30px);
+  line-height: 1.36;
+  font-weight: 850;
+}
+
+.daily-digest-post > section:first-child > p:last-child {
+  color: var(--sw-text);
+  font-size: 17px;
+  line-height: 1.82;
+}
+
+.codex-model-guide > section > div {
+  padding: 20px 0;
+  border-top: 1px solid var(--sw-line);
+}
+
+.codex-model-guide > section > div:first-child {
+  border-top: 0;
+}
+
+.editorial-post > hr {
+  margin: 38px 0;
+  border: 0;
+  border-top: 1px solid var(--sw-line);
+}
+
+/* 8. Forms and secondary pages */
+#tt-body-tag #content > .post-header,
+#tt-body-guestbook #content > .post-header {
+  max-width: var(--sw-content);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#tt-body-tag #content > .tags {
+  display: grid;
+  max-width: var(--sw-content);
+  margin: 0 auto 60px;
+  padding: 8px 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 24px;
+  border-top: 2px solid var(--sw-ink);
+  border-bottom: 1px solid var(--sw-line);
+  background: var(--sw-surface);
+}
+
+.comment-form input,
+.comment-form textarea,
+.tt-comments-wrap textarea {
+  border: 1px solid var(--sw-line) !important;
+  border-radius: 6px !important;
+  background: var(--sw-surface) !important;
+}
+
+#tt-body-tag #content > .tags a {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 12px 2px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid var(--sw-line);
+  border-radius: 0;
+  color: var(--sw-text);
+  font-size: 14px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#tt-body-tag #content > .tags a::before {
+  margin-right: 5px;
+  color: var(--sw-accent);
+  content: "#";
+}
+
+#tt-body-tag #content > .tags a:hover,
+#tt-body-tag #content > .tags a:focus-visible {
+  color: var(--sw-accent);
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus,
+.tt-comments-wrap textarea:focus {
+  border-color: var(--sw-accent) !important;
+  box-shadow: 0 0 0 3px var(--sw-focus-soft) !important;
+}
+
+#tt-body-guestbook #content > .tt-comments-wrap,
+#tt-body-page #content .comments,
+#tt-body-page #content .related-articles,
+#tt-body-page #content > .inner > .tags {
+  width: 100%;
+  max-width: var(--sw-content);
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+}
+
+.tt-comment-cont .tt-btn_register,
+.comment-form .submit button {
+  min-width: 96px;
+  min-height: var(--sw-control);
+  border: 1px solid var(--sw-ink) !important;
+  border-radius: 5px !important;
+  background: var(--sw-ink) !important;
+  color: var(--sw-surface) !important;
+  font-weight: 700;
+}
+
+.tt-comment-cont .tt-btn_register:hover,
+.tt-comment-cont .tt-btn_register:focus-visible,
+.comment-form .submit button:hover,
+.comment-form .submit button:focus-visible {
+  border-color: var(--sw-accent) !important;
+  background: var(--sw-accent) !important;
+}
+
+#tt-body-page #content > .inner > .tags {
+  margin-top: 44px;
+  margin-bottom: 48px;
+  padding-top: 18px;
+  border-top: 1px solid var(--sw-line);
+}
+
+#tt-body-page #content > .inner > .tags h2,
+.related-articles h2,
+.comments h2 {
+  margin: 0 0 16px;
+  color: var(--sw-ink);
+  font-size: 18px;
+  font-weight: 780;
+}
+
+#tt-body-page #content > .inner > .tags a {
+  margin: 0 7px 8px 0;
+  padding: 0 12px;
+  border-color: var(--sw-line);
+  border-radius: 999px;
+  background: var(--sw-surface);
+  color: var(--sw-text);
+  font-size: 13px;
+  line-height: 30px;
+}
+
+/* Tistory injects a category list inside the editor body. The skin already
+   renders a visual related-post section, so showing both is duplicate UI. */
+#tt-body-page .entry-content > .another_category {
+  display: none !important;
+}
+
+.related-articles {
+  margin-top: 0;
+  margin-bottom: 52px;
+  padding-top: 26px;
+  border-top: 1px solid var(--sw-line-strong);
+}
+
+.related-articles ul {
+  display: grid;
+  margin: 0 !important;
+  padding: 0 !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+}
+
+.related-articles ul li {
+  float: none;
+  width: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.related-articles ul li a {
+  display: grid;
+  min-height: 80px;
+  padding: 0 0 18px;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 15px;
+  align-items: center;
+  border-bottom: 1px solid var(--sw-line);
+  color: var(--sw-text);
+  text-decoration: none;
+}
+
+.related-articles ul li figure {
+  width: 124px;
+  height: 78px;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--sw-surface-subtle);
+}
+
+.related-articles ul li figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related-articles ul li .title {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--sw-text);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: normal !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.related-articles ul li a:hover .title,
+.related-articles ul li a:focus-visible .title {
+  color: var(--sw-accent);
+}
+
+/* 9. Footer */
+#footer {
+  padding: 34px 0 38px;
+  border-top: 1px solid var(--sw-line);
+  background: var(--sw-surface);
+}
+
+#footer .inner {
+  width: min(var(--sw-shell), calc(100% - 40px));
+  max-width: none;
+}
+
+#footer .footer-brand {
+  margin: 0 0 7px;
+  color: var(--sw-ink);
+  font-family: var(--sw-font-brand);
+  font-size: 17px;
+  font-weight: 750;
+}
+
+#footer p,
+#footer .meta,
+#footer .copyright {
+  margin: 0 0 5px;
+  color: var(--sw-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#footer .order-menu {
+  margin-bottom: 20px;
+}
+
+#footer .order-menu a {
+  margin-bottom: 0;
+  color: var(--sw-text);
+}
+
+#footer .page-top {
+  border-color: var(--sw-line);
+  background-color: var(--sw-surface);
+}
+
+#footer .page-top:hover,
+#footer .page-top:focus-visible {
+  border-color: var(--sw-accent);
+  background-color: var(--sw-accent);
+}
+
+@media screen and (max-width: 1080px) {
+  #header .inner {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  #container .content-wrap {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  body {
+    background: var(--sw-canvas) !important;
+  }
+
+  #header .inner {
+    display: block;
+    min-height: 0;
+    padding: 0;
+  }
+
+  #header h1 {
+    position: relative;
+    padding: 16px 64px 16px 18px;
+    font-size: 1.05em;
+  }
+
+  #header .util {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 16px 58px 16px 18px;
+    box-sizing: border-box;
+  }
+
+  #gnb {
+    height: 50px;
+    margin-left: 0;
+    border-top: 1px solid var(--sw-line);
+  }
+
+  #gnb ul {
+    gap: 20px;
+    padding: 0 18px !important;
+  }
+
+  #gnb ul li {
+    padding: 0 !important;
+  }
+
+  #gnb ul li a {
+    height: 50px;
+    padding: 0 !important;
+  }
+
+  #content {
+    padding-top: 32px;
+  }
+
+  .post-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+
+  body #content > .inner:has(> .post-item) {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  #tt-body-index .pagination,
+  #tt-body-category .pagination,
+  #tt-body-tag .pagination,
+  #tt-body-archive .pagination {
+    display: flex !important;
+    margin: 32px 20px 44px !important;
+    gap: 5px;
+  }
+
+  .pagination a,
+  .pagination .prev,
+  .pagination .next {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 7px;
+    font-size: 13px;
+  }
+
+  .post-cover {
+    min-height: 0 !important;
+  }
+
+  .post-cover .inner {
+    width: calc(100% - 36px) !important;
+    min-height: 0 !important;
+    padding: 27px 0 30px !important;
+  }
+
+  .post-cover h1 {
+    font-size: 28px !important;
+    line-height: 1.38 !important;
+  }
+
+  .entry-content {
+    padding-right: 18px !important;
+    padding-left: 18px !important;
+  }
+
+  .entry-content > .daily-digest-post,
+  .entry-content > .daily-digest-continuation {
+    max-width: none !important;
+    font-size: 16.5px !important;
+  }
+
+  .daily-digest-post .digest-lead {
+    font-size: 18.5px !important;
+  }
+
+  .daily-digest-post .digest-throughline,
+  .daily-digest-post .digest-quiz,
+  .daily-digest-post .digest-terms {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .daily-digest-post .digest-action {
+    padding-right: 0 !important;
+    padding-left: 16px !important;
+  }
+
+  .daily-digest-post .digest-news-card h3 {
+    font-size: 23px !important;
+  }
+
+  .daily-digest-post .digest-full-content p {
+    font-size: 16.5px !important;
+    line-height: 1.88 !important;
+  }
+
+  .daily-digest-post .digest-reading-item a {
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    font-size: 14.5px !important;
+  }
+
+  #tt-body-tag #content > .post-header,
+  #tt-body-guestbook #content > .post-header,
+  #tt-body-tag #content > .tags,
+  #tt-body-guestbook #content > .tt-comments-wrap {
+    width: auto;
+    margin-right: 18px;
+    margin-left: 18px;
+  }
+
+  #tt-body-tag #content > .tags {
+    padding: 6px 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .related-articles {
+    width: auto;
+    margin-right: 18px;
+    margin-left: 18px;
+  }
+
+  .related-articles ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .related-articles ul li a {
+    min-height: 68px;
+    padding-bottom: 16px;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .related-articles ul li figure {
+    width: 104px;
+    height: 68px;
+  }
+
+  #footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  #footer .inner {
+    width: calc(100% - 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+    html { background: #f5f7f9; }
+    body { margin: 0; padding: 0 16px 56px; overflow-wrap: anywhere; }
+    .preview-post-cover {
+      width: min(720px, 100%);
+      margin: 0 auto 34px;
+      padding: 34px 0 26px;
+      border-bottom: 1px solid var(--sw-line);
+    }
+    .preview-post-cover p {
+      margin: 0 0 9px;
+      color: var(--sw-accent);
+      font-size: 12px;
+      font-weight: 760;
+    }
+    .preview-post-cover h1 {
+      margin: 0;
+      color: var(--sw-ink);
+      font-size: 32px;
+      line-height: 1.36;
+      letter-spacing: -.03em;
+      word-break: keep-all;
+    }
+    .entry-content { width: min(760px, 100%); margin: 0 auto; padding: 0 20px; }
+    img { max-width: 100%; height: auto; }
+    @media (max-width: 560px) {
+      body { padding: 0 0 40px; }
+      .preview-post-cover { padding: 26px 18px 22px; }
+      .preview-post-cover h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+<header class="preview-post-cover">
+  <p>티스토리 글 제목</p>
+  <h1>낮 3시간의 전기부터 패키지 업데이트까지, 자동화를 기다리게 하는 이유</h1>
+</header>
+<main class="entry-content">
+  <article class="daily-digest-post" data-digest-version="2">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 16 (목) · 약 10분</p>
+    <p class="digest-lead">세탁기를 지금 돌릴지, 점심시간에 예약할지 판단하는 일이 전기요금표와 연결되는 때가 있다. 소프트웨어에서도 새 패키지가 나왔다는 알림을 곧바로 병합할지 잠시 기다릴지 같은 선택을 한다. 오늘의 세 소식은 자동화의 속도보다 ‘언제 실행하고 무엇을 확인할지’를 정하는 설계가 더 중요할 수 있음을 보여준다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/cover.webp" alt="낮 전력 요금표와 의존성 점검 기록, 보안 테스트 자료가 놓인 작업대" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-throughline">
+  <p class="digest-section-label">오늘의 관점</p>
+  <h2>세 소식을 함께 보면</h2>
+  <p>호주의 Solar Sharer Offer는 낮의 태양광 잉여 시간에 맞춰 사용을 옮기도록 유도한다. GitHub Dependabot은 일반 버전 업데이트를 기본 3일 기다리게 하되 보안 업데이트는 즉시 연다. OpenAI의 GPT-Red 연구는 자동화된 공격 탐색으로 모델을 훈련하지만 사람·외부 레드팀·실시간 감시를 함께 둔다. 세 사례 모두 자동 실행을 없애는 대신, 시간 창과 예외와 검증 단계를 명시한다.</p>
+</section>
+
+  <nav class="digest-reading-guide" aria-label="글 순서">
+  <p class="digest-reading-title">글 순서</p>
+  <div class="digest-reading-list" role="list"><div class="digest-reading-item" role="listitem"><a href="#digest-news-1"><span class="digest-reading-index">01</span>호주의 낮 3시간 무료 전기, 요금표보다 먼저 확인할 조건</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-2"><span class="digest-reading-index">02</span>Dependabot이 일반 업데이트를 3일 기다리는 이유와 예외</a></div><div class="digest-reading-item" role="listitem"><a href="#digest-news-3"><span class="digest-reading-index">03</span>GPT-Red가 보여준 자동 레드팀의 범위와 남는 검증</a></div></div>
+</nav>
+
+  <h2 class="digest-news-heading">오늘 고른 뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-01.webp" alt="낮 시간의 요금표와 스마트 미터를 곁에 둔 세탁기" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">NEWS 01 · ABC News · 2026. 6. 29</p>
+    <h3>호주의 낮 3시간 무료 전기, 요금표보다 먼저 확인할 조건</h3>
+    <p class="digest-blurb">호주 뉴사우스웨일스·남호주·퀸즐랜드 남동부에서는 7월 1일부터 하루 최소 3시간 무료 전기 요금제를 선택할 수 있다. 스마트 미터와 요금제 변경이 전제이며, 무료 시간 밖의 단가와 실제로 옮길 수 있는 사용량까지 비교해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>ABC는 호주의 Solar Sharer Offer가 7월 1일부터 뉴사우스웨일스, 남호주, 퀸즐랜드 남동부에서 시작된다고 설명했다. 해당 지역의 전력 소매업체는 낮 태양광 발전이 많은 시간대에 최소 3시간 전기를 무료로 제공하는 요금제를 내놓아야 한다. 이 제도는 집에 태양광 패널이 있는 사람만을 위한 것이 아니라, 조건을 갖춘 가구가 요금제를 선택해 낮 시간대의 전력을 쓸 수 있게 하려는 방식이다. 세탁기·건조기·에어컨처럼 시간을 옮길 수 있는 기기의 사용을 낮으로 옮기는 장면이 대표적이다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>‘무료’라는 말만 보면 하루 요금이 자동으로 줄어드는 것처럼 들리지만, 이 상품은 사용 시간을 옮길 수 있을 때 의미가 커진다. 시간대별 요금은 전력망에 태양광 공급이 많은 낮과 수요가 높은 저녁의 차이를 반영한다. 예약 기능이 있는 세탁기나 전기차 충전기, 냉난방 설정을 활용하면 가구의 생활 리듬을 크게 바꾸지 않고도 낮 창을 활용할 여지가 있다. 반대로 낮에 집을 비우고 예약 가능한 기기도 없다면 무료 구간의 혜택이 작을 수 있다. 자동화는 여기서 ‘전기를 공짜로 쓰게 하는 마법’이 아니라, 내가 쓸 전력을 특정 시간에 옮기는 도구다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>ABC의 안내 기준으로 이 혜택은 해당 세 지역의 모든 계약에 자동 적용되는 것이 아니라, 스마트 미터를 갖춘 고객이 소매업체를 통해 선택하는 요금제다. 무료 창의 정확한 시각, 하루 사용량 상한, 기본요금과 다른 시간대의 kWh 단가는 사업자별 계약서를 확인해야 한다. 이미 태양광·배터리·고정 요금제를 쓰는 집은 새 요금제로 바꿨을 때의 연간 총액을 비교하는 편이 안전하다. 다른 나라나 다른 전력 시장에 같은 제도를 그대로 적용할 수 있다는 뜻도 아니다. 핵심은 할인 문구가 아니라, 자신의 사용 기록 가운데 실제로 옮길 수 있는 부하가 얼마나 되는지다.</p></div>
+    <p class="digest-source-link"><a href="https://www.abc.net.au/news/2026-06-29/free-electricity-solar-sharer-scheme/105999242" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
+</section>
+<section id="digest-news-2" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-02.webp" alt="일반 패키지 업데이트의 대기 기간을 검토하는 개발 작업대" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">NEWS 02 · GitHub Changelog · 2026. 7. 15</p>
+    <h3>Dependabot이 일반 업데이트를 3일 기다리는 이유와 예외</h3>
+    <p class="digest-blurb">GitHub은 Dependabot의 일반 버전 업데이트 PR을 새 릴리스가 레지스트리에 나온 뒤 최소 3일 후 열도록 기본값을 바꿨다. 보안 업데이트는 지연되지 않으며, `.github/dependabot.yml`의 `cooldown`으로 기간을 조정하거나 끌 수 있다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>GitHub은 14일 Dependabot의 버전 업데이트가 새 릴리스가 레지스트리에 공개된 뒤 최소 3일이 지나야 풀 리퀘스트를 열도록 기본 동작을 바꿨다고 알렸다. 새 릴리스 직후에는 손상된 패키지나 깨진 배포의 신호가 아직 유지관리자와 커뮤니티에 충분히 드러나지 않을 수 있다는 판단이다. 이번 기본값은 일반 버전 업데이트에만 적용된다. 취약점 해결을 위한 Dependabot 보안 업데이트는 즉시 열리므로, 중요한 보안 수정까지 3일 미뤄지는 규칙은 아니다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>의존성 갱신 PR이 빨리 도착하면 최신 기능과 수정 사항을 빨리 받는 장점이 있지만, 새 패키지를 자동 병합하는 저장소에서는 첫 며칠의 관찰 시간이 사실상 사라진다. 이번 변경은 일반 갱신에 작은 대기 창을 기본으로 넣어 그 위험을 줄이려는 선택이다. 다만 3일이 패키지의 안전을 보증하지는 않는다. 테스트가 통과해도 악성 동작, 라이선스 변화, 런타임 호환성 문제는 남을 수 있다. 반대로 보안 업데이트는 공개된 취약점의 공격 가능성을 줄이기 위해 빠른 검토가 필요하므로 같은 규칙으로 묶지 않는 것이 합리적이다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>이 기본값은 github.com의 지원 생태계 전반과 GitHub Enterprise Server 3.23에 적용된다고 GitHub은 밝혔다. 저장소에서 먼저 `.github/dependabot.yml`에 이미 `cooldown` 설정이 있는지 확인한다. 릴리스 후보나 사내 패키지처럼 즉시 검증이 필요한 경우에는 기간을 더 짧게 하거나 끌 수 있고, 반대로 위험도가 높은 생태계는 더 긴 창을 정할 수 있다. 그 다음 일반 업데이트와 보안 업데이트에 서로 다른 병합 규칙을 둔다. 예를 들어 보안 PR은 담당자 검토와 회귀 테스트를 우선하고, 일반 PR은 변경 로그·다운로드 경로·잠금 파일 차이를 확인한 뒤 병합하는 식이다.</p></div>
+    <p class="digest-source-link"><a href="https://github.blog/changelog/2026-07-14-dependabot-version-updates-introduce-default-package-cooldown/" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
+</section>
+<section id="digest-news-3" class="digest-news-card">
+  <figure class="digest-story-figure"><img class="digest-story-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/story-03.webp" alt="도구 호출 기록과 위협 모델을 함께 살피는 AI 안전 테스트 작업대" width="1200" height="630" loading="lazy"></figure>
+  <div class="digest-news-copy">
+    <p class="digest-source">NEWS 03 · OpenAI · 2026. 7. 15</p>
+    <h3>GPT-Red가 보여준 자동 레드팀의 범위와 남는 검증</h3>
+    <p class="digest-blurb">OpenAI는 프롬프트 인젝션 같은 실패를 찾는 내부 자동 레드팀 모델 GPT-Red를 소개했다. 자기대전 방식으로 공격과 방어 모델을 함께 훈련하며, 발표된 수치는 특정 벤치마크·시나리오의 결과이므로 실제 배포에서는 다층 안전장치와 별도 검증이 계속 필요하다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무슨 일이 있었나</h4><p>OpenAI는 15일 자동화된 내부 레드팀 모델 GPT-Red를 소개했다. 이 모델은 에이전트가 웹페이지, 이메일, 로컬 파일, 도구 출력처럼 제3자 데이터를 만나는 상황에서 프롬프트 인젝션을 어떻게 당할 수 있는지 찾아내는 역할을 한다. 발표에 따르면 GPT-Red는 여러 방어 모델과 자기대전 강화학습으로 훈련된다. 공격 모델은 유효한 실패를 끌어내면 보상을 받고, 방어 모델은 원래 과업을 수행하면서 공격을 견디면 보상을 받는다. OpenAI는 이 과정에서 얻은 공격을 GPT-5.6의 학습에도 반영했다고 설명한다.</p><h4 class="digest-subheading">왜 우리에게 중요한가</h4><p>도구를 쓰는 AI는 사용자의 지시만 읽지 않는다. 검색 결과, 문서, 코드 저장소, 연결된 앱의 내용도 입력이 되며 그 안에 모델의 목적을 바꾸려는 문장이 섞일 수 있다. 사람 레드팀만으로 다양한 실패 사례를 계속 만들기 어렵다는 점에서, 자동화된 공격 탐색은 방어 학습의 속도와 범위를 넓히는 방법이 될 수 있다. OpenAI는 가장 어려운 직접 프롬프트 인젝션 벤치마크에서 이전 4개월 전의 자사 최고 운영 모델보다 실패가 6배 적었다고 보고했다. 하지만 그 숫자는 정해진 평가 집합에서의 비교이지, 모든 에이전트 환경에서 안전하다는 증명은 아니다.</p><h4 class="digest-subheading">직접 확인할 점</h4><p>GPT-Red는 배포되는 일반 모델이 아니라 내부 안전 연구용 모델이라고 OpenAI는 명시한다. 소개 글에는 사람과 제3자 레드팀, 다층 안전장치, 실시간 감시를 계속 함께 쓰겠다는 계획도 나온다. 제품 팀이 이 사례를 참고한다면 ‘공격 모델 하나를 만들면 끝’이라고 해석하지 않는 것이 중요하다. 실제 서비스에서는 어떤 외부 입력이 도구 권한에 닿는지, 민감한 데이터를 어디까지 보낼 수 있는지, 실패를 발견했을 때 자동 실행을 멈추고 사람에게 넘기는 경로가 있는지를 별도로 시험해야 한다. 공개된 벤치마크 점수와 자신의 위협 모델은 서로 바꿔 쓸 수 없다.</p></div>
+    <p class="digest-source-link"><a href="https://openai.com/index/unlocking-self-improvement-gpt-red/" target="_blank" rel="noopener">원문 보기</a></p>
+  </div>
+</section>
+
+  <section class="digest-quiz">
+  <p class="digest-source">기초상식 · 소프트웨어 개발</p>
+  <h2>오늘의 정처기 문제</h2>
+  <p class="digest-question">의존성의 일반 버전 업데이트를 새 릴리스 직후 바로 적용하지 않고 일정 기간 기다려 문제 신호를 관찰하는 설정은?</p>
+  <ol class="digest-options" role="list"><li class="digest-option"><span class="digest-option-number">1.</span><span>롤백</span></li><li class="digest-option"><span class="digest-option-number">2.</span><span>쿨다운</span></li><li class="digest-option"><span class="digest-option-number">3.</span><span>캐싱</span></li><li class="digest-option"><span class="digest-option-number">4.</span><span>샤딩</span></li></ol>
+  <details class="digest-answer">
+    <summary>정답과 해설 보기</summary>
+    <p class="digest-answer-line"><b>정답</b> 2번 · 쿨다운</p>
+    <p class="digest-explain"><b>해설</b> 쿨다운(cooldown)은 새 릴리스가 나온 뒤 정한 기간을 기다린 후 업데이트를 제안하거나 적용하게 하는 대기 창입니다.</p>
+  </details>
+</section>
+
+  <section class="digest-terms">
+  <h2>오늘의 IT · 개발 · 기획 용어</h2>
+  <ul><li>
+  <b>시간대별 요금 (Time-of-use Tariff)</b>
+  <span>에너지</span>
+  <em>전기를 쓴 시각에 따라 kWh당 단가가 달라지는 요금 방식. 공급과 수요가 많은 시간대의 가격 차이를 반영한다.</em>
+</li><li>
+  <b>패키지 쿨다운 (Package Cooldown)</b>
+  <span>개발</span>
+  <em>새 패키지 릴리스가 공개된 직후에는 업데이트를 잠시 미루고, 오류나 공급망 이상 신호가 드러날 시간을 두는 정책.</em>
+</li><li>
+  <b>레드팀 (Red Teaming)</b>
+  <span>AI 보안</span>
+  <em>시스템을 공격자의 관점에서 시험해 취약점과 실패 조건을 찾고 방어를 개선하는 검증 활동.</em>
+</li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">좋은 자동화는 가장 빠른 경로만 고르지 않는다. 비용이 낮은 시간에 일을 옮기고, 새 코드가 충분히 관찰될 시간을 주며, 실패를 찾아내는 역할을 별도로 둔다. 오늘 쓰는 예약 하나와 업데이트 규칙 하나를 살펴보면, 속도를 늦춰도 손해가 아닌 지점을 찾을 수 있다.</p>
+  <div class="digest-action"><b>직접 확인해보려면</b><span>자동 실행되는 작업 하나를 골라 ‘즉시 해야 하는 예외’와 ‘잠시 기다려도 되는 기본값’을 각각 한 줄로 적어본다.</span></div>
+</section>
+</article>
+
+</main>
+</body>
+</html>
