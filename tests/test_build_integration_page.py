@@ -1,4 +1,5 @@
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -36,6 +37,8 @@ class IntegrationPageTests(unittest.TestCase):
                                 "https://won0322.tistory.com/2",
                             ],
                             "image_filename": "sample.png",
+                            "image_location": "~/티스토리-업로드/1번-샘플.png",
+                            "image_position": "도입부 다음, 목차 앞",
                             "image_alt": "Java 예제 설명 이미지",
                             "ad_position": "본문 약 40%",
                         }
@@ -50,6 +53,8 @@ class IntegrationPageTests(unittest.TestCase):
         self.assertEqual(len(posts), 1)
         self.assertEqual(posts[0]["slug"], "sample")
         self.assertEqual(posts[0]["tags"], "Java, 예제")
+        self.assertEqual(posts[0]["image_location"], "~/티스토리-업로드/1번-샘플.png")
+        self.assertEqual(posts[0]["image_position"], "도입부 다음, 목차 앞")
         self.assertIn("<!-- TISTORY_IMAGE_TAG -->", posts[0]["html"])
         self.assertIn("<!-- ADFIT_TAG -->", posts[0]["html"])
 
@@ -80,6 +85,8 @@ class IntegrationPageTests(unittest.TestCase):
                     "source_ids": [1, 2],
                     "delete_urls": ["https://won0322.tistory.com/1"],
                     "image_filename": "sample.png",
+                    "image_location": "~/티스토리-업로드/1번-샘플.png",
+                    "image_position": "도입부 다음, 목차 앞",
                     "image_alt": "Java 예제 설명 이미지",
                     "ad_position": "본문 약 40%",
                     "html": "<style></style><article><!-- TISTORY_IMAGE_TAG --><!-- ADFIT_TAG --></article>",
@@ -87,8 +94,16 @@ class IntegrationPageTests(unittest.TestCase):
             ]
         )
 
-        self.assertIn("보강글 HTML 조립", page)
+        self.assertIn("티스토리 보강글 발행 도우미", page)
+        self.assertIn("위에서부터 차례대로", page)
         self.assertIn('href="./"', page)
+        self.assertIn('id="imageLocation"', page)
+        self.assertIn('id="imagePosition"', page)
+        self.assertIn('data-copy="image-path"', page)
+        self.assertIn('id="imageStepState"', page)
+        self.assertIn('id="adStepState"', page)
+        self.assertIn('id="finalResult" hidden', page)
+        self.assertIn('els.finalResult.hidden = !ready;', page)
         self.assertIn('id="imageMarkup"', page)
         self.assertIn('id="adMarkup"', page)
         self.assertIn('id="buildFinalButton"', page)
@@ -112,6 +127,15 @@ class IntegrationPageTests(unittest.TestCase):
         self.assertIn('document.execCommand("copy")', page)
         self.assertIn("기본모드로 돌아가지 마세요", page)
         self.assertIn("예약 저장 확인 후에만 원문 삭제", page)
+        self.assertIn('copyText(current.image_location, "이미지 경로")', page)
+
+    def test_real_posts_use_korean_image_names_and_explain_image_location(self):
+        posts = load_posts()
+
+        self.assertTrue(posts)
+        self.assertTrue(all(re.search(r"[가-힣]", post["image_filename"]) for post in posts))
+        self.assertTrue(all(post["image_location"] for post in posts))
+        self.assertTrue(all(post["image_position"] for post in posts))
 
     def test_escapes_post_html_inside_script_payload(self):
         page = render(
@@ -135,7 +159,7 @@ class IntegrationPageTests(unittest.TestCase):
             page = output.read_text(encoding="utf-8")
 
         self.assertIn('<html lang="ko">', page)
-        self.assertIn("보강글 HTML 조립", page)
+        self.assertIn("티스토리 보강글 발행 도우미", page)
 
 
 if __name__ == "__main__":

@@ -66,6 +66,8 @@ def load_posts(content_dir=CONTENT_DIR):
                 "source_ids": raw.get("source_ids") or [],
                 "delete_urls": raw.get("delete_urls") or [],
                 "image_filename": str(raw.get("image_filename") or ""),
+                "image_location": str(raw.get("image_location") or ""),
+                "image_position": str(raw.get("image_position") or ""),
                 "image_alt": str(raw.get("image_alt") or ""),
                 "ad_position": str(raw.get("ad_position") or ""),
                 "html": source_html,
@@ -79,12 +81,13 @@ def render(posts):
     first_slug = posts[0]["slug"] if posts else ""
     buttons = "\n".join(
         '<button class="post-button" type="button" data-slug="{}" '
-        'aria-pressed="false"><span>{}</span><strong>{}</strong></button>'.format(
+        'aria-pressed="false"><span>{}번 글 · {}</span><strong>{}</strong></button>'.format(
             esc(post.get("slug")),
+            index,
             esc(post.get("scheduled_at")),
             esc(post.get("title")),
         )
-        for post in posts
+        for index, post in enumerate(posts, start=1)
     )
     empty = '<p class="empty">준비된 보강글이 없습니다.</p>'
     template = """<!doctype html>
@@ -94,7 +97,7 @@ def render(posts):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src https: data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>보강글 HTML 조립 · 티스토리 발행 준비</title>
+  <title>티스토리 보강글 발행 도우미</title>
   <style>
     :root {
       color-scheme: light;
@@ -180,6 +183,7 @@ def render(posts):
       font-size: clamp(25px, 3vw, 34px);
       line-height: 1.2;
       letter-spacing: -.035em;
+      word-break: keep-all;
     }
     .lead {
       max-width: 760px;
@@ -190,13 +194,13 @@ def render(posts):
     .steps {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px 18px;
+      gap: 8px 24px;
       margin: 0 0 16px;
       padding: 13px 18px;
       border-bottom: 1px solid var(--line);
       background: var(--warm);
       color: #46534d;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 750;
     }
     .steps span::before {
@@ -213,7 +217,7 @@ def render(posts):
     }
     .layout {
       display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
+      grid-template-columns: 300px minmax(0, 1fr);
       gap: 16px;
       align-items: start;
       margin-top: 16px;
@@ -232,7 +236,7 @@ def render(posts):
     .post-list { display: grid; gap: 5px; padding: 8px; }
     .post-button {
       width: 100%;
-      padding: 11px;
+      padding: 13px;
       border: 1px solid transparent;
       border-radius: 4px;
       background: transparent;
@@ -293,7 +297,6 @@ def render(posts):
     .btn:disabled { cursor: not-allowed; opacity: .42; }
     .builder {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 12px;
     }
@@ -303,8 +306,23 @@ def render(posts):
       border: 1px solid var(--line);
       background: #fbfcfb;
     }
-    .markup-box h2 { margin: 0; font-size: 15px; }
-    .markup-box p { min-height: 38px; margin: 4px 0 9px; color: var(--muted); font-size: 12px; }
+    .step-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+    .markup-box h2 { margin: 0; font-size: 17px; }
+    .markup-box p { margin: 6px 0 10px; color: var(--muted); font-size: 13px; }
+    .step-state {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 9px;
+      border: 1px solid #d6b977;
+      border-radius: 999px;
+      background: #fff8e8;
+      color: #80520b;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .step-state[data-complete="true"] { border-color: #9fc8b7; background: #eaf6f1; color: var(--accent-dark); }
     .markup-input {
       display: block;
       width: 100%;
@@ -325,9 +343,17 @@ def render(posts):
       border-left: 4px solid var(--accent);
       background: var(--accent-soft);
       color: #34463d;
-      font-size: 12px;
+      font-size: 13px;
     }
     .asset-note p { margin: 3px 0; overflow-wrap: anywhere; }
+    .asset-title { margin: 0 0 10px; color: var(--ink); font-size: 17px; }
+    .asset-grid { display: grid; gap: 8px; }
+    .asset-row { display: grid; grid-template-columns: 105px minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+    .asset-label { color: var(--muted); font-size: 12px; font-weight: 900; }
+    .asset-value { min-width: 0; overflow-wrap: anywhere; }
+    .file-name { color: var(--accent-dark); font-size: 16px; font-weight: 900; }
+    .path-value { padding: 8px 10px; border: 1px solid #cad8d1; background: #fff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+    .asset-tip { margin: 10px 0 0 !important; padding-top: 9px; border-top: 1px solid #cfe0d8; }
     .action-row {
       display: flex;
       flex-wrap: wrap;
@@ -346,6 +372,11 @@ def render(posts):
       color: #46534d;
       font-size: 12px;
     }
+    .publish-checklist { margin: 12px 0; padding: 14px 16px; border: 1px solid var(--line); background: #fff; }
+    .publish-checklist h2 { margin: 0 0 7px; font-size: 15px; }
+    .publish-checklist ol { margin: 0; padding-left: 22px; color: #46534d; font-size: 13px; }
+    .publish-checklist li { margin: 4px 0; }
+    .final-result[hidden] { display: none; }
     .code-output {
       display: block;
       width: 100%;
@@ -377,6 +408,9 @@ def render(posts):
       .layout { grid-template-columns: 1fr; }
       .content { padding: 12px; }
       .builder { grid-template-columns: 1fr; }
+      .asset-row { grid-template-columns: 1fr auto; }
+      .asset-label { grid-column: 1 / -1; }
+      .path-value { grid-column: 1 / -1; }
       .field { grid-template-columns: 1fr auto; }
       .field .field-label { grid-column: 1 / -1; }
       .action-row { display: grid; grid-template-columns: 1fr; }
@@ -395,28 +429,28 @@ def render(posts):
   <div class="wrap">
     <nav class="desk-nav" aria-label="발행 도구">
       <a href="./">데일리 뉴스 발행</a>
-      <a href="integration.html" aria-current="page">보강글 HTML 조립</a>
+      <a href="integration.html" aria-current="page">보강글 발행 도우미</a>
     </nav>
     <header class="masthead">
-      <p class="eyebrow">TISTORY INTEGRATION DESK</p>
-      <h1>보강글 HTML 조립</h1>
-      <p class="lead">티스토리에서 만든 이미지 태그와 AdFit 태그를 붙이면 준비된 보강글의 정확한 위치에 넣고 최종 HTML을 만듭니다.</p>
+      <p class="eyebrow">TISTORY PUBLISHING HELPER</p>
+      <h1>티스토리 보강글 발행 도우미</h1>
+      <p class="lead">위에서부터 차례대로 따라 하면 됩니다. 글을 고르고, 안내된 이미지를 올린 뒤 이미지·광고 태그만 붙여 넣으면 최종 HTML이 완성됩니다.</p>
     </header>
     <div class="steps" aria-label="사용 순서">
-      <span data-step="1">글 선택</span>
-      <span data-step="2">이미지·광고 태그 붙여넣기</span>
-      <span data-step="3">최종 HTML 복사</span>
-      <span data-step="4">HTML 모드에서 전체 교체</span>
+      <span data-step="1">발행할 글 선택</span>
+      <span data-step="2">안내된 PNG 업로드</span>
+      <span data-step="3">이미지·광고 태그 붙여넣기</span>
+      <span data-step="4">완성 HTML 복사</span>
     </div>
 
     <div class="layout">
       <aside class="panel">
-        <div class="panel-title">업로드할 보강글</div>
+        <div class="panel-title">① 발행할 글을 고르세요</div>
         <div class="post-list" id="postList">__BUTTONS__</div>
       </aside>
 
       <main class="panel">
-        <div class="panel-title">최종 HTML 만들기</div>
+        <div class="panel-title">② 선택한 글의 발행 준비</div>
         <div class="content">
           <section class="publish-fields" aria-label="발행 정보">
             <div class="field"><span class="field-label">제목</span><span class="field-value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
@@ -426,42 +460,59 @@ def render(posts):
             <div class="field"><span class="field-label">통합 원문 ID</span><span class="field-value" id="sourceIds"></span><span></span></div>
           </section>
 
-          <section class="asset-note" aria-label="이미지와 광고 위치">
-            <p><strong>업로드 이미지:</strong> <span id="imageFilename"></span></p>
-            <p><strong>대체 문구:</strong> <span id="imageAlt"></span> <button class="btn" type="button" data-copy="alt">복사</button></p>
-            <p><strong>광고 위치:</strong> <span id="adPosition"></span></p>
+          <section class="asset-note" aria-label="업로드할 이미지 안내">
+            <h2 class="asset-title">먼저 이 이미지를 티스토리에 올리세요</h2>
+            <div class="asset-grid">
+              <div class="asset-row"><span class="asset-label">이미지 파일명</span><span class="asset-value file-name" id="imageFilename"></span><button class="btn" type="button" data-copy="image-name">파일명 복사</button></div>
+              <div class="asset-row"><span class="asset-label">파일이 있는 곳</span><code class="asset-value path-value" id="imageLocation"></code><button class="btn" type="button" data-copy="image-path">경로 복사</button></div>
+              <div class="asset-row"><span class="asset-label">글에 들어갈 위치</span><span class="asset-value" id="imagePosition"></span><span></span></div>
+              <div class="asset-row"><span class="asset-label">이미지 설명</span><span class="asset-value" id="imageAlt"></span><button class="btn" type="button" data-copy="alt">설명 복사</button></div>
+              <div class="asset-row"><span class="asset-label">광고가 들어갈 위치</span><span class="asset-value" id="adPosition"></span><span></span></div>
+            </div>
+            <p class="asset-tip"><strong>작업 방법:</strong> 위 PNG를 티스토리 기본모드에서 업로드하고 광고도 삽입한 뒤, HTML 모드로 바꿔 각각의 태그를 아래 칸에 붙여 넣으세요. 실제 위치는 자동으로 맞춥니다.</p>
           </section>
 
           <div class="builder">
             <section class="markup-box">
-              <h2><label for="imageMarkup">1. 이미지 HTML 태그</label></h2>
-              <p>이미지를 티스토리에 업로드한 뒤 HTML 모드에서 이미지 <code>&lt;figure&gt;</code> 전체를 복사합니다.</p>
-              <textarea class="markup-input" id="imageMarkup" spellcheck="false" placeholder="&lt;figure class=&quot;imageblock ...&quot;&gt;...&lt;/figure&gt;"></textarea>
+              <div class="step-head"><h2><label for="imageMarkup">③ 이미지 태그 붙여넣기</label></h2><span class="step-state" id="imageStepState" data-complete="false">입력 전</span></div>
+              <p>HTML 모드에서 방금 올린 이미지의 <code>&lt;figure&gt;...&lt;/figure&gt;</code> 전체를 복사해 넣으세요.</p>
+              <textarea class="markup-input" id="imageMarkup" spellcheck="false" placeholder="여기에 티스토리 이미지 figure 태그를 붙여넣으세요"></textarea>
             </section>
             <section class="markup-box">
-              <h2><label for="adMarkup">2. AdFit HTML 태그</label></h2>
-              <p>더보기(···) → 광고 → AdFit 삽입 후 HTML 모드에서 광고 <code>&lt;figure&gt;</code>를 복사합니다.</p>
-              <textarea class="markup-input" id="adMarkup" spellcheck="false" placeholder="&lt;figure data-ke-type=&quot;revenue&quot; ...&gt;&lt;/figure&gt;"></textarea>
+              <div class="step-head"><h2><label for="adMarkup">④ AdFit 광고 태그 붙여넣기</label></h2><span class="step-state" id="adStepState" data-complete="false">입력 전</span></div>
+              <p>HTML 모드에서 AdFit 광고의 <code>&lt;figure data-ke-type=&quot;revenue&quot;&gt;...&lt;/figure&gt;</code> 전체를 복사해 넣으세요.</p>
+              <textarea class="markup-input" id="adMarkup" spellcheck="false" placeholder="여기에 티스토리 AdFit 광고 figure 태그를 붙여넣으세요"></textarea>
             </section>
           </div>
 
           <div class="action-row">
             <p class="readiness" id="readiness" data-ready="false">이미지·광고 태그를 붙여 주세요.</p>
-            <button class="btn primary" type="button" id="buildFinalButton">최종 HTML 만들기</button>
+            <button class="btn primary" type="button" id="buildFinalButton">⑤ 최종 HTML 만들기</button>
             <button class="btn" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
             <button class="btn dark" type="button" id="finalCopyButton" data-copy="final" disabled>최종 HTML 복사</button>
           </div>
           <p class="manual-help"><strong>중요:</strong> 완성 코드를 티스토리 HTML 모드에 전체 붙여넣은 뒤 기본모드로 돌아가지 마세요. 예약 저장 확인 후에만 원문 삭제가 가능합니다.</p>
-          <label class="sr-only" for="finalHtml">최종 티스토리 본문 HTML</label>
-          <textarea class="code-output" id="finalHtml" spellcheck="false" readonly></textarea>
-          <section class="preview-pane" id="previewPane" aria-label="최종 본문 미리보기" hidden>
-            <iframe class="preview-frame" id="previewFrame" title="최종 본문 미리보기" sandbox=""></iframe>
-          </section>
+          <section class="final-result" id="finalResult" hidden>
+            <section class="publish-checklist" aria-label="마지막 발행 순서">
+              <h2>최종 HTML이 완성됐습니다</h2>
+              <ol>
+                <li><strong>최종 HTML 복사</strong>를 누릅니다.</li>
+                <li>티스토리 HTML 모드 본문을 전체 선택하고 붙여 넣습니다.</li>
+                <li>기본모드로 돌아가지 않고 제목·카테고리·태그·예약 시간을 입력합니다.</li>
+                <li>예약 저장이 확인된 다음에만 아래 원문을 삭제합니다.</li>
+              </ol>
+            </section>
+            <label class="sr-only" for="finalHtml">최종 티스토리 본문 HTML</label>
+            <textarea class="code-output" id="finalHtml" spellcheck="false" readonly></textarea>
+            <section class="preview-pane" id="previewPane" aria-label="최종 본문 미리보기" hidden>
+              <iframe class="preview-frame" id="previewFrame" title="최종 본문 미리보기" sandbox=""></iframe>
+            </section>
 
-          <details class="delete-details">
-            <summary>예약 저장 확인 후 삭제할 원문 URL</summary>
-            <ul class="delete-list" id="deleteList"></ul>
-          </details>
+            <details class="delete-details">
+              <summary>예약 저장 확인 후 삭제할 원문 URL</summary>
+              <ul class="delete-list" id="deleteList"></ul>
+            </details>
+          </section>
           <div class="status" id="status" role="status" aria-live="polite"></div>
         </div>
       </main>
@@ -485,15 +536,20 @@ def render(posts):
       scheduledAt: document.getElementById("scheduledAt"),
       sourceIds: document.getElementById("sourceIds"),
       imageFilename: document.getElementById("imageFilename"),
+      imageLocation: document.getElementById("imageLocation"),
+      imagePosition: document.getElementById("imagePosition"),
       imageAlt: document.getElementById("imageAlt"),
       adPosition: document.getElementById("adPosition"),
       imageMarkup: document.getElementById("imageMarkup"),
       adMarkup: document.getElementById("adMarkup"),
+      imageStepState: document.getElementById("imageStepState"),
+      adStepState: document.getElementById("adStepState"),
       buildFinalButton: document.getElementById("buildFinalButton"),
       previewButton: document.getElementById("previewButton"),
       previewPane: document.getElementById("previewPane"),
       previewFrame: document.getElementById("previewFrame"),
       finalCopyButton: document.getElementById("finalCopyButton"),
+      finalResult: document.getElementById("finalResult"),
       finalHtml: document.getElementById("finalHtml"),
       readiness: document.getElementById("readiness"),
       deleteList: document.getElementById("deleteList"),
@@ -565,9 +621,17 @@ def render(posts):
     }
 
     function updateState(message = "") {
+      const imageReady = Boolean(extractImageMarkup(els.imageMarkup.value));
+      const adReady = Boolean(extractRevenueMarkup(els.adMarkup.value));
       const ready = isFinalHtmlStructurallyValid(currentFinalHtml);
+      els.imageStepState.dataset.complete = String(imageReady);
+      els.imageStepState.textContent = imageReady ? "확인 완료" : "입력 전";
+      els.adStepState.dataset.complete = String(adReady);
+      els.adStepState.textContent = adReady ? "확인 완료" : "입력 전";
+      els.buildFinalButton.disabled = !(imageReady && adReady);
       els.finalCopyButton.disabled = !ready;
       els.previewButton.disabled = !ready;
+      els.finalResult.hidden = !ready;
       els.readiness.dataset.ready = String(ready);
       els.readiness.textContent = message || (
         ready
@@ -643,6 +707,8 @@ def render(posts):
       els.scheduledAt.textContent = post.scheduled_at || "";
       els.sourceIds.textContent = (post.source_ids || []).join(", ");
       els.imageFilename.textContent = post.image_filename || "";
+      els.imageLocation.textContent = post.image_location || "";
+      els.imagePosition.textContent = post.image_position || "";
       els.imageAlt.textContent = post.image_alt || "";
       els.adPosition.textContent = post.ad_position || "";
       els.imageMarkup.value = window.localStorage.getItem("tistory-integration-image-" + slug) || "";
@@ -718,6 +784,8 @@ def render(posts):
       if (button.dataset.copy === "title") copyText(current.title, "제목");
       if (button.dataset.copy === "category") copyText(current.category, "카테고리");
       if (button.dataset.copy === "tags") copyText(current.tags, "태그");
+      if (button.dataset.copy === "image-name") copyText(current.image_filename, "이미지 파일명");
+      if (button.dataset.copy === "image-path") copyText(current.image_location, "이미지 경로");
       if (button.dataset.copy === "alt") copyText(current.image_alt, "이미지 대체 문구");
       if (button.dataset.copy === "final") {
         if (!isFinalHtmlStructurallyValid(currentFinalHtml)) {
