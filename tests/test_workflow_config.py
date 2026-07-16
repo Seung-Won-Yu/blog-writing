@@ -112,6 +112,20 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("표·차트·타임라인·비교·동작 흐름", contract)
         self.assertIn("실패한 이미지만 다시", contract)
 
+    def test_editor_contract_supports_verified_github_application_cases(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("GitHub 적용 사례", contract)
+        self.assertIn("주 1회 정도", contract)
+        self.assertIn("검색 지속성 30", contract)
+        self.assertIn("검증한 버전·커밋", contract)
+        self.assertIn("기대 결과와 실제 결과", contract)
+        self.assertIn("임시 디렉터리", contract)
+        self.assertIn("의심스러운 설치 스크립트", contract)
+        self.assertIn("구조 분석", contract)
+        self.assertIn("적용 전후", contract)
+        self.assertIn("측정하지 않은 숫자", contract)
+
 
 if __name__ == "__main__":
     unittest.main()
