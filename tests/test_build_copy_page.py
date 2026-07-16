@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from blog_pipeline.publishing.build_copy_page import (
+    SKIN_CSS_PATH,
     json_for_script,
     load_drafts,
     render,
@@ -251,21 +252,36 @@ class CopyPageTests(unittest.TestCase):
                 write_preview_pages(drafts)
 
             page = (preview / "2026-07-13.html").read_text(encoding="utf-8")
+            shared_skin = (preview / "tistory-style.css").read_text(encoding="utf-8")
 
         self.assertIn('<meta charset="utf-8">', page)
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', page)
         self.assertIn('Content-Security-Policy', page)
         self.assertIn("script-src 'none'", page)
+        self.assertIn("style-src 'self' 'unsafe-inline'", page)
+        self.assertIn('<link rel="stylesheet" href="tistory-style.css">', page)
         self.assertIn("한글 제목 · 본문 미리보기", page)
-        self.assertIn('class="preview-post-cover"', page)
-        self.assertIn('<main class="entry-content">', page)
+        self.assertEqual(SKIN_CSS_PATH.name, "style.css")
+        self.assertIn('<body id="tt-body-page"', page)
+        self.assertIn('<div class="post-cover">', page)
+        self.assertIn('<section id="container">', page)
+        self.assertIn('<div class="content-wrap">', page)
+        self.assertIn('<article id="content">', page)
+        self.assertIn('<div class="entry-content" id="article-view">', page)
         self.assertIn(
-            ".preview-post-cover, .entry-content { box-sizing: border-box; }",
-            page,
+            '<div class="tt_article_useless_p_margin contents_style">', page
         )
-        self.assertIn("--sw-content: 720px", page)
-        self.assertIn(".entry-content > .daily-digest-post", page)
+        self.assertNotIn('<main class="entry-content">', page)
+        self.assertNotIn(
+            ".entry-content { width: min(760px, 100%);", page
+        )
+        self.assertIn("--sw-content: 720px", shared_skin)
+        self.assertIn(
+            ".entry-content > .tt_article_useless_p_margin > .daily-digest-post",
+            shared_skin,
+        )
         self.assertIn("<article><h2>한글 제목</h2>", page)
+        self.assertEqual(page.count("<article><h2>한글 제목</h2>"), 1)
 
 
 if __name__ == "__main__":

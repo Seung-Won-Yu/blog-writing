@@ -681,12 +681,18 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
 .entry-content > .daily-digest-post,
 .entry-content > .daily-digest-post *,
 .entry-content > .daily-digest-continuation,
-.entry-content > .daily-digest-continuation * {
+.entry-content > .daily-digest-continuation *,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-post,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-post *,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-continuation,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-continuation * {
   box-sizing: border-box !important;
 }
 
 .entry-content > .daily-digest-post,
-.entry-content > .daily-digest-continuation {
+.entry-content > .daily-digest-continuation,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-post,
+.entry-content > .tt_article_useless_p_margin > .daily-digest-continuation {
   width: 100% !important;
   max-width: var(--sw-content) !important;
   margin: 0 auto !important;
@@ -1878,6 +1884,22 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
     padding: 27px 0 30px !important;
   }
 
+  #tt-body-page #content > .inner:has(#article-view .tt_article_useless_p_margin > .daily-digest-post) > .post-cover {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  #tt-body-page #content > .inner:has(#article-view .tt_article_useless_p_margin > .daily-digest-post) > .post-cover .inner {
+    width: 100% !important;
+  }
+
+  #tt-body-page #content > .inner:has(#article-view .tt_article_useless_p_margin > .daily-digest-post) > .post-cover .inner > h1 {
+    display: block !important;
+    overflow: visible !important;
+    -webkit-box-orient: initial !important;
+    -webkit-line-clamp: unset !important;
+  }
+
   .post-cover h1 {
     font-size: 28px !important;
     line-height: 1.38 !important;
@@ -1889,8 +1911,13 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 
   .entry-content > .daily-digest-post,
-  .entry-content > .daily-digest-continuation {
+  .entry-content > .daily-digest-continuation,
+  .entry-content > .tt_article_useless_p_margin > .daily-digest-post,
+  .entry-content > .tt_article_useless_p_margin > .daily-digest-continuation {
+    width: calc(100% + 36px) !important;
     max-width: none !important;
+    margin-right: -18px !important;
+    margin-left: -18px !important;
     font-size: 16.5px !important;
   }
 

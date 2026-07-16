@@ -149,6 +149,46 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn(".daily-digest-post .digest-reference-list", layer_css)
         self.assertNotIn("body .digest-data-table", layer_css)
 
+    def test_daily_digest_matches_tistory_wrapper_without_changing_ordinary_posts(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+        mobile_css = layer_css.split(
+            "@media screen and (max-width: 767px) {", 1
+        )[1]
+        wrapped_post = (
+            ".entry-content > .tt_article_useless_p_margin > .daily-digest-post"
+        )
+        wrapped_continuation = (
+            ".entry-content > .tt_article_useless_p_margin > "
+            ".daily-digest-continuation"
+        )
+
+        self.assertIn(wrapped_post, layer_css)
+        self.assertIn(f"{wrapped_post} *", layer_css)
+        self.assertIn(wrapped_continuation, layer_css)
+        self.assertIn(f"{wrapped_continuation} *", layer_css)
+        self.assertIn("width: calc(100% + 36px) !important;", mobile_css)
+        self.assertIn("margin-right: -18px !important;", mobile_css)
+        self.assertIn("margin-left: -18px !important;", mobile_css)
+        self.assertNotIn(".tt_article_useless_p_margin {", layer_css)
+        self.assertNotIn("#article-view {\n    padding-right: 0", mobile_css)
+
+    def test_mobile_daily_post_titles_are_not_double_padded_or_line_clamped(self):
+        layer_css = LAYER_PATH.read_text(encoding="utf-8")
+        mobile_css = layer_css.split(
+            "@media screen and (max-width: 767px) {", 1
+        )[1]
+
+        self.assertIn(
+            ":has(#article-view .tt_article_useless_p_margin > .daily-digest-post)",
+            mobile_css,
+        )
+        self.assertIn("padding-right: 0 !important;", mobile_css)
+        self.assertIn("padding-left: 0 !important;", mobile_css)
+        self.assertIn(".post-cover .inner > h1", mobile_css)
+        self.assertIn("display: block !important;", mobile_css)
+        self.assertIn("overflow: visible !important;", mobile_css)
+        self.assertIn("-webkit-line-clamp: unset !important;", mobile_css)
+
 
 if __name__ == "__main__":
     unittest.main()

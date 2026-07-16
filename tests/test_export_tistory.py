@@ -634,6 +634,7 @@ class EditorialImageIntegrationTests(unittest.TestCase):
         self.assertIn('class="digest-hero" aria-label="글 소개"', html)
         self.assertIn('class="digest-reading-guide"', html)
         self.assertNotIn('style="', html)
+        self.assertNotIn("<style", html.lower())
         self.assertNotIn('class="digest-title"', html)
         self.assertNotIn('class="digest-summary"', html)
 

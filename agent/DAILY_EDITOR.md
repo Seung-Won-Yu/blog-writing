@@ -140,8 +140,9 @@
 
 ## HTML 디자인 계약
 
-- 디자인 기준은 `design/tistory/skin-layer.css` 하나입니다. 생성기는 인라인 `style`을 출력하지 않습니다.
+- 전용 디자인 원본은 `design/tistory/skin-layer.css`, 티스토리 전체 적용본은 `design/tistory/style.css`입니다. 생성기는 `<style>` 태그나 인라인 `style` 속성을 본문에 출력하지 않습니다.
 - 본문은 `.daily-digest-post[data-digest-version="3"]` 하나로 시작하며 티스토리 제목을 본문에 반복하지 않습니다.
+- GitHub 미리보기는 실제 티스토리의 `#article-view > .tt_article_useless_p_margin` 래퍼와 전체 `style.css`를 그대로 사용합니다.
 - 본문 기준 폭은 `--sw-content: 720px`입니다. 이미지·구분선·광고·텍스트가 같은 기준선을 사용합니다.
 - 핵심 기사 구조는 `digest-news-card > digest-news-copy`와 광고 뒤 `digest-lead-continuation > digest-news-copy`를 유지합니다.
 - 표는 `.digest-table-wrap`에서, 코드는 `.digest-code-block`에서 모바일 가로 스크롤을 사용합니다.

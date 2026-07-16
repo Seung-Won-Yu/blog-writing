@@ -12,7 +12,7 @@ DOCS_DIR = ROOT / "docs"
 TISTORY_DIR = DOCS_DIR / "tistory"
 PREVIEW_DIR = DOCS_DIR / "preview"
 OUT_PATH = DOCS_DIR / "index.html"
-SKIN_CSS_PATH = ROOT / "design" / "tistory" / "skin-layer.css"
+SKIN_CSS_PATH = ROOT / "design" / "tistory" / "style.css"
 EDITOR_GUIDE_URL = (
     "https://github.com/Seung-Won-Yu/blog-writing/blob/main/agent/DAILY_EDITOR.md"
 )
@@ -76,6 +76,7 @@ def write_preview_pages(drafts):
     """Write UTF-8 standalone previews without changing copy-ready fragments."""
     PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
     skin_css = SKIN_CSS_PATH.read_text(encoding="utf-8")
+    (PREVIEW_DIR / "tistory-style.css").write_text(skin_css, encoding="utf-8")
     for draft in drafts:
         day = draft["day"]
         fragment_path = TISTORY_DIR / f"{day}.html"
@@ -86,50 +87,45 @@ def write_preview_pages(drafts):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
   <title>{esc(draft.get("title"))} · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
   <style>
-    {skin_css}
     html {{ background: #f5f7f9; }}
-    body {{ margin: 0; padding: 0 16px 56px; overflow-wrap: anywhere; }}
-    .preview-post-cover, .entry-content {{ box-sizing: border-box; }}
-    .preview-post-cover {{
-      width: min(720px, 100%);
-      margin: 0 auto 34px;
-      padding: 34px 0 26px;
-      border-bottom: 1px solid var(--sw-line);
+    body.preview-page {{ min-height: 100vh; margin: 0; overflow-wrap: anywhere; }}
+    .preview-page #container .content-wrap {{ max-width: none; }}
+    .preview-page #content {{
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
     }}
-    .preview-post-cover p {{
-      margin: 0 0 9px;
-      color: var(--sw-accent);
-      font-size: 12px;
-      font-weight: 760;
-    }}
-    .preview-post-cover h1 {{
-      margin: 0;
-      color: var(--sw-ink);
-      font-size: 32px;
-      line-height: 1.36;
-      letter-spacing: -.03em;
-      word-break: keep-all;
-    }}
-    .entry-content {{ width: min(760px, 100%); margin: 0 auto; padding: 0 20px; }}
-    img {{ max-width: 100%; height: auto; }}
-    @media (max-width: 560px) {{
-      body {{ padding: 0 0 40px; }}
-      .preview-post-cover {{ padding: 26px 18px 22px; }}
-      .preview-post-cover h1 {{ font-size: 24px; }}
-    }}
+    .preview-page img {{ max-width: 100%; height: auto; }}
   </style>
 </head>
-<body>
-<header class="preview-post-cover">
-  <p>티스토리 글 제목</p>
-  <h1>{esc(draft.get("title"))}</h1>
-</header>
-<main class="entry-content">
-  {fragment}
-</main>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">{esc(draft.get("category") or "본문 미리보기")}</span>
+              <h1>{esc(draft.get("title"))}</h1>
+              <span class="meta"><span class="date">{esc(day)}</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+              {fragment}
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
 </body>
 </html>
 """
