@@ -143,14 +143,32 @@ def _news(day):
     return value if isinstance(value, list) else []
 
 
+def _brief_text(value, limit, fallback):
+    text = " ".join(str(value or "").replace("\x00", " ").split())
+    lowered = text.casefold()
+    if not text or any(
+        marker in lowered for marker in ("http://", "https://", "<", ">", "```")
+    ):
+        return fallback
+    if len(text) > limit:
+        text = text[: limit - 1].rstrip() + "…"
+    return text
+
+
 def resolve_visual(day):
     """Resolve safe visual copy and per-story motifs for old and new day JSON."""
     stories = _news(day)[:3]
     first = stories[0] if stories else {}
     reference = "{} {}".format(first.get("title_kr", ""), first.get("blurb_kr", ""))
-    visual = validate_visual(day.get("visual"), reference)
+    raw_visual = day.get("visual") if isinstance(day.get("visual"), dict) else {}
+    raw_story_briefs = (
+        raw_visual.get("stories")
+        if isinstance(raw_visual.get("stories"), list)
+        else []
+    )
+    visual = validate_visual(raw_visual, reference)
     visual["stories"] = []
-    for item in stories:
+    for index, item in enumerate(stories):
         motif = motif_for_text(item.get("title_kr", ""))
         if motif == "signal":
             motif = motif_for_text(item.get("blurb_kr", ""))
@@ -158,13 +176,24 @@ def resolve_visual(day):
             item.get("title_kr", ""), item.get("blurb_kr", "")
         )
         scene = scene_for_text(reference)
+        brief = (
+            raw_story_briefs[index]
+            if index < len(raw_story_briefs)
+            and isinstance(raw_story_briefs[index], dict)
+            else {}
+        )
+        fallback_label = VISUAL_LABELS[motif]
+        fallback_scene_label = scene_label(scene, motif)
+        fallback_steps = scene_steps(scene, motif)
         visual["stories"].append(
             {
                 "motif": motif,
-                "label": VISUAL_LABELS[motif],
+                "label": _brief_text(brief.get("label"), 12, fallback_label),
                 "scene": scene,
-                "scene_label": scene_label(scene, motif),
-                "steps": scene_steps(scene, motif),
+                "scene_label": _brief_text(
+                    brief.get("scene_label"), 48, fallback_scene_label
+                ),
+                "steps": _brief_text(brief.get("steps"), 96, fallback_steps),
                 "title": " ".join(str(item.get("title_kr") or "").split()),
                 "source": " ".join(str(item.get("source") or "").split()),
             }

@@ -143,6 +143,48 @@ class EditorialImageTests(unittest.TestCase):
             ["사진 데이터의 흐름", "세 모델의 선택 기준", "벤치마크와 실제 차이"],
         )
 
+    def test_preserves_article_specific_story_briefs_for_fallback_images(self):
+        day = {
+            **DAY,
+            "visual": {
+                "subject": "구체적 기사 장면",
+                "hook": "무엇이 실제로 달라졌나?",
+                "motif": "security",
+                "stories": [
+                    {
+                        "label": "권한 검토",
+                        "scene_label": "휴대폰 사진 한 장과 권한 토글",
+                        "steps": "사진 선택 → AI 전송 → 자동 연동 중단",
+                    },
+                    {
+                        "label": "로그 추적",
+                        "scene_label": "실행 로그와 권한 범위를 나란히 비교",
+                        "steps": "자동 실행 → 로그 기록 → 사람이 추적",
+                    },
+                ],
+            },
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(visual["stories"][0]["label"], "권한 검토")
+        self.assertEqual(
+            visual["stories"][0]["scene_label"],
+            "휴대폰 사진 한 장과 권한 토글",
+        )
+        self.assertEqual(
+            visual["stories"][0]["steps"],
+            "사진 선택 → AI 전송 → 자동 연동 중단",
+        )
+        self.assertEqual(
+            visual["stories"][1]["scene_label"],
+            "실행 로그와 권한 범위를 나란히 비교",
+        )
+        self.assertEqual(
+            visual["stories"][2]["steps"],
+            "변화 감지 → 의미 해석 → 다음 행동",
+        )
+
     def test_keeps_a_short_subject_separate_from_the_curiosity_hook(self):
         day = {
             **DAY,

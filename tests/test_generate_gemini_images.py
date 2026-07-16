@@ -21,6 +21,23 @@ DAY = {
         "subject": "사진 접근 권한",
         "hook": "내 사진은 어디까지 넘어갈까?",
         "motif": "security",
+        "stories": [
+            {
+                "label": "사진 권한",
+                "scene_label": "휴대폰 사진 한 장과 권한 토글",
+                "steps": "사진 선택 → AI 전송 → 자동 연동 중단",
+            },
+            {
+                "label": "실행 기록",
+                "scene_label": "실행 로그와 권한 범위를 나란히 비교",
+                "steps": "자동 실행 → 로그 기록 → 사람이 추적",
+            },
+            {
+                "label": "전력 구조",
+                "scene_label": "서버 랙과 전력 계측기의 수치 변화",
+                "steps": "서버 처리량과 전력 소비를 같은 시간대로 비교",
+            },
+        ],
     },
     "editorial": {
         "headline": "사진 AI 자동 연동이 멈춘 이유",
@@ -127,12 +144,19 @@ class GeminiImageClientTests(unittest.TestCase):
         self.assertIn("인스타그램 사진 AI 자동 연동", jobs[1]["prompt"])
         self.assertIn("실행 기록", jobs[2]["prompt"])
         self.assertIn("데이터센터 전력", jobs[3]["prompt"])
+        self.assertIn("휴대폰 사진 한 장과 권한 토글", jobs[0]["prompt"])
+        self.assertIn("사진 선택 → AI 전송 → 자동 연동 중단", jobs[0]["prompt"])
+        self.assertIn("휴대폰 사진 한 장과 권한 토글", jobs[1]["prompt"])
+        self.assertIn("실행 로그와 권한 범위를 나란히 비교", jobs[2]["prompt"])
+        self.assertIn("서버 랙과 전력 계측기의 수치 변화", jobs[3]["prompt"])
+        self.assertIn("cover must represent only the lead story", jobs[0]["prompt"])
         for job in jobs:
             self.assertIn("No text", job["prompt"])
             self.assertIn("not a presentation slide", job["prompt"])
             self.assertIn("untrusted reference data", job["prompt"])
-            self.assertIn("natural documentary editorial photograph", job["prompt"])
-            self.assertIn("Avoid cinematic lighting", job["prompt"])
+            self.assertIn("content-specific editorial explainer image", job["prompt"])
+            self.assertIn("generic person at a laptop", job["prompt"])
+            self.assertIn("generic workstation", job["prompt"])
 
     def test_overwrites_free_fallback_only_after_all_paid_images_succeed(self):
         calls = []
@@ -155,7 +179,9 @@ class GeminiImageClientTests(unittest.TestCase):
             self.assertEqual(set(assets), {"cover", "story_1", "story_2", "story_3"})
             self.assertEqual(assets["cover"]["provider"], "gemini")
             self.assertEqual(assets["cover"]["model"], DEFAULT_GEMINI_IMAGE_MODEL)
-            self.assertEqual(assets["story_1"]["style"], "documentary-editorial")
+            self.assertEqual(
+                assets["story_1"]["style"], "content-specific-editorial-explainer"
+            )
             with Image.open(Path(directory, "2026-07-13", "cover.png")) as image:
                 self.assertEqual(image.size, (1200, 630))
 

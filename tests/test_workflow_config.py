@@ -79,6 +79,16 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("하나의 커밋", contract)
         self.assertIn("digest-news-copy", contract)
 
+    def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("대표 이미지는 첫 기사 하나만", contract)
+        self.assertIn("기사 고유 시각 단서", contract)
+        self.assertIn("원인 → 결과", contract)
+        self.assertIn("노트북 앞 사람", contract)
+        self.assertIn("1초 안에", contract)
+        self.assertIn("실패한 이미지만 다시", contract)
+
 
 if __name__ == "__main__":
     unittest.main()
