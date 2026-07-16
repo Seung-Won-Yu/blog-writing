@@ -475,8 +475,8 @@ def render(posts):
           <div class="builder">
             <section class="markup-box">
               <div class="step-head"><h2><label for="imageMarkup">③ 이미지 태그 붙여넣기</label></h2><span class="step-state" id="imageStepState" data-complete="false">입력 전</span></div>
-              <p>HTML 모드에서 방금 올린 이미지의 <code>&lt;figure&gt;...&lt;/figure&gt;</code> 전체를 복사해 넣으세요.</p>
-              <textarea class="markup-input" id="imageMarkup" spellcheck="false" placeholder="여기에 티스토리 이미지 figure 태그를 붙여넣으세요"></textarea>
+              <p>HTML 모드에서 방금 올린 이미지 줄 전체를 복사해 넣으세요. 티스토리가 만든 <code>[##_Image|..._##]</code> 형식도 정상입니다.</p>
+              <textarea class="markup-input" id="imageMarkup" spellcheck="false" placeholder="여기에 티스토리 이미지 한 줄 전체를 붙여넣으세요"></textarea>
             </section>
             <section class="markup-box">
               <div class="step-head"><h2><label for="adMarkup">④ AdFit 광고 태그 붙여넣기</label></h2><span class="step-state" id="adStepState" data-complete="false">입력 전</span></div>
@@ -524,6 +524,7 @@ def render(posts):
     const firstSlug = __FIRST_SLUG__;
     const imageMarker = "<!-- TISTORY_IMAGE_TAG -->";
     const adMarker = "<!-- ADFIT_TAG -->";
+    const tistoryImagePattern = /\[##_Image\|[\s\S]*?_##\]/g;
     const bySlug = new Map(posts.map((post) => [post.slug, post]));
     let current = null;
     let sourceHtml = "";
@@ -568,18 +569,36 @@ def render(posts):
       return new DOMParser().parseFromString(String(value || ""), "text/html");
     }
 
+    function extractTistoryImageMarkup(value) {
+      const text = String(value || "").trim();
+      const tokens = text.match(tistoryImagePattern) || [];
+      if (tokens.length !== 1) return "";
+      const paragraph = text.match(/<p(?:\s[^>]*)?>\s*\[##_Image\|[\s\S]*?_##\]\s*<\/p>/i);
+      return paragraph ? paragraph[0].trim() : tokens[0];
+    }
+
     function extractImageMarkup(value) {
+      const text = String(value || "");
       const parsed = parseMarkup(value);
       const figures = Array.from(parsed.querySelectorAll("figure")).filter((figure) => {
         return figure.querySelector("img") && figure.dataset.keType !== "revenue";
       });
-      if (figures.length === 1) return figures[0].outerHTML;
       const images = parsed.querySelectorAll("img");
+      const tistoryImageMarkup = extractTistoryImageMarkup(text);
+      const tistoryImageCount = (text.match(tistoryImagePattern) || []).length;
+      if (tistoryImageCount) {
+        return tistoryImageCount === 1 && figures.length === 0 && images.length === 0
+          ? tistoryImageMarkup
+          : "";
+      }
+      if (figures.length === 1) return figures[0].outerHTML;
       return figures.length === 0 && images.length === 1 ? images[0].outerHTML : "";
     }
 
     function applyImageAlt(markup, alt) {
       if (!markup) return "";
+      const tistoryImageMarkup = extractTistoryImageMarkup(markup);
+      if (tistoryImageMarkup) return tistoryImageMarkup;
       const parsed = parseMarkup(markup);
       const images = parsed.querySelectorAll("img");
       if (images.length !== 1) return "";
@@ -608,9 +627,13 @@ def render(posts):
       const parsed = parseMarkup(value);
       const articles = parsed.querySelectorAll("article");
       const images = parsed.querySelectorAll("article img");
+      const tistoryImageCount = articles.length === 1
+        ? (articles[0].innerHTML.match(tistoryImagePattern) || []).length
+        : 0;
       const ads = parsed.querySelectorAll('article figure[data-ke-type="revenue"]');
       const scripts = parsed.querySelectorAll("script");
-      return articles.length === 1 && images.length >= 1 && ads.length === 1 && scripts.length === 0;
+      return articles.length === 1 && (images.length + tistoryImageCount) >= 1
+        && ads.length === 1 && scripts.length === 0;
     }
 
     function setPreviewMode(showingPreview) {
