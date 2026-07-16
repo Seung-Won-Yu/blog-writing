@@ -54,6 +54,30 @@
       border-bottom: 1px solid var(--line);
       background: var(--paper);
     }
+    .desk-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .desk-nav a {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .desk-nav a[aria-current="page"] {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
     .eyebrow {
       margin: 0 0 7px;
       color: var(--accent);
@@ -337,6 +361,10 @@
 </head>
 <body>
   <div class="wrap">
+    <nav class="desk-nav" aria-label="발행 도구">
+      <a href="./" aria-current="page">데일리 뉴스 발행</a>
+      <a href="integration.html">보강글 HTML 조립</a>
+    </nav>
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>

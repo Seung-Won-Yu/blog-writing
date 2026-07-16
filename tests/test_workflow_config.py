@@ -19,6 +19,9 @@ class WorkflowConfigTests(unittest.TestCase):
             workflow,
         )
         self.assertIn("python3 -m blog_pipeline.publishing.build_copy_page", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.publishing.build_integration_page", workflow
+        )
         self.assertIn("actions/upload-pages-artifact@v3", workflow)
         self.assertIn("actions/deploy-pages@v5", workflow)
 

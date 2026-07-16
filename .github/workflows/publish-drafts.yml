@@ -43,7 +43,9 @@ jobs:
         run: python3 -m blog_pipeline.publishing.optimize_images --check-all
 
       - name: Build committed draft previews
-        run: python3 -m blog_pipeline.publishing.build_copy_page
+        run: |
+          python3 -m blog_pipeline.publishing.build_copy_page
+          python3 -m blog_pipeline.publishing.build_integration_page
 
       - uses: actions/configure-pages@v5
 

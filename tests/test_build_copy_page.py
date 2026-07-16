@@ -47,6 +47,8 @@ class CopyPageTests(unittest.TestCase):
         self.assertNotIn("조이한", html)
         self.assertIn('role="status"', html)
         self.assertIn('aria-live="polite"', html)
+        self.assertIn('href="integration.html"', html)
+        self.assertIn("보강글 HTML 조립", html)
 
     def test_draft_buttons_expose_selected_state_and_fetch_recovery(self):
         html = render(

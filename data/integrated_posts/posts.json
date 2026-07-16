@@ -1,0 +1,80 @@
+[
+  {
+    "slug": "java-star-patterns",
+    "title": "Java 별찍기 완전정리: 이중 for문으로 삼각형·역삼각형·피라미드 출력",
+    "category": "자격증·공부 아카이브 / Java 기초",
+    "tags": [
+      "Java",
+      "별찍기",
+      "이중 for문",
+      "중첩 반복문",
+      "삼각형 출력",
+      "피라미드",
+      "코딩테스트",
+      "Java 기초"
+    ],
+    "scheduled_at": "2026-07-17T09:00:00+09:00",
+    "source_ids": [5, 7, 22, 38, 39, 40],
+    "delete_urls": [
+      "https://won0322.tistory.com/5",
+      "https://won0322.tistory.com/7",
+      "https://won0322.tistory.com/22",
+      "https://won0322.tistory.com/38",
+      "https://won0322.tistory.com/39",
+      "https://won0322.tistory.com/40"
+    ],
+    "image_filename": "java-star-patterns-diagram.png",
+    "image_alt": "Java 이중 for문으로 출력하는 왼쪽 삼각형, 역삼각형, 오른쪽 삼각형, 중앙 피라미드 비교",
+    "ad_position": "왼쪽 삼각형·역삼각형 설명 뒤 · 본문 약 36%"
+  },
+  {
+    "slug": "java-method-examples",
+    "title": "Java 메서드 예제 3가지: 계산기·가운데 글자·거듭제곱 구현",
+    "category": "자격증·공부 아카이브 / Java 기초",
+    "tags": [
+      "Java",
+      "Java 메서드",
+      "매개변수",
+      "반환값",
+      "substring",
+      "switch문",
+      "거듭제곱",
+      "Java 기초"
+    ],
+    "scheduled_at": "2026-07-18T09:00:00+09:00",
+    "source_ids": [33, 34, 37],
+    "delete_urls": [
+      "https://won0322.tistory.com/33",
+      "https://won0322.tistory.com/34",
+      "https://won0322.tistory.com/37"
+    ],
+    "image_filename": "java-method-examples-diagram.png",
+    "image_alt": "Java 계산기, 가운데 글자, 거듭제곱 메서드의 매개변수 처리와 반환 과정",
+    "ad_position": "계산기 메서드 설명 뒤 · 본문 약 38%"
+  },
+  {
+    "slug": "java-array-practice",
+    "title": "Java 배열 문제 풀이: 조건 필터링·오름차순 정렬·가장 가까운 두 수",
+    "category": "자격증·공부 아카이브 / Java 기초",
+    "tags": [
+      "Java",
+      "Java 배열",
+      "Arrays.sort",
+      "배열 정렬",
+      "조건 필터링",
+      "이중 for문",
+      "코딩테스트",
+      "Java 기초"
+    ],
+    "scheduled_at": "2026-07-19T09:00:00+09:00",
+    "source_ids": [21, 24, 36],
+    "delete_urls": [
+      "https://won0322.tistory.com/21",
+      "https://won0322.tistory.com/24",
+      "https://won0322.tistory.com/36"
+    ],
+    "image_filename": "java-array-practice-diagram.png",
+    "image_alt": "Java 배열의 조건 필터링, 오름차순 정렬, 차이가 가장 작은 두 원소 탐색 비교",
+    "ad_position": "조건 필터링·정렬 설명 뒤 · 본문 약 40%"
+  }
+]

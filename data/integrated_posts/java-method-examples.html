@@ -1,0 +1,269 @@
+<style>
+.java-method-post {
+  --jme-ink: #18243a;
+  --jme-muted: #5d687a;
+  --jme-line: #dce4eb;
+  --jme-accent: #7a3e16;
+  --jme-accent-soft: #fff4e8;
+  --jme-green-soft: #edf7f3;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 26px;
+  color: var(--jme-ink);
+  font-size: 18px;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.java-method-post * { box-sizing: border-box; }
+.java-method-post p { margin: 0 0 1.15em; }
+.java-method-post h2 {
+  margin: 2.7em 0 0.85em;
+  padding-bottom: 0.38em;
+  border-bottom: 2px solid var(--jme-ink);
+  font-size: 1.5em;
+  line-height: 1.4;
+}
+.java-method-post h3 { margin: 2em 0 0.65em; color: var(--jme-accent); font-size: 1.17em; line-height: 1.5; }
+.java-method-post strong { color: #102a43; }
+.java-method-post a { color: #0b6fbd; text-underline-offset: 3px; }
+.java-method-post .jme-lead { margin-bottom: 1.35em; font-size: 1.08em; line-height: 1.9; }
+.java-method-post .jme-key { width: 100%; margin: 1.6em 0; border-left: 5px solid var(--jme-accent); background: var(--jme-accent-soft); }
+.java-method-post .jme-key p { margin: 0; padding: 16px 18px; }
+.java-method-post .jme-toc { width: 100%; margin: 1.7em 0 2.2em; border: 1px solid var(--jme-line); border-radius: 12px; background: #fff; }
+.java-method-post .jme-toc strong { display: block; padding: 17px 18px 6px; }
+.java-method-post .jme-toc ol { margin: 0; padding: 4px 18px 17px 40px; }
+.java-method-post .jme-toc li { margin: 4px 0; }
+.java-method-post .jme-visual { margin: 2em 0 2.3em; }
+.java-method-post .jme-visual figure { margin: 0 !important; }
+.java-method-post .jme-visual img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.java-method-post .jme-caption { margin: 10px 0 0; color: var(--jme-muted); font-size: 0.83em; line-height: 1.6; text-align: center; }
+.java-method-post .jme-flow { width: 100%; margin: 1.25em 0 1.7em; border: 1px solid #cfe2d9; border-radius: 10px; background: var(--jme-green-soft); }
+.java-method-post .jme-flow p { margin: 0; padding: 14px 18px; }
+.java-method-post .jme-code { max-width: 100%; margin: 1.25em 0 1.7em; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; background: #111827; }
+.java-method-post .jme-code pre { min-width: max-content; margin: 0; padding: 18px 20px; color: #e5edf7; font: 15px/1.7 SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; tab-size: 4; }
+.java-method-post .jme-output pre { color: #d7ffe8; }
+.java-method-post .jme-table-wrap { max-width: 100%; margin: 1.3em 0 1.8em; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.java-method-post table { width: 100%; min-width: 660px; border-collapse: collapse; font-size: 0.92em; }
+.java-method-post th,
+.java-method-post td { padding: 12px 14px; border: 1px solid var(--jme-line); text-align: left; vertical-align: top; }
+.java-method-post th { background: #f4f7fa; white-space: nowrap; }
+.java-method-post ul,
+.java-method-post ol { padding-left: 1.35em; }
+.java-method-post li { margin: 0.38em 0; }
+.java-method-post code:not(pre code) { padding: 0.12em 0.38em; border-radius: 4px; background: #eef2f6; color: #9b3f1b; font-size: 0.92em; }
+.java-method-post .jme-summary { width: 100%; margin: 2.2em 0 0; border-top: 3px solid var(--jme-accent); background: #faf8f5; }
+.java-method-post .jme-summary-inner { padding: 18px 20px; }
+.java-method-post .jme-summary h2 { margin: 0 0 0.6em; padding: 0; border: 0; font-size: 1.28em; }
+.java-method-post .jme-summary ul { margin-bottom: 0; }
+@media (max-width: 640px) {
+  .java-method-post { padding: 0 19px; font-size: 17px; line-height: 1.82; }
+  .java-method-post h2 { margin-top: 2.35em; font-size: 1.35em; }
+  .java-method-post h3 { font-size: 1.1em; }
+  .java-method-post .jme-code pre { padding: 16px; font-size: 14px; }
+  .java-method-post th,
+  .java-method-post td { padding: 10px 12px; }
+}
+</style>
+
+<article class="java-method-post">
+  <p class="jme-lead"><strong>Java 메서드</strong>는 입력값을 매개변수로 받고, 한 가지 일을 처리한 뒤 결과를 반환하도록 코드를 묶는 단위다. 계산기, 문자열 가운데 글자, 거듭제곱 예제를 같은 구조로 구현하면 <strong>매개변수 → 처리 → 반환값 → 호출</strong>의 흐름이 선명해진다.</p>
+
+  <p>클래스·객체와 메서드의 관계가 먼저 필요하다면 <a href="https://won0322.tistory.com/127">Java 메서드와 객체지향: 클래스·생성자·상속 한 번에 정리</a>를 읽고 이 실전 예제로 이어가면 된다.</p>
+
+  <div class="jme-key"><p><strong>좋은 메서드의 기준:</strong> 이름만 보고 역할을 알 수 있고, 입력과 출력이 분명하며, 잘못된 입력을 조용히 숨기지 않는다.</p></div>
+
+  <div class="jme-visual">
+    <!-- TISTORY_IMAGE_TAG -->
+    <p class="jme-caption">호출값이 매개변수로 전달되고 계산 결과가 호출 지점으로 돌아오는 메서드 흐름</p>
+  </div>
+
+  <nav class="jme-toc" aria-label="목차">
+    <strong>목차</strong>
+    <ol>
+      <li><a href="#jme-structure">메서드 선언과 호출 흐름</a></li>
+      <li><a href="#jme-calculator">연산자에 따라 계산하는 메서드</a></li>
+      <li><a href="#jme-middle">문자열 가운데 글자 반환</a></li>
+      <li><a href="#jme-power">반복문으로 거듭제곱 계산</a></li>
+      <li><a href="#jme-full-code">전체 실행 코드</a></li>
+      <li><a href="#jme-mistakes">자주 틀리는 부분</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="jme-structure">1. 메서드 선언은 네 부분으로 읽는다</h2>
+
+  <div class="jme-code"><pre><code>static int add(int num1, int num2) {
+    return num1 + num2;
+}</code></pre></div>
+
+  <p><code>int</code>는 반환형, <code>add</code>는 메서드명, 괄호 안의 <code>num1</code>과 <code>num2</code>는 매개변수다. <code>return</code>을 만나면 메서드 실행이 끝나고 계산 결과가 호출 지점으로 돌아간다.</p>
+
+  <div class="jme-flow"><p><code>add(7, 5)</code> 호출 → <code>num1 = 7</code>, <code>num2 = 5</code> 전달 → 덧셈 → <code>12</code> 반환</p></div>
+
+  <p><code>static</code> 메서드인 <code>main</code>에서 객체 생성 없이 바로 부르려면 예제 메서드도 <code>static</code>으로 선언한다. 객체와 함께 사용하는 인스턴스 메서드는 동작 방식이 다르지만, 매개변수와 반환값을 읽는 원리는 같다.</p>
+
+  <div class="jme-table-wrap">
+    <table>
+      <thead><tr><th>요소</th><th>예시</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td>반환형</td><td><code>int</code>, <code>String</code>, <code>void</code></td><td>호출 지점으로 돌려줄 값의 자료형</td></tr>
+        <tr><td>메서드명</td><td><code>calculate</code></td><td>동작을 나타내는 이름</td></tr>
+        <tr><td>매개변수</td><td><code>int base</code></td><td>메서드가 처리할 입력값</td></tr>
+        <tr><td>반환문</td><td><code>return result;</code></td><td>결과를 돌려주고 실행 종료</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="jme-calculator">2. 연산자에 따라 계산하는 calculate()</h2>
+
+  <p>숫자 두 개와 연산자를 매개변수로 받는다. 여러 <code>if</code>문보다 <code>switch</code>문을 쓰면 허용하는 연산자와 각 반환값이 한눈에 보인다. 나눗셈 결과의 소수 부분을 보존하기 위해 반환형은 <code>double</code>로 정했다.</p>
+
+  <div class="jme-code"><pre><code>static double calculate(double num1, double num2, char operator) {
+    switch (operator) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            if (num2 == 0) {
+                throw new IllegalArgumentException("0으로 나눌 수 없습니다.");
+            }
+            return num1 / num2;
+        default:
+            throw new IllegalArgumentException("지원하지 않는 연산자입니다.");
+    }
+}</code></pre></div>
+
+  <div class="jme-code jme-output"><pre><code>calculate(50, 15, '-') → 35.0
+calculate(50, 15, '*') → 750.0
+calculate(10, 4, '/')  → 2.5</code></pre></div>
+
+  <p>지원하지 않는 연산자를 받았을 때 <code>0</code>을 반환하면 실제 계산 결과 0과 오류를 구분할 수 없다. 예외로 잘못된 입력을 알리는 편이 안전하다.</p>
+
+  <!-- ADFIT_TAG -->
+
+  <h2 id="jme-middle">3. 홀수·짝수 길이를 모두 처리하는 getMiddle()</h2>
+
+  <p>길이가 홀수면 가운데 한 글자, 짝수면 가운데 두 글자를 반환한다. 문자열을 배열로 쪼갤 필요 없이 <code>substring(start, end)</code>를 사용하면 시작 위치와 끝 위치만 계산할 수 있다.</p>
+
+  <div class="jme-flow"><p><strong>시작 위치</strong> <code>(length - 1) / 2</code> · <strong>끝 위치</strong> <code>length / 2 + 1</code></p></div>
+
+  <div class="jme-code"><pre><code>static String getMiddle(String word) {
+    if (word == null || word.isEmpty()) {
+        throw new IllegalArgumentException("빈 문자열은 처리할 수 없습니다.");
+    }
+
+    int length = word.length();
+    int start = (length - 1) / 2;
+    int end = length / 2 + 1;
+
+    return word.substring(start, end);
+}</code></pre></div>
+
+  <div class="jme-code jme-output"><pre><code>getMiddle("power") → "w"
+getMiddle("test")  → "es"
+getMiddle("A")     → "A"</code></pre></div>
+
+  <p><code>substring</code>의 두 번째 인덱스는 포함되지 않는다. <code>test</code>의 길이는 4이므로 <code>start = 1</code>, <code>end = 3</code>이고 인덱스 1과 2의 <code>es</code>가 반환된다.</p>
+
+  <h2 id="jme-power">4. 반복문으로 거듭제곱을 계산하는 power()</h2>
+
+  <p><code>base</code>를 <code>exponent</code>번 곱한다. 누적 곱의 시작값은 반드시 <code>1</code>이어야 한다. 시작값을 특정 밑인 2로 고정하면 <code>power(3, 4)</code>처럼 다른 밑을 넣었을 때 잘못된 결과가 나온다.</p>
+
+  <div class="jme-code"><pre><code>static long power(int base, int exponent) {
+    if (exponent &lt; 0) {
+        throw new IllegalArgumentException("지수는 0 이상이어야 합니다.");
+    }
+
+    long result = 1;
+    for (int i = 0; i &lt; exponent; i++) {
+        result *= base;
+    }
+    return result;
+}</code></pre></div>
+
+  <div class="jme-code jme-output"><pre><code>power(2, 3) → 8
+power(3, 4) → 81
+power(7, 0) → 1</code></pre></div>
+
+  <p>0제곱 결과가 1인 이유도 시작값에서 드러난다. <code>exponent = 0</code>이면 반복문이 한 번도 실행되지 않고 초기값 1이 그대로 반환된다. 큰 수는 <code>long</code> 범위도 넘을 수 있으므로 실제 대용량 계산에는 <code>BigInteger</code>가 필요하다.</p>
+
+  <h2 id="jme-full-code">5. 세 메서드를 한 번에 실행하는 전체 코드</h2>
+
+  <div class="jme-code"><pre><code>public class MethodExamples {
+    public static void main(String[] args) {
+        System.out.println(calculate(50, 15, '-'));
+        System.out.println(calculate(10, 4, '/'));
+
+        System.out.println(getMiddle("power"));
+        System.out.println(getMiddle("test"));
+
+        System.out.println(power(2, 3));
+        System.out.println(power(3, 4));
+        System.out.println(power(7, 0));
+    }
+
+    static double calculate(double num1, double num2, char operator) {
+        switch (operator) {
+            case '+': return num1 + num2;
+            case '-': return num1 - num2;
+            case '*': return num1 * num2;
+            case '/':
+                if (num2 == 0) {
+                    throw new IllegalArgumentException("0으로 나눌 수 없습니다.");
+                }
+                return num1 / num2;
+            default:
+                throw new IllegalArgumentException("지원하지 않는 연산자입니다.");
+        }
+    }
+
+    static String getMiddle(String word) {
+        if (word == null || word.isEmpty()) {
+            throw new IllegalArgumentException("빈 문자열은 처리할 수 없습니다.");
+        }
+        int length = word.length();
+        return word.substring((length - 1) / 2, length / 2 + 1);
+    }
+
+    static long power(int base, int exponent) {
+        if (exponent &lt; 0) {
+            throw new IllegalArgumentException("지수는 0 이상이어야 합니다.");
+        }
+        long result = 1;
+        for (int i = 0; i &lt; exponent; i++) {
+            result *= base;
+        }
+        return result;
+    }
+}</code></pre></div>
+
+  <h2 id="jme-mistakes">6. 메서드 예제에서 자주 틀리는 부분</h2>
+
+  <h3>반환형과 실제 반환값이 다른 경우</h3>
+  <p><code>String</code>을 반환한다고 선언했다면 모든 정상 경로에서 문자열을 반환해야 한다. 결과가 필요 없는 출력 전용 메서드만 <code>void</code>를 사용한다.</p>
+
+  <h3>정수 나눗셈으로 소수 부분이 사라지는 경우</h3>
+  <p><code>10 / 4</code>는 두 피연산자가 정수면 2다. 계산기처럼 소수 결과가 필요하면 매개변수와 반환형을 <code>double</code>로 선언한다.</p>
+
+  <h3>문자와 문자열 따옴표를 혼동하는 경우</h3>
+  <p>연산자 한 글자는 <code>'+'</code>처럼 작은따옴표를 쓰는 <code>char</code>다. <code>"+"</code>는 <code>String</code>이므로 <code>char operator</code>와 비교할 수 없다.</p>
+
+  <h3>거듭제곱 누적값을 base로 고정하는 경우</h3>
+  <p>초기값을 <code>base</code>로 두고 반복 횟수를 하나 줄이는 구현도 가능하지만 0제곱을 별도로 처리해야 한다. <code>result = 1</code>에서 정확히 지수만큼 곱하면 모든 0 이상의 지수를 같은 규칙으로 처리한다.</p>
+
+  <div class="jme-summary">
+    <div class="jme-summary-inner">
+      <h2>핵심 요약</h2>
+      <ul>
+        <li>메서드는 매개변수로 입력을 받고 반환형에 맞는 결과를 돌려준다.</li>
+        <li>계산기는 잘못된 연산자와 0 나누기를 예외로 처리한다.</li>
+        <li>가운데 글자는 문자열 길이로 시작·끝 인덱스를 계산한다.</li>
+        <li>거듭제곱의 누적 곱은 1에서 시작하고 지수만큼 반복한다.</li>
+        <li>정상 결과와 오류가 섞이지 않도록 입력 조건을 명확히 검사한다.</li>
+      </ul>
+    </div>
+  </div>
+</article>
