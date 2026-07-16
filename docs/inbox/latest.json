@@ -1,31 +1,58 @@
 {
   "schema_version": 1,
-  "day": "2026-07-16",
-  "generated_at": "2026-07-15T23:12:44.334878+00:00",
+  "day": "2026-07-17",
+  "generated_at": "2026-07-16T23:10:43.761076+00:00",
   "review_required": true,
   "selection": {
-    "max_items": 3,
+    "mode": "lead_shortlist",
+    "max_items": 5,
     "max_per_source": 1,
-    "exclude_recent_days": 14,
-    "audience_lanes": [
-      "broad",
-      "practical",
-      "deep"
-    ],
-    "max_topic_items": {
-      "ai": 3
-    },
-    "max_research_items": 0,
-    "require_topic_coherence": true,
-    "preferred_groups": [
-      "official",
-      "community",
-      "korean_editorial",
-      "research"
-    ],
+    "max_per_family": 1,
+    "min_lead_score": 8,
+    "exclude_recent_days": 60,
     "recently_selected_excluded": 3
   },
   "candidates": [
+    {
+      "id": "a907415b440a",
+      "title": "Why teens deserve access to safe AI",
+      "normalized_title": "why teens deserve access to safe ai",
+      "url": "https://openai.com/index/why-teens-deserve-access-safe-ai",
+      "published_at": "2026-07-16T16:00:00+00:00",
+      "summary": "Learn how OpenAI is making ChatGPT safer for teens with age-appropriate protections, learning tools, parental controls, and expert partnerships.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 12,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 12
+    },
     {
       "id": "23b1197c7433",
       "title": "The US is advancing AI safety through state and federal action",
@@ -34,6 +61,7 @@
       "published_at": "2026-07-15T12:00:00+00:00",
       "summary": "OpenAI outlines a “reverse federalism” approach to AI governance, where state laws help build a national framework for safe, democratic AI.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -55,7 +83,17 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 14,
+      "lead_rank": 4,
+      "selection_reason": "핵심뉴스 후보 4 · 점수 14"
     },
     {
       "id": "f8df3e0d3cc8",
@@ -65,6 +103,7 @@
       "published_at": "2026-07-15T10:00:00+00:00",
       "summary": "Explore GPT-Red, OpenAI’s automated red teaming system that uses self-play to improve AI safety, alignment, and prompt injection robustness.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -86,47 +125,25 @@
       },
       "topic_tags": [
         "ai"
-      ]
-    },
-    {
-      "id": "27d181b6a490",
-      "title": "Code scanning shows AI security detections on pull requests",
-      "normalized_title": "code scanning shows ai security detections on pull requests",
-      "url": "https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests",
-      "published_at": "2026-07-14T19:12:48+00:00",
-      "summary": "GitHub code scanning now surfaces AI-powered security detections directly on pull requests, expanding vulnerability coverage to languages and frameworks not currently supported by CodeQL. These detections help teams identify and… The post Code scanning shows AI security detections on pull requests appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
       ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 4,
-        "deep": 0
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 5
       },
-      "topic_tags": [
-        "ai"
-      ]
+      "lead_score": 12
     },
     {
-      "id": "0a5ca4c5b523",
-      "title": "How to manage AI investments in the agentic era",
-      "normalized_title": "how to manage ai investments in the agentic era",
-      "url": "https://openai.com/index/managing-ai-investments-in-agentic-era",
-      "published_at": "2026-07-14T10:00:00+00:00",
-      "summary": "Learn how enterprises can manage AI investments in the agentic era by measuring useful work per dollar, improving efficiency, and scaling high-value workflows.",
+      "id": "f47e8f0dcf67",
+      "title": "How Cars24 scales conversations and builds faster with OpenAI",
+      "normalized_title": "how cars24 scales conversations and builds faster with openai",
+      "url": "https://openai.com/index/cars24",
+      "published_at": "2026-07-16T00:00:00+00:00",
+      "summary": "Cars24 uses OpenAI-powered voice and chat agents to handle 1M+ monthly conversation minutes, recover 12% of lost leads, and bring agentic workflows to teams across the company.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -148,16 +165,25 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 12
     },
     {
-      "id": "3fbe8ceb6f00",
-      "title": "Improvements to secret scanning and public monitoring",
-      "normalized_title": "improvements to secret scanning and public monitoring",
-      "url": "https://github.blog/changelog/2026-07-15-improvements-to-secret-scanning-and-public-monitoring",
-      "published_at": "2026-07-15T22:38:16+00:00",
-      "summary": "This week, we’re rolling out several improvements to secret scanning and public monitoring: Resend is now a GitHub secret scanning partner. Secret scanning now detects new secret types from APIclub… The post Improvements to secret scanning and public monitoring appeared first on The GitHub Blog .",
+      "id": "75a0b958cea2",
+      "title": "Advanced search for Projects is generally available",
+      "normalized_title": "advanced search for projects is generally available",
+      "url": "https://github.blog/changelog/2026-07-16-advanced-search-for-projects-is-generally-available",
+      "published_at": "2026-07-16T19:07:14+00:00",
+      "summary": "The filter bar in GitHub Projects views now supports advanced search, so you can build the exact view you need with logical AND and OR instead of maintaining a separate… The post Advanced search for Projects is generally available appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -176,16 +202,62 @@
         "practical": 4,
         "deep": 0
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 18
     },
     {
-      "id": "3bf43cc89698",
-      "title": "GitHub Copilot in Visual Studio — June update",
-      "normalized_title": "github copilot in visual studio june update",
-      "url": "https://github.blog/changelog/2026-07-14-github-copilot-in-visual-studio-june-update",
-      "published_at": "2026-07-15T00:01:24+00:00",
-      "summary": "June 2026 is about visibility and trust with a clearer view of your GitHub Copilot usage, a new trust layer for MCP servers, and the first C++ scenarios for the… The post GitHub Copilot in Visual Studio — June update appeared first on The GitHub Blog .",
+      "id": "9ae1968152cd",
+      "title": "Repository admins can archive pull requests",
+      "normalized_title": "repository admins can archive pull requests",
+      "url": "https://github.blog/changelog/2026-07-16-repository-admins-can-archive-pull-requests",
+      "published_at": "2026-07-16T19:01:09+00:00",
+      "summary": "Repository admins can now archive pull requests to remove them from public view without permanently deleting them. When a pull request is archived, it is closed and locked. Pull requests… The post Repository admins can archive pull requests appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 4,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 18
+    },
+    {
+      "id": "793aa06e4820",
+      "title": "REST API endpoints for Visual Studio Subscription management",
+      "normalized_title": "rest api endpoints for visual studio subscription management",
+      "url": "https://github.blog/changelog/2026-07-16-rest-api-endpoints-for-visual-studio-subscription-management",
+      "published_at": "2026-07-16T18:06:52+00:00",
+      "summary": "GitHub Enterprise Cloud admins can now use the following REST API endpoints to programmatically manage Visual Studio Subscription (VSS) assignments: GET /enterprises/{enterprise}/visual-studio-subscriptions: Returns all VSS assignments for an enterprise, including… The post REST API endpoints for Visual Studio Subscription management appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -202,18 +274,29 @@
       "lane_scores": {
         "broad": 0,
         "practical": 5,
-        "deep": 0
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 22,
+      "lead_rank": 1,
+      "selection_reason": "핵심뉴스 후보 1 · 점수 22"
     },
     {
-      "id": "41099715e637",
-      "title": "GitHub Copilot for JetBrains expands BYOK capabilities",
-      "normalized_title": "github copilot for jetbrains expands byok capabilities",
-      "url": "https://github.blog/changelog/2026-07-14-github-copilot-for-jetbrains-expands-byok-capabilities",
-      "published_at": "2026-07-14T23:37:29+00:00",
-      "summary": "This update brings major advances in customization and model provider flexibility to all tiers of GitHub Copilot for JetBrains IDEs. With richer plugin and provider experiences, improved conversational interactions, and… The post GitHub Copilot for JetBrains expands BYOK capabilities appeared first on The GitHub Blog .",
+      "id": "cce806624a53",
+      "title": "Xcode 27 runner image now in public preview",
+      "normalized_title": "xcode 27 runner image now in public preview",
+      "url": "https://github.blog/changelog/2026-07-16-xcode-27-runner-image-now-in-public-preview",
+      "published_at": "2026-07-16T18:00:07+00:00",
+      "summary": "You can now build and test your Apple applications against Xcode 27 on GitHub-hosted macOS runners. This is now available in public preview. With early access to the latest Xcode… The post Xcode 27 runner image now in public preview appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -229,19 +312,143 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 5,
+        "practical": 4,
         "deep": 0
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 18
     },
     {
-      "id": "91740efedc0a",
-      "title": "Do AI Agents Know When a Task Is Simple? Toward Complexity-Aware Reasoning and Execution",
-      "normalized_title": "do ai agents know when a task is simple toward complexity aware reasoning and execution",
-      "url": "https://arxiv.org/abs/2607.13034v1",
-      "published_at": "2026-07-14T17:59:31+00:00",
-      "summary": "Large language model (LLM) agents increasingly automate multi-step engineering and informatics workflows, yet they rarely ask how much effort a task actually requires. They often follow a maximum-context-first strategy--re-reading files and dependencies they have already seen--turning a one-line edit into a small code-base audit. We argue the missing capability is task-aware execution-scope estimation: judging a task's difficulty, the information it truly needs, and the shortest reliable path before committing budget. We formalize minimum-sufficient execution and the Agent Cognitive Redundancy Ratio (ACRR), and propose E3 (Estimate, Execute, Expand): the agent estimates an initial operating point, executes a minimum viable path, and expands scope only when verification fails. On MSE-Bench--a deterministic benchmark of 121 edits in a capability-controlled simulator--E3 matches the strongest baseline's 100% success while cutting cost by 85%, tokens by 91%, and inspected files by 92%, and further beats a strong adaptive retrieval baseline by 16%; the gains survive held-out instruction wording and essentially every cost weighting. A companion real-model harness (LLM-Case) corroborates the effect on a live gpt-4o agent editing a real open-source library, with every candidate patch graded by actually running the project's real pytest suite against a measured oracle: the over-reading is milder but real, and E3 is the leanest and fastest policy at comparable task success--its one shortfall a provider rate-limit, not a wrong edit. We frame this as a controlled probe of execution redundancy, not a measurement of any deployed agent, and position task-aware execution as a step toward engineering-grounded AI (EGAI)--agents whose effort is anchored in the engineering reality of the task. We release the framework and benchmark.",
+      "id": "3fbe8ceb6f00",
+      "title": "Improvements to secret scanning and public monitoring",
+      "normalized_title": "improvements to secret scanning and public monitoring",
+      "url": "https://github.blog/changelog/2026-07-15-improvements-to-secret-scanning-and-public-monitoring",
+      "published_at": "2026-07-15T22:38:16+00:00",
+      "summary": "This week, we’re rolling out several improvements to secret scanning and public monitoring: Resend is now a GitHub secret scanning partner. Secret scanning now detects new secret types from APIclub… The post Improvements to secret scanning and public monitoring appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 4,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 18
+    },
+    {
+      "id": "4be95e4932d3",
+      "title": "AI-accelerated End-to-End Framework for Rapid Professional Upskilling",
+      "normalized_title": "ai accelerated end to end framework for rapid professional upskilling",
+      "url": "https://arxiv.org/abs/2607.14044v1",
+      "published_at": "2026-07-15T17:14:03+00:00",
+      "summary": "By 2030, 59 of every 100 workers will need reskilling or upskilling, yet the average time to close an enterprise skills gap grew from roughly 3 days in 2014 to 36 days in 2018. Most current frameworks accelerate single stages of upskilling programs and generally lack industry validation. We present an end-to-end framework that applies AI acceleration across five stages of knowledge acquisition, content development, content review and verification, teaching, and assessment development; with a strong focus on both production and learning efficiency. Three strong external signals validates the framework: the US National Association of State Boards of Accountancy reviewed and approved an upskilling program built on the framework for continuing-professional-education credits; 3 learners followed the program and passed the NVIDIA Certified Professional in Agentic AI exam in a significantly short amount of time, with 14 more in progress; the program's knowledge base supports complex downstream analysis such as the production of a robust 1,267 risk item dataset for managing multi-agent AI system risks.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 4
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
+    },
+    {
+      "id": "4ef6a5f9e47e",
+      "title": "Early Adoption of Agentic Coding Tools by GitHub Projects",
+      "normalized_title": "early adoption of agentic coding tools by github projects",
+      "url": "https://arxiv.org/abs/2607.14037v1",
+      "published_at": "2026-07-15T17:05:06+00:00",
+      "summary": "Agentic coding tools are increasingly capable of generating and submitting pull requests (PRs) to software projects, introducing new forms of human-agent collaboration in software development. While prior studies have examined PR-level outcomes of agent-generated contributions, less is known about how agentic coding tools are adopted and managed at the project level. In this paper, we analyze 25,264 agentic PRs from 2,361 popular GitHub repositories to investigate (1) the adoption of agentic coding tools, (2) project-level agentic PR productivity, and (3) human-agent collaboration patterns. Our results show that the median repository generates only one to two agentic PRs during a three-month period, indicating that intensive adoption remains concentrated in a small subset of projects. At the same time, small projects (1-5 contributors) exhibit higher participation ratios and average levels of agentic PR activity than medium-sized and large projects. We also observe substantial variation in project-level agentic PR productivity. While a small number of projects exceed an industry-reported estimate of 36 PRs per participant during the three-month observation period, most projects remain below this threshold. Finally, human-agent collaboration is dominated by a single-human oversight model, in which one developer reviews and/or modifies the agent's contributions, while multi-human collaboration patterns remain uncommon. These findings provide early empirical evidence on how open-source projects organize human oversight around agentic coding tools and suggest that successful integration of agent-generated contributions depends not only on advances in agent capabilities but also on the human and organizational processes that govern their use. Because this study captures an early snapshot of agent adoption, future work should continue to track how adoption patterns evolve over time.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 16
+    },
+    {
+      "id": "6d61f3ebe8cf",
+      "title": "The Dynamic Verifiable Multi-Agent Human Agentic Loyalty Loop (DVM-HALL) Model and the Net Human-Agent Score (NHAS) in Autonomous Commerce",
+      "normalized_title": "the dynamic verifiable multi agent human agentic loyalty loop dvm hall model and the net human agent score nhas in autonomous commerce",
+      "url": "https://arxiv.org/abs/2607.13998v1",
+      "published_at": "2026-07-15T16:27:48+00:00",
+      "summary": "The rapid proliferation of Agentic Artificial Intelligence fundamentally disrupts traditional customer loyalty paradigms. As AI evolves from passive recommendation algorithms to autonomous, goal-directed agents capable of executing purchasing decisions, the conventional understanding of consumer-brand relationships requires a structural reevaluation. By synthesizing extant literature across human-machine teaming, consumer decision-making, and algorithmic trust dynamics, we demonstrate that traditional loyalty models fail to account for algorithmic bounded rationality and constructed autonomy. To address this, we introduce the Dynamic Verifiable Multi-Agent Human Agentic Loyalty Loop (DVM-HALL) model. We formalize brand choice via a softmax probability formulation where human emotional equity, agentic machine-experience utility, calibrated trust, delegated authority, and verifiable execution jointly determine selection. The model features recursive updating mechanisms to dynamically calibrate trust and delegation after each interaction. Crucially, the framework integrates a verifiable execution layer for Decentralized Finance (DeFi) and tokenized loyalty settings, incorporating execution risks -- such as gas costs, slippage, MEV exposure, and smart-contract vulnerabilities -- as core predictors of agentic brand preference. Furthermore, we introduce the Net Human-Agent Score (NHAS), an auditable, risk-weighted metric designed to measure human-agent alignment using human feedback, execution logs, benchmark comparisons, and verifiable receipts. Finally, we propose a comprehensive three-stage empirical validation plan spanning controlled shopping experiments, multi-agent market simulations, and DeFi testbeds. This framework provides the foundational theory required for brands to navigate the impending transition toward machine customers.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -263,16 +470,67 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 0,
+        "explanatory_depth": 5,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 19
     },
     {
-      "id": "55f3f57477bf",
-      "title": "Dependabot version updates introduce default package cooldown",
-      "normalized_title": "dependabot version updates introduce default package cooldown",
-      "url": "https://github.blog/changelog/2026-07-14-dependabot-version-updates-introduce-default-package-cooldown",
-      "published_at": "2026-07-14T16:42:59+00:00",
-      "summary": "Dependabot now waits until a new release has been available on its registry for at least three days before opening a version update pull request. This cooldown is now the… The post Dependabot version updates introduce default package cooldown appeared first on The GitHub Blog .",
+      "id": "c2daab0f6db8",
+      "title": "A Self-Evolving Agent for Longitudinal Personal Health Management",
+      "normalized_title": "a self evolving agent for longitudinal personal health management",
+      "url": "https://arxiv.org/abs/2607.13940v1",
+      "published_at": "2026-07-15T15:22:11+00:00",
+      "summary": "Personal health management unfolds over repeated encounters, yet most health AI systems treat each request in isolation. We developed HealthClaw, an open-source agent architecture that updates support as a person's routines, preferences, measurements and risks change. It separates shared safety rules and medical knowledge from private longitudinal memory containing profile facts, reusable procedures and episodic traces. After each episode, induction determines what should update the profile, revise a procedure, remain episodic or be excluded. We evaluated HealthClaw with a synthetic year-long benchmark and nine 200-case biomedical tasks. Across 900 longitudinal support probes, answer accuracy increased from 0.2% with current-query prompting to 45.7% with HealthClaw, while prompt-side context exposure was 71.7% lower than with full-history prompting. In 100 privacy probes, HealthClaw produced higher privacy-aware answer quality and fewer unsafe disclosures than both baselines. Across the biomedical tasks, the mean absolute gain in the task-specific primary metric was 27.0 percentage points, and seven gains remained significant after false-discovery-rate correction. These offline benchmarks support governed, self-evolving memory for longitudinal personal health agents, although clinical effectiveness requires prospective evaluation. HealthClaw is publicly available at https://github.com/HC-Guo/HealthClaw.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 1,
+        "explanatory_depth": 5,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 20,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 20"
+    },
+    {
+      "id": "3bf43cc89698",
+      "title": "GitHub Copilot in Visual Studio — June update",
+      "normalized_title": "github copilot in visual studio june update",
+      "url": "https://github.blog/changelog/2026-07-14-github-copilot-in-visual-studio-june-update",
+      "published_at": "2026-07-15T00:01:24+00:00",
+      "summary": "June 2026 is about visibility and trust with a clearer view of your GitHub Copilot usage, a new trust layer for MCP servers, and the first C++ scenarios for the… The post GitHub Copilot in Visual Studio — June update appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -288,19 +546,28 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 4,
+        "practical": 5,
         "deep": 0
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 20
     },
     {
-      "id": "fe469724f582",
-      "title": "Security reviews now available in the GitHub Copilot app",
-      "normalized_title": "security reviews now available in the github copilot app",
-      "url": "https://github.blog/changelog/2026-07-14-security-reviews-now-available-in-the-github-copilot-app",
-      "published_at": "2026-07-14T12:54:12+00:00",
-      "summary": "You can now run a security review on your in-flight code changes directly from the GitHub Copilot app. The /security-review slash command is shipping in public preview, bringing the same… The post Security reviews now available in the GitHub Copilot app appeared first on The GitHub Blog .",
+      "id": "41099715e637",
+      "title": "GitHub Copilot for JetBrains expands BYOK capabilities",
+      "normalized_title": "github copilot for jetbrains expands byok capabilities",
+      "url": "https://github.blog/changelog/2026-07-14-github-copilot-for-jetbrains-expands-byok-capabilities",
+      "published_at": "2026-07-14T23:37:29+00:00",
+      "summary": "This update brings major advances in customization and model provider flexibility to all tiers of GitHub Copilot for JetBrains IDEs. With richer plugin and provider experiences, improved conversational interactions, and… The post GitHub Copilot for JetBrains expands BYOK capabilities appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -319,119 +586,15 @@
         "practical": 5,
         "deep": 0
       },
-      "topic_tags": []
-    },
-    {
-      "id": "009013928220",
-      "title": "How sales teams use ChatGPT Work",
-      "normalized_title": "how sales teams use chatgpt work",
-      "url": "https://openai.com/academy/codex-for-work/how-sales-teams-use-codex",
-      "published_at": "2026-07-14T00:00:00+00:00",
-      "summary": "See how sales teams can use ChatGPT Work to create pipeline briefs, meeting prep packets, forecast reviews, account plans, and stalled-deal diagnoses from real work inputs.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 5
       },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "578b3bdf5cbf",
-      "title": "How data science teams use ChatGPT Work",
-      "normalized_title": "how data science teams use chatgpt work",
-      "url": "https://openai.com/academy/codex-for-work/how-data-science-teams-use-codex",
-      "published_at": "2026-07-14T00:00:00+00:00",
-      "summary": "See how data science teams can use ChatGPT Work to build root-cause briefs, impact readouts, KPI memos, scoped analyses, and dashboard specs from real work inputs.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "97eb7c2126ac",
-      "title": "Manage secret scanning custom patterns via REST API",
-      "normalized_title": "manage secret scanning custom patterns via rest api",
-      "url": "https://github.blog/changelog/2026-07-13-create-and-manage-secret-scanning-custom-patterns-via-rest-api",
-      "published_at": "2026-07-13T23:59:13+00:00",
-      "summary": "Starting today, security teams can create, edit, and manage secret scanning custom patterns with the REST API. What’s new The following endpoints are generally available: GET .../secret-scanning/custom-patterns list patterns POST… The post Manage secret scanning custom patterns via REST API appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 5,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "52c1e396ba0f",
-      "title": "GitHub Code Quality license estimate in public preview",
-      "normalized_title": "github code quality license estimate in public preview",
-      "url": "https://github.blog/changelog/2026-07-13-github-code-quality-license-estimate-in-public-preview",
-      "published_at": "2026-07-13T23:39:22+00:00",
-      "summary": "You can now see the number of active committers on repositories using GitHub Code Quality across your enterprise, giving you an estimate of your Code Quality license cost before it… The post GitHub Code Quality license estimate in public preview appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 4,
-        "deep": 0
-      },
-      "topic_tags": []
+      "lead_score": 20
     },
     {
       "id": "521cb8f57272",
@@ -441,6 +604,7 @@
       "published_at": "2026-07-10T07:00:00+00:00",
       "summary": "How Deutsche Telekom is becoming an AI-native telco with OpenAI-transforming customer service, employee workflows, network operations, and the future of voice.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -462,16 +626,183 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 10
     },
     {
-      "id": "13920c760606",
-      "title": "TerraZero: Procedural Driving Simulation for Zero-Demonstration Self-Play at Scale",
-      "normalized_title": "terrazero procedural driving simulation for zero demonstration self play at scale",
-      "url": "https://arxiv.org/abs/2607.13028v1",
-      "published_at": "2026-07-14T17:59:02+00:00",
-      "summary": "Training robust autonomous driving agents requires a simulator that is fast enough for reinforcement learning at scale, realistic enough to ground behavior in real-world map structure, and diverse enough to cover the safety-critical long tail that logged data rarely contains. We present TerraZero, a procedural driving simulator and self-play training stack. A configurable C engine runs simulation on the CPU and policy inference on the GPU over a zero-copy path, sustaining 1.3M agent-steps per second on a single server-grade GPU, far faster than existing object-level simulators, while keeping fidelity lighter single-agent systems omit: heterogeneous agents, multiple dynamics models, and full traffic-rule enforcement. TerraZero treats logged data only as a source of real-world map geometry, populating each map with randomized rule-based road users and signal controllers and randomizing agent dynamics, rewards, and sizes per episode, so a map yields an unbounded set of scenarios. Every reported policy trains from scratch by reinforcement learning alone on a compute-efficient self-play recipe across GPUs, with zero human demonstrations and no fallback planner at inference. Policies generalize zero-shot across cities and datasets, including emergent left-hand-traffic driving without explicit supervision. As an ego policy, TerraZero is the first fully learned policy to top the InterPlan long-tail benchmark, ahead of larger learned planners; on routine-driving val14 it ranks among the best approaches and is the safest, posting the best collision and time-to-collision scores. On Waymo Open Sim Agents realism the same recipe outperforms other demonstration-free methods and is competitive with the strongest reference-anchored self-play method. One stack serves both roles: driving policies across dynamics for cars and trucks, and sim agents that jointly control vehicles, pedestrians, and cyclists.",
+      "id": "a019da84e775",
+      "title": "스페이스X 품에 안긴 커서, 코딩 도구 넘어 \"세계 최고 AI 개발\" 선언",
+      "normalized_title": "스페이스x 품에 안긴 커서 코딩 도구 넘어 세계 최고 ai 개발 선언",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212854",
+      "published_at": "2026-07-16T09:20:32+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 2,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 13,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 13"
+    },
+    {
+      "id": "0c9b818ad13e",
+      "title": "AWS, 바이브 코딩 한계 넘는다…'AI-DLC'로 개발 전 과정 혁신",
+      "normalized_title": "aws 바이브 코딩 한계 넘는다 ai dlc 로 개발 전 과정 혁신",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212857",
+      "published_at": "2026-07-16T08:22:07+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 1,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 1,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 12
+    },
+    {
+      "id": "c3acf9646905",
+      "title": "오픈AI, 코딩 에이전트 전용 '34만원' 매크로패드 출시",
+      "normalized_title": "오픈ai 코딩 에이전트 전용 34만원 매크로패드 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212850",
+      "published_at": "2026-07-16T07:25:28+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 2,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "645d84201c2d",
+      "title": "과기부 \"독자 AI로 보안 특화·프론티어급 모델 개발...세계 2위 목표\"",
+      "normalized_title": "과기부 독자 ai로 보안 특화 프론티어급 모델 개발 세계 2위 목표",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212833",
+      "published_at": "2026-07-16T05:46:25+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 0,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "d634ba4eef30",
+      "title": "Deep Interaction: An Efficient Human-AI Interaction Method for Large Reasoning Models",
+      "normalized_title": "deep interaction an efficient human ai interaction method for large reasoning models",
+      "url": "https://arxiv.org/abs/2607.14049v1",
+      "published_at": "2026-07-15T17:16:43+00:00",
+      "summary": "The emergence of Chain-of-Thought (CoT) reasoning has significantly enhanced the ability of large language models (LLMs) to tackle complex, multi-step tasks. However, when errors occur, current interaction approaches typically involve re-generating another response that may make mistakes again, or users laboriously flag the faulty step in follow-up turns that may get responses followed by similar errors recurring. To address this issue, we propose an efficient human intervention mechanism for precisely correcting reasoning errors in LLMs, termed Deep Interaction. Our approach enables direct editing of the original response, allowing erroneous parts to be corrected while preserving accurate reasoning steps. We refine the edited CoT into a distilled prompt, which then steers the LLM along the corrected reasoning path. Experimental results show that our method achieves over a 25% improvement in correction success rate and reduces token usage by approximately 40% on STEM tasks reasoning compared to baseline approaches.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -489,18 +820,29 @@
       "lane_scores": {
         "broad": 0,
         "practical": 0,
-        "deep": 4
+        "deep": 3
       },
-      "topic_tags": []
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 15
     },
     {
-      "id": "a973d2811c83",
-      "title": "PalmClaw: A Native On-Device Agent Framework for Mobile Phones",
-      "normalized_title": "palmclaw a native on device agent framework for mobile phones",
-      "url": "https://arxiv.org/abs/2607.13027v1",
-      "published_at": "2026-07-14T17:58:57+00:00",
-      "summary": "Large Language Model (LLM) agents have moved beyond generating responses to executing multi-step tasks by calling tools, observing the results, and iteratively deciding the next action. Most agent systems run on desktops or servers, which support tool use and task automation. Mobile devices are also important agent environments because they are widely accessible and contain users' data, sensors, and daily-use applications. Existing mobile agents mainly operate smartphones through graphical user interface (GUI) actions such as tapping, swiping, and typing, which often form long, interface-dependent sequences, cannot directly access device capabilities, and make execution boundaries difficult to define. We present \\textbf{PalmClaw}, an open-source agent framework that runs natively on mobile phones and manages the sessions, memory, skills, tools, and agent loop directly on the device. PalmClaw exposes device capabilities as device tools with explicit arguments, structured results, and clearly defined execution boundaries. This design enables agents to use mobile capabilities directly while keeping each action explicit and controlled. Experiments show an 11.5\\% relative improvement in task success and a 94.9\\% reduction in completion time over the strongest baseline, with lower setup burden and traces illustrating how execution boundaries are applied. Code is available at https://github.com/ModalityDance/PalmClaw.",
+      "id": "6a7fe71085be",
+      "title": "Earthquaker-AI: A Retrieval-Augmented Generation Framework with Rubric-Based Assessment for Primary School Earthquake Education",
+      "normalized_title": "earthquaker ai a retrieval augmented generation framework with rubric based assessment for primary school earthquake education",
+      "url": "https://arxiv.org/abs/2607.14046v1",
+      "published_at": "2026-07-15T17:15:16+00:00",
+      "summary": "This paper presents Earthquaker-AI, a hybrid educational framework building upon a previously implemented educational robotics project by integrating a conversational AI assistant based on Retrieval-Augmented Generation. It aims to enhance earthquake preparedness and conscious action among primary-school students. The system extends the award-winning STEM project Earthquaker moving from mechanical simulation with Lego WeDo2 to cognitive and metacognitive processing. The robotics component uses Lego WeDo2 automation to simulate seismic response, letting students interact with sensors and actuators as tangible representations of protective actions. The assistant operates as a guided learning mechanism aligning student responses with safety guidelines, while providing rubric-based verbal feedback that supports self-regulated learning and calmness under emergency conditions. Earthquaker-AI follows a progressive learning trajectory aligned with cognitive development. In early grades, the focus is on basic recognition of safety actions through multiple-choice questions, assessed via a two-dimensional rubric. In middle grades, students identify correct action sequences through multiple-choice questions, evaluated via a three-axis rubric. In upper grades, the approach shifts to verbal production, requiring short written responses assessed via a four-dimensional rubric that includes clarity of expression. The dialogic module uses RAG to match student queries semantically with official guidelines, generating safe, accurate responses. Experimental evaluation shows high groundedness and accuracy, with a low hallucination rate. Overall, Earthquaker-AI combines hands-on engagement, information processing, and reflective practice. Combining robotics, rubrics, and AI promotes technological literacy, self-regulation, and responsible use of digital systems, contributing to early crisis-management skills.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -517,21 +859,108 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 1,
+        "practical": 0,
         "deep": 4
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
     },
     {
-      "id": "2e0eac579010",
-      "title": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
-      "normalized_title": "knowledge and gradient guided reinforcement learning for parametrized action markov decision processes",
-      "url": "https://arxiv.org/abs/2607.12924v1",
-      "published_at": "2026-07-14T15:57:25+00:00",
-      "summary": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "id": "b1be195404d7",
+      "title": "Rethinking Penetration Testing for AI-Enabled Systems: From Resource Compromise to Behavioral Objective Violation",
+      "normalized_title": "rethinking penetration testing for ai enabled systems from resource compromise to behavioral objective violation",
+      "url": "https://arxiv.org/abs/2607.14006v1",
+      "published_at": "2026-07-15T16:36:54+00:00",
+      "summary": "Penetration testing traditionally evaluates whether adversaries can exploit weaknesses in software, infrastructure, configurations, or operational controls to achieve security-relevant compromise. This paradigm remains necessary for AI-enabled systems, but it is no longer sufficient. In such systems, adversaries may influence prompts, retrieved content, sensor inputs, training data, memory, tools, or human-AI interaction loops to alter system behavior without directly compromising the underlying infrastructure. This paper reframes penetration testing for AI-enabled systems as objective-driven behavioral evaluation. We define an AI-enabled system as one in which learned models materially influence behavior affecting operational outcomes, and we define AI-enabled penetration as the feasible induction of AI-governed behavior that violates one or more operational objectives under an explicit threat model. This definition preserves conventional penetration testing while extending it to adversarial pathways such as prompt injection, indirect prompt injection, data poisoning, sensor manipulation, retrieval poisoning, tool misuse, and agentic misalignment. We further propose a testing workflow that identifies operational objectives, maps AI-governed behavior, analyzes adversarial influence surfaces, defines behavioral failure criteria, executes scenario-based tests, and reports evidence linking adversarial action to objective violation. A running example involving an AI-enabled security operations center assistant illustrates how penetration may occur through behavioral influence rather than infrastructure compromise. Together, the definitions, workflow, and example provide a technical framework for evaluating adversarial success in deployed AI-enabled systems.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 4
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
+    },
+    {
+      "id": "a5c86dce6d39",
+      "title": "Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0",
+      "normalized_title": "do agent optimizers compound a continual learning evaluation on terminal bench 2 0",
+      "url": "https://arxiv.org/abs/2607.14004v1",
+      "published_at": "2026-07-15T16:36:04+00:00",
+      "summary": "Most reported gains from agent-optimization methods are one-shot: an agent is optimized against a fixed benchmark and the resulting improvement is reported as if it were a stable property of the method. This does not test the setting that matters for deployed agents, where optimization is applied recursively as new failures and new tasks appear over time. The central question this raises is whether optimizer-driven gains compound: after an agent has been optimized once, can it be optimized again on newly arrived tasks without eroding the gains the first round produced? We study this question with a two-phase continual-learning evaluation built from hard tasks in Terminal-Bench 2.0, comparing three approaches to agent-harness optimization (GEPA, Meta Harness, and RELAI's Verifiable Continual Learning, RELAI-VCL) under identical optimization budgets. All three methods improve over the baseline agent in the conventional, static, single-phase setting. However, once new tasks are introduced, the methods diverge sharply: GEPA's optimized agent transfers below the unoptimized baseline, Meta Harness transfers well but fails to improve further once given a second optimization budget, and RELAI-VCL is the only method that both transfers positively to unseen tasks and continues improving after those tasks are folded into the optimization objective, reaching the highest pass rate at every evaluated stage and the highest lifelong average pass rate overall (76.4% vs. 66.0% for GEPA, 64.6% for Meta Harness, and 58.7% for the baseline). Our key observation was that optimization gains compounded only when regression control was built into the optimization loop, providing an inductive bias against shortcut solutions that fail to generalize.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
+    },
+    {
+      "id": "7bedf43d472d",
+      "title": "Generative Compilation: On-the-Fly Compiler Feedback as AI Generates Code",
+      "normalized_title": "generative compilation on the fly compiler feedback as ai generates code",
+      "url": "https://arxiv.org/abs/2607.13921v1",
+      "published_at": "2026-07-15T15:00:22+00:00",
+      "summary": "Languages with rich static semantics, such as Rust, provide stronger guarantees for AI-generated code, but their strictness makes generation more difficult. Off-the-shelf compilers can provide useful feedback post-generation, but does not guide intermediate generation steps, such as those during autoregressive LLM decoding. Constrained decoding intervenes earlier by rejecting invalid tokens during sampling, but requires white-box model access and costly reimplementation for semantic constraints.We introduce generative compilation, the first approach to obtaining compiler feedback on partial programs during generation. The core technical device is a sealor: a lightweight, mostly syntax-guided transformation that converts partial programs into complete ones that standard compilers can diagnose. It is designed such that possible-to-complete partial programs are never rejected, while preserving enough code context to catch genuine dead ends early. We construct such a sealor on a core Rust-like calculus and prove that it satisfies these properties, all mechanized in Lean. We extend it to the first partial-program checker for real Rust. We evaluate our method on challenging repository-level Rust coding tasks, across both frontier black-box and open-weight models. We show that generative compilation reduces non-compiling outputs and improves functional correctness, relative to standard post-generation feedback. It does so by detecting a broad range of errors close to their source and early during generation, thereby reducing errors cascades and enabling focused diagnostics. More broadly, generative compilation is a step toward making compilers a first-class citizen of AI-assisted programming active during generation, rather than a separate post-generation check.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -551,16 +980,27 @@
         "practical": 0,
         "deep": 3
       },
-      "topic_tags": []
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 15
     },
     {
-      "id": "8b92457d29ef",
-      "title": "A Multi-Agent System for Autonomous, Fine-Tuning-Free Clinical Symptom Detection: Development and Validation Study",
-      "normalized_title": "a multi agent system for autonomous fine tuning free clinical symptom detection development and validation study",
-      "url": "https://arxiv.org/abs/2607.12886v1",
-      "published_at": "2026-07-14T15:32:07+00:00",
-      "summary": "Clinical notes contain many of the signs and symptoms that bring patients to care, yet this information rarely reaches structured fields. Existing extraction approaches either rely on context-insensitive rules that generate false positives or on supervised models that require substantial fine-tuning. We present Pythia, a multi-agent system that autonomously writes and optimizes extraction prompts for clinical concepts without manual prompt engineering or fine-tuning. Running on a locally hosted open-weights model, Pythia keeps clinical notes on local infrastructure and selects prompts using development-set sensitivity and specificity. We compared Pythia with a curated lexicon across 72 signs and symptoms from 400 clinical notes representing 387 patients. Development (n=300) and validation (n=100) sets were partitioned independently for each concept. Pythia achieved mean sensitivity of 0.76 and specificity of 0.95, compared with 0.82 and 0.76 for the lexicon, and matched or exceeded the lexicon on both metrics for 20 of 62 directly comparable concepts. For 14 concepts where the lexicon labeled every note positive, Pythia recovered mean specificity of 0.97 by requiring a present-tense, patient-attributed finding rather than any textual mention of a term. Specificity transferred from development to validation with minimal degradation across prevalences, whereas sensitivity transfer weakened below 5% prevalence, reaching a mean gap of 0.25 below 2% prevalence. A BERT classifier fine-tuned per concept on the same development set achieved mean sensitivity of 0.23 and collapsed to zero sensitivity for concepts below roughly 5% prevalence. These findings suggest that autonomous, fine-tuning-free prompt optimization can produce symptom extraction prompts that generalize effectively from development to validation while remaining deployable on local infrastructure.",
+      "id": "d34930dfacce",
+      "title": "AIMO Interpretability Challenge",
+      "normalized_title": "aimo interpretability challenge",
+      "url": "https://arxiv.org/abs/2607.13899v1",
+      "published_at": "2026-07-15T14:41:28+00:00",
+      "summary": "We propose the AIMO Interpretability Challenge, a competition on distinguishing robust from spurious reasoning in frontier mathematical language models based on the models' internal mechanisms. The challenge is motivated by a central limitation of standard reasoning benchmarks: strong final-answer accuracy does not reveal whether a model relies on stable reasoning mechanisms or exploits brittle reasoning shortcuts. Building on AI Mathematical Olympiad (AIMO) problems and submissions, together with resources from the Fields Model Initiative, the competition will provide (1) newly-published olympiad-level math reasoning problems and their symbolic representations, allowing generation of novel functional variants, (2) access to frontier reasoning models, and (3) assessments of models' adversarial robustness on these problems. Participants will use these resources, along with our computing infrastructure support, to develop methods for identifying which models solve problems robustly. Our competition will also create a new, open robustness benchmark and baseline systems, aiming to provide a lasting foundation for standard benchmarking in mathematical reasoning and interpretability. Scientifically, the competition connects interpretability and generalization research around a central question in AI research: can we determine if, and to what extent, the decision-making of frontier AI models is generalizable and thus, reliable?",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -578,18 +1018,29 @@
       "lane_scores": {
         "broad": 0,
         "practical": 0,
-        "deep": 3
+        "deep": 4
       },
-      "topic_tags": []
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
     },
     {
-      "id": "cd5027de226c",
-      "title": "CodeQL 2.26.0 adds Kotlin 2.4.0 support and AI prompt injection detection",
-      "normalized_title": "codeql 2 26 0 adds kotlin 2 4 0 support and ai prompt injection detection",
-      "url": "https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection",
-      "published_at": "2026-07-10T20:40:56+00:00",
-      "summary": "CodeQL is the static analysis engine behind GitHub code scanning, which finds and remediates security issues in your code. We’ve recently released CodeQL 2.26.0, which adds support for Kotlin 2.4.0,… The post CodeQL 2.26.0 adds Kotlin 2.4.0 support and AI prompt injection detection appeared first on The GitHub Blog .",
+      "id": "27d181b6a490",
+      "title": "Code scanning shows AI security detections on pull requests",
+      "normalized_title": "code scanning shows ai security detections on pull requests",
+      "url": "https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests",
+      "published_at": "2026-07-14T19:12:48+00:00",
+      "summary": "GitHub code scanning now surfaces AI-powered security detections directly on pull requests, expanding vulnerability coverage to languages and frameworks not currently supported by CodeQL. These detections help teams identify and… The post Code scanning shows AI security detections on pull requests appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -611,7 +1062,55 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 16
+    },
+    {
+      "id": "0a5ca4c5b523",
+      "title": "How to manage AI investments in the agentic era",
+      "normalized_title": "how to manage ai investments in the agentic era",
+      "url": "https://openai.com/index/managing-ai-investments-in-agentic-era",
+      "published_at": "2026-07-14T10:00:00+00:00",
+      "summary": "Learn how enterprises can manage AI investments in the agentic era by measuring useful work per dollar, improving efficiency, and scaling high-value workflows.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 10
     },
     {
       "id": "aa67bf587bd0",
@@ -621,6 +1120,7 @@
       "published_at": "2026-07-10T00:00:00+00:00",
       "summary": "Learn how to use ChatGPT, start your first conversation, and discover simple ways to write, brainstorm, and solve problems with AI.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -642,98 +1142,15 @@
       },
       "topic_tags": [
         "ai"
-      ]
-    },
-    {
-      "id": "b98a594ec40e",
-      "title": "GPT-5.6 is now the preferred model in Microsoft 365 Copilot",
-      "normalized_title": "gpt 5 6 is now the preferred model in microsoft 365 copilot",
-      "url": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot",
-      "published_at": "2026-07-09T13:00:00+00:00",
-      "summary": "Learn how GPT-5.6 powers Microsoft 365 Copilot with stronger AI capabilities across Word, Excel, PowerPoint, Chat, and Cowork for faster, higher-quality work.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
-      },
-      "requires_manual_review": false,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "7일 이내",
-        "관심 키워드"
       ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 1,
-        "deep": 1
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
       },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "2015b07b78a1",
-      "title": "ChatGPT is now a partner for your most ambitious work",
-      "normalized_title": "chatgpt is now a partner for your most ambitious work",
-      "url": "https://openai.com/index/chatgpt-for-your-most-ambitious-work",
-      "published_at": "2026-07-09T10:00:00+00:00",
-      "summary": "ChatGPT Work is an agent that can take action across your apps and files, stay with a project for hours if needed, and turn a goal into finished work.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
-      },
-      "requires_manual_review": false,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "7일 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "07aa5a8a45a2",
-      "title": "GPT-5.5 Bio Bug Bounty",
-      "normalized_title": "gpt 5 5 bio bug bounty",
-      "url": "https://openai.com/index/bio-bug-bounty",
-      "published_at": "2026-07-09T10:00:00+00:00",
-      "summary": "Details about the OpenAI Bio Bounty program",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "deep": 1
-      },
-      "requires_manual_review": false,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "7일 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ]
+      "lead_score": 10
     },
     {
       "id": "e00d55023af7",
@@ -743,6 +1160,7 @@
       "published_at": "2026-07-08T13:30:00+00:00",
       "summary": "Learn how OpenAI approaches government and national security partnerships, with principles for responsible AI use, democratic accountability, and public safety.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -763,7 +1181,15 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 8
     },
     {
       "id": "e9167e656930",
@@ -773,6 +1199,7 @@
       "published_at": "2026-07-08T13:00:00+00:00",
       "summary": "A new analysis from OpenAI reveals issues in SWE-Bench Pro, a popular coding benchmark, raising concerns about reliability and accuracy in evaluating AI models.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -793,46 +1220,181 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 10
     },
     {
-      "id": "3447f8d32f7e",
-      "title": "Helping K–12 educators build practical AI skills",
-      "normalized_title": "helping k 12 educators build practical ai skills",
-      "url": "https://openai.com/index/k-12-educators-practical-skills",
-      "published_at": "2026-07-08T10:00:00+00:00",
-      "summary": "OpenAI Academy and the Walton Family Foundation are bringing hands-on AI Skills Jams to help K–12 educators build practical AI skills for the classroom.",
-      "source_id": "openai",
-      "source_name": "OpenAI News",
-      "group": "official",
-      "source_weight": 5,
+      "id": "d5f05984f251",
+      "title": "\"사기 돕고, 평가 속이고\"…앤트로픽, 최첨단 AI '탈선 위험' 경고",
+      "normalized_title": "사기 돕고 평가 속이고 앤트로픽 최첨단 ai 탈선 위험 경고",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212837",
+      "published_at": "2026-07-16T09:39:40+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
       "lane_bias": {
-        "deep": 1
+        "broad": 4
       },
-      "requires_manual_review": false,
-      "score": 9,
+      "requires_manual_review": true,
+      "score": 8,
       "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
+        "출처 가중치 4",
+        "48시간 이내",
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 0,
+        "broad": 5,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 12
+    },
+    {
+      "id": "d537e8d8ab5b",
+      "title": "\"오픈AI·앤트로픽 약점 찔러라\"...MS, 새 영업 지침서 파트너 정조준",
+      "normalized_title": "오픈ai 앤트로픽 약점 찔러라 ms 새 영업 지침서 파트너 정조준",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212848",
+      "published_at": "2026-07-16T09:03:08+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "ae19312f54fe",
+      "title": "CIA \"우크라이나 AI 드론 위력에 러시아 신병 생존 시간 30분 불과'\"",
+      "normalized_title": "cia 우크라이나 ai 드론 위력에 러시아 신병 생존 시간 30분 불과",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212867",
+      "published_at": "2026-07-16T08:53:57+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "5c0155f4036d",
+      "title": "오픈AI, 자동 해킹 모델 'GPT-레드' 개발...\"악용 우려로 외부 공개 안 해\"",
+      "normalized_title": "오픈ai 자동 해킹 모델 gpt 레드 개발 악용 우려로 외부 공개 안 해",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212819",
+      "published_at": "2026-07-16T05:19:56+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
         "practical": 0,
         "deep": 1
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 12
     },
     {
-      "id": "18cba73af654",
-      "title": "Audio-Native Speech Recognition with a Frozen Discrete-Diffusion Language Model",
-      "normalized_title": "audio native speech recognition with a frozen discrete diffusion language model",
-      "url": "https://arxiv.org/abs/2607.13013v1",
-      "published_at": "2026-07-14T17:53:22+00:00",
-      "summary": "Automatic speech recognition is dominated by autoregressive decoders that emit one token at a time. We ask whether a discrete diffusion language model can transcribe speech instead, refining a whole transcript in parallel over a small number of denoising steps. We train an audio-native interface for DiffusionGemma, a 26B mixture-of-experts model that generates text by uniform, random-token discrete diffusion rather than the absorbing-mask scheme common to recent diffusion language models. A frozen Whisper encoder supplies acoustic features, a lightweight projector maps them into the model embedding space, and low-rank adapters let the frozen backbone attend to the new modality. About 42M parameters are trained, which is 0.16 percent of the backbone. We find that the natural training objectives fail to ground the audio because their gradient reaches the projector only through attention that has already dismissed it. A connectionist temporal classification loss applied through the frozen output head breaks this deadlock. The resulting model reaches 6.6 percent word error rate on LibriSpeech test-clean, transcribes in roughly eight parallel steps regardless of utterance length, and uses a single adapter trained on six languages, which we evaluate here on English, Hindi, and Mandarin.",
+      "id": "38987cc48658",
+      "title": "Multi-Expert Routing for Multi-Domain Low-Resource OCR: A Manchu Case Study",
+      "normalized_title": "multi expert routing for multi domain low resource ocr a manchu case study",
+      "url": "https://arxiv.org/abs/2607.14041v1",
+      "published_at": "2026-07-15T17:12:37+00:00",
+      "summary": "Historical Manchu OCR must accommodate various visually distinct writing styles, including regular script, running script, and the semi-cursive chancery hand used in palace memorials, despite limited labeled data. We study a multi-expert system that reuses checkpoints from an iterative fine-tuning process as domain specialists and uses a lightweight page-level image classifier to dispatch pages by visual style. When the checkpoint pool lacks a suitable specialist, we train an additional expert for that domain. On three frozen test sets, the routed system matches the selected specialist for each style at two-decimal precision: 0.30 percent CER on regular script, 1.57 percent on memorials, and 4.83 percent on running script. The router achieves 99.3 percent page-level domain accuracy and matches the domain-label oracle at the same precision. Two of the three selected specialists were not trained specifically for their final domain; only the running-script expert was trained with that domain as its target. We report the evaluation protocol, router design, and per-page predictions to make the comparison reproducible.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -851,162 +1413,25 @@
         "practical": 0,
         "deep": 3
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 15
     },
     {
-      "id": "77c7aff1ba6c",
-      "title": "Dynamic Resource Allocation for Ensemble Determinization MCTS",
-      "normalized_title": "dynamic resource allocation for ensemble determinization mcts",
-      "url": "https://arxiv.org/abs/2607.13007v1",
-      "published_at": "2026-07-14T17:51:15+00:00",
-      "summary": "Simulation-based algorithms are especially suited for high-uncertainty environments such as adversarial board games with significant elements of randomness and hidden information. In particular, several Monte Carlo Tree Search (MCTS) variants are commonly used in such domains. In this paper, we propose a series of enhancements for Ensemble Determinization MCTS, introducing two axes for dynamic resource allocation. First, Dynamic Number of Determinizations, increases or decreases the number of currently used determinization trees depending on the behavior of so-far search. Second, Dynamic Simulation Allocation, splits the simulation budget nonuniformly across the determinization trees, using simulation-to-simulation decisions to choose the tree with potentially the best knowledge gain. As benchmark domains, we used three popular tabletop games: Jaipur, Lost Cities, and Splendor. Testing our proposed enhancements in iteration- and time-based settings showed that particular configurations yield a statistically significant increase in the algorithm's strength.",
+      "id": "c23898e616da",
+      "title": "Improving Wind and Solar Power Prediction with Efficient Wrapper-based Feature Selection: An Empirical Study",
+      "normalized_title": "improving wind and solar power prediction with efficient wrapper based feature selection an empirical study",
+      "url": "https://arxiv.org/abs/2607.14024v1",
+      "published_at": "2026-07-15T16:55:42+00:00",
+      "summary": "With rising global energy demand and growing awareness of climate change and its impacts, the share of renewable energies in the global energy mix continues to grow. Unlike conventional power generation, the output of renewable energy sources cannot be controlled as consistently due to their dependence on environmental conditions. Therefore, reliable prediction of current and future energy production is essential. In this paper, we report findings from two structured literature reviews on real-world renewable energy prediction tasks: wind turbine power curve modeling and photovoltaic power prediction. For the former, we conducted a comprehensive literature review ourselves, while for the latter, we synthesize the key findings regarding frequently selected input features based on an existing survey. Across both domains, our analysis reveals that despite the large number of available monitoring and environmental variables, only limited or unsystematic methods for feature selection exist. To address this gap, we propose Cluster-based Sequential Feature Selection (CSFS), a novel, model-agnostic, clustering-based wrapper method for automatic, efficient, and reliable feature selection in renewable energy prediction pipelines. To support reproducibility and reuse, we provide an open-source implementation of CSFS on GitHub. We empirically evaluate the proposed approach on both use cases and compare it with established feature selection techniques such as wrapper-based sequential feature selection (SFS), filter-based methods, and Random Forest's embedded feature importance. The results show that the wrapper-based methods overall provide better-performing selections of features. CSFS achieves a predictive performance comparable to SFS while reducing computational cost by an average of 21%.",
       "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 4
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "67559ec23936",
-      "title": "Win by Silence: Deletion Non-Monotonicity, Autonomous Exploitation, and Typed-State Gating in LLM Plan Evaluation",
-      "normalized_title": "win by silence deletion non monotonicity autonomous exploitation and typed state gating in llm plan evaluation",
-      "url": "https://arxiv.org/abs/2607.12986v1",
-      "published_at": "2026-07-14T17:29:28+00:00",
-      "summary": "Plan evaluators can reward a strategic plan for becoming less explicit. This paper studies that failure in a staged expected-value scorer for LLM-generated venture routes. Proposition 1 gives the score change from deleting an interior transition while retargeting its predecessor and retaining downstream value: Delta_k = (prod_{i",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 3
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "b33a634b40e8",
-      "title": "Resist and Update: Counterfactual Report Coordinates for Incentive-Compatible LLMs",
-      "normalized_title": "resist and update counterfactual report coordinates for incentive compatible llms",
-      "url": "https://arxiv.org/abs/2607.12985v1",
-      "published_at": "2026-07-14T17:28:25+00:00",
-      "summary": "Aligned language models routinely misreport under non-evidential incentive pressure: they agree with a confident user or overstate certainty even when their internal belief is unchanged. We cast this as a failure of internal incentive-compatibility (IC) and present a method for learning and certifying counterfactual report mediators that hold a model's reports to a causal contract: invariant to forbidden influences (pressure, prestige, restyling) and responsive to licensed ones (genuine evidence). These two demands, resist and update, pull in opposite directions. We study them on a Bayesian-witness benchmark with known posteriors, in which the same user disagreement is licensed evidence or forbidden pressure purely by stated source reliability. We (i) causally identify, by interchange interventions rather than probe accuracy, low-rank report coordinates for answer, confidence, and caveat that are near-orthogonal and independently controllable, and (ii) introduce a training-free counterfactual report-coordinate (CRC) clamp that references the model's own report under a counterfactually incentive-neutralized context. On the witness benchmark the two-pass clamp attains resist and update of 1.00 jointly (Wilson 95% CI [0.99,1.00]), a causal certificate under a constructible reference, not a deployed solution. Global decoding and steering show a single-parameter tradeoff; output-level fine-tuning matches both objectives only when both are enumerated; resist-only training loses evidence-responsiveness. The deployable single-pass compilation is lossy (0.73/0.97). The mechanism and clamp reproduce across three model families and transfer to a natural sycophancy benchmark (SycophancyEval). Our contribution is the interface and certification method: activation-level counterfactual incentive-invariance as a structural primitive for internal IC.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 4
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "c271ecd288a8",
-      "title": "FormalAnalyticGeo: A Neural-Symbolic Based Framework for Multimodal Analytic Geometry Problem Generation",
-      "normalized_title": "formalanalyticgeo a neural symbolic based framework for multimodal analytic geometry problem generation",
-      "url": "https://arxiv.org/abs/2607.12982v1",
-      "published_at": "2026-07-14T17:24:57+00:00",
-      "summary": "Math reasoning has achieved significant progress with the rapid advancement of Multimodal Large Language Models (MLLMs), however analytic geometry remains largely underexplored, primarily due to the scarcity of annotated samples. Existing diagram generation approaches struggle with analytic geometry: template methods cannot handle constraint-driven layouts, and generative models lack the geometric precision to render annotated conic curves correctly. We present FormalAnalyticGeo, a scalable framework for fully automatic generation of multimodal analytic geometry problems. Leveraging the rigor of formal languages, we design the framework around CDL (Condition Description Language), a formal intermediate representation that bridges free-form problem text with precise diagram rendering via a Signed Distance Field (SDF) engine. The framework employs four specialized LLM components in sequence: a Generator that produces diverse analytic geometry problems, a Formalizer that converts each problem into CDL for SDF-based rendering, a Measurer that extracts ground-truth answers through vision-based measurement on the rendered diagrams, and a Quality Verifier that checks outputs at three stages. Structured feedback from the Quality Verifier drives automatic retry, forming a closed loop that eliminates any need for human annotation. Applying FormalAnalyticGeo at scale yields AnalyticGeo7K, a dataset of over 7K verified multimodal problems, each with aligned text, diagram, formal annotation, and ground truth.Experiments show that the generated problems achieve a median ground-truth relative error of 0.70\\%, with 82.3\\% of answers falling within 5\\% of the exact symbolic solution. Our framework and dataset will be publicly released.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 4
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "380a07e06821",
-      "title": "Form, Not Content? A Preregistered, Placebo-Controlled Evaluation of Learned Error-Conditioned Self-Repair Through Prompts and Weights in Frozen Small Code Models",
-      "normalized_title": "form not content a preregistered placebo controlled evaluation of learned error conditioned self repair through prompts and weights in frozen small code models",
-      "url": "https://arxiv.org/abs/2607.12962v1",
-      "published_at": "2026-07-14T16:59:42+00:00",
-      "summary": "Frozen small code LLMs are deployed locally, yet the information guiding a retry after a failed attempt is still measured without placebo controls in the self-repair literature. We treat a failed program as a conjecture and an execution counterexample as an oracle-relative refutation, and introduce PoPE (Popperian Placebo-controlled Evaluation): a methodology for measuring whether evidence that falsifies LLM-generated code can be used operationally by that same model. In PoPE, error content is paired with channel-specific placebos that keep the predeclared scaffold while ablating task-relevant content or deranging the task-error assignment. Frozen small code models (0.5-1.5B) are evaluated under preregistered rules through a prompt channel and a weight channel (small-data adapter training), with four generations per arm-unit pair. In the prompt channel, public-tier screening unlocked 12 units under the content-ablated form placebo versus 10 under the live error-pattern arm on a 40-unit resistant band; the result was recorded as mechanism-null. In the weight channel, an 8-8 tie was observed between the error-content adapter and the intervention-free baseline (p=1.0), while the SHA-deranged placebo adapter stayed ahead with 10 unlocks; content-attributable superiority was not confirmed. These results do not constitute evidence of equivalence or non-inferiority. Equivalence was not tested separately. Findings are restricted to the public-tier screening endpoint; hidden-tier confirmation was deferred by design. We read this not as compiled criticism disappearing as information, but as the loss of its external role in testing a new conjecture: when a representation learned from the oracle is written back into the generation state, testing is replaced by conditioning. No working JEPA-RL controller is claimed. PoPE is presented as a placebo-controlled, retestable measurement standard.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 3
-      },
-      "topic_tags": [
-        "ai"
-      ]
-    },
-    {
-      "id": "43df3846e70d",
-      "title": "ViHoRec: A Quality-Controlled Vietnamese Hotel Recommendation Dataset and Cold-Start Benchmark",
-      "normalized_title": "vihorec a quality controlled vietnamese hotel recommendation dataset and cold start benchmark",
-      "url": "https://arxiv.org/abs/2607.12946v1",
-      "published_at": "2026-07-14T16:28:40+00:00",
-      "summary": "Recommender-system research for Vietnamese remains limited by the absence of a public, well-documented hotel interaction resource. Building such a resource is challenging for three reasons: cross-platform hotel names must be reconciled before interactions are comparable; quality must be audited with reproducible metrics rather than ad hoc cleaning; and public release must preserve privacy while remaining benchmarkable under realistic cold-start conditions. We introduce ViHoRec, a quality-controlled Vietnamese hotel recommendation dataset of 18{,}267 interactions between 6{,}832 users and 560 hotels, crawled from Booking.com, Traveloka, and Ivivu. Our contributions are: (i) a reproducible construction pipeline with cross-platform entity resolution and quantitative quality control; (ii) a privacy-preserving release with HMAC pseudonyms; and (iii) a public cold-start benchmark with temporal leave-last-one-out split, data-centric ablations, and dependency-free baselines. On the public split, learned models degrade sharply for users with short histories (BPR-MF Recall@10: 0.065 vs. 0.120), while UserKNN remains strongest overall, establishing ViHoRec as a sparse, cold-start-dominated testbed for low-resource recommendation. All data are publicly available at https://github.com/MinhNguyenDS/ViHoRec.",
-      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -1023,46 +1448,27 @@
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 4
-      },
-      "topic_tags": []
-    },
-    {
-      "id": "cc3c9f034e9a",
-      "title": "Real-time fall detection based on vision for low-power edge platforms",
-      "normalized_title": "real time fall detection based on vision for low power edge platforms",
-      "url": "https://arxiv.org/abs/2607.12909v1",
-      "published_at": "2026-07-14T15:43:41+00:00",
-      "summary": "Falling detection is vital for elderly care and intelligent surveillance; however, prevailing vision-based approaches predominantly frame it as static pose classification or discrete temporal pattern matching, fundamentally overlooking the instability dynamics of the human support system. This paper proposes a physics-informed falling detection framework that recasts falling as a stability-loss event in a coupled dynamical system. We introduce a novel dual-LTC architecture comprising a Center-of-Mass (CoM) subsystem and a Base-of-Support (BoS) subsystem, both instantiated as Liquid Time-Constant (LTC) neural networks to continuously model inertial trajectory evolution and ground-contact adjustment through adaptive time constants, Physical interpretability of falling motion. A learnable coupling module emulates physical interaction between the two subsystems, while a Stability Manifold classifier operates in the joint latent space to detect boundary crossing via Lyapunov-inspired stability metrics. Complementary counterfactual trajectory projection and Time-to-Collision (TTC) estimation further enable irreversibility assessment and early warning. The architecture is designed to support a three-state prediction paradigm (Normal, Falling, Fallen); in this preliminary study, we validate the core stability discrimination capability on a two-class dataset (Normal vs. Falling), leaving the full three-state temporal transition to future work. Unlike conventional CNN--RNN pipelines, the proposed formulation encodes continuous-time mechanical inertia, yielding a sub-50K-parameter network capable of real-time inference on resource-constrained edge devices. Extensive experiments demonstrate competitive accuracy with superior physical interpretability, validating its efficacy for low-compute visual fall detection.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
         "deep": 3
       },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 5
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
       },
-      "topic_tags": []
+      "lead_score": 16
     },
     {
-      "id": "9862cc895506",
-      "title": "MemOps: Benchmarking Lifecycle Memory Operations in Long-Horizon Conversations",
-      "normalized_title": "memops benchmarking lifecycle memory operations in long horizon conversations",
-      "url": "https://arxiv.org/abs/2607.12893v1",
-      "published_at": "2026-07-14T15:33:44+00:00",
-      "summary": "Long-term memory has become a foundational capability for LLM-based agents that accompany users across extended, multi-session interactions. Existing benchmarks, however, evaluate such memory almost exclusively through downstream question answering, scoring only the correctness of a final answer. This black-box formulation conflates the heterogeneous causes of memory failure, such as missing the introduction of a relevant fact, binding an operation to the wrong target, or relying on stale values after a correction. As a result, it can credit correct answers despite their reliance on inconsistent or unsafe memory states. In this paper, we argue that, in dynamic long-horizon interactions, memory is not a static collection of facts but a lifecycle of explicit operations, including remembering, forgetting, updating, reflecting, and their compositions. We introduce MemOps, a benchmark that reformulates conversational memory as a sequence of lifecycle operations and represents each memory event with a structured trace specifying its trigger, target, scope, state transition, and supporting evidence. A controllable generation pipeline embeds these operations into long, task-oriented conversations and produces gold operation traces together with six categories of operation-level probes, evaluated under both adjacent-evidence and long-context settings. Across long-context, retrieval-based, parametric and managed-memory systems, MemOps disentangles failure modes that final-answer accuracy alone conceals, revealing that current systems remain far from uniformly reliable. For instance, session-level retrieval outperforms turn-level retrieval, and long-context models remain notably weak at reconstructing ordered memory-state trajectories. These results move long-term memory evaluation from final-answer scoring toward interpretable, operation-level diagnosis.",
+      "id": "400c87a1e2ae",
+      "title": "Transforming Rank: How Architecture Navigates the Spectral Pathologies of Depth",
+      "normalized_title": "transforming rank how architecture navigates the spectral pathologies of depth",
+      "url": "https://arxiv.org/abs/2607.14018v1",
+      "published_at": "2026-07-15T16:50:43+00:00",
+      "summary": "We investigate how each component of the Transformer feedforward block architecture design determines how much rank survives across depth at initialization. We reinterpret skip connections and normalization, long understood as controlling magnitude, as mechanisms for preserving gradient rank across depth, since the very matrix multiplications and nonlinear activations that make the network expressive also reduce the rank. We show that skip connections trade off rank collapse against ensemble-like behavior, controlled by the relative scales of the branch and the skip: skip connections route the gradient around the residual branch, where rank is lost, rather than along the long gradient paths that encourage the layers to compose. The placement of the normalization layer controls this same tradeoff by setting the branch-to-skip ratio across depth, unifying much of the normalization placement and depth scaling literature, in particular why rank collapses for Post-Norm but plateaus for Pre-Norm. Other aspects of the architecture, like the two-matrix structure that expands and contracts the width, use additional parameters to preserve the representation or branch Jacobian rank. The second matrix decorrelates a coherent mean spike that would grow across blocks with a single matrix and uncentered activation, preventing the residual representation from collapsing. The width expansion between the two matrices keeps the branch Jacobian full rank: applying the rank-reducing activation in this expanded space leaves enough directions to span the original, at a width that follows a Marchenko--Pastur law. The initialization rank of the input--output Jacobian predicts which networks train on CIFAR-10. Taken together, we recast architecture design for deep networks as navigating an intrinsic tradeoff among rank collapse, ensemble-like behavior, and parameter count.",
       "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
       "source_name": "arXiv cs.AI",
       "group": "research",
       "source_weight": 4,
@@ -1080,47 +1486,102 @@
         "broad": 0,
         "practical": 0,
         "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
+    },
+    {
+      "id": "fa1dedbf7a48",
+      "title": "Music-to-Dance Generation via Atomic Movements",
+      "normalized_title": "music to dance generation via atomic movements",
+      "url": "https://arxiv.org/abs/2607.13978v1",
+      "published_at": "2026-07-15T16:03:55+00:00",
+      "summary": "Music-driven dance generation aims to produce human motion that is both rhythmically synchronized and semantically consistent with music. While recent neural approaches have achieved impressive visual realism, they typically model motion as a continuous signal and neglect its compositional nature, making generated dances structurally incoherent and difficult to control. In this work, we introduce a structure-aware framework that models choreography as a sequence of atomic movements-semantically interpretable motion events that serve as the building blocks of dance. To construct this atomic movement vocabulary, we first segment large-scale dance data and cluster them into atomic movement groups. We then employ a large language model to semantically relabel and refine the clusters, yielding a set of interpretable and reusable atomic movements. Based on these atomic movement annotations, we design a two-stage generation framework that mirrors the human choreography process. In the atomic movement planning stage, the model predicts the type, duration, and timing of atomic movements conditioned on the input music, forming a symbolic dance allocation. In the completion stage, a transition-aware generator synthesizes smooth and stylistically coherent motion conditioned on the planned structure. Extensive experiments demonstrate that our method produces dances with significantly improved structural coherence, rhythmic alignment, and perceptual naturalness compared to existing baselines, while providing enhanced interpretability and controllable editing through explicit structural representation.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 0,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 17
+    },
+    {
+      "id": "9a0875168232",
+      "title": "Partially Correlated Verifier Cascades in LLM Harnesses: Concave Log-Odds, Polynomial Reliability, and Blind-Spot Ceilings",
+      "normalized_title": "partially correlated verifier cascades in llm harnesses concave log odds polynomial reliability and blind spot ceilings",
+      "url": "https://arxiv.org/abs/2607.13918v1",
+      "published_at": "2026-07-15T14:58:37+00:00",
+      "summary": "Serial verification gates are a core reliability primitive in LLM harnesses: a candidate answer is returned only if $k$ verifier calls all accept it. Under conditionally independent gates, the recent Odds Law (arXiv:2606.15712) shows that posterior log-odds grow linearly in $k$, so failure decays exponentially, and states that \"a tight theory of partially correlated verifier cascades remains open.\" This note gives a minimal such theory. Modeling the per-instance false-accept rate on the generator's own errors as a latent variable $α\\sim G$ (de Finetti), the exact cascade posterior is $\\ell_k = \\ell_0 - \\ln m_k$, with $m_k$ the $k$-th moment of $G$. Then: (i) $\\ell_k$ is concave in $k$ for every non-degenerate $G$ -- the Odds Law is its tangent at the first gate and an upper bound; (ii) for Beta$(a,b)$ latents, failure decays polynomially, $1-r_k \\asymp k^{-b}$, with correlation parameter $ρ_v = 1/(a+b+1)$; (iii) a blind-spot atom of mass $1-π$ at $α=1$ caps the evidence extractable from any number of gates at $-\\ln(1-π)$ nats, so reliability saturates below 1; (iv) letting the true-accept rate also vary ($β\\sim H$) yields a trichotomy -- gates eventually always help, plateau, or actively harm -- decided by the upper-tail exponents of $G$ and $H$, with closed-form crossover $k^\\dagger$. The mechanism is survivorship: errors surviving gates are the high-$α$ ones. The theory is measurable: $R$ repeated verdicts per instance identify the first $R$ moments of $G$, so two verdicts identify $ρ_v$; beta-binomial likelihood and NPMLE recover the reliability curve and the ill-posed ceiling. In synthetic tests, independence-based extrapolation underestimates failure by 20x at $k=5$ and ~3000x at $k=10$; the correlated fit at $R=8$ tracks held-out depths. The practical lever is decorrelation -- changing model family, modality, or evidence source -- not adding gates.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 3
       },
       "topic_tags": [
         "ai"
-      ]
-    },
-    {
-      "id": "cc05150ee422",
-      "title": "UR-VC: Unsupervised Robotic Value Correction for Time-Derived Progress Proxies",
-      "normalized_title": "ur vc unsupervised robotic value correction for time derived progress proxies",
-      "url": "https://arxiv.org/abs/2607.12892v1",
-      "published_at": "2026-07-14T15:33:33+00:00",
-      "summary": "Modern robot learning systems increasingly rely on dense progress or value signals to evaluate intermediate states, guide policy learning, and detect task completion, making the quality of these signals critical. Since such dense labels are rarely available at scale, normalized time within a demonstration is often used as a scalable substitute: later frames are treated as higher progress. However, this time-derived label is only a noisy proxy for physical task progress. In contact-rich manipulation, a robot may make progress and then lose it through slips, failed grasps, or partial undoing, while the time-derived label continues to increase monotonically. We introduce Unsupervised Robotic Value Correction (UR-VC), an offline, training-free method for correcting time-derived progress labels. UR-VC exploits a simple regularity in demonstration data: similar states often recur across different episodes, but at different timestamps. Instead of trusting the timestamp from a single trajectory, UR-VC retrieves similar states from other episodes and aggregates their time-derived labels to obtain a corrected progress estimate. UR-VC requires no manual progress labels, reward annotations, or additional value model. We evaluate UR-VC on real bimanual cloth flatten-and-fold data, a long-horizon deformable-object manipulation task with visible intermediate progress. The corrected labels capture local regressions and non-uniform progress that normalized time cannot represent, while preserving the overall task trend. We further use the corrected signal to construct advantage labels for VLA training, following recent advantage-conditioned policy learning. UR-VC shows a positive trend in real-robot task success under matched data, model, and training settings.",
-      "source_id": "arxiv-ai",
-      "source_name": "arXiv cs.AI",
-      "group": "research",
-      "source_weight": 4,
-      "lane_bias": {
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "연구 출처",
-        "48시간 이내"
       ],
-      "lane_scores": {
-        "broad": 0,
-        "practical": 0,
-        "deep": 3
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
       },
-      "topic_tags": []
+      "lead_score": 15
     },
     {
-      "id": "bc9762e5e60f",
-      "title": "Separate SSO and Organizations pages in Settings",
-      "normalized_title": "separate sso and organizations pages in settings",
-      "url": "https://github.blog/changelog/2026-07-13-separate-sso-and-organizations-pages-in-settings",
-      "published_at": "2026-07-13T15:57:56+00:00",
-      "summary": "We’ve separated the combined SSO & Organizations page in your user settings into two distinct pages: SSO and Organizations. This update makes it easier to find and manage these settings… The post Separate SSO and Organizations pages in Settings appeared first on The GitHub Blog .",
+      "id": "55f3f57477bf",
+      "title": "Dependabot version updates introduce default package cooldown",
+      "normalized_title": "dependabot version updates introduce default package cooldown",
+      "url": "https://github.blog/changelog/2026-07-14-dependabot-version-updates-introduce-default-package-cooldown",
+      "published_at": "2026-07-14T16:42:59+00:00",
+      "summary": "Dependabot now waits until a new release has been available on its registry for at least three days before opening a version update pull request. This cooldown is now the… The post Dependabot version updates introduce default package cooldown appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
+      "source_family": "github",
       "source_name": "GitHub Changelog",
       "group": "official",
       "source_weight": 5,
@@ -1139,16 +1600,62 @@
         "practical": 4,
         "deep": 0
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 16
     },
     {
-      "id": "e19fbb75eb44",
-      "title": "GPT-5.6: Frontier intelligence that scales with your ambition",
-      "normalized_title": "gpt 5 6 frontier intelligence that scales with your ambition",
-      "url": "https://openai.com/index/gpt-5-6",
-      "published_at": "2026-07-09T10:00:00+00:00",
-      "summary": "More intelligence from every token, stronger performance per dollar, and more capability on demand for your hardest work.",
+      "id": "fe469724f582",
+      "title": "Security reviews now available in the GitHub Copilot app",
+      "normalized_title": "security reviews now available in the github copilot app",
+      "url": "https://github.blog/changelog/2026-07-14-security-reviews-now-available-in-the-github-copilot-app",
+      "published_at": "2026-07-14T12:54:12+00:00",
+      "summary": "You can now run a security review on your in-flight code changes directly from the GitHub Copilot app. The /security-review slash command is shipping in public preview, bringing the same… The post Security reviews now available in the GitHub Copilot app appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 5,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 18
+    },
+    {
+      "id": "009013928220",
+      "title": "How sales teams use ChatGPT Work",
+      "normalized_title": "how sales teams use chatgpt work",
+      "url": "https://openai.com/academy/codex-for-work/how-sales-teams-use-codex",
+      "published_at": "2026-07-14T00:00:00+00:00",
+      "summary": "See how sales teams can use ChatGPT Work to create pipeline briefs, meeting prep packets, forecast reviews, account plans, and stalled-deal diagnoses from real work inputs.",
       "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -1167,18 +1674,177 @@
         "practical": 0,
         "deep": 1
       },
-      "topic_tags": [
-        "ai"
-      ]
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 10
     },
     {
-      "id": "3fb14968493d",
-      "title": "Introducing GPT-Live",
-      "normalized_title": "introducing gpt live",
-      "url": "https://openai.com/index/introducing-gpt-live",
-      "published_at": "2026-07-08T00:00:00+00:00",
-      "summary": "A new generation of voice models for natural human-AI interaction, now powering ChatGPT Voice.",
+      "id": "578b3bdf5cbf",
+      "title": "How data science teams use ChatGPT Work",
+      "normalized_title": "how data science teams use chatgpt work",
+      "url": "https://openai.com/academy/codex-for-work/how-data-science-teams-use-codex",
+      "published_at": "2026-07-14T00:00:00+00:00",
+      "summary": "See how data science teams can use ChatGPT Work to build root-cause briefs, impact readouts, KPI memos, scoped analyses, and dashboard specs from real work inputs.",
       "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 10
+    },
+    {
+      "id": "c8dc1df61461",
+      "title": "Better tools made Copilot code review worse. Here’s how we actually improved it.",
+      "normalized_title": "better tools made copilot code review worse here s how we actually improved it",
+      "url": "https://github.blog/ai-and-ml/github-copilot/better-tools-made-copilot-code-review-worse-heres-how-we-actually-improved-it",
+      "published_at": "2026-07-10T15:57:47+00:00",
+      "summary": "How migrating Copilot code review to shared Unix-style code exploration tools reduced review cost by reshaping agent workflows around pull request evidence. The post Better tools made Copilot code review worse. Here’s how we actually improved it. appeared first on The GitHub Blog .",
+      "source_id": "github-engineering",
+      "source_family": "github",
+      "source_name": "GitHub Engineering",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 4,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 4,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 18
+    },
+    {
+      "id": "b98a594ec40e",
+      "title": "GPT-5.6 is now the preferred model in Microsoft 365 Copilot",
+      "normalized_title": "gpt 5 6 is now the preferred model in microsoft 365 copilot",
+      "url": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot",
+      "published_at": "2026-07-09T13:00:00+00:00",
+      "summary": "Learn how GPT-5.6 powers Microsoft 365 Copilot with stronger AI capabilities across Word, Excel, PowerPoint, Chat, and Cowork for faster, higher-quality work.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "2015b07b78a1",
+      "title": "ChatGPT is now a partner for your most ambitious work",
+      "normalized_title": "chatgpt is now a partner for your most ambitious work",
+      "url": "https://openai.com/index/chatgpt-for-your-most-ambitious-work",
+      "published_at": "2026-07-09T10:00:00+00:00",
+      "summary": "ChatGPT Work is an agent that can take action across your apps and files, stay with a project for hours if needed, and turn a goal into finished work.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 8
+    },
+    {
+      "id": "07aa5a8a45a2",
+      "title": "GPT-5.5 Bio Bug Bounty",
+      "normalized_title": "gpt 5 5 bio bug bounty",
+      "url": "https://openai.com/index/bio-bug-bounty",
+      "published_at": "2026-07-09T10:00:00+00:00",
+      "summary": "Details about the OpenAI Bio Bounty program",
+      "source_id": "openai",
+      "source_family": "openai",
       "source_name": "OpenAI News",
       "group": "official",
       "source_weight": 5,
@@ -1199,16 +1865,25 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 8
     },
     {
-      "id": "9df731d92fd3",
-      "title": "우리는 너무 많은 생각을 AI에 떠넘기고 있는가?",
-      "normalized_title": "우리는 너무 많은 생각을 ai에 떠넘기고 있는가",
-      "url": "https://news.hada.io/topic?id=31458",
-      "published_at": "2026-07-15T05:35:08+00:00",
+      "id": "5aac306fe345",
+      "title": "NotebookLM, Gemini Notebook으로 이름 변경",
+      "normalized_title": "notebooklm gemini notebook으로 이름 변경",
+      "url": "https://news.hada.io/topic?id=31508",
+      "published_at": "2026-07-16T22:56:16+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1230,16 +1905,25 @@
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "fb868312853b",
-      "title": "Physical AI의 머니볼",
-      "normalized_title": "physical ai의 머니볼",
-      "url": "https://news.hada.io/topic?id=31456",
-      "published_at": "2026-07-15T02:17:01+00:00",
+      "id": "89b1dc25613e",
+      "title": "정부·기업·비영리단체가 자유·오픈소스 AI에 투자해야 하는 이유",
+      "normalized_title": "정부 기업 비영리단체가 자유 오픈소스 ai에 투자해야 하는 이유",
+      "url": "https://news.hada.io/topic?id=31501",
+      "published_at": "2026-07-16T20:34:33+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1256,21 +1940,224 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 1,
+        "practical": 2,
         "deep": 1
       },
       "topic_tags": [
         "ai"
-      ]
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 2,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
     },
     {
-      "id": "f781ddaa7274",
-      "title": "독일, 정보자유법 제한 추진",
-      "normalized_title": "독일 정보자유법 제한 추진",
-      "url": "https://news.hada.io/topic?id=31471",
-      "published_at": "2026-07-15T21:48:19+00:00",
+      "id": "5e1ffb769438",
+      "title": "Introducing Real World VoiceEQ: Measuring the human quality of voice AI",
+      "normalized_title": "introducing real world voiceeq measuring the human quality of voice ai",
+      "url": "https://huggingface.co/blog/real-world-voiceeq",
+      "published_at": "2026-07-15T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "2712be8a1a98",
+      "title": "A broken DNSSEC rollover took down .al. Now 1.1.1.1 tells you when validation is bypassed",
+      "normalized_title": "a broken dnssec rollover took down al now 1 1 1 1 tells you when validation is bypassed",
+      "url": "https://blog.cloudflare.com/dnssec-nta-ede-33",
+      "published_at": "2026-07-14T13:00:00+00:00",
+      "summary": "When a failed DNSSEC key rollover took down the .al TLD, we deployed a Negative Trust Anchor to restore resolution. This time, though, clients didn't have to take our word for it: 1.1.1.1 returned EDE 33, a new DNS error code that signals directly in the response that DNSSEC validation was bypassed.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 15
+    },
+    {
+      "id": "13dc5104dc60",
+      "title": "Introducing Precursor: detecting agentic behavior with continuous client-side signals",
+      "normalized_title": "introducing precursor detecting agentic behavior with continuous client side signals",
+      "url": "https://blog.cloudflare.com/introducing-precursor",
+      "published_at": "2026-07-13T13:00:00+00:00",
+      "summary": "Precursor, our new continuous behavioral validation engine for bot management, offers visibility into how humans and bots actually interact across the full user journey. By turning session-level behavior into bot detection signals, it identifies advanced automation with higher precision — while reducing friction for legitimate users.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 15
+    },
+    {
+      "id": "dcbd236e4eaa",
+      "title": "Improving Smart Tiered Cache for Public Cloud Regions",
+      "normalized_title": "improving smart tiered cache for public cloud regions",
+      "url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds",
+      "published_at": "2026-07-10T12:00:00+00:00",
+      "summary": "Smart Tiered Cache allows for precise upper tier selection for origins hosted on AWS, GCP, Azure, and Oracle Cloud with customer-provided cloud region hints.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 1,
+        "explanatory_depth": 4,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 17,
+      "lead_rank": 3,
+      "selection_reason": "핵심뉴스 후보 3 · 점수 17"
+    },
+    {
+      "id": "e19fbb75eb44",
+      "title": "GPT-5.6: Frontier intelligence that scales with your ambition",
+      "normalized_title": "gpt 5 6 frontier intelligence that scales with your ambition",
+      "url": "https://openai.com/index/gpt-5-6",
+      "published_at": "2026-07-09T10:00:00+00:00",
+      "summary": "More intelligence from every token, stronger performance per dollar, and more capability on demand for your hardest work.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 8
+    },
+    {
+      "id": "bbd0631abeb4",
+      "title": "Roc 컴파일러의 Rust→Zig 재작성 진행기",
+      "normalized_title": "roc 컴파일러의 rust zig 재작성 진행기",
+      "url": "https://news.hada.io/topic?id=31507",
+      "published_at": "2026-07-16T22:52:17+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1289,16 +2176,247 @@
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "4024c819a0bb",
-      "title": "호주, 전력 소매업체에 낮 3시간 무료 전기 의무화",
-      "normalized_title": "호주 전력 소매업체에 낮 3시간 무료 전기 의무화",
-      "url": "https://news.hada.io/topic?id=31470",
-      "published_at": "2026-07-15T21:45:19+00:00",
+      "id": "1f5e6a553d8f",
+      "title": "음악 불법 복제에서 사라진 즐거움",
+      "normalized_title": "음악 불법 복제에서 사라진 즐거움",
+      "url": "https://news.hada.io/topic?id=31506",
+      "published_at": "2026-07-16T22:47:05+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "4433f92d9e2b",
+      "title": "디지털 시계 디자인 컬렉션",
+      "normalized_title": "디지털 시계 디자인 컬렉션",
+      "url": "https://news.hada.io/topic?id=31504",
+      "published_at": "2026-07-16T21:33:31+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "cb65babfe05f",
+      "title": "Microsoft Comic Chat, 오픈 소스로 공개",
+      "normalized_title": "microsoft comic chat 오픈 소스로 공개",
+      "url": "https://news.hada.io/topic?id=31503",
+      "published_at": "2026-07-16T20:55:37+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "f3bd1080d1aa",
+      "title": "Kimi K3 공개 - 개방형 프론티어 인텔리전스",
+      "normalized_title": "kimi k3 공개 개방형 프론티어 인텔리전스",
+      "url": "https://news.hada.io/topic?id=31502",
+      "published_at": "2026-07-16T20:40:45+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "628d8e607973",
+      "title": "나도 MacBook 모서리를 갈아냈다",
+      "normalized_title": "나도 macbook 모서리를 갈아냈다",
+      "url": "https://news.hada.io/topic?id=31499",
+      "published_at": "2026-07-16T19:33:45+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "c33a68f6f680",
+      "title": "GPU 없이 13년 된 Xeon에서 Gemma 4 26B를 초당 5토큰으로 실행하기",
+      "normalized_title": "gpu 없이 13년 된 xeon에서 gemma 4 26b를 초당 5토큰으로 실행하기",
+      "url": "https://news.hada.io/topic?id=31498",
+      "published_at": "2026-07-16T18:41:39+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "71d17868651d",
+      "title": "정신 건강을 우선해야 하는 이유와 소통의 중요성",
+      "normalized_title": "정신 건강을 우선해야 하는 이유와 소통의 중요성",
+      "url": "https://news.hada.io/topic?id=31497",
+      "published_at": "2026-07-16T18:38:39+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1314,21 +2432,65 @@
       ],
       "lane_scores": {
         "broad": 1,
-        "practical": 2,
+        "practical": 1,
         "deep": 1
       },
       "topic_tags": [],
-      "audience_lane": "broad",
-      "selection_reason": "broad 독자 적합도 1"
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "e7268a428221",
-      "title": "Go에서 HTMX를 활용하는 방법",
-      "normalized_title": "go에서 htmx를 활용하는 방법",
-      "url": "https://news.hada.io/topic?id=31469",
-      "published_at": "2026-07-15T21:42:19+00:00",
+      "id": "980d749ecfc6",
+      "title": "NVIDIA Nemotron 3 Embed Ranks #1 Overall on RTEB, Advancing Agentic Retrieval",
+      "normalized_title": "nvidia nemotron 3 embed ranks 1 overall on rteb advancing agentic retrieval",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-3-embed-wins-rteb",
+      "published_at": "2026-07-16T16:01:21+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "4a915257dc7f",
+      "title": "내가 Google DeepMind를 떠난 이유",
+      "normalized_title": "내가 google deepmind를 떠난 이유",
+      "url": "https://news.hada.io/topic?id=31496",
+      "published_at": "2026-07-16T12:38:23+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1347,16 +2509,99 @@
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "79848ff98062",
-      "title": "Show GN: 뉴스레터 구독만 해두고 안 읽고 있지 않나요?",
-      "normalized_title": "show gn 뉴스레터 구독만 해두고 안 읽고 있지 않나요",
-      "url": "https://news.hada.io/topic?id=31468",
-      "published_at": "2026-07-15T20:51:25+00:00",
+      "id": "c5c3971a8972",
+      "title": "Newer Models, Same Advantage",
+      "normalized_title": "newer models same advantage",
+      "url": "https://huggingface.co/blog/Dharma-AI/newer-models-same-advantages",
+      "published_at": "2026-07-16T11:49:48+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "ac4f4267d8fe",
+      "title": "Show GN: 온디바이스 벡터 데이터베이스를 C로 만들었습니다 (LSM-tree + HNSW)",
+      "normalized_title": "show gn 온디바이스 벡터 데이터베이스를 c로 만들었습니다 lsm tree hnsw",
+      "url": "https://news.hada.io/topic?id=31495",
+      "published_at": "2026-07-16T09:36:51+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "8fe6901b4a3b",
+      "title": "Microsoft, 끌 수 없는 Windows GDID 기기 식별자 확인… FBI 사건 서류에 기록",
+      "normalized_title": "microsoft 끌 수 없는 windows gdid 기기 식별자 확인 fbi 사건 서류에 기록",
+      "url": "https://news.hada.io/topic?id=31494",
+      "published_at": "2026-07-16T09:01:54+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1375,16 +2620,25 @@
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "f7fa42259dde",
-      "title": "S&P Global, Oracle 신용등급을 투자적격 최하단 BBB-로 하향",
-      "normalized_title": "s p global oracle 신용등급을 투자적격 최하단 bbb 로 하향",
-      "url": "https://news.hada.io/topic?id=31467",
-      "published_at": "2026-07-15T19:33:57+00:00",
+      "id": "f1921fa44476",
+      "title": "FreeBSD 16, 기본 시스템에서 마지막 GPL 코드 제거",
+      "normalized_title": "freebsd 16 기본 시스템에서 마지막 gpl 코드 제거",
+      "url": "https://news.hada.io/topic?id=31493",
+      "published_at": "2026-07-16T08:01:20+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1403,16 +2657,25 @@
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "dd01e5c97c30",
-      "title": "qr-swastika-avoider v0.1.0 — QR 코드의 우발적 스와스티카 문양 회피",
-      "normalized_title": "qr swastika avoider v0 1 0 qr 코드의 우발적 스와스티카 문양 회피",
-      "url": "https://news.hada.io/topic?id=31466",
-      "published_at": "2026-07-15T16:02:00+00:00",
+      "id": "8af678d90803",
+      "title": "Grok Build가 오픈 소스로 공개됨",
+      "normalized_title": "grok build가 오픈 소스로 공개됨",
+      "url": "https://news.hada.io/topic?id=31492",
+      "published_at": "2026-07-16T06:34:05+00:00",
       "summary": "",
       "source_id": "geeknews",
+      "source_family": "geeknews",
       "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
@@ -1431,22 +2694,31 @@
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 11
     },
     {
-      "id": "bf5d37f7eee6",
-      "title": "Linux 입력 지연 측정: X11 대 Wayland, VRR, DXVK",
-      "normalized_title": "linux 입력 지연 측정 x11 대 wayland vrr dxvk",
-      "url": "https://news.hada.io/topic?id=31465",
-      "published_at": "2026-07-15T15:36:08+00:00",
+      "id": "f443de946cf3",
+      "title": "Security incident disclosure — July 2026",
+      "normalized_title": "security incident disclosure july 2026",
+      "url": "https://huggingface.co/blog/security-incident-july-2026",
+      "published_at": "2026-07-16T00:00:00+00:00",
       "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
       "group": "community",
       "source_weight": 3,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 6,
@@ -1457,24 +2729,33 @@
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
     },
     {
-      "id": "36d36a9fcc8b",
-      "title": "Show GN: CWIST: 즐거운 개발을 다시 여러분께 돌려드리는 웹 프레임워크",
-      "normalized_title": "show gn cwist 즐거운 개발을 다시 여러분께 돌려드리는 웹 프레임워크",
-      "url": "https://news.hada.io/topic?id=31464",
-      "published_at": "2026-07-15T15:28:23+00:00",
+      "id": "11253d0d7f13",
+      "title": "What building Shippy taught us about building agents",
+      "normalized_title": "what building shippy taught us about building agents",
+      "url": "https://huggingface.co/blog/allenai/shippy-tech-blog",
+      "published_at": "2026-07-15T17:29:41+00:00",
       "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
       "group": "community",
       "source_weight": 3,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 6,
@@ -1485,24 +2766,33 @@
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
     },
     {
-      "id": "6cc865c962e2",
-      "title": "Cursor 제로데이: 완전 공개만이 남은 보호 수단이 된 이유",
-      "normalized_title": "cursor 제로데이 완전 공개만이 남은 보호 수단이 된 이유",
-      "url": "https://news.hada.io/topic?id=31461",
-      "published_at": "2026-07-15T12:35:12+00:00",
+      "id": "969cdff00361",
+      "title": "Model Routing Is Simple. Until It Isn’t.",
+      "normalized_title": "model routing is simple until it isn t",
+      "url": "https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt",
+      "published_at": "2026-07-15T17:27:01+00:00",
       "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
       "group": "community",
       "source_weight": 3,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 6,
@@ -1513,24 +2803,33 @@
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
     },
     {
-      "id": "b5fb9ee0f18b",
-      "title": "DID에 관해 너무 많은 이야기",
-      "normalized_title": "did에 관해 너무 많은 이야기",
-      "url": "https://news.hada.io/topic?id=31460",
-      "published_at": "2026-07-15T11:02:10+00:00",
+      "id": "7f36308856b0",
+      "title": "Welcome Inkling by Thinking Machines",
+      "normalized_title": "welcome inkling by thinking machines",
+      "url": "https://huggingface.co/blog/thinkingmachines-inkling",
+      "published_at": "2026-07-15T00:00:00+00:00",
       "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
       "group": "community",
       "source_weight": 3,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 6,
@@ -1541,132 +2840,909 @@
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 13
     },
     {
-      "id": "88bd5e297a36",
-      "title": "스마트 가전을 점검해봐야 할지도 모른다",
-      "normalized_title": "스마트 가전을 점검해봐야 할지도 모른다",
-      "url": "https://news.hada.io/topic?id=31459",
-      "published_at": "2026-07-15T07:01:56+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
+      "id": "2be384b657fc",
+      "title": "Why we cannot wait for better post-quantum signature algorithms",
+      "normalized_title": "why we cannot wait for better post quantum signature algorithms",
+      "url": "https://blog.cloudflare.com/ml-dsa-will-have-to-do",
+      "published_at": "2026-07-09T13:40:47+00:00",
+      "summary": "NIST is advancing nine new post-quantum signature algorithms as potential candidates for future standardization. We take a closer look at all of them, and argue that while they are in the works and show great potential, we should use ML-DSA for now — the best one currently available.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 3
       },
       "requires_manual_review": true,
       "score": 6,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
+        "출처 가중치 4",
+        "공식 출처"
       ],
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 3
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 13
     },
     {
-      "id": "9a56733bbde3",
-      "title": "코드를 거의 보지 않고 만든 70배 빠른 SQL 파서",
-      "normalized_title": "코드를 거의 보지 않고 만든 70배 빠른 sql 파서",
-      "url": "https://news.hada.io/topic?id=31457",
-      "published_at": "2026-07-15T02:19:05+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
+      "id": "2a7072ece5f3",
+      "title": "Automating cross-repo documentation with GitHub Agentic Workflows",
+      "normalized_title": "automating cross repo documentation with github agentic workflows",
+      "url": "https://github.blog/ai-and-ml/github-copilot/automating-cross-repo-documentation-with-github-agentic-workflows",
+      "published_at": "2026-07-08T21:11:56+00:00",
+      "summary": "Explore how the Aspire team turns merged product changes into SME-reviewed docs pull requests, closing the gap between release and documentation. The post Automating cross-repo documentation with GitHub Agentic Workflows appeared first on The GitHub Blog .",
+      "source_id": "github-engineering",
+      "source_family": "github",
+      "source_name": "GitHub Engineering",
+      "group": "official",
+      "source_weight": 4,
       "lane_bias": {
-        "practical": 1,
-        "deep": 1
+        "practical": 2,
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 6,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
+        "출처 가중치 4",
+        "공식 출처"
       ],
       "lane_scores": {
         "broad": 0,
-        "practical": 1,
-        "deep": 1
+        "practical": 3,
+        "deep": 2
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 3,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 14
     },
     {
-      "id": "3498afd13d0a",
-      "title": "예측 불가능한 천재를 감싸는 법",
-      "normalized_title": "예측 불가능한 천재를 감싸는 법",
-      "url": "https://news.hada.io/topic?id=31455",
-      "published_at": "2026-07-15T02:12:49+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
+      "id": "6f5d29d15c43",
+      "title": "Introducing Meerkat: an experiment in global consensus",
+      "normalized_title": "introducing meerkat an experiment in global consensus",
+      "url": "https://blog.cloudflare.com/meerkat-introduction",
+      "published_at": "2026-07-08T12:00:00+00:00",
+      "summary": "Cloudflare Research is building a global consensus service called Meerkat that uses a new consensus algorithm called QuePaxa. We plan to use Meerkat to build a strongly consistent, fault-tolerant key-value store, and other applications.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 3
       },
       "requires_manual_review": true,
       "score": 6,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
+        "출처 가중치 4",
+        "공식 출처"
       ],
       "lane_scores": {
         "broad": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 3
       },
-      "topic_tags": []
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "9fcaddb19bb9",
+      "title": "Cloudflare proudly joins the UK government's Cyber Resilience Pledge",
+      "normalized_title": "cloudflare proudly joins the uk government s cyber resilience pledge",
+      "url": "https://blog.cloudflare.com/cloudflare-joins-uk-cyber-resilience-pledge",
+      "published_at": "2026-07-07T12:00:00+00:00",
+      "summary": "The pledge is a voluntary framework inviting organizations to commit to foundational cyber security governance, board-level accountability, and supply chain rigor. For over a decade, Cloudflare has pioneered the core pillars of this framework: democratizing security, leadership accountability, and radical transparency.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 1,
+        "explanatory_depth": 4,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 15
+    },
+    {
+      "id": "bc66dd331ae5",
+      "title": "Your Worker can now have its own cache in front of it",
+      "normalized_title": "your worker can now have its own cache in front of it",
+      "url": "https://blog.cloudflare.com/workers-cache",
+      "published_at": "2026-07-06T13:00:00+00:00",
+      "summary": "We are launching Workers Cache, a regionally tiered cache that sits directly in front of your Worker entrypoints. Infinitely composable, configured via standard HTTP headers",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 1
+      },
+      "lead_score": 13
+    },
+    {
+      "id": "9dd06ff2acc7",
+      "title": "Profiling in PyTorch (Part 3): Attention is all you profile",
+      "normalized_title": "profiling in pytorch part 3 attention is all you profile",
+      "url": "https://huggingface.co/blog/torch-attention-profile",
+      "published_at": "2026-07-10T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "8125b5dd69d0",
+      "title": "Run AI workloads on any cloud, store on Hugging Face: zero-egress storage with SkyPilot",
+      "normalized_title": "run ai workloads on any cloud store on hugging face zero egress storage with skypilot",
+      "url": "https://huggingface.co/blog/skypilot-hf-storage",
+      "published_at": "2026-07-07T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 11
+    },
+    {
+      "id": "3ce97f6a8c6c",
+      "title": "Native-speed vLLM transformers modeling backend",
+      "normalized_title": "native speed vllm transformers modeling backend",
+      "url": "https://huggingface.co/blog/native-speed-vllm-transformers-backend",
+      "published_at": "2026-07-08T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "77d64de25479",
+      "title": "From Hugging Face to Amazon SageMaker Studio in one click",
+      "normalized_title": "from hugging face to amazon sagemaker studio in one click",
+      "url": "https://huggingface.co/blog/amazon/one-click-to-sagemaker-studio",
+      "published_at": "2026-07-07T21:15:33+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "1ec294ada9f4",
+      "title": "Hugging Face Models on Foundry Managed Compute",
+      "normalized_title": "hugging face models on foundry managed compute",
+      "url": "https://huggingface.co/blog/microsoft/foundry-managed-compute",
+      "published_at": "2026-07-07T15:20:06+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "bf55a61637b6",
+      "title": "LeRobot v0.6.0: Imagine, Evaluate, Improve",
+      "normalized_title": "lerobot v0 6 0 imagine evaluate improve",
+      "url": "https://huggingface.co/blog/lerobot-release-v060",
+      "published_at": "2026-07-07T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "1dc582402725",
+      "title": "PRX Part 4: Our Data Strategy",
+      "normalized_title": "prx part 4 our data strategy",
+      "url": "https://huggingface.co/blog/Photoroom/prx-part4-data",
+      "published_at": "2026-07-06T15:30:55+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
+    },
+    {
+      "id": "e998906a376b",
+      "title": "🤗 Kernels: Major Updates",
+      "normalized_title": "kernels major updates",
+      "url": "https://huggingface.co/blog/revamped-kernels",
+      "published_at": "2026-07-06T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 3,
+      "score_reasons": [
+        "출처 가중치 3"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 1
+      },
+      "lead_score": 9
     }
   ],
   "selected": [
     {
-      "id": "4024c819a0bb",
-      "title": "호주, 전력 소매업체에 낮 3시간 무료 전기 의무화",
-      "normalized_title": "호주 전력 소매업체에 낮 3시간 무료 전기 의무화",
-      "url": "https://news.hada.io/topic?id=31470",
-      "published_at": "2026-07-15T21:45:19+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
+      "id": "793aa06e4820",
+      "title": "REST API endpoints for Visual Studio Subscription management",
+      "normalized_title": "rest api endpoints for visual studio subscription management",
+      "url": "https://github.blog/changelog/2026-07-16-rest-api-endpoints-for-visual-studio-subscription-management",
+      "published_at": "2026-07-16T18:06:52+00:00",
+      "summary": "GitHub Enterprise Cloud admins can now use the following REST API endpoints to programmatically manage Visual Studio Subscription (VSS) assignments: GET /enterprises/{enterprise}/visual-studio-subscriptions: Returns all VSS assignments for an enterprise, including… The post REST API endpoints for Visual Studio Subscription management appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
       "lane_bias": {
-        "practical": 1,
-        "deep": 1
+        "practical": 3
       },
-      "requires_manual_review": true,
-      "score": 6,
+      "requires_manual_review": false,
+      "score": 10,
       "score_reasons": [
-        "출처 가중치 3",
+        "출처 가중치 5",
+        "공식 출처",
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
-        "practical": 2,
-        "deep": 1
+        "broad": 0,
+        "practical": 5,
+        "deep": 2
       },
       "topic_tags": [],
-      "audience_lane": "broad",
-      "selection_reason": "broad 독자 적합도 1"
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 22,
+      "lead_rank": 1,
+      "selection_reason": "핵심뉴스 후보 1 · 점수 22"
+    },
+    {
+      "id": "c2daab0f6db8",
+      "title": "A Self-Evolving Agent for Longitudinal Personal Health Management",
+      "normalized_title": "a self evolving agent for longitudinal personal health management",
+      "url": "https://arxiv.org/abs/2607.13940v1",
+      "published_at": "2026-07-15T15:22:11+00:00",
+      "summary": "Personal health management unfolds over repeated encounters, yet most health AI systems treat each request in isolation. We developed HealthClaw, an open-source agent architecture that updates support as a person's routines, preferences, measurements and risks change. It separates shared safety rules and medical knowledge from private longitudinal memory containing profile facts, reusable procedures and episodic traces. After each episode, induction determines what should update the profile, revise a procedure, remain episodic or be excluded. We evaluated HealthClaw with a synthetic year-long benchmark and nine 200-case biomedical tasks. Across 900 longitudinal support probes, answer accuracy increased from 0.2% with current-query prompting to 45.7% with HealthClaw, while prompt-side context exposure was 71.7% lower than with full-history prompting. In 100 privacy probes, HealthClaw produced higher privacy-aware answer quality and fewer unsafe disclosures than both baselines. Across the biomedical tasks, the mean absolute gain in the task-specific primary metric was 27.0 percentage points, and seven gains remained significant after false-discovery-rate correction. These offline benchmarks support governed, self-evolving memory for longitudinal personal health agents, although clinical effectiveness requires prospective evaluation. HealthClaw is publicly available at https://github.com/HC-Guo/HealthClaw.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 1,
+        "explanatory_depth": 5,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 20,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 20"
+    },
+    {
+      "id": "dcbd236e4eaa",
+      "title": "Improving Smart Tiered Cache for Public Cloud Regions",
+      "normalized_title": "improving smart tiered cache for public cloud regions",
+      "url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds",
+      "published_at": "2026-07-10T12:00:00+00:00",
+      "summary": "Smart Tiered Cache allows for precise upper tier selection for origins hosted on AWS, GCP, Azure, and Oracle Cloud with customer-provided cloud region hints.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 1,
+        "explanatory_depth": 4,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 17,
+      "lead_rank": 3,
+      "selection_reason": "핵심뉴스 후보 3 · 점수 17"
+    },
+    {
+      "id": "23b1197c7433",
+      "title": "The US is advancing AI safety through state and federal action",
+      "normalized_title": "the us is advancing ai safety through state and federal action",
+      "url": "https://openai.com/index/advancing-ai-safety-through-state-and-federal-action",
+      "published_at": "2026-07-15T12:00:00+00:00",
+      "summary": "OpenAI outlines a “reverse federalism” approach to AI governance, where state laws help build a national framework for safe, democratic AI.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 12,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 14,
+      "lead_rank": 4,
+      "selection_reason": "핵심뉴스 후보 4 · 점수 14"
+    },
+    {
+      "id": "a019da84e775",
+      "title": "스페이스X 품에 안긴 커서, 코딩 도구 넘어 \"세계 최고 AI 개발\" 선언",
+      "normalized_title": "스페이스x 품에 안긴 커서 코딩 도구 넘어 세계 최고 ai 개발 선언",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212854",
+      "published_at": "2026-07-16T09:20:32+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 2,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 13,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 13"
+    }
+  ],
+  "lead_shortlist": [
+    {
+      "id": "793aa06e4820",
+      "title": "REST API endpoints for Visual Studio Subscription management",
+      "normalized_title": "rest api endpoints for visual studio subscription management",
+      "url": "https://github.blog/changelog/2026-07-16-rest-api-endpoints-for-visual-studio-subscription-management",
+      "published_at": "2026-07-16T18:06:52+00:00",
+      "summary": "GitHub Enterprise Cloud admins can now use the following REST API endpoints to programmatically manage Visual Studio Subscription (VSS) assignments: GET /enterprises/{enterprise}/visual-studio-subscriptions: Returns all VSS assignments for an enterprise, including… The post REST API endpoints for Visual Studio Subscription management appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 5,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 5,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 22,
+      "lead_rank": 1,
+      "selection_reason": "핵심뉴스 후보 1 · 점수 22"
+    },
+    {
+      "id": "c2daab0f6db8",
+      "title": "A Self-Evolving Agent for Longitudinal Personal Health Management",
+      "normalized_title": "a self evolving agent for longitudinal personal health management",
+      "url": "https://arxiv.org/abs/2607.13940v1",
+      "published_at": "2026-07-15T15:22:11+00:00",
+      "summary": "Personal health management unfolds over repeated encounters, yet most health AI systems treat each request in isolation. We developed HealthClaw, an open-source agent architecture that updates support as a person's routines, preferences, measurements and risks change. It separates shared safety rules and medical knowledge from private longitudinal memory containing profile facts, reusable procedures and episodic traces. After each episode, induction determines what should update the profile, revise a procedure, remain episodic or be excluded. We evaluated HealthClaw with a synthetic year-long benchmark and nine 200-case biomedical tasks. Across 900 longitudinal support probes, answer accuracy increased from 0.2% with current-query prompting to 45.7% with HealthClaw, while prompt-side context exposure was 71.7% lower than with full-history prompting. In 100 privacy probes, HealthClaw produced higher privacy-aware answer quality and fewer unsafe disclosures than both baselines. Across the biomedical tasks, the mean absolute gain in the task-specific primary metric was 27.0 percentage points, and seven gains remained significant after false-discovery-rate correction. These offline benchmarks support governed, self-evolving memory for longitudinal personal health agents, although clinical effectiveness requires prospective evaluation. HealthClaw is publicly available at https://github.com/HC-Guo/HealthClaw.",
+      "source_id": "arxiv-ai",
+      "source_family": "arxiv-ai",
+      "source_name": "arXiv cs.AI",
+      "group": "research",
+      "source_weight": 4,
+      "lane_bias": {
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 10,
+      "score_reasons": [
+        "출처 가중치 4",
+        "연구 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 5,
+        "actionability": 1,
+        "explanatory_depth": 5,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 20,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 20"
+    },
+    {
+      "id": "dcbd236e4eaa",
+      "title": "Improving Smart Tiered Cache for Public Cloud Regions",
+      "normalized_title": "improving smart tiered cache for public cloud regions",
+      "url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds",
+      "published_at": "2026-07-10T12:00:00+00:00",
+      "summary": "Smart Tiered Cache allows for precise upper tier selection for origins hosted on AWS, GCP, Azure, and Oracle Cloud with customer-provided cloud region hints.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 1,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 1,
+        "explanatory_depth": 4,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 17,
+      "lead_rank": 3,
+      "selection_reason": "핵심뉴스 후보 3 · 점수 17"
+    },
+    {
+      "id": "23b1197c7433",
+      "title": "The US is advancing AI safety through state and federal action",
+      "normalized_title": "the us is advancing ai safety through state and federal action",
+      "url": "https://openai.com/index/advancing-ai-safety-through-state-and-federal-action",
+      "published_at": "2026-07-15T12:00:00+00:00",
+      "summary": "OpenAI outlines a “reverse federalism” approach to AI governance, where state laws help build a national framework for safe, democratic AI.",
+      "source_id": "openai",
+      "source_family": "openai",
+      "source_name": "OpenAI News",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "deep": 1
+      },
+      "requires_manual_review": false,
+      "score": 12,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 5,
+        "freshness": 5
+      },
+      "lead_score": 14,
+      "lead_rank": 4,
+      "selection_reason": "핵심뉴스 후보 4 · 점수 14"
+    },
+    {
+      "id": "a019da84e775",
+      "title": "스페이스X 품에 안긴 커서, 코딩 도구 넘어 \"세계 최고 AI 개발\" 선언",
+      "normalized_title": "스페이스x 품에 안긴 커서 코딩 도구 넘어 세계 최고 ai 개발 선언",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212854",
+      "published_at": "2026-07-16T09:20:32+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "practical": 2,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 4,
+        "actionability": 2,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 13,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 13"
     }
   ],
   "errors": [
-    {
-      "source_id": "aitimes",
-      "message": "HTTP Error 403: Forbidden"
-    },
     {
       "source_id": "yozmit",
       "message": "HTTP Error 405: Not Allowed"
