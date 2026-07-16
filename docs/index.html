@@ -416,13 +416,13 @@
             <button class="btn" type="button" id="previewButton" aria-expanded="false" aria-controls="previewPane" disabled>본문 미리보기</button>
             <button class="btn dark" type="button" id="finalCopyButton" data-copy="final" disabled>최종 HTML 복사</button>
           </div>
+          <div class="status" id="status" role="status" aria-live="polite"></div>
           <p class="manual-help"><strong>붙여넣기:</strong> 최종 HTML을 티스토리 HTML 모드에 한 번 붙여넣고 기본모드로 다시 전환하지 마세요.</p>
           <label class="sr-only" for="htmlCode">최종 블로그 본문 HTML</label>
           <textarea class="code-output" id="htmlCode" spellcheck="false" readonly></textarea>
           <section class="preview-pane" id="previewPane" aria-label="블로그 본문 미리보기" hidden>
             <iframe class="preview-frame" id="previewFrame" title="블로그 본문 미리보기" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
           </section>
-          <div class="status" id="status" role="status" aria-live="polite"></div>
         </div>
       </main>
     </div>
@@ -528,10 +528,11 @@
       const articles = parsed.querySelectorAll(".daily-digest-post");
       const news = parsed.querySelectorAll(".digest-news-card");
       const ads = parsed.querySelectorAll('[data-ad-vendor="adfit"]');
-      if (articles.length !== 1 || news.length !== 3 || ads.length !== 1) return false;
+      const nextSection = parsed.querySelector(".digest-lead-continuation") || news[1];
+      if (articles.length !== 1 || news.length < 1 || ads.length !== 1 || !nextSection) return false;
       const firstBeforeAd = Boolean(news[0].compareDocumentPosition(ads[0]) & 4);
-      const adBeforeSecond = Boolean(ads[0].compareDocumentPosition(news[1]) & 4);
-      return firstBeforeAd && adBeforeSecond;
+      const adBeforeNext = Boolean(ads[0].compareDocumentPosition(nextSection) & 4);
+      return firstBeforeAd && adBeforeNext;
     }
 
     function buildFinalHtml(showMessage = true) {

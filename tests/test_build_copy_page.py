@@ -91,6 +91,20 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('helper.setSelectionRange(0, helper.value.length)', html)
         self.assertIn("복사에 실패했습니다", html)
 
+    def test_final_html_validation_accepts_deep_story_and_digest_layouts(self):
+        html = render([])
+
+        self.assertIn(
+            'const nextSection = parsed.querySelector(".digest-lead-continuation") || news[1];',
+            html,
+        )
+        self.assertIn(
+            "articles.length !== 1 || news.length < 1 || ads.length !== 1 || !nextSection",
+            html,
+        )
+        self.assertIn("ads[0].compareDocumentPosition(nextSection)", html)
+        self.assertNotIn("news.length !== 3", html)
+
     def test_allows_publish_ready_copy_without_required_manual_review(self):
         html = render([])
 
@@ -205,6 +219,10 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn(".action-row {", html)
         self.assertIn(".preview-pane {", html)
         self.assertIn("textarea[hidden], .preview-pane[hidden] { display: none; }", html)
+        self.assertLess(
+            html.index('<div class="status" id="status"'),
+            html.index('<section class="preview-pane" id="previewPane"'),
+        )
 
     def test_writes_a_utf8_script_blocked_standalone_preview(self):
         with tempfile.TemporaryDirectory() as directory:

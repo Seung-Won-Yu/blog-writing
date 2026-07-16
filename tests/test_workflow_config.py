@@ -89,6 +89,9 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("35~45%", contract)
         self.assertIn("하나의 커밋", contract)
         self.assertIn("digest-news-copy", contract)
+        self.assertIn("사용자 인계 지점", contract)
+        self.assertIn("오늘 글 발행 준비", contract)
+        self.assertIn("실제 조립·복사 흐름", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
