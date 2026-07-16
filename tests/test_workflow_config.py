@@ -92,6 +92,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("원인 → 결과", contract)
         self.assertIn("노트북 앞 사람", contract)
         self.assertIn("1초 안에", contract)
+        self.assertIn("curiosity_hook", contract)
+        self.assertIn("시각적 질문", contract)
+        self.assertIn("제목과 출처를 가렸을 때", contract)
+        self.assertIn("45~70%", contract)
+        self.assertIn("클릭베이트", contract)
         self.assertIn("실패한 이미지만 다시", contract)
 
 

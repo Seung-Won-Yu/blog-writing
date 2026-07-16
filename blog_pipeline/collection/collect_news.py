@@ -109,13 +109,31 @@ def parse_feed(text, base_url, default_timezone=dt.timezone.utc):
         title = _child_text(element, {"title"})
         summary = _child_text(element, {"summary", "description", "content"})
         published = _child_text(element, {"published", "updated", "pubdate", "date"})
-        link = ""
+        links = []
         for child in element:
             if _local_name(child.tag) != "link":
                 continue
-            link = child.attrib.get("href") or "".join(child.itertext()).strip()
-            if link:
-                break
+            value = child.attrib.get("href") or "".join(child.itertext()).strip()
+            if value:
+                links.append((child.attrib.get("rel", "").casefold(), value))
+
+        link = ""
+        if is_atom:
+            link = next((value for rel, value in links if rel == "alternate"), "")
+            if not link:
+                link = next((value for rel, value in links if rel in {"", "canonical"}), "")
+        elif links:
+            link = links[0][1]
+
+        if not link and not is_atom:
+            for child in element:
+                if _local_name(child.tag) != "guid":
+                    continue
+                if child.attrib.get("isPermaLink", "true").casefold() == "false":
+                    continue
+                link = "".join(child.itertext()).strip()
+                if link:
+                    break
 
         if title and link:
             items.append(
@@ -220,6 +238,24 @@ def _source_item_matches(raw, source):
     )
 
 
+def _source_item_is_recent(raw, max_age_days, now):
+    if max_age_days is None:
+        return True
+    published = str(raw.get("published_at") or "").strip()
+    if not published:
+        return True
+    if published.endswith("Z"):
+        published = published[:-1] + "+00:00"
+    try:
+        published_at = dt.datetime.fromisoformat(published)
+    except ValueError:
+        return True
+    if published_at.tzinfo is None:
+        published_at = published_at.replace(tzinfo=dt.timezone.utc)
+    age = now - published_at.astimezone(dt.timezone.utc)
+    return age <= dt.timedelta(days=max(0, int(max_age_days)))
+
+
 def load_recent_processed_urls(days_dir, day_id, lookback_days=14):
     """Return canonical URLs saved in recent processed daily articles."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
@@ -265,7 +301,13 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
             continue
 
         limit = int(source.get("max_items", default_limit))
-        filtered_items = [raw for raw in raw_items if _source_item_matches(raw, source)]
+        max_age_days = source.get("max_age_days", config.get("max_age_days"))
+        filtered_items = [
+            raw
+            for raw in raw_items
+            if _source_item_matches(raw, source)
+            and _source_item_is_recent(raw, max_age_days, now)
+        ]
         for raw in filtered_items[:limit]:
             candidate_input = dict(raw)
             if source.get("include_summary") is False:
@@ -304,6 +346,7 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
         eligible_candidates,
         max_items=int(selection.get("max_items", 3)),
         max_per_source=int(selection.get("max_per_source", 1)),
+        max_per_family=selection.get("max_per_family"),
         preferred_groups=selection.get("preferred_groups", []),
         audience_lanes=selection.get("audience_lanes", []),
         max_topic_items=selection.get("max_topic_items", {}),

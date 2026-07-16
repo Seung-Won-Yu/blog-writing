@@ -12,24 +12,31 @@
 - RSS·Atom·HTML 출처를 하나의 후보 형식으로 정규화
 - 추적 파라미터를 제거한 canonical URL 기반 중복 방지
 - 공식 발표·개발 커뮤니티·국내 기술 매체를 함께 탐색
+- 14일보다 오래된 기사 제외와 같은 운영사 피드의 중복 선정 제한
 - `일상에 닿는 변화`, `바로 쓰는 도구`, `깊이 읽는 기술` 관점으로 후보 분류
 - 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
 - 한 출처의 장애가 전체 수집을 막지 않는 독립 오류 처리
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
 
-## 수집 흐름
+## 운영 흐름
 
 ```text
-GitHub Actions
+07:17 KST · GitHub Actions
   → RSS·Atom·HTML 수집
   → URL·제목 정규화
   → 최근 사용 기사와 중복 확인
   → 출처·신선도·독자 관점 점수 계산
   → 오늘의 추천 후보 3건과 추가 후보 저장
   → GitHub Pages 뉴스 레이더 갱신
+
+09:00 KST · Codex 예약 작업
+  → 추천 원문 직접 확인
+  → 블로그 글 작성
+  → 기사별 이미지 생성·검수
+  → 티스토리 복사용 결과 제작
 ```
 
-수집기는 글을 자동 발행하지 않습니다. 후보 페이지는 원문 확인을 돕는 편집용 레이더이며, 각 기사에 대한 사실 확인과 해석은 별도 과정으로 남겨둡니다.
+GitHub Actions는 뉴스 수집·중복 제거·우선순위 계산까지만 수행하며 글과 이미지를 생성하지 않습니다. 후보 페이지는 원문 확인을 돕는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않습니다.
 
 ## 직접 실행
 
@@ -61,7 +68,8 @@ python3 -m unittest \
 
 - AI·IT 전문 매체
 - 개발자 커뮤니티
-- 제품·플랫폼 공식 변경 기록
+- OpenAI·GitHub·Cloudflare·Google Security 공식 피드
+- GitHub Engineering·Hugging Face 기술 블로그
 - 기술 연구 피드
 
 원문 제목과 링크는 외부 입력으로 취급합니다. 후보 페이지를 만들 때 HTML 이스케이프를 적용하고, 페이지에는 검색 제외 메타데이터를 사용합니다.
@@ -70,9 +78,13 @@ python3 -m unittest \
 
 ```text
 .github/workflows/collect-news.yml   정기 뉴스 수집
+agent/DAILY_EDITOR.md                09:00 Codex 편집 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정
+blog_pipeline/publishing/            이미지 최적화·HTML·검사
 config/news_sources.json             출처와 선정 규칙
+data/days/                            완성된 일일 글 데이터
 docs/inbox/                           최신 뉴스 후보 JSON·페이지
+docs/tistory/                         티스토리 복사용 결과와 이미지
 tests/                                수집 파이프라인 회귀 테스트
 ```
 

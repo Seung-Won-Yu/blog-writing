@@ -37,6 +37,29 @@ ATOM_XML = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 
+ATOM_WITH_REPLIES = """<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <title>Prompt injection threats in the wild</title>
+    <link rel="replies" href="https://security.example/comments" />
+    <link rel="alternate" href="https://security.example/article" />
+    <updated>2026-07-12T06:00:00Z</updated>
+  </entry>
+</feed>
+"""
+
+
+RSS_WITH_GUID_ONLY = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <item>
+    <title>Agent evaluation field notes</title>
+    <guid isPermaLink="true">https://example.com/agent-evaluation</guid>
+    <pubDate>Sun, 12 Jul 2026 07:00:00 GMT</pubDate>
+  </item>
+</channel></rss>
+"""
+
+
 HTML_PAGE = """
 <html><body>
   <a href="/magazine/detail/3700/"><span>AI 시대 개발자의 새로운 역할</span></a>
@@ -64,6 +87,16 @@ class FeedParserTests(unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["url"], "https://arxiv.org/abs/2607.00001")
         self.assertEqual(items[0]["published_at"], "2026-07-12T06:00:00+00:00")
+
+    def test_prefers_atom_alternate_link_over_replies(self):
+        items = parse_feed(ATOM_WITH_REPLIES, "https://security.example/feed")
+
+        self.assertEqual(items[0]["url"], "https://security.example/article")
+
+    def test_uses_rss_permalink_guid_when_link_is_missing(self):
+        items = parse_feed(RSS_WITH_GUID_ONLY, "https://example.com/feed")
+
+        self.assertEqual(items[0]["url"], "https://example.com/agent-evaluation")
 
 
 class HtmlParserTests(unittest.TestCase):
@@ -97,6 +130,38 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_filters_items_older_than_the_collection_age_limit(self):
+        config = {
+            "max_age_days": 14,
+            "selection": {"max_items": 3, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "official",
+                    "name": "Official",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://official.example/feed",
+                    "enabled": True,
+                }
+            ],
+        }
+        feed = """<rss><channel>
+          <item><title>새 보안 업데이트</title><link>https://official.example/new</link><pubDate>Sun, 12 Jul 2026 07:00:00 GMT</pubDate></item>
+          <item><title>오래된 보안 업데이트</title><link>https://official.example/old</link><pubDate>Mon, 01 Jun 2026 07:00:00 GMT</pubDate></item>
+        </channel></rss>"""
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda _url: feed,
+            now=NOW,
+            day_id="2026-07-12",
+        )
+
+        self.assertEqual(
+            [item["url"] for item in result["candidates"]],
+            ["https://official.example/new"],
+        )
+
     def test_excludes_recently_selected_url_from_new_selection(self):
         config = {
             "interest_keywords": ["AI"],

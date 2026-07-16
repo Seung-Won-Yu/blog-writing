@@ -1,12 +1,6 @@
 {
   "max_items_per_source": 15,
-  "reference_hosts": [
-    "news.hada.io",
-    "yozm.wishket.com",
-    "openai.com",
-    "github.blog",
-    "arxiv.org"
-  ],
+  "max_age_days": 14,
   "interest_keywords": [
     "AI",
     "에이전트",
@@ -55,6 +49,7 @@
   "selection": {
     "max_items": 3,
     "max_per_source": 1,
+    "max_per_family": 1,
     "exclude_recent_days": 14,
     "audience_lanes": ["broad", "practical", "deep"],
     "max_topic_items": {"ai": 3},
@@ -78,7 +73,6 @@
       "weight": 4,
       "lane_bias": {"broad": 4},
       "include_summary": false,
-      "runtime_summary": true,
       "include_title_keywords": [
         "AI", "인공지능", "GPT", "챗GPT", "로봇", "메타", "인스타", "엔비디아",
         "OpenAI", "구글", "마이크로소프트", "앤트로픽", "일론 머스크", "샘 알트먼",
@@ -97,7 +91,6 @@
       "weight": 3,
       "lane_bias": {"practical": 1, "deep": 1},
       "include_summary": false,
-      "runtime_summary": true,
       "manual_review": true,
       "enabled": true
     },
@@ -110,7 +103,6 @@
       "weight": 3,
       "lane_bias": {"practical": 2},
       "include_summary": false,
-      "runtime_summary": true,
       "fallbacks": [
         {
           "type": "html",
@@ -135,11 +127,57 @@
     {
       "id": "github-changelog",
       "name": "GitHub Changelog",
+      "source_family": "github",
       "group": "official",
       "type": "rss",
       "url": "https://github.blog/changelog/feed/",
       "weight": 5,
       "lane_bias": {"practical": 3},
+      "enabled": true
+    },
+    {
+      "id": "cloudflare-blog",
+      "name": "Cloudflare Blog",
+      "group": "official",
+      "type": "rss",
+      "url": "https://blog.cloudflare.com/rss/",
+      "weight": 4,
+      "lane_bias": {"practical": 1, "deep": 3},
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "github-engineering",
+      "name": "GitHub Engineering",
+      "source_family": "github",
+      "group": "official",
+      "type": "rss",
+      "url": "https://github.blog/engineering/feed/",
+      "weight": 4,
+      "lane_bias": {"practical": 2, "deep": 2},
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "huggingface-blog",
+      "name": "Hugging Face Blog",
+      "group": "community",
+      "type": "rss",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "weight": 3,
+      "lane_bias": {"practical": 1, "deep": 2},
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "google-security",
+      "name": "Google Security Blog",
+      "group": "official",
+      "type": "atom",
+      "url": "https://security.googleblog.com/feeds/posts/default?alt=rss",
+      "weight": 4,
+      "lane_bias": {"broad": 1, "practical": 1, "deep": 3},
+      "manual_review": true,
       "enabled": true
     },
     {

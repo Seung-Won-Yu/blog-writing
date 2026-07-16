@@ -92,15 +92,30 @@ class SourceConfigTests(unittest.TestCase):
         )
         self.assertEqual(config["selection"]["max_research_items"], 0)
         self.assertEqual(config["selection"]["exclude_recent_days"], 14)
+        self.assertEqual(config["max_age_days"], 14)
+        self.assertEqual(config["selection"]["max_per_family"], 1)
         self.assertNotIn("inbox_retention_days", config["selection"])
         self.assertTrue(config["selection"]["require_topic_coherence"])
         self.assertEqual(config["selection"]["max_topic_items"]["ai"], 3)
+        self.assertTrue(
+            {
+                "cloudflare-blog",
+                "github-engineering",
+                "huggingface-blog",
+                "google-security",
+            }.issubset({source["id"] for source in enabled})
+        )
+        github_sources = [
+            source for source in enabled if source["id"].startswith("github-")
+        ]
+        self.assertTrue(
+            all(source.get("source_family") == "github" for source in github_sources)
+        )
         yozmit = next(source for source in enabled if source["id"] == "yozmit")
         self.assertTrue(yozmit.get("fallbacks"))
         for source_id in ("aitimes", "geeknews", "yozmit"):
             source = next(item for item in enabled if item["id"] == source_id)
             self.assertFalse(source["include_summary"])
-            self.assertTrue(source["runtime_summary"])
 
 
 if __name__ == "__main__":

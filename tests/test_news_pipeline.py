@@ -150,6 +150,38 @@ class RankingTests(unittest.TestCase):
 
 
 class SelectionTests(unittest.TestCase):
+    def test_hard_limits_two_feeds_from_the_same_source_family(self):
+        items = []
+        for source_id, lane in (
+            ("github-changelog", "practical"),
+            ("github-engineering", "deep"),
+            ("openai", "broad"),
+        ):
+            source_config = source(source_id, "official", weight=5)
+            source_config["source_family"] = (
+                "github" if source_id.startswith("github") else source_id
+            )
+            item = make_candidate(
+                raw(f"{source_id} 새 소식", f"https://{source_id}.example/post"),
+                source_config,
+            )
+            item["score"] = 10
+            item["lane_scores"] = {"broad": 0, "practical": 0, "deep": 0, lane: 5}
+            items.append(item)
+
+        selected = select_candidates(
+            items,
+            max_items=3,
+            max_per_source=1,
+            max_per_family=1,
+            audience_lanes=["broad", "practical", "deep"],
+        )
+
+        self.assertEqual(
+            len([item for item in selected if item["source_family"] == "github"]),
+            1,
+        )
+
     def test_prefers_group_diversity_and_limits_one_per_source(self):
         items = []
         for title, url, source_config, score in [

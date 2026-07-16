@@ -140,6 +140,7 @@ def make_candidate(raw, source):
         "published_at": published.isoformat() if published else "",
         "summary": summary,
         "source_id": source.get("id", ""),
+        "source_family": source.get("source_family") or source.get("id", ""),
         "source_name": source.get("name") or source.get("id", ""),
         "group": source.get("group", "other"),
         "source_weight": int(source.get("weight", 0)),
@@ -267,6 +268,7 @@ def select_candidates(
     candidates,
     max_items=3,
     max_per_source=1,
+    max_per_family=None,
     preferred_groups=None,
     audience_lanes=None,
     max_topic_items=None,
@@ -281,6 +283,21 @@ def select_candidates(
     )
     selected = []
     source_counts = {}
+    family_counts = {}
+
+    def family_key(item):
+        return item.get("source_family") or item.get("source_id", "")
+
+    def family_is_full(item):
+        if max_per_family is None:
+            return False
+        return family_counts.get(family_key(item), 0) >= int(max_per_family)
+
+    def record_source(item):
+        source_id = item.get("source_id", "")
+        source_counts[source_id] = source_counts.get(source_id, 0) + 1
+        family = family_key(item)
+        family_counts[family] = family_counts.get(family, 0) + 1
 
     if audience_lanes:
         topic_limits = max_topic_items or {}
@@ -290,6 +307,8 @@ def select_candidates(
         def can_add(item, *, source_limit=True):
             source_id = item.get("source_id", "")
             if source_limit and source_counts.get(source_id, 0) >= max_per_source:
+                return False
+            if family_is_full(item):
                 return False
             for topic in item.get("topic_tags", []):
                 limit = topic_limits.get(topic)
@@ -307,8 +326,7 @@ def select_candidates(
             nonlocal research_count
             is_followup = bool(selected)
             selected.append(item)
-            source_id = item.get("source_id", "")
-            source_counts[source_id] = source_counts.get(source_id, 0) + 1
+            record_source(item)
             for topic in item.get("topic_tags", []):
                 topic_counts[topic] = topic_counts.get(topic, 0) + 1
             if item.get("group") == "research":
@@ -379,10 +397,10 @@ def select_candidates(
 
     def add(item):
         source_id = item.get("source_id", "")
-        if source_counts.get(source_id, 0) >= max_per_source:
+        if source_counts.get(source_id, 0) >= max_per_source or family_is_full(item):
             return False
         selected.append(item)
-        source_counts[source_id] = source_counts.get(source_id, 0) + 1
+        record_source(item)
         return True
 
     for group in preferred_groups:
