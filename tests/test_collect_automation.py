@@ -363,6 +363,8 @@ class AutomationInboxTests(unittest.TestCase):
         self.assertNotIn("<script>alert(1)</script>", page)
         self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", page)
         self.assertIn("&lt;b&gt;unsafe&lt;/b&gt;", page)
+        self.assertIn("-webkit-line-clamp:4", page)
+        self.assertIn(".featured .summary", page)
 
     def test_writes_latest_json_and_review_page(self):
         with tempfile.TemporaryDirectory() as directory:

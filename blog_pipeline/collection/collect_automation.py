@@ -442,9 +442,6 @@ def _candidate_card(item, criteria, featured=False):
     experiment_type = escape(str(item.get("experiment_type") or ""))
     repository = escape(str(item.get("repository") or ""))
     score = int(item.get("provisional_score", 0))
-    reasons = " · ".join(
-        escape(str(reason)) for reason in item.get("score_reasons", [])
-    )
     summary_html = '<p class="summary">{}</p>'.format(summary) if summary else ""
     repository_html = (
         '<span class="repository">{}</span>'.format(repository) if repository else ""
@@ -455,7 +452,6 @@ def _candidate_card(item, criteria, featured=False):
         <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>
         {summary_html}
         <div class="criteria">{criteria_html}</div>
-        <p class="reasons">{reasons}</p>
         <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
       </article>""".format(
         card_class="card featured" if featured else "card",
@@ -467,7 +463,6 @@ def _candidate_card(item, criteria, featured=False):
         title=title,
         summary_html=summary_html,
         criteria_html=_criteria_html(item, criteria),
-        reasons=reasons,
     )
 
 
@@ -513,7 +508,7 @@ def render_automation_inbox_html(inbox):
     h2 {{ margin:42px 0 14px; font-size:21px; }}
     h3 {{ margin:12px 0 6px; font-size:20px; line-height:1.4; letter-spacing:-.025em; }}
     a {{ color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }}
-    .eyebrow,.intro,.generated,.summary,.reasons,.notice,.empty,.errors {{ color:var(--muted); }}
+    .eyebrow,.intro,.generated,.summary,.notice,.empty,.errors {{ color:var(--muted); }}
     .eyebrow,.type {{ color:var(--accent); font-weight:800; }}
     .generated {{ font-size:12px; }}
     .intro {{ max-width:720px; }}
@@ -522,7 +517,10 @@ def render_automation_inbox_html(inbox):
     .featured {{ border-left:5px solid var(--accent); }}
     .meta,.criteria {{ display:flex; flex-wrap:wrap; gap:7px 11px; align-items:center; font-size:12px; }}
     .repository {{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }}
-    .summary,.reasons,.notice {{ margin:7px 0 0; }}
+    .repository,h3,.summary {{ overflow-wrap:anywhere; }}
+    .summary {{ display:-webkit-box; margin:7px 0 0; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:4; }}
+    .featured .summary {{ -webkit-line-clamp:6; }}
+    .notice {{ margin:7px 0 0; }}
     .criteria {{ margin-top:13px; }}
     .criterion {{ padding:3px 8px; border:1px solid var(--line); border-radius:999px; background:#f8faf9; }}
     .notice {{ padding-top:9px; border-top:1px dashed var(--line); color:var(--amber); font-size:12px; }}
