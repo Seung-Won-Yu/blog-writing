@@ -1,0 +1,76 @@
+{
+  "title": "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법",
+  "title_candidates": [
+    "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법",
+    "Cloudflare, 퍼블릭 클라우드 원본용 Smart Tiered Cache 리전 힌트 지원",
+    "퍼블릭 클라우드 anycast 원본과 Smart Tiered Cache 리전 힌트: 같은 원본 IP인데 왜 상위 캐시가…",
+    "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법 (2026.…"
+  ],
+  "category": "데일리IT뉴스",
+  "draft_id": "2026-07-17",
+  "publish_date": "2026-07-17",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "scheduled_at": "2026-07-17T09:00:00+09:00",
+  "tags": [
+    "Cloudflare",
+    "CDN",
+    "캐시",
+    "AWS",
+    "성능 최적화"
+  ],
+  "meta_description": "서울의 사용자가 사이트를 열었는데, 캐시를 거친 요청이 시카고를 들렀다가 싱가포르 원본으로 가는 상황을 떠올려 보자. 원본 IP는 가까워 보이지만 실제 서버 위치를 말해 주지 않는 anycast 주소… AWS·GCP·Azure·Oracle Cloud의 anycast 또는 리전 unic…",
+  "key_summary": [
+    "1. Cloudflare, 퍼블릭 클라우드 원본용 Smart Tiered Cache 리전 힌트 지원",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법"
+  ],
+  "generation_provider": "codex-agent",
+  "publish_ready": true,
+  "source": "data/days/2026-07-17.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-17.html",
+  "before_ad_html": "docs/tistory/2026-07-17-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-17-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-17-adfit.html",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/리전-힌트-상위캐시-대표.webp",
+      "path": "docs/tistory/assets/2026-07-17/리전-힌트-상위캐시-대표.webp",
+      "original_url": "",
+      "alt": "anycast 원본에 리전 힌트를 적용해 상위 캐시를 실제 클라우드 리전 가까이 선택하는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/anycast-원본-리전힌트-경로.webp",
+      "path": "docs/tistory/assets/2026-07-17/anycast-원본-리전힌트-경로.webp",
+      "original_url": "",
+      "alt": "리전 힌트 전후의 anycast 원본 상위 캐시 경로 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
+      "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
+      "original_url": "",
+      "alt": "원본 DNS 변경 뒤 캐시 재가열과 MISS 관찰 순서",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
