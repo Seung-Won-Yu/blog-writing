@@ -147,6 +147,12 @@ def _news(day):
 
 
 def _brief_text(value, limit, fallback):
+    if isinstance(value, (list, tuple)):
+        value = " · ".join(
+            str(item or "").strip()
+            for item in value
+            if str(item or "").strip()
+        )
     text = " ".join(str(value or "").replace("\x00", " ").split())
     lowered = text.casefold()
     if not text or any(

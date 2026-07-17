@@ -19,6 +19,20 @@ from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_ki
 ROOT = Path(__file__).resolve().parents[2]
 TRACKING_QUERY_PREFIXES = ("utm_",)
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid", "ref", "source"}
+VISUAL_EVIDENCE_TYPES = {"diagram", "screenshot", "chart"}
+VISUAL_LOGIC_TYPES = {
+    "flow",
+    "before_after",
+    "comparison",
+    "conditional",
+    "timeline",
+    "architecture",
+    "evidence",
+}
+PRODUCT_UI_PATTERN = re.compile(
+    r"(?:설정(?:법|\s*방법)?|사용법|대시보드|configuration|configure|setup|how\s+to)",
+    re.IGNORECASE,
+)
 
 
 def canonical_url(value):
@@ -56,6 +70,17 @@ def _is_http_url(value):
     return parsed.scheme.lower() in {"http", "https"} and bool(parsed.netloc)
 
 
+def _is_internal_tistory_post_url(value):
+    if not _is_http_url(value):
+        return False
+    parsed = urlsplit(str(value).strip())
+    host = parsed.netloc.lower().removeprefix("www.")
+    path = re.sub(r"/+", "/", parsed.path or "/").rstrip("/")
+    return host == "won0322.tistory.com" and bool(
+        re.fullmatch(r"/(?:m/)?\d+", path)
+    )
+
+
 def _read_json(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -63,7 +88,79 @@ def _read_json(path):
         return None
 
 
-def _lead_source_reasons(source, *, min_visuals=2):
+def _lead_visual_evidence_reasons(source):
+    reasons = []
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    assets = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    valid_assets = []
+    for asset in assets:
+        if not isinstance(asset, dict):
+            continue
+        scene_labels = asset.get("scene_label")
+        valid_scene_labels = (
+            isinstance(scene_labels, list)
+            and 2 <= len(scene_labels) <= 4
+            and all(str(label or "").strip() for label in scene_labels)
+        )
+        evidence_type = str(asset.get("evidence_type") or "").strip()
+        logic_type = str(asset.get("logic_type") or "").strip()
+        valid = (
+            str(asset.get("label") or "").strip()
+            and valid_scene_labels
+            and str(asset.get("steps") or "").strip()
+            and str(asset.get("curiosity_hook") or "").strip()
+            and evidence_type in VISUAL_EVIDENCE_TYPES
+            and logic_type in VISUAL_LOGIC_TYPES
+        )
+        if logic_type == "conditional" and not str(
+            asset.get("condition") or ""
+        ).strip():
+            valid = False
+        if evidence_type == "screenshot" and not (
+            _is_http_url(asset.get("source_url"))
+            or str(asset.get("capture_note") or "").strip()
+        ):
+            valid = False
+        if valid:
+            valid_assets.append(asset)
+
+    if len(valid_assets) != len(assets) or len(valid_assets) < 2:
+        reasons.append("lead_visual_briefs")
+
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if news and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    search_text = " ".join(
+        [
+            str(source.get("primary_query") or ""),
+            str(editorial.get("headline") or ""),
+            str(item.get("title_kr") or ""),
+            *[
+                str(block.get("text") or "")
+                for block in content
+                if isinstance(block, dict) and block.get("t") == "h"
+            ],
+        ]
+    )
+    has_product_ui_evidence = any(
+        asset.get("evidence_type") == "screenshot" for asset in valid_assets
+    )
+    has_unavailable_reason = bool(
+        str(visual.get("screenshot_unavailable_reason") or "").strip()
+    )
+    if (
+        PRODUCT_UI_PATTERN.search(search_text)
+        and not has_product_ui_evidence
+        and not has_unavailable_reason
+    ):
+        reasons.append("lead_product_ui_evidence")
+    return reasons
+
+
+def _lead_source_reasons(
+    source, *, min_visuals=2, require_visual_evidence=False
+):
     reasons = []
     news = source.get("news") if isinstance(source.get("news"), list) else []
     item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
@@ -124,10 +221,12 @@ def _lead_source_reasons(source, *, min_visuals=2):
         for post in related
         if isinstance(post, dict)
         and str(post.get("title") or "").strip()
-        and _is_http_url(post.get("url"))
+        and _is_internal_tistory_post_url(post.get("url"))
     ]
     if len(valid_related) < 2:
         reasons.append("related_posts")
+    if require_visual_evidence:
+        reasons.extend(_lead_visual_evidence_reasons(source))
     return reasons
 
 
@@ -244,6 +343,9 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
                 min_visuals=3
                 if identity.content_type == "automation_case"
                 else 2,
+                require_visual_evidence=(
+                    date.fromisoformat(identity.publish_date) >= date(2026, 7, 18)
+                ),
             )
         )
 

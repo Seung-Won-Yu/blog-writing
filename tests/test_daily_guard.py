@@ -464,6 +464,186 @@ class DailyGuardTests(unittest.TestCase):
         self.assertIn("lead_references", result["reasons"])
         self.assertIn("related_posts", result["reasons"])
 
+    def test_deep_story_rejects_related_posts_outside_the_tistory_blog(self):
+        source = {
+            "format": "lead-story-v1",
+            "primary_query": "Cloudflare 캐시 설정",
+            "images": {"cover": {}, "visual_1": {}, "visual_2": {}},
+            "news": [
+                {
+                    "title_kr": "Cloudflare 캐시 설정법",
+                    "references": [
+                        {
+                            "kind": "official",
+                            "title": "공식 발표",
+                            "url": "https://blog.cloudflare.com/example",
+                        },
+                        {
+                            "kind": "documentation",
+                            "title": "공식 문서",
+                            "url": "https://developers.cloudflare.com/example",
+                        },
+                    ],
+                    "content": [
+                        {"t": "h", "text": "변화"},
+                        {"t": "visual", "image": "visual_1"},
+                        {"t": "h", "text": "비교"},
+                        {"t": "p", "text": "차이"},
+                        {"t": "ad_break"},
+                        {"t": "h", "text": "설정"},
+                        {"t": "visual", "image": "visual_2"},
+                        {"t": "h", "text": "확인"},
+                    ],
+                }
+            ],
+            "related_posts": [
+                {
+                    "title": "외부 미리보기 1",
+                    "url": "https://seung-won-yu.github.io/blog-writing/tistory/1.html",
+                },
+                {
+                    "title": "외부 미리보기 2",
+                    "url": "https://example.com/post",
+                },
+            ],
+        }
+
+        from blog_pipeline.publishing.daily_guard import _lead_source_reasons
+
+        self.assertIn("related_posts", _lead_source_reasons(source))
+
+    def test_new_deep_story_requires_visual_logic_and_product_ui_evidence(self):
+        source = {
+            "format": "lead-story-v1",
+            "primary_query": "Cloudflare 리전 힌트 설정 방법",
+            "visual": {
+                "assets": [
+                    {
+                        "label": "설정 흐름",
+                        "scene_label": ["원본", "리전"],
+                        "steps": "원본 확인 → 리전 설정",
+                        "curiosity_hook": "어디서 설정할까?",
+                        "evidence_type": "diagram",
+                        "logic_type": "conditional",
+                    },
+                    {
+                        "label": "설정 결과",
+                        "scene_label": ["캐시", "로그"],
+                        "steps": "설정 → 확인",
+                        "curiosity_hook": "작동했는지 어떻게 알까?",
+                        "evidence_type": "diagram",
+                        "logic_type": "flow",
+                    },
+                ]
+            },
+            "images": {"cover": {}, "visual_1": {}, "visual_2": {}},
+            "news": [
+                {
+                    "title_kr": "Cloudflare 리전 힌트 설정법",
+                    "references": [
+                        {
+                            "kind": "official",
+                            "title": "공식 발표",
+                            "url": "https://blog.cloudflare.com/example",
+                        },
+                        {
+                            "kind": "documentation",
+                            "title": "공식 문서",
+                            "url": "https://developers.cloudflare.com/example",
+                        },
+                    ],
+                    "content": [
+                        {"t": "h", "text": "변화"},
+                        {"t": "visual", "image": "visual_1"},
+                        {"t": "h", "text": "비교"},
+                        {"t": "p", "text": "차이"},
+                        {"t": "ad_break"},
+                        {"t": "h", "text": "설정"},
+                        {"t": "visual", "image": "visual_2"},
+                        {"t": "h", "text": "확인"},
+                    ],
+                }
+            ],
+            "related_posts": [
+                {"title": "관련 1", "url": "https://won0322.tistory.com/120"},
+                {"title": "관련 2", "url": "https://won0322.tistory.com/121"},
+            ],
+        }
+
+        from blog_pipeline.publishing.daily_guard import _lead_source_reasons
+
+        reasons = _lead_source_reasons(source, require_visual_evidence=True)
+
+        self.assertIn("lead_visual_briefs", reasons)
+        self.assertIn("lead_product_ui_evidence", reasons)
+
+    def test_new_deep_story_accepts_conditional_brief_and_real_ui_screenshot(self):
+        source = {
+            "format": "lead-story-v1",
+            "primary_query": "Cloudflare 리전 힌트 설정 방법",
+            "visual": {
+                "assets": [
+                    {
+                        "label": "조건부 흐름",
+                        "scene_label": ["원본", "리전"],
+                        "steps": "설정 / DNS 변경 시 재확인",
+                        "curiosity_hook": "언제 다시 확인할까?",
+                        "evidence_type": "diagram",
+                        "logic_type": "conditional",
+                        "condition": "DNS 또는 IP를 변경한 경우",
+                    },
+                    {
+                        "label": "실제 설정 화면",
+                        "scene_label": ["Provider", "Region"],
+                        "steps": "원본 선택 → 리전 선택",
+                        "curiosity_hook": "어디서 설정할까?",
+                        "evidence_type": "screenshot",
+                        "logic_type": "evidence",
+                        "source_url": "https://blog.cloudflare.com/example",
+                    },
+                ]
+            },
+            "images": {"cover": {}, "visual_1": {}, "visual_2": {}},
+            "news": [
+                {
+                    "title_kr": "Cloudflare 리전 힌트 설정법",
+                    "references": [
+                        {
+                            "kind": "official",
+                            "title": "공식 발표",
+                            "url": "https://blog.cloudflare.com/example",
+                        },
+                        {
+                            "kind": "documentation",
+                            "title": "공식 문서",
+                            "url": "https://developers.cloudflare.com/example",
+                        },
+                    ],
+                    "content": [
+                        {"t": "h", "text": "변화"},
+                        {"t": "visual", "image": "visual_1"},
+                        {"t": "h", "text": "비교"},
+                        {"t": "p", "text": "차이"},
+                        {"t": "ad_break"},
+                        {"t": "h", "text": "설정"},
+                        {"t": "visual", "image": "visual_2"},
+                        {"t": "h", "text": "확인"},
+                    ],
+                }
+            ],
+            "related_posts": [
+                {"title": "관련 1", "url": "https://won0322.tistory.com/120"},
+                {"title": "관련 2", "url": "https://won0322.tistory.com/121"},
+            ],
+        }
+
+        from blog_pipeline.publishing.daily_guard import _lead_source_reasons
+
+        reasons = _lead_source_reasons(source, require_visual_evidence=True)
+
+        self.assertNotIn("lead_visual_briefs", reasons)
+        self.assertNotIn("lead_product_ui_evidence", reasons)
+
     def test_deep_story_caps_explanatory_visuals_at_six(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

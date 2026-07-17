@@ -323,7 +323,7 @@ def build_title_candidates(day):
         candidates.append(trim_text(f"{subject}: {hook}", 68))
     elif hook:
         candidates.append(trim_text(hook, 68))
-    if label:
+    if label and not is_lead_story(day):
         candidates.append(trim_text(f"{headline} ({label})", 70))
 
     unique = []

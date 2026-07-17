@@ -114,6 +114,22 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("한글 파일명", contract)
         self.assertIn("표·차트·타임라인·비교·동작 흐름", contract)
         self.assertIn("실패한 이미지만 다시", contract)
+        self.assertIn("`evidence_type`", contract)
+        self.assertIn("`logic_type`", contract)
+        self.assertIn("`condition`", contract)
+        self.assertIn("조건부 사건", contract)
+        self.assertIn("실제 제품 화면", contract)
+        self.assertIn("생성 이미지로 가짜 UI", contract)
+        self.assertIn("대표는 문제·결과", contract)
+
+    def test_editor_contract_requires_search_titles_complete_facts_and_real_internal_links(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("핵심 검색어는 한 번", contract)
+        self.assertIn("적용 범위·요금·선행 조건", contract)
+        self.assertIn("작동 확인 신호", contract)
+        self.assertIn("https://won0322.tistory.com/<숫자>", contract)
+        self.assertIn("GitHub Pages 미리보기 링크", contract)
 
     def test_saturday_contract_owns_verified_hands_on_automation_cases(self):
         daily = EDITOR_CONTRACT.read_text(encoding="utf-8")

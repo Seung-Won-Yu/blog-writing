@@ -1,10 +1,9 @@
 {
-  "title": "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법",
+  "title": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
   "title_candidates": [
-    "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법",
+    "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
     "Cloudflare, 퍼블릭 클라우드 원본용 Smart Tiered Cache 리전 힌트 지원",
-    "퍼블릭 클라우드 anycast 원본과 Smart Tiered Cache 리전 힌트: 같은 원본 IP인데 왜 상위 캐시가…",
-    "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법 (2026.…"
+    "퍼블릭 클라우드 anycast 원본과 Smart Tiered Cache 리전 힌트: 같은 원본 IP인데 왜 상위 캐시가…"
   ],
   "category": "데일리IT뉴스",
   "draft_id": "2026-07-17",
@@ -31,7 +30,7 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법"
+    "추천 제목: Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법"
   ],
   "generation_provider": "codex-agent",
   "publish_ready": true,
@@ -65,10 +64,20 @@
     {
       "kind": "visual_2",
       "title": "본문 이해 이미지 2",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
-      "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-조건부-확인.webp",
+      "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-조건부-확인.webp",
       "original_url": "",
-      "alt": "원본 DNS 변경 뒤 캐시 재가열과 MISS 관찰 순서",
+      "alt": "리전 힌트 적용 흐름과 DNS·IP 변경 시 캐시 재가열을 구분한 조건부 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/클라우드플레어-리전힌트-실제설정화면.webp",
+      "path": "docs/tistory/assets/2026-07-17/클라우드플레어-리전힌트-실제설정화면.webp",
+      "original_url": "",
+      "alt": "Cloudflare Origin Configuration에서 Cloud Provider와 Region을 선택하는 실제 화면",
       "width": 1200,
       "height": 630
     }

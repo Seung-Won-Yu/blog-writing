@@ -187,6 +187,38 @@ class EditorialImageTests(unittest.TestCase):
             "변화 감지 → 의미 해석 → 다음 행동",
         )
 
+    def test_joins_scene_label_lists_without_python_list_punctuation(self):
+        day = {
+            "format": "lead-story-v1",
+            "news": [
+                {
+                    "title_kr": "Cloudflare 리전 힌트 설정",
+                    "blurb_kr": "anycast 원본의 경로를 바로잡는다.",
+                }
+            ],
+            "visual": {
+                "assets": [
+                    {
+                        "label": "리전 힌트 경로",
+                        "scene_label": ["서울 사용자", "anycast IP", "싱가포르 원본"],
+                        "steps": "모호한 경로 → 리전 힌트 → 가까운 상위 캐시",
+                    },
+                    {
+                        "label": "적용 확인",
+                        "scene_label": ["설정 화면", "확인 로그"],
+                        "steps": "설정 → 로그 확인",
+                    },
+                ]
+            },
+        }
+
+        visual = resolve_visual(day)
+
+        self.assertEqual(
+            visual["stories"][0]["scene_label"],
+            "서울 사용자 · anycast IP · 싱가포르 원본",
+        )
+
     def test_keeps_a_short_subject_separate_from_the_curiosity_hook(self):
         day = {
             **DAY,

@@ -319,6 +319,14 @@ class SaturdayAutomationExportTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_deep_story_title_candidates_do_not_repeat_the_date(self):
+        candidates = build_title_candidates(LEAD_DAY)
+
+        self.assertTrue(candidates)
+        self.assertFalse(
+            any(LEAD_DAY["date_label"] in candidate for candidate in candidates)
+        )
+
     def test_renders_one_deep_story_with_variable_visuals_table_and_related_posts(self):
         html = render_post("2026-07-17", LEAD_DAY)
 

@@ -25,23 +25,42 @@
           "리전 힌트"
         ],
         "steps": "이전의 여러 상위 캐시 경로 → 리전 힌트 → 원본 가까이의 주 상위 캐시와 대체 경로",
-        "curiosity_hook": "IP만 보면 가까워 보이는데 실제 원본은 어디에 있을까?"
+        "curiosity_hook": "IP만 보면 가까워 보이는데 실제 원본은 어디에 있을까?",
+        "evidence_type": "diagram",
+        "logic_type": "before_after"
       },
       {
-        "label": "설정 전 확인해야 할 조건과 캐시 재가열 위험",
+        "label": "리전 힌트 적용과 DNS·IP 변경 시 재가열을 어떻게 구분하는가",
         "scene_label": [
-          "Cloudflare 캐시",
-          "원본 DNS 변경",
-          "MISS 재가열",
-          "리전 확인"
+          "원본 리전 확인",
+          "리전 힌트 설정",
+          "DNS·IP 변경 시",
+          "MISS 재가열"
         ],
-        "steps": "원본 네트워크 확인 → 리전 힌트 설정 → 캐시 적중률 관찰 → IP 변경 뒤 재확인",
-        "curiosity_hook": "설정을 켠 직후보다 DNS를 바꾼 뒤에 왜 MISS가 늘어날까?"
+        "steps": "필수 흐름: 원본 리전 확인 → 리전 힌트 설정 → 적용 확인 / 조건부 분기: DNS·IP 변경 시 → 캐시 재가열·MISS 증가 → 원본 요청 비교",
+        "curiosity_hook": "DNS·IP를 바꾼 경우에만 왜 MISS를 따로 봐야 할까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "condition": "원본 DNS 또는 IP를 변경한 경우에만"
+      },
+      {
+        "label": "Cloudflare에서 제공자와 리전을 어디서 선택하는가",
+        "scene_label": [
+          "Set Region Hint",
+          "Cloud Provider",
+          "Region",
+          "Confirm"
+        ],
+        "steps": "Origin Configuration에서 원본 선택 → Set Region Hint → 제공자와 리전 선택 → Confirm",
+        "curiosity_hook": "실제 설정 화면에서 어떤 값을 선택해야 할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "source_url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds/"
       }
     ]
   },
   "editorial": {
-    "headline": "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법",
+    "headline": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
     "opening": "서울의 사용자가 사이트를 열었는데, 캐시를 거친 요청이 시카고를 들렀다가 싱가포르 원본으로 가는 상황을 떠올려 보자. 원본 IP는 가까워 보이지만 실제 서버 위치를 말해 주지 않는 anycast 주소라면 이런 우회가 가능하다. Cloudflare가 AWS·GCP·Azure·Oracle Cloud 원본에 리전 힌트를 받기 시작한 이유와, 켜기 전에 확인할 조건을 경로·설정·한계 순서로 살펴본다.",
     "closing": "리전 힌트는 캐시를 더 많이 만들거나 원본을 옮기는 기능이 아니다. anycast IP가 숨긴 실제 클라우드 리전을 알려 주어, 상위 캐시의 선택을 더 정확하게 만드는 보정값이다. 원본의 네트워크 형태와 리전을 확인하고, 변경 뒤에는 `MISS`와 원본 요청을 함께 관찰해야 효과를 제대로 판단할 수 있다.",
     "action": "원본의 공인 IP가 anycast 또는 리전 unicast 앞단인지 확인한 뒤, Cloudflare 대시보드에서 실제 클라우드 리전과 일치하는 힌트를 설정해 보자."
@@ -139,9 +158,22 @@
           "text": "리전 힌트는 모든 원본에 넣는 일반적인 성능 스위치가 아니다. 먼저 원본 도메인이 어떤 클라우드 제공자 앞단을 쓰는지, 실제 워크로드가 어느 리전에 있는지 확인해야 한다. 대시보드에서 힌트를 입력할 수 있는 대상은 Cloudflare가 anycast로 감지한 원본 IP다. 고정 unicast 원본이라면 지연 측정만으로 위치를 충분히 판단할 수 있으므로 힌트가 필요하지 않을 수 있다."
         },
         {
+          "t": "p",
+          "text": "리전 힌트는 Free·Pro·Business·Enterprise 전 요금제에서 추가 비용 없이 사용할 수 있다. 다만 Custom Tiered Cache를 구성했다면 그 토폴로지가 리전 힌트보다 우선한다. 이 경우 힌트만 바꿔도 상위 캐시 경로가 달라질 것이라고 기대하면 안 된다."
+        },
+        {
           "t": "code",
           "language": "text",
-          "text": "확인 순서\n1. 원본 IP가 anycast 또는 리전 unicast 앞단인지 확인\n2. 실제 백엔드가 있는 클라우드 제공자와 리전 확인\n3. Caching > Tiered Cache > Origin Configuration으로 이동\n4. 해당 원본 IP에서 Set Region Hint 선택\n5. 설정 뒤 캐시 MISS와 원본 요청 변화를 같은 기간으로 비교"
+          "text": "확인 순서\n1. 원본 IP가 anycast 또는 리전 unicast 앞단인지 확인\n2. 실제 백엔드가 있는 클라우드 제공자와 리전 확인\n3. Caching > Tiered Cache > Origin Configuration으로 이동\n4. 해당 원본 IP에서 Set Region Hint 선택\n5. http_requests 로그의 CacheTieredFill로 Tiered Cache 사용 확인\n6. 설정 전후 같은 기간의 MISS·원본 요청·사용자 지연 비교"
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "Cloudflare의 실제 Origin Configuration 화면에서는 원본 IP를 선택한 뒤 Cloud Provider와 Region을 지정한다. 화면 출처: Cloudflare 공식 블로그."
+        },
+        {
+          "t": "p",
+          "text": "`CacheTieredFill`은 해당 요청에 Tiered Cache가 사용됐는지 확인하는 값이다. 이 값만으로 성능 개선을 단정하지 말고, 같은 기간의 `MISS`, 원본 요청 수, 실제 사용자 지연 시간을 함께 비교해야 한다."
         },
         {
           "t": "h",
@@ -158,7 +190,7 @@
         {
           "t": "visual",
           "image": "visual_2",
-          "caption": "리전 힌트는 설정으로 끝나지 않는다. 원본·DNS 변경 뒤에는 새 상위 캐시가 채워지는 과정에서 MISS와 원본 요청을 함께 관찰해야 한다."
+          "caption": "리전 힌트 설정 자체와 원본 DNS·IP 변경은 별개다. DNS·IP를 바꾼 경우에만 새 상위 캐시의 재가열로 MISS가 늘 수 있어 원본 요청과 함께 관찰한다."
         },
         {
           "t": "h",
@@ -184,12 +216,12 @@
   "related_posts": [
     {
       "title": "TypeScript 7, Go 재작성으로 10배 빨라졌다? 바로 올리기 전 확인할 것",
-      "url": "https://ihan0316.github.io/ai-weekly-newsroom/days/2026-07-09.html",
+      "url": "https://won0322.tistory.com/116",
       "reason": "성능 발표를 실제 운영 환경의 측정과 조건으로 확인하는 방법을 함께 볼 수 있다."
     },
     {
       "title": "무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/2026-07-15.html",
+      "url": "https://won0322.tistory.com/125",
       "reason": "인프라 변경의 비용과 사용량을 관찰 지표로 검증하는 관점을 이어서 읽기 좋다."
     }
   ],
@@ -215,20 +247,33 @@
       "quality": 82
     },
     "visual_2": {
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
-      "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp",
-      "alt": "원본 DNS 변경 뒤 캐시 재가열과 MISS 관찰 순서",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-조건부-확인.webp",
+      "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-조건부-확인.webp",
+      "alt": "리전 힌트 적용 흐름과 DNS·IP 변경 시 캐시 재가열을 구분한 조건부 도식",
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 30228,
+      "provider": "codex-imagegen-built-in",
+      "bytes": 48778,
+      "quality": 82
+    },
+    "visual_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/클라우드플레어-리전힌트-실제설정화면.webp",
+      "path": "docs/tistory/assets/2026-07-17/클라우드플레어-리전힌트-실제설정화면.webp",
+      "alt": "Cloudflare Origin Configuration에서 Cloud Provider와 Region을 선택하는 실제 화면",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "provider": "cloudflare-official",
+      "source_url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds/",
+      "bytes": 24064,
       "quality": 82
     }
   },
   "generation": {
     "provider": "codex-agent",
     "model": "gpt-5",
-    "revision": 7,
+    "revision": 8,
     "image_policy": "webp-v1"
   }
 }
