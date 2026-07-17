@@ -8,6 +8,7 @@ from blog_pipeline.collection.collect_news import (
     build_inbox,
     load_recent_processed_urls,
     parse_feed,
+    parse_github_trending,
     parse_html_links,
     render_inbox_html,
 )
@@ -69,6 +70,25 @@ HTML_PAGE = """
 </body></html>
 """
 
+GITHUB_TRENDING_HTML = """
+<main>
+  <article class="Box-row">
+    <h2 class="h3 lh-condensed">
+      <a href="/n8n-io/n8n"><span>n8n-io /</span> n8n</a>
+    </h2>
+    <p class="col-9 color-fg-muted my-1 pr-4">
+      Fair-code workflow automation platform with native AI capabilities.
+    </p>
+    <a href="/n8n-io/n8n/stargazers">stars</a>
+  </article>
+  <article class="Box-row">
+    <h2><a href="/activepieces/activepieces">activepieces / activepieces</a></h2>
+    <p class="col-9 color-fg-muted my-1 pr-4">Open source automation tool.</p>
+  </article>
+  <a href="/features/actions">GitHub Actions</a>
+</main>
+"""
+
 NOW = dt.datetime(2026, 7, 12, 9, 0, tzinfo=dt.timezone.utc)
 
 
@@ -127,6 +147,20 @@ class HtmlParserTests(unittest.TestCase):
         items = parse_html_links(html, source)
 
         self.assertEqual([item["title"] for item in items], ["바이브 코딩으로 유료 앱 대체하기"])
+
+    def test_parses_github_trending_repository_names_and_descriptions(self):
+        items = parse_github_trending(
+            GITHUB_TRENDING_HTML,
+            "https://github.com/trending?since=weekly",
+        )
+
+        self.assertEqual(
+            [item["title"] for item in items],
+            ["n8n-io/n8n", "activepieces/activepieces"],
+        )
+        self.assertEqual(items[0]["url"], "https://github.com/n8n-io/n8n")
+        self.assertIn("workflow automation", items[0]["summary"])
+        self.assertEqual(items[0]["published_at"], "")
 
 
 class InboxTests(unittest.TestCase):

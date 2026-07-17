@@ -57,6 +57,71 @@ class _LinkParser(HTMLParser):
             self._parts = []
 
 
+class _GitHubTrendingParser(HTMLParser):
+    _REPOSITORY_PATH = re.compile(r"^/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
+
+    def __init__(self, base_url):
+        super().__init__()
+        self.base_url = base_url
+        self.items = []
+        self._article_depth = 0
+        self._in_heading = False
+        self._in_description = False
+        self._href = ""
+        self._description_parts = []
+
+    def handle_starttag(self, tag, attrs):
+        tag = tag.lower()
+        attributes = dict(attrs)
+        classes = set(str(attributes.get("class") or "").split())
+        if tag == "article":
+            if self._article_depth:
+                self._article_depth += 1
+            elif "Box-row" in classes:
+                self._article_depth = 1
+                self._href = ""
+                self._description_parts = []
+            return
+        if not self._article_depth:
+            return
+        if tag == "h2":
+            self._in_heading = True
+        elif tag == "a" and self._in_heading and not self._href:
+            href = str(attributes.get("href") or "")
+            if self._REPOSITORY_PATH.fullmatch(href):
+                self._href = href
+        elif tag == "p" and {"color-fg-muted", "my-1"}.issubset(classes):
+            self._in_description = True
+
+    def handle_data(self, data):
+        if self._article_depth and self._in_description:
+            self._description_parts.append(data)
+
+    def handle_endtag(self, tag):
+        tag = tag.lower()
+        if tag == "h2":
+            self._in_heading = False
+        elif tag == "p":
+            self._in_description = False
+        elif tag == "article" and self._article_depth:
+            self._article_depth -= 1
+            if self._article_depth == 0:
+                self._finish_article()
+
+    def _finish_article(self):
+        if not self._href:
+            return
+        title = self._href.strip("/")
+        self.items.append(
+            {
+                "title": title,
+                "url": urljoin(self.base_url, self._href),
+                "summary": " ".join(" ".join(self._description_parts).split()),
+                "published_at": "",
+            }
+        )
+
+
 def _local_name(tag):
     return tag.rsplit("}", 1)[-1].lower()
 
@@ -183,6 +248,14 @@ def parse_html_links(text, source):
     return items
 
 
+def parse_github_trending(text, base_url="https://github.com/trending"):
+    """Extract repository names and descriptions from GitHub Trending."""
+    parser = _GitHubTrendingParser(base_url)
+    parser.feed(text)
+    parser.close()
+    return parser.items
+
+
 def _collect_variant(source, fetch_text):
     text = fetch_text(source["url"])
     source_type = source.get("type", "rss").lower()
@@ -192,6 +265,8 @@ def _collect_variant(source, fetch_text):
         return parse_feed(text, source["url"], timezone)
     if source_type == "html":
         return parse_html_links(text, source)
+    if source_type == "github_trending":
+        return parse_github_trending(text, source["url"])
     raise ValueError("지원하지 않는 소스 형식: {}".format(source_type))
 
 
