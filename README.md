@@ -36,6 +36,13 @@
   → 한국어 설명 도식·표·차트 생성·검수
   → 티스토리 복사용 결과 제작
   → 테스트·GitHub Pages 배포 확인
+
+토요일 14:00 KST · Codex 업무자동화 실험 작업
+  → 실제 반복 작업 또는 공개 도구 1건 선정
+  → 안전한 임시 환경에서 최소 예제 실행
+  → 실제 화면·로그와 한국어 설명 도식 제작
+  → 뉴스글과 분리된 두 번째 티스토리 초안 생성
+  → 테스트·GitHub Pages 배포 확인
 ```
 
 GitHub Actions의 정기 작업은 뉴스 수집·중복 제거·우선순위 계산까지만 수행하며 글과 이미지를 생성하지 않습니다. 후보 페이지는 심층 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
@@ -80,11 +87,13 @@ python3 -m unittest \
 
 ```text
 .github/workflows/collect-news.yml   정기 뉴스 수집
-agent/DAILY_EDITOR.md                09:00 Codex 편집 계약
+agent/DAILY_EDITOR.md                매일 09:00 뉴스 편집 계약
+agent/SATURDAY_AUTOMATION.md         토요일 14:00 업무자동화 실험 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정
 blog_pipeline/publishing/            이미지 최적화·HTML·검사
 config/news_sources.json             출처와 선정 규칙
 data/days/                            완성된 일일 글 데이터
+data/automation_cases/                토요일 업무자동화 실험 데이터
 docs/inbox/                           최신 뉴스 후보 JSON·페이지
 docs/tistory/                         티스토리 복사용 결과와 이미지
 tests/                                수집 파이프라인 회귀 테스트

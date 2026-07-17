@@ -9,11 +9,148 @@ from blog_pipeline.publishing.build_copy_page import (
     json_for_script,
     load_drafts,
     render,
+    safe_image_assets,
     write_preview_pages,
 )
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_rejects_non_http_image_links_before_they_reach_download_controls(self):
+        assets = safe_image_assets(
+            [
+                {"kind": "cover", "url": "javascript:alert(1)"},
+                {"kind": "visual_1", "url": "data:text/html,bad"},
+                {"kind": "visual_2", "url": "https://example.com/safe.webp"},
+            ]
+        )
+
+        self.assertEqual(
+            assets,
+            [
+                {
+                    "kind": "visual_2",
+                    "url": "https://example.com/safe.webp",
+                }
+            ],
+        )
+        page = render([])
+        self.assertIn('["http:", "https:"].includes(url.protocol)', page)
+
+    def test_same_date_previews_keep_news_and_automation_bodies_separate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "tistory"
+            preview = root / "preview"
+            tistory.mkdir()
+            (tistory / "2026-07-18.html").write_text(
+                "<article>뉴스 전용 본문</article>", encoding="utf-8"
+            )
+            (tistory / "2026-07-18-automation.html").write_text(
+                "<article>자동화 전용 본문</article>", encoding="utf-8"
+            )
+            drafts = [
+                {
+                    "draft_id": "2026-07-18",
+                    "publish_date": "2026-07-18",
+                    "content_label": "뉴스 심층글",
+                    "title": "뉴스",
+                },
+                {
+                    "draft_id": "2026-07-18-automation",
+                    "publish_date": "2026-07-18",
+                    "content_label": "업무자동화 실험",
+                    "title": "자동화",
+                },
+            ]
+
+            with patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ), patch(
+                "blog_pipeline.publishing.build_copy_page.PREVIEW_DIR", preview
+            ):
+                write_preview_pages(drafts)
+
+            daily = (preview / "2026-07-18.html").read_text(encoding="utf-8")
+            automation = (preview / "2026-07-18-automation.html").read_text(
+                encoding="utf-8"
+            )
+
+        self.assertIn("뉴스 전용 본문", daily)
+        self.assertNotIn("자동화 전용 본문", daily)
+        self.assertIn("자동화 전용 본문", automation)
+        self.assertNotIn("뉴스 전용 본문", automation)
+
+    def test_groups_news_and_automation_drafts_for_the_same_saturday(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "docs" / "tistory"
+            days = root / "data" / "days"
+            automation_cases = root / "data" / "automation_cases"
+            tistory.mkdir(parents=True)
+            days.mkdir(parents=True)
+            automation_cases.mkdir(parents=True)
+            (days / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (automation_cases / "2026-07-18.json").write_text(
+                "{}", encoding="utf-8"
+            )
+            rows = (
+                (
+                    "2026-07-18",
+                    "data/days/2026-07-18.json",
+                    "daily_news",
+                    "뉴스 심층글",
+                    "2026-07-18T09:00:00+09:00",
+                ),
+                (
+                    "2026-07-18-automation",
+                    "data/automation_cases/2026-07-18.json",
+                    "automation_case",
+                    "업무자동화 실험",
+                    "2026-07-18T18:00:00+09:00",
+                ),
+            )
+            for draft_id, source, content_type, content_label, scheduled_at in rows:
+                (tistory / f"{draft_id}.html").write_text(
+                    "<article>draft</article>", encoding="utf-8"
+                )
+                (tistory / f"{draft_id}.json").write_text(
+                    json.dumps(
+                        {
+                            "draft_id": draft_id,
+                            "publish_date": "2026-07-18",
+                            "content_type": content_type,
+                            "content_label": content_label,
+                            "scheduled_at": scheduled_at,
+                            "title": content_label,
+                            "source": source,
+                        },
+                        ensure_ascii=False,
+                    ),
+                    encoding="utf-8",
+                )
+
+            with patch("blog_pipeline.publishing.build_copy_page.ROOT", root), patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ):
+                drafts = load_drafts()
+            page = render(drafts)
+
+        self.assertEqual(len(drafts), 2)
+        self.assertEqual(
+            {item["day"] for item in drafts},
+            {"2026-07-18", "2026-07-18-automation"},
+        )
+        self.assertEqual({item["publish_date"] for item in drafts}, {"2026-07-18"})
+        self.assertIn("2026-07-18 · 2건", page)
+        self.assertIn("뉴스 심층글", page)
+        self.assertIn("업무자동화 실험", page)
+        self.assertIn("예약 발행", page)
+        self.assertIn('data-draft-id="2026-07-18"', page)
+        self.assertIn('data-draft-id="2026-07-18-automation"', page)
+        self.assertIn("const byId = new Map", page)
+        self.assertNotIn("const byDay = new Map", page)
+        self.assertNotIn("button.dataset.day", page)
+
     def test_copy_page_hides_legacy_drafts_without_local_source_data(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -35,6 +172,37 @@ class CopyPageTests(unittest.TestCase):
                 drafts = load_drafts()
 
         self.assertEqual([item["day"] for item in drafts], ["2026-07-13"])
+
+    def test_copy_page_rejects_metadata_whose_id_differs_from_its_filename(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "docs" / "tistory"
+            days = root / "data" / "days"
+            automation = root / "data" / "automation_cases"
+            tistory.mkdir(parents=True)
+            days.mkdir(parents=True)
+            automation.mkdir(parents=True)
+            (days / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (automation / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (tistory / "2026-07-18-automation.html").write_text(
+                "draft", encoding="utf-8"
+            )
+            (tistory / "2026-07-18-automation.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-18",
+                        "source": "data/days/2026-07-18.json",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with patch("blog_pipeline.publishing.build_copy_page.ROOT", root), patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ):
+                drafts = load_drafts()
+
+        self.assertEqual(drafts, [])
 
     def test_explains_the_minimal_daily_publish_flow(self):
         html = render([])
@@ -78,6 +246,9 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aria-pressed="false"', html)
         self.assertIn('button.setAttribute("aria-pressed"', html)
         self.assertIn("초안을 불러오지 못했습니다", html)
+        self.assertIn("let selectionRevision = 0;", html)
+        self.assertIn("const revision = ++selectionRevision;", html)
+        self.assertIn("if (revision !== selectionRevision) return;", html)
         self.assertIn('for="htmlCode"', html)
         self.assertIn('copyText(currentFinalHtml, "최종 HTML")', html)
         self.assertIn("최종 HTML 복사", html)

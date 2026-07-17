@@ -118,6 +118,18 @@
       gap: 4px;
       padding: 8px;
     }
+    .draft-group + .draft-group {
+      margin-top: 5px;
+      padding-top: 7px;
+      border-top: 1px solid var(--line);
+    }
+    .draft-group-title {
+      margin: 0;
+      padding: 5px 10px 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
     .draft-btn {
       width: 100%;
       padding: 10px 11px;
@@ -133,9 +145,19 @@
       background: var(--accent-soft);
     }
     .draft-btn span {
-      display: block;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
       font-size: 13px;
       font-weight: 900;
+    }
+    .draft-btn span b { font-weight: 900; }
+    .draft-btn span em {
+      color: var(--accent);
+      font-size: 10px;
+      font-style: normal;
+      white-space: nowrap;
     }
     .draft-btn small {
       display: -webkit-box;
@@ -368,18 +390,33 @@
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">매일 09:00 Codex Terra / Medium이 만든 결과에서 발행에 필요한 항목만 확인합니다.</p>
+      <p class="lead">매일 09:00 Codex Terra / Medium 뉴스 심층글과 토요일 14:00 업무자동화 실험글의 발행 준비물을 확인합니다.</p>
     </header>
 
     <div class="layout">
       <aside class="panel">
         <div class="panel-title">초안 날짜</div>
-        <div class="drafts" id="drafts"><button class="draft-btn" type="button" data-day="2026-07-16" aria-pressed="false"><span>2026-07-16</span><small>Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지</small></button>
-<button class="draft-btn" type="button" data-day="2026-07-15" aria-pressed="false"><span>2026-07-15</span><small>250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법</small></button>
-<button class="draft-btn" type="button" data-day="2026-07-14" aria-pressed="false"><span>2026-07-14</span><small>딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까</small></button>
-<button class="draft-btn" type="button" data-day="2026-07-13" aria-pressed="false"><span>2026-07-13</span><small>러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지</small></button>
-<button class="draft-btn" type="button" data-day="2026-07-12" aria-pressed="false"><span>2026-07-12</span><small>메타는 왜 &#x27;인스타 사진 AI 연동&#x27;을 사흘 만에 멈췄을까</small></button>
-<button class="draft-btn" type="button" data-day="2026-07-11" aria-pressed="false"><span>2026-07-11</span><small>Ghostty는 왜 Zig를 택했을까? 미첼 하시모토가 말한 터미널과 오픈소스</small></button></div>
+        <div class="drafts" id="drafts"><section class="draft-group"><p class="draft-group-title">2026-07-17 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-17" aria-pressed="false"><span><b>뉴스 심층글</b><em>2026. 7. 17. (금) 09:00</em></span><small>Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-16 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-16" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-15 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-15" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-14 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-14" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-13 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-13" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-12 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-12" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>메타는 왜 &#x27;인스타 사진 AI 연동&#x27;을 사흘 만에 멈췄을까</small></button>
+</section>
+<section class="draft-group"><p class="draft-group-title">2026-07-11 · 1건</p>
+<button class="draft-btn" type="button" data-draft-id="2026-07-11" aria-pressed="false"><span><b>뉴스 심층글</b><em></em></span><small>Ghostty는 왜 Zig를 택했을까? 미첼 하시모토가 말한 터미널과 오픈소스</small></button>
+</section></div>
       </aside>
 
       <main class="panel">
@@ -389,6 +426,7 @@
             <div class="field"><span class="label">추천 제목</span><span class="value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="btn" type="button" data-copy="tags">복사</button></div>
+            <div class="field"><span class="label">예약 발행</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
           </section>
 
           <section class="image-card" id="imageCard" hidden>
@@ -404,7 +442,7 @@
             <div class="ad-builder-head">
               <div>
                 <h2><label for="adMarkup">광고 HTML 태그</label></h2>
-                <p>티스토리 광고 넣기로 만든 태그를 붙이면 NEWS 01 뒤에 정확히 한 번 들어갑니다.</p>
+                <p>티스토리 광고 넣기로 만든 태그를 붙이면 첫 핵심 설명이 끝난 35~45% 위치에 정확히 한 번 들어갑니다.</p>
               </div>
               <button class="btn primary" type="button" id="buildFinalButton" disabled>최종 HTML 만들기</button>
             </div>
@@ -429,9 +467,7 @@
   </div>
 
   <script>
-    const drafts = [{"day": "2026-07-16", "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지", "title_candidates": ["Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지", "Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나", "Dependabot 3일 쿨다운: 새 패키지를 바로 받지 않는 이유와 설정법", "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지 (2026. 7. 16)"], "category": "데일리IT뉴스", "tags": "Dependabot, GitHub, dependabot.yml, 의존성 관리, 패키지 쿨다운, 소프트웨어 공급망, 보안 업데이트, 개발 자동화", "meta_description": "새 패키지가 공개됐다는 알림은 빠를수록 좋아 보인다. 그러나 릴리스 직후에는 깨진 배포나 악성 패키지 신호가 아직 드러나지 않았을 수 있다. GitHub이 Dependabot의 일반 버전 업데이트에… Dependabot의 일반 버전 업데이트 PR은 새 릴리스가 레지스트리에 공개된 뒤…", "key_summary": ["1. Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나", "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기", "추천 제목: Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp", "path": "docs/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp", "original_url": "", "alt": "새 패키지 공개부터 3일 관찰 창과 업데이트 PR 검토까지 보여주는 Dependabot 쿨다운 도식", "width": 1200, "height": 630}, {"kind": "visual_1", "title": "본문 이해 이미지 1", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp", "path": "docs/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp", "original_url": "", "alt": "일반 버전 업데이트의 3일 관찰 경로와 보안 업데이트의 즉시 처리 경로 비교", "width": 1200, "height": 630}, {"kind": "visual_2", "title": "본문 이해 이미지 2", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp", "path": "docs/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp", "original_url": "", "alt": "패치 마이너 메이저 업데이트의 변경 폭과 권장 대기 기간 비교", "width": 1200, "height": 630}, {"kind": "visual_3", "title": "본문 이해 이미지 3", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp", "path": "docs/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp", "original_url": "", "alt": "3일 관찰 창 이후 CI와 잠금 파일 검토와 사람 승인을 거치는 검증 게이트", "width": 1200, "height": 630}], "generation_provider": "codex-agent", "publish_ready": true, "source": "data/days/2026-07-16.json", "source_page": "", "html_path": "tistory/2026-07-16.html", "before_ad_html_path": "tistory/2026-07-16-before-ad.html", "after_ad_html_path": "tistory/2026-07-16-after-ad.html", "adfit_html_path": "tistory/2026-07-16-adfit.html", "preview_path": "preview/2026-07-16.html", "meta_path": "tistory/2026-07-16.json"}, {"day": "2026-07-15", "title": "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법", "title_candidates": ["250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법", "무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까 외 2건", "AI 서비스의 청구·검사·자기점검: 자동화 결과를 어디까지 믿을 것인가", "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법 (2026. 7. 15)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, arXiv, 사용량 기반 과금 (Usage-based Billing), 코드 스캐닝 (Code Scanning), 메타인지 (Metacognition)", "meta_description": "무료로 쓰던 서비스의 청구 화면에 250억 원이 찍힌다면 무엇부터 해야 할까. 금액이 터무니없다는 감각은 출발점일 뿐이고, 사용 기록·결제 수단·고객 지원 답변을 차례로 맞춰봐야 한다. 오늘의 세 소… 소프트웨어 개발 문제로 개념도 확인합니다.", "key_summary": ["1. 무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까", "2. GitHub, PR에 AI 보안 탐지 표시…병합 전 확인할 조건은", "3. LLM도 자신의 답을 점검할 수 있을까…메타인지 연구가 정리한 질문들", "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.webp", "path": "docs/tistory/assets/2026-07-15/cover.webp", "original_url": "", "alt": "청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.webp", "path": "docs/tistory/assets/2026-07-15/story-01.webp", "original_url": "", "alt": "사용자가 청구 내역과 카드 결제 정보를 대조하는 장면", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.webp", "path": "docs/tistory/assets/2026-07-15/story-02.webp", "original_url": "", "alt": "개발팀이 풀 리퀘스트의 AI 보안 탐지 결과를 함께 검토하는 장면", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.webp", "path": "docs/tistory/assets/2026-07-15/story-03.webp", "original_url": "", "alt": "연구자가 AI 답변과 근거 자료를 나란히 점검하는 장면", "width": 1200, "height": 630}], "generation_provider": "codex-agent", "publish_ready": true, "source": "data/days/2026-07-15.json", "source_page": "", "html_path": "tistory/2026-07-15.html", "before_ad_html_path": "tistory/2026-07-15-before-ad.html", "after_ad_html_path": "tistory/2026-07-15-after-ad.html", "adfit_html_path": "tistory/2026-07-15-adfit.html", "preview_path": "preview/2026-07-15.html", "meta_path": "tistory/2026-07-15.json"}, {"day": "2026-07-14", "title": "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까", "title_candidates": ["딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까", "AI 얼굴은 너무 완벽하다? 1시간 훈련 뒤 식별 정확도 40%에서 80%대로 외 2건", "딥페이크 얼굴 판별: 너무 완벽한 얼굴이 단서였다", "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까 (2026. 7. 14)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, GeekNews, 프롬프트 인젝션 (Prompt Injection), 정적 분석 (Static Analysis), 소프트웨어 팩토리 (Software Factory)", "meta_description": "낯선 사람의 프로필 사진이 지나치게 반듯하다. 영상통화 전에 송금이나 본인 확인을 요구받는 순간이라면 ‘뭔가 이상하다’는 감각만으로 충분할까. 한 연구는 사람이 AI 얼굴을 가려내는 능력도 훈련할 수… 소프트웨어 개발 문제로 개념도 확인합니다.", "key_summary": ["1. AI 얼굴은 너무 완벽하다? 1시간 훈련 뒤 식별 정확도 40%에서 80%대로", "2. GitHub CodeQL, AI 시스템 프롬프트로 흘러가는 사용자 입력을 찾는다", "3. AI가 코드를 쓰는 2026년에도 사람이 직접 코딩해야 하는 이유", "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/cover.jpg", "path": "docs/tistory/assets/2026-07-14/cover.jpg", "original_url": "", "alt": "실제 얼굴과 AI 생성 얼굴 사진 사이를 돋보기로 비교하는 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-01.jpg", "path": "docs/tistory/assets/2026-07-14/story-01.jpg", "original_url": "", "alt": "참가자가 여러 얼굴 사진을 비교하며 AI 생성 얼굴을 분류하는 연구 장면", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-02.jpg", "path": "docs/tistory/assets/2026-07-14/story-02.jpg", "original_url": "", "alt": "사용자 입력이 보호된 시스템 지시문에 닿기 전 정적 분석으로 차단되는 장면", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-03.jpg", "path": "docs/tistory/assets/2026-07-14/story-03.jpg", "original_url": "", "alt": "개발자가 자동화된 여러 작업 장치 사이에서 약한 구조를 직접 살피는 장면", "width": 1200, "height": 630}], "generation_provider": "github-models", "publish_ready": true, "source": "data/days/2026-07-14.json", "source_page": "", "html_path": "tistory/2026-07-14.html", "before_ad_html_path": "tistory/2026-07-14-before-ad.html", "after_ad_html_path": "tistory/2026-07-14-after-ad.html", "adfit_html_path": "tistory/2026-07-14-adfit.html", "preview_path": "preview/2026-07-14.html", "meta_path": "tistory/2026-07-14.json"}, {"day": "2026-07-13", "title": "러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지", "title_candidates": ["러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지", "1인 개발자는 왜 무료 러닝앱 LLRUN을 만들었을까?", "러닝 기록을 대회 경험으로 바꾼 LLRUN의 제품 설계"], "category": "데일리IT뉴스", "tags": "LLRUN, 러닝앱, 1인개발, React, Capacitor, MapLibre, Spring Boot, GPS", "meta_description": "비싼 참가비와 정해진 일정이 불편해 직접 러닝앱을 만든 1인 개발자. LLRUN의 기록 경쟁, 경로비행, 크루 기능과 제품·기술 관점의 배울 점을 정리했습니다.", "key_summary": ["등록된 코스를 원하는 시간에 달리고 기록을 겨루는 무료 러닝앱입니다.", "3D 경로 영상, 아트런, 크루 기능으로 재방문과 공유 이유를 만듭니다.", "센서·GPS·백그라운드 기록·위치 개인정보가 핵심 기술 과제입니다."], "publish_checklist": ["제목·본문·이미지·원문 링크 확인 완료", "AdFit 광고가 첫 핵심 구획 뒤에 1개만 있는지 확인", "HTML 모드에서 한 번에 붙여넣고 기본 모드로 전환하지 않기"], "image_assets": [{"kind": "story_1", "title": "LLRUN 본문 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png", "path": "docs/tistory/assets/2026-07-13/news-01.png", "original_url": "", "alt": "러닝앱 LLRUN 소개 화면과 GPS 경로 기능", "width": 1200, "height": 630}], "generation_provider": "codex", "publish_ready": true, "source": "data/days/2026-07-13.json", "source_page": "https://won0322.tistory.com/121", "html_path": "tistory/2026-07-13.html", "before_ad_html_path": "tistory/2026-07-13-before-ad.html", "after_ad_html_path": "tistory/2026-07-13-after-ad.html", "adfit_html_path": "tistory/2026-07-13-adfit.html", "preview_path": "preview/2026-07-13.html", "meta_path": "tistory/2026-07-13.json"}, {"day": "2026-07-12", "title": "메타는 왜 '인스타 사진 AI 연동'을 사흘 만에 멈췄을까", "title_candidates": ["메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단", "메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회 외 2건", "사진과 AI 연동: 내 사진은 어디까지 연결될까?", "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 (2026. 7. 12)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, OpenAI News, Opt-out, Agentic Coding, Benchmark Noise", "meta_description": "아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려… 소프트웨어 설계 문제로 개념도 확인합니다.", "key_summary": ["1. 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회", "2. 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재", "3. 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기", "정처기 포인트: 소프트웨어 설계 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png", "path": "docs/tistory/assets/2026-07-12/cover.png", "original_url": "", "alt": "2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png", "path": "docs/tistory/assets/2026-07-12/story-01.png", "original_url": "", "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-02.png", "path": "docs/tistory/assets/2026-07-12/story-02.png", "original_url": "", "alt": "코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-03.png", "path": "docs/tistory/assets/2026-07-12/story-03.png", "original_url": "", "alt": "코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}], "generation_provider": "gemini", "publish_ready": true, "source": "data/days/2026-07-12.json", "source_page": "", "html_path": "tistory/2026-07-12.html", "before_ad_html_path": "tistory/2026-07-12-before-ad.html", "after_ad_html_path": "tistory/2026-07-12-after-ad.html", "adfit_html_path": "tistory/2026-07-12-adfit.html", "preview_path": "preview/2026-07-12.html", "meta_path": "tistory/2026-07-12.json"}, {"day": "2026-07-11", "title": "Ghostty는 왜 Zig를 택했을까? 미첼 하시모토가 말한 터미널과 오픈소스", "title_candidates": ["미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수", "미첼 하시모토의 고스티: 지그로 빚어낸 고성능 터미널의 기준 외 2건", "AI 토큰의 여정: AI 답변 전 토큰은 어디를 지날까?", "미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수 (2026. 7. 11)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, PTY (Pseudo Terminal), Hyperlocal, Hallucination (환각)", "meta_description": "아침에 터미널을 열고 명령어를 입력하는 순간의 반응 속도는 개발자의 하루 기분을 결정한다. 0.1초의 지연 시간이 쌓여 업무의 리듬을 깨뜨리는 장면은 도구의 품질이 왜 중요한지 말해준다. 단순히 기능… 정보시스템 구축관리 문제로 개념도 확인합니다.", "key_summary": ["1. 미첼 하시모토의 고스티: 지그로 빚어낸 고성능 터미널의 기준", "2. AI 생성 텍스트의 범람과 개발자의 인지적 번아웃", "3. 맵뉴스: 알고리즘 대신 장소로 연결되는 하이퍼로컬 SNS", "정처기 포인트: 정보시스템 구축관리 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/cover.png", "path": "docs/tistory/assets/2026-07-11/cover.png", "original_url": "", "alt": "2026. 7. 11 AI 토큰의 여정 - AI 답변 전 토큰은 어디를 지날까? 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-01.png", "path": "docs/tistory/assets/2026-07-11/story-01.png", "original_url": "", "alt": "AI 하드웨어 · AI 요청의 처리 흐름: 요청 토큰 → 데이터센터 → 응답 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-02.png", "path": "docs/tistory/assets/2026-07-11/story-02.png", "original_url": "", "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-03.png", "path": "docs/tistory/assets/2026-07-11/story-03.png", "original_url": "", "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}], "generation_provider": "gemini", "publish_ready": true, "source": "data/days/2026-07-11.json", "source_page": "", "html_path": "tistory/2026-07-11.html", "before_ad_html_path": "tistory/2026-07-11-before-ad.html", "after_ad_html_path": "tistory/2026-07-11-after-ad.html", "adfit_html_path": "tistory/2026-07-11-adfit.html", "preview_path": "preview/2026-07-11.html", "meta_path": "tistory/2026-07-11.json"}];
-    drafts.unshift({"day":"2026-07-17","title":"Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법","category":"데일리IT뉴스","tags":"Cloudflare, CDN, 캐시, AWS, 성능 최적화","image_assets":[{"kind":"cover","title":"대표 이미지","url":"https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/리전-힌트-상위캐시-대표.webp","alt":"anycast 원본에 리전 힌트를 적용해 상위 캐시를 실제 클라우드 리전 가까이 선택하는 흐름"}],"publish_ready":true,"source":"data/days/2026-07-17.json","html_path":"tistory/2026-07-17.html","adfit_html_path":"tistory/2026-07-17-adfit.html","preview_path":"preview/2026-07-17.html"});
-    document.getElementById("drafts").insertAdjacentHTML("afterbegin", '<button class="draft-btn" type="button" data-day="2026-07-17" aria-pressed="false"><span>2026-07-17</span><small>Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법</small></button>');
+    const drafts = [{"day": "2026-07-17", "draft_id": "2026-07-17", "publish_date": "2026-07-17", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "2026-07-17T09:00:00+09:00", "scheduled_label": "2026. 7. 17. (금) 09:00", "title": "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법", "title_candidates": ["Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법", "Cloudflare, 퍼블릭 클라우드 원본용 Smart Tiered Cache 리전 힌트 지원", "퍼블릭 클라우드 anycast 원본과 Smart Tiered Cache 리전 힌트: 같은 원본 IP인데 왜 상위 캐시가…", "Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법 (2026.…"], "category": "데일리IT뉴스", "tags": "Cloudflare, CDN, 캐시, AWS, 성능 최적화", "meta_description": "서울의 사용자가 사이트를 열었는데, 캐시를 거친 요청이 시카고를 들렀다가 싱가포르 원본으로 가는 상황을 떠올려 보자. 원본 IP는 가까워 보이지만 실제 서버 위치를 말해 주지 않는 anycast 주소… AWS·GCP·Azure·Oracle Cloud의 anycast 또는 리전 unic…", "key_summary": ["1. Cloudflare, 퍼블릭 클라우드 원본용 Smart Tiered Cache 리전 힌트 지원", "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기", "추천 제목: Cloudflare Smart Tiered Cache 리전 힌트: anycast 원본의 캐시 경로를 바로잡는 법"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/리전-힌트-상위캐시-대표.webp", "path": "docs/tistory/assets/2026-07-17/리전-힌트-상위캐시-대표.webp", "original_url": "", "alt": "anycast 원본에 리전 힌트를 적용해 상위 캐시를 실제 클라우드 리전 가까이 선택하는 흐름", "width": 1200, "height": 630}, {"kind": "visual_1", "title": "본문 이해 이미지 1", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/anycast-원본-리전힌트-경로.webp", "path": "docs/tistory/assets/2026-07-17/anycast-원본-리전힌트-경로.webp", "original_url": "", "alt": "리전 힌트 전후의 anycast 원본 상위 캐시 경로 비교", "width": 1200, "height": 630}, {"kind": "visual_2", "title": "본문 이해 이미지 2", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp", "path": "docs/tistory/assets/2026-07-17/원본변경-캐시재가열-확인.webp", "original_url": "", "alt": "원본 DNS 변경 뒤 캐시 재가열과 MISS 관찰 순서", "width": 1200, "height": 630}], "generation_provider": "codex-agent", "publish_ready": true, "source": "data/days/2026-07-17.json", "source_page": "", "html_path": "tistory/2026-07-17.html", "before_ad_html_path": "tistory/2026-07-17-before-ad.html", "after_ad_html_path": "tistory/2026-07-17-after-ad.html", "adfit_html_path": "tistory/2026-07-17-adfit.html", "preview_path": "preview/2026-07-17.html", "meta_path": "tistory/2026-07-17.json"}, {"day": "2026-07-16", "draft_id": "2026-07-16", "publish_date": "2026-07-16", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지", "title_candidates": ["Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지", "Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나", "Dependabot 3일 쿨다운: 새 패키지를 바로 받지 않는 이유와 설정법", "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지 (2026. 7. 16)"], "category": "데일리IT뉴스", "tags": "Dependabot, GitHub, dependabot.yml, 의존성 관리, 패키지 쿨다운, 소프트웨어 공급망, 보안 업데이트, 개발 자동화", "meta_description": "새 패키지가 공개됐다는 알림은 빠를수록 좋아 보인다. 그러나 릴리스 직후에는 깨진 배포나 악성 패키지 신호가 아직 드러나지 않았을 수 있다. GitHub이 Dependabot의 일반 버전 업데이트에… Dependabot의 일반 버전 업데이트 PR은 새 릴리스가 레지스트리에 공개된 뒤…", "key_summary": ["1. Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나", "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기", "추천 제목: Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp", "path": "docs/tistory/assets/2026-07-16/dependabot-3일-쿨다운-대표.webp", "original_url": "", "alt": "새 패키지 공개부터 3일 관찰 창과 업데이트 PR 검토까지 보여주는 Dependabot 쿨다운 도식", "width": 1200, "height": 630}, {"kind": "visual_1", "title": "본문 이해 이미지 1", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp", "path": "docs/tistory/assets/2026-07-16/일반업데이트-보안업데이트-비교.webp", "original_url": "", "alt": "일반 버전 업데이트의 3일 관찰 경로와 보안 업데이트의 즉시 처리 경로 비교", "width": 1200, "height": 630}, {"kind": "visual_2", "title": "본문 이해 이미지 2", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp", "path": "docs/tistory/assets/2026-07-16/버전별-쿨다운-설정.webp", "original_url": "", "alt": "패치 마이너 메이저 업데이트의 변경 폭과 권장 대기 기간 비교", "width": 1200, "height": 630}, {"kind": "visual_3", "title": "본문 이해 이미지 3", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp", "path": "docs/tistory/assets/2026-07-16/쿨다운-이후-검증게이트.webp", "original_url": "", "alt": "3일 관찰 창 이후 CI와 잠금 파일 검토와 사람 승인을 거치는 검증 게이트", "width": 1200, "height": 630}], "generation_provider": "codex-agent", "publish_ready": true, "source": "data/days/2026-07-16.json", "source_page": "", "html_path": "tistory/2026-07-16.html", "before_ad_html_path": "tistory/2026-07-16-before-ad.html", "after_ad_html_path": "tistory/2026-07-16-after-ad.html", "adfit_html_path": "tistory/2026-07-16-adfit.html", "preview_path": "preview/2026-07-16.html", "meta_path": "tistory/2026-07-16.json"}, {"day": "2026-07-15", "draft_id": "2026-07-15", "publish_date": "2026-07-15", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법", "title_candidates": ["250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법", "무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까 외 2건", "AI 서비스의 청구·검사·자기점검: 자동화 결과를 어디까지 믿을 것인가", "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법 (2026. 7. 15)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, arXiv, 사용량 기반 과금 (Usage-based Billing), 코드 스캐닝 (Code Scanning), 메타인지 (Metacognition)", "meta_description": "무료로 쓰던 서비스의 청구 화면에 250억 원이 찍힌다면 무엇부터 해야 할까. 금액이 터무니없다는 감각은 출발점일 뿐이고, 사용 기록·결제 수단·고객 지원 답변을 차례로 맞춰봐야 한다. 오늘의 세 소… 소프트웨어 개발 문제로 개념도 확인합니다.", "key_summary": ["1. 무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까", "2. GitHub, PR에 AI 보안 탐지 표시…병합 전 확인할 조건은", "3. LLM도 자신의 답을 점검할 수 있을까…메타인지 연구가 정리한 질문들", "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/cover.webp", "path": "docs/tistory/assets/2026-07-15/cover.webp", "original_url": "", "alt": "청구 대시보드와 보안 경고, 연구 자료를 비교하며 자동화 결과를 검증하는 작업 장면", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-01.webp", "path": "docs/tistory/assets/2026-07-15/story-01.webp", "original_url": "", "alt": "사용자가 청구 내역과 카드 결제 정보를 대조하는 장면", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-02.webp", "path": "docs/tistory/assets/2026-07-15/story-02.webp", "original_url": "", "alt": "개발팀이 풀 리퀘스트의 AI 보안 탐지 결과를 함께 검토하는 장면", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-15/story-03.webp", "path": "docs/tistory/assets/2026-07-15/story-03.webp", "original_url": "", "alt": "연구자가 AI 답변과 근거 자료를 나란히 점검하는 장면", "width": 1200, "height": 630}], "generation_provider": "codex-agent", "publish_ready": true, "source": "data/days/2026-07-15.json", "source_page": "", "html_path": "tistory/2026-07-15.html", "before_ad_html_path": "tistory/2026-07-15-before-ad.html", "after_ad_html_path": "tistory/2026-07-15-after-ad.html", "adfit_html_path": "tistory/2026-07-15-adfit.html", "preview_path": "preview/2026-07-15.html", "meta_path": "tistory/2026-07-15.json"}, {"day": "2026-07-14", "draft_id": "2026-07-14", "publish_date": "2026-07-14", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까", "title_candidates": ["딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까", "AI 얼굴은 너무 완벽하다? 1시간 훈련 뒤 식별 정확도 40%에서 80%대로 외 2건", "딥페이크 얼굴 판별: 너무 완벽한 얼굴이 단서였다", "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까 (2026. 7. 14)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, GeekNews, 프롬프트 인젝션 (Prompt Injection), 정적 분석 (Static Analysis), 소프트웨어 팩토리 (Software Factory)", "meta_description": "낯선 사람의 프로필 사진이 지나치게 반듯하다. 영상통화 전에 송금이나 본인 확인을 요구받는 순간이라면 ‘뭔가 이상하다’는 감각만으로 충분할까. 한 연구는 사람이 AI 얼굴을 가려내는 능력도 훈련할 수… 소프트웨어 개발 문제로 개념도 확인합니다.", "key_summary": ["1. AI 얼굴은 너무 완벽하다? 1시간 훈련 뒤 식별 정확도 40%에서 80%대로", "2. GitHub CodeQL, AI 시스템 프롬프트로 흘러가는 사용자 입력을 찾는다", "3. AI가 코드를 쓰는 2026년에도 사람이 직접 코딩해야 하는 이유", "정처기 포인트: 소프트웨어 개발 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/cover.jpg", "path": "docs/tistory/assets/2026-07-14/cover.jpg", "original_url": "", "alt": "실제 얼굴과 AI 생성 얼굴 사진 사이를 돋보기로 비교하는 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-01.jpg", "path": "docs/tistory/assets/2026-07-14/story-01.jpg", "original_url": "", "alt": "참가자가 여러 얼굴 사진을 비교하며 AI 생성 얼굴을 분류하는 연구 장면", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-02.jpg", "path": "docs/tistory/assets/2026-07-14/story-02.jpg", "original_url": "", "alt": "사용자 입력이 보호된 시스템 지시문에 닿기 전 정적 분석으로 차단되는 장면", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-14/story-03.jpg", "path": "docs/tistory/assets/2026-07-14/story-03.jpg", "original_url": "", "alt": "개발자가 자동화된 여러 작업 장치 사이에서 약한 구조를 직접 살피는 장면", "width": 1200, "height": 630}], "generation_provider": "github-models", "publish_ready": true, "source": "data/days/2026-07-14.json", "source_page": "", "html_path": "tistory/2026-07-14.html", "before_ad_html_path": "tistory/2026-07-14-before-ad.html", "after_ad_html_path": "tistory/2026-07-14-after-ad.html", "adfit_html_path": "tistory/2026-07-14-adfit.html", "preview_path": "preview/2026-07-14.html", "meta_path": "tistory/2026-07-14.json"}, {"day": "2026-07-13", "draft_id": "2026-07-13", "publish_date": "2026-07-13", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지", "title_candidates": ["러닝 대회가 비싸서 직접 앱을 만든 개발자, LLRUN에서 배운 3가지", "1인 개발자는 왜 무료 러닝앱 LLRUN을 만들었을까?", "러닝 기록을 대회 경험으로 바꾼 LLRUN의 제품 설계"], "category": "데일리IT뉴스", "tags": "LLRUN, 러닝앱, 1인개발, React, Capacitor, MapLibre, Spring Boot, GPS", "meta_description": "비싼 참가비와 정해진 일정이 불편해 직접 러닝앱을 만든 1인 개발자. LLRUN의 기록 경쟁, 경로비행, 크루 기능과 제품·기술 관점의 배울 점을 정리했습니다.", "key_summary": ["등록된 코스를 원하는 시간에 달리고 기록을 겨루는 무료 러닝앱입니다.", "3D 경로 영상, 아트런, 크루 기능으로 재방문과 공유 이유를 만듭니다.", "센서·GPS·백그라운드 기록·위치 개인정보가 핵심 기술 과제입니다."], "publish_checklist": ["제목·본문·이미지·원문 링크 확인 완료", "AdFit 광고가 첫 핵심 구획 뒤에 1개만 있는지 확인", "HTML 모드에서 한 번에 붙여넣고 기본 모드로 전환하지 않기"], "image_assets": [{"kind": "story_1", "title": "LLRUN 본문 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-13/news-01.png", "path": "docs/tistory/assets/2026-07-13/news-01.png", "original_url": "", "alt": "러닝앱 LLRUN 소개 화면과 GPS 경로 기능", "width": 1200, "height": 630}], "generation_provider": "codex", "publish_ready": true, "source": "data/days/2026-07-13.json", "source_page": "https://won0322.tistory.com/121", "html_path": "tistory/2026-07-13.html", "before_ad_html_path": "tistory/2026-07-13-before-ad.html", "after_ad_html_path": "tistory/2026-07-13-after-ad.html", "adfit_html_path": "tistory/2026-07-13-adfit.html", "preview_path": "preview/2026-07-13.html", "meta_path": "tistory/2026-07-13.json"}, {"day": "2026-07-12", "draft_id": "2026-07-12", "publish_date": "2026-07-12", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "메타는 왜 '인스타 사진 AI 연동'을 사흘 만에 멈췄을까", "title_candidates": ["메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단", "메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회 외 2건", "사진과 AI 연동: 내 사진은 어디까지 연결될까?", "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 (2026. 7. 12)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, AI타임스, GitHub Changelog, OpenAI News, Opt-out, Agentic Coding, Benchmark Noise", "meta_description": "아침에 일어났을 때 내가 올린 일상 사진이 나도 모르는 사이 AI의 학습 재료로 쓰이고 있다는 사실을 알게 된다면 어떨까. 메타가 인스타그램 공개 계정의 게시물을 AI 이미지 생성에 자동으로 활용하려… 소프트웨어 설계 문제로 개념도 확인합니다.", "key_summary": ["1. 메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회", "2. 깃허브 코파일럿, 오픈AI GPT-5.6 솔·테라·루나 모델 탑재", "3. 오픈AI, 코딩 벤치마크 SWE-Bench Pro의 신뢰성 문제 제기", "정처기 포인트: 소프트웨어 설계 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/cover.png", "path": "docs/tistory/assets/2026-07-12/cover.png", "original_url": "", "alt": "2026. 7. 12 사진과 AI 연동 - 내 사진은 어디까지 연결될까? 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-01.png", "path": "docs/tistory/assets/2026-07-12/story-01.png", "original_url": "", "alt": "자동화 보안 · 사진 데이터의 흐름: 사진 → AI 연동 → 사용자 통제 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-02.png", "path": "docs/tistory/assets/2026-07-12/story-02.png", "original_url": "", "alt": "코딩 방식 · 세 모델의 선택 기준: 속도·비용·정확도에 따른 모델 선택 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-12/story-03.png", "path": "docs/tistory/assets/2026-07-12/story-03.png", "original_url": "", "alt": "코딩 방식 · 벤치마크와 실제 차이: 평가 점수와 실제 코드 검증의 간극 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}], "generation_provider": "gemini", "publish_ready": true, "source": "data/days/2026-07-12.json", "source_page": "", "html_path": "tistory/2026-07-12.html", "before_ad_html_path": "tistory/2026-07-12-before-ad.html", "after_ad_html_path": "tistory/2026-07-12-after-ad.html", "adfit_html_path": "tistory/2026-07-12-adfit.html", "preview_path": "preview/2026-07-12.html", "meta_path": "tistory/2026-07-12.json"}, {"day": "2026-07-11", "draft_id": "2026-07-11", "publish_date": "2026-07-11", "content_type": "daily_news", "content_label": "뉴스 심층글", "scheduled_at": "", "scheduled_label": "", "title": "Ghostty는 왜 Zig를 택했을까? 미첼 하시모토가 말한 터미널과 오픈소스", "title_candidates": ["미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수", "미첼 하시모토의 고스티: 지그로 빚어낸 고성능 터미널의 기준 외 2건", "AI 토큰의 여정: AI 답변 전 토큰은 어디를 지날까?", "미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수 (2026. 7. 11)"], "category": "데일리IT뉴스", "tags": "AI, IT뉴스, 개발뉴스, 정처기, 개발용어, 데일리다이제스트, GeekNews, PTY (Pseudo Terminal), Hyperlocal, Hallucination (환각)", "meta_description": "아침에 터미널을 열고 명령어를 입력하는 순간의 반응 속도는 개발자의 하루 기분을 결정한다. 0.1초의 지연 시간이 쌓여 업무의 리듬을 깨뜨리는 장면은 도구의 품질이 왜 중요한지 말해준다. 단순히 기능… 정보시스템 구축관리 문제로 개념도 확인합니다.", "key_summary": ["1. 미첼 하시모토의 고스티: 지그로 빚어낸 고성능 터미널의 기준", "2. AI 생성 텍스트의 범람과 개발자의 인지적 번아웃", "3. 맵뉴스: 알고리즘 대신 장소로 연결되는 하이퍼로컬 SNS", "정처기 포인트: 정보시스템 구축관리 문제로 개념을 점검합니다."], "publish_checklist": ["제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기", "본문 이미지가 정상 표시되는지 확인하기", "원문 링크와 핵심 사실을 직접 대조해 확인하기", "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기", "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기", "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기", "추천 제목: 미첼 하시모토 인터뷰: Ghostty, Zig, 오픈소스 유지보수"], "image_assets": [{"kind": "cover", "title": "대표 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/cover.png", "path": "docs/tistory/assets/2026-07-11/cover.png", "original_url": "", "alt": "2026. 7. 11 AI 토큰의 여정 - AI 답변 전 토큰은 어디를 지날까? 대표 이미지", "width": 1200, "height": 630}, {"kind": "story_1", "title": "본문 1번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-01.png", "path": "docs/tistory/assets/2026-07-11/story-01.png", "original_url": "", "alt": "AI 하드웨어 · AI 요청의 처리 흐름: 요청 토큰 → 데이터센터 → 응답 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_2", "title": "본문 2번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-02.png", "path": "docs/tistory/assets/2026-07-11/story-02.png", "original_url": "", "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}, {"kind": "story_3", "title": "본문 3번 이미지", "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-11/story-03.png", "path": "docs/tistory/assets/2026-07-11/story-03.png", "original_url": "", "alt": "코딩 방식 · 코딩 방식: 개발 의도 → 코드 작성 → 테스트 결과 흐름을 표현한 기사 이해 이미지", "width": 1200, "height": 630}], "generation_provider": "gemini", "publish_ready": true, "source": "data/days/2026-07-11.json", "source_page": "", "html_path": "tistory/2026-07-11.html", "before_ad_html_path": "tistory/2026-07-11-before-ad.html", "after_ad_html_path": "tistory/2026-07-11-after-ad.html", "adfit_html_path": "tistory/2026-07-11-adfit.html", "preview_path": "preview/2026-07-11.html", "meta_path": "tistory/2026-07-11.json"}];
     const latest = "2026-07-17";
     const defaultAdMarkup = "\u003cfigure class=\"ad-wp\" contenteditable=\"false\" data-ke-type=\"revenue\" data-ad-vendor=\"adfit\" data-ad-id-pc=\"713977\" data-ad-id-mobile=\"713980\"\u003e\u003c/figure\u003e";
     const revenueMarkerPattern = /<figure\b(?=[^>]*data-ke-type=["']revenue["'])[^>]*><\/figure>/gi;
@@ -440,12 +476,14 @@
     let currentBaseHtml = "";
     let currentAdfitHtml = "";
     let currentFinalHtml = "";
-    const byDay = new Map(drafts.map((item) => [item.day, item]));
+    let selectionRevision = 0;
+    const byId = new Map(drafts.map((item) => [item.draft_id, item]));
 
     const els = {
       title: document.getElementById("title"),
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
+      schedule: document.getElementById("schedule"),
       imageCard: document.getElementById("imageCard"),
       coverPreview: document.getElementById("coverPreview"),
       coverTitle: document.getElementById("coverTitle"),
@@ -491,8 +529,19 @@
     }
 
     function selectCoverAsset(assets) {
-      const validAssets = (assets || []).filter((asset) => asset && asset.url);
+      const validAssets = (assets || []).filter(
+        (asset) => asset && safeImageUrl(asset.url)
+      );
       return validAssets.find((asset) => asset.kind === "cover") || validAssets[0];
+    }
+
+    function safeImageUrl(value) {
+      try {
+        const url = new URL(value, window.location.href);
+        return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+      } catch (error) {
+        return "";
+      }
     }
 
     function filenameFromUrl(url) {
@@ -511,12 +560,17 @@
         els.coverPreview.removeAttribute("src");
         return;
       }
+      const coverUrl = safeImageUrl(cover.url);
+      if (!coverUrl) {
+        els.imageCard.hidden = true;
+        return;
+      }
       els.imageCard.hidden = false;
-      els.coverPreview.src = cover.url;
+      els.coverPreview.src = coverUrl;
       els.coverPreview.alt = cover.alt || "대표 이미지 미리보기";
       els.coverTitle.textContent = cover.title || "오늘 글 대표 이미지";
-      els.coverDownload.href = cover.url;
-      els.coverDownload.download = current.day + "-" + filenameFromUrl(cover.url);
+      els.coverDownload.href = coverUrl;
+      els.coverDownload.download = current.draft_id + "-" + filenameFromUrl(coverUrl);
     }
 
     function extractRevenueMarkup(value) {
@@ -580,18 +634,20 @@
       els.previewButton.textContent = showingPreview ? "HTML 코드 보기" : "본문 미리보기";
     }
 
-    async function selectDraft(day) {
-      const draft = byDay.get(day);
+    async function selectDraft(draftId) {
+      const draft = byId.get(draftId);
       if (!draft) return;
+      const revision = ++selectionRevision;
       current = draft;
       document.querySelectorAll(".draft-btn").forEach((button) => {
-        const selected = button.dataset.day === day;
+        const selected = button.dataset.draftId === draftId;
         button.classList.toggle("is-active", selected);
         button.setAttribute("aria-pressed", String(selected));
       });
       els.title.textContent = draft.title || "";
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
+      els.schedule.textContent = draft.scheduled_label || draft.scheduled_at || "직접 지정";
       renderCover(draft.image_assets);
       currentBaseHtml = "";
       currentAdfitHtml = "";
@@ -610,6 +666,7 @@
         ]);
         if (!responses[0].ok || !responses[1].ok) throw new Error("HTML fetch failed");
         const bodies = await Promise.all([responses[0].text(), responses[1].text()]);
+        if (revision !== selectionRevision) return;
         currentBaseHtml = bodies[0];
         currentAdfitHtml = bodies[1];
         currentPreviewPath = draft.preview_path + "?v=" + Date.now();
@@ -618,8 +675,9 @@
         els.previewFrame.setAttribute("src", currentPreviewPath);
         setPreviewMode(true);
         updateCopyState();
-        setStatus(day + " 초안을 불러왔습니다.");
+        setStatus(draft.publish_date + " · " + draft.content_label + " 초안을 불러왔습니다.");
       } catch (error) {
+        if (revision !== selectionRevision) return;
         currentBaseHtml = "";
         currentAdfitHtml = "";
         currentFinalHtml = "";
@@ -686,7 +744,7 @@
 
     document.getElementById("drafts").addEventListener("click", (event) => {
       const button = event.target.closest(".draft-btn");
-      if (button) selectDraft(button.dataset.day);
+      if (button) selectDraft(button.dataset.draftId);
     });
 
     document.addEventListener("click", (event) => {
@@ -703,6 +761,7 @@
       if (type === "title") copyText(current.title, "추천 제목");
       if (type === "category") copyText(current.category, "카테고리");
       if (type === "tags") copyText(current.tags, "태그");
+      if (type === "schedule") copyText(current.scheduled_label || current.scheduled_at, "예약 발행 시각");
     });
 
     if (latest) selectDraft(latest);

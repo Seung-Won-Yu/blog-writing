@@ -6,6 +6,7 @@ ROOT = Path(__file__).parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "publish-drafts.yml"
 COLLECT_WORKFLOW = ROOT / ".github" / "workflows" / "collect-news.yml"
 EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
+SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -56,12 +57,14 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_agent_contract_and_clean_package_layout_exist(self):
         expected = (
             ROOT / "agent" / "DAILY_EDITOR.md",
+            ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "blog_pipeline" / "collection" / "collect_news.py",
             ROOT / "blog_pipeline" / "collection" / "news_pipeline.py",
             ROOT / "blog_pipeline" / "publishing" / "export_tistory.py",
             ROOT / "blog_pipeline" / "publishing" / "build_copy_page.py",
             ROOT / "blog_pipeline" / "publishing" / "build_integration_page.py",
             ROOT / "blog_pipeline" / "publishing" / "daily_guard.py",
+            ROOT / "blog_pipeline" / "publishing" / "saturday_guard.py",
             ROOT / "blog_pipeline" / "publishing" / "generate_editorial_images.py",
             ROOT / "blog_pipeline" / "publishing" / "optimize_images.py",
         )
@@ -112,19 +115,30 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("표·차트·타임라인·비교·동작 흐름", contract)
         self.assertIn("실패한 이미지만 다시", contract)
 
-    def test_editor_contract_supports_verified_github_application_cases(self):
-        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+    def test_saturday_contract_owns_verified_hands_on_automation_cases(self):
+        daily = EDITOR_CONTRACT.read_text(encoding="utf-8")
+        contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("GitHub 적용 사례", contract)
-        self.assertIn("주 1회 정도", contract)
+        self.assertIn("SATURDAY_AUTOMATION.md", daily)
+        self.assertNotIn("### GitHub 적용 사례형", daily)
+        self.assertIn("토요일 14:00 KST", contract)
+        self.assertIn("18:00 예약 발행", contract)
+        self.assertIn("직접 실행 실험기", contract)
+        self.assertIn("따라하기", contract)
+        self.assertIn("공개 도구 적용 사례", contract)
         self.assertIn("검색 지속성 30", contract)
         self.assertIn("검증한 버전·커밋", contract)
         self.assertIn("기대 결과와 실제 결과", contract)
         self.assertIn("임시 디렉터리", contract)
         self.assertIn("의심스러운 설치 스크립트", contract)
         self.assertIn("구조 분석", contract)
-        self.assertIn("적용 전후", contract)
         self.assertIn("측정하지 않은 숫자", contract)
+        self.assertIn("실제 실행 화면", contract)
+        self.assertIn("화면이나 터미널 결과를 이미지 생성으로 꾸며내지 않습니다", contract)
+        self.assertIn("대표 이미지 1장과 본문 시각물 3~6개", contract)
+        self.assertIn("YYYY-MM-DD-automation", contract)
+        self.assertIn("saturday_guard --today --require-complete", contract)
+        self.assertIn("같은 날짜의 `data/days/YYYY-MM-DD.json`", contract)
 
 
 if __name__ == "__main__":

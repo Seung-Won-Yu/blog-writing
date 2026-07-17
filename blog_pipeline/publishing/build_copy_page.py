@@ -2,9 +2,11 @@
 """Build a small GitHub Pages UI for copying Tistory draft HTML."""
 import html
 import json
+from datetime import datetime
 from pathlib import Path
 
-from .export_tistory import TISTORY_ADFIT_MARKER
+from .draft_identity import resolve_draft_identity
+from .export_tistory import TISTORY_ADFIT_MARKER, safe_http_url
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -34,6 +36,45 @@ def json_for_script(value):
     )
 
 
+def is_allowed_source(source):
+    path = Path(str(source or ""))
+    if path.is_absolute() or ".." in path.parts:
+        return False
+    if path.parts[:2] not in {
+        ("data", "days"),
+        ("data", "automation_cases"),
+    }:
+        return False
+    return len(path.parts) == 3 and path.suffix == ".json" and (ROOT / path).is_file()
+
+
+def scheduled_label(value):
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    try:
+        scheduled = datetime.fromisoformat(text)
+    except ValueError:
+        return text
+    weekdays = "월화수목금토일"
+    return (
+        f"{scheduled.year}. {scheduled.month}. {scheduled.day}. "
+        f"({weekdays[scheduled.weekday()]}) {scheduled:%H:%M}"
+    )
+
+
+def safe_image_assets(values):
+    assets = []
+    for item in values if isinstance(values, list) else []:
+        if not isinstance(item, dict):
+            continue
+        url = safe_http_url(item.get("url"))
+        if not url:
+            continue
+        assets.append({**item, "url": url})
+    return assets
+
+
 def load_drafts():
     drafts = []
     for meta_path in sorted(TISTORY_DIR.glob("*.json"), reverse=True):
@@ -43,33 +84,58 @@ def load_drafts():
         with meta_path.open("r", encoding="utf-8") as f:
             meta = json.load(f)
         source = str(meta.get("source") or "")
-        if not source.startswith("data/days/") or not (ROOT / source).is_file():
+        file_draft_id = meta_path.stem
+        draft_id = str(meta.get("draft_id") or file_draft_id)
+        if draft_id != file_draft_id:
             continue
-        day = meta_path.stem
+        try:
+            identity = resolve_draft_identity(draft_id, meta)
+        except ValueError:
+            continue
+        if source != identity.source or not is_allowed_source(source):
+            continue
+        publish_date = identity.publish_date
+        content_type = identity.content_type
+        content_label = identity.content_label
+        scheduled_at = str(meta.get("scheduled_at") or "")
         drafts.append(
             {
-                "day": day,
-                "title": meta.get("title") or day,
+                "day": draft_id,
+                "draft_id": draft_id,
+                "publish_date": publish_date,
+                "content_type": content_type,
+                "content_label": content_label,
+                "scheduled_at": scheduled_at,
+                "scheduled_label": scheduled_label(scheduled_at),
+                "title": meta.get("title") or draft_id,
                 "title_candidates": meta.get("title_candidates") or [],
                 "category": meta.get("category") or "",
                 "tags": ", ".join(meta.get("tags") or []),
                 "meta_description": meta.get("meta_description") or "",
                 "key_summary": meta.get("key_summary") or [],
                 "publish_checklist": meta.get("publish_checklist") or [],
-                "image_assets": meta.get("image_assets") or [],
+                "image_assets": safe_image_assets(meta.get("image_assets")),
                 "generation_provider": meta.get("generation_provider") or "unknown",
                 "publish_ready": bool(meta.get("publish_ready")),
                 "source": source,
                 "source_page": meta.get("source_page") or "",
-                "html_path": f"tistory/{day}.html",
-                "before_ad_html_path": f"tistory/{day}-before-ad.html",
-                "after_ad_html_path": f"tistory/{day}-after-ad.html",
-                "adfit_html_path": f"tistory/{day}-adfit.html",
-                "preview_path": f"preview/{day}.html",
-                "meta_path": f"tistory/{day}.json",
+                "html_path": f"tistory/{draft_id}.html",
+                "before_ad_html_path": f"tistory/{draft_id}-before-ad.html",
+                "after_ad_html_path": f"tistory/{draft_id}-after-ad.html",
+                "adfit_html_path": f"tistory/{draft_id}-adfit.html",
+                "preview_path": f"preview/{draft_id}.html",
+                "meta_path": f"tistory/{draft_id}.json",
             }
         )
-    return drafts
+    return sorted(
+        drafts,
+        key=lambda item: (
+            item["publish_date"],
+            item["scheduled_at"],
+            item["draft_id"],
+        ),
+        reverse=True,
+    )
 
 
 def write_preview_pages(drafts):
@@ -78,8 +144,10 @@ def write_preview_pages(drafts):
     skin_css = SKIN_CSS_PATH.read_text(encoding="utf-8")
     (PREVIEW_DIR / "tistory-style.css").write_text(skin_css, encoding="utf-8")
     for draft in drafts:
-        day = draft["day"]
-        fragment_path = TISTORY_DIR / f"{day}.html"
+        draft_id = str(draft.get("draft_id") or draft.get("day") or "")
+        if not draft_id:
+            raise ValueError("draft requires draft_id or day")
+        fragment_path = TISTORY_DIR / f"{draft_id}.html"
         fragment = fragment_path.read_text(encoding="utf-8")
         page = f"""<!doctype html>
 <html lang="ko">
@@ -113,7 +181,7 @@ def write_preview_pages(drafts):
             <div class="inner">
               <span class="category">{esc(draft.get("category") or "본문 미리보기")}</span>
               <h1>{esc(draft.get("title"))}</h1>
-              <span class="meta"><span class="date">{esc(day)}</span></span>
+              <span class="meta"><span class="date">{esc(draft.get("publish_date"))} · {esc(draft.get("content_label"))}</span></span>
             </div>
           </div>
           <div class="entry-content" id="article-view">
@@ -129,17 +197,39 @@ def write_preview_pages(drafts):
 </body>
 </html>
 """
-        (PREVIEW_DIR / f"{day}.html").write_text(page, encoding="utf-8")
+        (PREVIEW_DIR / f"{draft_id}.html").write_text(page, encoding="utf-8")
+
+
+def render_draft_buttons(drafts):
+    groups = []
+    for draft in drafts:
+        publish_date = str(draft.get("publish_date") or draft.get("day") or "")
+        if not groups or groups[-1][0] != publish_date:
+            groups.append((publish_date, []))
+        groups[-1][1].append(draft)
+    rendered = []
+    for publish_date, items in groups:
+        rendered.append(
+            f'<section class="draft-group"><p class="draft-group-title">'
+            f'{esc(publish_date)} · {len(items)}건</p>'
+        )
+        for item in items:
+            draft_id = str(item.get("draft_id") or item.get("day") or "")
+            rendered.append(
+                f'<button class="draft-btn" type="button" '
+                f'data-draft-id="{esc(draft_id)}" aria-pressed="false">'
+                f'<span><b>{esc(item.get("content_label") or "뉴스 심층글")}</b>'
+                f'<em>{esc(item.get("scheduled_label"))}</em></span>'
+                f'<small>{esc(item.get("title"))}</small></button>'
+            )
+        rendered.append("</section>")
+    return "\n".join(rendered)
 
 
 def render(drafts):
     payload = json_for_script(drafts)
-    latest = drafts[0]["day"] if drafts else ""
-    buttons = "\n".join(
-        f'<button class="draft-btn" type="button" data-day="{esc(item["day"])}" aria-pressed="false">'
-        f'<span>{esc(item["day"])}</span><small>{esc(item["title"])}</small></button>'
-        for item in drafts
-    )
+    latest = str((drafts[0].get("draft_id") or drafts[0].get("day") or "")) if drafts else ""
+    buttons = render_draft_buttons(drafts)
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -260,6 +350,18 @@ def render(drafts):
       gap: 4px;
       padding: 8px;
     }}
+    .draft-group + .draft-group {{
+      margin-top: 5px;
+      padding-top: 7px;
+      border-top: 1px solid var(--line);
+    }}
+    .draft-group-title {{
+      margin: 0;
+      padding: 5px 10px 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }}
     .draft-btn {{
       width: 100%;
       padding: 10px 11px;
@@ -275,9 +377,19 @@ def render(drafts):
       background: var(--accent-soft);
     }}
     .draft-btn span {{
-      display: block;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
       font-size: 13px;
       font-weight: 900;
+    }}
+    .draft-btn span b {{ font-weight: 900; }}
+    .draft-btn span em {{
+      color: var(--accent);
+      font-size: 10px;
+      font-style: normal;
+      white-space: nowrap;
     }}
     .draft-btn small {{
       display: -webkit-box;
@@ -510,7 +622,7 @@ def render(drafts):
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">매일 09:00 Codex Terra / Medium이 만든 결과에서 발행에 필요한 항목만 확인합니다.</p>
+      <p class="lead">매일 09:00 Codex Terra / Medium 뉴스 심층글과 토요일 14:00 업무자동화 실험글의 발행 준비물을 확인합니다.</p>
     </header>
 
     <div class="layout">
@@ -526,6 +638,7 @@ def render(drafts):
             <div class="field"><span class="label">추천 제목</span><span class="value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="btn" type="button" data-copy="tags">복사</button></div>
+            <div class="field"><span class="label">예약 발행</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
           </section>
 
           <section class="image-card" id="imageCard" hidden>
@@ -541,7 +654,7 @@ def render(drafts):
             <div class="ad-builder-head">
               <div>
                 <h2><label for="adMarkup">광고 HTML 태그</label></h2>
-                <p>티스토리 광고 넣기로 만든 태그를 붙이면 NEWS 01 뒤에 정확히 한 번 들어갑니다.</p>
+                <p>티스토리 광고 넣기로 만든 태그를 붙이면 첫 핵심 설명이 끝난 35~45% 위치에 정확히 한 번 들어갑니다.</p>
               </div>
               <button class="btn primary" type="button" id="buildFinalButton" disabled>최종 HTML 만들기</button>
             </div>
@@ -575,12 +688,14 @@ def render(drafts):
     let currentBaseHtml = "";
     let currentAdfitHtml = "";
     let currentFinalHtml = "";
-    const byDay = new Map(drafts.map((item) => [item.day, item]));
+    let selectionRevision = 0;
+    const byId = new Map(drafts.map((item) => [item.draft_id, item]));
 
     const els = {{
       title: document.getElementById("title"),
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
+      schedule: document.getElementById("schedule"),
       imageCard: document.getElementById("imageCard"),
       coverPreview: document.getElementById("coverPreview"),
       coverTitle: document.getElementById("coverTitle"),
@@ -626,8 +741,19 @@ def render(drafts):
     }}
 
     function selectCoverAsset(assets) {{
-      const validAssets = (assets || []).filter((asset) => asset && asset.url);
+      const validAssets = (assets || []).filter(
+        (asset) => asset && safeImageUrl(asset.url)
+      );
       return validAssets.find((asset) => asset.kind === "cover") || validAssets[0];
+    }}
+
+    function safeImageUrl(value) {{
+      try {{
+        const url = new URL(value, window.location.href);
+        return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+      }} catch (error) {{
+        return "";
+      }}
     }}
 
     function filenameFromUrl(url) {{
@@ -646,12 +772,17 @@ def render(drafts):
         els.coverPreview.removeAttribute("src");
         return;
       }}
+      const coverUrl = safeImageUrl(cover.url);
+      if (!coverUrl) {{
+        els.imageCard.hidden = true;
+        return;
+      }}
       els.imageCard.hidden = false;
-      els.coverPreview.src = cover.url;
+      els.coverPreview.src = coverUrl;
       els.coverPreview.alt = cover.alt || "대표 이미지 미리보기";
       els.coverTitle.textContent = cover.title || "오늘 글 대표 이미지";
-      els.coverDownload.href = cover.url;
-      els.coverDownload.download = current.day + "-" + filenameFromUrl(cover.url);
+      els.coverDownload.href = coverUrl;
+      els.coverDownload.download = current.draft_id + "-" + filenameFromUrl(coverUrl);
     }}
 
     function extractRevenueMarkup(value) {{
@@ -715,18 +846,20 @@ def render(drafts):
       els.previewButton.textContent = showingPreview ? "HTML 코드 보기" : "본문 미리보기";
     }}
 
-    async function selectDraft(day) {{
-      const draft = byDay.get(day);
+    async function selectDraft(draftId) {{
+      const draft = byId.get(draftId);
       if (!draft) return;
+      const revision = ++selectionRevision;
       current = draft;
       document.querySelectorAll(".draft-btn").forEach((button) => {{
-        const selected = button.dataset.day === day;
+        const selected = button.dataset.draftId === draftId;
         button.classList.toggle("is-active", selected);
         button.setAttribute("aria-pressed", String(selected));
       }});
       els.title.textContent = draft.title || "";
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
+      els.schedule.textContent = draft.scheduled_label || draft.scheduled_at || "직접 지정";
       renderCover(draft.image_assets);
       currentBaseHtml = "";
       currentAdfitHtml = "";
@@ -745,6 +878,7 @@ def render(drafts):
         ]);
         if (!responses[0].ok || !responses[1].ok) throw new Error("HTML fetch failed");
         const bodies = await Promise.all([responses[0].text(), responses[1].text()]);
+        if (revision !== selectionRevision) return;
         currentBaseHtml = bodies[0];
         currentAdfitHtml = bodies[1];
         currentPreviewPath = draft.preview_path + "?v=" + Date.now();
@@ -753,8 +887,9 @@ def render(drafts):
         els.previewFrame.setAttribute("src", currentPreviewPath);
         setPreviewMode(true);
         updateCopyState();
-        setStatus(day + " 초안을 불러왔습니다.");
+        setStatus(draft.publish_date + " · " + draft.content_label + " 초안을 불러왔습니다.");
       }} catch (error) {{
+        if (revision !== selectionRevision) return;
         currentBaseHtml = "";
         currentAdfitHtml = "";
         currentFinalHtml = "";
@@ -821,7 +956,7 @@ def render(drafts):
 
     document.getElementById("drafts").addEventListener("click", (event) => {{
       const button = event.target.closest(".draft-btn");
-      if (button) selectDraft(button.dataset.day);
+      if (button) selectDraft(button.dataset.draftId);
     }});
 
     document.addEventListener("click", (event) => {{
@@ -838,6 +973,7 @@ def render(drafts):
       if (type === "title") copyText(current.title, "추천 제목");
       if (type === "category") copyText(current.category, "카테고리");
       if (type === "tags") copyText(current.tags, "태그");
+      if (type === "schedule") copyText(current.scheduled_label || current.scheduled_at, "예약 발행 시각");
     }});
 
     if (latest) selectDraft(latest);
