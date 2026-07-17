@@ -43,6 +43,21 @@ class CanonicalUrlTests(unittest.TestCase):
 
         self.assertEqual(value, "https://example.com/news/item?id=7")
 
+    def test_rejects_non_web_and_hostless_urls(self):
+        for unsafe in (
+            "javascript:alert(1)",
+            "data:text/html,<script>alert(1)</script>",
+            "file:///tmp/private",
+            "/relative/path",
+        ):
+            with self.subTest(unsafe=unsafe):
+                self.assertEqual(canonicalize_url(unsafe), "")
+
+        self.assertEqual(
+            canonicalize_url("//Example.com/safe"),
+            "https://example.com/safe",
+        )
+
     def test_validates_strict_iso_day_ids_for_output_paths(self):
         self.assertEqual(validate_day_id("2026-07-13"), "2026-07-13")
         for invalid in ("../../main", "2026-7-13", "2026-02-30", ""):

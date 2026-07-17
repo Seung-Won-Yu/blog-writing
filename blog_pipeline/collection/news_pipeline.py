@@ -60,6 +60,8 @@ def canonicalize_url(url):
     parts = urlsplit(value)
     scheme = parts.scheme.lower() or "https"
     host = parts.netloc.lower()
+    if scheme not in {"http", "https"} or not host:
+        return ""
     path = re.sub(r"/{2,}", "/", parts.path or "/")
     if path != "/":
         path = path.rstrip("/")

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from blog_pipeline.collection.collect_automation import (
     build_automation_inbox,
+    load_recent_automation_history,
     load_recent_automation_urls,
     render_automation_inbox_html,
     score_automation_candidate,
@@ -225,25 +226,114 @@ class AutomationScoringTests(unittest.TestCase):
             all(item["execution_status"] == "not_run" for item in result["selected"])
         )
 
+    def test_excludes_recent_repository_and_matching_primary_query_fingerprints(self):
+        config = automation_config()
+        config["selection"]["max_candidates"] = 3
+
+        def fetch(url):
+            return TRENDING_HTML if "trending" in url else RELEASE_ATOM
+
+        result = build_automation_inbox(
+            config,
+            fetch_text=fetch,
+            now=NOW,
+            day_id="2026-07-18",
+            excluded_fingerprints={"repo:activepieces/activepieces"},
+            excluded_queries={"monitoring dashboard notification"},
+        )
+
+        release = next(
+            item
+            for item in result["candidates"]
+            if item["source_id"] == "activepieces-releases"
+        )
+        visual_tool = next(
+            item
+            for item in result["candidates"]
+            if item["title"] == "example/visual-tool"
+        )
+        self.assertTrue(release["recently_used"])
+        self.assertEqual(release["recent_match"], "same_repository")
+        self.assertTrue(visual_tool["recently_used"])
+        self.assertEqual(visual_tool["recent_match"], "similar_primary_query")
+        self.assertNotIn(
+            "activepieces-releases",
+            {item["source_id"] for item in result["selected"]},
+        )
+
 
 class AutomationInboxTests(unittest.TestCase):
-    def test_loads_recent_urls_from_completed_automation_cases_only(self):
+    def test_loads_history_from_publish_ready_automation_cases_only(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "2026-07-11.json").write_text(
+            cases = root / "data" / "automation_cases"
+            metadata = root / "docs" / "tistory"
+            cases.mkdir(parents=True)
+            metadata.mkdir(parents=True)
+            (cases / "2026-07-11.json").write_text(
                 json.dumps(
                     {
+                        "draft_id": "2026-07-11-automation",
+                        "publish_date": "2026-07-11",
                         "content_type": "automation_case",
-                        "news": [{"url": "https://github.com/n8n-io/n8n?ref=blog"}],
+                        "primary_query": "n8n 실패 워크플로 알림",
+                        "news": [
+                            {
+                                "title_kr": "n8n 실패 알림 자동화",
+                                "url": "https://github.com/n8n-io/n8n/releases/tag/v2?ref=blog",
+                            }
+                        ],
                         "references": [{"url": "https://example.com/not-primary"}],
                     }
                 ),
                 encoding="utf-8",
             )
+            (metadata / "2026-07-11-automation.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-11-automation",
+                        "publish_date": "2026-07-11",
+                        "content_type": "automation_case",
+                        "source": "data/automation_cases/2026-07-11.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (cases / "2026-07-12.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-12-automation",
+                        "publish_date": "2026-07-12",
+                        "content_type": "automation_case",
+                        "primary_query": "미완성 주제",
+                        "news": [{"url": "https://github.com/example/incomplete"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
 
-            urls = load_recent_automation_urls(root, "2026-07-18", lookback_days=90)
+            history = load_recent_automation_history(
+                cases,
+                "2026-07-18",
+                lookback_days=90,
+                publish_meta_dir=metadata,
+            )
+            urls = load_recent_automation_urls(
+                cases,
+                "2026-07-18",
+                lookback_days=90,
+                publish_meta_dir=metadata,
+            )
 
-        self.assertEqual(urls, {"https://github.com/n8n-io/n8n"})
+        self.assertEqual(
+            urls,
+            {"https://github.com/n8n-io/n8n/releases/tag/v2"},
+        )
+        self.assertEqual(history["urls"], urls)
+        self.assertEqual(history["fingerprints"], {"repo:n8n-io/n8n"})
+        self.assertIn("n8n 실패 워크플로 알림", history["queries"])
+        self.assertNotIn("미완성 주제", history["queries"])
 
     def test_review_page_escapes_external_text_and_is_not_indexable(self):
         page = render_automation_inbox_html(

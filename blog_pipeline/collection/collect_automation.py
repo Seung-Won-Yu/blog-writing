@@ -7,10 +7,32 @@ import re
 from collections import Counter
 from html import escape
 from pathlib import Path
+from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
-from .collect_news import build_inbox, fetch_url, load_recent_processed_urls
-from .news_pipeline import canonicalize_url, validate_day_id
+from .collect_news import build_inbox, fetch_url
+from .news_pipeline import canonicalize_url, normalize_title, validate_day_id
+
+
+AUTOMATION_TOPIC_STOP_WORDS = {
+    "ai",
+    "automation",
+    "github",
+    "guide",
+    "how",
+    "test",
+    "to",
+    "workflow",
+    "설정",
+    "사용법",
+    "자동화",
+    "테스트",
+    "워크플로",
+}
+PRODUCT_HOST_FINGERPRINTS = {
+    "blog.n8n.io": "product:n8n",
+    "n8n.io": "product:n8n",
+}
 
 
 def _keyword_matches(text, keyword):
@@ -140,6 +162,8 @@ def build_automation_inbox(
     now=None,
     day_id=None,
     excluded_urls=None,
+    excluded_fingerprints=None,
+    excluded_queries=None,
 ):
     """Collect public candidates and rank them for a reproducible experiment."""
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -173,12 +197,33 @@ def build_automation_inbox(
         ),
         reverse=True,
     )
-    canonical_excluded = {
-        canonicalize_url(url) for url in (excluded_urls or set()) if canonicalize_url(url)
-    }
+    canonical_excluded = set()
+    for url in excluded_urls or set():
+        canonical_url = canonicalize_url(url)
+        if canonical_url:
+            canonical_excluded.add(canonical_url)
+    excluded_fingerprints = set(excluded_fingerprints or set())
+    excluded_queries = set(excluded_queries or set())
     eligible = []
     for candidate in candidates:
-        candidate["recently_used"] = candidate.get("url") in canonical_excluded
+        recent_match = ""
+        if candidate.get("url") in canonical_excluded:
+            recent_match = "same_url"
+        else:
+            fingerprint = _automation_source_fingerprint(
+                candidate.get("url"),
+                candidate.get("repository"),
+            )
+            if fingerprint and fingerprint in excluded_fingerprints:
+                recent_match = (
+                    "same_repository"
+                    if fingerprint.startswith("repo:")
+                    else "same_source_family"
+                )
+            elif _matches_recent_primary_query(candidate, excluded_queries):
+                recent_match = "similar_primary_query"
+        candidate["recent_match"] = recent_match
+        candidate["recently_used"] = bool(recent_match)
         if not candidate["recently_used"]:
             eligible.append(candidate)
 
@@ -255,13 +300,126 @@ def _compact_candidate(candidate):
         "verification_status",
         "execution_status",
         "recently_used",
+        "recent_match",
         "requires_manual_review",
     )
     return {key: candidate[key] for key in keys if key in candidate}
 
 
-def load_recent_automation_urls(cases_dir, day_id, lookback_days=90):
-    return load_recent_processed_urls(cases_dir, day_id, lookback_days)
+def _automation_source_fingerprint(url, repository=""):
+    repository = str(repository or "").strip().strip("/").casefold()
+    if repository.count("/") == 1:
+        return "repo:{}".format(repository)
+
+    canonical_url = canonicalize_url(url)
+    if not canonical_url:
+        return ""
+    parts = urlsplit(canonical_url)
+    host = parts.netloc.casefold().removeprefix("www.")
+    segments = [segment.casefold() for segment in parts.path.split("/") if segment]
+    if host == "github.com" and len(segments) >= 2:
+        return "repo:{}/{}".format(segments[0], segments[1])
+    return PRODUCT_HOST_FINGERPRINTS.get(host, "")
+
+
+def _topic_tokens(value):
+    return {
+        token
+        for token in normalize_title(value).split()
+        if len(token) >= 2 and token not in AUTOMATION_TOPIC_STOP_WORDS
+    }
+
+
+def _matches_recent_primary_query(candidate, queries):
+    candidate_tokens = _topic_tokens(
+        "{} {}".format(candidate.get("title", ""), candidate.get("summary", ""))
+    )
+    if len(candidate_tokens) < 2:
+        return False
+    for query in queries:
+        query_tokens = _topic_tokens(query)
+        if len(query_tokens) < 2:
+            continue
+        overlap = candidate_tokens & query_tokens
+        if len(overlap) >= 2 and len(overlap) / len(query_tokens) >= 2 / 3:
+            return True
+    return False
+
+
+def _read_json(path):
+    try:
+        return json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, TypeError, ValueError):
+        return None
+
+
+def load_recent_automation_history(
+    cases_dir,
+    day_id,
+    lookback_days=90,
+    publish_meta_dir=None,
+):
+    """Load dedupe fingerprints from publish-ready Saturday automation cases."""
+    target_day = dt.date.fromisoformat(validate_day_id(day_id))
+    cases = Path(cases_dir)
+    metadata = (
+        Path(publish_meta_dir)
+        if publish_meta_dir is not None
+        else cases.parent.parent / "docs" / "tistory"
+    )
+    history = {"urls": set(), "fingerprints": set(), "queries": set()}
+
+    for days_ago in range(1, max(0, int(lookback_days)) + 1):
+        prior_day = target_day - dt.timedelta(days=days_ago)
+        prior_id = prior_day.isoformat()
+        draft_id = "{}-automation".format(prior_id)
+        payload = _read_json(cases / "{}.json".format(prior_id))
+        meta = _read_json(metadata / "{}.json".format(draft_id))
+        if not isinstance(payload, dict) or not isinstance(meta, dict):
+            continue
+        expected_source = "data/automation_cases/{}.json".format(prior_id)
+        if (
+            payload.get("draft_id") != draft_id
+            or payload.get("publish_date") != prior_id
+            or payload.get("content_type") != "automation_case"
+            or meta.get("draft_id") != draft_id
+            or meta.get("content_type") != "automation_case"
+            or meta.get("source") != expected_source
+            or not meta.get("publish_ready")
+        ):
+            continue
+
+        primary_query = str(payload.get("primary_query") or "").strip()
+        if primary_query:
+            history["queries"].add(primary_query)
+        for item in payload.get("news", []):
+            if not isinstance(item, dict):
+                continue
+            title = str(item.get("title_kr") or "").strip()
+            if title:
+                history["queries"].add(title)
+            url = canonicalize_url(item.get("url"))
+            if not url:
+                continue
+            history["urls"].add(url)
+            fingerprint = _automation_source_fingerprint(url)
+            if fingerprint:
+                history["fingerprints"].add(fingerprint)
+    return history
+
+
+def load_recent_automation_urls(
+    cases_dir,
+    day_id,
+    lookback_days=90,
+    publish_meta_dir=None,
+):
+    return load_recent_automation_history(
+        cases_dir,
+        day_id,
+        lookback_days=lookback_days,
+        publish_meta_dir=publish_meta_dir,
+    )["urls"]
 
 
 def _criteria_html(item, criteria):
@@ -433,6 +591,7 @@ def main(argv=None):
     parser.add_argument("--config", default="config/automation_sources.json")
     parser.add_argument("--output-dir", default="docs/automation-inbox")
     parser.add_argument("--automation-cases-dir", default="data/automation_cases")
+    parser.add_argument("--publish-meta-dir", default="docs/tistory")
     args = parser.parse_args(argv)
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
@@ -442,17 +601,20 @@ def main(argv=None):
     except ValueError as exc:
         parser.error(str(exc))
     lookback = int(config.get("selection", {}).get("exclude_recent_days", 90))
-    excluded = load_recent_automation_urls(
+    history = load_recent_automation_history(
         args.automation_cases_dir,
         day_id,
         lookback_days=lookback,
+        publish_meta_dir=args.publish_meta_dir,
     )
     inbox = build_automation_inbox(
         config,
         fetch_text=fetch_url,
         now=now,
         day_id=day_id,
-        excluded_urls=excluded,
+        excluded_urls=history["urls"],
+        excluded_fingerprints=history["fingerprints"],
+        excluded_queries=history["queries"],
     )
     paths = write_automation_inbox(inbox, args.output_dir)
     print(

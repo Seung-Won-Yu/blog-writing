@@ -4,7 +4,7 @@
   "content_type": "automation_candidates",
   "execution_status": "not_run",
   "day": "2026-07-18",
-  "generated_at": "2026-07-17T04:39:49.017441+00:00",
+  "generated_at": "2026-07-17T04:54:12.440649+00:00",
   "review_required": true,
   "criteria": {
     "search_durability": {
@@ -76,6 +76,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -110,6 +111,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -144,6 +146,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -178,6 +181,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -212,6 +216,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -246,6 +251,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -280,6 +286,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -313,6 +320,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -347,6 +355,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -381,6 +390,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -415,6 +425,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -449,6 +460,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -483,6 +495,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -516,6 +529,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -549,6 +563,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -582,6 +597,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -615,6 +631,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -648,6 +665,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -681,6 +699,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -715,6 +734,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -748,6 +768,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -782,6 +803,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -815,6 +837,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     },
     {
@@ -848,6 +871,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false
     },
     {
@@ -880,6 +904,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true
     }
   ],
@@ -916,6 +941,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false,
       "rank": 1
     },
@@ -951,6 +977,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false,
       "rank": 2
     },
@@ -986,6 +1013,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true,
       "rank": 3
     },
@@ -1021,6 +1049,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": false,
       "rank": 4
     },
@@ -1055,6 +1084,7 @@
       "verification_status": "metadata_only",
       "execution_status": "not_run",
       "recently_used": false,
+      "recent_match": "",
       "requires_manual_review": true,
       "rank": 5
     }

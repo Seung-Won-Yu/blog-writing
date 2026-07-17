@@ -69,6 +69,7 @@ class WorkflowConfigTests(unittest.TestCase):
         )
         self.assertIn("tests.test_collect_automation", workflow)
         self.assertIn("git add docs/automation-inbox", workflow)
+        self.assertIn("git pull --rebase origin main", workflow)
         self.assertIn("git push origin HEAD:main", workflow)
         self.assertNotIn("generate_daily_draft", workflow)
         self.assertNotIn("generate_editorial_images", workflow)
