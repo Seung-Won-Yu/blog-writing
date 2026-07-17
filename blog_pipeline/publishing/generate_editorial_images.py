@@ -1,4 +1,4 @@
-"""Generate deterministic editorial images for a daily Tistory draft.
+"""Generate deterministic fallback images for a Tistory draft.
 
 The cover and story images are rendered from the selected stories instead of
 calling an image-generation API. This keeps the workflow free of an extra API
@@ -11,11 +11,13 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
+from .draft_identity import resolve_draft_identity
 from .editorial_format import is_lead_story
 from .visual_direction import (
     VISUAL_LABELS,
@@ -154,6 +156,12 @@ def _brief_text(value, limit, fallback):
     if len(text) > limit:
         text = text[: limit - 1].rstrip() + "…"
     return text
+
+
+def _filename_part(value, fallback):
+    text = re.sub(r"[^0-9A-Za-z가-힣]+", "-", str(value or "").strip())
+    text = re.sub(r"-{2,}", "-", text).strip("-")
+    return (text or fallback)[:36].rstrip("-")
 
 
 def resolve_visual(day):
@@ -1321,7 +1329,7 @@ def _flow(day, font_path, bold_font_path):
 
 
 def generate_editorial_images(
-    day_id,
+    draft_id,
     day,
     output_dir=DEFAULT_OUTPUT_DIR,
     public_base_url=DEFAULT_PUBLIC_BASE_URL,
@@ -1329,30 +1337,45 @@ def generate_editorial_images(
     font_path=None,
 ):
     """Write a cover and format-specific explanatory images."""
-    day_id = validate_day_id(day_id)
+    identity = resolve_draft_identity(draft_id, day)
+    draft_id = identity.draft_id
+    is_automation = identity.content_type == "automation_case"
     regular_font = font_path or find_font()
     bold_font = font_path or find_font(bold=True)
-    target = Path(output_dir) / day_id
+    target = Path(output_dir) / draft_id
     target.mkdir(parents=True, exist_ok=True)
 
-    cover_path = target / "cover.png"
     visual = resolve_visual(day)
+    cover_filename = (
+        f"{_filename_part(visual.get('subject'), '업무자동화')}-대표.png"
+        if is_automation
+        else "cover.png"
+    )
+    cover_path = target / cover_filename
     _save_png_atomic(_cover(day, regular_font, bold_font), cover_path)
 
     base_url = str(public_base_url).rstrip("/")
-    logical_dir = f"docs/tistory/assets/{day_id}"
+    logical_dir = f"docs/tistory/assets/{draft_id}"
     assets = {
         "cover": {
-            "url": f"{base_url}/{day_id}/cover.png",
-            "path": f"{logical_dir}/cover.png",
-            "alt": f"{day.get('date_label') or day_id} {visual['subject']} - {visual['hook']} 대표 이미지",
+            "url": f"{base_url}/{draft_id}/{cover_filename}",
+            "path": f"{logical_dir}/{cover_filename}",
+            "alt": f"{day.get('date_label') or identity.publish_date} {visual['subject']} - {visual['hook']} 대표 이미지",
             "width": 1200,
             "height": 630,
         },
     }
     if is_lead_story(day):
         image_rows = [
-            (index, f"visual_{index}", f"visual-{index:02d}.png")
+            (
+                index,
+                f"visual_{index}",
+                (
+                    f"{index:02d}-{_filename_part(visual['stories'][index - 1].get('label'), '설명-이미지')}.png"
+                    if is_automation
+                    else f"visual-{index:02d}.png"
+                ),
+            )
             for index in range(1, len(visual["stories"]) + 1)
         ]
     else:
@@ -1366,12 +1389,15 @@ def generate_editorial_images(
             _story_image(day, index - 1, regular_font, bold_font), path
         )
         assets[kind] = {
-            "url": f"{base_url}/{day_id}/{filename}",
+            "url": f"{base_url}/{draft_id}/{filename}",
             "path": f"{logical_dir}/{filename}",
-            "alt": "{} · {}: {} 흐름을 표현한 기사 이해 이미지".format(
+            "alt": "{} · {}: {} 흐름을 표현한 {}".format(
                 visual["stories"][index - 1]["label"],
                 visual["stories"][index - 1]["scene_label"],
                 visual["stories"][index - 1]["steps"],
+                "실험 이해 이미지"
+                if identity.content_type == "automation_case"
+                else "기사 이해 이미지",
             ),
             "width": 1200,
             "height": 630,
@@ -1389,6 +1415,51 @@ def _atomic_write_json(path, value):
     temporary.replace(path)
 
 
+def _generate_stored_draft(
+    draft_id,
+    day_path,
+    *,
+    output_dir,
+    public_base_url,
+):
+    identity = resolve_draft_identity(draft_id)
+    day_path = Path(day_path)
+    if not day_path.exists():
+        raise SystemExit(f"draft not found: {day_path}")
+    day = json.loads(day_path.read_text(encoding="utf-8"))
+    resolve_draft_identity(identity.draft_id, day)
+    assets = generate_editorial_images(
+        identity.draft_id,
+        day,
+        output_dir=output_dir,
+        public_base_url=public_base_url,
+    )
+    _atomic_write_json(day_path, day)
+
+    # Imported lazily so the pure image generator remains reusable in tests.
+    from .export_tistory import write_post
+
+    write_post(identity.draft_id, day=day)
+    return assets
+
+
+def generate_for_draft(
+    draft_id,
+    *,
+    root=HERE,
+    output_dir=DEFAULT_OUTPUT_DIR,
+    public_base_url=DEFAULT_PUBLIC_BASE_URL,
+):
+    """Generate fallback assets for a daily or Saturday stored draft."""
+    identity = resolve_draft_identity(draft_id)
+    return _generate_stored_draft(
+        identity.draft_id,
+        Path(root) / identity.source,
+        output_dir=output_dir,
+        public_base_url=public_base_url,
+    )
+
+
 def generate_for_day(
     day_id,
     *,
@@ -1399,19 +1470,12 @@ def generate_for_day(
     """Generate assets for a stored day and refresh its Tistory export."""
     day_id = validate_day_id(day_id)
     day_path = Path(days_dir) / f"{day_id}.json"
-    if not day_path.exists():
-        raise SystemExit(f"day not found: {day_path}")
-    day = json.loads(day_path.read_text(encoding="utf-8"))
-    assets = generate_editorial_images(
-        day_id, day, output_dir=output_dir, public_base_url=public_base_url
+    return _generate_stored_draft(
+        day_id,
+        day_path,
+        output_dir=output_dir,
+        public_base_url=public_base_url,
     )
-    _atomic_write_json(day_path, day)
-
-    # Imported lazily so the pure image generator remains reusable in tests.
-    from .export_tistory import write_post
-
-    write_post(day_id, day=day)
-    return assets
 
 
 def main():
@@ -1421,10 +1485,14 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--today", action="store_true", help="오늘 날짜 이미지 생성")
     group.add_argument("--day", help="YYYY-MM-DD 날짜 이미지 생성")
+    group.add_argument(
+        "--draft-id",
+        help="YYYY-MM-DD 또는 YYYY-MM-DD-automation 초안 이미지 생성",
+    )
     args = parser.parse_args()
 
-    day_id = dt.date.today().isoformat() if args.today else args.day
-    assets = generate_for_day(day_id)
+    draft_id = dt.date.today().isoformat() if args.today else (args.draft_id or args.day)
+    assets = generate_for_draft(draft_id)
     print("generated images: " + ", ".join(item["path"] for item in assets.values()))
 
 

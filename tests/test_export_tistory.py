@@ -11,6 +11,7 @@ from blog_pipeline.publishing.export_tistory import (
     build_meta_description,
     build_publish_checklist,
     build_title_candidates,
+    draft_files,
     estimate_read_minutes,
     post_title,
     render_post,
@@ -204,6 +205,117 @@ class ExportProtectionTests(unittest.TestCase):
             self.assertFalse(
                 should_preserve_published_export("2026-07-14", output_dir=output)
             )
+
+
+class SaturdayAutomationExportTests(unittest.TestCase):
+    def test_rejects_missing_saturday_category_or_schedule(self):
+        automation = copy.deepcopy(LEAD_DAY)
+        automation.update(
+            {
+                "draft_id": "2026-07-18-automation",
+                "publish_date": "2026-07-18",
+                "content_type": "automation_case",
+                "content_label": "업무자동화 실험",
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)
+        ):
+            with self.assertRaisesRegex(ValueError, "category"):
+                write_post("2026-07-18-automation", day=automation)
+            automation["category"] = "업무자동화"
+            with self.assertRaisesRegex(ValueError, "scheduled_at"):
+                write_post("2026-07-18-automation", day=automation)
+
+    def test_bulk_discovery_includes_daily_and_automation_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            daily = root / "days"
+            automation = root / "automation_cases"
+            daily.mkdir()
+            automation.mkdir()
+            (daily / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (automation / "2026-07-18.json").write_text("{}", encoding="utf-8")
+
+            discovered = draft_files(daily, automation)
+
+        self.assertEqual(
+            [(identity.draft_id, path.name) for identity, path in discovered],
+            [
+                ("2026-07-18", "2026-07-18.json"),
+                ("2026-07-18-automation", "2026-07-18.json"),
+            ],
+        )
+
+    def test_exports_a_second_saturday_draft_without_overwriting_daily_news(self):
+        automation = copy.deepcopy(LEAD_DAY)
+        automation.update(
+            {
+                "draft_id": "2026-07-18-automation",
+                "content_type": "automation_case",
+                "content_label": "업무자동화 실험",
+                "publish_date": "2026-07-18",
+                "scheduled_at": "2026-07-18T18:00:00+09:00",
+                "category": "업무자동화",
+            }
+        )
+        automation["editorial"]["headline"] = (
+            "GitHub Actions로 반복 보고서 자동화해 본 과정"
+        )
+        for kind, asset in automation["images"].items():
+            filename = "cover.webp" if kind == "cover" else kind.replace("_", "-") + ".webp"
+            asset["path"] = (
+                "docs/tistory/assets/2026-07-18-automation/" + filename
+            )
+            asset["url"] = (
+                "https://blog.example/assets/2026-07-18-automation/" + filename
+            )
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            with patch(
+                "blog_pipeline.publishing.export_tistory.OUT_DIR", output
+            ):
+                write_post("2026-07-18", day=copy.deepcopy(LEAD_DAY))
+                daily_before = {
+                    path.name: path.read_bytes()
+                    for path in output.glob("2026-07-18*")
+                }
+                write_post(
+                    "2026-07-18-automation",
+                    day=automation,
+                )
+                daily_after = {
+                    name: (output / name).read_bytes() for name in daily_before
+                }
+
+            meta = json.loads(
+                (output / "2026-07-18-automation.json").read_text(encoding="utf-8")
+            )
+            body = (output / "2026-07-18-automation.html").read_text(
+                encoding="utf-8"
+            )
+
+        self.assertEqual(meta["draft_id"], "2026-07-18-automation")
+        self.assertEqual(meta["publish_date"], "2026-07-18")
+        self.assertEqual(meta["content_type"], "automation_case")
+        self.assertEqual(meta["content_label"], "업무자동화 실험")
+        self.assertEqual(meta["scheduled_at"], "2026-07-18T18:00:00+09:00")
+        self.assertEqual(meta["category"], "업무자동화")
+        self.assertEqual(meta["source"], "data/automation_cases/2026-07-18.json")
+        self.assertEqual(daily_after, daily_before)
+        self.assertTrue(
+            all(
+                asset["path"].startswith(
+                    "docs/tistory/assets/2026-07-18-automation/"
+                )
+                for asset in meta["image_assets"]
+            )
+        )
+        self.assertIn("업무자동화 실험", body)
+        self.assertNotIn("오늘의 핵심뉴스", body)
+        self.assertTrue(meta["publish_ready"])
 
 
 class EditorialReadingFlowTests(unittest.TestCase):

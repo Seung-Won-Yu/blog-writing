@@ -11,6 +11,8 @@ from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
+from blog_pipeline.collection.news_pipeline import validate_day_id
+from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
 
 
@@ -61,7 +63,7 @@ def _read_json(path):
         return None
 
 
-def _lead_source_reasons(source):
+def _lead_source_reasons(source, *, min_visuals=2):
     reasons = []
     news = source.get("news") if isinstance(source.get("news"), list) else []
     item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
@@ -96,9 +98,12 @@ def _lead_source_reasons(source):
     }
     images = source.get("images") if isinstance(source.get("images"), dict) else {}
     declared_visual_keys = set(lead_visual_kinds(images))
+    required_visual_keys = {
+        f"visual_{index}" for index in range(1, min_visuals + 1)
+    }
     if (
-        not 2 <= len(visual_keys) <= 6
-        or not {"visual_1", "visual_2"}.issubset(visual_keys)
+        not min_visuals <= len(visual_keys) <= 6
+        or not required_visual_keys.issubset(visual_keys)
         or not visual_keys.issubset(images)
         or declared_visual_keys != visual_keys
     ):
@@ -126,16 +131,25 @@ def _lead_source_reasons(source):
     return reasons
 
 
-def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
-    """Compare current news with prior days by canonical URL and close title."""
-    current_date = date.fromisoformat(day_id)
+def find_recent_draft_duplicates(
+    draft_id, current_day, *, root=ROOT, window_days=14
+):
+    """Compare one draft with prior drafts in the same content lane."""
+    identity = resolve_draft_identity(draft_id)
+    current_date = date.fromisoformat(identity.publish_date)
     current_news = current_day.get("news") if isinstance(current_day, dict) else []
     current_news = current_news if isinstance(current_news, list) else []
     duplicates = []
 
     for offset in range(1, window_days + 1):
         previous_day = (current_date - timedelta(days=offset)).isoformat()
-        previous = _read_json(Path(root) / "data" / "days" / f"{previous_day}.json")
+        previous_draft_id = (
+            f"{previous_day}-automation"
+            if identity.content_type == "automation_case"
+            else previous_day
+        )
+        previous_identity = resolve_draft_identity(previous_draft_id)
+        previous = _read_json(Path(root) / previous_identity.source)
         if not isinstance(previous, dict):
             continue
         previous_news = previous.get("news")
@@ -167,6 +181,7 @@ def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
                             "current_index": current_index,
                             "current_title": str(current.get("title_kr") or ""),
                             "previous_day": previous_day,
+                            "previous_draft_id": previous_draft_id,
                             "previous_index": previous_index,
                             "previous_title": str(old.get("title_kr") or ""),
                             "reason": reason,
@@ -177,45 +192,73 @@ def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
     return duplicates
 
 
-def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
-    """Return NEW, PARTIAL, or COMPLETE using committed output invariants."""
+def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
+    """Backward-compatible daily duplicate comparison."""
+    day_id = validate_day_id(day_id)
+    return find_recent_draft_duplicates(
+        day_id, current_day, root=root, window_days=window_days
+    )
+
+
+def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
+    """Return NEW, PARTIAL, or COMPLETE for one collision-safe draft."""
+    identity = resolve_draft_identity(draft_id)
     root = Path(root)
-    source_path = root / "data" / "days" / f"{day_id}.json"
+    source_path = root / identity.source
     tistory_dir = root / "docs" / "tistory"
-    meta_path = tistory_dir / f"{day_id}.json"
-    html_path = tistory_dir / f"{day_id}.html"
-    adfit_path = tistory_dir / f"{day_id}-adfit.html"
-    preview_path = root / "docs" / "preview" / f"{day_id}.html"
+    meta_path = tistory_dir / f"{identity.draft_id}.json"
+    html_path = tistory_dir / f"{identity.draft_id}.html"
+    adfit_path = tistory_dir / f"{identity.draft_id}-adfit.html"
+    preview_path = root / "docs" / "preview" / f"{identity.draft_id}.html"
     output_paths = (source_path, meta_path, html_path, adfit_path, preview_path)
 
     if not any(path.exists() for path in output_paths):
-        return {"day": day_id, "status": "NEW", "reasons": [], "duplicates": []}
+        return {
+            "day": identity.publish_date,
+            "draft_id": identity.draft_id,
+            "content_type": identity.content_type,
+            "status": "NEW",
+            "reasons": [],
+            "duplicates": [],
+        }
 
     reasons = []
     source = _read_json(source_path)
     if not isinstance(source, dict):
         reasons.append("missing_or_invalid_source")
         source = {}
+    else:
+        try:
+            resolve_draft_identity(identity.draft_id, source)
+        except ValueError:
+            reasons.append("invalid_draft_identity")
     news = source.get("news")
     lead_story = is_lead_story(source)
     expected_news_count = 1 if lead_story else 3
     if not isinstance(news, list) or len(news) != expected_news_count:
         reasons.append("news_count")
     if lead_story:
-        reasons.extend(_lead_source_reasons(source))
+        reasons.extend(
+            _lead_source_reasons(
+                source,
+                min_visuals=3
+                if identity.content_type == "automation_case"
+                else 2,
+            )
+        )
 
-    if date.fromisoformat(day_id) >= date(2026, 7, 16):
-        from .optimize_images import inspect_day_images
+    if date.fromisoformat(identity.publish_date) >= date(2026, 7, 16):
+        from .optimize_images import inspect_draft_images
 
         try:
-            image_result = inspect_day_images(day_id, root=root)
+            image_result = inspect_draft_images(identity.draft_id, root=root)
         except (OSError, TypeError, ValueError):
             reasons.append("invalid_image_manifest")
         else:
             reasons.extend(image_result["reasons"])
 
-    duplicates = find_recent_duplicates(
-        day_id,
+    duplicates = find_recent_draft_duplicates(
+        identity.draft_id,
         source,
         root=root,
         window_days=max(window_days, 60) if lead_story else window_days,
@@ -227,8 +270,22 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
     if not isinstance(meta, dict):
         reasons.append("missing_publish_meta")
         meta = {}
-    elif not meta.get("publish_ready"):
-        reasons.append("not_publish_ready")
+    else:
+        try:
+            resolve_draft_identity(identity.draft_id, meta)
+        except ValueError:
+            reasons.append("invalid_publish_identity")
+        meta_source = str(meta.get("source") or "").strip()
+        if (
+            meta_source
+            and meta_source != identity.source
+        ) or (
+            identity.content_type == "automation_case"
+            and meta_source != identity.source
+        ):
+            reasons.append("invalid_publish_source")
+        if not meta.get("publish_ready"):
+            reasons.append("not_publish_ready")
 
     image_kinds = {
         item.get("kind")
@@ -238,6 +295,8 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
     required_images = set(image_kinds_for_day(source))
     if lead_story:
         required_images.update({"cover", "visual_1", "visual_2"})
+        if identity.content_type == "automation_case":
+            required_images.add("visual_3")
     if not required_images.issubset(image_kinds):
         reasons.append("missing_editorial_images")
 
@@ -277,11 +336,19 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
         reasons.append("missing_preview")
 
     return {
-        "day": day_id,
+        "day": identity.publish_date,
+        "draft_id": identity.draft_id,
+        "content_type": identity.content_type,
         "status": "COMPLETE" if not reasons else "PARTIAL",
         "reasons": list(dict.fromkeys(reasons)),
         "duplicates": duplicates,
     }
+
+
+def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
+    """Backward-compatible strict daily guard."""
+    day_id = validate_day_id(day_id)
+    return inspect_draft_state(day_id, root=root, window_days=window_days)
 
 
 def main(argv=None):
@@ -289,13 +356,20 @@ def main(argv=None):
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--today", action="store_true")
     group.add_argument("--day")
+    group.add_argument("--draft-id")
     parser.add_argument("--check-duplicates", action="store_true")
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--window-days", type=int, default=14)
     args = parser.parse_args(argv)
 
-    day_id = args.day or datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
-    result = inspect_daily_state(day_id, window_days=max(1, args.window_days))
+    draft_id = (
+        args.draft_id
+        or args.day
+        or datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+    )
+    result = inspect_draft_state(
+        draft_id, window_days=max(1, args.window_days)
+    )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if args.check_duplicates and result["duplicates"]:
         return 2

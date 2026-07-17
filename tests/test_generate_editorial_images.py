@@ -1,5 +1,6 @@
 import hashlib
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,6 +13,7 @@ from blog_pipeline.publishing.generate_editorial_images import (
     draw_scene,
     find_font,
     generate_editorial_images,
+    generate_for_draft,
     generate_for_day,
     resolve_visual,
 )
@@ -417,6 +419,69 @@ class EditorialImageTests(unittest.TestCase):
             write_post.assert_called_once()
             self.assertEqual(write_post.call_args.args[0], "2026-07-13")
             self.assertEqual(write_post.call_args.kwargs["day"]["images"], assets)
+
+    def test_stored_automation_generation_uses_a_separate_asset_namespace(self):
+        automation = {
+            **DAY,
+            "draft_id": "2026-07-18-automation",
+            "publish_date": "2026-07-18",
+            "content_type": "automation_case",
+            "content_label": "업무자동화 실험",
+            "format": "lead-story-v1",
+            "news": [dict(DAY["news"][0])],
+            "visual": {
+                "assets": [
+                    {"label": "입력 확인", "steps": "요청 → 입력 검증"},
+                    {"label": "결과 비교", "steps": "수동 → 자동 결과"},
+                ]
+            },
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "data" / "automation_cases" / "2026-07-18.json"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                json.dumps(automation, ensure_ascii=False), encoding="utf-8"
+            )
+            output = root / "docs" / "tistory" / "assets"
+
+            with patch(
+                "blog_pipeline.publishing.export_tistory.write_post"
+            ) as write_post:
+                assets = generate_for_draft(
+                    "2026-07-18-automation",
+                    root=root,
+                    output_dir=output,
+                    public_base_url="https://blog.example/assets/",
+                )
+
+            stored = json.loads(source.read_text(encoding="utf-8"))
+
+        self.assertEqual(stored["images"], assets)
+        self.assertTrue(
+            all(
+                asset["path"].startswith(
+                    "docs/tistory/assets/2026-07-18-automation/"
+                )
+                for asset in assets.values()
+            )
+        )
+        self.assertTrue(
+            all(
+                "실험 이해 이미지" in asset["alt"]
+                for kind, asset in assets.items()
+                if kind.startswith("visual_")
+            )
+        )
+        self.assertTrue(
+            all(
+                re.search(r"[가-힣]", Path(asset["path"]).name)
+                for asset in assets.values()
+            )
+        )
+        self.assertNotEqual(Path(assets["cover"]["path"]).name, "cover.png")
+        write_post.assert_called_once()
+        self.assertEqual(write_post.call_args.args[0], "2026-07-18-automation")
 
 
 if __name__ == "__main__":

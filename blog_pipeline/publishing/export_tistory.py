@@ -9,6 +9,7 @@ usage:
   python -m blog_pipeline.publishing.export_tistory --today
   python -m blog_pipeline.publishing.export_tistory --latest
   python -m blog_pipeline.publishing.export_tistory --day 2026-07-01
+  python -m blog_pipeline.publishing.export_tistory --draft-id 2026-07-04-automation
   python -m blog_pipeline.publishing.export_tistory --all
 """
 import argparse
@@ -21,10 +22,12 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story
 
 HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
+AUTOMATION_CASES_DIR = HERE / "data" / "automation_cases"
 OUT_DIR = HERE / "docs" / "tistory"
 
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
@@ -89,12 +92,42 @@ def day_files():
     return sorted(DAYS_DIR.glob("*.json"))
 
 
+def draft_files(days_dir=None, automation_cases_dir=None):
+    """Return every supported source with its collision-safe draft identity."""
+    daily_root = Path(days_dir) if days_dir is not None else DAYS_DIR
+    automation_root = (
+        Path(automation_cases_dir)
+        if automation_cases_dir is not None
+        else AUTOMATION_CASES_DIR
+    )
+    discovered = [
+        (resolve_draft_identity(path.stem), path)
+        for path in daily_root.glob("*.json")
+    ]
+    discovered.extend(
+        (resolve_draft_identity(f"{path.stem}-automation"), path)
+        for path in automation_root.glob("*.json")
+    )
+    return sorted(discovered, key=lambda item: item[0].draft_id)
+
+
 def load_day(day_id):
     path = DAYS_DIR / f"{day_id}.json"
     if not path.exists():
         raise SystemExit(f"day not found: {path}")
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_draft(draft_id):
+    identity = resolve_draft_identity(draft_id)
+    path = HERE / identity.source
+    if not path.exists():
+        raise SystemExit(f"draft not found: {path}")
+    with path.open("r", encoding="utf-8") as f:
+        day = json.load(f)
+    resolve_draft_identity(draft_id, day)
+    return day
 
 
 def latest_day_id():
@@ -335,11 +368,12 @@ def build_key_summary(day):
 
 def build_publish_checklist(day):
     titles = build_title_candidates(day)
+    category = plain(day.get("category")) or DEFAULT_CATEGORY
     checklist = [
         "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
         "원문 링크와 핵심 사실을 직접 대조해 확인하기",
         "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-        "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+        f"태그 입력 후 카테고리를 {category}로 지정하기",
         f"추천 제목: {titles[0]}" if titles else "추천 제목 확인하기",
     ]
     if is_lead_story(day):
@@ -485,7 +519,7 @@ def build_related_posts(related_posts):
 </section>""".strip()
 
 
-def build_lead_news_section(item, images):
+def build_lead_news_section(item, images, analysis_label="심층 분석"):
     if not isinstance(item, dict):
         return '<p class="digest-empty">오늘 수집된 뉴스가 없습니다.</p>'
     content = item.get("content") if isinstance(item.get("content"), list) else []
@@ -521,7 +555,7 @@ def build_lead_news_section(item, images):
     return f"""
 <section id="digest-news-1" class="digest-news-card digest-lead-story">
   <div class="digest-news-copy">
-    <p class="digest-source">심층 분석{' · ' + esc(source_meta) if source_meta else ''}</p>
+    <p class="digest-source">{esc(analysis_label)}{' · ' + esc(source_meta) if source_meta else ''}</p>
     <h3>{esc(item.get('title_kr'))}</h3>
     {summary_html}
     {before_content}
@@ -681,6 +715,9 @@ def render_post(day_id, day):
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     if is_lead_story(day):
         lead_story = news[0] if news else {}
+        is_automation = plain(day.get("content_type")) == "automation_case"
+        section_heading = "업무자동화 실험" if is_automation else "오늘의 핵심뉴스"
+        analysis_label = "실행 기록" if is_automation else "심층 분석"
         return f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
@@ -689,8 +726,8 @@ def render_post(day_id, day):
 
   {build_editorial_image(images.get("cover"), "cover")}
 
-  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
-  {build_lead_news_section(lead_story, images)}
+  <h2 class="digest-news-heading">{section_heading}</h2>
+  {build_lead_news_section(lead_story, images, analysis_label)}
 
   {build_related_posts(day.get("related_posts"))}
 
@@ -763,8 +800,31 @@ def build_adfit_ready_html(post_html):
     )
 
 
-def write_post(day_id, day=None, source_page=None):
-    day = day or load_day(day_id)
+def write_post(
+    draft_id,
+    day=None,
+    source_page=None,
+):
+    day = day or load_draft(draft_id)
+    identity = resolve_draft_identity(draft_id, day)
+    publish_date = identity.publish_date
+    content_type = identity.content_type
+    content_label = identity.content_label
+    if content_type == "automation_case":
+        category = plain(day.get("category"))
+        if category != "업무자동화":
+            raise ValueError("automation category must be 업무자동화")
+        scheduled_at = plain(day.get("scheduled_at"))
+        expected_schedule = f"{publish_date}T18:00:00+09:00"
+        if scheduled_at != expected_schedule:
+            raise ValueError(
+                f"automation scheduled_at must be {expected_schedule}"
+            )
+    else:
+        category = plain(day.get("category")) or DEFAULT_CATEGORY
+        scheduled_at = plain(day.get("scheduled_at")) or (
+            f"{publish_date}T09:00:00+09:00"
+        )
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     image_titles = {
@@ -808,8 +868,8 @@ def write_post(day_id, day=None, source_page=None):
         ]
     )
 
-    html_path = OUT_DIR / f"{day_id}.html"
-    meta_path = OUT_DIR / f"{day_id}.json"
+    html_path = OUT_DIR / f"{draft_id}.html"
+    meta_path = OUT_DIR / f"{draft_id}.json"
     generation = day.get("generation") if isinstance(day.get("generation"), dict) else {}
     generation_provider = plain(generation.get("provider"))
     try:
@@ -821,11 +881,11 @@ def write_post(day_id, day=None, source_page=None):
         and generation_revision >= MIN_PUBLISH_REVISION
     )
 
-    post_html = render_post(day_id, day)
+    post_html = render_post(publish_date, day)
     before_ad_html, after_ad_html = split_post_around_first_story(post_html)
-    before_ad_path = OUT_DIR / f"{day_id}-before-ad.html"
-    after_ad_path = OUT_DIR / f"{day_id}-after-ad.html"
-    adfit_path = OUT_DIR / f"{day_id}-adfit.html"
+    before_ad_path = OUT_DIR / f"{draft_id}-before-ad.html"
+    after_ad_path = OUT_DIR / f"{draft_id}-after-ad.html"
+    adfit_path = OUT_DIR / f"{draft_id}-adfit.html"
     html_path.write_text(post_html, encoding="utf-8")
     before_ad_path.write_text(before_ad_html, encoding="utf-8")
     after_ad_path.write_text(after_ad_html, encoding="utf-8")
@@ -835,19 +895,24 @@ def write_post(day_id, day=None, source_page=None):
             {
                 "title": post_title(day),
                 "title_candidates": build_title_candidates(day),
-                "category": DEFAULT_CATEGORY,
+                "category": category,
+                "draft_id": draft_id,
+                "publish_date": publish_date,
+                "content_type": content_type,
+                "content_label": content_label,
+                "scheduled_at": scheduled_at,
                 "tags": build_recommended_tags(day),
                 "meta_description": build_meta_description(day),
                 "key_summary": build_key_summary(day),
                 "publish_checklist": build_publish_checklist(day),
                 "generation_provider": generation_provider,
                 "publish_ready": publish_ready,
-                "source": f"data/days/{day_id}.json",
+                "source": identity.source,
                 "source_page": source_page,
-                "html": f"docs/tistory/{day_id}.html",
-                "before_ad_html": f"docs/tistory/{day_id}-before-ad.html",
-                "after_ad_html": f"docs/tistory/{day_id}-after-ad.html",
-                "adfit_html": f"docs/tistory/{day_id}-adfit.html",
+                "html": f"docs/tistory/{draft_id}.html",
+                "before_ad_html": f"docs/tistory/{draft_id}-before-ad.html",
+                "after_ad_html": f"docs/tistory/{draft_id}-after-ad.html",
+                "adfit_html": f"docs/tistory/{draft_id}-adfit.html",
                 "image_assets": image_assets,
             },
             ensure_ascii=False,
@@ -891,7 +956,11 @@ def main():
     group.add_argument("--today", action="store_true", help="export today's day")
     group.add_argument("--latest", action="store_true", help="export the newest day only when it is today")
     group.add_argument("--day", help="export one YYYY-MM-DD day")
-    group.add_argument("--all", action="store_true", help="export every day")
+    group.add_argument(
+        "--draft-id",
+        help="export one YYYY-MM-DD or YYYY-MM-DD-automation draft",
+    )
+    group.add_argument("--all", action="store_true", help="export every draft")
     args = parser.parse_args()
 
     if args.today:
@@ -900,12 +969,14 @@ def main():
         write_post(latest_or_today())
     elif args.day:
         write_post(args.day)
+    elif args.draft_id:
+        write_post(args.draft_id)
     else:
-        for path in day_files():
-            if should_preserve_published_export(path.stem):
-                print(f"preserved published export: {path.stem}")
+        for identity, _ in draft_files():
+            if should_preserve_published_export(identity.draft_id):
+                print(f"preserved published export: {identity.draft_id}")
                 continue
-            write_post(path.stem)
+            write_post(identity.draft_id)
 
 
 if __name__ == "__main__":

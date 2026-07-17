@@ -8,6 +8,7 @@ from PIL import Image
 from blog_pipeline.publishing.daily_guard import (
     find_recent_duplicates,
     inspect_daily_state,
+    inspect_draft_state,
 )
 
 
@@ -15,6 +16,155 @@ class DailyGuardTests(unittest.TestCase):
     def write_json(self, path, payload):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+    def test_daily_complete_and_saturday_automation_new_are_independent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day = "2026-07-11"
+            self.write_json(
+                root / "data" / "days" / f"{day}.json",
+                {
+                    "news": [
+                        {"title_kr": "첫 뉴스", "url": "https://example.com/1"},
+                        {"title_kr": "둘째 뉴스", "url": "https://example.com/2"},
+                        {"title_kr": "셋째 뉴스", "url": "https://example.com/3"},
+                    ]
+                },
+            )
+            self.write_json(
+                root / "docs" / "tistory" / f"{day}.json",
+                {
+                    "publish_ready": True,
+                    "image_assets": [
+                        {"kind": "cover"},
+                        {"kind": "story_1"},
+                        {"kind": "story_2"},
+                        {"kind": "story_3"},
+                    ],
+                },
+            )
+            body = (
+                '<article class="daily-digest-post">'
+                '<section id="digest-news-1" class="digest-news-card">1</section>'
+                '<section id="digest-news-2" class="digest-news-card">2</section>'
+                '<section id="digest-news-3" class="digest-news-card">3</section>'
+                "</article>"
+            )
+            tistory = root / "docs" / "tistory"
+            (tistory / f"{day}.html").write_text(body, encoding="utf-8")
+            (tistory / f"{day}-adfit.html").write_text(
+                body.replace(
+                    '<section id="digest-news-2"',
+                    '<figure data-ad-vendor="adfit"></figure><section id="digest-news-2"',
+                ),
+                encoding="utf-8",
+            )
+            preview = root / "docs" / "preview"
+            preview.mkdir(parents=True)
+            (preview / f"{day}.html").write_text(body, encoding="utf-8")
+
+            daily_before = inspect_daily_state(day, root=root)
+            automation = inspect_draft_state(f"{day}-automation", root=root)
+            daily_after = inspect_daily_state(day, root=root)
+
+        self.assertEqual(daily_before["status"], "COMPLETE")
+        self.assertEqual(automation["status"], "NEW")
+        self.assertEqual(automation["draft_id"], f"{day}-automation")
+        self.assertEqual(daily_after, daily_before)
+
+    def test_saturday_automation_requires_at_least_three_explanatory_visuals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day = "2026-07-18"
+            self.write_json(
+                root / "data" / "automation_cases" / f"{day}.json",
+                {
+                    "draft_id": f"{day}-automation",
+                    "publish_date": day,
+                    "content_type": "automation_case",
+                    "content_label": "업무자동화 실험",
+                    "format": "lead-story-v1",
+                    "primary_query": "반복 보고서 자동화",
+                    "images": {
+                        "cover": {},
+                        "visual_1": {},
+                        "visual_2": {},
+                    },
+                    "news": [
+                        {
+                            "title_kr": "반복 보고서 자동화 실험",
+                            "references": [
+                                {
+                                    "kind": "official",
+                                    "title": "공식 문서",
+                                    "url": "https://example.com/docs",
+                                },
+                                {
+                                    "kind": "independent",
+                                    "title": "보조 자료",
+                                    "url": "https://example.net/guide",
+                                },
+                            ],
+                            "content": [
+                                {"t": "h", "text": "문제"},
+                                {"t": "visual", "image": "visual_1"},
+                                {"t": "h", "text": "준비"},
+                                {"t": "p", "text": "환경"},
+                                {"t": "ad_break"},
+                                {"t": "h", "text": "실행"},
+                                {"t": "visual", "image": "visual_2"},
+                                {"t": "h", "text": "결과"},
+                            ],
+                        }
+                    ],
+                    "related_posts": [
+                        {
+                            "title": "관련 1",
+                            "url": "https://won0322.tistory.com/120",
+                        },
+                        {
+                            "title": "관련 2",
+                            "url": "https://won0322.tistory.com/121",
+                        },
+                    ],
+                },
+            )
+
+            result = inspect_draft_state(f"{day}-automation", root=root)
+
+        self.assertIn("lead_explanatory_visuals", result["reasons"])
+
+    def test_saturday_guard_rejects_mismatched_publish_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day = "2026-07-18"
+            draft_id = f"{day}-automation"
+            self.write_json(
+                root / "data" / "automation_cases" / f"{day}.json",
+                {
+                    "draft_id": draft_id,
+                    "publish_date": day,
+                    "content_type": "automation_case",
+                    "content_label": "업무자동화 실험",
+                    "news": [],
+                },
+            )
+            self.write_json(
+                root / "docs" / "tistory" / f"{draft_id}.json",
+                {
+                    "draft_id": day,
+                    "publish_date": day,
+                    "content_type": "daily_news",
+                    "content_label": "뉴스 심층글",
+                    "source": f"data/days/{day}.json",
+                    "publish_ready": True,
+                },
+            )
+
+            result = inspect_draft_state(draft_id, root=root)
+
+        self.assertIn("invalid_publish_identity", result["reasons"])
+        self.assertIn("invalid_publish_source", result["reasons"])
 
     def test_complete_day_stops_a_second_generation(self):
         with tempfile.TemporaryDirectory() as directory:

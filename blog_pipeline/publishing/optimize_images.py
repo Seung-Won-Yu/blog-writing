@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 from PIL import Image, ImageOps
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
+from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story
 
 
@@ -41,6 +42,24 @@ def _safe_asset_path(root, value):
         path.relative_to(root)
     except ValueError as exc:
         raise ValueError(f"asset path escapes repository: {value}") from exc
+    return path
+
+
+def _draft_asset_path(root, draft_id, value):
+    path = _safe_asset_path(root, value)
+    expected = (
+        Path(root).resolve()
+        / "docs"
+        / "tistory"
+        / "assets"
+        / str(draft_id)
+    ).resolve()
+    try:
+        path.relative_to(expected)
+    except ValueError as exc:
+        raise ValueError(
+            f"image is outside draft asset namespace {draft_id}: {value}"
+        ) from exc
     return path
 
 
@@ -95,14 +114,15 @@ def save_bounded_webp(
     return {"bytes": len(payload), "quality": selected_quality}
 
 
-def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
-    """Convert the referenced daily image set to bounded WebP files."""
-    day_id = validate_day_id(day_id)
+def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
+    """Convert one daily or Saturday draft image set to bounded WebP files."""
+    identity = resolve_draft_identity(draft_id)
     root = Path(root).resolve()
-    day_path = root / "data" / "days" / f"{day_id}.json"
+    day_path = root / identity.source
     if not day_path.is_file():
-        raise FileNotFoundError(f"day not found: {day_path}")
+        raise FileNotFoundError(f"draft not found: {day_path}")
     day = json.loads(day_path.read_text(encoding="utf-8"))
+    resolve_draft_identity(identity.draft_id, day)
     images = day.get("images")
     if not isinstance(images, dict):
         raise ValueError("day images must be an object")
@@ -114,7 +134,9 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
         asset = images.get(kind)
         if not isinstance(asset, dict):
             raise ValueError(f"missing image asset: {kind}")
-        source = _safe_asset_path(root, asset.get("path"))
+        source = _draft_asset_path(
+            root, identity.draft_id, asset.get("path")
+        )
         if not source.is_file():
             raise FileNotFoundError(f"missing image file: {source}")
         target = source.with_suffix(".webp")
@@ -157,7 +179,7 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
     set_budget = LEAD_IMAGE_SET_BUDGET if is_lead_story(day) else IMAGE_SET_BUDGET
     if total_bytes > set_budget:
         raise ValueError(
-            f"daily image set exceeds {set_budget} bytes: {total_bytes}"
+            f"draft image set exceeds {set_budget} bytes: {total_bytes}"
         )
     generation = day.setdefault("generation", {})
     generation["image_policy"] = IMAGE_POLICY
@@ -165,15 +187,30 @@ def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
     if not preserve_sources:
         for path in original_paths:
             path.unlink(missing_ok=True)
-    return {"day": day_id, "total_bytes": total_bytes, "images": images}
+    return {
+        "day": identity.publish_date,
+        "draft_id": identity.draft_id,
+        "publish_date": identity.publish_date,
+        "total_bytes": total_bytes,
+        "images": images,
+    }
 
 
-def inspect_day_images(day_id, *, root=ROOT):
-    """Check the image policy using only committed paths and file sizes."""
+def optimize_day_images(day_id, *, root=ROOT, preserve_sources=False):
+    """Backward-compatible strict daily image optimizer."""
     day_id = validate_day_id(day_id)
+    return optimize_draft_images(
+        day_id, root=root, preserve_sources=preserve_sources
+    )
+
+
+def inspect_draft_images(draft_id, *, root=ROOT):
+    """Check one draft image policy using committed paths and file sizes."""
+    identity = resolve_draft_identity(draft_id)
     root = Path(root).resolve()
-    day_path = root / "data" / "days" / f"{day_id}.json"
+    day_path = root / identity.source
     day = json.loads(day_path.read_text(encoding="utf-8"))
+    resolve_draft_identity(identity.draft_id, day)
     reasons = []
     if day.get("generation", {}).get("image_policy") != IMAGE_POLICY:
         reasons.append("missing_image_policy")
@@ -185,9 +222,11 @@ def inspect_day_images(day_id, *, root=ROOT):
             reasons.append(f"missing_image:{kind}")
             continue
         try:
-            path = _safe_asset_path(root, asset.get("path"))
+            path = _draft_asset_path(
+                root, identity.draft_id, asset.get("path")
+            )
         except ValueError:
-            reasons.append(f"unsafe_image_path:{kind}")
+            reasons.append(f"foreign_image_path:{kind}")
             continue
         if path.suffix.lower() != ".webp":
             reasons.append(f"non_webp_image:{kind}")
@@ -202,31 +241,55 @@ def inspect_day_images(day_id, *, root=ROOT):
     if total_bytes > set_budget:
         reasons.append("oversized_image_set")
     return {
-        "day": day_id,
+        "day": identity.publish_date,
+        "draft_id": identity.draft_id,
+        "publish_date": identity.publish_date,
         "total_bytes": total_bytes,
         "reasons": list(dict.fromkeys(reasons)),
     }
 
 
+def inspect_day_images(day_id, *, root=ROOT):
+    """Backward-compatible strict daily image inspection."""
+    day_id = validate_day_id(day_id)
+    return inspect_draft_images(day_id, root=root)
+
+
 def _check_all(root):
     failures = []
     checked = 0
-    for path in sorted((Path(root) / "data" / "days").glob("*.json")):
+    roots = (
+        (Path(root) / "data" / "days", False),
+        (Path(root) / "data" / "automation_cases", True),
+    )
+    sources = []
+    for source_root, is_automation in roots:
+        sources.extend(
+            (path, f"{path.stem}-automation" if is_automation else path.stem)
+            for path in source_root.glob("*.json")
+        )
+    for path, draft_id in sorted(sources, key=lambda item: item[1]):
         try:
             day = json.loads(path.read_text(encoding="utf-8"))
-            file_day = dt.date.fromisoformat(validate_day_id(path.stem))
+            identity = resolve_draft_identity(draft_id, day)
+            publish_date = dt.date.fromisoformat(identity.publish_date)
         except (OSError, TypeError, ValueError):
             failures.append(
-                {"day": path.stem, "total_bytes": 0, "reasons": ["invalid_day_json"]}
+                {
+                    "day": path.stem,
+                    "draft_id": draft_id,
+                    "total_bytes": 0,
+                    "reasons": ["invalid_draft_json"],
+                }
             )
             continue
         if (
-            file_day < IMAGE_POLICY_START
+            publish_date < IMAGE_POLICY_START
             and day.get("generation", {}).get("image_policy") != IMAGE_POLICY
         ):
             continue
         checked += 1
-        result = inspect_day_images(path.stem, root=root)
+        result = inspect_draft_images(draft_id, root=root)
         if result["reasons"]:
             failures.append(result)
     return {"checked": checked, "failures": failures}
@@ -237,6 +300,7 @@ def main(argv=None):
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--today", action="store_true")
     group.add_argument("--day")
+    group.add_argument("--draft-id")
     group.add_argument("--check-all", action="store_true")
     parser.add_argument("--preserve-sources", action="store_true")
     args = parser.parse_args(argv)
@@ -245,13 +309,13 @@ def main(argv=None):
         result = _check_all(ROOT)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 1 if result["failures"] else 0
-    day_id = (
+    draft_id = (
         dt.datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
         if args.today
-        else args.day
+        else (args.draft_id or args.day)
     )
-    result = optimize_day_images(
-        day_id, root=ROOT, preserve_sources=args.preserve_sources
+    result = optimize_draft_images(
+        draft_id, root=ROOT, preserve_sources=args.preserve_sources
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0

@@ -10,12 +10,116 @@ from blog_pipeline.publishing.optimize_images import (
     IMAGE_SET_BUDGET,
     LEAD_IMAGE_SET_BUDGET,
     inspect_day_images,
+    inspect_draft_images,
+    optimize_draft_images,
     optimize_day_images,
     save_bounded_webp,
 )
 
 
 class OptimizeImagesTests(unittest.TestCase):
+    def test_rejects_an_automation_asset_that_points_into_the_daily_namespace(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id = "2026-07-18"
+            draft_id = f"{day_id}-automation"
+            daily_asset = (
+                root
+                / "docs"
+                / "tistory"
+                / "assets"
+                / day_id
+                / "cover.png"
+            )
+            daily_asset.parent.mkdir(parents=True)
+            Image.new("RGB", (600, 315), "#ffffff").save(daily_asset, "PNG")
+            source = root / "data" / "automation_cases" / f"{day_id}.json"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                json.dumps(
+                    {
+                        "draft_id": draft_id,
+                        "publish_date": day_id,
+                        "content_type": "automation_case",
+                        "content_label": "업무자동화 실험",
+                        "format": "lead-story-v1",
+                        "generation": {"provider": "codex-agent"},
+                        "images": {
+                            "cover": {
+                                "path": f"docs/tistory/assets/{day_id}/cover.png",
+                                "url": "https://blog.example/cover.png",
+                            },
+                            "visual_1": {},
+                            "visual_2": {},
+                        },
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "draft asset namespace"):
+                optimize_draft_images(draft_id, root=root)
+            inspection = inspect_draft_images(draft_id, root=root)
+
+            self.assertTrue(daily_asset.is_file())
+
+        self.assertIn("foreign_image_path:cover", inspection["reasons"])
+
+    def test_optimizes_automation_assets_in_their_own_namespace(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            draft_id = "2026-07-18-automation"
+            day_id = "2026-07-18"
+            asset_dir = root / "docs" / "tistory" / "assets" / draft_id
+            asset_dir.mkdir(parents=True)
+            images = {}
+            for kind in ("cover", "visual_1", "visual_2"):
+                filename = f"{kind}.png"
+                Image.effect_noise((600, 315), 40).convert("RGB").save(
+                    asset_dir / filename, "PNG"
+                )
+                images[kind] = {
+                    "path": f"docs/tistory/assets/{draft_id}/{filename}",
+                    "url": f"https://blog.example/assets/{draft_id}/{filename}",
+                    "alt": kind,
+                }
+            source_path = root / "data" / "automation_cases" / f"{day_id}.json"
+            source_path.parent.mkdir(parents=True)
+            source_path.write_text(
+                json.dumps(
+                    {
+                        "draft_id": draft_id,
+                        "publish_date": day_id,
+                        "content_type": "automation_case",
+                        "content_label": "업무자동화 실험",
+                        "format": "lead-story-v1",
+                        "generation": {"provider": "codex-agent"},
+                        "images": images,
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = optimize_draft_images(draft_id, root=root)
+            stored = json.loads(source_path.read_text(encoding="utf-8"))
+            inspection = inspect_draft_images(draft_id, root=root)
+
+        self.assertEqual(result["draft_id"], draft_id)
+        self.assertEqual(result["publish_date"], day_id)
+        self.assertEqual(stored["generation"]["image_policy"], "webp-v1")
+        self.assertTrue(
+            all(
+                asset["path"].startswith(
+                    f"docs/tistory/assets/{draft_id}/"
+                )
+                and asset["path"].endswith(".webp")
+                for asset in stored["images"].values()
+            )
+        )
+        self.assertEqual(inspection["reasons"], [])
+
     def test_deep_diagram_can_preserve_the_full_frame_instead_of_cropping(self):
         image = Image.new("RGB", (600, 600), "#00aa00")
         for y in range(150):
