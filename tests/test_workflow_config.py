@@ -5,6 +5,9 @@ from pathlib import Path
 ROOT = Path(__file__).parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "publish-drafts.yml"
 COLLECT_WORKFLOW = ROOT / ".github" / "workflows" / "collect-news.yml"
+AUTOMATION_COLLECT_WORKFLOW = (
+    ROOT / ".github" / "workflows" / "collect-automation.yml"
+)
 EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
 SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
 
@@ -54,11 +57,31 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("GEMINI_API_KEY", workflow)
         self.assertNotIn("models: read", workflow)
 
+    def test_saturday_collection_workflow_only_collects_ranked_candidates(self):
+        workflow = AUTOMATION_COLLECT_WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("name: Collect Saturday automation candidates", workflow)
+        self.assertIn("cron: '17 2 * * 6'", workflow)
+        self.assertIn("contents: write", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.collection.collect_automation --today",
+            workflow,
+        )
+        self.assertIn("tests.test_collect_automation", workflow)
+        self.assertIn("git add docs/automation-inbox", workflow)
+        self.assertIn("git push origin HEAD:main", workflow)
+        self.assertNotIn("generate_daily_draft", workflow)
+        self.assertNotIn("generate_editorial_images", workflow)
+        self.assertNotIn("export_tistory", workflow)
+        self.assertNotIn("GEMINI_API_KEY", workflow)
+        self.assertNotIn("models: read", workflow)
+
     def test_agent_contract_and_clean_package_layout_exist(self):
         expected = (
             ROOT / "agent" / "DAILY_EDITOR.md",
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "blog_pipeline" / "collection" / "collect_news.py",
+            ROOT / "blog_pipeline" / "collection" / "collect_automation.py",
             ROOT / "blog_pipeline" / "collection" / "news_pipeline.py",
             ROOT / "blog_pipeline" / "publishing" / "export_tistory.py",
             ROOT / "blog_pipeline" / "publishing" / "build_copy_page.py",
@@ -155,6 +178,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("YYYY-MM-DD-automation", contract)
         self.assertIn("saturday_guard --today --require-complete", contract)
         self.assertIn("같은 날짜의 `data/days/YYYY-MM-DD.json`", contract)
+        self.assertIn("`docs/automation-inbox/latest.json`", contract)
+        self.assertIn("당일 날짜와 다르면", contract)
+        self.assertIn("임시 점수", contract)
+        self.assertIn("검증 완료의 증거가 아닙니다", contract)
+        self.assertIn("공식 출처를 직접 검색", contract)
 
 
 if __name__ == "__main__":

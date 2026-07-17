@@ -1,11 +1,13 @@
 # Blog News Radar
 
 [![Collect daily news](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
+[![Collect Saturday automation candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml)
 
 `쑥쑥자라나라` 블로그를 위한 AI·IT 심층뉴스 제작 프로젝트입니다. 여러 출처의 새 글을 모아 후보를 정리하고, 매일 핵심뉴스 한 건을 추가 조사해 설명 이미지와 함께 읽을 만한 글로 만듭니다.
 
 - 블로그: [하루 한 시간 나를 Develop!](https://won0322.tistory.com/)
 - 뉴스 레이더: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
+- 자동화 후보함: [토요일 자동화 레이더](https://seung-won-yu.github.io/blog-writing/automation-inbox/)
 
 ## 주요 기능
 
@@ -17,6 +19,7 @@
 - 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
 - 한 출처의 장애가 전체 수집을 막지 않는 독립 오류 처리
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
+- GitHub Trending·공식 릴리스·공식 가이드에서 토요일 실험 후보를 별도 선정
 
 ## 운영 흐름
 
@@ -37,6 +40,12 @@
   → 티스토리 복사용 결과 제작
   → 테스트·GitHub Pages 배포 확인
 
+토요일 11:17 KST · GitHub Actions
+  → GitHub Trending·공식 릴리스·공식 가이드 수집
+  → 최근 90일 자동화 주제 제외
+  → 검색성·문제 해결성·재현성·시각화 가능성 점수 계산
+  → 추천 5건과 추가 후보를 자동화 레이더에 저장
+
 토요일 14:00 KST · Codex 업무자동화 실험 작업
   → 실제 반복 작업 또는 공개 도구 1건 선정
   → 안전한 임시 환경에서 최소 예제 실행
@@ -45,7 +54,7 @@
   → 테스트·GitHub Pages 배포 확인
 ```
 
-GitHub Actions의 정기 작업은 뉴스 수집·중복 제거·우선순위 계산까지만 수행하며 글과 이미지를 생성하지 않습니다. 후보 페이지는 심층 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
+GitHub Actions의 정기 작업은 뉴스·자동화 후보 수집, 중복 제거, 우선순위 계산까지만 수행하며 저장소 실행·글·이미지를 생성하지 않습니다. 후보 페이지는 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
 
 ## 직접 실행
 
@@ -53,6 +62,7 @@ Python 3.12를 권장합니다.
 
 ```bash
 python3 -m blog_pipeline.collection.collect_news --today
+python3 -m blog_pipeline.collection.collect_automation --today
 ```
 
 결과는 다음 두 파일에 최신본으로 저장됩니다.
@@ -60,6 +70,8 @@ python3 -m blog_pipeline.collection.collect_news --today
 ```text
 docs/inbox/latest.json
 docs/inbox/index.html
+docs/automation-inbox/latest.json
+docs/automation-inbox/index.html
 ```
 
 수집 관련 테스트만 실행하려면 다음 명령을 사용합니다.
@@ -87,14 +99,17 @@ python3 -m unittest \
 
 ```text
 .github/workflows/collect-news.yml   정기 뉴스 수집
+.github/workflows/collect-automation.yml 토요일 자동화 후보 수집
 agent/DAILY_EDITOR.md                매일 09:00 뉴스 편집 계약
 agent/SATURDAY_AUTOMATION.md         토요일 14:00 업무자동화 실험 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정
 blog_pipeline/publishing/            이미지 최적화·HTML·검사
 config/news_sources.json             출처와 선정 규칙
+config/automation_sources.json       자동화 출처와 임시 점수 규칙
 data/days/                            완성된 일일 글 데이터
 data/automation_cases/                토요일 업무자동화 실험 데이터
 docs/inbox/                           최신 뉴스 후보 JSON·페이지
+docs/automation-inbox/                최신 자동화 후보 JSON·페이지
 docs/tistory/                         티스토리 복사용 결과와 이미지
 tests/                                수집 파이프라인 회귀 테스트
 ```
