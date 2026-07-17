@@ -1,0 +1,301 @@
+{
+  "max_items_per_source": 6,
+  "max_age_days": 45,
+  "interest_keywords": [
+    "automation",
+    "workflow",
+    "GitHub Actions",
+    "Playwright",
+    "Docker",
+    "self-hosted",
+    "monitoring",
+    "notification",
+    "자동화",
+    "워크플로"
+  ],
+  "criteria": {
+    "search_durability": {
+      "label": "검색 지속성",
+      "weight": 30,
+      "target_matches": 3,
+      "keywords": [
+        "automation", "workflow", "self-hosted", "docker", "github actions",
+        "playwright", "backup", "monitoring", "자동화", "워크플로", "백업", "모니터링"
+      ]
+    },
+    "problem_solving": {
+      "label": "문제 해결성",
+      "weight": 30,
+      "target_matches": 3,
+      "keywords": [
+        "retry", "failure", "notification", "schedule", "sync", "backup", "scrape",
+        "deploy", "test", "monitor", "alert", "실패", "알림", "예약", "동기화", "배포", "테스트"
+      ]
+    },
+    "reproducibility": {
+      "label": "재현 가능성",
+      "weight": 20,
+      "target_matches": 3,
+      "keywords": [
+        "quickstart", "example", "template", "docker", "cli", "configuration", "settings",
+        "tutorial", "yaml", "예제", "템플릿", "설정", "따라하기"
+      ]
+    },
+    "visual_evidence": {
+      "label": "시각 설명 가능성",
+      "weight": 10,
+      "target_matches": 2,
+      "keywords": [
+        "dashboard", "logs", "report", "trace", "workflow", "browser", "chart",
+        "대시보드", "로그", "보고서", "브라우저", "차트"
+      ]
+    },
+    "blog_connection": {
+      "label": "기존 글 연결성",
+      "weight": 10,
+      "target_matches": 2,
+      "keywords": [
+        "github", "ai", "agent", "automation", "developer", "python", "typescript",
+        "깃허브", "인공지능", "에이전트", "자동화", "개발"
+      ]
+    }
+  },
+  "selection": {
+    "mode": "automation_shortlist",
+    "max_items": 5,
+    "max_candidates": 25,
+    "max_per_source": 1,
+    "max_per_family": 1,
+    "min_score": 20,
+    "preferred_source_kinds": [
+      "official_guide",
+      "trending",
+      "release"
+    ],
+    "exclude_recent_days": 90
+  },
+  "sources": [
+    {
+      "id": "github-trending-weekly",
+      "name": "GitHub Trending Weekly",
+      "source_family": "github-trending",
+      "group": "discovery",
+      "type": "github_trending",
+      "source_kind": "trending",
+      "url": "https://github.com/trending?since=weekly",
+      "weight": 4,
+      "max_items": 25,
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "README, 라이선스, 최근 커밋과 최소 실행 예제를 확인",
+      "criteria_bias": {
+        "search_durability": 5,
+        "problem_solving": 4,
+        "blog_connection": 3
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "n8n-releases",
+      "name": "n8n Releases",
+      "source_family": "n8n",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/n8n-io/n8n/releases.atom",
+      "repository": "n8n-io/n8n",
+      "candidate_prefix": "n8n-io/n8n",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "Docker 임시 환경에서 공식 quickstart와 변경 기능을 최소 재현",
+      "criteria_bias": {
+        "search_durability": 5,
+        "reproducibility": 4,
+        "visual_evidence": 3,
+        "blog_connection": 2
+      },
+      "enabled": true
+    },
+    {
+      "id": "activepieces-releases",
+      "name": "Activepieces Releases",
+      "source_family": "activepieces",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/activepieces/activepieces/releases.atom",
+      "repository": "activepieces/activepieces",
+      "candidate_prefix": "activepieces/activepieces",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "따라하기",
+      "verification_hint": "공식 설치법과 샘플 플로를 테스트 데이터로 재현",
+      "criteria_bias": {
+        "search_durability": 5,
+        "reproducibility": 4,
+        "visual_evidence": 3
+      },
+      "enabled": true
+    },
+    {
+      "id": "windmill-releases",
+      "name": "Windmill Releases",
+      "source_family": "windmill",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/windmill-labs/windmill/releases.atom",
+      "repository": "windmill-labs/windmill",
+      "candidate_prefix": "windmill-labs/windmill",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "공식 예제의 스크립트·플로·실행 로그를 임시 환경에서 확인",
+      "criteria_bias": {
+        "search_durability": 5,
+        "reproducibility": 4,
+        "visual_evidence": 3
+      },
+      "enabled": true
+    },
+    {
+      "id": "kestra-releases",
+      "name": "Kestra Releases",
+      "source_family": "kestra",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/kestra-io/kestra/releases.atom",
+      "repository": "kestra-io/kestra",
+      "candidate_prefix": "kestra-io/kestra",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "따라하기",
+      "verification_hint": "공식 Docker 예제와 YAML 플로를 작은 입력으로 재현",
+      "criteria_bias": {
+        "search_durability": 5,
+        "reproducibility": 5,
+        "visual_evidence": 3
+      },
+      "enabled": true
+    },
+    {
+      "id": "playwright-releases",
+      "name": "Playwright Releases",
+      "source_family": "playwright",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/microsoft/playwright/releases.atom",
+      "repository": "microsoft/playwright",
+      "candidate_prefix": "microsoft/playwright",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "직접 실행 실험기",
+      "verification_hint": "공식 테스트 예제와 trace·report 결과를 로컬 브라우저에서 확인",
+      "criteria_bias": {
+        "problem_solving": 5,
+        "reproducibility": 5,
+        "visual_evidence": 4,
+        "blog_connection": 3
+      },
+      "enabled": true
+    },
+    {
+      "id": "uv-releases",
+      "name": "uv Releases",
+      "source_family": "uv",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/astral-sh/uv/releases.atom",
+      "repository": "astral-sh/uv",
+      "candidate_prefix": "astral-sh/uv",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "직접 실행 실험기",
+      "verification_hint": "동일한 Python 프로젝트에서 기존 명령과 uv 결과를 반복 측정",
+      "criteria_bias": {
+        "search_durability": 4,
+        "problem_solving": 4,
+        "reproducibility": 5,
+        "blog_connection": 2
+      },
+      "enabled": true
+    },
+    {
+      "id": "actions-runner-releases",
+      "name": "GitHub Actions Runner Releases",
+      "source_family": "github-actions-runner",
+      "group": "official_release",
+      "type": "atom",
+      "source_kind": "release",
+      "url": "https://github.com/actions/runner/releases.atom",
+      "repository": "actions/runner",
+      "candidate_prefix": "actions/runner",
+      "weight": 5,
+      "max_items": 5,
+      "max_summary_chars": 900,
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "공식 변경점과 테스트 워크플로 로그를 확인하고 운영 러너에는 적용하지 않음",
+      "criteria_bias": {
+        "problem_solving": 5,
+        "reproducibility": 4,
+        "blog_connection": 5
+      },
+      "enabled": true
+    },
+    {
+      "id": "n8n-blog",
+      "name": "n8n Official Blog",
+      "source_family": "n8n",
+      "group": "official",
+      "type": "rss",
+      "source_kind": "official_guide",
+      "url": "https://blog.n8n.io/rss/",
+      "weight": 5,
+      "max_items": 8,
+      "max_summary_chars": 900,
+      "experiment_type": "따라하기",
+      "verification_hint": "공식 튜토리얼을 최소 입력과 테스트 계정 없는 범위로 축소해 재현",
+      "criteria_bias": {
+        "search_durability": 6,
+        "problem_solving": 5,
+        "reproducibility": 5,
+        "visual_evidence": 4
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "github-changelog-automation",
+      "name": "GitHub Changelog",
+      "source_family": "github-changelog",
+      "group": "official",
+      "type": "rss",
+      "source_kind": "official_changelog",
+      "url": "https://github.blog/changelog/feed/",
+      "weight": 5,
+      "max_items": 8,
+      "max_summary_chars": 900,
+      "include_title_keywords": [
+        "Actions", "workflow", "automation", "Dependabot", "CodeQL", "Copilot", "CLI"
+      ],
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "공식 문서의 선행 조건과 테스트 저장소 적용 결과를 확인",
+      "criteria_bias": {
+        "problem_solving": 4,
+        "reproducibility": 3,
+        "blog_connection": 5
+      },
+      "enabled": true
+    }
+  ]
+}

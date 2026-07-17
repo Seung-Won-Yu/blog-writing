@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>2026-07-18 토요일 자동화 후보함</title>
+  <style>
+    :root { --ink:#17211c; --muted:#647069; --line:#dce4df; --paper:#fff; --wash:#f3f6f4; --accent:#176848; --amber:#a76512; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--wash); font:15px/1.65 -apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif; }
+    main { width:min(920px,calc(100% - 32px)); margin:auto; padding:52px 0 80px; }
+    h1 { margin:4px 0 10px; font-size:clamp(30px,6vw,46px); letter-spacing:-.05em; }
+    h2 { margin:42px 0 14px; font-size:21px; }
+    h3 { margin:12px 0 6px; font-size:20px; line-height:1.4; letter-spacing:-.025em; }
+    a { color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
+    .eyebrow,.intro,.generated,.summary,.reasons,.notice,.empty,.errors { color:var(--muted); }
+    .eyebrow,.type { color:var(--accent); font-weight:800; }
+    .generated { font-size:12px; }
+    .intro { max-width:720px; }
+    .grid { display:grid; gap:14px; }
+    .card { padding:21px 23px; background:var(--paper); border:1px solid var(--line); border-radius:14px; }
+    .featured { border-left:5px solid var(--accent); }
+    .meta,.criteria { display:flex; flex-wrap:wrap; gap:7px 11px; align-items:center; font-size:12px; }
+    .repository { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .summary,.reasons,.notice { margin:7px 0 0; }
+    .criteria { margin-top:13px; }
+    .criterion { padding:3px 8px; border:1px solid var(--line); border-radius:999px; background:#f8faf9; }
+    .notice { padding-top:9px; border-top:1px dashed var(--line); color:var(--amber); font-size:12px; }
+    .errors { padding:16px 20px 16px 38px; background:#fff; border:1px solid var(--line); border-radius:12px; }
+    footer { margin-top:42px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">SATURDAY AUTOMATION RADAR</p>
+    <p class="generated">2026-07-18 · 생성 2026-07-17T04:39:49.017441+00:00</p>
+    <h1>토요일 자동화 후보함</h1>
+    <p class="intro">GitHub Trending, 공개 릴리스와 공식 변경 내역에서 실험 후보만 모았습니다. 점수는 메타데이터 기반 임시 점수이며 실제 실행 결과가 아닙니다.</p>
+  </header>
+  <section><h2>우선 검토할 후보 5건</h2><div class="grid">
+      <article class="card featured">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>GitHub Actions Runner Releases</span><span class="repository">actions/runner</span><b>임시 점수 56</b></div>
+        <h3><a href="https://github.com/actions/runner/releases/tag/v2.335.1" target="_blank" rel="noopener noreferrer">actions/runner v2.335.1</a></h3>
+        <p class="summary">What&#x27;s Changed Bump System.ServiceProcess.ServiceController from 10.0.6 to 10.0.7 by @dependabot [bot] in #4370 Bump @actions/glob from 0.6.1 to 0.7.0 in /src/Misc/expressionFunc/hashFiles by @dependabot [bot] in #4367 feat: propagate actions dependencies by @nodeselector in #4372 Not retry and report action download 403. by @TingluoHuang in #4391 Update setup job starting logs by @GitPaulo in #4383 fix: expand commit hash regex to support SHA-256 (64-char) hashes by @yaananth in #4347 Move dap setup to setup job step by @rentziass in #4403 Add support for Ubuntu 26.04 (liblttng-ust1t64, libicu77-80) by @dvaldivia in #4394 Update dotnet sdk to latest version @8.0.421 by @github-actions[bot] in #4428 Update Docker to v29.5.0 and Buildx to v0.34.0 by @github-actions[bot] in #4425 Execute debugger REPL commands inside job container by @rentziass in #4420 Send welcome message in debugger con</p>
+        <div class="criteria"><span class="criterion">검색 지속성 10/30</span><span class="criterion">문제 해결성 15/30</span><span class="criterion">재현 가능성 11/20</span><span class="criterion">시각 설명 가능성 10/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 10/30 · 문제 해결성 15/30 · 재현 가능성 11/20 · 시각 설명 가능성 10/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card featured">
+        <div class="meta"><span class="type">직접 실행 실험기</span><span>Playwright Releases</span><span class="repository">microsoft/playwright</span><b>임시 점수 52</b></div>
+        <h3><a href="https://github.com/microsoft/playwright/releases/tag/v1.61.1" target="_blank" rel="noopener noreferrer">microsoft/playwright v1.61.1</a></h3>
+        <p class="summary">Bug Fixes #41365 [Bug]: Expect.Extend matcher with same name as default matcher in same expect instance overrides default matchers implementation to custom matcher #41351 [Bug]: Playwright UI mode: apiRequestContext._wrapApiCall reports unexpected number of bytes (same test passes in headed mode) #41360 [Bug]: Trace viewer: message times in websockets are downscaled by 1000 #41311 [Bug]: [Regression]: Sync loader throws &quot;context.conditions?.includes is not a function&quot; on Node 22.15 #41371 [Regression]: Sync ESM loader (registerHooks) fails to resolve extensionless .ts subpath imports across pnpm workspace symlinks</p>
+        <div class="criteria"><span class="criterion">검색 지속성 10/30</span><span class="criterion">문제 해결성 25/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 9/10</span><span class="criterion">기존 글 연결성 3/10</span></div>
+        <p class="reasons">검색 지속성 10/30 · 문제 해결성 25/30 · 재현 가능성 5/20 · 시각 설명 가능성 9/10 · 기존 글 연결성 3/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card featured">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 40</b></div>
+        <h3><a href="https://blog.n8n.io/building-an-ai-powered-incident-response-workflow-in-n8n" target="_blank" rel="noopener noreferrer">Building an AI-powered incident response workflow in n8n</a></h3>
+        <p class="summary">Build an AI-powered incident response workflow with n8n. Combine RAG, threat intelligence, and historical incidents to accelerate SOC investigations.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 16/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 9/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 16/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 9/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card featured">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>Windmill Releases</span><span class="repository">windmill-labs/windmill</span><b>임시 점수 39</b></div>
+        <h3><a href="https://github.com/windmill-labs/windmill/releases/tag/v1.758.0" target="_blank" rel="noopener noreferrer">windmill-labs/windmill v1.758.0</a></h3>
+        <p class="summary">1.758.0 (2026-07-14) Features ai-agent: give tools a real description instead of the tool name ( #10083 ) ( 7ebfad3 ) ai-chat: port flow-group and sticky-note instructions to global chat ( #10090 ) ( 32f32d9 ) cli: add --tag override to script and flow run/preview ( #10079 ) ( 98e6cca ) sessions: support many pending sessions persisted in IndexedDB ( #10076 ) ( bfcec7e ) Bug Fixes ai-chat: size AI-created flow notes to fit their text ( #10091 ) ( af3e3fe ) apps: allow setting sandbox isolation and public access before first deploy ( #10085 ) ( cfc3f29 ) apps: load themes when selecting the Resources → Theme tab ( #10086 ) ( f2869d8 ) frontend: stop spurious raw-app reload that 404s on &quot;Start without AI&quot; ( #10099 ) ( 2c702ef ) mcp: align script auto_kind filter with scripts list API ( #10098 ) ( 4edffeb ) sessions: pending-draft debounce follow-ups (delete-cancel, keystroke de-transient, </p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 10/30</span><span class="criterion">재현 가능성 11/20</span><span class="criterion">시각 설명 가능성 3/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 문제 해결성 10/30 · 재현 가능성 11/20 · 시각 설명 가능성 3/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card featured">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>GitHub Trending Weekly</span><span class="repository">davila7/claude-code-templates</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/davila7/claude-code-templates" target="_blank" rel="noopener noreferrer">davila7/claude-code-templates</a></h3>
+        <p class="summary">CLI tool for configuring and monitoring Claude Code</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 4/30</span><span class="criterion">재현 가능성 7/20</span><span class="criterion">시각 설명 가능성 0/10</span><span class="criterion">기존 글 연결성 3/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 문제 해결성 4/30 · 재현 가능성 7/20 · 기존 글 연결성 3/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article></div></section>
+  <section><h2>추가 후보 20건</h2><div class="grid">
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>GitHub Actions Runner Releases</span><span class="repository">actions/runner</span><b>임시 점수 56</b></div>
+        <h3><a href="https://github.com/actions/runner/releases/tag/v2.335.0" target="_blank" rel="noopener noreferrer">actions/runner v2.335.0</a></h3>
+        <p class="summary">What&#x27;s Changed Bump System.ServiceProcess.ServiceController from 10.0.6 to 10.0.7 by @dependabot [bot] in #4370 Bump @actions/glob from 0.6.1 to 0.7.0 in /src/Misc/expressionFunc/hashFiles by @dependabot [bot] in #4367 feat: propagate actions dependencies by @nodeselector in #4372 Not retry and report action download 403. by @TingluoHuang in #4391 Update setup job starting logs by @GitPaulo in #4383 fix: expand commit hash regex to support SHA-256 (64-char) hashes by @yaananth in #4347 Move dap setup to setup job step by @rentziass in #4403 Add support for Ubuntu 26.04 (liblttng-ust1t64, libicu77-80) by @dvaldivia in #4394 Update dotnet sdk to latest version @8.0.421 by @github-actions[bot] in #4428 Update Docker to v29.5.0 and Buildx to v0.34.0 by @github-actions[bot] in #4425 Execute debugger REPL commands inside job container by @rentziass in #4420 Send welcome message in debugger con</p>
+        <div class="criteria"><span class="criterion">검색 지속성 10/30</span><span class="criterion">문제 해결성 15/30</span><span class="criterion">재현 가능성 11/20</span><span class="criterion">시각 설명 가능성 10/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 10/30 · 문제 해결성 15/30 · 재현 가능성 11/20 · 시각 설명 가능성 10/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">직접 실행 실험기</span><span>Playwright Releases</span><span class="repository">microsoft/playwright</span><b>임시 점수 49</b></div>
+        <h3><a href="https://github.com/microsoft/playwright/releases/tag/v1.61.0" target="_blank" rel="noopener noreferrer">microsoft/playwright v1.61.0</a></h3>
+        <p class="summary">🔑 WebAuthn passkeys New Credentials virtual authenticator, available via browserContext.credentials , lets tests register passkeys and answer navigator.credentials.create() / navigator.credentials.get() ceremonies in the page — no real hardware key required, works in all browsers: const context = await browser . newContext ( ) ; // Seed a passkey your backend provisioned for a test user. await context . credentials . create ( &#x27;example.com&#x27; , { id : credentialId , userHandle , privateKey , publicKey , } ) ; await context . credentials . install ( ) ; const page = await context . newPage ( ) ; await page . goto ( &#x27;https://example.com/login&#x27; ) ; // The page&#x27;s navigator.credentials.get() is answered with the seeded passkey. You can also let the app register a passkey once in a setup test, read it back with credentials.get() , and seed it into later tests — see Credentials for details. 🗃️ Web</p>
+        <div class="criteria"><span class="criterion">검색 지속성 10/30</span><span class="criterion">문제 해결성 15/30</span><span class="criterion">재현 가능성 12/20</span><span class="criterion">시각 설명 가능성 9/10</span><span class="criterion">기존 글 연결성 3/10</span></div>
+        <p class="reasons">검색 지속성 10/30 · 문제 해결성 15/30 · 재현 가능성 12/20 · 시각 설명 가능성 9/10 · 기존 글 연결성 3/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>n8n Releases</span><span class="repository">n8n-io/n8n</span><b>임시 점수 44</b></div>
+        <h3><a href="https://github.com/n8n-io/n8n/releases/tag/n8n%402.31.1" target="_blank" rel="noopener noreferrer">n8n-io/n8n n8n@2.31.1</a></h3>
+        <p class="summary">2.31.1 (2026-07-15) Bug Fixes core: Bind dynamic credential tokens to a user ID ( #34134 ) ( ab2acc8 ) core: Count AI assistant workflow test runs as manual executions in statistics ( #34152 ) ( ea14067 ) core: Preserve node aliases when generating AI tool variants ( #34194 ) ( b01032c ) editor: Make AI assistant quota-exhausted error states explicit ( #34137 ) ( e81d108 )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 10/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 8/10</span><span class="criterion">기존 글 연결성 7/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 문제 해결성 10/30 · 재현 가능성 4/20 · 시각 설명 가능성 8/10 · 기존 글 연결성 7/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>Kestra Releases</span><span class="repository">kestra-io/kestra</span><b>임시 점수 35</b></div>
+        <h3><a href="https://github.com/kestra-io/kestra/releases/tag/v0.22.46" target="_blank" rel="noopener noreferrer">kestra-io/kestra v0.22.46</a></h3>
+        <p class="summary">Changelog 📘 Subtasks version 2a1f221 update to version &#x27;0.22.46&#x27; 🐛 Bug Fixes tasks f08b292 skip Docker VOLUME output download when nothing is declared ( #17311 ) ( #17334 ), closes #17311 #17316 #17334 Contributors We&#x27;d like to thank the following people for their contributions: GitHub, MAIRE Jérémy, github-actions[bot]</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 12/20</span><span class="criterion">시각 설명 가능성 3/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 재현 가능성 12/20 · 시각 설명 가능성 3/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 35</b></div>
+        <h3><a href="https://blog.n8n.io/compliance-automation-software" target="_blank" rel="noopener noreferrer">Compliance Automation Software: What To Evaluate</a></h3>
+        <p class="summary">Compare compliance automation software, including features, trade-offs, and how to build flexible workflows with n8n on infrastructure you control.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 16/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 4/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 16/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 4/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 35</b></div>
+        <h3><a href="https://blog.n8n.io/ai-security-monitoring" target="_blank" rel="noopener noreferrer">AI Security Monitoring: Risks, Detection, and Automated Response</a></h3>
+        <p class="summary">Learn how AI security monitoring works from both sides. Discover the unique AI risks and the strategies engineers use to automate detection and response.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 16/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 4/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 16/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 4/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">직접 실행 실험기</span><span>uv Releases</span><span class="repository">astral-sh/uv</span><b>임시 점수 30</b></div>
+        <h3><a href="https://github.com/astral-sh/uv/releases/tag/0.11.28" target="_blank" rel="noopener noreferrer">astral-sh/uv 0.11.28</a></h3>
+        <p class="summary">Release Notes Released on 2026-07-07. Security This release updates our ZIP library, astral-async-zip , to v0.0.20, which includes 15 changes that harden our ZIP handling against parser differentials . uv may reject ZIP archives with malformed or ambiguous content that were previously accepted. See the upstream commits for a full list of changes. Python Upgrade GraalPy to 25.1.3 ( #20069 ) Enhancements Improve trace logs for unexpected error chains ( #20220 ) Move lockfile update guidance to a hint ( #20219 ) Preserve indentation for multiline error causes ( #20156 ) Render user errors with their cause chains ( #20217 ) Route final command errors through the printer to respect -q and -qq ( #20163 ) Use standard rendering for uv build errors ( #20159 ) Use standard rendering for tool requirement errors ( #20160 ) Performance Only compile bytecode for installed distributions in uv pip inst</p>
+        <div class="criteria"><span class="criterion">검색 지속성 4/30</span><span class="criterion">문제 해결성 4/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 10/10</span><span class="criterion">기존 글 연결성 7/10</span></div>
+        <p class="reasons">검색 지속성 4/30 · 문제 해결성 4/30 · 재현 가능성 5/20 · 시각 설명 가능성 10/10 · 기존 글 연결성 7/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 30</b></div>
+        <h3><a href="https://blog.n8n.io/context-engineering-llm" target="_blank" rel="noopener noreferrer">Fix Agent Failures With Context Engineering for LLMs</a></h3>
+        <p class="summary">Context engineering for LLMs goes beyond prompt design. Learn how to manage context rot, budget tokens, and build reliable production AI agents with n8n.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 6/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 4/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 6/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 4/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 30</b></div>
+        <h3><a href="https://blog.n8n.io/ai-agent-memory" target="_blank" rel="noopener noreferrer">AI Agent Memory: Types, Storage, and How To Implement It</a></h3>
+        <p class="summary">Learn how AI agent memory works, from in-context buffers to vector stores. Discover how to build persistent memory into real-world agent workflows at scale.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 6/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 4/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 6/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 4/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>n8n Releases</span><span class="repository">n8n-io/n8n</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/n8n-io/n8n/releases/tag/n8n%402.31.2" target="_blank" rel="noopener noreferrer">n8n-io/n8n n8n@2.31.2</a></h3>
+        <p class="summary">2.31.2 (2026-07-16) Bug Fixes core: Fix change in width of all dropdowns in UI ( #34266 ) ( 953bbe5 ) core: Require execution mode for MCP workflow executions ( #34280 ) ( 9aced71 )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 8/10</span><span class="criterion">기존 글 연결성 2/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 재현 가능성 4/20 · 시각 설명 가능성 8/10 · 기존 글 연결성 2/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>n8n Releases</span><span class="repository">n8n-io/n8n</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/n8n-io/n8n/releases/tag/n8n%402.30.6" target="_blank" rel="noopener noreferrer">n8n-io/n8n n8n@2.30.6</a></h3>
+        <p class="summary">2.30.6 (2026-07-16) Bug Fixes core: Require execution mode for MCP workflow executions ( #34281 ) ( ea5319f )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 8/10</span><span class="criterion">기존 글 연결성 2/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 재현 가능성 4/20 · 시각 설명 가능성 8/10 · 기존 글 연결성 2/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>n8n Releases</span><span class="repository">n8n-io/n8n</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/n8n-io/n8n/releases/tag/beta" target="_blank" rel="noopener noreferrer">n8n-io/n8n beta</a></h3>
+        <p class="summary">2.31.2 (2026-07-16) Bug Fixes core: Fix change in width of all dropdowns in UI ( #34266 ) ( 953bbe5 ) core: Require execution mode for MCP workflow executions ( #34280 ) ( 9aced71 )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 8/10</span><span class="criterion">기존 글 연결성 2/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 재현 가능성 4/20 · 시각 설명 가능성 8/10 · 기존 글 연결성 2/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>n8n Releases</span><span class="repository">n8n-io/n8n</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/n8n-io/n8n/releases/tag/stable" target="_blank" rel="noopener noreferrer">n8n-io/n8n stable</a></h3>
+        <p class="summary">2.30.6 (2026-07-16) Bug Fixes core: Require execution mode for MCP workflow executions ( #34281 ) ( ea5319f )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 15/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 8/10</span><span class="criterion">기존 글 연결성 2/10</span></div>
+        <p class="reasons">검색 지속성 15/30 · 재현 가능성 4/20 · 시각 설명 가능성 8/10 · 기존 글 연결성 2/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>Windmill Releases</span><span class="repository">windmill-labs/windmill</span><b>임시 점수 29</b></div>
+        <h3><a href="https://github.com/windmill-labs/windmill/releases/tag/v1.760.0" target="_blank" rel="noopener noreferrer">windmill-labs/windmill v1.760.0</a></h3>
+        <p class="summary">1.760.0 (2026-07-15) Features nsjail: make python/ansible rlimit_as configurable per worker (GIT-921) ( #10138 ) ( 1787201 ) Bug Fixes ai: disable redirects on worker AI provider client (GHSA-5q4v) ( #10122 ) ( 27ead8d ) ai: stop sending the AI agent system prompt twice for OpenAI ( #10126 ) ( 8bfe5c9 ) apps: invalidate cached app policy on change or deletion (GHSA-r5v4-cxh9-7qhq) ( #10121 ) ( f7eb5c4 ) bash: normalize CRLF line endings before running scripts ( #10131 ) ( 6407d9f ) cli-image: patch fixable CRITICAL CVEs in windmill-cli image (GIT-922) ( #10135 ) ( 5626768 ) frontend: graceful small-screen timeframe picker on the runs page ( #10073 ) ( af177ce ) frontend: keep session-exit URL clean by syncing new_draft strip with the router ( #10101 ) ( 9705d60 ) frontend: only carry custom-tag overrides on &#x27;Run again&#x27; ( #10137 ) ( bd3adc9 ) frontend: treat a displaced draft save as supe</p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 11/20</span><span class="criterion">시각 설명 가능성 3/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 재현 가능성 11/20 · 시각 설명 가능성 3/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">직접 실행 실험기</span><span>uv Releases</span><span class="repository">astral-sh/uv</span><b>임시 점수 25</b></div>
+        <h3><a href="https://github.com/astral-sh/uv/releases/tag/0.11.29" target="_blank" rel="noopener noreferrer">astral-sh/uv 0.11.29</a></h3>
+        <p class="summary">Release Notes Released on 2026-07-15. Python Use gzip-compressed artifacts for PyPy downloads ( #20265 ) Enhancements Add JSON output to uv tree ( #19978 ) Add CUDA 13.2 as a supported PyTorch backend ( #20267 ) Prefer local artifacts over URLs when installing from pylock.toml ( #20393 ) Clarify diagnostics for unsatisfiable direct requirement ranges ( #20227 ) Include the selected project name in missing-extra errors ( #20358 ) Preview features Preserve extras and dependency-group conflict context when selecting locked project tools ( #20078 ) Split OSV audit queries that exceed the service&#x27;s 1,000-package limit ( #20398 ) Apply OSV fixed-version information only to the matching package and ecosystem ( #20399 ) Skip the virtualenv distutils monkeypatch on Python 3.10 and later ( #20222 ) Report invalid uv audit --service-url values instead of panicking ( #20374 ) Include preview setting</p>
+        <div class="criteria"><span class="criterion">검색 지속성 4/30</span><span class="criterion">문제 해결성 4/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 5/10</span><span class="criterion">기존 글 연결성 7/10</span></div>
+        <p class="reasons">검색 지속성 4/30 · 문제 해결성 4/30 · 재현 가능성 5/20 · 시각 설명 가능성 5/10 · 기존 글 연결성 7/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>Kestra Releases</span><span class="repository">kestra-io/kestra</span><b>임시 점수 25</b></div>
+        <h3><a href="https://github.com/kestra-io/kestra/releases/tag/v1.3.28" target="_blank" rel="noopener noreferrer">kestra-io/kestra v1.3.28</a></h3>
+        <p class="summary">Changelog 📘 Subtasks version 4293c7d update to version &#x27;1.3.28&#x27; 🐛 Bug Fixes chart ee66351 allow explicit replicas 0 on a deployment ( #17206 ), closes #17206 core 3e12e2e lower-case Windows drive letter with Locale.ROOT ec72861 clear error when proxy address is set without a port jdbc-mysql 6a46cf2 resolve duplicate V1_57 Flyway migration version, closes #17329 logs 3027b48 widen logs/metrics task_id column to 256 to match Task.id max size ( #17329 ), closes #17328 #17329 namespaces 4f57439 make namespace_file_metadata case-sensitive on MySQL, closes #17305 global abfd21e non-forced plugin defaults in a parent &gt; child relationship now compose in a single pass ( #17359 ), closes #17359 Contributors We&#x27;d like to thank the following people for their contributions: Anas Khan, GitHub, Loïc Mathieu, Malay Dewangan, Marco Sabatini, Nicolas K., Roman Acevedo, YannC, YannC., github-actions[bot], </p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 10/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 10/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">따라하기</span><span>n8n Official Blog</span><b>임시 점수 25</b></div>
+        <h3><a href="https://blog.n8n.io/agent-identity-reliable-execution-and-intent-are-only-half-way-solved" target="_blank" rel="noopener noreferrer">Agent Identity, Reliable Execution, and Intent are only half-way solved</a></h3>
+        <p class="summary">After spending the past couple of months looking at hundreds of tech docs from n8n, Google, Gumloop, and the rest, I tallied up 75 capabilities you’d expect an agent development tool to offer. But there are so many more things you can, need, or should do to agents</p>
+        <div class="criteria"><span class="criterion">검색 지속성 6/30</span><span class="criterion">문제 해결성 5/30</span><span class="criterion">재현 가능성 5/20</span><span class="criterion">시각 설명 가능성 4/10</span><span class="criterion">기존 글 연결성 5/10</span></div>
+        <p class="reasons">검색 지속성 6/30 · 문제 해결성 5/30 · 재현 가능성 5/20 · 시각 설명 가능성 4/10 · 기존 글 연결성 5/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>GitHub Trending Weekly</span><span class="repository">google-labs-code/stitch-skills</span><b>임시 점수 24</b></div>
+        <h3><a href="https://github.com/google-labs-code/stitch-skills" target="_blank" rel="noopener noreferrer">google-labs-code/stitch-skills</a></h3>
+        <p class="summary">A library of Agent Skills designed to work with the Stitch MCP server. Each skill follows the Agent Skills open standard, for compatibility with coding agents such as Antigravity, Gemini CLI, Claude Code, Cursor.</p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 4/30</span><span class="criterion">재현 가능성 7/20</span><span class="criterion">시각 설명 가능성 0/10</span><span class="criterion">기존 글 연결성 8/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 문제 해결성 4/30 · 재현 가능성 7/20 · 기존 글 연결성 8/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>Windmill Releases</span><span class="repository">windmill-labs/windmill</span><b>임시 점수 22</b></div>
+        <h3><a href="https://github.com/windmill-labs/windmill/releases/tag/v1.757.0" target="_blank" rel="noopener noreferrer">windmill-labs/windmill v1.757.0</a></h3>
+        <p class="summary">1.757.0 (2026-07-14) Features saml: add ALLOW_PRIVATE_SAML_METADATA_URLS SSRF bypass ( #10077 ) ( 851e309 ) Bug Fixes ai-agent: don&#x27;t mark repeated tool calls as failed in flow graph ( #10075 ) ( 207ce86 )</p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 0/30</span><span class="criterion">재현 가능성 4/20</span><span class="criterion">시각 설명 가능성 3/10</span><span class="criterion">기존 글 연결성 10/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 재현 가능성 4/20 · 시각 설명 가능성 3/10 · 기존 글 연결성 10/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="type">공개 도구 적용 사례</span><span>GitHub Trending Weekly</span><span class="repository">oven-sh/bun</span><b>임시 점수 22</b></div>
+        <h3><a href="https://github.com/oven-sh/bun" target="_blank" rel="noopener noreferrer">oven-sh/bun</a></h3>
+        <p class="summary">Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one</p>
+        <div class="criteria"><span class="criterion">검색 지속성 5/30</span><span class="criterion">문제 해결성 14/30</span><span class="criterion">재현 가능성 0/20</span><span class="criterion">시각 설명 가능성 0/10</span><span class="criterion">기존 글 연결성 3/10</span></div>
+        <p class="reasons">검색 지속성 5/30 · 문제 해결성 14/30 · 기존 글 연결성 3/10</p>
+        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+      </article></div></section>
+  <section><h2>수집 상태</h2><ul class="errors"><li>모든 출처를 정상적으로 확인했습니다.</li></ul></section>
+  <footer>후보함은 글이 아닙니다. 14:00 Codex 작업이 공식 문서·버전·권한을 확인하고 안전한 임시 환경에서 직접 검증한 뒤 한 건만 집필합니다.</footer>
+</main>
+</body>
+</html>
