@@ -1,8 +1,10 @@
 """Collect news candidates from RSS, Atom, and simple HTML source pages."""
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import datetime as dt
 import email.utils
+import hashlib
 import json
 import re
 from html import escape, unescape
@@ -285,6 +287,10 @@ def _collect_source(source, fetch_text):
             failures.append(exc)
             continue
         if items:
+            for item in items:
+                item["_allow_unknown_date"] = bool(
+                    variant.get("allow_unknown_date", False)
+                )
             return items
     if failures:
         raise failures[-1]
@@ -315,34 +321,77 @@ def _source_item_matches(raw, source):
     )
 
 
-def _source_item_is_recent(raw, max_age_days, now):
+def _source_item_is_recent(raw, max_age_days, now, allow_unknown_date=False):
     if max_age_days is None:
         return True
     published = str(raw.get("published_at") or "").strip()
     if not published:
-        return True
+        return bool(allow_unknown_date)
     if published.endswith("Z"):
         published = published[:-1] + "+00:00"
     try:
         published_at = dt.datetime.fromisoformat(published)
     except ValueError:
-        return True
+        return bool(allow_unknown_date)
     if published_at.tzinfo is None:
         published_at = published_at.replace(tzinfo=dt.timezone.utc)
     age = now - published_at.astimezone(dt.timezone.utc)
-    return age <= dt.timedelta(days=max(0, int(max_age_days)))
+    return (
+        age >= -dt.timedelta(hours=6)
+        and age <= dt.timedelta(days=max(0, int(max_age_days)))
+    )
 
 
-def load_recent_processed_urls(days_dir, day_id, lookback_days=14):
+def _daily_publish_meta_dir(days_dir, publish_meta_dir=None):
+    if publish_meta_dir is not None:
+        return Path(publish_meta_dir)
+    days = Path(days_dir)
+    return days.parent.parent / "docs" / "tistory"
+
+
+def _is_completed_daily_source(source_path, publish_meta_dir):
+    day_id = source_path.stem
+    meta_path = Path(publish_meta_dir) / f"{day_id}.json"
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return False
+    expected_source = f"data/days/{day_id}.json"
+    if not (
+        meta.get("draft_id") == day_id
+        and meta.get("publish_date") == day_id
+        and meta.get("content_type") == "daily_news"
+        and meta.get("source") == expected_source
+        and meta.get("publish_ready") is True
+    ):
+        return False
+    recorded_digest = str(meta.get("source_sha256") or "").strip().casefold()
+    if recorded_digest:
+        try:
+            actual_digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        except OSError:
+            return False
+        if recorded_digest != actual_digest:
+            return False
+    return True
+
+
+def load_recent_processed_urls(
+    days_dir,
+    day_id,
+    lookback_days=14,
+    publish_meta_dir=None,
+):
     """Return canonical URLs saved in recent processed daily articles."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
     output = Path(days_dir)
+    metadata = _daily_publish_meta_dir(output, publish_meta_dir)
     urls = set()
 
     for days_ago in range(1, max(0, int(lookback_days)) + 1):
         prior_day = target_day - dt.timedelta(days=days_ago)
         path = output / "{}.json".format(prior_day.isoformat())
-        if not path.exists():
+        if not path.exists() or not _is_completed_daily_source(path, metadata):
             continue
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -363,16 +412,22 @@ def _publisher_host(url):
     return urlsplit(canonical_url).netloc.casefold().removeprefix("www.")
 
 
-def load_recent_publisher_hosts(days_dir, day_id, lookback_days=1):
+def load_recent_publisher_hosts(
+    days_dir,
+    day_id,
+    lookback_days=1,
+    publish_meta_dir=None,
+):
     """Return publisher hosts used by recent processed daily articles."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
     output = Path(days_dir)
+    metadata = _daily_publish_meta_dir(output, publish_meta_dir)
     hosts = set()
 
     for days_ago in range(1, max(0, int(lookback_days)) + 1):
         prior_day = target_day - dt.timedelta(days=days_ago)
         path = output / "{}.json".format(prior_day.isoformat())
-        if not path.exists():
+        if not path.exists() or not _is_completed_daily_source(path, metadata):
             continue
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -406,13 +461,28 @@ def build_inbox(
     errors = []
     default_limit = int(config.get("max_items_per_source", 20))
 
-    for source in config.get("sources", []):
-        if not source.get("enabled", True):
-            continue
+    sources = [
+        source
+        for source in config.get("sources", [])
+        if source.get("enabled", True)
+    ]
+
+    def collect_safely(source):
         try:
-            raw_items = _collect_source(source, fetch_text)
+            return source, _collect_source(source, fetch_text), None
         except Exception as exc:  # One failed source must not stop the daily inbox.
-            errors.append({"source_id": source.get("id", ""), "message": str(exc)})
+            return source, [], exc
+
+    max_workers = max(1, min(12, int(config.get("max_workers", 1))))
+    if max_workers > 1 and len(sources) > 1:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            collected = list(executor.map(collect_safely, sources))
+    else:
+        collected = [collect_safely(source) for source in sources]
+
+    for source, raw_items, error in collected:
+        if error is not None:
+            errors.append({"source_id": source.get("id", ""), "message": str(error)})
             continue
 
         limit = int(source.get("max_items", default_limit))
@@ -421,13 +491,26 @@ def build_inbox(
             raw
             for raw in raw_items
             if _source_item_matches(raw, source)
-            and _source_item_is_recent(raw, max_age_days, now)
+            and _source_item_is_recent(
+                raw,
+                max_age_days,
+                now,
+                allow_unknown_date=bool(
+                    raw.get(
+                        "_allow_unknown_date",
+                        source.get("allow_unknown_date", False),
+                    )
+                ),
+            )
         ]
         for raw in filtered_items[:limit]:
             candidate_input = dict(raw)
             if source.get("include_summary") is False:
                 candidate_input["summary"] = ""
             candidate = make_candidate(candidate_input, source)
+            candidate["unknown_publication_date"] = not bool(
+                str(raw.get("published_at") or "").strip()
+            )
             if candidate["title"] and candidate["url"]:
                 candidates.append(candidate)
 
@@ -479,10 +562,20 @@ def build_inbox(
     selection["recent_publisher_excluded"] = recent_publisher_excluded
     if selection.get("mode") == "lead_shortlist":
         minimum = int(selection.get("min_lead_score", 0))
+        minimum_reader_relevance = int(
+            selection.get("min_reader_relevance", 0)
+        )
         lead_pool = [
             candidate
             for candidate in eligible_candidates
             if int(candidate.get("lead_score", 0)) >= minimum
+            and not candidate.get("unknown_publication_date")
+            and int(
+                candidate.get("lead_score_breakdown", {}).get(
+                    "reader_relevance", 0
+                )
+            )
+            >= minimum_reader_relevance
         ]
         selected = select_lead_shortlist(
             lead_pool,
@@ -698,6 +791,46 @@ def fetch_url(url, timeout=20):
         return response.read().decode(charset, errors="replace")
 
 
+def collection_quality_result(inbox, config):
+    """Fail closed when a candidate inbox lacks enough healthy source diversity."""
+    enabled_sources = [
+        source for source in config.get("sources", []) if source.get("enabled", True)
+    ]
+    failed_source_ids = {
+        str(error.get("source_id") or "") for error in inbox.get("errors", [])
+    }
+    successful_sources = sum(
+        1
+        for source in enabled_sources
+        if str(source.get("id") or "") not in failed_source_ids
+    )
+    candidates = inbox.get("candidates", [])
+    candidate_sources = {
+        str(candidate.get("source_id") or "")
+        for candidate in candidates
+        if str(candidate.get("source_id") or "")
+    }
+    policy = config.get("collection_quality") or {}
+    reasons = []
+    if successful_sources < int(policy.get("min_successful_sources", 1)):
+        reasons.append("insufficient_healthy_sources")
+    if len(candidates) < int(policy.get("min_candidates", 1)):
+        reasons.append("insufficient_candidates")
+    if len(candidate_sources) < int(policy.get("min_candidate_sources", 1)):
+        reasons.append("candidate_source_diversity")
+    selected_count = len(inbox.get("selected", []))
+    if selected_count < int(policy.get("min_selected", 1)):
+        reasons.append("insufficient_selected_candidates")
+    return {
+        "ok": not reasons,
+        "reasons": reasons,
+        "successful_sources": successful_sources,
+        "candidate_sources": len(candidate_sources),
+        "candidates": len(candidates),
+        "selected": selected_count,
+    }
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="여러 출처의 뉴스 후보함을 생성합니다.")
     day_group = parser.add_mutually_exclusive_group()
@@ -706,6 +839,7 @@ def main(argv=None):
     parser.add_argument("--config", default="config/news_sources.json")
     parser.add_argument("--output-dir", default="docs/inbox")
     parser.add_argument("--published-days-dir", default="data/days")
+    parser.add_argument("--publish-meta-dir", default="docs/tistory")
     args = parser.parse_args(argv)
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
@@ -719,12 +853,16 @@ def main(argv=None):
         config.get("selection", {}).get("publisher_cooldown_days", 1)
     )
     excluded_urls = load_recent_processed_urls(
-        args.published_days_dir, day_id, lookback_days
+        args.published_days_dir,
+        day_id,
+        lookback_days,
+        publish_meta_dir=args.publish_meta_dir,
     )
     excluded_publisher_hosts = load_recent_publisher_hosts(
         args.published_days_dir,
         day_id,
         publisher_cooldown_days,
+        publish_meta_dir=args.publish_meta_dir,
     )
     inbox = build_inbox(
         config,
@@ -734,6 +872,18 @@ def main(argv=None):
         excluded_urls=excluded_urls,
         excluded_publisher_hosts=excluded_publisher_hosts,
     )
+    quality = collection_quality_result(inbox, config)
+    if not quality["ok"]:
+        print(
+            "뉴스 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
+                quality["successful_sources"],
+                quality["candidate_sources"],
+                quality["candidates"],
+                quality["selected"],
+                ",".join(quality["reasons"]),
+            )
+        )
+        return 2
     paths = write_inbox(inbox, args.output_dir)
     print(
         "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건 / 과거 원뉴스 {}개 정리\n{}".format(

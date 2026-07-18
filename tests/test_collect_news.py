@@ -3,15 +3,19 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from blog_pipeline.collection.collect_news import (
+    _source_item_is_recent,
     build_inbox,
+    collection_quality_result,
     load_recent_publisher_hosts,
     load_recent_processed_urls,
     parse_feed,
     parse_github_trending,
     parse_html_links,
     render_inbox_html,
+    main as collect_news_main,
 )
 
 
@@ -91,6 +95,7 @@ GITHUB_TRENDING_HTML = """
 """
 
 NOW = dt.datetime(2026, 7, 12, 9, 0, tzinfo=dt.timezone.utc)
+DEFAULT_CONFIG = Path(__file__).parents[1] / "config" / "news_sources.json"
 
 
 class FeedParserTests(unittest.TestCase):
@@ -165,6 +170,251 @@ class HtmlParserTests(unittest.TestCase):
 
 
 class InboxTests(unittest.TestCase):
+    def test_unknown_date_html_fallback_stays_reviewable_but_not_lead_eligible(self):
+        config = {
+            "max_age_days": 14,
+            "interest_keywords": [],
+            "audience_lanes": {
+                "broad": {"keywords": ["보안", "장애"]},
+                "reader_impact": {"keywords": ["보안", "장애"]},
+            },
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 5,
+                "min_lead_score": 0,
+                "min_reader_relevance": 1,
+            },
+            "sources": [
+                {
+                    "id": "fallback-source",
+                    "name": "Fallback",
+                    "group": "general_editorial",
+                    "type": "rss",
+                    "url": "https://example.com/feed",
+                    "weight": 3,
+                    "fallbacks": [
+                        {
+                            "type": "html",
+                            "url": "https://example.com/news",
+                            "link_pattern": r"^/story/\d+$",
+                            "allow_unknown_date": True,
+                        }
+                    ],
+                }
+            ],
+        }
+
+        def fetch(url):
+            if url.endswith("/feed"):
+                return "<rss><channel></channel></rss>"
+            return '<a href="/story/1">보안 장애 대응 방법</a>'
+
+        result = build_inbox(
+            config,
+            fetch_text=fetch,
+            now=dt.datetime(2026, 7, 18, tzinfo=dt.timezone.utc),
+            day_id="2026-07-18",
+        )
+
+        self.assertEqual(len(result["candidates"]), 1)
+        self.assertTrue(result["candidates"][0]["unknown_publication_date"])
+        self.assertEqual(result["selected"], [])
+
+    def test_daily_candidates_require_a_parseable_recent_publication_time(self):
+        now = dt.datetime(2026, 7, 18, 0, 0, tzinfo=dt.timezone.utc)
+
+        self.assertFalse(_source_item_is_recent({}, 14, now))
+        self.assertTrue(_source_item_is_recent({}, 14, now, allow_unknown_date=True))
+        self.assertFalse(
+            _source_item_is_recent({"published_at": "someday"}, 14, now)
+        )
+        self.assertTrue(
+            _source_item_is_recent(
+                {"published_at": "2026-07-17T22:00:00+00:00"}, 14, now
+            )
+        )
+
+    def test_default_config_includes_general_reader_and_independent_sources(self):
+        config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+        source_ids = {source["id"] for source in config["sources"]}
+
+        self.assertGreaterEqual(config["max_workers"], 4)
+        self.assertGreaterEqual(len(source_ids), 17)
+        self.assertGreaterEqual(
+            config["selection"]["min_reader_relevance"], 2
+        )
+        self.assertTrue(
+            {
+                "google-blog",
+                "google-workspace-updates",
+                "mozilla-blog",
+                "microsoft-security",
+                "itworld-korea",
+                "the-verge",
+                "krebs-security",
+            }.issubset(source_ids)
+        )
+        google_sources = [
+            source
+            for source in config["sources"]
+            if source["id"] in {"google-blog", "google-workspace-updates"}
+        ]
+        self.assertEqual(
+            {source.get("source_family") for source in google_sources}, {"google"}
+        )
+        broad_keywords = set(config["audience_lanes"]["broad"]["keywords"])
+        self.assertTrue(
+            {
+                "AI",
+                "보안",
+                "app",
+                "productivity",
+                "Windows",
+                "Android",
+                "Gmail",
+            }.issubset(broad_keywords)
+        )
+
+    def test_collection_quality_requires_candidates_from_multiple_sources(self):
+        config = {
+            "collection_quality": {
+                "min_successful_sources": 3,
+                "min_candidate_sources": 3,
+                "min_candidates": 5,
+            },
+            "sources": [
+                {"id": "a", "enabled": True},
+                {"id": "b", "enabled": True},
+                {"id": "c", "enabled": True},
+            ],
+        }
+        inbox = {
+            "errors": [],
+            "candidates": [
+                {"source_id": "a", "url": f"https://a.example/{index}"}
+                for index in range(5)
+            ],
+        }
+
+        result = collection_quality_result(inbox, config)
+
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["candidate_sources"], 1)
+        self.assertIn("candidate_source_diversity", result["reasons"])
+
+    def test_collection_quality_rejects_an_empty_reader_relevant_shortlist(self):
+        config = {
+            "collection_quality": {
+                "min_successful_sources": 3,
+                "min_candidate_sources": 3,
+                "min_candidates": 5,
+                "min_selected": 3,
+            },
+            "sources": [
+                {"id": "a", "enabled": True},
+                {"id": "b", "enabled": True},
+                {"id": "c", "enabled": True},
+            ],
+        }
+        inbox = {
+            "errors": [],
+            "candidates": [
+                {"source_id": f"source-{index % 3}", "url": f"https://example.com/{index}"}
+                for index in range(6)
+            ],
+            "selected": [],
+        }
+
+        result = collection_quality_result(inbox, config)
+
+        self.assertFalse(result["ok"])
+        self.assertIn("insufficient_selected_candidates", result["reasons"])
+
+    def test_excludes_items_published_more_than_six_hours_in_the_future(self):
+        config = {
+            "max_age_days": 14,
+            "selection": {"max_items": 3, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "official",
+                    "name": "Official",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://official.example/feed",
+                    "enabled": True,
+                }
+            ],
+        }
+        feed = """<rss><channel>
+          <item><title>현재 시각에 공개된 소식</title><link>https://official.example/current</link><pubDate>Sun, 12 Jul 2026 08:00:00 GMT</pubDate></item>
+          <item><title>미래 시각으로 잘못 표시된 소식</title><link>https://official.example/future</link><pubDate>Sun, 12 Jul 2026 16:00:00 GMT</pubDate></item>
+        </channel></rss>"""
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda _url: feed,
+            now=NOW,
+            day_id="2026-07-12",
+        )
+
+        self.assertEqual(
+            [item["url"] for item in result["candidates"]],
+            ["https://official.example/current"],
+        )
+
+    def test_all_source_failures_do_not_silently_replace_the_latest_good_inbox(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            output = root / "inbox"
+            published = root / "days"
+            output.mkdir()
+            published.mkdir()
+            previous_latest = '{"day":"2026-07-11","selected":[{"title":"정상 후보"}]}\n'
+            latest_path = output / "latest.json"
+            latest_path.write_text(previous_latest, encoding="utf-8")
+            config_path = root / "news_sources.json"
+            config_path.write_text(
+                json.dumps(
+                    {
+                        "selection": {"max_items": 3},
+                        "sources": [
+                            {
+                                "id": "broken",
+                                "name": "Broken",
+                                "group": "official",
+                                "type": "rss",
+                                "url": "https://broken.example/feed",
+                                "enabled": True,
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with patch(
+                "blog_pipeline.collection.collect_news.fetch_url",
+                side_effect=OSError("network down"),
+            ):
+                exit_code = collect_news_main(
+                    [
+                        "--day",
+                        "2026-07-12",
+                        "--config",
+                        str(config_path),
+                        "--output-dir",
+                        str(output),
+                        "--published-days-dir",
+                        str(published),
+                    ]
+                )
+
+            latest_was_preserved = latest_path.read_text(encoding="utf-8") == previous_latest
+            self.assertTrue(
+                exit_code != 0 or latest_was_preserved,
+                "전 소스 실패를 성공으로 처리하면서 마지막 정상 후보함까지 덮어쓰면 안 됩니다.",
+            )
+
     def test_builds_a_five_item_lead_shortlist_instead_of_lane_slots(self):
         sources = []
         feeds = {}
@@ -336,6 +586,8 @@ class InboxTests(unittest.TestCase):
     def test_loads_only_processed_urls_from_recent_prior_days(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir)
+            metadata = output / "meta"
+            metadata.mkdir()
             (output / "2026-07-12.json").write_text(
                 json.dumps(
                     {
@@ -355,14 +607,33 @@ class InboxTests(unittest.TestCase):
                 json.dumps({"news": [{"url": "https://news.example/same-day"}]}),
                 encoding="utf-8",
             )
+            (metadata / "2026-07-12.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-12",
+                        "publish_date": "2026-07-12",
+                        "content_type": "daily_news",
+                        "source": "data/days/2026-07-12.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
 
-            urls = load_recent_processed_urls(output, "2026-07-13", lookback_days=14)
+            urls = load_recent_processed_urls(
+                output,
+                "2026-07-13",
+                lookback_days=14,
+                publish_meta_dir=metadata,
+            )
 
         self.assertEqual(urls, {"https://news.example/kept"})
 
     def test_loads_recent_publisher_hosts_for_short_cooldown_only(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir)
+            metadata = output / "meta"
+            metadata.mkdir()
             for day, url in (
                 ("2026-07-17", "https://blog.cloudflare.com/cache-update"),
                 ("2026-07-16", "https://github.blog/changelog/actions"),
@@ -373,14 +644,61 @@ class InboxTests(unittest.TestCase):
                     json.dumps({"news": [{"url": url}]}),
                     encoding="utf-8",
                 )
+                (metadata / f"{day}.json").write_text(
+                    json.dumps(
+                        {
+                            "draft_id": day,
+                            "publish_date": day,
+                            "content_type": "daily_news",
+                            "source": f"data/days/{day}.json",
+                            "publish_ready": True,
+                        }
+                    ),
+                    encoding="utf-8",
+                )
 
             hosts = load_recent_publisher_hosts(
                 output,
                 "2026-07-18",
                 lookback_days=3,
+                publish_meta_dir=metadata,
             )
 
         self.assertEqual(hosts, {"blog.cloudflare.com", "github.blog"})
+
+    def test_incomplete_daily_source_is_not_treated_as_published_history(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            days = root / "data" / "days"
+            metadata = root / "docs" / "tistory"
+            days.mkdir(parents=True)
+            metadata.mkdir(parents=True)
+            (days / "2026-07-17.json").write_text(
+                json.dumps(
+                    {"news": [{"url": "https://news.example/retry-tomorrow"}]}
+                ),
+                encoding="utf-8",
+            )
+            (metadata / "2026-07-17.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-17",
+                        "publish_date": "2026-07-17",
+                        "content_type": "daily_news",
+                        "source": "data/days/2026-07-17.json",
+                        "publish_ready": False,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            urls = load_recent_processed_urls(
+                days,
+                "2026-07-18",
+                publish_meta_dir=metadata,
+            )
+
+        self.assertEqual(urls, set())
 
     def test_review_inbox_is_not_search_indexable(self):
         page = render_inbox_html(

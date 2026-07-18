@@ -57,7 +57,10 @@ def canonicalize_url(url):
     if not value:
         return ""
 
-    parts = urlsplit(value)
+    try:
+        parts = urlsplit(value)
+    except ValueError:
+        return ""
     scheme = parts.scheme.lower() or "https"
     host = parts.netloc.lower()
     if scheme not in {"http", "https"} or not host:
@@ -227,6 +230,7 @@ def score_candidate(
             score += 1
             reasons.append("7일 이내")
 
+    title_haystack = str(candidate.get("title") or "").casefold()
     haystack = f"{candidate.get('title', '')} {candidate.get('summary', '')}".casefold()
     matches = [
         keyword
@@ -242,17 +246,29 @@ def score_candidate(
         reasons.append("짧은 제목")
 
     lane_scores = {}
+    raw_lane_scores = {}
+    raw_lane_matches = {}
     lane_bias = candidate.get("lane_bias") or {}
     for lane, lane_config in (audience_lanes or {}).items():
         if isinstance(lane_config, dict):
             keywords = lane_config.get("keywords", [])
+            lane_haystack = (
+                title_haystack
+                if lane_config.get("match_scope") == "title"
+                else haystack
+            )
         else:
             keywords = lane_config or []
+            lane_haystack = haystack
         lane_matches = [
-            keyword for keyword in keywords if _keyword_matches(haystack, keyword)
+            keyword
+            for keyword in keywords
+            if _keyword_matches(lane_haystack, keyword)
         ]
         bias = int(lane_bias.get(lane, 0))
-        lane_scores[lane] = min(5, len(lane_matches)) + bias
+        raw_lane_scores[lane] = min(5, len(lane_matches))
+        raw_lane_matches[lane] = list(dict.fromkeys(lane_matches))
+        lane_scores[lane] = raw_lane_scores[lane] + bias
 
     topic_tags = []
     for topic, keywords in (topic_keywords or {}).items():
@@ -262,6 +278,8 @@ def score_candidate(
     candidate["score"] = score
     candidate["score_reasons"] = reasons
     candidate["lane_scores"] = lane_scores
+    candidate["raw_lane_scores"] = raw_lane_scores
+    candidate["raw_lane_matches"] = raw_lane_matches
     candidate["topic_tags"] = topic_tags
     return candidate
 
@@ -269,16 +287,43 @@ def score_candidate(
 def score_lead_candidate(candidate):
     """Add an explainable score used only to build the five-story shortlist."""
     lanes = candidate.get("lane_scores") or {}
+    raw_lanes = candidate.get("raw_lane_scores") or lanes
     reasons = set(candidate.get("score_reasons") or [])
     group = candidate.get("group")
+    broad_relevance = min(5, int(raw_lanes.get("broad", 0)))
+    if "reader_impact" in raw_lanes:
+        lane_matches = candidate.get("raw_lane_matches") or {}
+        broad_terms = {
+            str(value).strip().casefold()
+            for value in lane_matches.get("broad", [])
+            if str(value).strip()
+        }
+        impact_terms = {
+            str(value).strip().casefold()
+            for value in lane_matches.get("reader_impact", [])
+            if str(value).strip()
+        }
+        consequence_terms = {
+            str(value).strip().casefold()
+            for value in lane_matches.get("reader_consequence", [])
+            if str(value).strip()
+        }
+        reader_impact = int(raw_lanes.get("reader_impact", 0))
+        broad_relevance = (
+            min(5, len(broad_terms | impact_terms | consequence_terms))
+            if reader_impact >= 1
+            else 0
+        )
     breakdown = {
-        "reader_relevance": min(5, max((int(value) for value in lanes.values()), default=0)),
+        "reader_relevance": broad_relevance,
         "actionability": min(5, int(lanes.get("practical", 0))),
         "explanatory_depth": min(5, int(lanes.get("deep", 0))),
         "evidence": {
             "official": 5,
             "research": 4,
+            "independent_editorial": 4,
             "korean_editorial": 3,
+            "general_editorial": 3,
             "community": 3,
             "korean_general": 2,
         }.get(group, 2),

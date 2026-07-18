@@ -69,6 +69,7 @@ def score_automation_candidate(candidate, criteria, source=None):
     text = "{} {}".format(candidate.get("title", ""), candidate.get("summary", ""))
     biases = source.get("criteria_bias") or {}
     scores = {}
+    raw_scores = {}
     reasons = []
 
     for key, spec in criteria.items():
@@ -77,7 +78,9 @@ def score_automation_candidate(candidate, criteria, source=None):
             if spec.get("match_scope") == "title"
             else text
         )
+        raw_value, _ = _criterion_score(criterion_text, spec, 0)
         value, _ = _criterion_score(criterion_text, spec, biases.get(key, 0))
+        raw_scores[key] = raw_value
         scores[key] = value
         if value:
             label = str(spec.get("label") or key)
@@ -86,6 +89,7 @@ def score_automation_candidate(candidate, criteria, source=None):
     candidate["provisional_score"] = sum(scores.values())
     candidate["score"] = candidate["provisional_score"]
     candidate["score_breakdown"] = scores
+    candidate["raw_score_breakdown"] = raw_scores
     candidate["score_reasons"] = reasons
     candidate["experiment_type"] = str(
         source.get("experiment_type") or "직접 실행 실험기"
@@ -105,6 +109,10 @@ def _prepare_candidate(candidate, source):
     if source.get("type") == "github_trending":
         candidate["repository"] = str(candidate.get("title") or "")
     candidate["source_kind"] = str(source.get("source_kind") or source.get("type") or "")
+    candidate["problem_lane"] = str(source.get("problem_lane") or "").strip()
+    candidate["tool_brand"] = str(
+        source.get("tool_brand") or source.get("name") or ""
+    ).strip()
     summary_limit = max(0, int(source.get("max_summary_chars", 1200)))
     if summary_limit:
         candidate["summary"] = str(candidate.get("summary") or "")[:summary_limit]
@@ -131,6 +139,7 @@ def _prepare_evergreen_candidate(raw):
         "source_kind": "evergreen_guide",
         "repository": str(raw.get("repository") or ""),
         "problem_lane": problem_lane,
+        "tool_brand": str(raw.get("tool_brand") or raw.get("source_name") or "").strip(),
         "requires_manual_review": True,
     }
 
@@ -148,14 +157,28 @@ def select_automation_candidates(candidates, selection):
         str(key): max(0, int(value))
         for key, value in (selection.get("minimum_criterion_scores") or {}).items()
     }
+    last_problem_lane = str(selection.get("last_problem_lane") or "").strip().casefold()
+    last_tool_brand = str(selection.get("last_tool_brand") or "").strip().casefold()
 
     def can_add(candidate):
         if int(candidate.get("provisional_score", 0)) < minimum:
             return False
-        score_breakdown = candidate.get("score_breakdown") or {}
+        score_breakdown = candidate.get("raw_score_breakdown") or candidate.get("score_breakdown") or {}
         if any(
             int(score_breakdown.get(key, 0)) < required
             for key, required in minimum_criterion_scores.items()
+        ):
+            return False
+        if (
+            last_problem_lane
+            and str(candidate.get("problem_lane") or "").strip().casefold()
+            == last_problem_lane
+        ):
+            return False
+        if (
+            last_tool_brand
+            and str(candidate.get("tool_brand") or "").strip().casefold()
+            == last_tool_brand
         ):
             return False
         source_id = candidate.get("source_id", "")
@@ -206,6 +229,8 @@ def build_automation_inbox(
     excluded_urls=None,
     excluded_fingerprints=None,
     excluded_queries=None,
+    last_problem_lane="",
+    last_tool_brand="",
 ):
     """Collect public candidates and rank them for a reproducible experiment."""
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -281,6 +306,8 @@ def build_automation_inbox(
             eligible.append(candidate)
 
     selection = dict(config.get("selection") or {})
+    selection["last_problem_lane"] = str(last_problem_lane or "")
+    selection["last_tool_brand"] = str(last_tool_brand or "")
     selection["recently_selected_excluded"] = len(candidates) - len(eligible)
     selected = select_automation_candidates(eligible, selection)
     selected_ids = {item.get("id") for item in selected}
@@ -356,6 +383,7 @@ def _compact_candidate(candidate):
         "recent_match",
         "requires_manual_review",
         "problem_lane",
+        "tool_brand",
     )
     return {key: candidate[key] for key in keys if key in candidate}
 
@@ -407,6 +435,39 @@ def _read_json(path):
         return None
 
 
+LEGACY_AUTOMATION_ROTATION_SIGNALS = (
+    (r"\bplaywright\b", "웹 반복 작업", "Playwright"),
+    (r"\bn8n\b", "업무 워크플로", "n8n"),
+    (r"google apps script|apps script", "이메일·문서", "Google Apps Script"),
+    (r"github actions", "개발·테스트", "GitHub Actions"),
+    (r"\bpython\b", "파일·데이터 정리", "Python"),
+)
+
+
+def _infer_legacy_rotation(payload):
+    """Recover lane/brand for completed posts written before structured evidence."""
+    editorial = (
+        payload.get("editorial")
+        if isinstance(payload.get("editorial"), dict)
+        else {}
+    )
+    news = payload.get("news") if isinstance(payload.get("news"), list) else []
+    first = news[0] if news and isinstance(news[0], dict) else {}
+    text = " ".join(
+        str(value or "")
+        for value in (
+            payload.get("primary_query"),
+            editorial.get("headline"),
+            first.get("title_kr"),
+            first.get("url"),
+        )
+    ).casefold()
+    for pattern, lane, brand in LEGACY_AUTOMATION_ROTATION_SIGNALS:
+        if re.search(pattern, text, re.IGNORECASE):
+            return lane, brand
+    return "", ""
+
+
 def load_recent_automation_history(
     cases_dir,
     day_id,
@@ -421,7 +482,13 @@ def load_recent_automation_history(
         if publish_meta_dir is not None
         else cases.parent.parent / "docs" / "tistory"
     )
-    history = {"urls": set(), "fingerprints": set(), "queries": set()}
+    history = {
+        "urls": set(),
+        "fingerprints": set(),
+        "queries": set(),
+        "last_problem_lane": "",
+        "last_tool_brand": "",
+    }
 
     for days_ago in range(1, max(0, int(lookback_days)) + 1):
         prior_day = target_day - dt.timedelta(days=days_ago)
@@ -446,6 +513,25 @@ def load_recent_automation_history(
         primary_query = str(payload.get("primary_query") or "").strip()
         if primary_query:
             history["queries"].add(primary_query)
+        if not history["last_problem_lane"] and not history["last_tool_brand"]:
+            verification = (
+                payload.get("verification")
+                if isinstance(payload.get("verification"), dict)
+                else {}
+            )
+            problem_lane = str(
+                payload.get("problem_lane")
+                or verification.get("problem_lane")
+                or ""
+            ).strip()
+            tool_brand = str(
+                payload.get("tool_brand")
+                or verification.get("tool_brand")
+                or ""
+            ).strip()
+            inferred_lane, inferred_brand = _infer_legacy_rotation(payload)
+            history["last_problem_lane"] = problem_lane or inferred_lane
+            history["last_tool_brand"] = tool_brand or inferred_brand
         for item in payload.get("news", []):
             if not isinstance(item, dict):
                 continue
@@ -667,6 +753,8 @@ def main(argv=None):
         excluded_urls=history["urls"],
         excluded_fingerprints=history["fingerprints"],
         excluded_queries=history["queries"],
+        last_problem_lane=history["last_problem_lane"],
+        last_tool_brand=history["last_tool_brand"],
     )
     paths = write_automation_inbox(inbox, args.output_dir)
     print(

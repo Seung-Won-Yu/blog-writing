@@ -13,11 +13,11 @@
 
 - RSS·Atom·HTML 출처를 하나의 후보 형식으로 정규화
 - 추적 파라미터를 제거한 canonical URL 기반 중복 방지
-- 공식 발표·개발 커뮤니티·국내 기술 매체를 함께 탐색
+- 공식 발표·국내외 일반 기술 매체·독립 보안 출처를 함께 탐색
 - 14일보다 오래된 기사 제외와 같은 운영사 피드의 중복 선정 제한
 - `일상에 닿는 변화`, `바로 쓰는 도구`, `깊이 읽는 기술` 관점으로 후보 분류
 - 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
-- 한 출처의 장애가 전체 수집을 막지 않는 독립 오류 처리
+- 최소 3개의 정상 출처·후보 출처가 없으면 직전 정상 후보함을 보존하는 오류 처리
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
 - GitHub Trending·공식 릴리스·공식 가이드에서 토요일 실험 후보를 별도 선정
 
@@ -89,8 +89,9 @@ python3 -m unittest \
 
 - AI·IT 전문 매체
 - 개발자 커뮤니티
-- OpenAI·GitHub·Cloudflare·Google Security 공식 피드
-- GitHub Engineering·Hugging Face 기술 블로그
+- OpenAI·GitHub·Cloudflare·Google·Mozilla·Microsoft 공식 피드
+- Google Workspace·GitHub Engineering·Hugging Face 기술 블로그
+- ITWorld Korea·The Verge 일반 기술 매체와 Krebs on Security 독립 보안 출처
 - 기술 연구 피드
 
 원문 제목과 링크는 외부 입력으로 취급합니다. 후보 페이지를 만들 때 HTML 이스케이프를 적용하고, 페이지에는 검색 제외 메타데이터를 사용합니다.

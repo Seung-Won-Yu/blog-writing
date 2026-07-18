@@ -1,5 +1,6 @@
 {
   "max_items_per_source": 6,
+  "max_workers": 8,
   "max_age_days": 45,
   "interest_keywords": [
     "automation",
@@ -70,9 +71,9 @@
         "email", "gmail", "spreadsheet", "sheets", "excel", "calendar", "meeting",
         "notes", "pdf", "file", "folder", "form", "survey", "receipt", "invoice",
         "report", "notification", "reminder", "photo", "document", "slides", "backup",
-        "download", "이메일", "메일", "스프레드시트", "엑셀", "일정", "회의", "메모", "pdf",
+        "download", "webpage", "website", "이메일", "메일", "스프레드시트", "엑셀", "일정", "회의", "메모", "pdf",
         "파일", "폴더", "설문", "영수증", "청구서", "보고서", "알림", "사진", "문서",
-        "백업", "다운로드"
+        "백업", "다운로드", "웹페이지"
       ]
     }
   },
@@ -84,6 +85,7 @@
       "url": "https://docs.python.org/3/library/pathlib.html",
       "source_name": "Python pathlib 공식 문서",
       "problem_lane": "파일·문서",
+      "tool_brand": "Python",
       "experiment_type": "직접 실행 실험기",
       "verification_hint": "임시 폴더와 테스트 파일만 사용하고 분류 전후 화면·파일 목록·복구 결과를 캡처",
       "criteria_bias": {"search_durability": 8, "problem_solving": 7, "reproducibility": 6, "visual_evidence": 5, "broad_appeal": 8}
@@ -96,6 +98,7 @@
       "source_name": "changedetection.io 공식 저장소",
       "repository": "dgtlmoon/changedetection.io",
       "problem_lane": "웹 변경·알림",
+      "tool_brand": "changedetection.io",
       "experiment_type": "공개 도구 적용 사례",
       "verification_hint": "로컬 또는 공개 테스트 페이지만 감시하고 실제 알림 대신 테스트 채널·로그로 결과를 확인",
       "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
@@ -107,6 +110,7 @@
       "url": "https://docs.python.org/3/library/csv.html",
       "source_name": "Python csv 공식 문서",
       "problem_lane": "보고서·표",
+      "tool_brand": "Python",
       "experiment_type": "따라하기",
       "verification_hint": "가상 데이터만 사용하고 입력 CSV·정리 규칙·완성 보고서와 실패 행을 함께 공개",
       "criteria_bias": {"search_durability": 8, "problem_solving": 7, "reproducibility": 7, "visual_evidence": 6, "broad_appeal": 8}
@@ -118,6 +122,7 @@
       "url": "https://docs.python.org/3/library/hashlib.html",
       "source_name": "Python hashlib 공식 문서",
       "problem_lane": "사진·저장공간",
+      "tool_brand": "Python",
       "experiment_type": "직접 실행 실험기",
       "verification_hint": "복사한 테스트 이미지만 사용하고 자동 삭제하지 않으며 중복 판정표와 오탐 조건을 확인",
       "criteria_bias": {"search_durability": 7, "problem_solving": 8, "reproducibility": 7, "visual_evidence": 5, "broad_appeal": 8}
@@ -129,6 +134,7 @@
       "url": "https://docs.python.org/3/library/shutil.html#archiving-operations",
       "source_name": "Python shutil 공식 문서",
       "problem_lane": "백업·복구",
+      "tool_brand": "Python",
       "experiment_type": "따라하기",
       "verification_hint": "임시 문서만 사용하고 압축 생성뿐 아니라 새 폴더에 실제 복원해 파일 수를 비교",
       "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 7, "visual_evidence": 5, "broad_appeal": 8}
@@ -140,6 +146,7 @@
       "url": "https://developers.google.com/apps-script/reference/gmail/gmail-app",
       "source_name": "Google Apps Script Gmail 공식 문서",
       "problem_lane": "이메일·문서",
+      "tool_brand": "Google Apps Script",
       "experiment_type": "따라하기",
       "verification_hint": "별도 테스트 메일만 사용하고 권한 범위·중복 실행·파일 삭제 금지 조건을 먼저 확인",
       "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
@@ -151,6 +158,7 @@
       "url": "https://developers.google.com/apps-script/guides/triggers/installable",
       "source_name": "Google Apps Script 트리거 공식 문서",
       "problem_lane": "설문·표",
+      "tool_brand": "Google Apps Script",
       "experiment_type": "직접 실행 실험기",
       "verification_hint": "가상 응답만 사용하고 설치형 트리거 권한·실패 알림·삭제 방법을 함께 확인",
       "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 7, "broad_appeal": 8}
@@ -162,6 +170,7 @@
       "url": "https://developers.google.com/apps-script/reference/calendar/calendar-app",
       "source_name": "Google Apps Script Calendar 공식 문서",
       "problem_lane": "일정·알림",
+      "tool_brand": "Google Apps Script",
       "experiment_type": "따라하기",
       "verification_hint": "테스트 캘린더만 사용하고 읽기 범위·시간대·빈 일정·실행 취소 방법을 기록",
       "criteria_bias": {"search_durability": 7, "problem_solving": 7, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
@@ -189,9 +198,12 @@
     {
       "id": "github-trending-weekly",
       "name": "GitHub Trending Weekly",
+      "problem_lane": "공개 도구",
+      "tool_brand": "GitHub",
       "source_family": "github-trending",
       "group": "discovery",
       "type": "github_trending",
+      "allow_unknown_date": true,
       "source_kind": "trending",
       "url": "https://github.com/trending?since=weekly",
       "weight": 4,
@@ -209,6 +221,8 @@
     {
       "id": "zapier-guides",
       "name": "Zapier Official Guides",
+      "problem_lane": "생활·사무",
+      "tool_brand": "Zapier",
       "source_family": "zapier",
       "group": "official",
       "type": "rss",
@@ -237,6 +251,8 @@
     {
       "id": "n8n-releases",
       "name": "n8n Releases",
+      "problem_lane": "워크플로 자동화",
+      "tool_brand": "n8n",
       "source_family": "n8n",
       "group": "official_release",
       "type": "atom",
@@ -260,6 +276,8 @@
     {
       "id": "activepieces-releases",
       "name": "Activepieces Releases",
+      "problem_lane": "워크플로 자동화",
+      "tool_brand": "Activepieces",
       "source_family": "activepieces",
       "group": "official_release",
       "type": "atom",
@@ -282,6 +300,8 @@
     {
       "id": "windmill-releases",
       "name": "Windmill Releases",
+      "problem_lane": "개발·데이터 작업",
+      "tool_brand": "Windmill",
       "source_family": "windmill",
       "group": "official_release",
       "type": "atom",
@@ -304,6 +324,8 @@
     {
       "id": "kestra-releases",
       "name": "Kestra Releases",
+      "problem_lane": "데이터·일정 작업",
+      "tool_brand": "Kestra",
       "source_family": "kestra",
       "group": "official_release",
       "type": "atom",
@@ -326,6 +348,8 @@
     {
       "id": "playwright-releases",
       "name": "Playwright Releases",
+      "problem_lane": "웹 반복 작업",
+      "tool_brand": "Playwright",
       "source_family": "playwright",
       "group": "official_release",
       "type": "atom",
@@ -349,6 +373,8 @@
     {
       "id": "uv-releases",
       "name": "uv Releases",
+      "problem_lane": "개발 환경",
+      "tool_brand": "uv",
       "source_family": "uv",
       "group": "official_release",
       "type": "atom",
@@ -372,6 +398,8 @@
     {
       "id": "actions-runner-releases",
       "name": "GitHub Actions Runner Releases",
+      "problem_lane": "개발·배포",
+      "tool_brand": "GitHub Actions",
       "source_family": "github-actions-runner",
       "group": "official_release",
       "type": "atom",
@@ -394,6 +422,8 @@
     {
       "id": "n8n-blog",
       "name": "n8n Official Blog",
+      "problem_lane": "워크플로 자동화",
+      "tool_brand": "n8n",
       "source_family": "n8n",
       "group": "official",
       "type": "rss",
@@ -417,6 +447,8 @@
     {
       "id": "google-workspace-updates",
       "name": "Google Workspace Updates",
+      "problem_lane": "이메일·문서",
+      "tool_brand": "Google Workspace",
       "source_family": "google-workspace",
       "group": "official",
       "type": "atom",
@@ -445,6 +477,8 @@
     {
       "id": "power-automate-blog",
       "name": "Microsoft Power Automate Blog",
+      "problem_lane": "생활·사무",
+      "tool_brand": "Microsoft Power Automate",
       "source_family": "power-automate",
       "group": "official",
       "type": "rss",
@@ -472,6 +506,8 @@
     {
       "id": "github-changelog-automation",
       "name": "GitHub Changelog",
+      "problem_lane": "개발·협업",
+      "tool_brand": "GitHub",
       "source_family": "github-changelog",
       "group": "official",
       "type": "rss",

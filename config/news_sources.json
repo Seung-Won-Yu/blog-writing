@@ -1,6 +1,13 @@
 {
   "max_items_per_source": 15,
+  "max_workers": 8,
   "max_age_days": 14,
+  "collection_quality": {
+    "min_successful_sources": 3,
+    "min_candidate_sources": 3,
+    "min_candidates": 5,
+    "min_selected": 3
+  },
   "interest_keywords": [
     "AI",
     "에이전트",
@@ -20,11 +27,45 @@
   "audience_lanes": {
     "broad": {
       "label": "일상에 닿는 큰 변화",
+      "match_scope": "title",
       "keywords": [
         "무료", "요금", "가격", "청구", "개인정보", "사진", "일자리", "취업",
         "교육", "학교", "스마트폰", "인스타", "유튜브", "검색", "의료", "건강",
         "질환", "로봇", "자동차", "자율주행", "사기", "딥페이크", "저작권", "규제",
-        "중단", "장애", "일반 사용자"
+        "중단", "장애", "일반 사용자", "AI", "인공지능", "보안", "앱",
+        "업무", "생산성", "구독", "윈도우", "안드로이드", "아이폰",
+        "free", "price", "billing",
+        "privacy", "photo", "job", "education",
+        "smartphone", "Google Search", "health", "scam", "deepfake", "copyright",
+        "regulation", "outage", "password", "browser", "email",
+        "document", "calendar", "file", "backup", "security", "security update",
+        "website", "app", "software", "productivity", "subscription", "Windows",
+        "Android", "iPhone", "Firefox", "Chrome", "Gmail", "Drive", "Docs", "Sheets",
+        "Meet", "Copilot"
+      ]
+    },
+    "reader_impact": {
+      "label": "독자가 체감할 영향",
+      "match_scope": "title",
+      "keywords": [
+        "무료", "요금", "가격", "청구", "개인정보", "일자리", "취업", "교육",
+        "학교", "의료", "건강", "질환", "사기", "딥페이크", "저작권", "규제",
+        "중단", "장애", "보안", "취약점", "구독", "유출", "차단", "추적",
+        "free", "price", "billing", "privacy", "job", "education", "health", "scam",
+        "deepfake", "copyright", "regulation", "outage", "security", "vulnerability",
+        "subscription", "breach", "shutdown", "tracking", "data loss"
+      ]
+    },
+    "reader_consequence": {
+      "label": "달라진 결과와 행동",
+      "match_scope": "title",
+      "keywords": [
+        "변경", "인상", "인하", "포함", "제외", "종료", "중단", "유출",
+        "사고", "오류", "표시", "예상", "위험", "피해", "보호", "지원", "차단",
+        "의무", "제한", "경고", "잠금", "삭제", "복구", "확대", "축소",
+        "change", "changes", "hike", "cut", "included", "removed", "ends", "shutdown",
+        "incident", "breach", "error", "warning", "risk", "protection", "supports",
+        "blocked", "required", "limited", "deleted", "recovery", "expanded"
       ]
     },
     "practical": {
@@ -44,7 +85,12 @@
     }
   },
   "topic_keywords": {
-    "ai": ["AI", "인공지능", "LLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트"]
+    "ai": ["AI", "인공지능", "LLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트"],
+    "security": ["보안", "취약점", "security", "vulnerability", "패치", "malware", "phishing"],
+    "privacy": ["개인정보", "privacy", "tracking", "추적", "저작권", "copyright"],
+    "cloud": ["Cloudflare", "AWS", "Azure", "GCP", "cloud", "클라우드", "CDN", "cache", "캐시"],
+    "developer_tools": ["GitHub", "VS Code", "API", "SDK", "framework", "developer", "개발자"],
+    "automation": ["자동화", "automation", "workflow", "email", "calendar", "spreadsheet", "문서", "파일"]
   },
   "selection": {
     "mode": "lead_shortlist",
@@ -52,6 +98,7 @@
     "max_per_source": 1,
     "max_per_family": 1,
     "min_lead_score": 8,
+    "min_reader_relevance": 2,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 1
   },
@@ -101,7 +148,8 @@
           "type": "html",
           "url": "https://yozm.wishket.com/magazine/",
           "link_pattern": "^/magazine/detail/\\d+/?$",
-          "max_title_chars": 120
+          "max_title_chars": 120,
+          "allow_unknown_date": true
         }
       ],
       "manual_review": true,
@@ -170,6 +218,126 @@
       "url": "https://security.googleblog.com/feeds/posts/default?alt=rss",
       "weight": 4,
       "lane_bias": {"broad": 1, "practical": 1, "deep": 3},
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "google-blog",
+      "name": "Google Blog",
+      "source_family": "google",
+      "group": "official",
+      "type": "rss",
+      "url": "https://blog.google/rss/",
+      "weight": 4,
+      "lane_bias": {"broad": 2, "practical": 1},
+      "include_title_keywords": [
+        "Gemini", "Search", "Android", "Chrome", "Gmail", "Photos", "Maps",
+        "privacy", "security", "health", "education", "accessibility"
+      ],
+      "max_items": 15,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "google-workspace-updates",
+      "name": "Google Workspace Updates",
+      "source_family": "google",
+      "group": "official",
+      "type": "atom",
+      "url": "https://feeds.feedburner.com/GoogleAppsUpdates",
+      "weight": 4,
+      "lane_bias": {"broad": 2, "practical": 3},
+      "include_title_keywords": [
+        "Gmail", "Drive", "Docs", "Sheets", "Meet", "Calendar", "Gemini",
+        "automation", "workflow", "security", "end users"
+      ],
+      "max_items": 15,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "mozilla-blog",
+      "name": "Mozilla Blog",
+      "source_family": "mozilla",
+      "group": "official",
+      "type": "rss",
+      "url": "https://blog.mozilla.org/en/feed/",
+      "weight": 4,
+      "lane_bias": {"broad": 2, "practical": 1, "deep": 1},
+      "include_title_keywords": [
+        "Firefox", "browser", "privacy", "tracking", "security", "password",
+        "AI", "choice", "open source", "accessibility"
+      ],
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "microsoft-security",
+      "name": "Microsoft Security Blog",
+      "source_family": "microsoft",
+      "group": "official",
+      "type": "rss",
+      "url": "https://www.microsoft.com/en-us/security/blog/feed/",
+      "weight": 4,
+      "lane_bias": {"broad": 2, "deep": 2},
+      "include_title_keywords": [
+        "phishing", "scam", "password", "identity", "Windows", "Copilot",
+        "Microsoft 365", "ransomware", "supply chain", "data breach"
+      ],
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "itworld-korea",
+      "name": "ITWorld Korea",
+      "source_family": "itworld",
+      "group": "korean_editorial",
+      "type": "rss",
+      "url": "https://www.itworld.co.kr/feed/",
+      "weight": 3,
+      "lane_bias": {"broad": 2, "practical": 1},
+      "include_title_keywords": [
+        "개인정보", "보안", "생산성", "자동화", "AI", "무료", "가격", "윈도우",
+        "브라우저", "클라우드", "업무", "취업", "교육", "스마트폰", "사기"
+      ],
+      "max_items": 15,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "the-verge",
+      "name": "The Verge",
+      "source_family": "verge",
+      "group": "general_editorial",
+      "type": "atom",
+      "url": "https://www.theverge.com/rss/index.xml",
+      "weight": 3,
+      "lane_bias": {"broad": 2, "practical": 1},
+      "include_title_keywords": [
+        "AI", "privacy", "security", "phone", "smartphone", "app", "free",
+        "price", "subscription", "job", "education", "health", "scam", "outage",
+        "browser", "email", "copyright", "regulation"
+      ],
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "krebs-security",
+      "name": "Krebs on Security",
+      "source_family": "krebs",
+      "group": "independent_editorial",
+      "type": "rss",
+      "url": "https://krebsonsecurity.com/feed/",
+      "weight": 3,
+      "lane_bias": {"broad": 2, "deep": 2},
+      "include_title_keywords": [
+        "breach", "password", "phishing", "scam", "fraud", "identity theft",
+        "ransomware", "data leak", "malware", "patch"
+      ],
+      "max_items": 10,
       "manual_review": true,
       "enabled": true
     },

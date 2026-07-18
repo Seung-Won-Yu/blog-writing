@@ -49,6 +49,7 @@ class CanonicalUrlTests(unittest.TestCase):
             "data:text/html,<script>alert(1)</script>",
             "file:///tmp/private",
             "/relative/path",
+            "http://[",
         ):
             with self.subTest(unsafe=unsafe):
                 self.assertEqual(canonicalize_url(unsafe), "")
@@ -99,6 +100,194 @@ class DeduplicationTests(unittest.TestCase):
 
 
 class RankingTests(unittest.TestCase):
+    def test_product_tokens_need_a_separate_reader_impact_signal(self):
+        lanes = {
+            "broad": {
+                "match_scope": "title",
+                "keywords": ["Copilot", "app", "security", "security update"],
+            },
+            "reader_impact": {
+                "match_scope": "title",
+                "keywords": ["security", "privacy", "outage"],
+            },
+        }
+        metrics_api = make_candidate(
+            raw(
+                "GitHub Copilot app now available in the usage metrics API",
+                "https://github.example/metrics",
+            ),
+            source("github", "official", weight=5),
+        )
+        security_change = make_candidate(
+            raw(
+                "GitHub Copilot app security update changes account protection",
+                "https://github.example/security",
+            ),
+            source("github", "official", weight=5),
+        )
+        for item in (metrics_api, security_change):
+            score_candidate(item, [], now=NOW, audience_lanes=lanes)
+            score_lead_candidate(item)
+
+        self.assertEqual(
+            metrics_api["lead_score_breakdown"]["reader_relevance"], 0
+        )
+        self.assertGreaterEqual(
+            security_change["lead_score_breakdown"]["reader_relevance"], 2
+        )
+
+    def test_same_subscription_token_is_not_double_counted_as_reader_value(self):
+        item = make_candidate(
+            raw(
+                "REST API endpoints for Visual Studio Subscription management",
+                "https://developer.example/subscription-api",
+            ),
+            source("developer", "official", weight=5),
+        )
+        score_candidate(
+            item,
+            [],
+            now=NOW,
+            audience_lanes={
+                "broad": {"match_scope": "title", "keywords": ["subscription"]},
+                "reader_impact": {
+                    "match_scope": "title",
+                    "keywords": ["subscription"],
+                },
+            },
+        )
+        score_lead_candidate(item)
+
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 1)
+
+    def test_title_scoped_reader_lane_ignores_generic_summary_mentions(self):
+        item = make_candidate(
+            raw(
+                "Enterprise resolver API schema migration",
+                "https://developer.example/schema-migration",
+                summary="This software update affects users and productivity teams.",
+            ),
+            source("developer", "official", weight=5),
+        )
+
+        score_candidate(
+            item,
+            [],
+            now=NOW,
+            audience_lanes={
+                "broad": {
+                    "match_scope": "title",
+                    "keywords": ["software", "users", "productivity"],
+                },
+                "practical": {"keywords": ["migration"]},
+            },
+        )
+
+        self.assertEqual(item["raw_lane_scores"]["broad"], 0)
+        self.assertGreater(item["raw_lane_scores"]["practical"], 0)
+
+    def test_source_bias_is_not_a_raw_general_reader_signal(self):
+        item = make_candidate(
+            raw(
+                "Enterprise resolver API schema migration",
+                "https://developer.example/schema-migration",
+                summary="Internal admin endpoint details",
+            ),
+            {
+                **source("developer", "official", weight=5),
+                "lane_bias": {"broad": 2, "deep": 3},
+            },
+        )
+
+        score_candidate(
+            item,
+            [],
+            now=NOW,
+            audience_lanes={
+                "broad": {"keywords": ["privacy", "email", "browser"]},
+                "practical": {"keywords": ["tutorial"]},
+                "deep": {"keywords": ["API"]},
+            },
+        )
+        score_lead_candidate(item)
+
+        self.assertEqual(item["lane_scores"]["broad"], 2)
+        self.assertEqual(item["raw_lane_scores"]["broad"], 0)
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 0)
+
+    def test_independent_and_general_editorial_sources_receive_explicit_evidence_scores(self):
+        independent = make_candidate(
+            raw("피싱 사기 수법과 계정 보호 방법", "https://security.example/story"),
+            source("security-reporter", "independent_editorial", weight=3),
+        )
+        general = make_candidate(
+            raw("새 브라우저 개인정보 설정", "https://tech.example/story"),
+            source("general-tech", "general_editorial", weight=3),
+        )
+        for item in (independent, general):
+            item["lane_scores"] = {"broad": 3, "practical": 2, "deep": 1}
+            item["score_reasons"] = ["48시간 이내"]
+            score_lead_candidate(item)
+
+        self.assertEqual(
+            independent["lead_score_breakdown"]["evidence"], 4
+        )
+        self.assertEqual(general["lead_score_breakdown"]["evidence"], 3)
+
+    def test_practical_developer_keywords_are_not_counted_twice_as_reader_relevance(self):
+        item = make_candidate(
+            raw(
+                "REST API endpoint for enterprise subscription management",
+                "https://developer.example/subscription-api",
+            ),
+            source("developer-api", "official", weight=5),
+        )
+        item["lane_scores"] = {"broad": 0, "practical": 5, "deep": 2}
+        item["score_reasons"] = ["48시간 이내", "공식 출처"]
+
+        score_lead_candidate(item)
+
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 0)
+        self.assertEqual(item["lead_score_breakdown"]["actionability"], 5)
+
+    def test_deep_only_niche_api_does_not_outrank_a_broad_practical_story(self):
+        general_story = make_candidate(
+            raw(
+                "무료 이메일 정리 자동화로 매주 한 시간을 아끼는 방법",
+                "https://news.example/email-automation",
+            ),
+            source("general-news", "official", weight=3),
+        )
+        general_story["lane_scores"] = {"broad": 4, "practical": 4, "deep": 0}
+        general_story["score_reasons"] = ["48시간 이내", "일반 독자 문제 해결"]
+        general_story["score"] = 10
+
+        niche_api = make_candidate(
+            raw(
+                "GraphQL Federation API resolver 세부 사양 변경",
+                "https://developer.example/graphql-api",
+            ),
+            source("developer-api", "official", weight=5),
+        )
+        niche_api["lane_scores"] = {"broad": 0, "practical": 0, "deep": 5}
+        niche_api["score_reasons"] = ["48시간 이내", "공식 출처"]
+        niche_api["score"] = 30
+
+        for item in (general_story, niche_api):
+            score_lead_candidate(item)
+
+        selected = select_lead_shortlist(
+            [niche_api, general_story],
+            max_items=2,
+            max_per_source=1,
+            max_per_family=1,
+        )
+
+        self.assertEqual(
+            [item["source_id"] for item in selected],
+            ["general-news", "developer-api"],
+        )
+
     def test_scores_lead_story_value_with_explainable_components(self):
         item = make_candidate(
             raw("GitHub PR AI 보안 탐지 기능 출시", "https://github.example/security"),

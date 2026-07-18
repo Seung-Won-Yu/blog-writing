@@ -98,6 +98,7 @@ def automation_config():
                 "name": "GitHub Trending",
                 "group": "discovery",
                 "type": "github_trending",
+                "allow_unknown_date": True,
                 "url": "https://github.com/trending?since=weekly",
                 "weight": 3,
                 "experiment_type": "공개 도구 적용 사례",
@@ -153,6 +154,7 @@ class AutomationScoringTests(unittest.TestCase):
             sum(item["weight"] for item in config["criteria"].values()),
             100,
         )
+        self.assertGreaterEqual(config["max_workers"], 4)
         self.assertEqual(config["selection"]["max_items"], 5)
         self.assertEqual(config["selection"]["max_candidates"], 25)
         self.assertEqual(config["selection"]["exclude_recent_days"], 90)
@@ -176,6 +178,18 @@ class AutomationScoringTests(unittest.TestCase):
                 item.get("problem_lane")
                 for item in config["evergreen_candidates"]
             )
+        )
+        self.assertTrue(
+            all(
+                item.get("tool_brand")
+                for item in config["evergreen_candidates"]
+            )
+        )
+        self.assertTrue(
+            all(source.get("problem_lane") for source in config["sources"])
+        )
+        self.assertTrue(
+            all(source.get("tool_brand") for source in config["sources"])
         )
 
     def test_shortlist_rejects_tool_only_candidates_below_a_required_criterion(self):
@@ -208,6 +222,117 @@ class AutomationScoringTests(unittest.TestCase):
         selected = select_automation_candidates(candidates, selection)
 
         self.assertEqual([item["id"] for item in selected], ["email-files"])
+
+    def test_source_bias_cannot_satisfy_the_broad_appeal_hard_gate(self):
+        candidate = {
+            "id": "developer-runner",
+            "title": "Developer runner v2.4.1",
+            "summary": "Internal workflow release notes",
+            "source_id": "developer-release",
+            "source_family": "developer-release",
+            "source_kind": "release",
+        }
+        criteria = {
+            "broad_appeal": {
+                "label": "대중 공감도",
+                "weight": 20,
+                "target_matches": 2,
+                "match_scope": "title",
+                "keywords": ["파일", "일정", "메일", "보고서"],
+            }
+        }
+        source = {"criteria_bias": {"broad_appeal": 20}}
+        selection = {
+            "max_items": 1,
+            "max_per_source": 1,
+            "max_per_family": 1,
+            "min_score": 0,
+            "minimum_criterion_scores": {"broad_appeal": 8},
+        }
+        score_automation_candidate(candidate, criteria, source)
+
+        selected = select_automation_candidates([candidate], selection)
+
+        self.assertEqual(candidate["raw_score_breakdown"]["broad_appeal"], 0)
+        self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 20)
+        self.assertEqual(selected, [])
+
+    def test_shortlist_avoids_the_last_problem_lane_and_tool_brand_when_an_alternative_exists(self):
+        candidates = [
+            {
+                "id": "same-lane",
+                "source_id": "python-guide",
+                "source_family": "python-guide",
+                "source_kind": "official_guide",
+                "problem_lane": "이메일·문서",
+                "tool_brand": "Python",
+                "provisional_score": 95,
+            },
+            {
+                "id": "same-brand",
+                "source_id": "workspace-guide",
+                "source_family": "workspace-guide",
+                "source_kind": "official_guide",
+                "problem_lane": "일정·알림",
+                "tool_brand": "Google Workspace",
+                "provisional_score": 90,
+            },
+            {
+                "id": "fresh-topic",
+                "source_id": "local-guide",
+                "source_family": "local-guide",
+                "source_kind": "official_guide",
+                "problem_lane": "백업·복구",
+                "tool_brand": "Python",
+                "provisional_score": 80,
+            },
+        ]
+        selection = {
+            "max_items": 1,
+            "max_per_source": 1,
+            "max_per_family": 1,
+            "min_score": 20,
+            "last_problem_lane": "이메일·문서",
+            "last_tool_brand": "Google Workspace",
+        }
+
+        selected = select_automation_candidates(candidates, selection)
+
+        self.assertEqual([item["id"] for item in selected], ["fresh-topic"])
+
+    def test_shortlist_does_not_recommend_a_repeated_lane_or_brand_without_an_alternative(self):
+        candidates = [
+            {
+                "id": "same-lane-only",
+                "source_id": "python-guide",
+                "source_family": "python-guide",
+                "source_kind": "official_guide",
+                "problem_lane": "이메일·문서",
+                "tool_brand": "Python",
+                "provisional_score": 95,
+            },
+            {
+                "id": "same-brand-only",
+                "source_id": "workspace-guide",
+                "source_family": "workspace-guide",
+                "source_kind": "official_guide",
+                "problem_lane": "일정·알림",
+                "tool_brand": "Google Workspace",
+                "provisional_score": 90,
+            },
+        ]
+        selection = {
+            "max_items": 2,
+            "max_per_source": 1,
+            "max_per_family": 1,
+            "min_score": 20,
+            "last_problem_lane": "이메일·문서",
+            "last_tool_brand": "Google Workspace",
+        }
+
+        selected = select_automation_candidates(candidates, selection)
+
+        self.assertEqual(selected, [])
 
     def test_title_scoped_broad_appeal_ignores_generic_terms_hidden_in_release_notes(self):
         candidate = {
@@ -390,6 +515,136 @@ class AutomationScoringTests(unittest.TestCase):
 
 
 class AutomationInboxTests(unittest.TestCase):
+    def test_history_infers_legacy_playwright_lane_and_brand_for_rotation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases = root / "data" / "automation_cases"
+            metadata = root / "docs" / "tistory"
+            cases.mkdir(parents=True)
+            metadata.mkdir(parents=True)
+            (cases / "2026-07-18.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-18-automation",
+                        "publish_date": "2026-07-18",
+                        "content_type": "automation_case",
+                        "primary_query": "Playwright 1.61.1 웹 자동화 테스트",
+                        "editorial": {
+                            "headline": "Playwright로 반복 점검 등록 자동화하기"
+                        },
+                        "news": [
+                            {
+                                "title_kr": "Playwright로 웹 반복 작업 자동화",
+                                "url": "https://playwright.dev/docs/intro",
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            (metadata / "2026-07-18-automation.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-18-automation",
+                        "publish_date": "2026-07-18",
+                        "content_type": "automation_case",
+                        "source": "data/automation_cases/2026-07-18.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            history = load_recent_automation_history(
+                cases,
+                "2026-07-25",
+                lookback_days=90,
+                publish_meta_dir=metadata,
+            )
+
+        self.assertEqual(history["last_problem_lane"], "웹 반복 작업")
+        self.assertEqual(history["last_tool_brand"], "Playwright")
+
+    def test_history_exposes_the_last_completed_problem_lane_and_tool_brand(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases = root / "data" / "automation_cases"
+            metadata = root / "docs" / "tistory"
+            cases.mkdir(parents=True)
+            metadata.mkdir(parents=True)
+            (cases / "2026-07-11.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-11-automation",
+                        "publish_date": "2026-07-11",
+                        "content_type": "automation_case",
+                        "primary_query": "Gmail 첨부파일 자동 정리",
+                        "problem_lane": "이메일·문서",
+                        "tool_brand": "Google Workspace",
+                        "news": [
+                            {
+                                "title_kr": "Gmail 첨부파일을 Drive에 자동 저장",
+                                "url": "https://workspace.google.com/blog/example",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (metadata / "2026-07-11-automation.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-11-automation",
+                        "publish_date": "2026-07-11",
+                        "content_type": "automation_case",
+                        "source": "data/automation_cases/2026-07-11.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (cases / "2026-07-04.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-04-automation",
+                        "publish_date": "2026-07-04",
+                        "content_type": "automation_case",
+                        "problem_lane": "백업·복구",
+                        "tool_brand": "Python",
+                        "news": [
+                            {
+                                "title_kr": "폴더 압축 백업",
+                                "url": "https://docs.python.org/3/library/shutil.html",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (metadata / "2026-07-04-automation.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": "2026-07-04-automation",
+                        "publish_date": "2026-07-04",
+                        "content_type": "automation_case",
+                        "source": "data/automation_cases/2026-07-04.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            history = load_recent_automation_history(
+                cases,
+                "2026-07-18",
+                lookback_days=90,
+                publish_meta_dir=metadata,
+            )
+
+        self.assertEqual(history["last_problem_lane"], "이메일·문서")
+        self.assertEqual(history["last_tool_brand"], "Google Workspace")
+
     def test_loads_history_from_publish_ready_automation_cases_only(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
