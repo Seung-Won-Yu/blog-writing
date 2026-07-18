@@ -156,11 +156,138 @@ class AutomationScoringTests(unittest.TestCase):
         self.assertEqual(config["selection"]["max_items"], 5)
         self.assertEqual(config["selection"]["max_candidates"], 25)
         self.assertEqual(config["selection"]["exclude_recent_days"], 90)
+        self.assertGreaterEqual(
+            config["selection"]["minimum_criterion_scores"]["broad_appeal"],
+            8,
+        )
+        self.assertEqual(config["criteria"]["broad_appeal"]["label"], "대중 공감도")
         source_types = {source["type"] for source in config["sources"]}
         self.assertIn("github_trending", source_types)
         self.assertIn("atom", source_types)
         self.assertIn("rss", source_types)
         self.assertTrue(all(source.get("enabled", True) for source in config["sources"]))
+        source_ids = {source["id"] for source in config["sources"]}
+        self.assertIn("google-workspace-updates", source_ids)
+        self.assertIn("power-automate-blog", source_ids)
+        self.assertIn("zapier-guides", source_ids)
+        self.assertGreaterEqual(len(config["evergreen_candidates"]), 6)
+        self.assertTrue(
+            all(
+                item.get("problem_lane")
+                for item in config["evergreen_candidates"]
+            )
+        )
+
+    def test_shortlist_rejects_tool_only_candidates_below_a_required_criterion(self):
+        candidates = [
+            {
+                "id": "tool-release",
+                "source_id": "developer-tool",
+                "source_family": "developer-tool",
+                "source_kind": "release",
+                "provisional_score": 95,
+                "score_breakdown": {"broad_appeal": 0},
+            },
+            {
+                "id": "email-files",
+                "source_id": "office-guide",
+                "source_family": "office-guide",
+                "source_kind": "official_guide",
+                "provisional_score": 72,
+                "score_breakdown": {"broad_appeal": 14},
+            },
+        ]
+        selection = {
+            "max_items": 2,
+            "max_per_source": 1,
+            "max_per_family": 1,
+            "min_score": 20,
+            "minimum_criterion_scores": {"broad_appeal": 7},
+        }
+
+        selected = select_automation_candidates(candidates, selection)
+
+        self.assertEqual([item["id"] for item in selected], ["email-files"])
+
+    def test_title_scoped_broad_appeal_ignores_generic_terms_hidden_in_release_notes(self):
+        candidate = {
+            "title": "Developer runner v2.4.1",
+            "summary": "Internal file report and notification fixes",
+        }
+        criteria = {
+            "broad_appeal": {
+                "label": "대중 공감도",
+                "weight": 20,
+                "target_matches": 2,
+                "match_scope": "title",
+                "keywords": ["file", "report", "notification"],
+            }
+        }
+
+        score_automation_candidate(candidate, criteria)
+
+        self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 0)
+
+    def test_default_policy_rejects_a_tool_release_with_only_one_generic_title_word(self):
+        config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+        candidate = {
+            "id": "file-api",
+            "title": "File API v2.0",
+            "summary": (
+                "automation workflow retry schedule quickstart template "
+                "dashboard logs report"
+            ),
+            "source_id": "developer-release",
+            "source_family": "developer-release",
+            "source_kind": "release",
+        }
+        score_automation_candidate(candidate, config["criteria"])
+
+        selected = select_automation_candidates(
+            [candidate],
+            config["selection"],
+        )
+
+        self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 7)
+        self.assertEqual(selected, [])
+
+    def test_adds_problem_first_evergreen_candidates_without_fetching_a_feed(self):
+        config = automation_config()
+        config["sources"] = []
+        config["criteria"]["broad_appeal"] = {
+            "label": "대중 공감도",
+            "weight": 20,
+            "target_matches": 2,
+            "match_scope": "title",
+            "keywords": ["파일", "폴더"],
+        }
+        config["selection"]["minimum_criterion_scores"] = {"broad_appeal": 1}
+        config["evergreen_candidates"] = [
+            {
+                "id": "downloads-file-sort",
+                "title": "다운로드 폴더를 파일 종류별로 자동 정리하기",
+                "summary": "임시 파일로 분류 전후를 확인하는 로컬 실험",
+                "url": "https://docs.python.org/3/library/pathlib.html",
+                "source_name": "Python 공식 문서",
+                "problem_lane": "파일·문서",
+                "experiment_type": "직접 실행 실험기",
+                "verification_hint": "임시 폴더와 테스트 파일만 사용",
+                "criteria_bias": {"broad_appeal": 8},
+            }
+        ]
+
+        result = build_automation_inbox(
+            config,
+            fetch_text=lambda _url: self.fail("feed fetch should not run"),
+            now=NOW,
+            day_id="2026-07-18",
+        )
+
+        self.assertEqual(
+            [item["title"] for item in result["selected"]],
+            ["다운로드 폴더를 파일 종류별로 자동 정리하기"],
+        )
+        self.assertEqual(result["selected"][0]["source_kind"], "evergreen_guide")
 
     def test_scores_each_editorial_criterion_within_its_weight(self):
         config = automation_config()

@@ -10,13 +10,24 @@
     "self-hosted",
     "monitoring",
     "notification",
+    "email",
+    "spreadsheet",
+    "calendar",
+    "file",
+    "document",
+    "pdf",
     "자동화",
-    "워크플로"
+    "워크플로",
+    "이메일",
+    "표",
+    "일정",
+    "파일",
+    "문서"
   ],
   "criteria": {
     "search_durability": {
       "label": "검색 지속성",
-      "weight": 30,
+      "weight": 20,
       "target_matches": 3,
       "keywords": [
         "automation", "workflow", "self-hosted", "docker", "github actions",
@@ -25,7 +36,7 @@
     },
     "problem_solving": {
       "label": "문제 해결성",
-      "weight": 30,
+      "weight": 25,
       "target_matches": 3,
       "keywords": [
         "retry", "failure", "notification", "schedule", "sync", "backup", "scrape",
@@ -43,23 +54,119 @@
     },
     "visual_evidence": {
       "label": "시각 설명 가능성",
-      "weight": 10,
-      "target_matches": 2,
+      "weight": 15,
+      "target_matches": 3,
       "keywords": [
         "dashboard", "logs", "report", "trace", "workflow", "browser", "chart",
         "대시보드", "로그", "보고서", "브라우저", "차트"
       ]
     },
-    "blog_connection": {
-      "label": "기존 글 연결성",
-      "weight": 10,
-      "target_matches": 2,
+    "broad_appeal": {
+      "label": "대중 공감도",
+      "weight": 20,
+      "target_matches": 3,
+      "match_scope": "title",
       "keywords": [
-        "github", "ai", "agent", "automation", "developer", "python", "typescript",
-        "깃허브", "인공지능", "에이전트", "자동화", "개발"
+        "email", "gmail", "spreadsheet", "sheets", "excel", "calendar", "meeting",
+        "notes", "pdf", "file", "folder", "form", "survey", "receipt", "invoice",
+        "report", "notification", "reminder", "photo", "document", "slides", "backup",
+        "download", "이메일", "메일", "스프레드시트", "엑셀", "일정", "회의", "메모", "pdf",
+        "파일", "폴더", "설문", "영수증", "청구서", "보고서", "알림", "사진", "문서",
+        "백업", "다운로드"
       ]
     }
   },
+  "evergreen_candidates": [
+    {
+      "id": "downloads-file-sort",
+      "title": "다운로드 폴더를 파일 종류와 날짜별로 자동 정리하기",
+      "summary": "임시 폴더에 PDF·이미지·압축 파일을 만든 뒤 확장자와 날짜 기준으로 이동하고 전후 파일 목록을 비교한다.",
+      "url": "https://docs.python.org/3/library/pathlib.html",
+      "source_name": "Python pathlib 공식 문서",
+      "problem_lane": "파일·문서",
+      "experiment_type": "직접 실행 실험기",
+      "verification_hint": "임시 폴더와 테스트 파일만 사용하고 분류 전후 화면·파일 목록·복구 결과를 캡처",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 7, "reproducibility": 6, "visual_evidence": 5, "broad_appeal": 8}
+    },
+    {
+      "id": "website-change-alert",
+      "title": "자주 확인하는 웹페이지가 바뀌었을 때만 알림 받기",
+      "summary": "공개 테스트 페이지의 문구를 바꾸어 변경 전후 차이와 알림 조건, 오탐을 줄이는 필터를 확인한다.",
+      "url": "https://github.com/dgtlmoon/changedetection.io",
+      "source_name": "changedetection.io 공식 저장소",
+      "repository": "dgtlmoon/changedetection.io",
+      "problem_lane": "웹 변경·알림",
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "로컬 또는 공개 테스트 페이지만 감시하고 실제 알림 대신 테스트 채널·로그로 결과를 확인",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
+    },
+    {
+      "id": "csv-weekly-report",
+      "title": "여러 CSV 파일을 하나의 주간 보고서로 자동 합치기",
+      "summary": "작은 매출·업무 테스트 CSV를 합치고 중복 행과 날짜 형식을 정리한 뒤 완성 파일을 비교한다.",
+      "url": "https://docs.python.org/3/library/csv.html",
+      "source_name": "Python csv 공식 문서",
+      "problem_lane": "보고서·표",
+      "experiment_type": "따라하기",
+      "verification_hint": "가상 데이터만 사용하고 입력 CSV·정리 규칙·완성 보고서와 실패 행을 함께 공개",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 7, "reproducibility": 7, "visual_evidence": 6, "broad_appeal": 8}
+    },
+    {
+      "id": "duplicate-photo-finder",
+      "title": "사진 폴더에서 내용이 같은 중복 파일만 찾아내기",
+      "summary": "이름은 다르지만 내용이 같은 테스트 이미지를 해시로 찾아 별도 목록에 기록하고 원본 삭제 없이 결과를 확인한다.",
+      "url": "https://docs.python.org/3/library/hashlib.html",
+      "source_name": "Python hashlib 공식 문서",
+      "problem_lane": "사진·저장공간",
+      "experiment_type": "직접 실행 실험기",
+      "verification_hint": "복사한 테스트 이미지만 사용하고 자동 삭제하지 않으며 중복 판정표와 오탐 조건을 확인",
+      "criteria_bias": {"search_durability": 7, "problem_solving": 8, "reproducibility": 7, "visual_evidence": 5, "broad_appeal": 8}
+    },
+    {
+      "id": "folder-backup-archive",
+      "title": "중요 폴더를 날짜가 붙은 압축 파일로 자동 백업하기",
+      "summary": "테스트 문서 폴더를 ZIP으로 보관하고 파일명·크기·복원 결과까지 확인하는 작은 백업 실험이다.",
+      "url": "https://docs.python.org/3/library/shutil.html#archiving-operations",
+      "source_name": "Python shutil 공식 문서",
+      "problem_lane": "백업·복구",
+      "experiment_type": "따라하기",
+      "verification_hint": "임시 문서만 사용하고 압축 생성뿐 아니라 새 폴더에 실제 복원해 파일 수를 비교",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 7, "visual_evidence": 5, "broad_appeal": 8}
+    },
+    {
+      "id": "gmail-attachment-drive",
+      "title": "특정 메일의 첨부파일만 구글 드라이브 폴더에 정리하기",
+      "summary": "테스트 메일과 파일을 기준으로 검색 조건, 중복 저장 방지, 대상 폴더와 실행 로그를 확인한다.",
+      "url": "https://developers.google.com/apps-script/reference/gmail/gmail-app",
+      "source_name": "Google Apps Script Gmail 공식 문서",
+      "problem_lane": "이메일·문서",
+      "experiment_type": "따라하기",
+      "verification_hint": "별도 테스트 메일만 사용하고 권한 범위·중복 실행·파일 삭제 금지 조건을 먼저 확인",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
+    },
+    {
+      "id": "form-response-summary",
+      "title": "구글 설문 응답이 들어오면 표와 요약을 자동 갱신하기",
+      "summary": "가상 설문 응답을 제출해 시트 반영, 요약 값, 중복 실행과 실패 로그를 전후 화면으로 비교한다.",
+      "url": "https://developers.google.com/apps-script/guides/triggers/installable",
+      "source_name": "Google Apps Script 트리거 공식 문서",
+      "problem_lane": "설문·표",
+      "experiment_type": "직접 실행 실험기",
+      "verification_hint": "가상 응답만 사용하고 설치형 트리거 권한·실패 알림·삭제 방법을 함께 확인",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 5, "visual_evidence": 7, "broad_appeal": 8}
+    },
+    {
+      "id": "calendar-reminder-summary",
+      "title": "다가오는 일정만 모아 아침 알림 목록으로 만들기",
+      "summary": "테스트 캘린더의 하루 일정을 읽어 시간순 목록을 만들고 빈 일정·중복 실행 조건을 확인한다.",
+      "url": "https://developers.google.com/apps-script/reference/calendar/calendar-app",
+      "source_name": "Google Apps Script Calendar 공식 문서",
+      "problem_lane": "일정·알림",
+      "experiment_type": "따라하기",
+      "verification_hint": "테스트 캘린더만 사용하고 읽기 범위·시간대·빈 일정·실행 취소 방법을 기록",
+      "criteria_bias": {"search_durability": 7, "problem_solving": 7, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
+    }
+  ],
   "selection": {
     "mode": "automation_shortlist",
     "max_items": 5,
@@ -67,7 +174,11 @@
     "max_per_source": 1,
     "max_per_family": 1,
     "min_score": 20,
+    "minimum_criterion_scores": {
+      "broad_appeal": 8
+    },
     "preferred_source_kinds": [
+      "evergreen_guide",
       "official_guide",
       "trending",
       "release"
@@ -90,7 +201,35 @@
       "criteria_bias": {
         "search_durability": 5,
         "problem_solving": 4,
-        "blog_connection": 3
+        "broad_appeal": 0
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "zapier-guides",
+      "name": "Zapier Official Guides",
+      "source_family": "zapier",
+      "group": "official",
+      "type": "rss",
+      "source_kind": "official_guide",
+      "url": "https://zapier.com/blog/feeds/latest/",
+      "weight": 4,
+      "max_items": 12,
+      "max_summary_chars": 900,
+      "include_title_keywords": [
+        "email", "Gmail", "spreadsheet", "Sheets", "Excel", "calendar", "meeting",
+        "notes", "PDF", "file", "folder", "form", "survey", "receipt", "invoice",
+        "report", "notification", "reminder", "photo", "document", "save", "organize"
+      ],
+      "experiment_type": "따라하기",
+      "verification_hint": "비교·홍보글을 그대로 쓰지 말고 무료 테스트 범위에서 한 가지 익숙한 반복 작업을 직접 재현",
+      "criteria_bias": {
+        "search_durability": 4,
+        "problem_solving": 4,
+        "reproducibility": 4,
+        "visual_evidence": 4,
+        "broad_appeal": 7
       },
       "manual_review": true,
       "enabled": true
@@ -114,7 +253,7 @@
         "search_durability": 5,
         "reproducibility": 4,
         "visual_evidence": 3,
-        "blog_connection": 2
+        "broad_appeal": 2
       },
       "enabled": true
     },
@@ -203,7 +342,7 @@
         "problem_solving": 5,
         "reproducibility": 5,
         "visual_evidence": 4,
-        "blog_connection": 3
+        "broad_appeal": 0
       },
       "enabled": true
     },
@@ -226,7 +365,7 @@
         "search_durability": 4,
         "problem_solving": 4,
         "reproducibility": 5,
-        "blog_connection": 2
+        "broad_appeal": 0
       },
       "enabled": true
     },
@@ -248,7 +387,7 @@
       "criteria_bias": {
         "problem_solving": 5,
         "reproducibility": 4,
-        "blog_connection": 5
+        "broad_appeal": 0
       },
       "enabled": true
     },
@@ -269,7 +408,63 @@
         "search_durability": 6,
         "problem_solving": 5,
         "reproducibility": 5,
-        "visual_evidence": 4
+        "visual_evidence": 4,
+        "broad_appeal": 6
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "google-workspace-updates",
+      "name": "Google Workspace Updates",
+      "source_family": "google-workspace",
+      "group": "official",
+      "type": "atom",
+      "source_kind": "official_guide",
+      "url": "https://feeds.feedburner.com/GoogleAppsUpdates",
+      "weight": 5,
+      "max_items": 10,
+      "max_summary_chars": 900,
+      "include_title_keywords": [
+        "Gmail", "Drive", "Sheets", "Calendar", "Meet", "Docs", "Forms", "Tasks",
+        "notes", "file", "email", "presentation"
+      ],
+      "exclude_title_keywords": ["Weekly Recap"],
+      "experiment_type": "따라하기",
+      "verification_hint": "일반 사용자가 확인 가능한 기능인지 요금제·출시 상태를 먼저 확인하고 테스트 데이터로 전후 화면을 재현",
+      "criteria_bias": {
+        "search_durability": 4,
+        "problem_solving": 4,
+        "reproducibility": 3,
+        "visual_evidence": 5,
+        "broad_appeal": 8
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "power-automate-blog",
+      "name": "Microsoft Power Automate Blog",
+      "source_family": "power-automate",
+      "group": "official",
+      "type": "rss",
+      "source_kind": "official_guide",
+      "url": "https://www.microsoft.com/en-us/power-platform/blog/product/power-automate/feed/",
+      "weight": 5,
+      "max_items": 8,
+      "max_summary_chars": 900,
+      "include_title_keywords": [
+        "email", "Excel", "approval", "document", "desktop", "invoice", "notification",
+        "process", "Copilot", "AI"
+      ],
+      "experiment_type": "따라하기",
+      "verification_hint": "무료 또는 공개 테스트 범위와 계정·요금제 조건을 확인하고 이메일·문서·표 같은 익숙한 작업으로 축소해 재현",
+      "criteria_bias": {
+        "search_durability": 4,
+        "problem_solving": 5,
+        "reproducibility": 3,
+        "visual_evidence": 5,
+        "broad_appeal": 8
       },
       "manual_review": true,
       "enabled": true
@@ -293,7 +488,7 @@
       "criteria_bias": {
         "problem_solving": 4,
         "reproducibility": 3,
-        "blog_connection": 5
+        "broad_appeal": 0
       },
       "enabled": true
     }

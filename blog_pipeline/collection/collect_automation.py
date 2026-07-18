@@ -32,6 +32,9 @@ AUTOMATION_TOPIC_STOP_WORDS = {
 PRODUCT_HOST_FINGERPRINTS = {
     "blog.n8n.io": "product:n8n",
     "n8n.io": "product:n8n",
+    "workspaceupdates.googleblog.com": "product:google-workspace",
+    "microsoft.com": "product:power-automate",
+    "zapier.com": "product:zapier",
 }
 
 
@@ -69,7 +72,12 @@ def score_automation_candidate(candidate, criteria, source=None):
     reasons = []
 
     for key, spec in criteria.items():
-        value, _ = _criterion_score(text, spec, biases.get(key, 0))
+        criterion_text = (
+            str(candidate.get("title", ""))
+            if spec.get("match_scope") == "title"
+            else text
+        )
+        value, _ = _criterion_score(criterion_text, spec, biases.get(key, 0))
         scores[key] = value
         if value:
             label = str(spec.get("label") or key)
@@ -103,6 +111,30 @@ def _prepare_candidate(candidate, source):
     return candidate
 
 
+def _prepare_evergreen_candidate(raw):
+    candidate_id = str(raw.get("id") or "").strip()
+    title = " ".join(str(raw.get("title") or "").split())
+    url = canonicalize_url(raw.get("url"))
+    if not candidate_id or not title or not url:
+        return None
+    problem_lane = str(raw.get("problem_lane") or "생활·사무").strip()
+    return {
+        "id": "evergreen:{}".format(candidate_id),
+        "title": title,
+        "url": url,
+        "published_at": "",
+        "summary": " ".join(str(raw.get("summary") or "").split()),
+        "source_id": "evergreen:{}".format(candidate_id),
+        "source_family": "evergreen:{}".format(problem_lane),
+        "source_name": str(raw.get("source_name") or "공식 문서"),
+        "group": "evergreen",
+        "source_kind": "evergreen_guide",
+        "repository": str(raw.get("repository") or ""),
+        "problem_lane": problem_lane,
+        "requires_manual_review": True,
+    }
+
+
 def select_automation_candidates(candidates, selection):
     selected = []
     source_counts = Counter()
@@ -112,9 +144,19 @@ def select_automation_candidates(candidates, selection):
     family_limit = selection.get("max_per_family", 2)
     max_per_family = None if family_limit is None else max(1, int(family_limit))
     minimum = int(selection.get("min_score", 0))
+    minimum_criterion_scores = {
+        str(key): max(0, int(value))
+        for key, value in (selection.get("minimum_criterion_scores") or {}).items()
+    }
 
     def can_add(candidate):
         if int(candidate.get("provisional_score", 0)) < minimum:
+            return False
+        score_breakdown = candidate.get("score_breakdown") or {}
+        if any(
+            int(score_breakdown.get(key, 0)) < required
+            for key, required in minimum_criterion_scores.items()
+        ):
             return False
         source_id = candidate.get("source_id", "")
         family = candidate.get("source_family") or source_id
@@ -189,6 +231,17 @@ def build_automation_inbox(
         _prepare_candidate(candidate, source)
         score_automation_candidate(candidate, criteria, source)
         candidates.append(candidate)
+
+    known_urls = {candidate.get("url") for candidate in candidates}
+    for raw in config.get("evergreen_candidates", []):
+        if not isinstance(raw, dict):
+            continue
+        candidate = _prepare_evergreen_candidate(raw)
+        if candidate is None or candidate["url"] in known_urls:
+            continue
+        score_automation_candidate(candidate, criteria, raw)
+        candidates.append(candidate)
+        known_urls.add(candidate["url"])
 
     candidates.sort(
         key=lambda item: (
@@ -302,6 +355,7 @@ def _compact_candidate(candidate):
         "recently_used",
         "recent_match",
         "requires_manual_review",
+        "problem_lane",
     )
     return {key: candidate[key] for key in keys if key in candidate}
 
