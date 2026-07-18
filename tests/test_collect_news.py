@@ -6,6 +6,7 @@ from pathlib import Path
 
 from blog_pipeline.collection.collect_news import (
     build_inbox,
+    load_recent_publisher_hosts,
     load_recent_processed_urls,
     parse_feed,
     parse_github_trending,
@@ -280,6 +281,58 @@ class InboxTests(unittest.TestCase):
         self.assertEqual([item["url"] for item in result["selected"]], ["https://news.example/new"])
         self.assertEqual(result["selection"]["recently_selected_excluded"], 1)
 
+    def test_excludes_recent_publisher_from_shortlist_but_keeps_candidate_visible(self):
+        config = {
+            "interest_keywords": ["보안"],
+            "selection": {"max_items": 2, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "cloudflare",
+                    "name": "Cloudflare",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://blog.cloudflare.com/rss/",
+                    "enabled": True,
+                },
+                {
+                    "id": "wordpress",
+                    "name": "WordPress",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://wordpress.org/news/feed/",
+                    "enabled": True,
+                },
+            ],
+        }
+        feeds = {
+            "https://blog.cloudflare.com/rss/": """<rss><channel><item>
+              <title>Cloudflare WAF 보안 업데이트</title>
+              <link>https://blog.cloudflare.com/new-waf-rule</link>
+            </item></channel></rss>""",
+            "https://wordpress.org/news/feed/": """<rss><channel><item>
+              <title>WordPress 플러그인 보안 업데이트</title>
+              <link>https://wordpress.org/news/security-update</link>
+            </item></channel></rss>""",
+        }
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda url: feeds[url],
+            now=NOW,
+            day_id="2026-07-18",
+            excluded_publisher_hosts={"blog.cloudflare.com"},
+        )
+
+        self.assertEqual(
+            [item["source_id"] for item in result["selected"]],
+            ["wordpress"],
+        )
+        cloudflare = next(
+            item for item in result["candidates"] if item["source_id"] == "cloudflare"
+        )
+        self.assertTrue(cloudflare["recent_publisher"])
+        self.assertEqual(result["selection"]["recent_publisher_excluded"], 1)
+
     def test_loads_only_processed_urls_from_recent_prior_days(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir)
@@ -306,6 +359,28 @@ class InboxTests(unittest.TestCase):
             urls = load_recent_processed_urls(output, "2026-07-13", lookback_days=14)
 
         self.assertEqual(urls, {"https://news.example/kept"})
+
+    def test_loads_recent_publisher_hosts_for_short_cooldown_only(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            for day, url in (
+                ("2026-07-17", "https://blog.cloudflare.com/cache-update"),
+                ("2026-07-16", "https://github.blog/changelog/actions"),
+                ("2026-07-14", "https://openai.com/too-old"),
+                ("2026-07-18", "https://same-day.example/ignore"),
+            ):
+                (output / f"{day}.json").write_text(
+                    json.dumps({"news": [{"url": url}]}),
+                    encoding="utf-8",
+                )
+
+            hosts = load_recent_publisher_hosts(
+                output,
+                "2026-07-18",
+                lookback_days=3,
+            )
+
+        self.assertEqual(hosts, {"blog.cloudflare.com", "github.blog"})
 
     def test_review_inbox_is_not_search_indexable(self):
         page = render_inbox_html(

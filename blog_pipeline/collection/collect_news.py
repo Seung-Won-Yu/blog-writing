@@ -8,7 +8,7 @@ import re
 from html import escape, unescape
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
@@ -356,7 +356,45 @@ def load_recent_processed_urls(days_dir, day_id, lookback_days=14):
     return urls
 
 
-def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
+def _publisher_host(url):
+    canonical_url = canonicalize_url(url)
+    if not canonical_url:
+        return ""
+    return urlsplit(canonical_url).netloc.casefold().removeprefix("www.")
+
+
+def load_recent_publisher_hosts(days_dir, day_id, lookback_days=3):
+    """Return publisher hosts used by recent processed daily articles."""
+    target_day = dt.date.fromisoformat(validate_day_id(day_id))
+    output = Path(days_dir)
+    hosts = set()
+
+    for days_ago in range(1, max(0, int(lookback_days)) + 1):
+        prior_day = target_day - dt.timedelta(days=days_ago)
+        path = output / "{}.json".format(prior_day.isoformat())
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for item in payload.get("news", []):
+            if not isinstance(item, dict):
+                continue
+            host = _publisher_host(item.get("url"))
+            if host:
+                hosts.add(host)
+    return hosts
+
+
+def build_inbox(
+    config,
+    fetch_text,
+    now=None,
+    day_id=None,
+    excluded_urls=None,
+    excluded_publisher_hosts=None,
+):
     """Collect, rank, and select candidates without publishing anything."""
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -413,13 +451,32 @@ def build_inbox(config, fetch_text, now=None, day_id=None, excluded_urls=None):
         canonical_url = canonicalize_url(url)
         if canonical_url:
             canonical_excluded_urls.add(canonical_url)
-    eligible_candidates = [
-        candidate
-        for candidate in candidates
-        if candidate.get("url") not in canonical_excluded_urls
-    ]
+    recent_hosts = {
+        str(host or "").strip().casefold().removeprefix("www.")
+        for host in (excluded_publisher_hosts or set())
+        if str(host or "").strip()
+    }
+    eligible_candidates = []
+    recent_url_excluded = 0
+    recent_publisher_excluded = 0
+    for candidate in candidates:
+        recent_url = candidate.get("url") in canonical_excluded_urls
+        recent_publisher = (
+            not recent_url
+            and bool(recent_hosts)
+            and _publisher_host(candidate.get("url")) in recent_hosts
+        )
+        candidate["recent_publisher"] = recent_publisher
+        if recent_url:
+            recent_url_excluded += 1
+        elif recent_publisher:
+            recent_publisher_excluded += 1
+        else:
+            eligible_candidates.append(candidate)
     selection = dict(config.get("selection", {}))
     selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
+    selection["recent_url_excluded"] = recent_url_excluded
+    selection["recent_publisher_excluded"] = recent_publisher_excluded
     if selection.get("mode") == "lead_shortlist":
         minimum = int(selection.get("min_lead_score", 0))
         lead_pool = [
@@ -658,8 +715,16 @@ def main(argv=None):
     except ValueError as exc:
         parser.error(str(exc))
     lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 14))
+    publisher_cooldown_days = int(
+        config.get("selection", {}).get("publisher_cooldown_days", 3)
+    )
     excluded_urls = load_recent_processed_urls(
         args.published_days_dir, day_id, lookback_days
+    )
+    excluded_publisher_hosts = load_recent_publisher_hosts(
+        args.published_days_dir,
+        day_id,
+        publisher_cooldown_days,
     )
     inbox = build_inbox(
         config,
@@ -667,6 +732,7 @@ def main(argv=None):
         now=now,
         day_id=day_id,
         excluded_urls=excluded_urls,
+        excluded_publisher_hosts=excluded_publisher_hosts,
     )
     paths = write_inbox(inbox, args.output_dir)
     print(

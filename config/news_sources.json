@@ -52,7 +52,8 @@
     "max_per_source": 1,
     "max_per_family": 1,
     "min_lead_score": 8,
-    "exclude_recent_days": 60
+    "exclude_recent_days": 60,
+    "publisher_cooldown_days": 3
   },
   "sources": [
     {
