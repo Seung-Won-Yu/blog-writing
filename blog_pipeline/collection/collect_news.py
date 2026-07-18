@@ -363,7 +363,7 @@ def _publisher_host(url):
     return urlsplit(canonical_url).netloc.casefold().removeprefix("www.")
 
 
-def load_recent_publisher_hosts(days_dir, day_id, lookback_days=3):
+def load_recent_publisher_hosts(days_dir, day_id, lookback_days=1):
     """Return publisher hosts used by recent processed daily articles."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
     output = Path(days_dir)
@@ -716,7 +716,7 @@ def main(argv=None):
         parser.error(str(exc))
     lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 14))
     publisher_cooldown_days = int(
-        config.get("selection", {}).get("publisher_cooldown_days", 3)
+        config.get("selection", {}).get("publisher_cooldown_days", 1)
     )
     excluded_urls = load_recent_processed_urls(
         args.published_days_dir, day_id, lookback_days
