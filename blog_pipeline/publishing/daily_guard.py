@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from datetime import date, datetime, timedelta
@@ -14,6 +15,7 @@ from zoneinfo import ZoneInfo
 from blog_pipeline.collection.news_pipeline import validate_day_id
 from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
+from .editorial_quality import PUBLISH_GATE_START, source_quality_reasons
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -46,13 +48,24 @@ AUTOMATION_ORIGIN_EVIDENCE = {
     "measured_chart": "chart",
     "imagegen": "diagram",
 }
+SCHEMA_EXCEPTIONS = (
+    AttributeError,
+    KeyError,
+    IndexError,
+    TypeError,
+    ValueError,
+    OverflowError,
+)
 
 
 def canonical_url(value):
     text = str(value or "").strip()
     if not text:
         return ""
-    parsed = urlsplit(text)
+    try:
+        parsed = urlsplit(text)
+    except ValueError:
+        return ""
     query = sorted(
         (key, val)
         for key, val in parse_qsl(parsed.query, keep_blank_values=True)
@@ -73,6 +86,15 @@ def canonical_url(value):
 
 def normalized_title(value):
     return re.sub(r"[^0-9a-z가-힣]+", "", str(value or "").lower())
+
+
+def has_inline_post_style(body_html):
+    """Detect actual style tags/attributes without flagging code sample text."""
+    value = str(body_html or "")
+    return bool(
+        re.search(r"<style(?:\s|>)", value, re.IGNORECASE)
+        or re.search(r"<[a-z][^>]*\sstyle\s*=", value, re.IGNORECASE)
+    )
 
 
 def _is_http_url(value):
@@ -99,6 +121,61 @@ def _read_json(path):
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError, TypeError):
         return None
+
+
+def _file_sha256(path):
+    try:
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    except OSError:
+        return ""
+
+
+def artifact_freshness_reasons(source_path, meta, html_path, adfit_path):
+    """Prove preview and final-copy artifacts came from the current source."""
+    reasons = []
+    expected = {
+        "source_sha256": (Path(source_path), "stale_source_export"),
+        "html_sha256": (Path(html_path), "stale_html_artifact"),
+        "adfit_sha256": (Path(adfit_path), "stale_adfit_artifact"),
+    }
+    for key, (path, reason) in expected.items():
+        recorded = str(meta.get(key) or "").strip().lower()
+        actual = _file_sha256(path)
+        if not re.fullmatch(r"[0-9a-f]{64}", recorded) or recorded != actual:
+            reasons.append(reason)
+    return reasons
+
+
+def preview_artifact_reasons(preview_path, final_adfit_html, meta=None):
+    """Require the standalone preview to equal its deterministic current build."""
+    try:
+        preview_html = Path(preview_path).read_text(encoding="utf-8")
+    except OSError:
+        return ["missing_preview"]
+    fragment = str(final_adfit_html or "")
+    if not fragment:
+        return ["stale_preview_artifact"]
+    if isinstance(meta, dict):
+        from .build_copy_page import render_preview_page
+
+        if preview_html != render_preview_page(meta, fragment):
+            return ["stale_preview_artifact"]
+        return []
+    uncommented = re.sub(r"<!--.*?-->", "", preview_html, flags=re.DOTALL)
+    article_pattern = re.compile(
+        r'<article\b[^>]*class=["\'][^"\']*\bdaily-digest-post\b[^"\']*["\'][^>]*>',
+        re.IGNORECASE,
+    )
+    starts = list(article_pattern.finditer(uncommented))
+    if len(starts) != 1:
+        return ["stale_preview_artifact"]
+    close_at = uncommented.find("</article>", starts[0].end())
+    if close_at < 0:
+        return ["stale_preview_artifact"]
+    actual = uncommented[starts[0].start() : close_at + len("</article>")]
+    if actual != fragment:
+        return ["stale_preview_artifact"]
+    return []
 
 
 def _lead_visual_evidence_reasons(source):
@@ -320,7 +397,42 @@ def find_recent_draft_duplicates(
     current_date = date.fromisoformat(identity.publish_date)
     current_news = current_day.get("news") if isinstance(current_day, dict) else []
     current_news = current_news if isinstance(current_news, list) else []
+    current_editorial = (
+        current_day.get("editorial")
+        if isinstance(current_day.get("editorial"), dict)
+        else {}
+    )
+    current_topic_key = str(current_editorial.get("topic_key") or "").strip().casefold()
+    current_entities = {
+        str(value or "").strip().casefold()
+        for value in current_editorial.get("entities", [])
+        if str(value or "").strip()
+    }
+    rotation_exception = str(
+        current_editorial.get("rotation_exception") or ""
+    ).strip()
+    current_verification = (
+        current_day.get("verification")
+        if isinstance(current_day.get("verification"), dict)
+        else {}
+    )
+    if identity.content_type == "automation_case":
+        from blog_pipeline.collection.collect_automation import (
+            _automation_source_fingerprint,
+            _matches_recent_primary_query,
+        )
+
+        current_fingerprints = {
+            _automation_source_fingerprint(canonical_url(item.get("url")))
+            for item in current_news
+            if isinstance(item, dict)
+        }
+        current_fingerprints.discard("")
+        current_primary_query = str(
+            current_day.get("primary_query") or ""
+        ).strip()
     duplicates = []
+    automation_rotation_checked = False
 
     for offset in range(1, window_days + 1):
         previous_day = (current_date - timedelta(days=offset)).isoformat()
@@ -333,8 +445,148 @@ def find_recent_draft_duplicates(
         previous = _read_json(Path(root) / previous_identity.source)
         if not isinstance(previous, dict):
             continue
+        if identity.content_type == "automation_case":
+            previous_meta = _read_json(
+                Path(root)
+                / "docs"
+                / "tistory"
+                / f"{previous_draft_id}.json"
+            )
+            if not (
+                isinstance(previous_meta, dict)
+                and previous_meta.get("draft_id") == previous_draft_id
+                and previous_meta.get("publish_date") == previous_day
+                and previous_meta.get("content_type") == "automation_case"
+                and previous_meta.get("source") == previous_identity.source
+                and previous_meta.get("publish_ready") is True
+            ):
+                continue
         previous_news = previous.get("news")
         if not isinstance(previous_news, list):
+            continue
+
+        if identity.content_type == "automation_case":
+            previous_fingerprints = {
+                _automation_source_fingerprint(canonical_url(item.get("url")))
+                for item in previous_news
+                if isinstance(item, dict)
+            }
+            previous_fingerprints.discard("")
+            shared_fingerprints = current_fingerprints & previous_fingerprints
+            previous_primary_query = str(
+                previous.get("primary_query") or ""
+            ).strip()
+            automation_reason = ""
+            automation_match = ""
+            if shared_fingerprints:
+                automation_reason = "same_repository"
+                automation_match = sorted(shared_fingerprints)[0]
+            elif current_primary_query and previous_primary_query and (
+                _matches_recent_primary_query(
+                    {"title": current_primary_query, "summary": ""},
+                    {previous_primary_query},
+                )
+            ):
+                automation_reason = "similar_primary_query"
+                automation_match = previous_primary_query
+            if automation_reason:
+                current_item = next(
+                    (item for item in current_news if isinstance(item, dict)), {}
+                )
+                previous_item = next(
+                    (item for item in previous_news if isinstance(item, dict)), {}
+                )
+                duplicates.append(
+                    {
+                        "current_index": 1,
+                        "current_title": str(current_item.get("title_kr") or ""),
+                        "previous_day": previous_day,
+                        "previous_draft_id": previous_draft_id,
+                        "previous_index": 1,
+                        "previous_title": str(previous_item.get("title_kr") or ""),
+                        "reason": automation_reason,
+                        "match": automation_match,
+                        "similarity": 1.0,
+                    }
+                )
+                continue
+
+        previous_editorial = (
+            previous.get("editorial")
+            if isinstance(previous.get("editorial"), dict)
+            else {}
+        )
+        previous_topic_key = str(
+            previous_editorial.get("topic_key") or ""
+        ).strip().casefold()
+        previous_entities = {
+            str(value or "").strip().casefold()
+            for value in previous_editorial.get("entities", [])
+            if str(value or "").strip()
+        }
+        semantic_reason = ""
+        semantic_match = ""
+        if current_topic_key and current_topic_key == previous_topic_key:
+            semantic_reason = "same_topic_key"
+            semantic_match = current_topic_key
+        elif (
+            identity.content_type == "daily_news"
+            and offset <= 3
+            and len(rotation_exception) < 40
+            and current_entities.intersection(previous_entities)
+        ):
+            semantic_reason = "recent_entity"
+            semantic_match = sorted(current_entities.intersection(previous_entities))[0]
+        elif (
+            identity.content_type == "automation_case"
+            and not automation_rotation_checked
+            and len(rotation_exception) < 40
+        ):
+            previous_verification = (
+                previous.get("verification")
+                if isinstance(previous.get("verification"), dict)
+                else {}
+            )
+            current_lane = str(
+                current_verification.get("problem_lane") or ""
+            ).strip().casefold()
+            previous_lane = str(
+                previous_verification.get("problem_lane") or ""
+            ).strip().casefold()
+            current_brand = str(
+                current_verification.get("tool_brand") or ""
+            ).strip().casefold()
+            previous_brand = str(
+                previous_verification.get("tool_brand") or ""
+            ).strip().casefold()
+            if current_lane and current_lane == previous_lane:
+                semantic_reason = "recent_problem_lane"
+                semantic_match = current_lane
+            elif current_brand and current_brand == previous_brand:
+                semantic_reason = "recent_tool_brand"
+                semantic_match = current_brand
+        if identity.content_type == "automation_case":
+            automation_rotation_checked = True
+        if semantic_reason:
+            current_item = next(
+                (item for item in current_news if isinstance(item, dict)), {}
+            )
+            previous_item = next(
+                (item for item in previous_news if isinstance(item, dict)), {}
+            )
+            duplicates.append(
+                {
+                    "current_index": 1,
+                    "current_title": str(current_item.get("title_kr") or ""),
+                    "previous_day": previous_day,
+                    "previous_draft_id": previous_draft_id,
+                    "previous_index": 1,
+                    "previous_title": str(previous_item.get("title_kr") or ""),
+                    "reason": semantic_reason,
+                    "match": semantic_match,
+                    "similarity": 1.0,
+                }
+            )
             continue
 
         for current_index, current in enumerate(current_news, 1):
@@ -381,7 +633,7 @@ def find_recent_duplicates(day_id, current_day, *, root=ROOT, window_days=14):
     )
 
 
-def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
+def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
     """Return NEW, PARTIAL, or COMPLETE for one collision-safe draft."""
     identity = resolve_draft_identity(draft_id)
     root = Path(root)
@@ -436,6 +688,7 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
             >= AUTOMATION_VISUAL_POLICY_START
         ):
             reasons.extend(_automation_visual_quality_reasons(source))
+    reasons.extend(source_quality_reasons(source, identity))
 
     if date.fromisoformat(identity.publish_date) >= date(2026, 7, 16):
         from .optimize_images import inspect_draft_images
@@ -476,6 +729,33 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
             reasons.append("invalid_publish_source")
         if not meta.get("publish_ready"):
             reasons.append("not_publish_ready")
+        if date.fromisoformat(identity.publish_date) >= PUBLISH_GATE_START:
+            from .export_tistory import (
+                build_image_assets,
+                build_recommended_tags,
+                post_title,
+            )
+
+            try:
+                expected_meta = {
+                    "source": identity.source,
+                    "draft_id": identity.draft_id,
+                    "publish_date": identity.publish_date,
+                    "content_type": identity.content_type,
+                    "content_label": identity.content_label,
+                    "category": source.get("category"),
+                    "scheduled_at": source.get("scheduled_at"),
+                    "tags": build_recommended_tags(source),
+                    "title": post_title(source),
+                    "image_assets": build_image_assets(source),
+                }
+            except SCHEMA_EXCEPTIONS:
+                reasons.append("invalid_publish_metadata")
+            else:
+                if any(
+                    meta.get(key) != value for key, value in expected_meta.items()
+                ):
+                    reasons.append("invalid_publish_metadata")
 
     image_kinds = {
         item.get("kind")
@@ -496,6 +776,11 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         body_html = ""
     if body_html.count('class="daily-digest-post"') != 1:
         reasons.append("body_count")
+    if (
+        date.fromisoformat(identity.publish_date) >= PUBLISH_GATE_START
+        and has_inline_post_style(body_html)
+    ):
+        reasons.append("inline_post_style")
     rendered_news_marker = (
         'class="digest-news-card digest-lead-story"'
         if lead_story
@@ -522,7 +807,36 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
     elif not (0 <= first_at < ad_at < second_at):
         reasons.append("adfit_position")
 
-    if not preview_path.is_file():
+    if date.fromisoformat(identity.publish_date) >= PUBLISH_GATE_START:
+        from .export_tistory import build_adfit_ready_html, render_post
+
+        try:
+            canonical_body = render_post(identity.publish_date, source)
+            canonical_adfit = build_adfit_ready_html(canonical_body)
+        except SCHEMA_EXCEPTIONS:
+            reasons.append("invalid_render_contract")
+            canonical_body = ""
+            canonical_adfit = ""
+        if canonical_body and body_html != canonical_body:
+            reasons.append("stale_html_artifact")
+        if canonical_adfit and adfit_html != canonical_adfit:
+            reasons.append("stale_adfit_artifact")
+
+        if build_adfit_ready_html(body_html) != adfit_html:
+            reasons.append("stale_adfit_artifact")
+        if (
+            adfit_html.count('data-ke-type="revenue"') != 1
+            or adfit_html.count('data-ad-id-pc="713977"') != 1
+            or adfit_html.count('data-ad-id-mobile="713980"') != 1
+        ):
+            reasons.append("invalid_adfit_markup")
+        reasons.extend(
+            artifact_freshness_reasons(source_path, meta, html_path, adfit_path)
+        )
+
+    if date.fromisoformat(identity.publish_date) >= PUBLISH_GATE_START:
+        reasons.extend(preview_artifact_reasons(preview_path, adfit_html, meta))
+    elif not preview_path.is_file():
         reasons.append("missing_preview")
 
     return {
@@ -535,10 +849,74 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
     }
 
 
+def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
+    """Return NEW, PARTIAL, or COMPLETE and fail closed on malformed JSON."""
+    identity = resolve_draft_identity(draft_id)
+    try:
+        return _inspect_draft_state(
+            identity.draft_id,
+            root=root,
+            window_days=window_days,
+        )
+    except SCHEMA_EXCEPTIONS:
+        return {
+            "day": identity.publish_date,
+            "draft_id": identity.draft_id,
+            "content_type": identity.content_type,
+            "status": "PARTIAL",
+            "reasons": ["invalid_source_schema"],
+            "duplicates": [],
+        }
+
+
 def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
     """Backward-compatible strict daily guard."""
     day_id = validate_day_id(day_id)
     return inspect_draft_state(day_id, root=root, window_days=window_days)
+
+
+def inspect_publish_ready_drafts(*, root=ROOT):
+    """Fail CI when any committed future draft is partial or not publish-ready."""
+    root = Path(root)
+    failures = []
+    draft_ids = set()
+    for source_path in sorted((root / "data" / "days").glob("*.json")):
+        try:
+            identity = resolve_draft_identity(source_path.stem)
+            publish_date = date.fromisoformat(identity.publish_date)
+        except (TypeError, ValueError):
+            continue
+        if publish_date >= PUBLISH_GATE_START:
+            draft_ids.add(identity.draft_id)
+    for source_path in sorted(
+        (root / "data" / "automation_cases").glob("*.json")
+    ):
+        try:
+            identity = resolve_draft_identity(f"{source_path.stem}-automation")
+            publish_date = date.fromisoformat(identity.publish_date)
+        except (TypeError, ValueError):
+            continue
+        if publish_date >= PUBLISH_GATE_START:
+            draft_ids.add(identity.draft_id)
+    for meta_path in sorted((root / "docs" / "tistory").glob("*.json")):
+        try:
+            identity = resolve_draft_identity(meta_path.stem)
+            publish_date = date.fromisoformat(identity.publish_date)
+        except (TypeError, ValueError):
+            continue
+        if publish_date >= PUBLISH_GATE_START:
+            draft_ids.add(identity.draft_id)
+
+    for draft_id in sorted(draft_ids):
+        identity = resolve_draft_identity(draft_id)
+        result = inspect_draft_state(
+            draft_id,
+            root=root,
+            window_days=90 if identity.content_type == "automation_case" else 60,
+        )
+        if result.get("status") != "COMPLETE":
+            failures.append(result)
+    return {"checked": len(draft_ids), "failures": failures}
 
 
 def main(argv=None):
@@ -547,10 +925,16 @@ def main(argv=None):
     group.add_argument("--today", action="store_true")
     group.add_argument("--day")
     group.add_argument("--draft-id")
+    group.add_argument("--all-publish-ready", action="store_true")
     parser.add_argument("--check-duplicates", action="store_true")
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--window-days", type=int, default=14)
     args = parser.parse_args(argv)
+
+    if args.all_publish_ready:
+        result = inspect_publish_ready_drafts(root=ROOT)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 1 if result["failures"] else 0
 
     draft_id = (
         args.draft_id

@@ -90,11 +90,17 @@
 3. 코드와 결과를 연결하는 주석 이미지
 4. 구성 요소·데이터 이동·분기·복구를 설명하는 한국어 도식
 
-실제 화면은 실행한 환경에서 직접 캡처하고 계정·경로·토큰·개인정보를 가립니다. 화면이나 터미널 결과를 이미지 생성으로 꾸며내지 않습니다. 본문에는 실제 캡처 또는 주석 캡처를 최소 1장, Codex 이미지 생성으로 만든 기사 고유 설명 이미지를 최소 1장 넣습니다. 이미지 생성은 개념 흐름도·구조도·대표 일러스트에만 사용합니다. 제품 로고만 크게 둔 그림, 포괄적인 컴퓨터·개발자 책상, AI 로봇·빛나는 뇌, 가짜 대시보드, 근거 없는 차트는 금지합니다. 단순 방패·DB 원통·상승 막대처럼 캡션과 관계없이 재사용할 수 있는 추상 도형도 금지합니다.
+실제 화면은 실행한 환경에서 직접 캡처하고 계정·경로·토큰·개인정보를 가립니다. 화면이나 터미널 결과를 이미지 생성으로 꾸며내지 않습니다. 본문에는 실제 캡처 또는 주석 캡처를 최소 1장, Codex 이미지 생성으로 만든 기사 고유 설명 이미지를 최소 1장 넣습니다. 대표 이미지 `images.cover`는 반드시 `imagegen`으로 만들고 기사 고유 상황·대상·결과를 보여 줍니다. 캡처·주석 캡처·실측 차트를 대표 이미지로 표시하지 않습니다. 이미지 생성은 개념 흐름도·구조도·대표 일러스트에만 사용합니다. 제품 로고만 크게 둔 그림, 포괄적인 컴퓨터·개발자 책상, AI 로봇·빛나는 뇌, 가짜 대시보드, 근거 없는 차트는 금지합니다. 단순 방패·DB 원통·상승 막대처럼 캡션과 관계없이 재사용할 수 있는 추상 도형도 금지합니다.
 
 생성 전 프롬프트는 `용도 → 실제 대상 → 구도 → 시각 스타일 → 색·조명 → 필수 물체 → 짧은 한국어 → 금지 요소` 순으로 작성합니다. 실제 버튼, 폴더, 메일, 문서, 전후 결과처럼 그 글만의 물체와 관계를 화면 중심 45~70%에 둡니다. 생성 직후 1초 안에 주제가 읽히는지, 캡션의 원인·결과와 같은 장면인지, 한국어가 정확한지, 모바일에서 핵심이 보이는지 확인하고 하나라도 실패하면 해당 이미지만 다시 생성합니다.
 
-`visual.assets`마다 `label`, `scene_label`, `steps`, `curiosity_hook`, `evidence_type`, `origin`을 기록합니다. `origin`은 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 `imagegen` 중 하나입니다. `imagegen`에는 실제 `generation_prompt`와 `generation_model`도 기록합니다. `images.cover`와 각 `images.visual_N`에도 같은 `origin`을 기록해 브리프와 파일 출처가 일치해야 합니다. 생성 도식에는 모바일에서도 읽히는 짧은 한국어 설명을 넣고, 한글 파일명과 독자가 봐야 할 결과를 적은 HTML 캡션을 사용합니다.
+`visual.assets`마다 `label`, `scene_label`, `steps`, `curiosity_hook`, `evidence_type`, `origin`을 기록합니다. `origin`은 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 `imagegen` 중 하나입니다. `imagegen`에는 실제 `generation_prompt`, `generation_model`, 모바일에서도 읽히는 짧은 `korean_labels` 2~6개를 기록합니다. 브리프와 대응 `images.visual_N`의 프롬프트·모델 값은 정확히 일치해야 합니다. `images.cover`와 각 `images.visual_N`에도 같은 `origin`을 기록해 브리프와 파일 출처가 일치해야 합니다. 생성 도식에는 짧은 한국어 설명을 넣고, 한글 파일명과 독자가 봐야 할 결과를 적은 HTML 캡션을 사용합니다.
+
+`capture`와 `annotated_capture`에는 브리프와 이미지 양쪽에 같은 `capture_tool`, `capture_target`, `captured_at`을 기록합니다. `capture_tool`은 `browser`, `computer-use`, `playwright`, `system-screenshot`, `terminal` 중 실제 사용한 도구만 쓰고, `captured_at`은 타임존이 있는 ISO 시각으로 예약 시각 14일 이내에서 기록합니다. 최적화기가 실제 WebP 파일과 같은 `capture_sha256`을 이미지에 기록하며, 이 해시는 기록과 파일의 일치를 검증할 뿐 캡처 사실 자체를 대신하지 않습니다. 실제 화면인지는 실행 과정·출력·전후 상태와 함께 교차 확인합니다.
+
+`measured_chart`는 브리프에 `measurement_source`, `unit`, `sample_count`, `measurement_environment`, 2~20개의 `data_points`(`label`, 유한한 숫자 `value`)를 넣습니다. `measurement_sha256`은 최적화기가 이 다섯 필드 전체를 UTF-8 compact JSON(키만 정렬, 배열 순서 유지)으로 직렬화해 자동 기록합니다. NaN·무한대·중복 라벨은 허용하지 않습니다. 토요일 실험에서 사용한 실측 차트는 `verification`의 `measurement_files`에 이미지 키를 넣고 `measurement_note`에 측정 방법·횟수·제외 조건을 적습니다. 이 필드가 없으면 차트로 발행하지 않습니다.
+
+각 브리프와 대응 이미지의 `qa`에 `topic_match`, `caption_match`, `mobile_readable`, `text_reviewed`, `not_generic`을 모두 `true`로 기록합니다. 최적화 후에는 실제 WebP 디코딩 결과와 메타데이터의 크기·용량·`sha256`을 비교합니다. 직접 캡처를 지정하고 실제 캡처 파일이 없거나, 생성 이미지를 캡처로 표시하면 발행을 막습니다.
 
 모든 이미지는 최종적으로 `1200×630 WebP`, 장당 최대 256KB, 전체 최대 2MB의 `webp-v1`을 지킵니다. Codex 이미지 생성이 실패하면 결정적 대체 생성기는 작업 상태 확인용으로만 사용할 수 있습니다. 결정적 대체 이미지는 발행 준비를 통과하지 않으며, 이미지 생성을 다시 시도하거나 실제 캡처로 교체해야 합니다.
 
@@ -113,7 +119,11 @@
 }
 ```
 
-그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `related_posts` 각 항목에는 실제 공개 글의 `title`, `url`, 현재 실험과 연결되는 `reason`을 기록합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+
+`publish_date`는 토요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
+
+`verification`은 문장 요약이 아닌 실행 증거 계약입니다. `mode`는 실제 실행한 경우에만 `executed`, `environment`에는 OS·런타임·도구 버전·소스 리비전을 넣습니다. 복제 가능한 `commands`, 테스트 입력 `input_fixture`, 예상 `expected`, 관찰 `actual`, 실패 `failure`, 복구 `rollback`, 캡처로 증명할 이미지 키 `evidence_files`를 모두 기록합니다. 주제 회전을 위해 `problem_lane`과 `tool_brand`도 필수입니다. `evidence_files`는 `capture` 또는 `annotated_capture` 출처인 본문 이미지만 가리켜야 합니다. 실행 직전·직후의 타임존 포함 ISO 시각 `started_at`, `completed_at`, 실제 종료 코드 `command_exit_code`(0), 개인정보를 제거한 실제 출력 `stdout_excerpt`도 필수입니다. 시작·종료 시각은 예약 시각 14일 이내에서 시간순으로 일치해야 합니다.
 
 `news[0].url`에는 후보함에서 최종 선택한 저장소·릴리스·공식 가이드의 URL을 기록합니다.
 

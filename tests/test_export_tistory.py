@@ -181,6 +181,31 @@ class OptionalLearningSectionsTests(unittest.TestCase):
 
 
 class ExportProtectionTests(unittest.TestCase):
+    def test_future_export_rejects_an_in_memory_body_not_saved_to_canonical_source(self):
+        from tests.test_editorial_quality import valid_daily_source
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = valid_daily_source("2026-07-19")
+            source_path = root / "data" / "days" / "2026-07-19.json"
+            source_path.parent.mkdir(parents=True)
+            source_path.write_text(
+                json.dumps(source, ensure_ascii=False), encoding="utf-8"
+            )
+            changed = copy.deepcopy(source)
+            changed["editorial"]["headline"] = (
+                "메모리에만 있는 변경은 저장된 원본과 다르므로 발행할 수 없다"
+            )
+
+            with patch(
+                "blog_pipeline.publishing.export_tistory.HERE", root
+            ), patch(
+                "blog_pipeline.publishing.export_tistory.OUT_DIR",
+                root / "docs" / "tistory",
+            ):
+                with self.assertRaisesRegex(ValueError, "canonical source"):
+                    write_post("2026-07-19", day=changed)
+
     def test_all_export_preserves_a_snapshot_linked_to_a_published_post(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)

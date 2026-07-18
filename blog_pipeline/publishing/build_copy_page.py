@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .draft_identity import resolve_draft_identity
+from .editorial_quality import PUBLISH_GATE_START
 from .export_tistory import TISTORY_ADFIT_MARKER, safe_http_url
 
 
@@ -117,6 +118,7 @@ def load_drafts():
                 "image_assets": safe_image_assets(meta.get("image_assets")),
                 "generation_provider": meta.get("generation_provider") or "unknown",
                 "publish_ready": bool(meta.get("publish_ready")),
+                "quality_reasons": list(meta.get("quality_reasons") or []),
                 "source": source,
                 "source_page": meta.get("source_page") or "",
                 "html_path": f"tistory/{draft_id}.html",
@@ -138,18 +140,40 @@ def load_drafts():
     )
 
 
-def write_preview_pages(drafts):
-    """Write UTF-8 standalone previews without changing copy-ready fragments."""
-    PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
-    skin_css = SKIN_CSS_PATH.read_text(encoding="utf-8")
-    (PREVIEW_DIR / "tistory-style.css").write_text(skin_css, encoding="utf-8")
-    for draft in drafts:
-        draft_id = str(draft.get("draft_id") or draft.get("day") or "")
-        if not draft_id:
-            raise ValueError("draft requires draft_id or day")
-        fragment_path = TISTORY_DIR / f"{draft_id}.html"
-        fragment = fragment_path.read_text(encoding="utf-8")
-        page = f"""<!doctype html>
+def apply_guard_results(drafts, *, root=ROOT):
+    """Make the copy UI fail closed when a future full guard is partial."""
+    from . import daily_guard
+
+    checked = []
+    for original in drafts:
+        draft = dict(original)
+        try:
+            publish_date = datetime.fromisoformat(
+                str(draft.get("publish_date") or "")
+            ).date()
+        except ValueError:
+            draft["publish_ready"] = False
+            draft["quality_reasons"] = ["invalid_publish_date"]
+            checked.append(draft)
+            continue
+        if publish_date >= PUBLISH_GATE_START and draft.get("publish_ready"):
+            identity = resolve_draft_identity(draft.get("draft_id"), draft)
+            result = daily_guard.inspect_draft_state(
+                identity.draft_id,
+                root=root,
+                window_days=(
+                    90 if identity.content_type == "automation_case" else 60
+                ),
+            )
+            draft["quality_reasons"] = list(result.get("reasons") or [])
+            draft["publish_ready"] = result.get("status") == "COMPLETE"
+        checked.append(draft)
+    return checked
+
+
+def render_preview_page(draft, fragment):
+    """Render the canonical standalone preview bound to one final fragment."""
+    return f"""<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
@@ -197,6 +221,23 @@ def write_preview_pages(drafts):
 </body>
 </html>
 """
+
+
+def write_preview_pages(drafts):
+    """Write UTF-8 standalone previews without changing copy-ready fragments."""
+    PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
+    skin_css = SKIN_CSS_PATH.read_text(encoding="utf-8")
+    (PREVIEW_DIR / "tistory-style.css").write_text(skin_css, encoding="utf-8")
+    for draft in drafts:
+        draft_id = str(draft.get("draft_id") or draft.get("day") or "")
+        if not draft_id:
+            raise ValueError("draft requires draft_id or day")
+        adfit_path = TISTORY_DIR / f"{draft_id}-adfit.html"
+        fragment_path = (
+            adfit_path if adfit_path.is_file() else TISTORY_DIR / f"{draft_id}.html"
+        )
+        fragment = fragment_path.read_text(encoding="utf-8")
+        page = render_preview_page(draft, fragment)
         (PREVIEW_DIR / f"{draft_id}.html").write_text(page, encoding="utf-8")
 
 
@@ -726,7 +767,8 @@ def render(drafts):
     function reviewGateMessage() {{
       if (!current) return "초안을 선택해 주세요.";
       if (!current.publish_ready) {{
-        return "발행 보류 · 품질 검사를 통과한 초안이 아닙니다.";
+        const reasons = (current.quality_reasons || []).join(", ");
+        return "발행 보류 · " + (reasons || "품질 검사를 통과한 초안이 아닙니다.");
       }}
       if (!currentFinalHtml) return "광고 태그 확인 후 최종 HTML을 만들어 주세요.";
       return "최종 HTML 준비 완료 · " + currentFinalHtml.length.toLocaleString() + "자";
@@ -987,6 +1029,7 @@ def main():
     TISTORY_DIR.mkdir(parents=True, exist_ok=True)
     drafts = load_drafts()
     write_preview_pages(drafts)
+    drafts = apply_guard_results(drafts, root=ROOT)
     OUT_PATH.write_text(render(drafts), encoding="utf-8")
     print(f"built: {OUT_PATH}")
 

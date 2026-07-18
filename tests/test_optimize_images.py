@@ -1,3 +1,4 @@
+import hashlib
 import json
 import tempfile
 import unittest
@@ -9,6 +10,7 @@ from blog_pipeline.publishing.optimize_images import (
     IMAGE_FILE_BUDGET,
     IMAGE_SET_BUDGET,
     LEAD_IMAGE_SET_BUDGET,
+    _check_all,
     inspect_day_images,
     inspect_draft_images,
     optimize_draft_images,
@@ -18,6 +20,176 @@ from blog_pipeline.publishing.optimize_images import (
 
 
 class OptimizeImagesTests(unittest.TestCase):
+    def test_check_all_reports_malformed_generation_instead_of_crashing(self):
+        from tests.test_editorial_quality import valid_daily_source
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = valid_daily_source("2026-07-19")
+            source["generation"] = True
+            path = root / "data" / "days" / "2026-07-19.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
+
+            result = _check_all(root)
+
+        self.assertEqual(result["checked"], 1)
+        self.assertEqual(result["failures"][0]["draft_id"], "2026-07-19")
+        self.assertIn("invalid_image_manifest", result["failures"][0]["reasons"])
+
+    def test_inspection_rejects_duplicate_committed_image_content(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id = "2026-07-19"
+            asset_dir = root / "docs" / "tistory" / "assets" / day_id
+            asset_dir.mkdir(parents=True)
+            shared = Image.effect_noise((1200, 630), 50).convert("RGB")
+            assets = {}
+            for kind, filename in (
+                ("cover", "대표-이미지.webp"),
+                ("visual_1", "본문-이미지.webp"),
+                ("visual_2", "비교-이미지.webp"),
+            ):
+                path = asset_dir / filename
+                image = shared if kind != "visual_2" else Image.effect_noise((1200, 630), 70).convert("RGB")
+                image.save(path, "WEBP", quality=70)
+                assets[kind] = {
+                    "path": path.relative_to(root).as_posix(),
+                    "url": f"https://blog.example/{filename}",
+                    "alt": "기사 내용의 단계와 결과를 비교하는 한국어 설명 이미지",
+                    "width": 1200,
+                    "height": 630,
+                    "format": "webp",
+                    "bytes": path.stat().st_size,
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                }
+            source = root / "data" / "days" / f"{day_id}.json"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 3,
+                        "format": "lead-story-v1",
+                        "generation": {"image_policy": "webp-v1"},
+                        "images": assets,
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = inspect_draft_images(day_id, root=root)
+
+        self.assertIn("duplicate_image_asset", result["reasons"])
+
+    def test_source_and_webp_target_paths_must_be_unique_per_image_kind(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            collision = asset_dir / "Cover.jpg"
+            Image.effect_noise((600, 315), 45).convert("RGB").save(
+                collision, "JPEG"
+            )
+            day = json.loads(day_path.read_text(encoding="utf-8"))
+            day["images"]["story_1"].update(
+                {
+                    "path": collision.relative_to(root).as_posix(),
+                    "url": "https://blog.example/assets/Cover.jpg",
+                }
+            )
+            day_path.write_text(json.dumps(day), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "unique"):
+                optimize_day_images(day_id, root=root)
+
+            self.assertTrue((asset_dir / "cover.png").is_file())
+            self.assertTrue(collision.is_file())
+            self.assertFalse((asset_dir / "cover.webp").exists())
+
+    def test_failed_batch_does_not_commit_an_earlier_optimized_asset(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            original_json = day_path.read_bytes()
+            (asset_dir / "story-01.png").unlink()
+
+            with self.assertRaises(FileNotFoundError):
+                optimize_day_images(day_id, root=root)
+
+            self.assertEqual(day_path.read_bytes(), original_json)
+            self.assertFalse((asset_dir / "cover.webp").exists())
+            self.assertTrue((asset_dir / "cover.png").is_file())
+
+    def test_future_image_inspection_opens_files_and_checks_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id = "2026-07-19"
+            asset_dir = root / "docs" / "tistory" / "assets" / day_id
+            asset_dir.mkdir(parents=True)
+            paths = {
+                "cover": asset_dir / "대표-이미지.webp",
+                "visual_1": asset_dir / "설명-이미지.webp",
+                "visual_2": asset_dir / "손상-이미지.webp",
+            }
+            Image.new("RGB", (1, 1), "#ffffff").save(paths["cover"], "WEBP")
+            Image.new("RGB", (1200, 630), "#f2f2f2").save(
+                paths["visual_1"], "WEBP"
+            )
+            paths["visual_2"].write_bytes(b"not-a-webp")
+            source = root / "data" / "days" / f"{day_id}.json"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 3,
+                        "format": "lead-story-v1",
+                        "generation": {"image_policy": "webp-v1"},
+                        "images": {
+                            "cover": {
+                                "path": paths["cover"].relative_to(root).as_posix(),
+                                "url": "https://blog.example/대표-이미지.webp",
+                                "alt": "대표 이미지 설명이 충분히 들어간 대체 문구",
+                                "width": 1200,
+                                "height": 630,
+                                "format": "webp",
+                                "sha256": "0" * 64,
+                            },
+                            "visual_1": {
+                                "path": paths["visual_1"].relative_to(root).as_posix(),
+                                "url": "https://blog.example/다른-파일명.webp",
+                                "alt": "",
+                                "width": "wide",
+                                "height": 630,
+                                "format": "webp",
+                                "sha256": "0" * 64,
+                            },
+                            "visual_2": {
+                                "path": paths["visual_2"].relative_to(root).as_posix(),
+                                "url": "https://blog.example/손상-이미지.webp",
+                                "alt": "손상 여부를 확인할 본문 설명 이미지 대체 문구",
+                                "width": 1200,
+                                "height": 630,
+                                "format": "webp",
+                                "sha256": "0" * 64,
+                            },
+                        },
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = inspect_draft_images(day_id, root=root)
+
+        self.assertIn("invalid_image_dimensions:cover", result["reasons"])
+        self.assertIn("image_digest_mismatch:cover", result["reasons"])
+        self.assertIn("missing_image_alt:visual_1", result["reasons"])
+        self.assertIn("low_information_image:visual_1", result["reasons"])
+        self.assertIn("image_metadata_mismatch:visual_1", result["reasons"])
+        self.assertIn("image_url_mismatch:visual_1", result["reasons"])
+        self.assertIn("image_digest_mismatch:visual_1", result["reasons"])
+        self.assertIn("invalid_image_file:visual_2", result["reasons"])
+
     def test_rejects_an_automation_asset_that_points_into_the_daily_namespace(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

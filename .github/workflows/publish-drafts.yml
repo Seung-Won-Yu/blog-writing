@@ -47,6 +47,9 @@ jobs:
           python3 -m blog_pipeline.publishing.build_copy_page
           python3 -m blog_pipeline.publishing.build_integration_page
 
+      - name: Verify every future publish-ready draft
+        run: python3 -m blog_pipeline.publishing.daily_guard --all-publish-ready
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3

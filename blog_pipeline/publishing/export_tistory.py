@@ -15,6 +15,7 @@ usage:
 import argparse
 import datetime
 import glob
+import hashlib
 import html
 import json
 import os
@@ -24,6 +25,11 @@ from urllib.parse import urlsplit
 
 from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story
+from .editorial_quality import (
+    estimate_read_minutes as estimate_editorial_read_minutes,
+    policy_active,
+    source_quality_reasons,
+)
 
 HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
@@ -66,6 +72,20 @@ def safe_http_url(value):
     if parsed.scheme.lower() not in {"http", "https"} or not parsed.netloc:
         return ""
     return text
+
+
+def file_sha256(path):
+    try:
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    except OSError:
+        return ""
+
+
+def safe_int(value):
+    try:
+        return int(value or 0)
+    except (TypeError, ValueError, OverflowError):
+        return 0
 
 
 def source_date_label(value):
@@ -242,33 +262,7 @@ def news_titles(day, limit=None):
 
 
 def estimate_read_minutes(day):
-    pieces = []
-    editorial = day.get("editorial") or {}
-    pieces.extend(editorial.values())
-    for item in day.get("news", []):
-        pieces.extend([item.get("title_kr"), item.get("blurb_kr")])
-        for block in item.get("content", []):
-            if not isinstance(block, dict):
-                continue
-            pieces.extend([block.get("text"), block.get("caption")])
-            if isinstance(block.get("items"), list):
-                pieces.extend(block["items"])
-            if isinstance(block.get("headers"), list):
-                pieces.extend(block["headers"])
-            if isinstance(block.get("rows"), list):
-                for row in block["rows"]:
-                    if isinstance(row, list):
-                        pieces.extend(row)
-    for post in day.get("related_posts", []):
-        if isinstance(post, dict):
-            pieces.extend([post.get("title"), post.get("reason")])
-    quiz = day.get("quiz") or {}
-    pieces.append(quiz.get("question"))
-    pieces.extend(quiz.get("options") or [])
-    for term in day.get("terms", []):
-        pieces.extend([term.get("term"), term.get("meaning_kr")])
-    length = sum(len(plain(piece)) for piece in pieces)
-    return max(2, (length + 449) // 450)
+    return estimate_editorial_read_minutes(day)
 
 
 def trim_text(text, limit):
@@ -385,6 +379,51 @@ def build_publish_checklist(day):
     ):
         checklist.insert(1, "본문 이미지가 정상 표시되는지 확인하기")
     return checklist
+
+
+def build_image_assets(day):
+    """Build the canonical image manifest consumed by the copy UI and guard."""
+    images = day.get("images") if isinstance(day.get("images"), dict) else {}
+    image_titles = {
+        "cover": "대표 이미지",
+        "story_1": "본문 1번 이미지",
+        "story_2": "본문 2번 이미지",
+        "story_3": "본문 3번 이미지",
+        "flow": "오늘의 흐름 이미지",
+    }
+    image_kinds = image_kinds_for_day(day)
+    if not is_lead_story(day):
+        image_kinds.append("flow")
+    assets = [
+        {
+            "kind": kind,
+            "title": image_titles.get(
+                kind, f"본문 이해 이미지 {kind.removeprefix('visual_')}"
+            ),
+            "url": plain(asset.get("url")),
+            "path": plain(asset.get("path")),
+            "original_url": "",
+            "alt": plain(asset.get("alt")),
+            "width": safe_int(asset.get("width")),
+            "height": safe_int(asset.get("height")),
+        }
+        for kind in image_kinds
+        for asset in [images.get(kind)]
+        if isinstance(asset, dict) and asset.get("url")
+    ]
+    news = day.get("news") if isinstance(day.get("news"), list) else []
+    assets.extend(
+        {
+            "kind": "source",
+            "title": plain(item.get("title_kr")),
+            "url": plain(item.get("image_url")),
+            "path": plain(item.get("saved_image_path")),
+            "original_url": plain(item.get("original_image_url")),
+        }
+        for item in news
+        if isinstance(item, dict) and item.get("saved_image_path")
+    )
+    return assets
 
 
 def build_recommended_tags(day):
@@ -807,6 +846,21 @@ def write_post(
 ):
     day = day or load_draft(draft_id)
     identity = resolve_draft_identity(draft_id, day)
+    canonical_source_sha256 = ""
+    if policy_active(identity):
+        source_path = HERE / identity.source
+        try:
+            source_bytes = source_path.read_bytes()
+            canonical_day = json.loads(source_bytes.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("canonical source is missing or invalid") from exc
+        resolve_draft_identity(draft_id, canonical_day)
+        if canonical_day != day:
+            raise ValueError(
+                "in-memory draft differs from canonical source; save JSON before export"
+            )
+        day = canonical_day
+        canonical_source_sha256 = hashlib.sha256(source_bytes).hexdigest()
     publish_date = identity.publish_date
     content_type = identity.content_type
     content_label = identity.content_label
@@ -826,47 +880,7 @@ def write_post(
             f"{publish_date}T09:00:00+09:00"
         )
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    images = day.get("images") if isinstance(day.get("images"), dict) else {}
-    image_titles = {
-        "cover": "대표 이미지",
-        "story_1": "본문 1번 이미지",
-        "story_2": "본문 2번 이미지",
-        "story_3": "본문 3번 이미지",
-        "flow": "오늘의 흐름 이미지",
-    }
-    image_kinds = image_kinds_for_day(day)
-    if not is_lead_story(day):
-        image_kinds.append("flow")
-    image_assets = [
-        {
-            "kind": kind,
-            "title": image_titles.get(
-                kind, f"본문 이해 이미지 {kind.removeprefix('visual_')}"
-            ),
-            "url": plain(asset.get("url")),
-            "path": plain(asset.get("path")),
-            "original_url": "",
-            "alt": plain(asset.get("alt")),
-            "width": int(asset.get("width") or 0),
-            "height": int(asset.get("height") or 0),
-        }
-        for kind in image_kinds
-        for asset in [images.get(kind)]
-        if isinstance(asset, dict) and asset.get("url")
-    ]
-    image_assets.extend(
-        [
-            {
-                "kind": "source",
-                "title": plain(item.get("title_kr")),
-                "url": plain(item.get("image_url")),
-                "path": plain(item.get("saved_image_path")),
-                "original_url": plain(item.get("original_image_url")),
-            }
-            for item in day.get("news", [])
-            if item.get("saved_image_path")
-        ]
-    )
+    image_assets = build_image_assets(day)
 
     html_path = OUT_DIR / f"{draft_id}.html"
     meta_path = OUT_DIR / f"{draft_id}.json"
@@ -876,8 +890,13 @@ def write_post(
         generation_revision = int(generation.get("revision") or 0)
     except (TypeError, ValueError):
         generation_revision = 0
-    publish_ready = (
-        generation_provider in {"codex-agent", "github-models", "gemini"}
+    allowed_generation_providers = (
+        {"codex-agent"}
+        if policy_active(identity)
+        else {"codex-agent", "github-models", "gemini"}
+    )
+    base_publish_ready = (
+        generation_provider in allowed_generation_providers
         and generation_revision >= MIN_PUBLISH_REVISION
     )
 
@@ -890,6 +909,25 @@ def write_post(
     before_ad_path.write_text(before_ad_html, encoding="utf-8")
     after_ad_path.write_text(after_ad_html, encoding="utf-8")
     adfit_path.write_text(build_adfit_ready_html(post_html), encoding="utf-8")
+    quality_reasons = source_quality_reasons(day, identity)
+    source_path = HERE / identity.source
+    source_sha256 = canonical_source_sha256 or file_sha256(source_path)
+    if policy_active(identity):
+        if not source_sha256:
+            quality_reasons.append("missing_source_digest")
+        else:
+            from .optimize_images import inspect_draft_images
+
+            try:
+                image_check = inspect_draft_images(identity.draft_id, root=HERE)
+            except (OSError, TypeError, ValueError):
+                quality_reasons.append("invalid_image_manifest")
+            else:
+                quality_reasons.extend(image_check["reasons"])
+    quality_reasons = list(dict.fromkeys(quality_reasons))
+    publish_ready = base_publish_ready and (
+        not policy_active(identity) or not quality_reasons
+    )
     meta_path.write_text(
         json.dumps(
             {
@@ -906,6 +944,8 @@ def write_post(
                 "key_summary": build_key_summary(day),
                 "publish_checklist": build_publish_checklist(day),
                 "generation_provider": generation_provider,
+                "estimated_read_minutes": estimate_read_minutes(day),
+                "quality_reasons": quality_reasons,
                 "publish_ready": publish_ready,
                 "source": identity.source,
                 "source_page": source_page,
@@ -913,6 +953,9 @@ def write_post(
                 "before_ad_html": f"docs/tistory/{draft_id}-before-ad.html",
                 "after_ad_html": f"docs/tistory/{draft_id}-after-ad.html",
                 "adfit_html": f"docs/tistory/{draft_id}-adfit.html",
+                "source_sha256": source_sha256,
+                "html_sha256": file_sha256(html_path),
+                "adfit_sha256": file_sha256(adfit_path),
                 "image_assets": image_assets,
             },
             ensure_ascii=False,

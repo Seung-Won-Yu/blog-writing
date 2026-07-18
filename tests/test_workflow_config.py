@@ -29,6 +29,18 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("actions/upload-pages-artifact@v3", workflow)
         self.assertIn("actions/deploy-pages@v5", workflow)
 
+    def test_pages_deploy_checks_every_future_publish_ready_draft(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+
+        guard = (
+            "python3 -m blog_pipeline.publishing.daily_guard "
+            "--all-publish-ready"
+        )
+        self.assertIn(guard, workflow)
+        self.assertLess(
+            workflow.index(guard), workflow.index("actions/upload-pages-artifact@v3")
+        )
+
     def test_github_does_not_collect_or_write_articles(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 
@@ -51,6 +63,7 @@ class WorkflowConfigTests(unittest.TestCase):
             "python3 -m blog_pipeline.collection.collect_news --today", workflow
         )
         self.assertIn("git add docs/inbox", workflow)
+        self.assertIn("git pull --rebase origin main", workflow)
         self.assertIn("git push origin HEAD:main", workflow)
         self.assertNotIn("generate_daily_draft", workflow)
         self.assertNotIn("generate_editorial_images", workflow)
@@ -162,6 +175,43 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("https://won0322.tistory.com/<숫자>", contract)
         self.assertIn("GitHub Pages 미리보기 링크", contract)
 
+    def test_editor_contract_matches_the_enforced_quality_schema(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        for field in (
+            "audience_problem",
+            "reader_takeaway",
+            "why_now",
+            "topic_key",
+            "reader_question",
+            "entities",
+            "coverage",
+            "origin",
+            "generation_prompt",
+            "generation_model",
+            "korean_labels",
+            "capture_tool",
+            "capture_target",
+            "captured_at",
+            "capture_sha256",
+            "measurement_source",
+            "unit",
+            "sample_count",
+            "measurement_environment",
+            "data_points",
+            "measurement_sha256",
+            "topic_match",
+            "caption_match",
+            "mobile_readable",
+            "text_reviewed",
+            "not_generic",
+            "sha256",
+        ):
+            self.assertIn(f"`{field}`", contract)
+        self.assertIn("`generation.image_provider`", contract)
+        self.assertIn("소제목 5~7개", contract)
+        self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
+
     def test_saturday_contract_owns_verified_hands_on_automation_cases(self):
         daily = EDITOR_CONTRACT.read_text(encoding="utf-8")
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
@@ -198,6 +248,49 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`origin`", contract)
         self.assertIn("`imagegen`", contract)
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
+
+    def test_saturday_contract_matches_the_enforced_experiment_schema(self):
+        contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
+
+        for field in (
+            "verification",
+            "mode",
+            "environment",
+            "commands",
+            "input_fixture",
+            "expected",
+            "actual",
+            "failure",
+            "rollback",
+            "evidence_files",
+            "started_at",
+            "completed_at",
+            "command_exit_code",
+            "stdout_excerpt",
+            "capture_tool",
+            "capture_target",
+            "captured_at",
+            "capture_sha256",
+            "measurement_source",
+            "unit",
+            "sample_count",
+            "measurement_environment",
+            "data_points",
+            "measurement_sha256",
+            "measurement_files",
+            "measurement_note",
+            "korean_labels",
+            "problem_lane",
+            "tool_brand",
+            "topic_match",
+            "caption_match",
+            "mobile_readable",
+            "text_reviewed",
+            "not_generic",
+            "sha256",
+        ):
+            self.assertIn(f"`{field}`", contract)
+        self.assertIn("`generation.image_provider`", contract)
 
 
 if __name__ == "__main__":

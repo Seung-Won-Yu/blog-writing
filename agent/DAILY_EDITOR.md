@@ -15,7 +15,7 @@
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
    - `NEW`: 아래 전체 흐름을 한 번만 수행합니다.
 
-2. `docs/inbox/latest.json`을 읽습니다. 파일의 `day`가 당일 날짜와 다르면 수집기를 한 번만 실행합니다. `selected` 후보 5건을 먼저 보고, 적합한 주제가 없을 때만 `candidates`를 확인합니다.
+2. `docs/inbox/latest.json`을 읽습니다. 파일의 `day`가 당일 날짜와 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 `day`가 당일과 다르거나 `selected`가 3건 미만이면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 정상적인 당일 후보함이면 `selected` 후보 5건을 먼저 보고, 적합한 주제가 없을 때만 `candidates`를 확인합니다.
 
 3. 다음 기준으로 핵심뉴스 1건을 고릅니다.
 
@@ -52,13 +52,14 @@
 
    실패하면 중복된 주제만 교체합니다. 중복 상태에서 이미지와 HTML을 만들지 않습니다.
 
-6. 대표 이미지 1장과 본문 설명 이미지 2~6장을 Codex 이미지 생성으로 만듭니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지는 만들지 않습니다. 각 이미지를 만들기 전에 `visual.assets`에 다음 브리프를 기록합니다.
+6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지 2~6장은 내용에 따라 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지는 만들지 않습니다. 각 이미지를 만들기 전에 `visual.assets`에 다음 브리프를 기록합니다.
 
    - `label`: 이미지가 답할 핵심 질문
    - `scene_label`: 기사 고유 시각 단서 2~4개
    - `steps`: 원인 → 결과, 이전 → 이후, 비교, 시간, 데이터 흐름 중 보여줄 관계
    - `curiosity_hook`: 독자가 먼저 발견할 선택, 막힌 지점, 의외의 결과 같은 시각적 질문
    - `evidence_type`: 생성 도식은 `diagram`, 실제 제품·문서 화면은 `screenshot`, 확인된 수치 시각화는 `chart`
+   - `origin`: 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 도식 `imagegen` 중 하나
    - `logic_type`: `flow`, `before_after`, `comparison`, `conditional`, `timeline`, `architecture`, `evidence` 중 하나
    - `condition`: `logic_type`이 `conditional`일 때만 쓰며 `DNS·IP를 변경한 경우`처럼 분기 조건을 정확히 기록
 
@@ -76,9 +77,13 @@
 
    설정·사용법이 핵심인 글은 실제 제품 화면이나 공식 문서 화면 1장을 우선 사용합니다. 직접 캡처한 화면은 계정·IP·토큰·개인정보를 가리고 `capture_note`를 기록합니다. 공식 화면은 `source_url`을 기록하고 캡션에 출처를 밝힙니다. 공개 화면을 확보할 수 없으면 `visual.screenshot_unavailable_reason`과 정확한 메뉴 경로를 남깁니다. 생성 이미지로 가짜 UI·가짜 터미널·가짜 측정 화면을 만들지 않습니다.
 
+   `capture`·`annotated_capture`는 브리프와 대응 `images.visual_N` 양쪽에 같은 `capture_tool`, `capture_target`, `captured_at`을 넣습니다. `capture_tool`은 `browser`, `computer-use`, `playwright`, `system-screenshot`, `terminal` 중 실제 사용한 도구, `captured_at`은 예약 시각 14일 이내의 타임존 포함 ISO 시각입니다. 최적화기가 실제 최종 파일과 같은 `capture_sha256`을 자동 기록합니다. 실측 차트는 `measurement_source`, `unit`, `sample_count`, `measurement_environment`, 2~20개의 `data_points`(`label`, 유한한 숫자 `value`)를 넣습니다. NaN·무한대·중복 라벨은 금지하며 최적화기가 이 측정 필드 전체의 `measurement_sha256`을 자동 기록합니다.
+
    노트북 앞 사람, 일반적인 개발자 책상, 맥락 없는 차트·대시보드·서류, 포괄적인 컴퓨터 화면, AI 로봇·빛나는 뇌·회로 이미지는 금지합니다. 영화 같은 조명, 네온, 광택 스톡 사진, PPT 카드, 큰 제목 중심 썸네일, 충격 표정·물음표 같은 클릭베이트도 쓰지 않습니다. 확인되지 않은 숫자를 차트에 만들지 않습니다.
 
-   생성 직후 이미지마다 `1초 안에 주제가 읽히는가`, `기사 고유 시각 단서가 있는가`, `짧은 한국어 설명이 정확한가`, `본문의 어느 문단을 이해시키는지 명확한가`, `대표와 본문 이미지 구도가 겹치지 않는가`를 확인합니다. 하나라도 실패하면 실패한 이미지만 다시 생성합니다. Codex 이미지 생성 자체가 실패했을 때만 `generate_editorial_images --today`를 대체 이미지 생성기로 한 번 사용합니다.
+   생성 직후 이미지마다 `1초 안에 주제가 읽히는가`, `기사 고유 시각 단서가 있는가`, `짧은 한국어 설명이 정확한가`, `본문의 어느 문단을 이해시키는지 명확한가`, `대표와 본문 이미지 구도가 겹치지 않는가`를 확인합니다. 하나라도 실패하면 실패한 이미지만 다시 생성합니다. Codex 이미지 생성 자체가 실패하면 `generate_editorial_images --today`는 배치·경로 상태를 확인하는 임시 대체기로만 한 번 사용합니다. 이 결정적 대체 이미지는 발행 준비를 통과하지 않으므로, 반드시 기사 고유 `imagegen` 이미지나 실제 캡처로 교체한 뒤 다시 검사합니다.
+
+   검수 결과는 대표·본문 이미지와 각 `visual.assets`의 `qa`에 `topic_match`, `caption_match`, `mobile_readable`, `text_reviewed`, `not_generic`을 모두 `true`로 기록합니다. `imagegen` 자산은 브리프와 이미지 양쪽에 실제 `generation_prompt`와 `generation_model`을 남기고 두 값을 정확히 일치시키며, 브리프에 짧은 한국어 `korean_labels` 2~6개를 넣습니다. 대표 `images.cover`는 반드시 기사 고유 `imagegen` 자산으로 만들고 캡처·실측 차트로 표시하지 않습니다. 브리프와 이미지의 `origin`은 일치해야 합니다. 파일 최적화 후 실제 디코딩한 WebP의 크기·용량과 `sha256`이 메타데이터와 같은지 검사합니다. 단순 확장자 변경, 깨진 파일, 짧거나 포괄적인 alt는 발행 준비로 취급하지 않습니다.
 
 7. 원본 이미지를 최적화하고 HTML·복사 페이지·통합 도우미를 한 번 만듭니다.
 
@@ -119,7 +124,7 @@
 
 - 제목의 핵심 검색어는 한 번만 쓰고 독자의 실제 문제·의외의 결과·얻는 답 중 하나를 함께 담습니다. 보통 35~60자 안에서 모바일 2~3줄을 목표로 하며, 제품·표준명이 길어지는 경우에만 예외를 둡니다.
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
-- 전체는 약 8~12분 분량으로, 소제목 4~7개를 사용합니다.
+- 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
 - 흐름은 `무엇이 바뀌었나 → 왜 이런 변화가 생겼나 → 기존 방식과 비교 → 실제 설정·사용법 → 남는 한계 → 바로 확인할 체크리스트`를 기본으로 하되 주제에 맞게 조정합니다.
 - 표는 비교가 실제로 쉬워질 때 1~3개 사용합니다. 설정·코드가 핵심이면 복사 가능한 코드 예제를 넣습니다.
 - 본문 설명 이미지 2~6장을 관련 문단 직후에 배치하고, 캡션은 그림에서 읽어야 할 결론을 설명합니다.
@@ -146,12 +151,13 @@
 - `date_label`, `weekday`, `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
-- `related_posts` 2건 이상
+- `related_posts` 2건 이상: 각 항목의 실제 공개 글 `title`, `url`, 현재 글과 연결되는 이유 `reason`
 - `generation`, `images.cover`, `images.visual_1`부터 실제 사용 이미지까지
 
-모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID를 기록합니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
+모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `checklist`을 모두 포함합니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
 
 ## HTML 디자인 계약
 

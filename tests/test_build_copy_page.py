@@ -15,6 +15,65 @@ from blog_pipeline.publishing.build_copy_page import (
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_copy_page_uses_ninety_day_guard_for_saturday_automation(self):
+        from blog_pipeline.publishing.build_copy_page import apply_guard_results
+
+        drafts = [
+            {
+                "draft_id": "2026-07-25",
+                "publish_date": "2026-07-25",
+                "content_type": "daily_news",
+                "publish_ready": True,
+            },
+            {
+                "draft_id": "2026-07-25-automation",
+                "publish_date": "2026-07-25",
+                "content_type": "automation_case",
+                "content_label": "업무자동화 실험",
+                "publish_ready": True,
+            },
+        ]
+        windows = {}
+
+        def inspect(draft_id, **kwargs):
+            windows[draft_id] = kwargs["window_days"]
+            return {"status": "COMPLETE", "reasons": []}
+
+        with patch(
+            "blog_pipeline.publishing.daily_guard.inspect_draft_state",
+            side_effect=inspect,
+        ):
+            checked = apply_guard_results(drafts, root=Path("/tmp/example"))
+
+        self.assertTrue(all(draft["publish_ready"] for draft in checked))
+        self.assertEqual(windows["2026-07-25"], 60)
+        self.assertEqual(windows["2026-07-25-automation"], 90)
+
+    def test_copy_page_disables_a_publish_ready_draft_when_guard_is_partial(self):
+        from blog_pipeline.publishing.build_copy_page import apply_guard_results
+
+        drafts = [
+            {
+                "draft_id": "2026-07-19",
+                "publish_date": "2026-07-19",
+                "publish_ready": True,
+            }
+        ]
+        with patch(
+            "blog_pipeline.publishing.daily_guard.inspect_draft_state",
+            return_value={
+                "status": "PARTIAL",
+                "reasons": ["quality_depth", "stale_export"],
+            },
+        ):
+            checked = apply_guard_results(drafts, root=Path("/tmp/example"))
+
+        self.assertFalse(checked[0]["publish_ready"])
+        self.assertEqual(
+            checked[0]["quality_reasons"], ["quality_depth", "stale_export"]
+        )
+        self.assertIn("quality_reasons", render(checked))
+
     def test_rejects_non_http_image_links_before_they_reach_download_controls(self):
         assets = safe_image_assets(
             [
@@ -79,6 +138,35 @@ class CopyPageTests(unittest.TestCase):
         self.assertNotIn("자동화 전용 본문", daily)
         self.assertIn("자동화 전용 본문", automation)
         self.assertNotIn("뉴스 전용 본문", automation)
+
+    def test_preview_prefers_the_same_adfit_fragment_used_for_final_copy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "tistory"
+            preview = root / "preview"
+            tistory.mkdir()
+            (tistory / "2026-07-19.html").write_text(
+                "<article>광고 전 기본 본문</article>", encoding="utf-8"
+            )
+            (tistory / "2026-07-19-adfit.html").write_text(
+                '<article>최종 본문<figure data-ke-type="revenue"></figure></article>',
+                encoding="utf-8",
+            )
+
+            with patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ), patch(
+                "blog_pipeline.publishing.build_copy_page.PREVIEW_DIR", preview
+            ):
+                write_preview_pages(
+                    [{"draft_id": "2026-07-19", "title": "미리보기"}]
+                )
+
+            page = (preview / "2026-07-19.html").read_text(encoding="utf-8")
+
+        self.assertIn("최종 본문", page)
+        self.assertIn('data-ke-type="revenue"', page)
+        self.assertNotIn("광고 전 기본 본문", page)
 
     def test_groups_news_and_automation_drafts_for_the_same_saturday(self):
         with tempfile.TemporaryDirectory() as directory:
