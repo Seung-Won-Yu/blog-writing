@@ -119,6 +119,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("사용자 인계 지점", contract)
         self.assertIn("오늘 글 발행 준비", contract)
         self.assertIn("실제 조립·복사 흐름", contract)
+        self.assertIn("최근 3일", contract)
+        self.assertIn("같은 핵심 브랜드·발행처", contract)
+        self.assertIn("긴급 보안·서비스 장애", contract)
+        self.assertIn("반복 브랜드를 제목에서 제외", contract)
+        self.assertIn("대표 이미지는 새 핵심 대상", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
