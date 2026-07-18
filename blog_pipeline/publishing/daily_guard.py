@@ -33,6 +33,19 @@ PRODUCT_UI_PATTERN = re.compile(
     r"(?:설정(?:법|\s*방법)?|사용법|대시보드|configuration|configure|setup|how\s+to)",
     re.IGNORECASE,
 )
+AUTOMATION_VISUAL_POLICY_START = date(2026, 7, 25)
+AUTOMATION_PUBLISHABLE_ORIGINS = {
+    "capture",
+    "annotated_capture",
+    "measured_chart",
+    "imagegen",
+}
+AUTOMATION_ORIGIN_EVIDENCE = {
+    "capture": "screenshot",
+    "annotated_capture": "screenshot",
+    "measured_chart": "chart",
+    "imagegen": "diagram",
+}
 
 
 def canonical_url(value):
@@ -156,6 +169,75 @@ def _lead_visual_evidence_reasons(source):
     ):
         reasons.append("lead_product_ui_evidence")
     return reasons
+
+
+def _automation_visual_quality_reasons(source):
+    """Reject low-fidelity fallback art from publish-ready automation posts."""
+    reasons = []
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    briefs = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    origins = []
+    fallback_found = False
+    declared_visual_keys = lead_visual_kinds(images)
+    expected_visual_keys = [
+        f"visual_{index}" for index in range(1, len(briefs) + 1)
+    ]
+    if declared_visual_keys != expected_visual_keys:
+        reasons.append("automation_image_provenance")
+    for kind in declared_visual_keys:
+        image = images.get(kind) if isinstance(images.get(kind), dict) else {}
+        if (
+            image.get("origin") == "deterministic_fallback"
+            or image.get("style") == "text-free-editorial-scene"
+        ):
+            fallback_found = True
+
+    cover = images.get("cover") if isinstance(images.get("cover"), dict) else {}
+    cover_origin = str(cover.get("origin") or "").strip()
+    if (
+        cover_origin not in AUTOMATION_PUBLISHABLE_ORIGINS
+        or cover.get("style") == "text-free-editorial-scene"
+    ):
+        reasons.append("automation_image_provenance")
+    if cover_origin == "deterministic_fallback":
+        fallback_found = True
+
+    for index, brief in enumerate(briefs, start=1):
+        if not isinstance(brief, dict):
+            reasons.append("automation_image_provenance")
+            continue
+        origin = str(brief.get("origin") or "").strip()
+        evidence_type = str(brief.get("evidence_type") or "").strip()
+        image = images.get(f"visual_{index}")
+        image = image if isinstance(image, dict) else {}
+        image_origin = str(image.get("origin") or "").strip()
+
+        if origin == "deterministic_fallback" or image_origin == "deterministic_fallback":
+            fallback_found = True
+        if image.get("style") == "text-free-editorial-scene":
+            fallback_found = True
+        if (
+            origin not in AUTOMATION_PUBLISHABLE_ORIGINS
+            or image_origin != origin
+            or AUTOMATION_ORIGIN_EVIDENCE.get(origin) != evidence_type
+        ):
+            reasons.append("automation_image_provenance")
+            continue
+        origins.append(origin)
+        if origin == "imagegen" and not (
+            str(brief.get("generation_prompt") or "").strip()
+            and str(brief.get("generation_model") or "").strip()
+        ):
+            reasons.append("automation_imagegen_brief")
+
+    if fallback_found:
+        reasons.append("automation_fallback_image")
+    if not any(origin in {"capture", "annotated_capture"} for origin in origins):
+        reasons.append("automation_real_capture")
+    if "imagegen" not in origins:
+        reasons.append("automation_imagegen_explanation")
+    return list(dict.fromkeys(reasons))
 
 
 def _lead_source_reasons(
@@ -348,6 +430,12 @@ def inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
                 ),
             )
         )
+        if (
+            identity.content_type == "automation_case"
+            and date.fromisoformat(identity.publish_date)
+            >= AUTOMATION_VISUAL_POLICY_START
+        ):
+            reasons.extend(_automation_visual_quality_reasons(source))
 
     if date.fromisoformat(identity.publish_date) >= date(2026, 7, 16):
         from .optimize_images import inspect_draft_images

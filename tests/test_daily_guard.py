@@ -134,6 +134,102 @@ class DailyGuardTests(unittest.TestCase):
 
         self.assertIn("lead_explanatory_visuals", result["reasons"])
 
+    def test_saturday_visual_quality_rejects_deterministic_fallback_images(self):
+        from blog_pipeline.publishing import daily_guard
+
+        source = {
+            "visual": {
+                "assets": [
+                    {"origin": "capture", "evidence_type": "screenshot"},
+                    {
+                        "origin": "deterministic_fallback",
+                        "evidence_type": "diagram",
+                    },
+                    {
+                        "origin": "imagegen",
+                        "evidence_type": "diagram",
+                        "generation_prompt": "버튼 이름 불일치와 수정 전후를 보여 주는 장면",
+                        "generation_model": "gpt-image",
+                    },
+                ]
+            },
+            "images": {
+                "cover": {"origin": "imagegen"},
+                "visual_1": {"origin": "capture"},
+                "visual_2": {
+                    "origin": "deterministic_fallback",
+                    "style": "text-free-editorial-scene",
+                },
+                "visual_3": {"origin": "imagegen"},
+            },
+        }
+
+        reasons = daily_guard._automation_visual_quality_reasons(source)
+
+        self.assertIn("automation_fallback_image", reasons)
+
+    def test_saturday_visual_quality_accepts_capture_and_imagegen_explanations(self):
+        from blog_pipeline.publishing import daily_guard
+
+        source = {
+            "visual": {
+                "assets": [
+                    {"origin": "capture", "evidence_type": "screenshot"},
+                    {
+                        "origin": "imagegen",
+                        "evidence_type": "diagram",
+                        "generation_prompt": "메일 첨부파일이 날짜별 폴더로 이동하는 실제 물체 중심 흐름",
+                        "generation_model": "gpt-image",
+                    },
+                    {
+                        "origin": "annotated_capture",
+                        "evidence_type": "screenshot",
+                    },
+                ]
+            },
+            "images": {
+                "cover": {"origin": "imagegen"},
+                "visual_1": {"origin": "capture"},
+                "visual_2": {"origin": "imagegen"},
+                "visual_3": {"origin": "annotated_capture"},
+            },
+        }
+
+        reasons = daily_guard._automation_visual_quality_reasons(source)
+
+        self.assertEqual(reasons, [])
+
+    def test_saturday_visual_quality_rejects_an_unbriefed_extra_fallback_image(self):
+        from blog_pipeline.publishing import daily_guard
+
+        source = {
+            "visual": {
+                "assets": [
+                    {"origin": "capture", "evidence_type": "screenshot"},
+                    {
+                        "origin": "imagegen",
+                        "evidence_type": "diagram",
+                        "generation_prompt": "폴더 정리 전후를 보여 주는 장면",
+                        "generation_model": "gpt-image",
+                    },
+                ]
+            },
+            "images": {
+                "cover": {"origin": "imagegen"},
+                "visual_1": {"origin": "capture"},
+                "visual_2": {"origin": "imagegen"},
+                "visual_3": {
+                    "origin": "deterministic_fallback",
+                    "style": "text-free-editorial-scene",
+                },
+            },
+        }
+
+        reasons = daily_guard._automation_visual_quality_reasons(source)
+
+        self.assertIn("automation_image_provenance", reasons)
+        self.assertIn("automation_fallback_image", reasons)
+
     def test_saturday_guard_rejects_mismatched_publish_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

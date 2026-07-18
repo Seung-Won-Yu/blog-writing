@@ -399,6 +399,13 @@ class EditorialImageTests(unittest.TestCase):
             self.assertEqual(
                 list(assets), ["cover", "visual_1", "visual_2", "visual_3"]
             )
+            self.assertEqual(day["generation"]["image_provider"], "deterministic-fallback")
+            self.assertTrue(
+                all(
+                    asset["origin"] == "deterministic_fallback"
+                    for asset in assets.values()
+                )
+            )
             for index in range(1, 4):
                 self.assertTrue(
                     Path(directory, "2026-07-17", f"visual-{index:02d}.png").is_file()

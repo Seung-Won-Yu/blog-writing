@@ -1369,6 +1369,7 @@ def generate_editorial_images(
             "alt": f"{day.get('date_label') or identity.publish_date} {visual['subject']} - {visual['hook']} 대표 이미지",
             "width": 1200,
             "height": 630,
+            "origin": "deterministic_fallback",
         },
     }
     if is_lead_story(day):
@@ -1408,7 +1409,10 @@ def generate_editorial_images(
             "width": 1200,
             "height": 630,
             "style": "text-free-editorial-scene",
+            "origin": "deterministic_fallback",
         }
+    generation = day.setdefault("generation", {})
+    generation["image_provider"] = "deterministic-fallback"
     day["images"] = assets
     return assets
 

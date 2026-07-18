@@ -173,7 +173,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("직접 실행 실험기", contract)
         self.assertIn("따라하기", contract)
         self.assertIn("공개 도구 적용 사례", contract)
-        self.assertIn("검색 지속성 30", contract)
+        self.assertIn("검색 지속성 20", contract)
         self.assertIn("검증한 버전·커밋", contract)
         self.assertIn("기대 결과와 실제 결과", contract)
         self.assertIn("임시 디렉터리", contract)
@@ -191,6 +191,13 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("임시 점수", contract)
         self.assertIn("검증 완료의 증거가 아닙니다", contract)
         self.assertIn("공식 출처를 직접 검색", contract)
+        self.assertIn("도구명을 지워도", contract)
+        self.assertIn("대중 공감도", contract)
+        self.assertIn("이메일·문서·PDF·표·일정·파일", contract)
+        self.assertIn("결과를 제목 앞부분", contract)
+        self.assertIn("`origin`", contract)
+        self.assertIn("`imagegen`", contract)
+        self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
 
 
 if __name__ == "__main__":
