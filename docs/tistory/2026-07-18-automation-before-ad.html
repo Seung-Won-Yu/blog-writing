@@ -1,0 +1,23 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 18 (토) · 약 10분</p>
+    <p class="digest-lead">반복 점검을 등록할 때마다 같은 항목을 입력하고 버튼을 누른 뒤 목록에 들어갔는지 확인하는 일은 작지만 자주 끊긴다. 이번에는 Playwright 1.61.1로 외부 계정·운영 서비스 없이 로컬 테스트 페이지의 한 건 등록을 자동화했다. 기대한 결과는 ‘배포 후 오류 로그 확인’이 목록에 나타나고 완료 문구가 보이는 것이었다. 첫 시도는 버튼을 ‘저장’으로 가정해 0개를 찾았고, 실제 화면의 이름인 ‘등록’으로 locator를 바꾼 뒤 성공했다. 이 글은 그 실패와 수정, 실제 Chromium 출력, 남는 한계를 함께 기록한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/Playwright로-로컬-점검-목록을-등-대표.webp" alt="2026. 7. 18 Playwright로 로컬 점검 목록을 등… - 반복 점검 화면에서 버튼 이름이 한 글자 다르면 자동화는 어떻게 실패할까? 대표 이미지" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">업무자동화 실험</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실행 기록 · Microsoft Playwright 공식 문서·GitHub 릴리스 · 2026. 6. 24</p>
+    <h3>Playwright 1.61.1로 로컬 점검 목록 한 건을 등록하고 결과를 확인한 실험</h3>
+    <p class="digest-blurb">macOS의 임시 디렉터리에서 Node.js 20.20.2, npm 10.8.2, @playwright/test 1.61.1, Chromium 149.0.7827.55로 실행했다. 개인 계정·토큰·외부 URL 없이 테스트 데이터 한 건만 사용했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">반복 점검 등록은 작아 보여도 확인 단계가 빠지기 쉽다</h4><p>배포 뒤 오류 로그를 확인한다는 일을 목록에 적는 데는 입력, 버튼 클릭, 목록 반영 확인이라는 세 단계가 있다. 수동으로는 몇 초면 되지만, 같은 흐름을 여러 내부 도구에서 반복하면 버튼 이름·성공 문구가 바뀐 순간 실수가 생긴다. 이번 범위는 실제 업무 서비스가 아니라 그 흐름을 축소한 로컬 테스트 페이지다. 그래서 자동화의 선택자와 검증 방식을 안전하게 확인할 수 있다.</p><h4 class="digest-subheading">선정 이유와 안전한 실행 범위</h4><p>후보함의 Playwright 1.61.1은 공식 릴리스와 설치 문서가 있고, 브라우저 자동화의 가장 작은 성공·실패 사례를 한 번에 보여 주기 좋았다. 공식 설치 문서는 npm 프로젝트에 Playwright를 추가하고 브라우저를 설치하는 흐름을 안내한다. 이 실험은 별도 /tmp 디렉터리, 테스트 문구 한 건, headless Chromium만 사용했다. sudo, 비밀키, 개인 로그인, 운영 사이트 변경, 알 수 없는 설치 스크립트는 사용하지 않았다.</p><div class="digest-table-wrap" role="region" aria-label="실제 실행 환경과 권한 범위" tabindex="0"><table class="digest-data-table"><caption>실제 실행 환경과 권한 범위</caption><thead><tr><th scope="col">항목</th><th scope="col">기록</th></tr></thead><tbody><tr><td>운영체제</td><td>macOS (임시 /tmp 디렉터리)</td></tr><tr><td>런타임</td><td>Node.js v20.20.2 · npm 10.8.2</td></tr><tr><td>도구</td><td>@playwright/test 1.61.1 · GitHub tag v1.61.1, commit 39e3553</td></tr><tr><td>브라우저</td><td>Chromium 149.0.7827.55</td></tr><tr><td>입력</td><td>배포 후 오류 로그 확인 (테스트 데이터 1건)</td></tr><tr><td>권한·범위</td><td>로컬 브라우저만 사용, 외부 계정·운영 서비스·토큰 없음</td></tr></tbody></table></div><h4 class="digest-subheading">준비: 임시 프로젝트에서 버전을 고정했다</h4><p>공식 문서를 읽은 뒤 임시 디렉터리에서 npm 초기화, Playwright 1.61.1 설치, Chromium 설치 순서로 진행했다. 프로젝트 저장소에는 node_modules나 실험용 패키지 파일을 넣지 않았다. 재현할 때도 업무 저장소 바깥의 빈 폴더에서 시작하고, 팀의 네트워크·브라우저 설치 정책을 먼저 확인하는 편이 안전하다.</p><pre class="digest-code-block language-bash"><code>RUN_DIR=$(mktemp -d /tmp/playwright-saturday-XXXXXX)
+cd &quot;$RUN_DIR&quot;
+npm init -y
+npm install --save-dev @playwright/test@1.61.1
+npx playwright --version
+npx playwright install chromium</code></pre><p>기대한 결과는 명확했다. 화면의 입력값 ‘배포 후 오류 로그 확인’을 유지한 채 등록 버튼을 누르면 목록에 같은 문구가 표시되고, ‘목록에 1건을 등록했습니다.’라는 완료 문구가 나타나야 한다. 클릭만 성공해도 화면 반영이 실패할 수 있으므로 두 결과를 함께 읽도록 했다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/01-실행-전-화면.webp" alt="실행 전 화면 · 로컬 테스트 페이지 · 등록 버튼 · 점검 항목: 브라우저가 테스트용 로컬 페이지를 열고 입력값과 버튼 이름을 읽는다. 흐름을 표현한 실험 이해 이미지" width="1200" height="630" loading="lazy"><figcaption>클릭 전 실제 Chromium 캡처다. locator를 고치기 전에 테스트 대상의 입력값과 버튼 표시명을 화면에서 확인했다.</figcaption></figure></div>
+  </div>
+</section>
+</article>

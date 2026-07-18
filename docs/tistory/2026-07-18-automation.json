@@ -1,0 +1,85 @@
+{
+  "title": "Playwright로 반복 점검 등록 자동화하기: 버튼 이름 오류를 실제 실행으로 고친 기록",
+  "title_candidates": [
+    "Playwright로 반복 점검 등록 자동화하기: 버튼 이름 오류를 실제 실행으로 고친 기록",
+    "Playwright 1.61.1로 로컬 점검 목록 한 건을 등록하고 결과를 확인한 실험",
+    "Playwright로 로컬 점검 목록을 등록하고 결과를 확인하는 실제 실행: 반복 점검 화면에서 버튼 이름이 한 글자 다…"
+  ],
+  "category": "업무자동화",
+  "draft_id": "2026-07-18-automation",
+  "publish_date": "2026-07-18",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "scheduled_at": "2026-07-18T18:00:00+09:00",
+  "tags": [
+    "Playwright",
+    "업무자동화",
+    "브라우저 자동화",
+    "테스트 자동화",
+    "반복 작업"
+  ],
+  "meta_description": "반복 점검을 등록할 때마다 같은 항목을 입력하고 버튼을 누른 뒤 목록에 들어갔는지 확인하는 일은 작지만 자주 끊긴다. 이번에는 Playwright 1.61.1로 외부 계정·운영 서비스 없이 로컬 테스… macOS의 임시 디렉터리에서 Node.js 20.20.2, npm 10.8.2,…",
+  "key_summary": [
+    "1. Playwright 1.61.1로 로컬 점검 목록 한 건을 등록하고 결과를 확인한 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 업무자동화로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Playwright로 반복 점검 등록 자동화하기: 버튼 이름 오류를 실제 실행으로 고친 기록"
+  ],
+  "generation_provider": "codex-agent",
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-07-18.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-18-automation.html",
+  "before_ad_html": "docs/tistory/2026-07-18-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-18-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-18-automation-adfit.html",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/Playwright로-로컬-점검-목록을-등-대표.webp",
+      "path": "docs/tistory/assets/2026-07-18-automation/Playwright로-로컬-점검-목록을-등-대표.webp",
+      "original_url": "",
+      "alt": "2026. 7. 18 Playwright로 로컬 점검 목록을 등… - 반복 점검 화면에서 버튼 이름이 한 글자 다르면 자동화는 어떻게 실패할까? 대표 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/01-실행-전-화면.webp",
+      "path": "docs/tistory/assets/2026-07-18-automation/01-실행-전-화면.webp",
+      "original_url": "",
+      "alt": "실행 전 화면 · 로컬 테스트 페이지 · 등록 버튼 · 점검 항목: 브라우저가 테스트용 로컬 페이지를 열고 입력값과 버튼 이름을 읽는다. 흐름을 표현한 실험 이해 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/02-locator-수정.webp",
+      "path": "docs/tistory/assets/2026-07-18-automation/02-locator-수정.webp",
+      "original_url": "",
+      "alt": "locator 수정… · 저장 0개 · 등록 1개 · 실행 성공: 잘못 가정한 버튼 이름을 확인하고 실제 접근 가능한 이름으로 locator를 바꾼다. 흐름을 표현한 실험 이해 이미지",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/03-결과-확인과-복구.webp",
+      "path": "docs/tistory/assets/2026-07-18-automation/03-결과-확인과-복구.webp",
+      "original_url": "",
+      "alt": "결과 확인과 복구 · 목록 1건 · 완료 문구 · 테스트 데이터: 목록 항목과 완료 문구를 함께 확인하고, 임시 디렉터리를 지워 실험을 끝낸다. 흐름을 표현한 실험 이해 이미지",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
