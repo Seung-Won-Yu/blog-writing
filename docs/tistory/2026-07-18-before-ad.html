@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 18 (토) · 약 9분</p>
+    <p class="digest-lead">사이트는 평소처럼 열리는데, 관리 화면의 업데이트 알림 하나가 늦은 밤에는 꽤 다른 의미가 된다. 7월 17일 공개된 WordPress 7.0.2는 보안 수정이 포함된 릴리스이고, Cloudflare는 공개 전 두 건의 고위험 취약점에 대응하는 WAF 규칙을 배포했다고 밝혔다. 여기서 흔한 오해는 ‘WAF가 있으니 업데이트를 미뤄도 된다’는 것이다. 앞단에서 공격 요청을 줄이는 일과 서버에 남은 취약한 코드를 바꾸는 일은 같은 작업이 아니다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18/워드프레스-보안패치-WAF-대표.webp" alt="WordPress 보안 패치와 웹 애플리케이션 방화벽이 외부 공격 요청을 막는 모습" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Cloudflare Blog / WordPress.org · 2026. 7. 18</p>
+    <h3>Cloudflare, WordPress 고위험 취약점 두 건에 WAF 규칙 배포…WordPress 7.0.2 보안 릴리스</h3>
+    <p class="digest-blurb">Cloudflare는 WordPress 보안팀과 협력해 두 건의 고위험 취약점에 대한 WAF 규칙을 배포했으며, WordPress 7.0.2는 7월 17일 공개된 보안 수정 릴리스다. WAF 보호 여부와 관계없이 영향받는 설치본은 패치 릴리스로 업데이트해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">WAF가 막아도 업데이트 알림은 사라지지 않는다</h4><p>Cloudflare는 WordPress 보안팀이 공개한 두 건의 고위험 취약점에 대응해 WAF 규칙을 배포했다고 밝혔다. 이 규칙은 Cloudflare를 통과하는 HTTP 요청을 원본 서버에 닿기 전에 검사하는 방식이다. 같은 날 WordPress 7.0.2도 공개됐고, WordPress 공식 문서는 이 버전을 보안 수정이 포함된 릴리스로 안내한다. 즉 이번에는 ‘앞단 차단’과 ‘코어 수정’이 거의 동시에 제공됐다.</p><p>두 조치를 같은 의미로 보면 판단이 늦어진다. WAF 규칙은 알려진 공격 형태가 사이트에 도달하는 일을 줄일 수 있지만, 사이트 파일 안의 취약한 코드 자체를 바꾸지는 않는다. 원본 서버가 Cloudflare를 거치지 않고 직접 노출돼 있거나, 규칙이 다루지 않는 경로·변형·권한 있는 사용자의 동작이 문제라면 WAF만으로 안전을 보장할 수 없다. 패치는 영향받는 코드를 고친 버전으로 교체하는 조치다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18/WAF-패치-방어층-비교.webp" alt="외부 공격 요청을 WAF가 차단하고 WordPress 코어는 보안 패치로 교체하는 두 방어 층" width="1200" height="630" loading="lazy"><figcaption>Cloudflare WAF는 인터넷 쪽 요청을 먼저 걸러 낸다. 하지만 서버에 있는 WordPress 코어의 취약한 코드를 바꾸는 일은 7.0.2 같은 보안 업데이트가 맡는다.</figcaption></figure><h4 class="digest-subheading">두 방어 층의 차이를 먼저 분리해 보자</h4><div class="digest-table-wrap" role="region" aria-label="WAF 보호와 WordPress 패치가 하는 일" tabindex="0"><table class="digest-data-table"><caption>WAF 보호와 WordPress 패치가 하는 일</caption><thead><tr><th scope="col">확인할 점</th><th scope="col">Cloudflare WAF</th><th scope="col">WordPress 7.0.2 업데이트</th></tr></thead><tbody><tr><td>주된 위치</td><td>원본 서버 앞의 요청 검사</td><td>사이트의 WordPress 코어 파일</td></tr><tr><td>바로 하는 일</td><td>알려진 악성 요청 패턴을 차단하거나 완화</td><td>보안 수정이 들어간 코드로 교체</td></tr><tr><td>확인 신호</td><td>WAF 이벤트·Security Analytics의 차단 기록</td><td>대시보드 버전, 업데이트 결과, 오류 로그</td></tr><tr><td>혼자 해결하지 못하는 부분</td><td>원본 직접 노출·모든 공격 변형·서버 안의 취약 코드</td><td>앞단 공격 트래픽 급증·플러그인·테마의 별도 취약점</td></tr></tbody></table></div><p>Cloudflare의 지원 문서도 CMS 보안 기능이 정상 관리 작업을 방해할 수 있다고 설명한다. 예를 들어 로그인이나 이미지 업로드가 보안 규칙과 충돌할 수 있으므로, 규칙을 넓게 끄기보다 이벤트 로그에서 어떤 규칙이 어떤 URL을 막았는지 먼저 확인하는 편이 낫다. 차단 기록은 방어가 작동했다는 단서이지, 업데이트를 건너뛰어도 된다는 증명은 아니다.</p><p>반대로 업데이트도 모든 위험을 끝내지 않는다. WordPress 코어가 최신이어도 오래된 플러그인·테마, 재사용한 관리자 비밀번호, 외부에 열린 원본 IP는 별도의 공격면이다. 그래서 이번처럼 코어 보안 공지가 나왔을 때는 패치의 적용 범위와 WAF의 적용 범위를 나란히 확인하는 것이 현실적이다.</p></div>
+  </div>
+</section>
+</article>

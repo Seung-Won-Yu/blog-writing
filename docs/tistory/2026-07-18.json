@@ -1,0 +1,75 @@
+{
+  "title": "WordPress 7.0.2 보안 업데이트: Cloudflare WAF가 있어도 패치해야 하는 이유",
+  "title_candidates": [
+    "WordPress 7.0.2 보안 업데이트: Cloudflare WAF가 있어도 패치해야 하는 이유",
+    "Cloudflare, WordPress 고위험 취약점 두 건에 WAF 규칙 배포…WordPress 7.0.2 보안 릴리스",
+    "WordPress 보안 패치와 Cloudflare WAF의 서로 다른 방어 층: WAF가 막아 주는데도 왜 WordPre…"
+  ],
+  "category": "데일리IT뉴스",
+  "draft_id": "2026-07-18",
+  "publish_date": "2026-07-18",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "scheduled_at": "2026-07-18T09:00:00+09:00",
+  "tags": [
+    "WordPress",
+    "보안 업데이트",
+    "Cloudflare",
+    "WAF",
+    "웹사이트 보안"
+  ],
+  "meta_description": "사이트는 평소처럼 열리는데, 관리 화면의 업데이트 알림 하나가 늦은 밤에는 꽤 다른 의미가 된다. 7월 17일 공개된 WordPress 7.0.2는 보안 수정이 포함된 릴리스이고, Cloudflare… Cloudflare는 WordPress 보안팀과 협력해 두 건의 고위험 취약점에 대…",
+  "key_summary": [
+    "1. Cloudflare, WordPress 고위험 취약점 두 건에 WAF 규칙 배포…WordPress 7.0.2 보안 릴리스",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: WordPress 7.0.2 보안 업데이트: Cloudflare WAF가 있어도 패치해야 하는 이유"
+  ],
+  "generation_provider": "codex-agent",
+  "publish_ready": true,
+  "source": "data/days/2026-07-18.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-18.html",
+  "before_ad_html": "docs/tistory/2026-07-18-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-18-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-18-adfit.html",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18/워드프레스-보안패치-WAF-대표.webp",
+      "path": "docs/tistory/assets/2026-07-18/워드프레스-보안패치-WAF-대표.webp",
+      "original_url": "",
+      "alt": "WordPress 보안 패치와 웹 애플리케이션 방화벽이 외부 공격 요청을 막는 모습",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18/WAF-패치-방어층-비교.webp",
+      "path": "docs/tistory/assets/2026-07-18/WAF-패치-방어층-비교.webp",
+      "original_url": "",
+      "alt": "외부 공격 요청을 WAF가 차단하고 WordPress 코어는 보안 패치로 교체하는 두 방어 층",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18/업데이트-로그확인-롤백분기.webp",
+      "path": "docs/tistory/assets/2026-07-18/업데이트-로그확인-롤백분기.webp",
+      "original_url": "",
+      "alt": "백업부터 스테이징 검증, WordPress 업데이트, 로그 확인과 실패 시 롤백까지의 조건부 흐름",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
