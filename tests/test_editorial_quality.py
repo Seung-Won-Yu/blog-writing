@@ -492,6 +492,45 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn("quality_identity", daily_reasons)
         self.assertIn("quality_identity", automation_reasons)
 
+    def test_manual_extra_allows_explicit_same_day_non_saturday_publish(self):
+        source = valid_automation_source("2026-07-26")
+        source.update(
+            {
+                "publication_mode": "manual_extra",
+                "manual_extra_reason": "사용자가 정규 토요일 일정과 별도로 오늘 즉시 발행을 요청했다.",
+                "scheduled_at": "2026-07-26T18:40:00+09:00",
+            }
+        )
+        source["verification"]["started_at"] = "2026-07-26T18:25:00+09:00"
+        source["verification"]["completed_at"] = "2026-07-26T18:35:00+09:00"
+        for brief in source["visual"]["assets"]:
+            if brief["origin"] in {"capture", "annotated_capture"}:
+                brief["captured_at"] = "2026-07-26T18:34:00+09:00"
+        for image in source["images"].values():
+            if image["origin"] in {"capture", "annotated_capture"}:
+                image["captured_at"] = "2026-07-26T18:34:00+09:00"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-26-automation")
+        )
+
+        self.assertNotIn("quality_identity", reasons)
+
+    def test_manual_extra_requires_reason_and_same_day_kst_time(self):
+        source = valid_automation_source("2026-07-26")
+        source.update(
+            {
+                "publication_mode": "manual_extra",
+                "scheduled_at": "2026-07-27T18:40:00+09:00",
+            }
+        )
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-26-automation")
+        )
+
+        self.assertIn("quality_identity", reasons)
+
     def test_saturday_capture_requires_bound_provenance(self):
         source = valid_automation_source()
         source["visual"]["assets"][0].pop("capture_tool")

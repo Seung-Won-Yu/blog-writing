@@ -869,13 +869,32 @@ def write_post(
         if category != "업무자동화":
             raise ValueError("automation category must be 업무자동화")
         scheduled_at = plain(day.get("scheduled_at"))
-        expected_schedule = f"{publish_date}T18:00:00+09:00"
-        if scheduled_at != expected_schedule:
-            raise ValueError(
-                f"automation scheduled_at must be {expected_schedule}"
-            )
+        publication_mode = plain(day.get("publication_mode")) or "scheduled"
+        if publication_mode == "manual_extra":
+            try:
+                manual_time = datetime.datetime.fromisoformat(scheduled_at)
+            except ValueError as exc:
+                raise ValueError("manual extra scheduled_at must be valid KST") from exc
+            if not (
+                manual_time.tzinfo is not None
+                and manual_time.date().isoformat() == publish_date
+                and manual_time.utcoffset() == datetime.timedelta(hours=9)
+                and len(plain(day.get("manual_extra_reason"))) >= 20
+            ):
+                raise ValueError(
+                    "manual extra requires same-day KST scheduled_at and explicit reason"
+                )
+        elif publication_mode == "scheduled":
+            expected_schedule = f"{publish_date}T18:00:00+09:00"
+            if scheduled_at != expected_schedule:
+                raise ValueError(
+                    f"automation scheduled_at must be {expected_schedule}"
+                )
+        else:
+            raise ValueError("unsupported automation publication_mode")
     else:
         category = plain(day.get("category")) or DEFAULT_CATEGORY
+        publication_mode = "scheduled"
         scheduled_at = plain(day.get("scheduled_at")) or (
             f"{publish_date}T09:00:00+09:00"
         )
@@ -938,6 +957,7 @@ def write_post(
                 "publish_date": publish_date,
                 "content_type": content_type,
                 "content_label": content_label,
+                "publication_mode": publication_mode,
                 "scheduled_at": scheduled_at,
                 "tags": build_recommended_tags(day),
                 "meta_description": build_meta_description(day),

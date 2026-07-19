@@ -1,0 +1,38 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 19 (일) · 약 15분</p>
+    <p class="digest-lead">모집 공고, 품절 상품, 지원사업 신청 페이지는 궁금할 때마다 새로고침하게 만든다. 문제는 열 번 확인해도 아홉 번은 그대로라는 점이다. 이번 실험에서는 별도 유료 서비스나 계정 없이 Python 표준 라이브러리만으로 페이지의 핵심 문구를 저장하고, 다음 실행에서 값이 달라졌을 때만 ‘알림 대상’으로 표시하는 작은 감지기를 만들었다. 로컬 테스트 페이지를 ‘마감·0명’에서 ‘신청 가능·12명’으로 직접 바꿔 기준 저장, 변경 없음, 변경 감지, 대상 영역 누락까지 네 가지 흐름을 확인했다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19-automation/웹페이지-변경-감지-대표.webp" alt="마감된 클래스 신청 카드가 신청 가능 상태로 바뀌자 한 번만 알림이 울리는 웹페이지 변경 감지 대표 이미지" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">업무자동화 실험</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실행 기록 · Python 공식 문서와 로컬 실행 실험 · 2026. 7. 14</p>
+    <h3>Python으로 웹페이지 변경 감지기를 직접 만들고 네 가지 상태를 검증한 기록</h3>
+    <p class="digest-blurb">특정 영역의 텍스트만 저장해 이전 값과 비교하고, 달라진 실행에만 알림 신호를 만드는 구조를 실제 마감·신청 가능 페이지로 검증했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">왜 새로고침 대신 변경 감지가 필요한가</h4><p>모집 공고나 재고 페이지를 직접 확인하는 방식은 단순하지만 확인 횟수만큼 집중이 끊긴다. 반대로 페이지 전체를 1분마다 비교하면 날짜·추천 상품·방문자 수처럼 관심 없는 값에도 반응하고 상대 사이트에도 불필요한 요청을 만든다. 필요한 것은 ‘페이지가 조금이라도 달라졌는가’가 아니라 ‘내가 기다리는 신청 상태나 가격이 달라졌는가’를 판단하는 작은 장치다. 변경 감지와 알림 시스템에 관한 조사 연구도 동적인 웹페이지에서 수집, 변화 판정, 알림이 서로 다른 단계라는 점을 구분한다. 이 실험도 읽기와 비교, 알림 대상을 분리했다.</p><p>테스트 대상은 주말 사진 클래스 신청 카드다. 처음에는 ‘마감·0명·다음 확인’이 보이고, 나중에는 ‘신청 가능·12명·접수 마감’으로 바뀐다. 페이지의 머리글이나 배경은 비교하지 않고 id가 watch-target인 카드 속 글자만 읽는다. 이 선택 하나가 알림 품질을 좌우한다. 광고 배너나 시계처럼 자주 달라지는 요소가 감시 범위에서 빠지기 때문이다. 실제 사이트에서는 브라우저 개발자 도구로 원하는 영역의 고유 id나 CSS 선택자를 먼저 확인하면 된다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19-automation/01-변경전-마감-화면.webp" alt="로컬 테스트 페이지에서 신청 상태 마감과 남은 자리 0명을 보여 주는 실제 변경 전 화면" width="1200" height="630" loading="lazy"><figcaption>직접 만든 로컬 테스트 페이지의 최초 상태. 신청 카드만 감시하며 이 실행에서는 ‘마감·0명’이 기준값으로 저장된다.</figcaption></figure><h4 class="digest-subheading">전체 페이지가 아니라 핵심 문구만 비교한다</h4><p>비교 범위는 좁을수록 좋지만 너무 좁으면 맥락을 잃는다. 가격 숫자 하나만 보면 통화나 옵션이 바뀌어도 놓칠 수 있고, 카드 전체를 보면 버튼 문구와 재고 수량을 함께 판단할 수 있다. 이번에는 카드 내부의 모든 텍스트를 줄 단위로 모은 뒤 연속 공백과 빈 줄을 제거했다. 같은 문장이 화면 폭 때문에 두 줄로 보이더라도 HTML 속 텍스트가 같으면 같은 값으로 처리한다. JavaScript로 나중에 그려지는 페이지, 로그인 뒤 화면, 무한 스크롤은 urllib만으로 읽히지 않을 수 있으므로 그때는 Playwright 같은 실제 브라우저 방식이 필요하다.</p><div class="digest-table-wrap" role="region" aria-label="웹페이지 확인 방식별 차이" tabindex="0"><table class="digest-data-table"><caption>웹페이지 확인 방식별 차이</caption><thead><tr><th scope="col">방식</th><th scope="col">장점</th><th scope="col">문제</th><th scope="col">추천 상황</th></tr></thead><tbody><tr><td>직접 새로고침</td><td>준비가 필요 없다</td><td>반복 확인과 놓침이 생긴다</td><td>한두 번만 확인할 때</td></tr><tr><td>페이지 전체 비교</td><td>구현이 쉽다</td><td>광고·시간 변화에도 반응한다</td><td>페이지 전체 개편을 볼 때</td></tr><tr><td>핵심 영역 비교</td><td>알림 잡음이 적다</td><td>선택자를 먼저 찾아야 한다</td><td>가격·재고·접수 상태를 볼 때</td></tr></tbody></table></div><p>완성된 서비스가 필요하면 changedetection.io처럼 CSS 선택자, XPath, 브라우저 실행, 여러 알림 채널을 지원하는 공개 도구도 있다. 다만 작은 공개 페이지 한두 곳을 확인하는 목적이라면 Python 표준 라이브러리만으로 원리를 먼저 익혀 두는 편이 좋다. 무엇이 저장되고 어떤 변화가 알림을 만드는지 직접 볼 수 있고, 나중에 완성형 도구를 선택할 때도 필터와 확인 주기를 더 정확하게 정할 수 있다.</p><h4 class="digest-subheading">Python 표준 라이브러리로 직접 실험하기</h4><p>준비물은 Python 3 하나뿐이다. urllib.request는 URL을 요청해 응답을 읽고, html.parser는 지정 영역의 글자를 모으며, hashlib.sha256은 정리된 텍스트를 짧고 고정된 값으로 바꾼다. SHA-256은 여기서 암호를 저장하려는 목적이 아니라 이전 내용과 현재 내용이 같은지 빠르게 비교하는 지문 역할을 한다. 원문도 state.json에 함께 남겨야 변경이 생겼을 때 어떤 줄이 달라졌는지 보여 줄 수 있다. 해시만 저장하면 변화 여부는 알 수 있지만 사람에게 설명할 차이를 만들기 어렵다.</p><pre class="digest-code-block language-python"><code>from urllib.request import Request, urlopen
+from html.parser import HTMLParser
+import hashlib, json, re
+
+def normalize(text):
+    return &quot;\n&quot;.join(
+        line.strip()
+        for line in re.sub(r&quot;[ \t]+&quot;, &quot; &quot;, text).splitlines()
+        if line.strip()
+    )
+
+def digest(text):
+    return hashlib.sha256(text.encode(&quot;utf-8&quot;)).hexdigest()
+
+request = Request(URL, headers={&quot;User-Agent&quot;: &quot;ChangeMonitorDemo/1.0&quot;})
+with urlopen(request, timeout=10) as response:
+    markup = response.read().decode(&quot;utf-8&quot;)
+
+# HTMLParser로 #watch-target의 글자만 모았다고 가정
+current_text = normalize(extracted_text)
+current_hash = digest(current_text)</code></pre><p>Python 공식 urllib 문서는 Request에 헤더를 넣을 수 있고 urlopen 결과를 파일처럼 읽을 수 있다고 설명한다. 실제 감지기에는 timeout을 반드시 둬야 네트워크가 느릴 때 작업 전체가 멈추지 않는다. HTTPError와 URLError도 ‘페이지가 바뀌었다’로 처리하면 안 된다. 서버 오류나 연결 실패는 변화가 아니라 확인 실패다. 이번 스크립트는 감시 대상 영역이 없거나 요청에 실패하면 state.json을 덮어쓰지 않고 종료 코드 2를 반환하도록 만들었다. 다음 정상 실행에서 기존 기준과 비교할 수 있게 하기 위해서다.</p></div>
+  </div>
+</section>
+</article>

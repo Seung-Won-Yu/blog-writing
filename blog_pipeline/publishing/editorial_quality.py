@@ -487,6 +487,11 @@ def _meaningful_blocks(content):
 def _identity_reasons(source, identity):
     publish_day = date.fromisoformat(identity.publish_date)
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
+    publication_mode = plain(source.get("publication_mode")) or "scheduled"
+    manual_extra = (
+        identity.content_type == "automation_case"
+        and publication_mode == "manual_extra"
+    )
     expected = {
         "schema_version": 3,
         "format": "lead-story-v1",
@@ -499,19 +504,29 @@ def _identity_reasons(source, identity):
         "content_type": identity.content_type,
         "content_label": identity.content_label,
         "category": "업무자동화" if identity.content_type == "automation_case" else "데일리IT뉴스",
-        "scheduled_at": (
-            f"{identity.publish_date}T18:00:00+09:00"
-            if identity.content_type == "automation_case"
-            else f"{identity.publish_date}T09:00:00+09:00"
-        ),
     }
-    if (
-        any(source.get(key) != value for key, value in expected.items())
-        or (
-            identity.content_type == "automation_case"
-            and publish_day.weekday() != 5
+    invalid = any(source.get(key) != value for key, value in expected.items())
+    if identity.content_type == "automation_case":
+        if manual_extra:
+            scheduled = _aware_datetime(source.get("scheduled_at"))
+            invalid = invalid or not (
+                scheduled
+                and scheduled.date() == publish_day
+                and scheduled.utcoffset() == timedelta(hours=9)
+                and len(plain(source.get("manual_extra_reason"))) >= 20
+            )
+        else:
+            invalid = invalid or publication_mode != "scheduled"
+            invalid = invalid or publish_day.weekday() != 5
+            invalid = invalid or source.get("scheduled_at") != (
+                f"{identity.publish_date}T18:00:00+09:00"
+            )
+    else:
+        invalid = invalid or publication_mode != "scheduled"
+        invalid = invalid or source.get("scheduled_at") != (
+            f"{identity.publish_date}T09:00:00+09:00"
         )
-    ):
+    if invalid:
         return ["quality_identity"]
     return []
 

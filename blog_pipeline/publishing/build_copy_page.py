@@ -49,7 +49,7 @@ def is_allowed_source(source):
     return len(path.parts) == 3 and path.suffix == ".json" and (ROOT / path).is_file()
 
 
-def scheduled_label(value):
+def scheduled_label(value, *, publication_mode="scheduled"):
     text = str(value or "").strip()
     if not text:
         return ""
@@ -58,10 +58,11 @@ def scheduled_label(value):
     except ValueError:
         return text
     weekdays = "월화수목금토일"
-    return (
+    label = (
         f"{scheduled.year}. {scheduled.month}. {scheduled.day}. "
         f"({weekdays[scheduled.weekday()]}) {scheduled:%H:%M}"
     )
+    return f"즉시 발행 · {label}" if publication_mode == "manual_extra" else label
 
 
 def safe_image_assets(values):
@@ -99,6 +100,7 @@ def load_drafts():
         content_type = identity.content_type
         content_label = identity.content_label
         scheduled_at = str(meta.get("scheduled_at") or "")
+        publication_mode = str(meta.get("publication_mode") or "scheduled")
         drafts.append(
             {
                 "day": draft_id,
@@ -106,8 +108,11 @@ def load_drafts():
                 "publish_date": publish_date,
                 "content_type": content_type,
                 "content_label": content_label,
+                "publication_mode": publication_mode,
                 "scheduled_at": scheduled_at,
-                "scheduled_label": scheduled_label(scheduled_at),
+                "scheduled_label": scheduled_label(
+                    scheduled_at, publication_mode=publication_mode
+                ),
                 "title": meta.get("title") or draft_id,
                 "title_candidates": meta.get("title_candidates") or [],
                 "category": meta.get("category") or "",
@@ -173,13 +178,17 @@ def apply_guard_results(drafts, *, root=ROOT):
 
 def render_preview_page(draft, fragment):
     """Render the canonical standalone preview bound to one final fragment."""
+    preview_fragment = str(fragment or "").replace(
+        "https://seung-won-yu.github.io/blog-writing/tistory/assets/",
+        "../tistory/assets/",
+    )
     return f"""<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
   <title>{esc(draft.get("title"))} · 본문 미리보기</title>
   <link rel="stylesheet" href="tistory-style.css">
   <style>
@@ -210,7 +219,7 @@ def render_preview_page(draft, fragment):
           </div>
           <div class="entry-content" id="article-view">
             <div class="tt_article_useless_p_margin contents_style">
-              {fragment}
+  {preview_fragment}
             </div>
           </div>
         </div>
@@ -679,7 +688,7 @@ def render(drafts):
             <div class="field"><span class="label">추천 제목</span><span class="value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="btn" type="button" data-copy="tags">복사</button></div>
-            <div class="field"><span class="label">예약 발행</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
+            <div class="field"><span class="label">발행 방식</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
           </section>
 
           <section class="image-card" id="imageCard" hidden>
@@ -1015,7 +1024,7 @@ def render(drafts):
       if (type === "title") copyText(current.title, "추천 제목");
       if (type === "category") copyText(current.category, "카테고리");
       if (type === "tags") copyText(current.tags, "태그");
-      if (type === "schedule") copyText(current.scheduled_label || current.scheduled_at, "예약 발행 시각");
+      if (type === "schedule") copyText(current.scheduled_label || current.scheduled_at, "발행 설정");
     }});
 
     if (latest) selectDraft(latest);

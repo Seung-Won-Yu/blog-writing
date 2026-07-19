@@ -233,6 +233,34 @@ class ExportProtectionTests(unittest.TestCase):
 
 
 class SaturdayAutomationExportTests(unittest.TestCase):
+    def test_exports_explicit_manual_extra_on_non_saturday(self):
+        automation = copy.deepcopy(LEAD_DAY)
+        automation.update(
+            {
+                "draft_id": "2026-07-19-automation",
+                "publish_date": "2026-07-19",
+                "content_type": "automation_case",
+                "content_label": "업무자동화 실험",
+                "category": "업무자동화",
+                "publication_mode": "manual_extra",
+                "manual_extra_reason": "사용자가 정규 토요일 일정 외 오늘 즉시 발행을 요청했다.",
+                "scheduled_at": "2026-07-19T18:40:00+09:00",
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)
+        ):
+            write_post("2026-07-19-automation", day=automation)
+            meta = json.loads(
+                (Path(directory) / "2026-07-19-automation.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+
+        self.assertEqual(meta["publication_mode"], "manual_extra")
+        self.assertEqual(meta["scheduled_at"], "2026-07-19T18:40:00+09:00")
+
     def test_rejects_missing_saturday_category_or_schedule(self):
         automation = copy.deepcopy(LEAD_DAY)
         automation.update(

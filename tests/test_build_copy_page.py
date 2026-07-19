@@ -10,11 +10,34 @@ from blog_pipeline.publishing.build_copy_page import (
     load_drafts,
     render,
     safe_image_assets,
+    scheduled_label,
     write_preview_pages,
 )
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_preview_uses_repository_assets_before_public_deploy(self):
+        from blog_pipeline.publishing.build_copy_page import render_preview_page
+
+        page = render_preview_page(
+            {"title": "미리보기"},
+            '<img src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/example.webp">',
+        )
+
+        self.assertIn('src="../tistory/assets/2026-07-19/example.webp"', page)
+        self.assertNotIn(
+            'src="https://seung-won-yu.github.io/blog-writing/tistory/assets/',
+            page,
+        )
+
+    def test_manual_extra_schedule_is_labeled_as_immediate_publish(self):
+        self.assertEqual(
+            scheduled_label(
+                "2026-07-19T18:40:00+09:00", publication_mode="manual_extra"
+            ),
+            "즉시 발행 · 2026. 7. 19. (일) 18:40",
+        )
+
     def test_copy_page_uses_ninety_day_guard_for_saturday_automation(self):
         from blog_pipeline.publishing.build_copy_page import apply_guard_results
 
@@ -232,7 +255,7 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn("2026-07-18 · 2건", page)
         self.assertIn("뉴스 심층글", page)
         self.assertIn("업무자동화 실험", page)
-        self.assertIn("예약 발행", page)
+        self.assertIn("발행 방식", page)
         self.assertIn('data-draft-id="2026-07-18"', page)
         self.assertIn('data-draft-id="2026-07-18-automation"', page)
         self.assertIn("const byId = new Map", page)
