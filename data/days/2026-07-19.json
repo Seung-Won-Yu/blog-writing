@@ -1,0 +1,344 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-07-19",
+  "publish_date": "2026-07-19",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "데일리IT뉴스",
+  "scheduled_at": "2026-07-19T09:00:00+09:00",
+  "date_label": "2026. 7. 19",
+  "weekday": "일",
+  "primary_query": "Hugging Face security incident July 2026 rotate access tokens fine-grained token organization security checklist",
+  "tags": [
+    "Hugging Face",
+    "보안 사고",
+    "액세스 토큰",
+    "토큰 회전",
+    "AI 개발",
+    "계정 보안"
+  ],
+  "visual": {
+    "subject": "Hugging Face 토큰 회전과 최소 권한으로 줄이는 계정 접근 위험",
+    "hook": "서비스 사고 공지를 봤을 때 내 토큰은 왜 바로 바꿔야 할까?",
+    "motif": "노출 가능성이 있는 긴 열쇠를 폐기하고, 용도별 작은 열쇠로 바꾸는 흐름",
+    "assets": [
+      {
+        "label": "보안 공지 뒤 토큰을 회전하는 순서",
+        "scene_label": [
+          "Hugging Face",
+          "기존 토큰",
+          "새 토큰",
+          "배포 환경"
+        ],
+        "steps": "사고 공지 확인 → 기존 토큰 폐기 → 용도별 새 토큰 생성 → 환경 변수 교체 → 접근 확인",
+        "curiosity_hook": "토큰을 새로 만들기만 하면 왜 배포가 멈출 수 있을까?",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog explanation image, 1200 by 630 landscape. Create a calm flat editorial diagram about rotating Hugging Face access tokens after a security incident. Show five large connected steps: notice, old token disabled, new fine-grained token, CI environment variable replaced, access verified. Use short, accurate Korean labels exactly: '공지 확인', '기존 토큰 폐기', '새 토큰', '환경 변수 교체', '접근 확인'. Include a token-key icon and deployment box, with arrows showing the causal flow. White background, navy and muted orange accents, large mobile-readable Korean text. No UI screenshot, no fake terminal, no humans, no robots, no neon, no logo dominance, no watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "공지 확인",
+          "기존 토큰 폐기",
+          "새 토큰",
+          "환경 변수 교체",
+          "접근 확인"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "넓은 권한 토큰과 세분화 토큰의 영향 범위 비교",
+        "scene_label": [
+          "읽기 토큰",
+          "쓰기 토큰",
+          "세분화 토큰",
+          "조직 저장소"
+        ],
+        "steps": "하나의 넓은 토큰 → 여러 리소스 접근 가능 / 용도별 세분화 토큰 → 필요한 저장소만 접근",
+        "curiosity_hook": "유출된 토큰 하나가 어디까지 닿는지는 무엇으로 달라질까?",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog explanation image, 1200 by 630 landscape. Make a precise side-by-side comparison of Hugging Face token permissions. Left panel: one broad write token reaches several organization repositories with wide orange arrows. Right panel: separate fine-grained tokens reach only named allowed repository boxes with narrow green arrows. Use short Korean labels exactly: '넓은 권한 토큰', '세분화 토큰', '여러 저장소', '필요한 저장소만'. Clean white background, navy outlines, restrained orange versus green, large mobile-readable typography. This is an explanatory diagram, not a fake product screen. No people, generic computer desk, robot, neon, watermark, or invented measurements.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "넓은 권한 토큰",
+          "세분화 토큰",
+          "여러 저장소",
+          "필요한 저장소만"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ],
+    "screenshot_unavailable_reason": "공개 관리 화면은 각 사용자의 토큰과 조직 권한을 노출할 수 있고, 실제 화면을 확보하지 않은 상태에서 가짜 UI를 만들지 않기 위해 공식 문서 기반의 관계 도식으로 설명한다."
+  },
+  "editorial": {
+    "headline": "Hugging Face 보안 공지 뒤 해야 할 일: 토큰 회전과 최소 권한 점검 순서",
+    "opening": "CI가 평소처럼 모델을 내려받고 있는데 보안 사고 공지가 뜨면, 가장 먼저 떠오르는 질문은 ‘우리 배포 토큰도 바꿔야 하나?’다. Hugging Face는 7월 16일 일부 내부 데이터셋과 서비스 자격 증명에 대한 무단 접근을 탐지·대응했다고 알리면서, 커뮤니티에 액세스 토큰 회전과 최근 활동 검토를 권고했다. 공개 모델·데이터셋·Spaces의 변조 증거는 없다고 밝혔지만, 토큰을 환경 변수나 노트북에 넣어 쓰는 팀이라면 이 공지는 계정 쪽 점검을 미룰 이유가 아니다.",
+    "closing": "이번 공지가 모든 사용자 토큰 유출을 뜻하는 것은 아니다. 다만 토큰은 한 번 노출되면 누가 어디서 썼는지 되짚기 어렵고, 오래 유지한 넓은 권한은 회전 작업도 크게 만든다. 토큰을 용도별로 나누고, 사고 공지 때 폐기·교체·확인을 한 묶음으로 실행할 수 있게 해 두면 다음 대응은 훨씬 짧아진다.",
+    "action": "오늘 Hugging Face 설정의 Access Tokens에서 사용처를 설명할 수 없는 토큰과 넓은 read/write 토큰을 찾아, 배포·개인 작업·노트북용으로 분리할 수 있는지 확인해 보자.",
+    "audience_problem": "Hugging Face 토큰을 CI, 노트북, 개인 개발 환경에 섞어 쓰는 개발자는 사고 공지 뒤 무엇을 폐기하고 어떻게 서비스 중단을 피할지 판단하기 어렵다.",
+    "reader_takeaway": "토큰 회전의 순서와 fine-grained 토큰의 적용 범위, 교체 뒤 확인 신호를 한 번에 점검할 수 있다.",
+    "why_now": "Hugging Face가 2026년 7월 16일 보안 사고를 공지하며 액세스 토큰 회전과 최근 활동 검토를 권고했다.",
+    "topic_key": "Hugging Face 액세스 토큰 회전과 최소 권한",
+    "reader_question": "보안 공지 뒤 내 Hugging Face 토큰을 어떤 순서로 바꾸고, CI가 끊기지 않았는지 어떻게 확인할까?",
+    "entities": [
+      "Hugging Face",
+      "User Access Token",
+      "fine-grained token",
+      "CI/CD"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "checklist"
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "Hugging Face, 7월 보안 사고 공지…액세스 토큰 회전과 최근 활동 검토 권고",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/security-incident-july-2026",
+      "published_at": "2026-07-16T00:00:00+00:00",
+      "blurb_kr": "Hugging Face는 일부 생산 인프라 침입과 제한된 내부 데이터셋·서비스 자격 증명에 대한 무단 접근을 탐지했다고 밝혔다. 공개 사용자 모델·데이터셋·Spaces 변조 증거는 없다고 했으며, 예방 차원에서 사용자는 액세스 토큰을 회전하고 최근 활동을 검토하라고 권고했다.",
+      "references": [
+        {
+          "title": "Security incident disclosure — July 2026",
+          "url": "https://huggingface.co/blog/security-incident-july-2026",
+          "kind": "official"
+        },
+        {
+          "title": "User access tokens",
+          "url": "https://huggingface.co/docs/hub/main/security-tokens",
+          "kind": "documentation"
+        },
+        {
+          "title": "Tokens Management",
+          "url": "https://huggingface.co/docs/hub/enterprise-tokens-management",
+          "kind": "documentation"
+        },
+        {
+          "title": "CSA research note: malicious AI model repositories attack surface",
+          "url": "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/05/CSA_research_note_malicious-ai-model-repositories-attack-surface_20260510-csa-styled.pdf",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "사고 공지는 ‘내 계정이 털렸다’는 뜻과 다르다"
+        },
+        {
+          "t": "p",
+          "text": "Hugging Face의 7월 16일 공지는 데이터 처리 파이프라인의 코드 실행 경로가 악용돼 일부 내부 데이터셋과 여러 서비스 자격 증명에 무단 접근이 있었다고 설명한다. 회사는 공개 사용자 모델·데이터셋·Spaces의 변조 증거는 찾지 못했고, 컨테이너 이미지와 공개 패키지 공급망도 확인했다고 밝혔다. 영향받은 파트너·고객 데이터 여부는 계속 평가 중이며, 해당 당사자에게 직접 연락하겠다고 했다."
+        },
+        {
+          "t": "p",
+          "text": "그래도 사용자에게는 액세스 토큰 회전과 최근 활동 검토를 예방 조치로 권고했다. 이 문장을 ‘모든 사용자 토큰이 유출됐다’로 확대 해석할 필요는 없다. 반대로 내 토큰이 환경 변수, 노트북, 개인 컴퓨터 어디에서 어떤 권한으로 쓰이는지 모른다면, 사고 여부를 기다리기보다 정리할 좋은 계기다. 회전은 새 토큰을 만든 뒤 기존 토큰을 폐기해 이전 비밀값을 더는 인증에 쓸 수 없게 하는 작업이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "토큰 회전은 새 토큰을 만드는 일만이 아니다. 기존 토큰 폐기, CI·노트북의 비밀값 교체, 실제 접근 확인까지 이어져야 이전 토큰의 경로가 닫힌다."
+        },
+        {
+          "t": "h",
+          "text": "토큰의 권한이 넓을수록 교체 범위도 커진다"
+        },
+        {
+          "t": "p",
+          "text": "Hugging Face 문서는 토큰 역할을 fine-grained, read, write로 구분한다. read는 접근 가능한 저장소를 읽을 수 있고, write는 생성·푸시까지 할 수 있다. fine-grained 토큰은 특정 조직의 특정 모델·저장소처럼 필요한 리소스에만 권한을 주도록 설계돼, 운영 환경에서 권장된다. 토큰의 실제 접근 범위는 역할뿐 아니라 해당 사용자의 조직 멤버십 권한에도 영향을 받는다."
+        },
+        {
+          "t": "table",
+          "caption": "용도별 토큰을 나누면 회전과 영향 분석이 쉬워지는 이유",
+          "headers": [
+            "사용처",
+            "권장 접근 범위",
+            "교체 뒤 확인 신호"
+          ],
+          "rows": [
+            [
+              "개인 노트북",
+              "개인 작업에 필요한 읽기 또는 세분화 권한",
+              "로그인·모델 내려받기 성공"
+            ],
+            [
+              "CI/CD 배포",
+              "배포에 필요한 저장소만 허용한 세분화 토큰",
+              "비밀값 교체 뒤 빌드·배포 성공"
+            ],
+            [
+              "조직 자동화",
+              "조직 정책과 승인 절차에 맞춘 최소 권한",
+              "권한 오류·승인 상태·감사 기록 확인"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "세분화 토큰이 모든 환경에서 자동으로 답이 되는 것은 아니다. 조직의 Team·Enterprise 정책에서는 토큰 승인, 거부, 폐기 같은 추가 상태가 있고, 폐기된 조직 접근은 되돌릴 수 없다고 문서는 안내한다. 따라서 새 토큰을 먼저 만들었을 때 조직 범위가 보류 상태인지, 필요한 리소스가 빠지지 않았는지 확인한 뒤 기존 토큰을 폐기해야 서비스 중단 시간을 줄일 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "그림으로 보는 권한 범위의 차이"
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "한 개의 넓은 쓰기 토큰은 여러 저장소에 닿을 수 있다. 작업별 세분화 토큰은 유출·오작동 때 영향을 필요한 저장소 쪽으로 제한하고, 어떤 비밀값을 교체할지도 분명하게 만든다."
+        },
+        {
+          "t": "h",
+          "text": "중단 없이 회전하려면 사용처 목록부터 만든다"
+        },
+        {
+          "t": "p",
+          "text": "먼저 Hugging Face 설정의 Access Tokens에서 토큰 이름, 역할, 생성 목적을 확인한다. 이름만 보고 용도를 알 수 없는 토큰은 바로 지우기보다, CI 비밀값·호스팅 환경 변수·노트북·로컬 자격 증명에 같은 값이 남아 있는지 확인해야 한다. 운영 토큰을 개인 토큰과 섞어 쓰고 있었다면, 배포용 새 fine-grained 토큰을 먼저 만들고 필요한 저장소만 범위에 넣는 편이 안전하다."
+        },
+        {
+          "t": "code",
+          "language": "text",
+          "text": "토큰 회전 체크 순서\n1. 토큰별 사용처와 필요한 저장소·권한을 목록으로 적는다\n2. 각 사용처에 맞는 새 fine-grained 또는 read 토큰을 만든다\n3. CI 비밀값, 호스팅 환경 변수, 노트북·로컬 자격 증명을 새 값으로 바꾼다\n4. 모델 내려받기·추론·푸시처럼 실제 필요한 동작을 새 토큰으로 확인한다\n5. 이전 토큰을 폐기하거나 삭제한다\n6. 최근 활동과 권한 오류를 다시 검토하고, 토큰 이름에 사용처·교체 날짜를 남긴다"
+        },
+        {
+          "t": "p",
+          "text": "검증은 단순히 로그인 화면이 열리는지보다 실제 작업을 한 번 수행해 보는 방식이 낫다. 읽기 전용 배포라면 비공개 모델이나 gated 모델을 내려받는 작업을, 쓰기 자동화라면 테스트 저장소에 대한 최소 작업을 확인한다. 새 토큰이 403을 반환하면 토큰 역할, 조직 멤버십, 조직의 승인·fine-grained 전용 정책을 차례로 확인한다. 권한을 넓혀 해결하기 전에 필요한 저장소와 동작이 무엇인지 다시 확인해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "토큰 회전만으로 끝나지 않는 범위"
+        },
+        {
+          "t": "p",
+          "text": "이번 공지는 계정 토큰 점검의 계기이지만, 데이터셋이나 모델을 실행하는 환경의 위험을 모두 해결하지는 않는다. 사고의 초기 접근 경로는 데이터 처리에서 실행 가능한 코드와 템플릿 주입으로 설명됐다. Cloud Security Alliance의 AI 모델 저장소 공격면 연구도 공개 저장소에서 실행 코드, 직렬화 파일, 외부 의존성을 함께 검토해야 한다는 맥락을 제시한다. 토큰 권한 축소는 접근 피해 범위를 줄이는 한 층이고, 신뢰하지 않은 코드·아티팩트를 분리된 환경에서 검토하는 일은 별도 층이다."
+        },
+        {
+          "t": "h",
+          "text": "오늘 바로 확인할 체크리스트"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "Hugging Face Access Tokens 목록에서 각 토큰의 사용처를 설명할 수 있는가?",
+            "CI/CD와 개인 노트북이 같은 write 토큰을 공유하고 있지 않은가?",
+            "배포용 토큰을 필요한 저장소만 허용한 fine-grained 토큰으로 바꿀 수 있는가?",
+            "새 토큰으로 실제 모델 접근·배포 작업을 확인한 뒤 이전 토큰을 폐기했는가?",
+            "최근 활동과 조직의 토큰 승인·권한 오류를 같은 날 다시 검토했는가?",
+            "신뢰하지 않은 데이터셋·모델 코드는 토큰 권한과 별도로 분리된 환경에서 검토하는가?"
+          ]
+        },
+        {
+          "t": "p",
+          "text": "보안 공지 뒤 가장 좋은 대응은 공포로 모든 비밀값을 한꺼번에 바꾸는 것이 아니다. 어디에 어떤 권한의 토큰이 있는지 확인하고, 새 최소 권한 토큰을 배치한 뒤, 이전 값을 끊고 실제 작업으로 검증하는 순서를 반복 가능하게 만드는 일이다. 그 과정이 갖춰져 있으면 다음 공지에서는 원인을 추측하는 시간보다 교체와 확인에 더 많은 시간을 쓸 수 있다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까",
+      "url": "https://won0322.tistory.com/125",
+      "reason": "AI 서비스의 운영 알림을 실제 설정·사용 내역과 대조해 판단하는 방법을 이어서 볼 수 있다."
+    },
+    {
+      "title": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
+      "url": "https://won0322.tistory.com/126",
+      "reason": "운영 설정을 바꾼 뒤 조건과 확인 신호를 함께 점검하는 흐름을 참고할 수 있다."
+    }
+  ],
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/HuggingFace-토큰회전-대표.webp",
+      "path": "docs/tistory/assets/2026-07-19/HuggingFace-토큰회전-대표.webp",
+      "alt": "Hugging Face 보안 공지 뒤 기존 토큰을 폐기하고 용도별 새 토큰으로 교체하는 대표 도식",
+      "origin": "imagegen",
+      "provider": "codex-imagegen-built-in",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog cover, 1200 by 630 landscape. Create a unique editorial illustration for a Hugging Face security incident response: a large access-token key at center is being safely replaced by three smaller labeled-purpose keys that connect to a CI pipeline, a notebook, and a private model repository. Show the before-to-after transition, with an old key marked disabled and new limited-scope keys active. Use only these short Korean labels exactly: '기존 토큰 폐기', '용도별 새 토큰', '최소 권한'. White background, navy, muted orange and green, crisp flat technical editorial style, core subject fills about 60 percent. No fake UI, no terminal, no person, no generic desk, no robot, no neon, no huge headline, no watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 33542,
+      "quality": 82,
+      "sha256": "a9f1026882a337cc18a69ae402ed7e8afc9e17d536b026dd98d519bb8c8b82ed"
+    },
+    "visual_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-회전-순서.webp",
+      "path": "docs/tistory/assets/2026-07-19/토큰-회전-순서.webp",
+      "alt": "보안 공지 확인부터 기존 토큰 폐기, 새 토큰 배치와 접근 확인까지 이어지는 토큰 회전 흐름",
+      "origin": "imagegen",
+      "provider": "codex-imagegen-built-in",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog explanation image, 1200 by 630 landscape. Create a calm flat editorial diagram about rotating Hugging Face access tokens after a security incident. Show five large connected steps: notice, old token disabled, new fine-grained token, CI environment variable replaced, access verified. Use short, accurate Korean labels exactly: '공지 확인', '기존 토큰 폐기', '새 토큰', '환경 변수 교체', '접근 확인'. Include a token-key icon and deployment box, with arrows showing the causal flow. White background, navy and muted orange accents, large mobile-readable Korean text. No UI screenshot, no fake terminal, no humans, no robots, no neon, no logo dominance, no watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 36952,
+      "quality": 82,
+      "sha256": "08d4ff133a556f382ad1fc71c539f7e51f6d33023b0d41035c80ec76a561ab0a"
+    },
+    "visual_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-권한-범위-비교.webp",
+      "path": "docs/tistory/assets/2026-07-19/토큰-권한-범위-비교.webp",
+      "alt": "넓은 권한 토큰은 여러 저장소에 연결되고 세분화 토큰은 필요한 저장소에만 연결되는 비교 도식",
+      "origin": "imagegen",
+      "provider": "codex-imagegen-built-in",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog explanation image, 1200 by 630 landscape. Make a precise side-by-side comparison of Hugging Face token permissions. Left panel: one broad write token reaches several organization repositories with wide orange arrows. Right panel: separate fine-grained tokens reach only named allowed repository boxes with narrow green arrows. Use short Korean labels exactly: '넓은 권한 토큰', '세분화 토큰', '여러 저장소', '필요한 저장소만'. Clean white background, navy outlines, restrained orange versus green, large mobile-readable typography. This is an explanatory diagram, not a fake product screen. No people, generic computer desk, robot, neon, watermark, or invented measurements.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 34634,
+      "quality": 82,
+      "sha256": "62ba3fc6da189e085c7d1d93dde3aa84059de944d8961c6479d7cf3afb410ba5"
+    }
+  }
+}

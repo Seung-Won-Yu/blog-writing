@@ -1,0 +1,81 @@
+{
+  "title": "Hugging Face 보안 공지 뒤 해야 할 일: 토큰 회전과 최소 권한 점검 순서",
+  "title_candidates": [
+    "Hugging Face 보안 공지 뒤 해야 할 일: 토큰 회전과 최소 권한 점검 순서",
+    "Hugging Face, 7월 보안 사고 공지…액세스 토큰 회전과 최근 활동 검토 권고",
+    "Hugging Face 토큰 회전과 최소 권한으로 줄이는 계정 접근 위험: 서비스 사고 공지를 봤을 때 내 토큰은 왜 바…"
+  ],
+  "category": "데일리IT뉴스",
+  "draft_id": "2026-07-19",
+  "publish_date": "2026-07-19",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "scheduled_at": "2026-07-19T09:00:00+09:00",
+  "tags": [
+    "Hugging Face",
+    "보안 사고",
+    "액세스 토큰",
+    "토큰 회전",
+    "AI 개발",
+    "계정 보안"
+  ],
+  "meta_description": "CI가 평소처럼 모델을 내려받고 있는데 보안 사고 공지가 뜨면, 가장 먼저 떠오르는 질문은 ‘우리 배포 토큰도 바꿔야 하나?’다. Hugging Face는 7월 16일 일부 내부 데이터셋과 서비스 자… Hugging Face는 일부 생산 인프라 침입과 제한된 내부 데이터셋·서비스 자격…",
+  "key_summary": [
+    "1. Hugging Face, 7월 보안 사고 공지…액세스 토큰 회전과 최근 활동 검토 권고",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Hugging Face 보안 공지 뒤 해야 할 일: 토큰 회전과 최소 권한 점검 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-19.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-19.html",
+  "before_ad_html": "docs/tistory/2026-07-19-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-19-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-19-adfit.html",
+  "source_sha256": "ebc6eb04c0d83301ae12725982d82800abb64c6046cb9b8bd3fd5b8ff71a6e06",
+  "html_sha256": "f8f1fbef123c6da10e91f46b0fc6c972bbe673e7927e9a2cf8b65bde554c3e0b",
+  "adfit_sha256": "70162ddbeb22a2cb3b17ca50908d74210b33aa0839b1a980c4f02000ee5f67c5",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/HuggingFace-토큰회전-대표.webp",
+      "path": "docs/tistory/assets/2026-07-19/HuggingFace-토큰회전-대표.webp",
+      "original_url": "",
+      "alt": "Hugging Face 보안 공지 뒤 기존 토큰을 폐기하고 용도별 새 토큰으로 교체하는 대표 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-회전-순서.webp",
+      "path": "docs/tistory/assets/2026-07-19/토큰-회전-순서.webp",
+      "original_url": "",
+      "alt": "보안 공지 확인부터 기존 토큰 폐기, 새 토큰 배치와 접근 확인까지 이어지는 토큰 회전 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-권한-범위-비교.webp",
+      "path": "docs/tistory/assets/2026-07-19/토큰-권한-범위-비교.webp",
+      "original_url": "",
+      "alt": "넓은 권한 토큰은 여러 저장소에 연결되고 세분화 토큰은 필요한 저장소에만 연결되는 비교 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

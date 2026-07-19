@@ -1,0 +1,38 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 19 (일) · 약 9분</p>
+    <p class="digest-lead">CI가 평소처럼 모델을 내려받고 있는데 보안 사고 공지가 뜨면, 가장 먼저 떠오르는 질문은 ‘우리 배포 토큰도 바꿔야 하나?’다. Hugging Face는 7월 16일 일부 내부 데이터셋과 서비스 자격 증명에 대한 무단 접근을 탐지·대응했다고 알리면서, 커뮤니티에 액세스 토큰 회전과 최근 활동 검토를 권고했다. 공개 모델·데이터셋·Spaces의 변조 증거는 없다고 밝혔지만, 토큰을 환경 변수나 노트북에 넣어 쓰는 팀이라면 이 공지는 계정 쪽 점검을 미룰 이유가 아니다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/HuggingFace-토큰회전-대표.webp" alt="Hugging Face 보안 공지 뒤 기존 토큰을 폐기하고 용도별 새 토큰으로 교체하는 대표 도식" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Hugging Face · 2026. 7. 16</p>
+    <h3>Hugging Face, 7월 보안 사고 공지…액세스 토큰 회전과 최근 활동 검토 권고</h3>
+    <p class="digest-blurb">Hugging Face는 일부 생산 인프라 침입과 제한된 내부 데이터셋·서비스 자격 증명에 대한 무단 접근을 탐지했다고 밝혔다. 공개 사용자 모델·데이터셋·Spaces 변조 증거는 없다고 했으며, 예방 차원에서 사용자는 액세스 토큰을 회전하고 최근 활동을 검토하라고 권고했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">사고 공지는 ‘내 계정이 털렸다’는 뜻과 다르다</h4><p>Hugging Face의 7월 16일 공지는 데이터 처리 파이프라인의 코드 실행 경로가 악용돼 일부 내부 데이터셋과 여러 서비스 자격 증명에 무단 접근이 있었다고 설명한다. 회사는 공개 사용자 모델·데이터셋·Spaces의 변조 증거는 찾지 못했고, 컨테이너 이미지와 공개 패키지 공급망도 확인했다고 밝혔다. 영향받은 파트너·고객 데이터 여부는 계속 평가 중이며, 해당 당사자에게 직접 연락하겠다고 했다.</p><p>그래도 사용자에게는 액세스 토큰 회전과 최근 활동 검토를 예방 조치로 권고했다. 이 문장을 ‘모든 사용자 토큰이 유출됐다’로 확대 해석할 필요는 없다. 반대로 내 토큰이 환경 변수, 노트북, 개인 컴퓨터 어디에서 어떤 권한으로 쓰이는지 모른다면, 사고 여부를 기다리기보다 정리할 좋은 계기다. 회전은 새 토큰을 만든 뒤 기존 토큰을 폐기해 이전 비밀값을 더는 인증에 쓸 수 없게 하는 작업이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-회전-순서.webp" alt="보안 공지 확인부터 기존 토큰 폐기, 새 토큰 배치와 접근 확인까지 이어지는 토큰 회전 흐름" width="1200" height="630" loading="lazy"><figcaption>토큰 회전은 새 토큰을 만드는 일만이 아니다. 기존 토큰 폐기, CI·노트북의 비밀값 교체, 실제 접근 확인까지 이어져야 이전 토큰의 경로가 닫힌다.</figcaption></figure><h4 class="digest-subheading">토큰의 권한이 넓을수록 교체 범위도 커진다</h4><p>Hugging Face 문서는 토큰 역할을 fine-grained, read, write로 구분한다. read는 접근 가능한 저장소를 읽을 수 있고, write는 생성·푸시까지 할 수 있다. fine-grained 토큰은 특정 조직의 특정 모델·저장소처럼 필요한 리소스에만 권한을 주도록 설계돼, 운영 환경에서 권장된다. 토큰의 실제 접근 범위는 역할뿐 아니라 해당 사용자의 조직 멤버십 권한에도 영향을 받는다.</p><div class="digest-table-wrap" role="region" aria-label="용도별 토큰을 나누면 회전과 영향 분석이 쉬워지는 이유" tabindex="0"><table class="digest-data-table"><caption>용도별 토큰을 나누면 회전과 영향 분석이 쉬워지는 이유</caption><thead><tr><th scope="col">사용처</th><th scope="col">권장 접근 범위</th><th scope="col">교체 뒤 확인 신호</th></tr></thead><tbody><tr><td>개인 노트북</td><td>개인 작업에 필요한 읽기 또는 세분화 권한</td><td>로그인·모델 내려받기 성공</td></tr><tr><td>CI/CD 배포</td><td>배포에 필요한 저장소만 허용한 세분화 토큰</td><td>비밀값 교체 뒤 빌드·배포 성공</td></tr><tr><td>조직 자동화</td><td>조직 정책과 승인 절차에 맞춘 최소 권한</td><td>권한 오류·승인 상태·감사 기록 확인</td></tr></tbody></table></div><p>세분화 토큰이 모든 환경에서 자동으로 답이 되는 것은 아니다. 조직의 Team·Enterprise 정책에서는 토큰 승인, 거부, 폐기 같은 추가 상태가 있고, 폐기된 조직 접근은 되돌릴 수 없다고 문서는 안내한다. 따라서 새 토큰을 먼저 만들었을 때 조직 범위가 보류 상태인지, 필요한 리소스가 빠지지 않았는지 확인한 뒤 기존 토큰을 폐기해야 서비스 중단 시간을 줄일 수 있다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">그림으로 보는 권한 범위의 차이</h4><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-19/토큰-권한-범위-비교.webp" alt="넓은 권한 토큰은 여러 저장소에 연결되고 세분화 토큰은 필요한 저장소에만 연결되는 비교 도식" width="1200" height="630" loading="lazy"><figcaption>한 개의 넓은 쓰기 토큰은 여러 저장소에 닿을 수 있다. 작업별 세분화 토큰은 유출·오작동 때 영향을 필요한 저장소 쪽으로 제한하고, 어떤 비밀값을 교체할지도 분명하게 만든다.</figcaption></figure><h4 class="digest-subheading">중단 없이 회전하려면 사용처 목록부터 만든다</h4><p>먼저 Hugging Face 설정의 Access Tokens에서 토큰 이름, 역할, 생성 목적을 확인한다. 이름만 보고 용도를 알 수 없는 토큰은 바로 지우기보다, CI 비밀값·호스팅 환경 변수·노트북·로컬 자격 증명에 같은 값이 남아 있는지 확인해야 한다. 운영 토큰을 개인 토큰과 섞어 쓰고 있었다면, 배포용 새 fine-grained 토큰을 먼저 만들고 필요한 저장소만 범위에 넣는 편이 안전하다.</p><pre class="digest-code-block language-text"><code>토큰 회전 체크 순서
+1. 토큰별 사용처와 필요한 저장소·권한을 목록으로 적는다
+2. 각 사용처에 맞는 새 fine-grained 또는 read 토큰을 만든다
+3. CI 비밀값, 호스팅 환경 변수, 노트북·로컬 자격 증명을 새 값으로 바꾼다
+4. 모델 내려받기·추론·푸시처럼 실제 필요한 동작을 새 토큰으로 확인한다
+5. 이전 토큰을 폐기하거나 삭제한다
+6. 최근 활동과 권한 오류를 다시 검토하고, 토큰 이름에 사용처·교체 날짜를 남긴다</code></pre><p>검증은 단순히 로그인 화면이 열리는지보다 실제 작업을 한 번 수행해 보는 방식이 낫다. 읽기 전용 배포라면 비공개 모델이나 gated 모델을 내려받는 작업을, 쓰기 자동화라면 테스트 저장소에 대한 최소 작업을 확인한다. 새 토큰이 403을 반환하면 토큰 역할, 조직 멤버십, 조직의 승인·fine-grained 전용 정책을 차례로 확인한다. 권한을 넓혀 해결하기 전에 필요한 저장소와 동작이 무엇인지 다시 확인해야 한다.</p><h4 class="digest-subheading">토큰 회전만으로 끝나지 않는 범위</h4><p>이번 공지는 계정 토큰 점검의 계기이지만, 데이터셋이나 모델을 실행하는 환경의 위험을 모두 해결하지는 않는다. 사고의 초기 접근 경로는 데이터 처리에서 실행 가능한 코드와 템플릿 주입으로 설명됐다. Cloud Security Alliance의 AI 모델 저장소 공격면 연구도 공개 저장소에서 실행 코드, 직렬화 파일, 외부 의존성을 함께 검토해야 한다는 맥락을 제시한다. 토큰 권한 축소는 접근 피해 범위를 줄이는 한 층이고, 신뢰하지 않은 코드·아티팩트를 분리된 환경에서 검토하는 일은 별도 층이다.</p><h4 class="digest-subheading">오늘 바로 확인할 체크리스트</h4><ul class="digest-bullet-list"><li>Hugging Face Access Tokens 목록에서 각 토큰의 사용처를 설명할 수 있는가?</li><li>CI/CD와 개인 노트북이 같은 write 토큰을 공유하고 있지 않은가?</li><li>배포용 토큰을 필요한 저장소만 허용한 fine-grained 토큰으로 바꿀 수 있는가?</li><li>새 토큰으로 실제 모델 접근·배포 작업을 확인한 뒤 이전 토큰을 폐기했는가?</li><li>최근 활동과 조직의 토큰 승인·권한 오류를 같은 날 다시 검토했는가?</li><li>신뢰하지 않은 데이터셋·모델 코드는 토큰 권한과 별도로 분리된 환경에서 검토하는가?</li></ul><p>보안 공지 뒤 가장 좋은 대응은 공포로 모든 비밀값을 한꺼번에 바꾸는 것이 아니다. 어디에 어떤 권한의 토큰이 있는지 확인하고, 새 최소 권한 토큰을 배치한 뒤, 이전 값을 끊고 실제 작업으로 검증하는 순서를 반복 가능하게 만드는 일이다. 그 과정이 갖춰져 있으면 다음 공지에서는 원인을 추측하는 시간보다 교체와 확인에 더 많은 시간을 쓸 수 있다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://huggingface.co/blog/security-incident-july-2026" target="_blank" rel="noopener">Security incident disclosure — July 2026</a><span>공식</span></li><li><a href="https://huggingface.co/docs/hub/main/security-tokens" target="_blank" rel="noopener">User access tokens</a><span>공식 문서</span></li><li><a href="https://huggingface.co/docs/hub/enterprise-tokens-management" target="_blank" rel="noopener">Tokens Management</a><span>공식 문서</span></li><li><a href="https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/05/CSA_research_note_malicious-ai-model-repositories-attack-surface_20260510-csa-styled.pdf" target="_blank" rel="noopener">CSA research note: malicious AI model repositories attack surface</a><span>독립 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/125"><b>무료 사용자에게 찍힌 250억 원 청구, AI 서비스 요금 화면은 어떻게 확인해야 할까</b><span>AI 서비스의 운영 알림을 실제 설정·사용 내역과 대조해 판단하는 방법을 이어서 볼 수 있다.</span></a></li><li><a href="https://won0322.tistory.com/126"><b>Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법</b><span>운영 설정을 바꾼 뒤 조건과 확인 신호를 함께 점검하는 흐름을 참고할 수 있다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">이번 공지가 모든 사용자 토큰 유출을 뜻하는 것은 아니다. 다만 토큰은 한 번 노출되면 누가 어디서 썼는지 되짚기 어렵고, 오래 유지한 넓은 권한은 회전 작업도 크게 만든다. 토큰을 용도별로 나누고, 사고 공지 때 폐기·교체·확인을 한 묶음으로 실행할 수 있게 해 두면 다음 대응은 훨씬 짧아진다.</p>
+  <div class="digest-action"><b>직접 확인해보려면</b><span>오늘 Hugging Face 설정의 Access Tokens에서 사용처를 설명할 수 없는 토큰과 넓은 read/write 토큰을 찾아, 배포·개인 작업·노트북용으로 분리할 수 있는지 확인해 보자.</span></div>
+</section>
+</article>

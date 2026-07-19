@@ -57,7 +57,8 @@ npx playwright --version
 npx playwright install chromium</code></pre><p>기대한 결과는 명확했다. 화면의 입력값 ‘배포 후 오류 로그 확인’을 유지한 채 등록 버튼을 누르면 목록에 같은 문구가 표시되고, ‘목록에 1건을 등록했습니다.’라는 완료 문구가 나타나야 한다. 클릭만 성공해도 화면 반영이 실패할 수 있으므로 두 결과를 함께 읽도록 했다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-18-automation/01-실행-전-화면.webp" alt="실행 전 화면 · 로컬 테스트 페이지 · 등록 버튼 · 점검 항목: 브라우저가 테스트용 로컬 페이지를 열고 입력값과 버튼 이름을 읽는다. 흐름을 표현한 실험 이해 이미지" width="1200" height="630" loading="lazy"><figcaption>클릭 전 실제 Chromium 캡처다. locator를 고치기 전에 테스트 대상의 입력값과 버튼 표시명을 화면에서 확인했다.</figcaption></figure></div>
   </div>
 </section>
-<div class="digest-ad-break" data-digest-ad-break="true"></div>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
 <section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">첫 시도: ‘저장’이라는 추측은 0개였다</h4><p>처음에는 버튼 이름이 ‘저장’일 것이라고 추측했다. 실제로 role=button, name=저장 조건으로 개수를 확인하니 0개였다. 이 단계는 실패를 숨기지 않기 위해 남겼다. 화면의 실제 버튼은 ‘등록’이므로, 존재하지 않는 locator를 클릭하도록 계속 기다리는 대신 먼저 개수를 확인해 원인을 좁혔다.</p><pre class="digest-code-block language-javascript"><code>const wrong = await page.getByRole(&#x27;button&#x27;, { name: &#x27;저장&#x27; }).count();
 console.log(`ATTEMPT 1: role=button name=저장 -&gt; ${wrong}개`);
 // 실제 결과: 0개
