@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "day": "2026-07-19",
-  "generated_at": "2026-07-18T23:11:00.110697+00:00",
+  "day": "2026-07-20",
+  "generated_at": "2026-07-19T23:11:33.047264+00:00",
   "review_required": true,
   "selection": {
     "mode": "lead_shortlist",
@@ -12,9 +12,9 @@
     "min_reader_relevance": 2,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 1,
-    "recently_selected_excluded": 8,
-    "recent_url_excluded": 2,
-    "recent_publisher_excluded": 6
+    "recently_selected_excluded": 17,
+    "recent_url_excluded": 3,
+    "recent_publisher_excluded": 14
   },
   "candidates": [
     {
@@ -33,11 +33,11 @@
         "deep": 1
       },
       "requires_manual_review": false,
-      "score": 12,
+      "score": 10,
       "score_reasons": [
         "출처 가중치 5",
         "공식 출처",
-        "48시간 이내",
+        "7일 이내",
         "관심 키워드"
       ],
       "lane_scores": {
@@ -72,395 +72,9 @@
         "actionability": 0,
         "explanatory_depth": 1,
         "evidence": 5,
-        "freshness": 5
+        "freshness": 3
       },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "a7ef730e5543",
-      "title": "Repository-level GitHub Copilot usage metrics generally available",
-      "normalized_title": "repository level github copilot usage metrics generally available",
-      "url": "https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available",
-      "published_at": "2026-07-17T22:05:18+00:00",
-      "summary": "The Copilot usage metrics REST API now reports repository-level activity. Two new endpoints return a daily, per-repository breakdown of pull request activity for Copilot coding agent and Copilot code review.… The post Repository-level GitHub Copilot usage metrics generally available appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 6,
-        "deep": 1
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot",
-          "API"
-        ],
-        "deep": [
-          "API"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 1,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": false
-    },
-    {
-      "id": "695a6e704fb1",
-      "title": "GitHub Mobile: Fix pull request comments with Copilot cloud agent",
-      "normalized_title": "github mobile fix pull request comments with copilot cloud agent",
-      "url": "https://github.blog/changelog/2026-07-17-github-mobile-fix-pull-request-comments-with-copilot-cloud-agent",
-      "published_at": "2026-07-17T19:47:45+00:00",
-      "summary": "You can now select Fix with Copilot directly from Copilot code review pull request comments in GitHub Mobile. The button is available both on the pull request’s main view and… The post GitHub Mobile: Fix pull request comments with Copilot cloud agent appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 1
-      },
-      "topic_tags": [
-        "cloud",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": [
-          "cloud"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 1,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": false
-    },
-    {
-      "id": "b7c85c763928",
-      "title": "GitHub Copilot app now available in the usage metrics API",
-      "normalized_title": "github copilot app now available in the usage metrics api",
-      "url": "https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api",
-      "published_at": "2026-07-17T22:05:11+00:00",
-      "summary": "The Copilot usage metrics API now reports the GitHub Copilot app usage in the enterprise and organization 1-day and 28-day reports. This gives enterprise and organization admins visibility into the… The post GitHub Copilot app now available in the usage metrics API appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 2,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 6,
-        "deep": 1
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 2,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "app",
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot",
-          "API"
-        ],
-        "deep": [
-          "API"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 1,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": false
-    },
-    {
-      "id": "9466b1428775",
-      "title": "Copilot code review: Customization and configurability improvements",
-      "normalized_title": "copilot code review customization and configurability improvements",
-      "url": "https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements",
-      "published_at": "2026-07-17T21:08:30+00:00",
-      "summary": "Copilot code review now utilizes a firewall, custom setup steps, and independent runner configurations. It now reads custom instructions from the head branch to allow for easy testing and validation… The post Copilot code review: Customization and configurability improvements appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 15,
-      "recent_publisher": false
-    },
-    {
-      "id": "3877d136049d",
-      "title": "The cost of saying yes has changed",
-      "normalized_title": "the cost of saying yes has changed",
-      "url": "https://github.blog/engineering/the-cost-of-saying-yes-has-changed",
-      "published_at": "2026-07-17T16:46:47+00:00",
-      "summary": "The cost of writing code dropped; the cost of owning it didn't. A framework for deciding which changes are actually cheap in the AI era. The post The cost of saying yes has changed appeared first on The GitHub Blog .",
-      "source_id": "github-engineering",
-      "source_family": "github",
-      "source_name": "GitHub Engineering",
-      "group": "official",
-      "source_weight": 4,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 4",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 3
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub"
-        ],
-        "deep": [
-          "framework"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 3,
-        "explanatory_depth": 3,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": false
-    },
-    {
-      "id": "fae7eebfbe40",
-      "title": "Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks",
-      "normalized_title": "microsoft at black hat usa 2026 defending trust in the age of ai and supply chain attacks",
-      "url": "https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks",
-      "published_at": "2026-07-17T16:00:00+00:00",
-      "summary": "Join Microsoft Security at Black Hat USA 2026 for supply chain research, hands-on security experiences, expert conversations, and our reception. The post Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks appeared first on Microsoft Security Blog .",
-      "source_id": "microsoft-security",
-      "source_family": "microsoft",
-      "source_name": "Microsoft Security Blog",
-      "group": "official",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 2,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 4",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 2
-      },
-      "topic_tags": [
-        "ai",
-        "security"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 2,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 12,
+      "lead_score": 9,
       "recent_publisher": false
     },
     {
@@ -645,60 +259,133 @@
       "recent_publisher": false
     },
     {
-      "id": "c2c75c929220",
-      "title": "Cloudflare WAF protects WordPress applications from two high-severity vulnerabilities",
-      "normalized_title": "cloudflare waf protects wordpress applications from two high severity vulnerabilities",
-      "url": "https://blog.cloudflare.com/wordpress-vulnerabilities",
-      "published_at": "2026-07-17T21:30:43+00:00",
-      "summary": "Cloudflare has deployed two WAF rules in response to high-severity vulnerabilities disclosed to us by the WordPress security team. The new rules protect all Cloudflare customers using affected WordPress versions, but customers should still update immediately to a patched release",
-      "source_id": "cloudflare-blog",
-      "source_family": "cloudflare-blog",
-      "source_name": "Cloudflare Blog",
+      "id": "a7ef730e5543",
+      "title": "Repository-level GitHub Copilot usage metrics generally available",
+      "normalized_title": "repository level github copilot usage metrics generally available",
+      "url": "https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available",
+      "published_at": "2026-07-17T22:05:18+00:00",
+      "summary": "The Copilot usage metrics REST API now reports repository-level activity. Two new endpoints return a daily, per-repository breakdown of pull request activity for Copilot coding agent and Copilot code review.… The post Repository-level GitHub Copilot usage metrics generally available appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
       "group": "official",
-      "source_weight": 4,
+      "source_weight": 5,
       "lane_bias": {
-        "practical": 1,
-        "deep": 3
+        "practical": 3
       },
-      "requires_manual_review": true,
+      "requires_manual_review": false,
       "score": 9,
       "score_reasons": [
-        "출처 가중치 4",
+        "출처 가중치 5",
         "공식 출처",
-        "48시간 이내"
+        "7일 이내",
+        "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 1,
-        "deep": 3
+        "practical": 6,
+        "deep": 1
       },
       "topic_tags": [
-        "security",
-        "cloud"
+        "developer_tools"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
+        "practical": 3,
+        "deep": 1
       },
       "raw_lane_matches": {
-        "broad": [],
+        "broad": [
+          "Copilot"
+        ],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [],
-        "deep": []
+        "practical": [
+          "GitHub",
+          "Copilot",
+          "API"
+        ],
+        "deep": [
+          "API"
+        ]
       },
       "lead_score_breakdown": {
         "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 3,
+        "actionability": 5,
+        "explanatory_depth": 1,
         "evidence": 5,
-        "freshness": 5
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "recent_publisher": false
+    },
+    {
+      "id": "695a6e704fb1",
+      "title": "GitHub Mobile: Fix pull request comments with Copilot cloud agent",
+      "normalized_title": "github mobile fix pull request comments with copilot cloud agent",
+      "url": "https://github.blog/changelog/2026-07-17-github-mobile-fix-pull-request-comments-with-copilot-cloud-agent",
+      "published_at": "2026-07-17T19:47:45+00:00",
+      "summary": "You can now select Fix with Copilot directly from Copilot code review pull request comments in GitHub Mobile. The button is available both on the pull request’s main view and… The post GitHub Mobile: Fix pull request comments with Copilot cloud agent appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 1
+      },
+      "topic_tags": [
+        "cloud",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot"
+        ],
+        "deep": [
+          "cloud"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 5,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
       },
       "lead_score": 14,
       "recent_publisher": false
@@ -1253,11 +940,11 @@
       "recent_publisher": false
     },
     {
-      "id": "e4fdc4551d2b",
-      "title": "[AI 이슈트렌드] 반도체발 코스피 쇼크 속 홈플러스 파산 위기 주목",
-      "normalized_title": "ai 이슈트렌드 반도체발 코스피 쇼크 속 홈플러스 파산 위기 주목",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212904",
-      "published_at": "2026-07-18T09:03:37+00:00",
+      "id": "1e9e4f62b7a6",
+      "title": "삼성전자, 프리미엄 ‘폴드8 울트라'·AI 안경 출격 준비",
+      "normalized_title": "삼성전자 프리미엄 폴드8 울트라 ai 안경 출격 준비",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212916",
+      "published_at": "2026-07-19T20:13:48+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -1312,11 +999,11 @@
       "recent_publisher": false
     },
     {
-      "id": "2a732680a1f5",
-      "title": "스페이스X, 미 국방부와 수십억달러 'AI 클라우드 공급' 논의",
-      "normalized_title": "스페이스x 미 국방부와 수십억달러 ai 클라우드 공급 논의",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212905",
-      "published_at": "2026-07-18T08:48:01+00:00",
+      "id": "1324a7e2891b",
+      "title": "씽킹AI, 한국 진출 후 보폭 확대…고객사 60곳 확보·기능 고도화 가속",
+      "normalized_title": "씽킹ai 한국 진출 후 보폭 확대 고객사 60곳 확보 기능 고도화 가속",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212915",
+      "published_at": "2026-07-19T09:32:17+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -1336,49 +1023,48 @@
       "lane_scores": {
         "broad": 5,
         "reader_impact": 0,
-        "reader_consequence": 0,
+        "reader_consequence": 1,
         "practical": 0,
-        "deep": 1
+        "deep": 0
       },
       "topic_tags": [
-        "ai",
-        "cloud"
+        "ai"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
         "reader_impact": 0,
-        "reader_consequence": 0,
+        "reader_consequence": 1,
         "practical": 0,
-        "deep": 1
+        "deep": 0
       },
       "raw_lane_matches": {
         "broad": [
           "AI"
         ],
         "reader_impact": [],
-        "reader_consequence": [],
+        "reader_consequence": [
+          "확대"
+        ],
         "practical": [],
-        "deep": [
-          "클라우드"
-        ]
+        "deep": []
       },
       "lead_score_breakdown": {
         "reader_relevance": 0,
         "actionability": 0,
-        "explanatory_depth": 1,
+        "explanatory_depth": 0,
         "evidence": 2,
         "freshness": 5
       },
-      "lead_score": 8,
+      "lead_score": 7,
       "recent_publisher": false
     },
     {
-      "id": "d2ecc835a17b",
-      "title": "지푸, 'GLM-5.2' 흥행으로 중국 AI 최초 연매출 10억달러 눈앞",
-      "normalized_title": "지푸 glm 5 2 흥행으로 중국 ai 최초 연매출 10억달러 눈앞",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212899",
-      "published_at": "2026-07-18T06:53:21+00:00",
+      "id": "b9115eacad43",
+      "title": "중국, 미국의 'AI 기술 무단 추출' 주장 전면 부인...\"기술 경쟁 정치화\" 비판",
+      "normalized_title": "중국 미국의 ai 기술 무단 추출 주장 전면 부인 기술 경쟁 정치화 비판",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212909",
+      "published_at": "2026-07-19T06:40:51+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -1433,11 +1119,70 @@
       "recent_publisher": false
     },
     {
-      "id": "f23377cf7a20",
-      "title": "애플, 오픈AI '하드웨어 이직자' 40명에 경고 서한 발송..\"증거 보존하라\"",
-      "normalized_title": "애플 오픈ai 하드웨어 이직자 40명에 경고 서한 발송 증거 보존하라",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212898",
-      "published_at": "2026-07-18T02:57:23+00:00",
+      "id": "a08fd5362a15",
+      "title": "미국 전역서 AI 데이터센터 반대 시위…42개 주서 초당적 동시 집회",
+      "normalized_title": "미국 전역서 ai 데이터센터 반대 시위 42개 주서 초당적 동시 집회",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212911",
+      "published_at": "2026-07-19T06:20:04+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 7,
+      "recent_publisher": false
+    },
+    {
+      "id": "0cfce5ac786a",
+      "title": "115년 기술 상징의 추락...IBM 25% 폭락이 경고하는 'AI 블랙홀'",
+      "normalized_title": "115년 기술 상징의 추락 ibm 25 폭락이 경고하는 ai 블랙홀",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212907",
+      "published_at": "2026-07-18T22:59:13+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -1494,36 +1239,231 @@
       "recent_publisher": false
     },
     {
-      "id": "5245b54ce5ff",
-      "title": "\"AI 연인 대신 진짜 아기를\"…중국, 'AI 페르소나' 단속 나선 속사정",
-      "normalized_title": "ai 연인 대신 진짜 아기를 중국 ai 페르소나 단속 나선 속사정",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212903",
-      "published_at": "2026-07-18T02:40:36+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
+      "id": "b7c85c763928",
+      "title": "GitHub Copilot app now available in the usage metrics API",
+      "normalized_title": "github copilot app now available in the usage metrics api",
+      "url": "https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api",
+      "published_at": "2026-07-17T22:05:11+00:00",
+      "summary": "The Copilot usage metrics API now reports the GitHub Copilot app usage in the enterprise and organization 1-day and 28-day reports. This gives enterprise and organization admins visibility into the… The post GitHub Copilot app now available in the usage metrics API appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 6,
+        "deep": 1
+      },
+      "topic_tags": [
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 3,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "app",
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot",
+          "API"
+        ],
+        "deep": [
+          "API"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 5,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "recent_publisher": false
+    },
+    {
+      "id": "9466b1428775",
+      "title": "Copilot code review: Customization and configurability improvements",
+      "normalized_title": "copilot code review customization and configurability improvements",
+      "url": "https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements",
+      "published_at": "2026-07-17T21:08:30+00:00",
+      "summary": "Copilot code review now utilizes a firewall, custom setup steps, and independent runner configurations. It now reads custom instructions from the head branch to allow for easy testing and validation… The post Copilot code review: Customization and configurability improvements appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 0
+      },
+      "topic_tags": [
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot"
+        ],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 13,
+      "recent_publisher": false
+    },
+    {
+      "id": "3877d136049d",
+      "title": "The cost of saying yes has changed",
+      "normalized_title": "the cost of saying yes has changed",
+      "url": "https://github.blog/engineering/the-cost-of-saying-yes-has-changed",
+      "published_at": "2026-07-17T16:46:47+00:00",
+      "summary": "The cost of writing code dropped; the cost of owning it didn't. A framework for deciding which changes are actually cheap in the AI era. The post The cost of saying yes has changed appeared first on The GitHub Blog .",
+      "source_id": "github-engineering",
+      "source_family": "github",
+      "source_name": "GitHub Engineering",
+      "group": "official",
       "source_weight": 4,
       "lane_bias": {
-        "broad": 4
+        "practical": 2,
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 8,
       "score_reasons": [
         "출처 가중치 4",
-        "48시간 이내",
+        "공식 출처",
+        "7일 이내",
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 5,
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 3,
+        "deep": 3
+      },
+      "topic_tags": [
+        "ai",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub"
+        ],
+        "deep": [
+          "framework"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 3,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "recent_publisher": false
+    },
+    {
+      "id": "fae7eebfbe40",
+      "title": "Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks",
+      "normalized_title": "microsoft at black hat usa 2026 defending trust in the age of ai and supply chain attacks",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks",
+      "published_at": "2026-07-17T16:00:00+00:00",
+      "summary": "Join Microsoft Security at Black Hat USA 2026 for supply chain research, hands-on security experiences, expert conversations, and our reception. The post Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks appeared first on Microsoft Security Blog .",
+      "source_id": "microsoft-security",
+      "source_family": "microsoft",
+      "source_name": "Microsoft Security Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 2,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 3,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
-        "deep": 0
+        "deep": 2
       },
       "topic_tags": [
-        "ai"
+        "ai",
+        "security"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
@@ -1545,74 +1485,11 @@
       "lead_score_breakdown": {
         "reader_relevance": 0,
         "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "43402cbf0584",
-      "title": "메타, 앤트로픽과 15조 AI 인프라 임대 논의…클라우드 진출 눈앞",
-      "normalized_title": "메타 앤트로픽과 15조 ai 인프라 임대 논의 클라우드 진출 눈앞",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212896",
-      "published_at": "2026-07-17T21:45:57+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 2
-      },
-      "topic_tags": [
-        "ai",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 2
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": [
-          "인프라",
-          "클라우드"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
         "explanatory_depth": 2,
-        "evidence": 2,
-        "freshness": 5
+        "evidence": 5,
+        "freshness": 3
       },
-      "lead_score": 9,
+      "lead_score": 10,
       "recent_publisher": false
     },
     {
@@ -2744,11 +2621,11 @@
       "recent_publisher": false
     },
     {
-      "id": "b232ad41cc87",
-      "title": "AI가 Stack Overflow에 끼친 영향을 그래프로 보기",
-      "normalized_title": "ai가 stack overflow에 끼친 영향을 그래프로 보기",
-      "url": "https://news.hada.io/topic?id=31567",
-      "published_at": "2026-07-18T23:01:40+00:00",
+      "id": "5cf046853e8f",
+      "title": "Show GN: 브라우저에서만 돌아가는 한국어 AI 글 판별기",
+      "normalized_title": "show gn 브라우저에서만 돌아가는 한국어 ai 글 판별기",
+      "url": "https://news.hada.io/topic?id=31582",
+      "published_at": "2026-07-19T11:53:11+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -2804,71 +2681,11 @@
       "recent_publisher": false
     },
     {
-      "id": "064043faeeec",
-      "title": "AI 기업 로고는 왜 항문처럼 보일까? (2025)",
-      "normalized_title": "ai 기업 로고는 왜 항문처럼 보일까 2025",
-      "url": "https://news.hada.io/topic?id=31566",
-      "published_at": "2026-07-18T22:59:59+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "a3af5b4dd54f",
-      "title": "애플-엔비디아, 시총 1위 두고 '초박빙' 접전…장중 한때 애플 선두 탈환",
-      "normalized_title": "애플 엔비디아 시총 1위 두고 초박빙 접전 장중 한때 애플 선두 탈환",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=212906",
-      "published_at": "2026-07-18T09:38:22+00:00",
+      "id": "540c036eaeff",
+      "title": "\"엔비디아 내부서도 GPU 확보 전쟁...젠슨 황이 직접 중재\"",
+      "normalized_title": "엔비디아 내부서도 gpu 확보 전쟁 젠슨 황이 직접 중재",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212914",
+      "published_at": "2026-07-19T07:35:35+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -2915,6 +2732,248 @@
         "freshness": 5
       },
       "lead_score": 7,
+      "recent_publisher": false
+    },
+    {
+      "id": "6fad3feed576",
+      "title": "AI 코드 검토가 타당한 반론이 될 수 없는 이유",
+      "normalized_title": "ai 코드 검토가 타당한 반론이 될 수 없는 이유",
+      "url": "https://news.hada.io/topic?id=31578",
+      "published_at": "2026-07-19T06:03:07+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "8358d1940662",
+      "title": "Mamdani 뉴욕시장, 임대 광고에 AI 이미지를 몰래 사용할 수 없다고 밝혀",
+      "normalized_title": "mamdani 뉴욕시장 임대 광고에 ai 이미지를 몰래 사용할 수 없다고 밝혀",
+      "url": "https://news.hada.io/topic?id=31576",
+      "published_at": "2026-07-19T04:33:08+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "22a56c924579",
+      "title": "앤트로픽, '페이블 5' 정식 요금제 편입...프로모션 종료하고 '50% 제한'",
+      "normalized_title": "앤트로픽 페이블 5 정식 요금제 편입 프로모션 종료하고 50 제한",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212908",
+      "published_at": "2026-07-19T00:24:31+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 1,
+        "reader_consequence": 2,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 1,
+        "reader_consequence": 2,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "요금"
+        ],
+        "reader_impact": [
+          "요금"
+        ],
+        "reader_consequence": [
+          "종료",
+          "제한"
+        ],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "lead_rank": 3,
+      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
+    },
+    {
+      "id": "c2c75c929220",
+      "title": "Cloudflare WAF protects WordPress applications from two high-severity vulnerabilities",
+      "normalized_title": "cloudflare waf protects wordpress applications from two high severity vulnerabilities",
+      "url": "https://blog.cloudflare.com/wordpress-vulnerabilities",
+      "published_at": "2026-07-17T21:30:43+00:00",
+      "summary": "Cloudflare has deployed two WAF rules in response to high-severity vulnerabilities disclosed to us by the WordPress security team. The new rules protect all Cloudflare customers using affected WordPress versions, but customers should still update immediately to a patched release",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [
+        "security",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 12,
       "recent_publisher": false
     },
     {
@@ -3624,7 +3683,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "1545101c5e50",
@@ -3809,7 +3868,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "c8dc1df61461",
@@ -3931,11 +3990,11 @@
       "recent_publisher": false
     },
     {
-      "id": "6f27a36ab3ac",
-      "title": "역진행(Regressive) JPEG",
-      "normalized_title": "역진행 regressive jpeg",
-      "url": "https://news.hada.io/topic?id=31565",
-      "published_at": "2026-07-18T22:57:41+00:00",
+      "id": "51c025cefe97",
+      "title": "새롭게 디자인된 Elixir-lang.org",
+      "normalized_title": "새롭게 디자인된 elixir lang org",
+      "url": "https://news.hada.io/topic?id=31590",
+      "published_at": "2026-07-19T20:33:40+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -3986,11 +4045,11 @@
       "recent_publisher": false
     },
     {
-      "id": "28de63660ae8",
-      "title": "LG 모니터, 사용자 동의 없이 Windows Update로 소프트웨어 설치",
-      "normalized_title": "lg 모니터 사용자 동의 없이 windows update로 소프트웨어 설치",
-      "url": "https://news.hada.io/topic?id=31564",
-      "published_at": "2026-07-18T22:55:30+00:00",
+      "id": "bebcfd7849db",
+      "title": "Gleam 저장소가 Tangled에 공개됨",
+      "normalized_title": "gleam 저장소가 tangled에 공개됨",
+      "url": "https://news.hada.io/topic?id=31589",
+      "published_at": "2026-07-19T19:33:25+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4008,7 +4067,7 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
@@ -4017,136 +4076,193 @@
       "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "Windows"
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "282680d50b62",
+      "title": "Fable 5 vs. GPT-5.6 Sol: NP-난해 문제에서 /goal은 도움이 되는가?",
+      "normalized_title": "fable 5 vs gpt 5 6 sol np 난해 문제에서 goal은 도움이 되는가",
+      "url": "https://news.hada.io/topic?id=31588",
+      "published_at": "2026-07-19T18:34:55+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "160a24edad90",
+      "title": "당신이 안 보는 사이 프론트엔드에 무슨 일이 있었나",
+      "normalized_title": "당신이 안 보는 사이 프론트엔드에 무슨 일이 있었나",
+      "url": "https://news.hada.io/topic?id=31587",
+      "published_at": "2026-07-19T17:12:58+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "9a6db4124af9",
+      "title": "Codex 사용량 한도 리셋 추적",
+      "normalized_title": "codex 사용량 한도 리셋 추적",
+      "url": "https://news.hada.io/topic?id=31586",
+      "published_at": "2026-07-19T16:34:22+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "privacy"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [
+          "추적"
         ],
-        "reader_impact": [],
         "reader_consequence": [],
         "practical": [],
         "deep": []
       },
       "lead_score_breakdown": {
-        "reader_relevance": 0,
+        "reader_relevance": 1,
         "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "d5681dc40b08",
-      "title": "EEG로 확인한 뇌의 두 음성 스트림 동시 부호화",
-      "normalized_title": "eeg로 확인한 뇌의 두 음성 스트림 동시 부호화",
-      "url": "https://news.hada.io/topic?id=31563",
-      "published_at": "2026-07-18T21:34:43+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "9cba3929e24e",
-      "title": "Zilog Z80 출시 50주년",
-      "normalized_title": "zilog z80 출시 50주년",
-      "url": "https://news.hada.io/topic?id=31561",
-      "published_at": "2026-07-18T18:35:09+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "출시"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
         "explanatory_depth": 1,
         "evidence": 3,
         "freshness": 5
@@ -4155,11 +4271,11 @@
       "recent_publisher": false
     },
     {
-      "id": "1e191d851556",
-      "title": "H-E-B의 엔터프라이즈 Haskell 도입과 운영",
-      "normalized_title": "h e b의 엔터프라이즈 haskell 도입과 운영",
-      "url": "https://news.hada.io/topic?id=31560",
-      "published_at": "2026-07-18T18:03:31+00:00",
+      "id": "604f58adfdc4",
+      "title": "EU, 미판매 의류·신발 폐기 금지 시행",
+      "normalized_title": "eu 미판매 의류 신발 폐기 금지 시행",
+      "url": "https://news.hada.io/topic?id=31584",
+      "published_at": "2026-07-19T13:33:46+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4210,11 +4326,11 @@
       "recent_publisher": false
     },
     {
-      "id": "06cee9dbe79c",
-      "title": "문제를 해결하지 않고 대응하는 세 가지 방식",
-      "normalized_title": "문제를 해결하지 않고 대응하는 세 가지 방식",
-      "url": "https://news.hada.io/topic?id=31559",
-      "published_at": "2026-07-18T17:44:58+00:00",
+      "id": "953931272be7",
+      "title": "Show GN: Kaileron - 회원가입 없이 즐기는 MAME 롤백 넷플레이",
+      "normalized_title": "show gn kaileron 회원가입 없이 즐기는 mame 롤백 넷플레이",
+      "url": "https://news.hada.io/topic?id=31580",
+      "published_at": "2026-07-19T08:28:03+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4265,11 +4381,11 @@
       "recent_publisher": false
     },
     {
-      "id": "8187445ef462",
-      "title": "로마 콘크리트는 어떻게 수천 년을 견뎠나? 1,900년 된 화장실에서 찾은 단서",
-      "normalized_title": "로마 콘크리트는 어떻게 수천 년을 견뎠나 1 900년 된 화장실에서 찾은 단서",
-      "url": "https://news.hada.io/topic?id=31558",
-      "published_at": "2026-07-18T17:41:58+00:00",
+      "id": "0c586a38db8d",
+      "title": "만들면 사람들이 찾아온다",
+      "normalized_title": "만들면 사람들이 찾아온다",
+      "url": "https://news.hada.io/topic?id=31577",
+      "published_at": "2026-07-19T05:33:30+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4320,68 +4436,11 @@
       "recent_publisher": false
     },
     {
-      "id": "b6825476801c",
-      "title": "Pebble 대규모 업데이트 – 2026년 7월",
-      "normalized_title": "pebble 대규모 업데이트 2026년 7월",
-      "url": "https://news.hada.io/topic?id=31557",
-      "published_at": "2026-07-18T17:38:58+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "업데이트"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "3aa58976e600",
-      "title": "SQLite를 운영하며 새롭게 배운 몇 가지",
-      "normalized_title": "sqlite를 운영하며 새롭게 배운 몇 가지",
-      "url": "https://news.hada.io/topic?id=31556",
-      "published_at": "2026-07-18T16:33:55+00:00",
+      "id": "baa0c44c02d0",
+      "title": "Show GN: 고전 아케이드 게임의 웹 플레이 & Live kit을 이용한 네트워크 플레이",
+      "normalized_title": "show gn 고전 아케이드 게임의 웹 플레이 live kit을 이용한 네트워크 플레이",
+      "url": "https://news.hada.io/topic?id=31575",
+      "published_at": "2026-07-19T02:02:34+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4432,11 +4491,11 @@
       "recent_publisher": false
     },
     {
-      "id": "60ab20b8abf8",
-      "title": "Show GN: drawdb-collaborative - 실시간 협업이 가능한 drawDB",
-      "normalized_title": "show gn drawdb collaborative 실시간 협업이 가능한 drawdb",
-      "url": "https://news.hada.io/topic?id=31555",
-      "published_at": "2026-07-18T16:23:52+00:00",
+      "id": "5a34e10a760e",
+      "title": "지금은 Kimi K3의 시간",
+      "normalized_title": "지금은 kimi k3의 시간",
+      "url": "https://news.hada.io/topic?id=31574",
+      "published_at": "2026-07-19T01:33:58+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4487,11 +4546,11 @@
       "recent_publisher": false
     },
     {
-      "id": "0348040964dd",
-      "title": "Show GN: 유튜브 댓글에서 체스 플레이 매크 프로그램",
-      "normalized_title": "show gn 유튜브 댓글에서 체스 플레이 매크 프로그램",
-      "url": "https://news.hada.io/topic?id=31554",
-      "published_at": "2026-07-18T15:50:39+00:00",
+      "id": "d6353d21d8ad",
+      "title": "안녕히, 그동안의 모든 Bikeshed에 감사드립니다",
+      "normalized_title": "안녕히 그동안의 모든 bikeshed에 감사드립니다",
+      "url": "https://news.hada.io/topic?id=31573",
+      "published_at": "2026-07-19T01:09:07+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4509,7 +4568,7 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
@@ -4518,16 +4577,14 @@
       "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "유튜브"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [],
@@ -4544,70 +4601,11 @@
       "recent_publisher": false
     },
     {
-      "id": "a85b666b162e",
-      "title": "Show GN: 윈도우의 MSIX를 더블클릭 인스톨러 EXE로 만들어주는 도구를 만들어봤습니다.",
-      "normalized_title": "show gn 윈도우의 msix를 더블클릭 인스톨러 exe로 만들어주는 도구를 만들어봤습니다",
-      "url": "https://news.hada.io/topic?id=31552",
-      "published_at": "2026-07-18T13:14:33+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "윈도우"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "도구"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "d638c3f56ef8",
-      "title": "Show GN: Solar-RS485-Monitor – RS485 기반 태양광 인버터 모니터링 도구",
-      "normalized_title": "show gn solar rs485 monitor rs485 기반 태양광 인버터 모니터링 도구",
-      "url": "https://news.hada.io/topic?id=31551",
-      "published_at": "2026-07-18T12:13:32+00:00",
+      "id": "173c6f0e42f0",
+      "title": "Lone Lisp를 만든 Matheus Moreira 인터뷰",
+      "normalized_title": "lone lisp를 만든 matheus moreira 인터뷰",
+      "url": "https://news.hada.io/topic?id=31572",
+      "published_at": "2026-07-19T01:06:07+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4628,65 +4626,8 @@
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 2,
+        "practical": 1,
         "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "도구"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "d9b2b6a45e1f",
-      "title": "Fine-tune video and image models at scale with NVIDIA NeMo Automodel and 🤗 Diffusers",
-      "normalized_title": "fine tune video and image models at scale with nvidia nemo automodel and diffusers",
-      "url": "https://huggingface.co/blog/nvidia/scale-diffusers-finetuning-nemo-automodel",
-      "published_at": "2026-07-17T15:57:54+00:00",
-      "summary": "",
-      "source_id": "huggingface-blog",
-      "source_family": "huggingface-blog",
-      "source_name": "Hugging Face Blog",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
       },
       "topic_tags": [],
       "unknown_publication_date": false,
@@ -4707,11 +4648,11 @@
       "lead_score_breakdown": {
         "reader_relevance": 0,
         "actionability": 1,
-        "explanatory_depth": 2,
+        "explanatory_depth": 1,
         "evidence": 3,
         "freshness": 5
       },
-      "lead_score": 11,
+      "lead_score": 10,
       "recent_publisher": false
     },
     {
@@ -5902,7 +5843,7 @@
         "freshness": 1
       },
       "lead_score": 10,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "2a7072ece5f3",
@@ -6076,7 +6017,7 @@
         "freshness": 1
       },
       "lead_score": 10,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "003f14febd45",
@@ -6258,7 +6199,7 @@
         "freshness": 1
       },
       "lead_score": 11,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "31b278e61f3a",
@@ -6372,7 +6313,7 @@
         "freshness": 1
       },
       "lead_score": 10,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "05988b5ab41e",
@@ -6496,7 +6437,7 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "eaab262185a8",
@@ -6863,6 +6804,61 @@
       "recent_publisher": false
     },
     {
+      "id": "d9b2b6a45e1f",
+      "title": "Fine-tune video and image models at scale with NVIDIA NeMo Automodel and 🤗 Diffusers",
+      "normalized_title": "fine tune video and image models at scale with nvidia nemo automodel and diffusers",
+      "url": "https://huggingface.co/blog/nvidia/scale-diffusers-finetuning-nemo-automodel",
+      "published_at": "2026-07-17T15:57:54+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 9,
+      "recent_publisher": true
+    },
+    {
       "id": "c5c3971a8972",
       "title": "Newer Models, Same Advantage",
       "normalized_title": "newer models same advantage",
@@ -6915,7 +6911,7 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "f443de946cf3",
@@ -6978,9 +6974,7 @@
         "freshness": 3
       },
       "lead_score": 11,
-      "recent_publisher": false,
-      "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
+      "recent_publisher": false
     },
     {
       "id": "11253d0d7f13",
@@ -7035,7 +7029,7 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "969cdff00361",
@@ -7090,7 +7084,7 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "7f36308856b0",
@@ -7145,7 +7139,7 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "8125b5dd69d0",
@@ -7207,7 +7201,7 @@
         "freshness": 1
       },
       "lead_score": 8,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "9dd06ff2acc7",
@@ -7261,7 +7255,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "3ce97f6a8c6c",
@@ -7315,7 +7309,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "77d64de25479",
@@ -7369,7 +7363,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "1ec294ada9f4",
@@ -7423,7 +7417,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "bf55a61637b6",
@@ -7477,7 +7471,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "1dc582402725",
@@ -7531,7 +7525,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     },
     {
       "id": "e998906a376b",
@@ -7585,7 +7579,7 @@
         "freshness": 1
       },
       "lead_score": 7,
-      "recent_publisher": false
+      "recent_publisher": true
     }
   ],
   "selected": [
@@ -7741,69 +7735,67 @@
       "selection_reason": "핵심뉴스 후보 2 · 점수 14"
     },
     {
-      "id": "f443de946cf3",
-      "title": "Security incident disclosure — July 2026",
-      "normalized_title": "security incident disclosure july 2026",
-      "url": "https://huggingface.co/blog/security-incident-july-2026",
-      "published_at": "2026-07-16T00:00:00+00:00",
+      "id": "22a56c924579",
+      "title": "앤트로픽, '페이블 5' 정식 요금제 편입...프로모션 종료하고 '50% 제한'",
+      "normalized_title": "앤트로픽 페이블 5 정식 요금제 편입 프로모션 종료하고 50 제한",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212908",
+      "published_at": "2026-07-19T00:24:31+00:00",
       "summary": "",
-      "source_id": "huggingface-blog",
-      "source_family": "huggingface-blog",
-      "source_name": "Hugging Face Blog",
-      "group": "community",
-      "source_weight": 3,
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
       "lane_bias": {
-        "practical": 1,
-        "deep": 2
+        "broad": 4
       },
       "requires_manual_review": true,
-      "score": 4,
+      "score": 7,
       "score_reasons": [
-        "출처 가중치 3",
-        "7일 이내"
+        "출처 가중치 4",
+        "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 5,
         "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 2
+        "reader_consequence": 2,
+        "practical": 0,
+        "deep": 0
       },
-      "topic_tags": [
-        "security"
-      ],
+      "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
         "reader_impact": 1,
-        "reader_consequence": 1,
+        "reader_consequence": 2,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
         "broad": [
-          "security"
+          "요금"
         ],
         "reader_impact": [
-          "security"
+          "요금"
         ],
         "reader_consequence": [
-          "incident"
+          "종료",
+          "제한"
         ],
         "practical": [],
         "deep": []
       },
       "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 3
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
       },
-      "lead_score": 11,
+      "lead_score": 10,
       "recent_publisher": false,
       "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
+      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
     }
   ],
   "lead_shortlist": [
@@ -7959,69 +7951,67 @@
       "selection_reason": "핵심뉴스 후보 2 · 점수 14"
     },
     {
-      "id": "f443de946cf3",
-      "title": "Security incident disclosure — July 2026",
-      "normalized_title": "security incident disclosure july 2026",
-      "url": "https://huggingface.co/blog/security-incident-july-2026",
-      "published_at": "2026-07-16T00:00:00+00:00",
+      "id": "22a56c924579",
+      "title": "앤트로픽, '페이블 5' 정식 요금제 편입...프로모션 종료하고 '50% 제한'",
+      "normalized_title": "앤트로픽 페이블 5 정식 요금제 편입 프로모션 종료하고 50 제한",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=212908",
+      "published_at": "2026-07-19T00:24:31+00:00",
       "summary": "",
-      "source_id": "huggingface-blog",
-      "source_family": "huggingface-blog",
-      "source_name": "Hugging Face Blog",
-      "group": "community",
-      "source_weight": 3,
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
       "lane_bias": {
-        "practical": 1,
-        "deep": 2
+        "broad": 4
       },
       "requires_manual_review": true,
-      "score": 4,
+      "score": 7,
       "score_reasons": [
-        "출처 가중치 3",
-        "7일 이내"
+        "출처 가중치 4",
+        "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 5,
         "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 2
+        "reader_consequence": 2,
+        "practical": 0,
+        "deep": 0
       },
-      "topic_tags": [
-        "security"
-      ],
+      "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
         "reader_impact": 1,
-        "reader_consequence": 1,
+        "reader_consequence": 2,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
         "broad": [
-          "security"
+          "요금"
         ],
         "reader_impact": [
-          "security"
+          "요금"
         ],
         "reader_consequence": [
-          "incident"
+          "종료",
+          "제한"
         ],
         "practical": [],
         "deep": []
       },
       "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 3
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
       },
-      "lead_score": 11,
+      "lead_score": 10,
       "recent_publisher": false,
       "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
+      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
     }
   ],
   "errors": [
