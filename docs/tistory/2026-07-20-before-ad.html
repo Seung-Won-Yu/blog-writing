@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 20 (월) · 약 8분</p>
+    <p class="digest-lead">회사 Windows PC에서 로그인할 때마다 휴대전화 알림을 확인하는 흐름은 익숙하지만, 현장이나 공유 공간에서는 그 한 단계가 자주 막힙니다. Google은 GCPW(Google Credential Provider for Windows)에서 FIDO2 호환 물리 보안 키를 두 번째 인증 수단으로 지원하기 시작했습니다. 이제 관리형 Google 계정으로 Windows에 로그인할 때 보안 키를 사용할 수 있고, 가까이 있는 블루투스 휴대전화의 패스키도 두 번째 단계로 쓸 수 있습니다. 다만 이 변화는 Windows 비밀번호를 보안 키 하나로 완전히 교체한다는 뜻은 아닙니다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-20/Windows-FIDO2-대표.webp" alt="Windows 로그인에 FIDO2 보안 키를 두 번째 인증으로 더하는 대표 도식" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Google Workspace Updates · 2026. 7. 14</p>
+    <h3>Google Credential Provider for Windows, FIDO2 물리 보안 키를 두 번째 인증 수단으로 지원</h3>
+    <p class="digest-blurb">Google은 GCPW에서 FIDO2 호환 물리 보안 키와 근처 블루투스 휴대전화의 패스키를 Windows 로그인용 두 번째 인증 수단으로 지원하기 시작했다. 배포는 7월 13일부터 최대 15일간 점진적으로 진행된다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">Windows 로그인에서 정확히 무엇이 바뀌었나</h4><p>GCPW는 Windows 10 또는 11 기기에서 관리형 Google 계정으로 로그인하게 하는 구성 요소다. Google의 이번 업데이트는 그 로그인 과정의 두 번째 인증에 FIDO2 호환 물리 보안 키를 추가한다. 관리자는 하드웨어 키를 쓰는 2단계 인증을 강제할 수 있고, 사용자는 근처 블루투스 휴대전화에 있는 패스키도 두 번째 단계에서 사용할 수 있다. 기능 노출은 7월 13일부터 최대 15일간 점진적으로 이뤄진다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-20/FIDO2-설정-흐름.webp" alt="관리자 설정부터 보안 키 등록, Windows 로그인, 키 터치와 로그인 완료까지의 흐름" width="1200" height="630" loading="lazy"><figcaption>관리자 정책과 계정의 키 등록이 먼저 갖춰져야 Windows 로그인에서 키 터치 단계가 나타난다.</figcaption></figure><h4 class="digest-subheading">보안 키가 하는 일: 비밀번호 대체와 구분하기</h4><p>여기서 FIDO2 키는 Windows 로그인 전체를 단독으로 대체한다는 발표가 아니다. Google 공지는 이를 두 번째 인증 수단이라고 명시한다. 즉 관리형 Google 계정의 기존 로그인 흐름 뒤에서 ‘내가 실제 키를 갖고 있다’는 확인을 더하는 역할이다. Google 계정 도움말도 보안 키를 2단계 인증에 사용할 수 있다고 안내하며, 키에 패스키를 만들 때와 두 번째 단계로 쓸 때의 동작이 다를 수 있음을 설명한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-20/2단계인증-비교.webp" alt="휴대전화 확인과 FIDO2 보안 키가 모두 두 번째 인증임을 보여 주는 비교 도식" width="1200" height="630" loading="lazy"><figcaption>휴대전화 확인과 FIDO2 키는 모두 두 번째 인증에 속한다. 새 기능을 비밀번호 제거로 해석하면 정책과 지원 범위를 잘못 설계할 수 있다.</figcaption></figure></div>
+  </div>
+</section>
+</article>
