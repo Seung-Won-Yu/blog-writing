@@ -32,7 +32,8 @@
       "target_matches": 3,
       "keywords": [
         "automation", "workflow", "self-hosted", "docker", "github actions",
-        "playwright", "backup", "monitoring", "자동화", "워크플로", "백업", "모니터링"
+        "playwright", "backup", "monitoring", "vibe coding", "open source", "writing", "beginner",
+        "자동화", "워크플로", "백업", "모니터링", "바이브 코딩", "오픈소스", "글쓰기", "윤문", "기초", "입문"
       ]
     },
     "problem_solving": {
@@ -41,7 +42,8 @@
       "target_matches": 3,
       "keywords": [
         "retry", "failure", "notification", "schedule", "sync", "backup", "scrape",
-        "deploy", "test", "monitor", "alert", "실패", "알림", "예약", "동기화", "배포", "테스트"
+        "deploy", "test", "monitor", "alert", "debug", "verify", "rollback", "restore", "hallucination",
+        "실패", "알림", "예약", "동기화", "배포", "테스트", "디버깅", "검증", "되돌리기", "복구", "환각"
       ]
     },
     "reproducibility": {
@@ -50,7 +52,8 @@
       "target_matches": 3,
       "keywords": [
         "quickstart", "example", "template", "docker", "cli", "configuration", "settings",
-        "tutorial", "yaml", "예제", "템플릿", "설정", "따라하기"
+        "tutorial", "yaml", "before after", "comparison", "experiment", "hands-on",
+        "예제", "템플릿", "설정", "따라하기", "전후", "비교", "실험", "실습", "직접"
       ]
     },
     "visual_evidence": {
@@ -58,8 +61,9 @@
       "weight": 15,
       "target_matches": 3,
       "keywords": [
-        "dashboard", "logs", "report", "trace", "workflow", "browser", "chart",
-        "대시보드", "로그", "보고서", "브라우저", "차트"
+        "dashboard", "logs", "report", "trace", "workflow", "browser", "chart", "before after",
+        "comparison", "flow", "architecture", "대시보드", "로그", "보고서", "브라우저", "차트",
+        "전후", "비교", "흐름", "구조"
       ]
     },
     "broad_appeal": {
@@ -73,7 +77,8 @@
         "report", "notification", "reminder", "photo", "document", "slides", "backup",
         "download", "webpage", "website", "이메일", "메일", "스프레드시트", "엑셀", "일정", "회의", "메모", "pdf",
         "파일", "폴더", "설문", "영수증", "청구서", "보고서", "알림", "사진", "문서",
-        "백업", "다운로드", "웹페이지"
+        "백업", "다운로드", "웹페이지", "AI 글", "AI 초안", "AI 티", "바이브 코딩", "코딩",
+        "오픈소스", "글쓰기", "개발 입문", "비전공자", "앱 만들기"
       ]
     }
   },
@@ -174,6 +179,31 @@
       "experiment_type": "따라하기",
       "verification_hint": "테스트 캘린더만 사용하고 읽기 범위·시간대·빈 일정·실행 취소 방법을 기록",
       "criteria_bias": {"search_durability": 7, "problem_solving": 7, "reproducibility": 5, "visual_evidence": 6, "broad_appeal": 8}
+    },
+    {
+      "id": "im-not-ai-korean-writing-test",
+      "title": "AI 초안의 ‘AI 티’를 줄이면 무엇이 달라질까: im-not-ai 직접 비교",
+      "summary": "같은 한국어 AI 초안을 윤문 전후로 비교하고 탐지된 표현, 변경률, 사실·수치·고유명사 보존 여부와 과윤문 한계를 확인한다.",
+      "url": "https://github.com/epoko77-ai/im-not-ai",
+      "source_name": "im-not-ai 공식 저장소",
+      "repository": "epoko77-ai/im-not-ai",
+      "problem_lane": "AI 글쓰기",
+      "tool_brand": "im-not-ai",
+      "experiment_type": "공개 도구 적용 사례",
+      "verification_hint": "임시 복제본과 공개 예제 문장만 사용한다. README·라이선스·현재 태그와 커밋·Codex 지원 범위를 확인하고 동일 원문 전후 diff와 변경률, 보존 실패 사례를 기록",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 7, "reproducibility": 7, "visual_evidence": 7, "broad_appeal": 7}
+    },
+    {
+      "id": "vibe-coding-recovery-basics",
+      "title": "바이브 코딩이 막힐 때 되돌리는 법: 오류·Git·배포 차이 직접 실습",
+      "summary": "작은 웹페이지를 AI로 수정하면서 의도적 오류, Git 저장점, 로컬과 배포 차이를 차례로 재현하고 막힌 상태에서 복구하는 최소 절차를 확인한다.",
+      "url": "https://yozm.wishket.com/magazine/detail/3850/",
+      "source_name": "요즘IT(아이디어 발견)",
+      "problem_lane": "바이브 코딩 기초",
+      "tool_brand": "Git·브라우저",
+      "experiment_type": "개발·AI 실전 검증",
+      "verification_hint": "요즘IT 원문을 요약하지 않고 Git·MDN·배포 플랫폼 공식 문서로 개념을 교차 확인한다. 별도 임시 폴더의 미니 웹페이지에서 오류·복구·로컬과 배포 차이를 직접 캡처",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 8, "visual_evidence": 7, "broad_appeal": 8}
     }
   ],
   "selection": {
@@ -188,6 +218,7 @@
     },
     "preferred_source_kinds": [
       "evergreen_guide",
+      "evergreen_editorial",
       "official_guide",
       "trending",
       "release"
@@ -213,6 +244,38 @@
       "criteria_bias": {
         "search_durability": 5,
         "problem_solving": 4,
+        "broad_appeal": 0
+      },
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "yozmit-evergreen-dev",
+      "name": "요즘IT 개발·AI 실전",
+      "problem_lane": "개발·AI 실전",
+      "tool_brand": "요즘IT",
+      "source_family": "yozmit-evergreen",
+      "group": "korean_editorial",
+      "type": "rss",
+      "source_kind": "evergreen_editorial",
+      "url": "https://yozm.wishket.com/magazine/feed/",
+      "allow_unknown_date": true,
+      "weight": 4,
+      "max_items": 12,
+      "max_age_days": 60,
+      "max_summary_chars": 900,
+      "include_title_keywords": [
+        "AI", "ChatGPT", "Claude", "클로드", "바이브 코딩", "코딩", "개발",
+        "GitHub", "깃허브", "오픈소스", "프롬프트", "글쓰기", "자동화",
+        "앱", "웹사이트", "웹페이지"
+      ],
+      "experiment_type": "개발·AI 실전 검증",
+      "verification_hint": "요즘IT 글은 아이디어 발견에만 사용하고 원문을 재서술하지 않는다. 공식 저장소·공식 문서를 추가 확인한 뒤 작은 예제로 직접 실행하고 기대값·실제 결과·실패·복구를 기록",
+      "criteria_bias": {
+        "search_durability": 6,
+        "problem_solving": 5,
+        "reproducibility": 5,
+        "visual_evidence": 4,
         "broad_appeal": 0
       },
       "manual_review": true,

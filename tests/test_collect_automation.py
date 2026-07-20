@@ -172,6 +172,27 @@ class AutomationScoringTests(unittest.TestCase):
         self.assertIn("google-workspace-updates", source_ids)
         self.assertIn("power-automate-blog", source_ids)
         self.assertIn("zapier-guides", source_ids)
+        self.assertIn("yozmit-evergreen-dev", source_ids)
+        self.assertIn(
+            "evergreen_editorial",
+            config["selection"]["preferred_source_kinds"],
+        )
+        yozmit = next(
+            source
+            for source in config["sources"]
+            if source["id"] == "yozmit-evergreen-dev"
+        )
+        self.assertEqual(
+            yozmit["url"],
+            "https://yozm.wishket.com/magazine/feed/",
+        )
+        self.assertTrue(yozmit["allow_unknown_date"])
+        self.assertTrue(yozmit["manual_review"])
+        evergreen_ids = {
+            item["id"] for item in config["evergreen_candidates"]
+        }
+        self.assertIn("im-not-ai-korean-writing-test", evergreen_ids)
+        self.assertIn("vibe-coding-recovery-basics", evergreen_ids)
         self.assertGreaterEqual(len(config["evergreen_candidates"]), 6)
         self.assertTrue(
             all(
@@ -375,6 +396,29 @@ class AutomationScoringTests(unittest.TestCase):
 
         self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 7)
         self.assertEqual(selected, [])
+
+    def test_default_policy_accepts_a_specific_evergreen_development_topic(self):
+        config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+        candidate = {
+            "id": "vibe-coding-recovery",
+            "title": "바이브 코딩이 막힐 때 되돌리는 법",
+            "summary": "Git 복구와 로컬·배포 차이를 직접 실습한다.",
+            "source_id": "yozmit-evergreen-dev",
+            "source_family": "yozmit-evergreen",
+            "source_kind": "evergreen_editorial",
+        }
+        score_automation_candidate(candidate, config["criteria"])
+
+        selected = select_automation_candidates(
+            [candidate],
+            config["selection"],
+        )
+
+        self.assertGreaterEqual(
+            candidate["raw_score_breakdown"]["broad_appeal"],
+            8,
+        )
+        self.assertEqual([item["id"] for item in selected], [candidate["id"]])
 
     def test_adds_problem_first_evergreen_candidates_without_fetching_a_feed(self):
         config = automation_config()
