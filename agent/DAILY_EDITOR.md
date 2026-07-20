@@ -102,17 +102,22 @@
    python3 -m unittest discover -s tests
    ```
 
-9. 최종 가드가 `COMPLETE`인지 확인합니다.
+9. 최종 가드가 `COMPLETE`인지 확인한 뒤, 당일 발행 묶음만 결정적으로 스테이징하고 누락·미스테이징이 없는지 확인합니다.
 
    ```bash
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
+   python3 -m blog_pipeline.publishing.publish_bundle --today --stage
+   python3 -m blog_pipeline.publishing.publish_bundle --today --check
+   git diff --cached --check
    ```
 
-10. 모든 기준을 통과하고 실제 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. GitHub Pages 배포 작업이 성공하고 공개 루트에서 실제 조립·복사 흐름까지 확인합니다. 티스토리에는 자동 발행하지 않습니다.
+   `publish_bundle`은 원고 JSON, 메타, 본문·광고 분할본, AdFit 결합본, 미리보기, 이미지, 루트 발행 도우미를 한 묶음으로 취급합니다. `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 로컬에만 남은 파일을 저장소 정책상 제외 파일이라고 추측하지 않습니다.
+
+10. 모든 기준을 통과하고 실제 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 푸시 직후 해당 커밋의 `Publish reviewed drafts` 실행이 성공할 때까지 확인합니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. GitHub Pages 배포 작업이 성공하고 공개 루트에서 실제 조립·복사 흐름까지 확인한 뒤에만 `COMPLETE`로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 단일 실행과 토큰 원칙
 
-- 완료 표시는 `daily_guard`의 `COMPLETE` 판정입니다.
+- 완료 표시는 `daily_guard`의 `COMPLETE`, `publish_bundle`의 `READY`, 원격 Pages 배포 성공과 공개 루트 확인을 모두 충족한 상태입니다.
 - `COMPLETE` 날짜는 사용자가 명시적으로 재작성을 요청하지 않는 한 읽기 전용입니다.
 - 한 실행에서 같은 JSON·이미지를 처음부터 두 번 만들지 않습니다.
 - 한 실행에서 커밋 1회, 푸시 1회를 넘기지 않습니다.

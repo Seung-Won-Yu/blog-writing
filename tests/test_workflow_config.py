@@ -101,6 +101,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "blog_pipeline" / "publishing" / "build_copy_page.py",
             ROOT / "blog_pipeline" / "publishing" / "build_integration_page.py",
             ROOT / "blog_pipeline" / "publishing" / "daily_guard.py",
+            ROOT / "blog_pipeline" / "publishing" / "publish_bundle.py",
             ROOT / "blog_pipeline" / "publishing" / "saturday_guard.py",
             ROOT / "blog_pipeline" / "publishing" / "generate_editorial_images.py",
             ROOT / "blog_pipeline" / "publishing" / "optimize_images.py",
@@ -114,6 +115,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("daily_guard --today", contract)
         self.assertIn("daily_guard --today --check-duplicates", contract)
         self.assertIn("daily_guard --today --require-complete", contract)
+        self.assertIn("publish_bundle --today --stage", contract)
+        self.assertIn("publish_bundle --today --check", contract)
         self.assertIn("optimize_images --today", contract)
         self.assertIn("webp-v1", contract)
         self.assertIn("`COMPLETE`: 즉시 종료", contract)
@@ -139,6 +142,18 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("긴급 보안·서비스 장애", contract)
         self.assertIn("반복 브랜드를 제목에서 제외", contract)
         self.assertIn("대표 이미지는 새 핵심 대상", contract)
+
+    def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
+        contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "publish_bundle --draft-id YYYY-MM-DD-automation --stage",
+            contract,
+        )
+        self.assertIn(
+            "publish_bundle --draft-id YYYY-MM-DD-automation --check",
+            contract,
+        )
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")

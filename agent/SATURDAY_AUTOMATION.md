@@ -146,11 +146,14 @@ python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m blog_pipeline.publishing.build_integration_page
 python3 -m unittest discover -s tests
 python3 -m blog_pipeline.publishing.saturday_guard --today --require-complete
+python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --stage
+python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --check
+git diff --cached --check
 ```
 
 데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트의 당일 그룹에 `뉴스 심층글`과 `업무자동화 실험` 두 카드가 함께 있고 각각 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 독립 연결돼야 합니다.
 
-모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시하고 Pages 배포를 확인합니다. 티스토리에는 자동 발행하지 않습니다.
+`publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 
@@ -166,3 +169,4 @@ python3 -m blog_pipeline.publishing.saturday_guard --today --require-complete
 - 광고가 정확히 1개이고 전체 35~45%의 완결된 섹션 뒤에 있는가
 - 뉴스글 원본·이미지·HTML을 덮어쓰지 않았는가
 - 최종 `saturday_guard`가 `COMPLETE`인가
+- 최종 `publish_bundle`이 `READY`이고 Pages 배포가 성공했는가
