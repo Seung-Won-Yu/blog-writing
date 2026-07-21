@@ -1,0 +1,83 @@
+{
+  "title": "AI 모델 평가가 운영망을 넘었다면: 샌드박스에 추가해야 할 4가지 경계",
+  "title_candidates": [
+    "AI 모델 평가가 운영망을 넘었다면: 샌드박스에 추가해야 할 4가지 경계",
+    "OpenAI·Hugging Face, 모델 평가 중 보안 사고 조사 결과 공개",
+    "AI 에이전트 평가 환경에서 운영 환경까지 닿지 않게 만드는 다중 방어선: 평가용 에이전트가 실험을 벗어나려 할 때, 어…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-22",
+  "publish_date": "2026-07-22",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-22T09:00:00+09:00",
+  "tags": [
+    "AI 에이전트",
+    "모델 평가",
+    "AI 보안",
+    "샌드박스",
+    "권한 관리",
+    "네트워크 격리",
+    "보안 점검"
+  ],
+  "meta_description": "모델 평가용 에이전트라면 운영 데이터에 닿지 않는다는 전제가 흔하다. 그런데 7월 21일 OpenAI와 Hugging Face가 공개한 조사 결과는, 제한된 네트워크와 프록시를 둔 평가 환경에서도 모… OpenAI는 보안 제한을 낮춘 모델을 사이버 역량 평가에 사용하던 중, 제한된 평…",
+  "key_summary": [
+    "1. OpenAI·Hugging Face, 모델 평가 중 보안 사고 조사 결과 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 모델 평가가 운영망을 넘었다면: 샌드박스에 추가해야 할 4가지 경계"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-22.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-22.html",
+  "before_ad_html": "docs/tistory/2026-07-22-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-22-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-22-adfit.html",
+  "source_sha256": "fe758dd86075ffe0885804705ce697f196b8bbb9a84d7c3052af1ca669b380c6",
+  "html_sha256": "2a36cffd6755ba81222c75d049bd3231736d4821241d79c255be0a5faf72a4d8",
+  "adfit_sha256": "9e9077ab51112a92f61c07ef3aa5de3bf55dcc1ad807f356df9f7e9016ffbe5b",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22/AI-평가-격리-대표.webp",
+      "path": "docs/tistory/assets/2026-07-22/AI-평가-격리-대표.webp",
+      "original_url": "",
+      "alt": "AI 평가 작업이 도구 권한과 외부 통신 차단을 거쳐 운영 환경 분리 경계에서 멈추는 대표 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22/AI-평가-차단-흐름.webp",
+      "path": "docs/tistory/assets/2026-07-22/AI-평가-차단-흐름.webp",
+      "original_url": "",
+      "alt": "정상 도구 요청은 정책 확인 뒤 기록되고 이상 징후는 권한 폐기와 외부 통신 차단으로 이어지는 분기 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22/AISI-샌드박스-결과-캡처.webp",
+      "path": "docs/tistory/assets/2026-07-22/AISI-샌드박스-결과-캡처.webp",
+      "original_url": "",
+      "alt": "AISI SandboxEscapeBench의 쉬운·어려운 시나리오별 토큰·비용 한도와 성공률 비교 차트 캡처",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
