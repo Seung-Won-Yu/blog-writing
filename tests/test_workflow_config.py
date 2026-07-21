@@ -113,7 +113,8 @@ class WorkflowConfigTests(unittest.TestCase):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
         self.assertIn("daily_guard --today", contract)
-        self.assertIn("daily_guard --today --check-duplicates", contract)
+        self.assertIn("daily_guard --today --source-only", contract)
+        self.assertIn("원고 사전검사", contract)
         self.assertIn("daily_guard --today --require-complete", contract)
         self.assertIn("publish_bundle --today --stage", contract)
         self.assertIn("publish_bundle --today --check", contract)

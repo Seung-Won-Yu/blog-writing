@@ -80,6 +80,39 @@ BANNED_EDITORIAL_PHRASES = {
     "ai로 작성했습니다",
     "승원의 메모",
 }
+EDITORIAL_LENGTH_RULES = {
+    "headline": (25, 70),
+    "opening": (180, 1200),
+    "closing": (100, 1000),
+    "action": (30, 500),
+    "audience_problem": (40, 500),
+    "reader_takeaway": (40, 500),
+    "why_now": (40, 500),
+    "topic_key": (6, 100),
+    "reader_question": (30, 300),
+}
+DEPTH_POLICIES = {
+    "daily_news": {
+        "minimum_headings": 5,
+        "maximum_headings": 7,
+        "minimum_visuals": 2,
+        "maximum_visuals": 6,
+        "minimum_minutes": 8,
+        "maximum_minutes": 16,
+        "minimum_blocks": 15,
+        "required_block_types": {"table", "ul"},
+    },
+    "automation_case": {
+        "minimum_headings": 5,
+        "maximum_headings": 8,
+        "minimum_visuals": 3,
+        "maximum_visuals": 6,
+        "minimum_minutes": 10,
+        "maximum_minutes": 20,
+        "minimum_blocks": 17,
+        "required_block_types": {"table", "ul", "code"},
+    },
+}
 
 
 def plain(value):
@@ -204,7 +237,7 @@ def _strict_text_list(value, *, minimum=0):
     )
 
 
-def _schema_reasons(source, identity):
+def _schema_reasons(source, identity, *, require_images=True):
     """Reject JSON values that would otherwise render as Python repr strings."""
     invalid = False
     required_top_text = (
@@ -370,7 +403,7 @@ def _schema_reasons(source, identity):
 
     images = source.get("images")
     if not isinstance(images, dict):
-        invalid = True
+        invalid |= require_images
         images = {}
     for key, image in images.items():
         if key != "cover" and not re.fullmatch(r"visual_\d+", str(key)):
@@ -534,20 +567,9 @@ def _identity_reasons(source, identity):
 def _editorial_reasons(source, identity):
     reasons = []
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
-    length_rules = {
-        "headline": (25, 70),
-        "opening": (180, 1200),
-        "closing": (100, 1000),
-        "action": (30, 500),
-        "audience_problem": (40, 500),
-        "reader_takeaway": (40, 500),
-        "why_now": (40, 500),
-        "topic_key": (6, 100),
-        "reader_question": (30, 300),
-    }
     if any(
         not minimum <= len(plain(editorial.get(key))) <= maximum
-        for key, (minimum, maximum) in length_rules.items()
+        for key, (minimum, maximum) in EDITORIAL_LENGTH_RULES.items()
     ):
         reasons.append("quality_editorial")
     entities = editorial.get("entities")
@@ -680,20 +702,21 @@ def _depth_reasons(source, identity):
     headings = [block for block in blocks if block.get("t") == "h"]
     visuals = [block for block in blocks if block.get("t") == "visual"]
     ad_indexes = [index for index, block in enumerate(blocks) if block.get("t") == "ad_break"]
-    automation = identity.content_type == "automation_case"
-    min_headings, max_headings = (5, 8) if automation else (5, 7)
-    min_visuals = 3 if automation else 2
-    minimum_minutes, maximum_minutes = (10, 20) if automation else (8, 16)
+    policy = DEPTH_POLICIES[identity.content_type]
     block_types = {block.get("t") for block in blocks}
     invalid = (
         malformed_blocks
-        or not min_headings <= len(headings) <= max_headings
-        or not min_visuals <= len(visuals) <= 6
-        or not minimum_minutes <= estimate_read_minutes(source) <= maximum_minutes
-        or len(blocks) < (17 if automation else 15)
-        or "table" not in block_types
-        or "ul" not in block_types
-        or (automation and "code" not in block_types)
+        or not policy["minimum_headings"]
+        <= len(headings)
+        <= policy["maximum_headings"]
+        or not policy["minimum_visuals"]
+        <= len(visuals)
+        <= policy["maximum_visuals"]
+        or not policy["minimum_minutes"]
+        <= estimate_read_minutes(source)
+        <= policy["maximum_minutes"]
+        or len(blocks) < policy["minimum_blocks"]
+        or not policy["required_block_types"].issubset(block_types)
         or len(ad_indexes) != 1
     )
     if not invalid:
@@ -977,23 +1000,8 @@ def _experiment_reasons(source, identity):
     return ["quality_experiment_evidence"] if invalid else []
 
 
-def source_quality_reasons(source, identity):
-    """Return durable reason codes for one future publishable source."""
-    if not isinstance(source, dict) or not policy_active(identity):
-        return []
+def _run_quality_validators(validators):
     reasons = []
-    validators = (
-        lambda: _identity_reasons(source, identity),
-        lambda: _schema_reasons(source, identity),
-        lambda: _editorial_reasons(source, identity),
-        lambda: _korean_content_reasons(source),
-        lambda: _reference_reasons(source),
-        lambda: _source_freshness_reasons(source, identity),
-        lambda: _depth_reasons(source, identity),
-        lambda: _prose_reasons(source),
-        lambda: _visual_reasons(source, identity),
-        lambda: _experiment_reasons(source, identity),
-    )
     for validate in validators:
         try:
             reasons.extend(validate())
@@ -1001,7 +1009,10 @@ def source_quality_reasons(source, identity):
             # A malformed JSON field must make the draft unpublishable, never
             # abort the whole scheduled quality scan.
             reasons.append("quality_schema")
+    return reasons
 
+
+def _generation_reasons(source):
     generation = source.get("generation") if isinstance(source.get("generation"), dict) else {}
     try:
         revision = int(generation.get("revision") or 0)
@@ -1012,5 +1023,38 @@ def source_quality_reasons(source, identity):
         or not plain(generation.get("model"))
         or revision < 7
     ):
-        reasons.append("quality_generation")
+        return ["quality_generation"]
+    return []
+
+
+def source_authoring_reasons(source, identity):
+    """Validate the article contract before image files or exports exist."""
+    if not isinstance(source, dict) or not policy_active(identity):
+        return []
+    validators = (
+        lambda: _identity_reasons(source, identity),
+        lambda: _schema_reasons(source, identity, require_images=False),
+        lambda: _editorial_reasons(source, identity),
+        lambda: _korean_content_reasons(source),
+        lambda: _reference_reasons(source),
+        lambda: _source_freshness_reasons(source, identity),
+        lambda: _depth_reasons(source, identity),
+        lambda: _prose_reasons(source),
+    )
+    reasons = _run_quality_validators(validators)
+    reasons.extend(_generation_reasons(source))
+    return list(dict.fromkeys(reasons))
+
+
+def source_quality_reasons(source, identity):
+    """Return durable reason codes for one future publishable source."""
+    if not isinstance(source, dict) or not policy_active(identity):
+        return []
+    reasons = source_authoring_reasons(source, identity)
+    validators = (
+        lambda: _schema_reasons(source, identity),
+        lambda: _visual_reasons(source, identity),
+        lambda: _experiment_reasons(source, identity),
+    )
+    reasons.extend(_run_quality_validators(validators))
     return list(dict.fromkeys(reasons))

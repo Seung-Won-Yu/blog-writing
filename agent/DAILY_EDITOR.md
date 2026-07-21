@@ -44,13 +44,13 @@
 
 업무자동화 실험·따라하기·GitHub 적용 사례는 이 작업에 섞지 않고 `agent/SATURDAY_AUTOMATION.md`가 담당합니다.
 
-5. `data/days/YYYY-MM-DD.json`을 `lead-story-v1` 형식으로 한 번에 작성합니다. 이미지 생성 전 중복 가드를 실행합니다.
+5. `data/days/YYYY-MM-DD.json`을 `lead-story-v1` 형식으로 한 번에 작성합니다. 이미지 생성 전에 원고 사전검사를 실행합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.daily_guard --today --check-duplicates
+   python3 -m blog_pipeline.publishing.daily_guard --today --source-only
    ```
 
-   실패하면 중복된 주제만 교체합니다. 중복 상태에서 이미지와 HTML을 만들지 않습니다.
+   `READY`일 때만 다음 단계로 갑니다. `PARTIAL`이면 출력된 `expected_identity`, `editorial_lengths`, `invalid_scene_labels`, `depth`, `duplicates`에서 실패한 JSON 필드만 고쳐 같은 명령을 다시 실행합니다. 원고 사전검사가 실패한 상태에서는 이미지와 HTML을 만들지 않습니다.
 
 6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지 2~6장은 내용에 따라 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지는 만들지 않습니다. 각 이미지를 만들기 전에 `visual.assets`에 다음 브리프를 기록합니다.
 
@@ -153,7 +153,8 @@
 
 당일 파일은 `schema_version: 3`, `format: lead-story-v1`을 사용합니다.
 
-- `date_label`, `weekday`, `primary_query`, `tags`
+- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: 뉴스 심층글`, `category: 데일리IT뉴스`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다.
+- `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`
 - `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`
@@ -163,6 +164,8 @@
 - `generation`, `images.cover`, `images.visual_1`부터 실제 사용 이미지까지
 
 모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `checklist`을 모두 포함합니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
+
+`editorial` 문자열 길이는 `headline 25~70`, `opening 180~1200`, `closing 100~1000`, `action 30~500`, `audience_problem 40~500`, `reader_takeaway 40~500`, `why_now 40~500`, `topic_key 6~100`, `reader_question 30~300`자입니다. `visual.assets[*].scene_label`은 쉼표로 합친 문자열이 아니라 비어 있지 않은 문자열 2~4개의 JSON 배열로 기록합니다.
 
 ## HTML 디자인 계약
 

@@ -15,7 +15,14 @@ from zoneinfo import ZoneInfo
 from blog_pipeline.collection.news_pipeline import validate_day_id
 from .draft_identity import resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
-from .editorial_quality import PUBLISH_GATE_START, source_quality_reasons
+from .editorial_quality import (
+    DEPTH_POLICIES,
+    EDITORIAL_LENGTH_RULES,
+    PUBLISH_GATE_START,
+    estimate_read_minutes,
+    source_authoring_reasons,
+    source_quality_reasons,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -875,6 +882,134 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
     return inspect_draft_state(day_id, root=root, window_days=window_days)
 
 
+def _source_preflight_diagnostics(source, identity):
+    publish_day = date.fromisoformat(identity.publish_date)
+    weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
+    scheduled_hour = "18:00:00" if identity.content_type == "automation_case" else "09:00:00"
+    expected_identity = {
+        "schema_version": 3,
+        "format": "lead-story-v1",
+        "draft_id": identity.draft_id,
+        "publish_date": identity.publish_date,
+        "date_label": f"{publish_day.year}. {publish_day.month}. {publish_day.day}",
+        "weekday": weekday_labels[publish_day.weekday()],
+        "content_type": identity.content_type,
+        "content_label": identity.content_label,
+        "category": "업무자동화" if identity.content_type == "automation_case" else "데일리IT뉴스",
+        "publication_mode": "scheduled",
+        "scheduled_at": f"{identity.publish_date}T{scheduled_hour}+09:00",
+    }
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    editorial_lengths = {
+        key: {
+            "actual": len(" ".join(str(editorial.get(key) or "").split())),
+            "minimum": minimum,
+            "maximum": maximum,
+        }
+        for key, (minimum, maximum) in EDITORIAL_LENGTH_RULES.items()
+    }
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    briefs = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    invalid_scene_labels = []
+    for index, brief in enumerate(briefs, 1):
+        labels = brief.get("scene_label") if isinstance(brief, dict) else None
+        if not (
+            isinstance(labels, list)
+            and 2 <= len(labels) <= 4
+            and all(isinstance(label, str) and label.strip() for label in labels)
+        ):
+            invalid_scene_labels.append(f"visual_{index}")
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    blocks = [block for block in content if isinstance(block, dict)]
+    headings = sum(block.get("t") == "h" for block in blocks)
+    visuals = sum(block.get("t") == "visual" for block in blocks)
+    ad_indexes = [index for index, block in enumerate(blocks) if block.get("t") == "ad_break"]
+    ad_position = None
+    if len(ad_indexes) == 1:
+        ad_position = round(ad_indexes[0] / max(1, len(blocks) - 1), 3)
+    policy = DEPTH_POLICIES[identity.content_type]
+    depth = {
+        "estimated_minutes": estimate_read_minutes(source),
+        "blocks": len(blocks),
+        "headings": headings,
+        "visuals": visuals,
+        "ad_position": ad_position,
+        "required": {
+            **{
+                key: value
+                for key, value in policy.items()
+                if key != "required_block_types"
+            },
+            "required_block_types": sorted(policy["required_block_types"]),
+            "ad_position": [0.35, 0.45],
+        },
+    }
+    return {
+        "expected_identity": expected_identity,
+        "editorial_lengths": editorial_lengths,
+        "invalid_scene_labels": invalid_scene_labels,
+        "depth": depth,
+    }
+
+
+def inspect_source_state(draft_id, *, root=ROOT, window_days=14):
+    """Validate the written JSON before generating image files or exports."""
+    identity = resolve_draft_identity(draft_id)
+    root = Path(root)
+    source = _read_json(root / identity.source)
+    if not isinstance(source, dict):
+        return {
+            "day": identity.publish_date,
+            "draft_id": identity.draft_id,
+            "content_type": identity.content_type,
+            "status": "PARTIAL",
+            "reasons": ["missing_or_invalid_source"],
+            "duplicates": [],
+        }
+
+    reasons = []
+    try:
+        resolve_draft_identity(identity.draft_id, source)
+    except ValueError:
+        reasons.append("invalid_draft_identity")
+    news = source.get("news")
+    lead_story = is_lead_story(source)
+    if not isinstance(news, list) or len(news) != (1 if lead_story else 3):
+        reasons.append("news_count")
+    if lead_story:
+        lead_reasons = _lead_source_reasons(
+            source,
+            min_visuals=3 if identity.content_type == "automation_case" else 2,
+            require_visual_evidence=True,
+        )
+        # Image records and files are deliberately created only after this gate.
+        reasons.extend(
+            reason for reason in lead_reasons if reason != "lead_explanatory_visuals"
+        )
+    reasons.extend(source_authoring_reasons(source, identity))
+    duplicates = find_recent_draft_duplicates(
+        identity.draft_id,
+        source,
+        root=root,
+        window_days=window_days,
+    )
+    if duplicates:
+        reasons.append("duplicate_topic")
+    result = {
+        "day": identity.publish_date,
+        "draft_id": identity.draft_id,
+        "content_type": identity.content_type,
+        "status": "READY" if not reasons else "PARTIAL",
+        "reasons": list(dict.fromkeys(reasons)),
+        "duplicates": duplicates,
+    }
+    result.update(_source_preflight_diagnostics(source, identity))
+    return result
+
+
 def inspect_publish_ready_drafts(*, root=ROOT):
     """Fail CI when any committed future draft is partial or not publish-ready."""
     root = Path(root)
@@ -927,6 +1062,7 @@ def main(argv=None):
     group.add_argument("--draft-id")
     group.add_argument("--all-publish-ready", action="store_true")
     parser.add_argument("--check-duplicates", action="store_true")
+    parser.add_argument("--source-only", action="store_true")
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--window-days", type=int, default=14)
     args = parser.parse_args(argv)
@@ -941,9 +1077,14 @@ def main(argv=None):
         or args.day
         or datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
     )
-    result = inspect_draft_state(
-        draft_id, window_days=max(1, args.window_days)
-    )
+    if args.source_only:
+        result = inspect_source_state(
+            draft_id, window_days=max(1, args.window_days)
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["status"] == "READY" else 1
+
+    result = inspect_draft_state(draft_id, window_days=max(1, args.window_days))
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if args.check_duplicates and result["duplicates"]:
         return 2
