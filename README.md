@@ -33,7 +33,7 @@
   → 오늘의 추천 후보 5건과 추가 후보 저장
   → GitHub Pages 뉴스 레이더 갱신
 
-09:00 KST · Codex 예약 작업
+08:00 KST · Codex 예약 작업
   → 핵심뉴스 1건 선정·추가 검색
   → 공식 문서와 독립 자료 교차 확인
   → 8~12분 심층글 작성
@@ -109,7 +109,7 @@ python3 -m unittest \
 ```text
 .github/workflows/collect-news.yml   정기 뉴스 수집
 .github/workflows/collect-automation.yml 토요일 개발·자동화 후보 수집
-agent/DAILY_EDITOR.md                매일 09:00 뉴스 편집 계약
+agent/DAILY_EDITOR.md                매일 08:00 뉴스 편집·09:00 발행 준비 계약
 agent/SATURDAY_AUTOMATION.md         토요일 14:00 실전 개발·자동화 계약
 agent/DEVELOPMENT_GUIDE.md           수요일 14:00 개발 가이드 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정

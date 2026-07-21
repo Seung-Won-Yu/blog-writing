@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 데일리 심층뉴스 편집 계약
 
-이 문서는 매일 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. GitHub Actions는 07:17 KST에 뉴스 수집·중복 제거·후보 5건 우선순위 계산까지만 담당합니다. Codex는 그중 핵심뉴스 1건을 골라 추가 조사, 심층 집필, 설명 이미지 제작, HTML 생성, 검수와 GitHub Pages 배포를 담당합니다. 티스토리 붙여넣기와 예약 발행은 사용자가 직접 합니다.
+이 문서는 매일 08:00 KST에 실행되어 09:00 발행 준비를 끝내는 Codex 편집자의 유일한 작업 계약입니다. GitHub Actions는 07:17 KST에 뉴스 수집·중복 제거·후보 5건 우선순위 계산까지만 담당합니다. Codex는 그중 핵심뉴스 1건을 골라 추가 조사, 심층 집필, 설명 이미지 제작, HTML 생성, 검수와 GitHub Pages 배포를 담당합니다. 티스토리 붙여넣기와 09:00 예약 발행은 사용자가 직접 합니다.
 
 ## 운영 흐름
 
@@ -52,7 +52,7 @@
 
    `READY`일 때만 다음 단계로 갑니다. `PARTIAL`이면 출력된 `expected_identity`, `editorial_lengths`, `invalid_scene_labels`, `depth`, `duplicates`에서 실패한 JSON 필드만 고쳐 같은 명령을 다시 실행합니다. 원고 사전검사가 실패한 상태에서는 이미지와 HTML을 만들지 않습니다.
 
-6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지 2~6장은 내용에 따라 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지는 만들지 않습니다. 각 이미지를 만들기 전에 `visual.assets`에 다음 브리프를 기록합니다.
+6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지 2~6장은 내용에 따라 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지는 만들지 않습니다. 생성 전에 대표 브리프를 `visual.cover`, 본문 브리프를 `visual.assets`에 기록합니다. 둘 다 아래 필드를 사용하되 대표는 `content_role: hook`, 본문은 `content_role: explanation`으로 기록합니다. 모든 `label`은 서로 다른 질문이어야 하며 대표가 답한 비교·순서·결과를 본문 이미지에서 다시 만들지 않습니다.
 
    - `label`: 이미지가 답할 핵심 질문
    - `scene_label`: 기사 고유 시각 단서 2~4개
@@ -160,7 +160,7 @@
 - `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
-- `related_posts` 2건 이상: 각 항목의 실제 공개 글 `title`, `url`, 현재 글과 연결되는 이유 `reason`
+- `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason` 기록
 - `generation`, `images.cover`, `images.visual_1`부터 실제 사용 이미지까지
 
 모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `checklist`을 모두 포함합니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.

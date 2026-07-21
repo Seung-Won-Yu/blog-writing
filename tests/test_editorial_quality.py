@@ -24,15 +24,20 @@ def repeated_text(label, count=80):
 IMAGEGEN_PROMPT = "실제 제품의 변경 전후와 사용자가 확인할 결과를 한 장면에 보여 주는 한국어 설명 이미지"
 
 
-def visual_asset(origin="imagegen", evidence_type="diagram"):
+def visual_asset(
+    origin="imagegen",
+    evidence_type="diagram",
+    label="변화가 실제 사용 흐름에 미치는 영향",
+):
     asset = {
-        "label": "변화가 실제 사용 흐름에 미치는 영향",
+        "label": label,
         "scene_label": ["변경 전", "변경 후"],
         "steps": "변경 전 상태 → 바뀐 조건 → 독자가 확인할 결과",
         "curiosity_hook": "어느 단계에서 결과가 달라질까?",
         "evidence_type": evidence_type,
         "logic_type": "comparison",
         "origin": origin,
+        "content_role": "explanation",
         "qa": {
             "topic_match": True,
             "caption_match": True,
@@ -96,8 +101,8 @@ def image_asset(origin="imagegen"):
 def valid_daily_source(day="2026-07-19"):
     publish_day = date.fromisoformat(day)
     weekdays = ["월", "화", "수", "목", "금", "토", "일"]
-    first_visual = visual_asset()
-    second_visual = visual_asset()
+    first_visual = visual_asset(label="기존 방식과 새 방식의 조건 차이")
+    second_visual = visual_asset(label="설정에서 결과를 확인하는 실제 순서")
     content = [
         {"t": "h", "text": "무엇이 바뀌었나"},
         {"t": "p", "text": repeated_text("확인된 변화", 22)},
@@ -142,7 +147,17 @@ def valid_daily_source(day="2026-07-19"):
             "entities": ["Example Product"],
             "coverage": ["change", "mechanism", "comparison", "application", "limits", "checklist"],
         },
-        "visual": {"assets": [first_visual, second_visual]},
+        "visual": {
+            "cover": {
+                "label": "업데이트 전 막힌 장면과 적용 뒤 얻는 결과",
+                "scene_label": ["막힌 사용 흐름", "확인 가능한 결과"],
+                "steps": "독자가 겪는 문제 → 새 기능 적용 뒤 달라지는 결과",
+                "curiosity_hook": "이 변경이 지금 해결하는 불편은 무엇일까?",
+                "logic_type": "before_after",
+                "content_role": "hook",
+            },
+            "assets": [first_visual, second_visual],
+        },
         "generation": {
             "provider": "codex-agent",
             "model": "gpt-5.6",
@@ -199,9 +214,9 @@ def valid_automation_source(day="2026-07-25"):
         }
     )
     source["visual"]["assets"] = [
-        visual_asset("capture", "screenshot"),
-        visual_asset("imagegen", "diagram"),
-        visual_asset("annotated_capture", "screenshot"),
+        visual_asset("capture", "screenshot", "자동화 실행 전 실제 입력 화면"),
+        visual_asset("imagegen", "diagram", "입력부터 분류까지의 자동 처리 흐름"),
+        visual_asset("annotated_capture", "screenshot", "성공과 예외가 나뉜 실제 실행 결과"),
     ]
     source["images"] = {
         "cover": image_asset("imagegen"),
@@ -269,7 +284,9 @@ def valid_guide_source(day="2026-07-22"):
             "coverage": ["foundation", "request_flow", "stack", "data", "security", "operations", "plan"],
         }
     )
-    source["visual"]["assets"].append(visual_asset())
+    source["visual"]["assets"].append(
+        visual_asset(label="12주 동안 기술을 쌓는 단계별 학습 순서")
+    )
     source["images"]["visual_3"] = image_asset()
     content = source["news"][0]["content"]
     content.extend(
@@ -725,6 +742,23 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertIn("quality_fallback_image", reasons)
         self.assertIn("quality_visual_qa", reasons)
+
+    def test_new_daily_rejects_cover_and_body_visuals_with_same_question(self):
+        day = "2026-07-22"
+        source = valid_daily_source(day)
+        source["visual"]["cover"]["label"] = source["visual"]["assets"][0]["label"]
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_roles", reasons)
+
+    def test_new_daily_accepts_distinct_cover_and_body_visual_roles(self):
+        day = "2026-07-22"
+        source = valid_daily_source(day)
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertNotIn("quality_visual_roles", reasons)
 
     def test_complete_future_daily_source_passes_the_source_quality_gate(self):
         day = "2026-07-19"

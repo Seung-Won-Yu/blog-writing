@@ -16,6 +16,7 @@ from .draft_identity import category_for_identity, regular_schedule_for_identity
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
+VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -927,6 +928,43 @@ def _visual_reasons(source, identity):
     return reasons
 
 
+def _visual_role_reasons(source, identity):
+    if date.fromisoformat(identity.publish_date) < VISUAL_ROLE_POLICY_START:
+        return []
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    cover = visual.get("cover") if isinstance(visual.get("cover"), dict) else {}
+    briefs = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    required = ("label", "steps", "curiosity_hook", "logic_type", "content_role")
+    if (
+        any(not _strict_text(cover.get(key)) for key in required)
+        or cover.get("content_role") != "hook"
+        or not _strict_text_list(cover.get("scene_label"), minimum=2)
+        or any(
+            not isinstance(brief, dict)
+            or brief.get("content_role") != "explanation"
+            for brief in briefs
+        )
+    ):
+        return ["quality_visual_roles"]
+
+    labels = [plain(cover.get("label")), *[plain(brief.get("label")) for brief in briefs]]
+    normalized = [re.sub(r"\s+", " ", label).strip().casefold() for label in labels]
+    if len(set(normalized)) != len(normalized):
+        return ["quality_visual_roles"]
+    token_sets = [
+        set(re.findall(r"[가-힣A-Za-z0-9]+", label.casefold()))
+        for label in labels
+    ]
+    for index, left in enumerate(token_sets):
+        for right in token_sets[index + 1 :]:
+            if not left or not right:
+                return ["quality_visual_roles"]
+            similarity = len(left & right) / min(len(left), len(right))
+            if similarity >= 0.75:
+                return ["quality_visual_roles"]
+    return []
+
+
 def _experiment_reasons(source, identity):
     if identity.content_type != "automation_case":
         return []
@@ -1071,6 +1109,7 @@ def source_authoring_reasons(source, identity):
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
         lambda: _prose_reasons(source),
+        lambda: _visual_role_reasons(source, identity),
     )
     reasons = _run_quality_validators(validators)
     reasons.extend(_generation_reasons(source))

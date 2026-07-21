@@ -676,7 +676,7 @@ def render(drafts):
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">매일 09:00 Codex Terra / Medium 뉴스 심층글과 토요일 14:00 업무자동화 실험글의 발행 준비물을 확인합니다.</p>
+      <p class="lead">매일 08:00 Codex Terra / Medium이 만드는 09:00 뉴스 심층글과 토요일 14:00 업무자동화 실험글의 발행 준비물을 확인합니다.</p>
     </header>
 
     <div class="layout">

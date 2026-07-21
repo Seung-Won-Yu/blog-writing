@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 토요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 매일 09:00 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 매일 08:00 제작·09:00 발행 준비되는 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
 사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비토요일 실행은 계속 건너뜁니다.
 
@@ -88,6 +88,8 @@
 
 대표 이미지 1장과 본문 시각물 3~6개를 기본으로 합니다. 장수를 채우는 장식 이미지는 만들지 않습니다. 각 시각물은 본문의 특정 질문 하나를 답해야 합니다.
 
+생성 전에 대표 브리프를 `visual.cover`, 본문 브리프를 `visual.assets`에 기록합니다. 대표는 `content_role: hook`, 본문은 `content_role: explanation`을 사용합니다. 모든 `label`은 서로 다른 질문이어야 하며 대표에서 보여 준 문제·결과를 본문 이미지가 같은 구도로 반복하면 실패로 처리합니다.
+
 우선순위는 다음과 같습니다.
 
 1. 실제 실행 화면·설정 화면·터미널 로그·생성 결과 캡처
@@ -126,7 +128,7 @@
 
 티스토리에서는 `실전 개발 노트 > 자동화·실험`을 선택합니다.
 
-그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `related_posts` 각 항목에는 실제 공개 글의 `title`, `url`, 현재 실험과 연결되는 `reason`을 기록합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`을 기록합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 
 `publish_date`는 토요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
 

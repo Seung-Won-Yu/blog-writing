@@ -2,6 +2,12 @@
   "max_items_per_source": 6,
   "max_workers": 8,
   "max_age_days": 45,
+  "collection_quality": {
+    "min_successful_sources": 3,
+    "min_candidate_sources": 3,
+    "min_candidates": 5,
+    "min_selected": 3
+  },
   "interest_keywords": [
     "automation",
     "workflow",

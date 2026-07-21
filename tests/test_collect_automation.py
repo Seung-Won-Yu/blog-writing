@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from blog_pipeline.collection.collect_automation import (
+    automation_collection_quality_result,
     build_automation_inbox,
     load_recent_automation_history,
     load_recent_automation_urls,
@@ -121,6 +122,26 @@ def automation_config():
 
 
 class AutomationScoringTests(unittest.TestCase):
+    def test_collection_quality_fails_closed_on_weak_shortlist(self):
+        config = automation_config()
+        config["collection_quality"] = {
+            "min_successful_sources": 2,
+            "min_candidate_sources": 2,
+            "min_candidates": 3,
+            "min_selected": 2,
+        }
+        inbox = {
+            "candidates": [{"source_id": "github-trending"}],
+            "selected": [],
+            "errors": [{"source_id": "activepieces-releases"}],
+        }
+
+        result = automation_collection_quality_result(inbox, config)
+
+        self.assertFalse(result["ok"])
+        self.assertIn("insufficient_selected_candidates", result["reasons"])
+        self.assertIn("insufficient_healthy_sources", result["reasons"])
+
     def test_shortlist_reserves_space_for_distinct_source_kinds(self):
         candidates = [
             {"id": "release-1", "source_id": "r1", "source_family": "r1", "source_kind": "release", "provisional_score": 90},

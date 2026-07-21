@@ -127,6 +127,22 @@ def _is_internal_tistory_post_url(value):
     )
 
 
+def _public_tistory_post_urls(root=ROOT):
+    root = Path(root)
+    catalog_path = root / "config" / "tistory_public_posts.json"
+    if not catalog_path.exists() and root != ROOT:
+        catalog_path = ROOT / "config" / "tistory_public_posts.json"
+    catalog = _read_json(catalog_path)
+    posts = catalog.get("posts") if isinstance(catalog, dict) else None
+    if not isinstance(posts, list):
+        return set()
+    return {
+        str(post.get("url") or "").rstrip("/")
+        for post in posts
+        if isinstance(post, dict) and _is_internal_tistory_post_url(post.get("url"))
+    }
+
+
 def _read_json(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -329,7 +345,7 @@ def _automation_visual_quality_reasons(source):
 
 
 def _lead_source_reasons(
-    source, *, min_visuals=2, require_visual_evidence=False
+    source, *, min_visuals=2, require_visual_evidence=False, root=ROOT
 ):
     reasons = []
     news = source.get("news") if isinstance(source.get("news"), list) else []
@@ -386,12 +402,14 @@ def _lead_source_reasons(
             reasons.append("lead_ad_break_position")
 
     related = source.get("related_posts") if isinstance(source.get("related_posts"), list) else []
+    public_post_urls = _public_tistory_post_urls(root)
     valid_related = [
         post
         for post in related
         if isinstance(post, dict)
         and str(post.get("title") or "").strip()
         and _is_internal_tistory_post_url(post.get("url"))
+        and str(post.get("url") or "").rstrip("/") in public_post_urls
     ]
     if len(valid_related) < 2:
         reasons.append("related_posts")
@@ -697,6 +715,7 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
                 require_visual_evidence=(
                     date.fromisoformat(identity.publish_date) >= date(2026, 7, 18)
                 ),
+                root=root,
             )
         )
         if (
@@ -1008,6 +1027,7 @@ def inspect_source_state(draft_id, *, root=ROOT, window_days=14):
                 else 2
             ),
             require_visual_evidence=True,
+            root=root,
         )
         # Image records and files are deliberately created only after this gate.
         reasons.extend(

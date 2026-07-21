@@ -721,6 +721,44 @@ def write_automation_inbox(inbox, output_dir):
     return {"json": str(latest_json), "html": str(index_html)}
 
 
+def automation_collection_quality_result(inbox, config):
+    enabled_sources = [
+        source for source in config.get("sources", []) if source.get("enabled", True)
+    ]
+    failed_source_ids = {
+        str(error.get("source_id") or "") for error in inbox.get("errors", [])
+    }
+    successful_sources = sum(
+        1
+        for source in enabled_sources
+        if str(source.get("id") or "") not in failed_source_ids
+    )
+    candidates = inbox.get("candidates", [])
+    candidate_sources = {
+        str(candidate.get("source_id") or "")
+        for candidate in candidates
+        if str(candidate.get("source_id") or "")
+    }
+    policy = config.get("collection_quality") or {}
+    reasons = []
+    if successful_sources < int(policy.get("min_successful_sources", 1)):
+        reasons.append("insufficient_healthy_sources")
+    if len(candidates) < int(policy.get("min_candidates", 1)):
+        reasons.append("insufficient_candidates")
+    if len(candidate_sources) < int(policy.get("min_candidate_sources", 1)):
+        reasons.append("candidate_source_diversity")
+    if len(inbox.get("selected", [])) < int(policy.get("min_selected", 1)):
+        reasons.append("insufficient_selected_candidates")
+    return {
+        "ok": not reasons,
+        "reasons": reasons,
+        "successful_sources": successful_sources,
+        "candidate_sources": len(candidate_sources),
+        "candidates": len(candidates),
+        "selected": len(inbox.get("selected", [])),
+    }
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="토요일 개발·자동화 실험 후보함을 생성합니다.")
     day_group = parser.add_mutually_exclusive_group()
@@ -756,6 +794,18 @@ def main(argv=None):
         last_problem_lane=history["last_problem_lane"],
         last_tool_brand=history["last_tool_brand"],
     )
+    quality = automation_collection_quality_result(inbox, config)
+    if not quality["ok"]:
+        print(
+            "개발·자동화 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
+                quality["successful_sources"],
+                quality["candidate_sources"],
+                quality["candidates"],
+                quality["selected"],
+                ",".join(quality["reasons"]),
+            )
+        )
+        return 2
     paths = write_automation_inbox(inbox, args.output_dir)
     print(
         "개발·자동화 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(

@@ -1109,6 +1109,21 @@ class DailyGuardTests(unittest.TestCase):
 
         self.assertIn("related_posts", _lead_source_reasons(source))
 
+    def test_deep_story_rejects_unpublished_tistory_post_ids(self):
+        from blog_pipeline.publishing.daily_guard import _lead_source_reasons
+
+        source = {
+            "primary_query": "공개 글 링크 검증",
+            "news": [{"references": [{"title": "공식", "url": "https://example.com", "kind": "official"}], "content": [{"t": "h"}] * 4 + [{"t": "visual", "image": "visual_1"}, {"t": "visual", "image": "visual_2"}, {"t": "ad_break"}]}],
+            "images": {"visual_1": {}, "visual_2": {}},
+            "related_posts": [
+                {"title": "실제 공개 글", "url": "https://won0322.tistory.com/132"},
+                {"title": "존재하지 않는 글", "url": "https://won0322.tistory.com/999999"},
+            ],
+        }
+
+        self.assertIn("related_posts", _lead_source_reasons(source))
+
     def test_new_deep_story_requires_visual_logic_and_product_ui_evidence(self):
         source = {
             "format": "lead-story-v1",

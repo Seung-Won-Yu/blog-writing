@@ -10,6 +10,7 @@ AUTOMATION_COLLECT_WORKFLOW = (
 )
 EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
 SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
+GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -62,7 +63,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news --today", workflow
         )
-        self.assertIn("git add docs/inbox", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.collection.sync_tistory_posts", workflow
+        )
+        self.assertIn("tests.test_sync_tistory_posts", workflow)
+        self.assertIn("git add config/tistory_public_posts.json docs/inbox", workflow)
         self.assertIn("git pull --rebase origin main", workflow)
         self.assertIn("git push origin HEAD:main", workflow)
         self.assertNotIn("generate_daily_draft", workflow)
@@ -94,6 +99,9 @@ class WorkflowConfigTests(unittest.TestCase):
         expected = (
             ROOT / "agent" / "DAILY_EDITOR.md",
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
+            ROOT / "agent" / "DEVELOPMENT_GUIDE.md",
+            ROOT / "config" / "tistory_public_posts.json",
+            ROOT / "blog_pipeline" / "collection" / "sync_tistory_posts.py",
             ROOT / "blog_pipeline" / "collection" / "collect_news.py",
             ROOT / "blog_pipeline" / "collection" / "collect_automation.py",
             ROOT / "blog_pipeline" / "collection" / "news_pipeline.py",
@@ -155,6 +163,16 @@ class WorkflowConfigTests(unittest.TestCase):
             "publish_bundle --draft-id YYYY-MM-DD-automation --check",
             contract,
         )
+
+    def test_development_guide_contract_enforces_the_complete_pipeline(self):
+        contract = GUIDE_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("daily_guard --draft-id YYYY-MM-DD-guide --source-only", contract)
+        self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --stage", contract)
+        self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --check", contract)
+        self.assertIn("config/tistory_public_posts.json", contract)
+        self.assertIn("content_role: hook", contract)
+        self.assertIn("content_role: explanation", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
