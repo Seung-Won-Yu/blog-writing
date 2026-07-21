@@ -58,7 +58,7 @@ class WorkflowConfigTests(unittest.TestCase):
         workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("name: Collect daily news", workflow)
-        self.assertIn("cron: '17 22 * * *'", workflow)
+        self.assertIn("cron: '17 21 * * *'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news --today", workflow

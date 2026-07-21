@@ -25,7 +25,7 @@
 ## 운영 흐름
 
 ```text
-07:17 KST · GitHub Actions
+06:17 KST · GitHub Actions
   → RSS·Atom·HTML 수집
   → URL·제목 정규화
   → 최근 사용 기사와 중복 확인
