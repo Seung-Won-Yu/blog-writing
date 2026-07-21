@@ -281,23 +281,27 @@ class SaturdayAutomationExportTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "scheduled_at"):
                 write_post("2026-07-18-automation", day=automation)
 
-    def test_bulk_discovery_includes_daily_and_automation_sources(self):
+    def test_bulk_discovery_includes_daily_automation_and_guide_sources(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             daily = root / "days"
             automation = root / "automation_cases"
+            guides = root / "guides"
             daily.mkdir()
             automation.mkdir()
+            guides.mkdir()
             (daily / "2026-07-18.json").write_text("{}", encoding="utf-8")
             (automation / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (guides / "2026-07-18.json").write_text("{}", encoding="utf-8")
 
-            discovered = draft_files(daily, automation)
+            discovered = draft_files(daily, automation, guides)
 
         self.assertEqual(
             [(identity.draft_id, path.name) for identity, path in discovered],
             [
                 ("2026-07-18", "2026-07-18.json"),
                 ("2026-07-18-automation", "2026-07-18.json"),
+                ("2026-07-18-guide", "2026-07-18.json"),
             ],
         )
 

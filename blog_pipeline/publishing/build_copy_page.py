@@ -44,6 +44,7 @@ def is_allowed_source(source):
     if path.parts[:2] not in {
         ("data", "days"),
         ("data", "automation_cases"),
+        ("data", "guides"),
     }:
         return False
     return len(path.parts) == 3 and path.suffix == ".json" and (ROOT / path).is_file()

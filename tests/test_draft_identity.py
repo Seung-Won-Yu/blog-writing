@@ -2,6 +2,7 @@ import unittest
 
 from blog_pipeline.publishing.draft_identity import (
     automation_draft_id,
+    guide_draft_id,
     resolve_draft_identity,
 )
 
@@ -10,6 +11,7 @@ class DraftIdentityTests(unittest.TestCase):
     def test_resolves_daily_and_saturday_namespaces_independently(self):
         daily = resolve_draft_identity("2026-07-18")
         automation = resolve_draft_identity("2026-07-18-automation")
+        guide = resolve_draft_identity("2026-07-18-guide")
 
         self.assertEqual(daily.source, "data/days/2026-07-18.json")
         self.assertEqual(daily.content_type, "daily_news")
@@ -17,8 +19,13 @@ class DraftIdentityTests(unittest.TestCase):
             automation.source, "data/automation_cases/2026-07-18.json"
         )
         self.assertEqual(automation.content_type, "automation_case")
+        self.assertEqual(guide.source, "data/guides/2026-07-18.json")
+        self.assertEqual(guide.content_type, "evergreen_guide")
+        self.assertEqual(guide.content_label, "개발 가이드")
         self.assertEqual(automation.publish_date, daily.publish_date)
+        self.assertEqual(guide.publish_date, daily.publish_date)
         self.assertNotEqual(automation.draft_id, daily.draft_id)
+        self.assertNotEqual(guide.draft_id, daily.draft_id)
 
     def test_automation_payload_requires_an_explicit_matching_identity(self):
         payload = {
@@ -53,6 +60,9 @@ class DraftIdentityTests(unittest.TestCase):
         self.assertEqual(
             automation_draft_id("2026-07-18"), "2026-07-18-automation"
         )
+
+    def test_builds_the_canonical_guide_id(self):
+        self.assertEqual(guide_draft_id("2026-07-18"), "2026-07-18-guide")
 
 
 if __name__ == "__main__":

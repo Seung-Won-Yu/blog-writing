@@ -1,4 +1,4 @@
-"""Canonical identities for daily news and Saturday automation drafts."""
+"""Canonical identities for daily news, automation, and evergreen guides."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from datetime import date
 
 _DAILY_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})$")
 _AUTOMATION_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-automation$")
+_GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
 
 
 @dataclass(frozen=True)
@@ -21,7 +22,7 @@ class DraftIdentity:
 
 
 def resolve_draft_identity(draft_id, payload=None):
-    """Resolve and validate the only two supported draft namespaces."""
+    """Resolve and validate every supported draft namespace."""
     value = str(draft_id or "").strip()
     match = _DAILY_ID.fullmatch(value)
     if match:
@@ -35,16 +36,27 @@ def resolve_draft_identity(draft_id, payload=None):
         )
     else:
         match = _AUTOMATION_ID.fullmatch(value)
-        if not match:
-            raise ValueError(f"invalid draft id: {draft_id}")
-        publish_date = match.group(1)
-        identity = DraftIdentity(
-            draft_id=value,
-            publish_date=publish_date,
-            content_type="automation_case",
-            content_label="업무자동화 실험",
-            source=f"data/automation_cases/{publish_date}.json",
-        )
+        if match:
+            publish_date = match.group(1)
+            identity = DraftIdentity(
+                draft_id=value,
+                publish_date=publish_date,
+                content_type="automation_case",
+                content_label="업무자동화 실험",
+                source=f"data/automation_cases/{publish_date}.json",
+            )
+        else:
+            match = _GUIDE_ID.fullmatch(value)
+            if not match:
+                raise ValueError(f"invalid draft id: {draft_id}")
+            publish_date = match.group(1)
+            identity = DraftIdentity(
+                draft_id=value,
+                publish_date=publish_date,
+                content_type="evergreen_guide",
+                content_label="개발 가이드",
+                source=f"data/guides/{publish_date}.json",
+            )
 
     date.fromisoformat(identity.publish_date)
     if not isinstance(payload, dict):
@@ -56,11 +68,12 @@ def resolve_draft_identity(draft_id, payload=None):
         "content_type": identity.content_type,
         "content_label": identity.content_label,
     }
-    if identity.content_type == "automation_case":
+    if identity.content_type in {"automation_case", "evergreen_guide"}:
         missing = [key for key in expected if not str(payload.get(key) or "").strip()]
         if missing:
             raise ValueError(
-                "automation draft identity is incomplete: " + ", ".join(missing)
+                f"{identity.content_type} draft identity is incomplete: "
+                + ", ".join(missing)
             )
     for key, expected_value in expected.items():
         actual = str(payload.get(key) or "").strip()
@@ -74,3 +87,8 @@ def resolve_draft_identity(draft_id, payload=None):
 def automation_draft_id(day_id):
     publish_date = date.fromisoformat(str(day_id)).isoformat()
     return f"{publish_date}-automation"
+
+
+def guide_draft_id(day_id):
+    publish_date = date.fromisoformat(str(day_id)).isoformat()
+    return f"{publish_date}-guide"

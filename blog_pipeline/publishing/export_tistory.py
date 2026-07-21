@@ -34,6 +34,7 @@ from .editorial_quality import (
 HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
 AUTOMATION_CASES_DIR = HERE / "data" / "automation_cases"
+GUIDES_DIR = HERE / "data" / "guides"
 OUT_DIR = HERE / "docs" / "tistory"
 
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
@@ -112,7 +113,7 @@ def day_files():
     return sorted(DAYS_DIR.glob("*.json"))
 
 
-def draft_files(days_dir=None, automation_cases_dir=None):
+def draft_files(days_dir=None, automation_cases_dir=None, guides_dir=None):
     """Return every supported source with its collision-safe draft identity."""
     daily_root = Path(days_dir) if days_dir is not None else DAYS_DIR
     automation_root = (
@@ -120,6 +121,7 @@ def draft_files(days_dir=None, automation_cases_dir=None):
         if automation_cases_dir is not None
         else AUTOMATION_CASES_DIR
     )
+    guide_root = Path(guides_dir) if guides_dir is not None else GUIDES_DIR
     discovered = [
         (resolve_draft_identity(path.stem), path)
         for path in daily_root.glob("*.json")
@@ -127,6 +129,10 @@ def draft_files(days_dir=None, automation_cases_dir=None):
     discovered.extend(
         (resolve_draft_identity(f"{path.stem}-automation"), path)
         for path in automation_root.glob("*.json")
+    )
+    discovered.extend(
+        (resolve_draft_identity(f"{path.stem}-guide"), path)
+        for path in guide_root.glob("*.json")
     )
     return sorted(discovered, key=lambda item: item[0].draft_id)
 
@@ -1021,7 +1027,7 @@ def main():
     group.add_argument("--day", help="export one YYYY-MM-DD day")
     group.add_argument(
         "--draft-id",
-        help="export one YYYY-MM-DD or YYYY-MM-DD-automation draft",
+        help="export one daily, automation, or evergreen guide draft",
     )
     group.add_argument("--all", action="store_true", help="export every draft")
     args = parser.parse_args()
