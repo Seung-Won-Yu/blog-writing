@@ -411,13 +411,14 @@ def _check_all(root):
     failures = []
     checked = 0
     roots = (
-        (Path(root) / "data" / "days", False),
-        (Path(root) / "data" / "automation_cases", True),
+        (Path(root) / "data" / "days", ""),
+        (Path(root) / "data" / "automation_cases", "-automation"),
+        (Path(root) / "data" / "guides", "-guide"),
     )
     sources = []
-    for source_root, is_automation in roots:
+    for source_root, suffix in roots:
         sources.extend(
-            (path, f"{path.stem}-automation" if is_automation else path.stem)
+            (path, f"{path.stem}{suffix}")
             for path in source_root.glob("*.json")
         )
     for path, draft_id in sorted(sources, key=lambda item: item[1]):

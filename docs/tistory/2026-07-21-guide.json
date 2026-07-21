@@ -1,0 +1,93 @@
+{
+  "title": "2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서",
+  "title_candidates": [
+    "2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서",
+    "2026 백엔드 개발자 로드맵: 기술 목록보다 먼저 익힐 요청 처리 흐름"
+  ],
+  "category": "나만의 정리",
+  "draft_id": "2026-07-21-guide",
+  "publish_date": "2026-07-21",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_extra",
+  "scheduled_at": "2026-07-21T14:00:00+09:00",
+  "tags": [
+    "백엔드 개발자",
+    "백엔드 로드맵",
+    "Java 25",
+    "Spring Boot 4",
+    "PostgreSQL",
+    "Docker",
+    "API 개발",
+    "개발자 취업"
+  ],
+  "meta_description": "백엔드 로드맵을 펼치면 언어, 프레임워크, 데이터베이스, 캐시, 메시지 큐, 클라우드가 한 화면을 가득 채운다. 전부 알아야 시작할 수 있을 것 같지만 실제 서비스는 한 번의 요청을 안전하게 받아 저… Java 25와 Spring Boot 4 같은 최신 버전을 반영하되, 한 번의 요청…",
+  "key_summary": [
+    "1. 2026 백엔드 개발자 로드맵: 기술 목록보다 먼저 익힐 요청 처리 흐름",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 나만의 정리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 14,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-07-21.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-21-guide.html",
+  "before_ad_html": "docs/tistory/2026-07-21-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-21-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-21-guide-adfit.html",
+  "source_sha256": "94b107439de403c3002ef0c6038c7b1e7fa888d9f66128c99372595e35cf6909",
+  "html_sha256": "7513baa4e2a9d715e2caeb799cadf0f9a6f08814dbb51776dc44f76c839d3d31",
+  "adfit_sha256": "4436bdd1f4c681c38fa7e08aefa1350f52e92807ba07893cd1355bb355e70ed0",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-21-guide/2026-백엔드-로드맵-대표.webp",
+      "path": "docs/tistory/assets/2026-07-21-guide/2026-백엔드-로드맵-대표.webp",
+      "original_url": "",
+      "alt": "기초부터 Java Spring, PostgreSQL, Docker 배포와 관측까지 이어지는 2026 백엔드 개발자 로드맵",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-21-guide/요청-한번의-여행.webp",
+      "path": "docs/tistory/assets/2026-07-21-guide/요청-한번의-여행.webp",
+      "original_url": "",
+      "alt": "주문 요청이 HTTPS와 API, 인증 검증, 비즈니스 로직, PostgreSQL을 거쳐 응답되는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-21-guide/데이터-저장소-선택.webp",
+      "path": "docs/tistory/assets/2026-07-21-guide/데이터-저장소-선택.webp",
+      "original_url": "",
+      "alt": "영구 기록은 PostgreSQL, 임시 조회는 Redis, 비동기 처리는 메시지 큐로 선택하는 기준",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-21-guide/12주-백엔드-학습순서.webp",
+      "path": "docs/tistory/assets/2026-07-21-guide/12주-백엔드-학습순서.webp",
+      "original_url": "",
+      "alt": "기초부터 API와 DB, 품질, 배포 운영까지 이어지는 12주 백엔드 학습 순서",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

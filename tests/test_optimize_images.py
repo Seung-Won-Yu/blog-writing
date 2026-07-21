@@ -37,6 +37,23 @@ class OptimizeImagesTests(unittest.TestCase):
         self.assertEqual(result["failures"][0]["draft_id"], "2026-07-19")
         self.assertIn("invalid_image_manifest", result["failures"][0]["reasons"])
 
+    def test_check_all_includes_evergreen_guide_sources(self):
+        from tests.test_editorial_quality import valid_guide_source
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = valid_guide_source("2026-07-21")
+            source["generation"] = True
+            path = root / "data" / "guides" / "2026-07-21.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
+
+            result = _check_all(root)
+
+        self.assertEqual(result["checked"], 1)
+        self.assertEqual(result["failures"][0]["draft_id"], "2026-07-21-guide")
+        self.assertIn("invalid_image_manifest", result["failures"][0]["reasons"])
+
     def test_inspection_rejects_duplicate_committed_image_content(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
