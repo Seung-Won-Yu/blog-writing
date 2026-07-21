@@ -10,6 +10,8 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+from .draft_identity import category_for_identity
+
 
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
@@ -541,10 +543,7 @@ def _identity_reasons(source, identity):
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
     publication_mode = plain(source.get("publication_mode")) or "scheduled"
     manual_extra = publication_mode == "manual_extra"
-    expected_category = {
-        "automation_case": "업무자동화",
-        "evergreen_guide": "나만의 정리",
-    }.get(identity.content_type, "데일리IT뉴스")
+    expected_category = category_for_identity(identity)
     expected = {
         "schema_version": 3,
         "format": "lead-story-v1",

@@ -2,6 +2,7 @@ import unittest
 
 from blog_pipeline.publishing.draft_identity import (
     automation_draft_id,
+    category_for_content_type,
     guide_draft_id,
     resolve_draft_identity,
 )
@@ -63,6 +64,24 @@ class DraftIdentityTests(unittest.TestCase):
 
     def test_builds_the_canonical_guide_id(self):
         self.assertEqual(guide_draft_id("2026-07-18"), "2026-07-18-guide")
+
+    def test_category_taxonomy_changes_from_july_22_without_rewriting_history(self):
+        self.assertEqual(
+            category_for_content_type("daily_news", "2026-07-21"),
+            "데일리IT뉴스",
+        )
+        self.assertEqual(
+            category_for_content_type("daily_news", "2026-07-22"),
+            "최신 IT·개발 소식",
+        )
+        self.assertEqual(
+            category_for_content_type("automation_case", "2026-07-26"),
+            "자동화·실험",
+        )
+        self.assertEqual(
+            category_for_content_type("evergreen_guide", "2026-07-22"),
+            "개발 가이드",
+        )
 
 
 if __name__ == "__main__":

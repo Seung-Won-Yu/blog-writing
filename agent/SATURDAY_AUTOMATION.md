@@ -119,10 +119,12 @@
   "publish_date": "YYYY-MM-DD",
   "content_type": "automation_case",
   "content_label": "업무자동화 실험",
-  "category": "업무자동화",
+  "category": "자동화·실험",
   "scheduled_at": "YYYY-MM-DDT18:00:00+09:00"
 }
 ```
+
+티스토리에서는 `실전 개발 노트 > 자동화·실험`을 선택합니다.
 
 그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `related_posts` 각 항목에는 실제 공개 글의 `title`, `url`, 현재 실험과 연결되는 `reason`을 기록합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 

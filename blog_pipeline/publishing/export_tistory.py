@@ -23,7 +23,11 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from .draft_identity import resolve_draft_identity
+from .draft_identity import (
+    category_for_content_type,
+    category_for_identity,
+    resolve_draft_identity,
+)
 from .editorial_format import image_kinds_for_day, is_lead_story
 from .editorial_quality import (
     estimate_read_minutes as estimate_editorial_read_minutes,
@@ -38,7 +42,7 @@ GUIDES_DIR = HERE / "data" / "guides"
 OUT_DIR = HERE / "docs" / "tistory"
 
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
-DEFAULT_CATEGORY = "데일리IT뉴스"
+DEFAULT_CATEGORY = category_for_content_type("daily_news")
 DEFAULT_TAGS = ["AI", "IT뉴스", "개발뉴스", "정처기", "개발용어", "데일리다이제스트"]
 REFERENCE_KIND_LABELS = {
     "official": "공식",
@@ -368,7 +372,10 @@ def build_key_summary(day):
 
 def build_publish_checklist(day):
     titles = build_title_candidates(day)
-    category = plain(day.get("category")) or DEFAULT_CATEGORY
+    category = plain(day.get("category")) or category_for_content_type(
+        day.get("content_type"),
+        day.get("publish_date"),
+    )
     checklist = [
         "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
         "원문 링크와 핵심 사실을 직접 대조해 확인하기",
@@ -879,8 +886,11 @@ def write_post(
     content_label = identity.content_label
     if content_type == "automation_case":
         category = plain(day.get("category"))
-        if category != "업무자동화":
-            raise ValueError("automation category must be 업무자동화")
+        expected_category = category_for_identity(identity)
+        if category != expected_category:
+            raise ValueError(
+                f"automation category must be {expected_category}"
+            )
         scheduled_at = plain(day.get("scheduled_at"))
         publication_mode = plain(day.get("publication_mode")) or "scheduled"
         if publication_mode == "manual_extra":
@@ -907,8 +917,11 @@ def write_post(
             raise ValueError("unsupported automation publication_mode")
     elif content_type == "evergreen_guide":
         category = plain(day.get("category"))
-        if category != "나만의 정리":
-            raise ValueError("evergreen guide category must be 나만의 정리")
+        expected_category = category_for_identity(identity)
+        if category != expected_category:
+            raise ValueError(
+                f"evergreen guide category must be {expected_category}"
+            )
         publication_mode = plain(day.get("publication_mode"))
         scheduled_at = plain(day.get("scheduled_at"))
         try:
@@ -925,7 +938,7 @@ def write_post(
                 "evergreen guide requires same-day KST manual_extra schedule"
             )
     else:
-        category = plain(day.get("category")) or DEFAULT_CATEGORY
+        category = plain(day.get("category")) or category_for_identity(identity)
         publication_mode = "scheduled"
         scheduled_at = plain(day.get("scheduled_at")) or (
             f"{publish_date}T09:00:00+09:00"

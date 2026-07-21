@@ -68,6 +68,28 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(result["reasons"], [])
         self.assertFalse((root / "docs" / "tistory" / f"{day}.html").exists())
 
+    def test_tomorrow_preflight_uses_the_new_blog_category(self):
+        day = "2026-07-22"
+        source = valid_daily_source(day)
+        source.pop("images")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "data" / "days" / f"{day}.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                json.dumps(source, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
+            result = inspect_source_state(day, root=root)
+
+        self.assertEqual(result["status"], "READY")
+        self.assertEqual(
+            result["expected_identity"]["category"],
+            "최신 IT·개발 소식",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -3,7 +3,10 @@ import math
 import unittest
 from datetime import date
 
-from blog_pipeline.publishing.draft_identity import resolve_draft_identity
+from blog_pipeline.publishing.draft_identity import (
+    category_for_content_type,
+    resolve_draft_identity,
+)
 from blog_pipeline.publishing.editorial_quality import (
     estimate_read_minutes,
     measurement_digest,
@@ -122,7 +125,7 @@ def valid_daily_source(day="2026-07-19"):
         "weekday": weekdays[publish_day.weekday()],
         "content_type": "daily_news",
         "content_label": "뉴스 심층글",
-        "category": "데일리IT뉴스",
+        "category": category_for_content_type("daily_news", day),
         "scheduled_at": f"{day}T09:00:00+09:00",
         "primary_query": "일반 사용자가 확인할 최신 기능 변경과 적용 조건",
         "tags": ["기능 변경", "사용 방법", "적용 조건", "업데이트", "체크리스트"],
@@ -181,7 +184,7 @@ def valid_automation_source(day="2026-07-25"):
             "draft_id": f"{day}-automation",
             "content_type": "automation_case",
             "content_label": "업무자동화 실험",
-            "category": "업무자동화",
+            "category": category_for_content_type("automation_case", day),
             "scheduled_at": f"{day}T18:00:00+09:00",
             "primary_query": "메일 첨부파일을 날짜별 폴더로 자동 정리하기",
             "tags": ["업무자동화", "메일 정리", "파일 정리", "반복 업무", "따라하기"],
@@ -251,7 +254,7 @@ def valid_guide_source(day="2026-07-21"):
             "draft_id": f"{day}-guide",
             "content_type": "evergreen_guide",
             "content_label": "개발 가이드",
-            "category": "나만의 정리",
+            "category": category_for_content_type("evergreen_guide", day),
             "publication_mode": "manual_extra",
             "scheduled_at": f"{day}T14:00:00+09:00",
             "primary_query": "2026 백엔드 개발자 로드맵 Java Spring DB Docker 공부 순서",

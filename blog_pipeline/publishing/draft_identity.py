@@ -11,6 +11,18 @@ _DAILY_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})$")
 _AUTOMATION_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-automation$")
 _GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
 
+CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
+LEGACY_CATEGORIES = {
+    "daily_news": "데일리IT뉴스",
+    "automation_case": "업무자동화",
+    "evergreen_guide": "나만의 정리",
+}
+CURRENT_CATEGORIES = {
+    "daily_news": "최신 IT·개발 소식",
+    "automation_case": "자동화·실험",
+    "evergreen_guide": "개발 가이드",
+}
+
 
 @dataclass(frozen=True)
 class DraftIdentity:
@@ -19,6 +31,29 @@ class DraftIdentity:
     content_type: str
     content_label: str
     source: str
+
+
+def category_for_content_type(content_type, publish_date=None):
+    """Return the Tistory leaf category for a draft and taxonomy date."""
+    key = str(content_type or "daily_news").strip()
+    if key not in CURRENT_CATEGORIES:
+        key = "daily_news"
+    category_map = CURRENT_CATEGORIES
+    if publish_date:
+        try:
+            published = date.fromisoformat(str(publish_date).strip())
+        except ValueError:
+            published = CATEGORY_TAXONOMY_V2_START
+        if published < CATEGORY_TAXONOMY_V2_START:
+            category_map = LEGACY_CATEGORIES
+    return category_map[key]
+
+
+def category_for_identity(identity):
+    return category_for_content_type(
+        identity.content_type,
+        identity.publish_date,
+    )
 
 
 def resolve_draft_identity(draft_id, payload=None):

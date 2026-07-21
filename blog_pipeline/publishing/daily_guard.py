@@ -13,7 +13,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
-from .draft_identity import resolve_draft_identity
+from .draft_identity import category_for_identity, resolve_draft_identity
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
 from .editorial_quality import (
     DEPTH_POLICIES,
@@ -891,10 +891,7 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
 def _source_preflight_diagnostics(source, identity):
     publish_day = date.fromisoformat(identity.publish_date)
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
-    expected_category = {
-        "automation_case": "업무자동화",
-        "evergreen_guide": "나만의 정리",
-    }.get(identity.content_type, "데일리IT뉴스")
+    expected_category = category_for_identity(identity)
     publication_mode = (
         "manual_extra" if identity.content_type == "evergreen_guide" else "scheduled"
     )

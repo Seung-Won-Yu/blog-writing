@@ -153,7 +153,7 @@
 
 당일 파일은 `schema_version: 3`, `format: lead-story-v1`을 사용합니다.
 
-- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: 뉴스 심층글`, `category: 데일리IT뉴스`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다.
+- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: 뉴스 심층글`, `category: 최신 IT·개발 소식`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다.
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`
