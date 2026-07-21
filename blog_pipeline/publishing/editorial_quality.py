@@ -13,6 +13,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
+GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -50,6 +51,15 @@ AUTOMATION_COVERAGE = {
     "comparison",
     "failure",
     "rollback",
+}
+GUIDE_COVERAGE = {
+    "foundation",
+    "request_flow",
+    "stack",
+    "data",
+    "security",
+    "operations",
+    "plan",
 }
 RENDERABLE_BLOCK_TYPES = {
     "h",
@@ -112,6 +122,16 @@ DEPTH_POLICIES = {
         "minimum_blocks": 17,
         "required_block_types": {"table", "ul", "code"},
     },
+    "evergreen_guide": {
+        "minimum_headings": 6,
+        "maximum_headings": 9,
+        "minimum_visuals": 3,
+        "maximum_visuals": 6,
+        "minimum_minutes": 10,
+        "maximum_minutes": 20,
+        "minimum_blocks": 19,
+        "required_block_types": {"table", "ul"},
+    },
 }
 
 
@@ -121,11 +141,10 @@ def plain(value):
 
 def policy_active(identity):
     publish_date = date.fromisoformat(identity.publish_date)
-    start = (
-        AUTOMATION_QUALITY_POLICY_START
-        if identity.content_type == "automation_case"
-        else DAILY_QUALITY_POLICY_START
-    )
+    start = {
+        "automation_case": AUTOMATION_QUALITY_POLICY_START,
+        "evergreen_guide": GUIDE_QUALITY_POLICY_START,
+    }.get(identity.content_type, DAILY_QUALITY_POLICY_START)
     return publish_date >= start
 
 
@@ -521,10 +540,11 @@ def _identity_reasons(source, identity):
     publish_day = date.fromisoformat(identity.publish_date)
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
     publication_mode = plain(source.get("publication_mode")) or "scheduled"
-    manual_extra = (
-        identity.content_type == "automation_case"
-        and publication_mode == "manual_extra"
-    )
+    manual_extra = publication_mode == "manual_extra"
+    expected_category = {
+        "automation_case": "업무자동화",
+        "evergreen_guide": "나만의 정리",
+    }.get(identity.content_type, "데일리IT뉴스")
     expected = {
         "schema_version": 3,
         "format": "lead-story-v1",
@@ -536,7 +556,7 @@ def _identity_reasons(source, identity):
         "weekday": weekday_labels[publish_day.weekday()],
         "content_type": identity.content_type,
         "content_label": identity.content_label,
-        "category": "업무자동화" if identity.content_type == "automation_case" else "데일리IT뉴스",
+        "category": expected_category,
     }
     invalid = any(source.get(key) != value for key, value in expected.items())
     if identity.content_type == "automation_case":
@@ -554,6 +574,14 @@ def _identity_reasons(source, identity):
             invalid = invalid or source.get("scheduled_at") != (
                 f"{identity.publish_date}T18:00:00+09:00"
             )
+    elif identity.content_type == "evergreen_guide":
+        scheduled = _aware_datetime(source.get("scheduled_at"))
+        invalid = invalid or not (
+            manual_extra
+            and scheduled
+            and scheduled.date() == publish_day
+            and scheduled.utcoffset() == timedelta(hours=9)
+        )
     else:
         invalid = invalid or publication_mode != "scheduled"
         invalid = invalid or source.get("scheduled_at") != (
@@ -580,11 +608,10 @@ def _editorial_reasons(source, identity):
         and len({plain(item).casefold() for item in entities if plain(item)}) == len(entities)
     ):
         reasons.append("quality_editorial")
-    required_coverage = (
-        AUTOMATION_COVERAGE
-        if identity.content_type == "automation_case"
-        else DAILY_COVERAGE
-    )
+    required_coverage = {
+        "automation_case": AUTOMATION_COVERAGE,
+        "evergreen_guide": GUIDE_COVERAGE,
+    }.get(identity.content_type, DAILY_COVERAGE)
     coverage_values = editorial.get("coverage")
     coverage = {
         plain(value).casefold()

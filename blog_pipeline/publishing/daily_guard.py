@@ -446,7 +446,11 @@ def find_recent_draft_duplicates(
         previous_draft_id = (
             f"{previous_day}-automation"
             if identity.content_type == "automation_case"
-            else previous_day
+            else (
+                f"{previous_day}-guide"
+                if identity.content_type == "evergreen_guide"
+                else previous_day
+            )
         )
         previous_identity = resolve_draft_identity(previous_draft_id)
         previous = _read_json(Path(root) / previous_identity.source)
@@ -681,9 +685,11 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         reasons.extend(
             _lead_source_reasons(
                 source,
-                min_visuals=3
-                if identity.content_type == "automation_case"
-                else 2,
+                min_visuals=(
+                    3
+                    if identity.content_type in {"automation_case", "evergreen_guide"}
+                    else 2
+                ),
                 require_visual_evidence=(
                     date.fromisoformat(identity.publish_date) >= date(2026, 7, 18)
                 ),
@@ -730,7 +736,7 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
             meta_source
             and meta_source != identity.source
         ) or (
-            identity.content_type == "automation_case"
+            identity.content_type in {"automation_case", "evergreen_guide"}
             and meta_source != identity.source
         ):
             reasons.append("invalid_publish_source")
@@ -885,7 +891,17 @@ def inspect_daily_state(day_id, *, root=ROOT, window_days=14):
 def _source_preflight_diagnostics(source, identity):
     publish_day = date.fromisoformat(identity.publish_date)
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
-    scheduled_hour = "18:00:00" if identity.content_type == "automation_case" else "09:00:00"
+    expected_category = {
+        "automation_case": "업무자동화",
+        "evergreen_guide": "나만의 정리",
+    }.get(identity.content_type, "데일리IT뉴스")
+    publication_mode = (
+        "manual_extra" if identity.content_type == "evergreen_guide" else "scheduled"
+    )
+    scheduled_hour = {
+        "automation_case": "18:00:00",
+        "evergreen_guide": "14:00:00",
+    }.get(identity.content_type, "09:00:00")
     expected_identity = {
         "schema_version": 3,
         "format": "lead-story-v1",
@@ -895,8 +911,8 @@ def _source_preflight_diagnostics(source, identity):
         "weekday": weekday_labels[publish_day.weekday()],
         "content_type": identity.content_type,
         "content_label": identity.content_label,
-        "category": "업무자동화" if identity.content_type == "automation_case" else "데일리IT뉴스",
-        "publication_mode": "scheduled",
+        "category": expected_category,
+        "publication_mode": publication_mode,
         "scheduled_at": f"{identity.publish_date}T{scheduled_hour}+09:00",
     }
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
@@ -982,7 +998,11 @@ def inspect_source_state(draft_id, *, root=ROOT, window_days=14):
     if lead_story:
         lead_reasons = _lead_source_reasons(
             source,
-            min_visuals=3 if identity.content_type == "automation_case" else 2,
+            min_visuals=(
+                3
+                if identity.content_type in {"automation_case", "evergreen_guide"}
+                else 2
+            ),
             require_visual_evidence=True,
         )
         # Image records and files are deliberately created only after this gate.
@@ -1033,6 +1053,14 @@ def inspect_publish_ready_drafts(*, root=ROOT):
             continue
         if publish_date >= PUBLISH_GATE_START:
             draft_ids.add(identity.draft_id)
+    for source_path in sorted((root / "data" / "guides").glob("*.json")):
+        try:
+            identity = resolve_draft_identity(f"{source_path.stem}-guide")
+            publish_date = date.fromisoformat(identity.publish_date)
+        except (TypeError, ValueError):
+            continue
+        if publish_date >= PUBLISH_GATE_START:
+            draft_ids.add(identity.draft_id)
     for meta_path in sorted((root / "docs" / "tistory").glob("*.json")):
         try:
             identity = resolve_draft_identity(meta_path.stem)
@@ -1047,7 +1075,10 @@ def inspect_publish_ready_drafts(*, root=ROOT):
         result = inspect_draft_state(
             draft_id,
             root=root,
-            window_days=90 if identity.content_type == "automation_case" else 60,
+            window_days={
+                "automation_case": 90,
+                "evergreen_guide": 365,
+            }.get(identity.content_type, 60),
         )
         if result.get("status") != "COMPLETE":
             failures.append(result)

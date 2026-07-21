@@ -168,7 +168,10 @@ def apply_guard_results(drafts, *, root=ROOT):
                 identity.draft_id,
                 root=root,
                 window_days=(
-                    90 if identity.content_type == "automation_case" else 60
+                    {
+                        "automation_case": 90,
+                        "evergreen_guide": 365,
+                    }.get(identity.content_type, 60)
                 ),
             )
             draft["quality_reasons"] = list(result.get("reasons") or [])

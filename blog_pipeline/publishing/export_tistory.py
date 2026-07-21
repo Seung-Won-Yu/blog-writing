@@ -760,9 +760,16 @@ def render_post(day_id, day):
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     if is_lead_story(day):
         lead_story = news[0] if news else {}
-        is_automation = plain(day.get("content_type")) == "automation_case"
-        section_heading = "업무자동화 실험" if is_automation else "오늘의 핵심뉴스"
-        analysis_label = "실행 기록" if is_automation else "심층 분석"
+        content_type = plain(day.get("content_type"))
+        if content_type == "automation_case":
+            section_heading = "업무자동화 실험"
+            analysis_label = "실행 기록"
+        elif content_type == "evergreen_guide":
+            section_heading = "개발 가이드"
+            analysis_label = "최신 기준"
+        else:
+            section_heading = "오늘의 핵심뉴스"
+            analysis_label = "심층 분석"
         return f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
@@ -898,6 +905,25 @@ def write_post(
                 )
         else:
             raise ValueError("unsupported automation publication_mode")
+    elif content_type == "evergreen_guide":
+        category = plain(day.get("category"))
+        if category != "나만의 정리":
+            raise ValueError("evergreen guide category must be 나만의 정리")
+        publication_mode = plain(day.get("publication_mode"))
+        scheduled_at = plain(day.get("scheduled_at"))
+        try:
+            manual_time = datetime.datetime.fromisoformat(scheduled_at)
+        except ValueError as exc:
+            raise ValueError("evergreen guide scheduled_at must be valid KST") from exc
+        if not (
+            publication_mode == "manual_extra"
+            and manual_time.tzinfo is not None
+            and manual_time.date().isoformat() == publish_date
+            and manual_time.utcoffset() == datetime.timedelta(hours=9)
+        ):
+            raise ValueError(
+                "evergreen guide requires same-day KST manual_extra schedule"
+            )
     else:
         category = plain(day.get("category")) or DEFAULT_CATEGORY
         publication_mode = "scheduled"

@@ -244,7 +244,63 @@ def valid_automation_source(day="2026-07-25"):
     return source
 
 
+def valid_guide_source(day="2026-07-21"):
+    source = valid_daily_source(day)
+    source.update(
+        {
+            "draft_id": f"{day}-guide",
+            "content_type": "evergreen_guide",
+            "content_label": "개발 가이드",
+            "category": "나만의 정리",
+            "publication_mode": "manual_extra",
+            "scheduled_at": f"{day}T14:00:00+09:00",
+            "primary_query": "2026 백엔드 개발자 로드맵 Java Spring DB Docker 공부 순서",
+            "tags": ["백엔드 개발자", "백엔드 로드맵", "Java", "Spring Boot", "PostgreSQL"],
+        }
+    )
+    source["editorial"].update(
+        {
+            "topic_key": "backend-developer-roadmap-2026",
+            "reader_question": "백엔드 개발자가 되려면 2026년에는 어떤 기술을 어떤 순서로 공부해야 할까?",
+            "entities": ["Java 25", "Spring Boot 4", "PostgreSQL 18"],
+            "coverage": ["foundation", "request_flow", "stack", "data", "security", "operations", "plan"],
+        }
+    )
+    source["visual"]["assets"].append(visual_asset())
+    source["images"]["visual_3"] = image_asset()
+    content = source["news"][0]["content"]
+    content.extend(
+        [
+            {"t": "h", "text": "12주 학습 계획"},
+            {"t": "visual", "image": "visual_3", "caption": "기초부터 배포와 관측까지 이어지는 12주 학습 순서"},
+            {"t": "p", "text": repeated_text("학습 계획", 16)},
+        ]
+    )
+    ad = next(block for block in content if block.get("t") == "ad_break")
+    content.remove(ad)
+    content.insert(8, ad)
+    source["news"][0].update(
+        {
+            "source": "백엔드 로드맵 참고 자료",
+            "url": "https://roadmap.sh/backend",
+            "published_at": "2026-07-20T12:00:00+09:00",
+        }
+    )
+    return source
+
+
 class EditorialQualityTests(unittest.TestCase):
+    def test_evergreen_guide_has_its_own_category_schedule_and_depth_policy(self):
+        source = valid_guide_source()
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-21-guide")
+        )
+
+        self.assertNotIn("quality_identity", reasons)
+        self.assertNotIn("quality_editorial", reasons)
+        self.assertNotIn("quality_depth", reasons)
+
     def test_rendered_editorial_leaves_must_be_strings(self):
         mutations = (
             lambda source: source["editorial"].update(

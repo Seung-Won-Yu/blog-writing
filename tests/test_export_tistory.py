@@ -376,6 +376,26 @@ class SaturdayAutomationExportTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_evergreen_guide_uses_guide_labels_instead_of_news_labels(self):
+        guide = copy.deepcopy(LEAD_DAY)
+        guide.update(
+            {
+                "draft_id": "2026-07-21-guide",
+                "publish_date": "2026-07-21",
+                "content_type": "evergreen_guide",
+                "content_label": "개발 가이드",
+                "category": "나만의 정리",
+                "publication_mode": "manual_extra",
+                "scheduled_at": "2026-07-21T14:00:00+09:00",
+            }
+        )
+
+        body = render_post("2026-07-21-guide", guide)
+
+        self.assertIn("개발 가이드", body)
+        self.assertIn("최신 기준", body)
+        self.assertNotIn("오늘의 핵심뉴스", body)
+
     def test_deep_story_title_candidates_do_not_repeat_the_date(self):
         candidates = build_title_candidates(LEAD_DAY)
 
