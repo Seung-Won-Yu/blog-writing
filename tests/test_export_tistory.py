@@ -376,6 +376,36 @@ class SaturdayAutomationExportTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_exports_a_scheduled_wednesday_guide(self):
+        guide = copy.deepcopy(LEAD_DAY)
+        guide.update(
+            {
+                "draft_id": "2026-07-22-guide",
+                "publish_date": "2026-07-22",
+                "content_type": "evergreen_guide",
+                "content_label": "개발 가이드",
+                "category": "개발 가이드",
+                "publication_mode": "scheduled",
+                "scheduled_at": "2026-07-22T18:00:00+09:00",
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)
+        ), patch(
+            "blog_pipeline.publishing.export_tistory.policy_active",
+            return_value=False,
+        ):
+            write_post("2026-07-22-guide", day=guide)
+            meta = json.loads(
+                (Path(directory) / "2026-07-22-guide.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+
+        self.assertEqual(meta["publication_mode"], "scheduled")
+        self.assertEqual(meta["scheduled_at"], "2026-07-22T18:00:00+09:00")
+
     def test_evergreen_guide_uses_guide_labels_instead_of_news_labels(self):
         guide = copy.deepcopy(LEAD_DAY)
         guide.update(

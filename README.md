@@ -20,7 +20,7 @@
 - 최소 3개의 정상 출처·후보 출처가 없으면 직전 정상 후보함을 보존하는 오류 처리
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
 - GitHub Trending·공식 릴리스·공식 가이드·요즘IT에서 토요일 개발·자동화 실험 후보를 별도 선정
-- 요청형 상시 검색 글을 `개발 가이드`로 분리해 뉴스와 같은 복사·광고·미리보기 흐름으로 제공
+- 매주 수요일 상시 검색형 `개발 가이드`를 뉴스와 분리해 복사·광고·미리보기 흐름으로 제공
 
 ## 운영 흐름
 
@@ -54,11 +54,12 @@
   → 뉴스글과 분리된 두 번째 티스토리 초안 생성
   → 테스트·GitHub Pages 배포 확인
 
-요청 시 · 상시 검색형 개발 가이드
+수요일 14:00 KST · Codex 개발 가이드 작업
   → 기존 글은 주제 출발점으로만 사용
   → 최신 공식 문서와 독립 자료 교차 확인
   → 10~20분 원고와 한국어 설명 이미지 3장 이상 제작
   → `실전 개발 노트 > 개발 가이드` 카테고리용 최종 HTML·미리보기 제공
+  → 사용자가 수요일 18:00로 티스토리 예약 발행
 ```
 
 GitHub Actions의 정기 작업은 뉴스·개발·자동화 후보 수집, 중복 제거, 우선순위 계산까지만 수행하며 저장소 실행·글·이미지를 생성하지 않습니다. 후보 페이지는 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
@@ -110,13 +111,14 @@ python3 -m unittest \
 .github/workflows/collect-automation.yml 토요일 개발·자동화 후보 수집
 agent/DAILY_EDITOR.md                매일 09:00 뉴스 편집 계약
 agent/SATURDAY_AUTOMATION.md         토요일 14:00 실전 개발·자동화 계약
+agent/DEVELOPMENT_GUIDE.md           수요일 14:00 개발 가이드 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정
 blog_pipeline/publishing/            이미지 최적화·HTML·검사
 config/news_sources.json             출처와 선정 규칙
 config/automation_sources.json       개발·자동화 출처와 임시 점수 규칙
 data/days/                            완성된 일일 글 데이터
 data/automation_cases/                토요일 실전 개발·자동화 데이터
-data/guides/                          요청형 상시 검색 개발 가이드
+data/guides/                          수요일 상시 검색 개발 가이드
 docs/inbox/                           최신 뉴스 후보 JSON·페이지
 docs/automation-inbox/                최신 개발·자동화 후보 JSON·페이지
 docs/tistory/                         티스토리 복사용 결과와 이미지

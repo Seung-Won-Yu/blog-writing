@@ -4,6 +4,7 @@ from blog_pipeline.publishing.draft_identity import (
     automation_draft_id,
     category_for_content_type,
     guide_draft_id,
+    regular_schedule_for_identity,
     resolve_draft_identity,
 )
 
@@ -64,6 +65,25 @@ class DraftIdentityTests(unittest.TestCase):
 
     def test_builds_the_canonical_guide_id(self):
         self.assertEqual(guide_draft_id("2026-07-18"), "2026-07-18-guide")
+
+    def test_recurring_schedules_match_each_content_lane(self):
+        self.assertEqual(
+            regular_schedule_for_identity(resolve_draft_identity("2026-07-22")),
+            "2026-07-22T09:00:00+09:00",
+        )
+        self.assertEqual(
+            regular_schedule_for_identity(
+                resolve_draft_identity("2026-07-25-automation")
+            ),
+            "2026-07-25T18:00:00+09:00",
+        )
+        self.assertEqual(
+            regular_schedule_for_identity(resolve_draft_identity("2026-07-22-guide")),
+            "2026-07-22T18:00:00+09:00",
+        )
+        self.assertIsNone(
+            regular_schedule_for_identity(resolve_draft_identity("2026-07-23-guide"))
+        )
 
     def test_category_taxonomy_changes_from_july_22_without_rewriting_history(self):
         self.assertEqual(

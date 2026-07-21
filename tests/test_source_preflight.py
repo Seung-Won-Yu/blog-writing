@@ -6,7 +6,7 @@ from pathlib import Path
 from blog_pipeline.publishing.daily_guard import inspect_source_state
 from blog_pipeline.publishing.draft_identity import resolve_draft_identity
 from blog_pipeline.publishing.editorial_quality import source_authoring_reasons
-from tests.test_editorial_quality import valid_daily_source
+from tests.test_editorial_quality import valid_daily_source, valid_guide_source
 
 
 class SourcePreflightTests(unittest.TestCase):
@@ -88,6 +88,30 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(
             result["expected_identity"]["category"],
             "최신 IT·개발 소식",
+        )
+
+    def test_wednesday_guide_preflight_uses_the_recurring_schedule(self):
+        day = "2026-07-22"
+        source = valid_guide_source(day)
+        source.pop("images")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "data" / "guides" / f"{day}.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                json.dumps(source, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
+            result = inspect_source_state(f"{day}-guide", root=root)
+
+        self.assertEqual(result["status"], "READY")
+        self.assertEqual(result["expected_identity"]["category"], "개발 가이드")
+        self.assertEqual(result["expected_identity"]["publication_mode"], "scheduled")
+        self.assertEqual(
+            result["expected_identity"]["scheduled_at"],
+            "2026-07-22T18:00:00+09:00",
         )
 
 

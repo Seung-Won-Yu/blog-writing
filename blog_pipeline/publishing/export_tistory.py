@@ -26,6 +26,7 @@ from urllib.parse import urlsplit
 from .draft_identity import (
     category_for_content_type,
     category_for_identity,
+    regular_schedule_for_identity,
     resolve_draft_identity,
 )
 from .editorial_format import image_kinds_for_day, is_lead_story
@@ -924,19 +925,29 @@ def write_post(
             )
         publication_mode = plain(day.get("publication_mode"))
         scheduled_at = plain(day.get("scheduled_at"))
-        try:
-            manual_time = datetime.datetime.fromisoformat(scheduled_at)
-        except ValueError as exc:
-            raise ValueError("evergreen guide scheduled_at must be valid KST") from exc
-        if not (
-            publication_mode == "manual_extra"
-            and manual_time.tzinfo is not None
-            and manual_time.date().isoformat() == publish_date
-            and manual_time.utcoffset() == datetime.timedelta(hours=9)
-        ):
-            raise ValueError(
-                "evergreen guide requires same-day KST manual_extra schedule"
-            )
+        if publication_mode == "manual_extra":
+            try:
+                manual_time = datetime.datetime.fromisoformat(scheduled_at)
+            except ValueError as exc:
+                raise ValueError(
+                    "evergreen guide scheduled_at must be valid KST"
+                ) from exc
+            if not (
+                manual_time.tzinfo is not None
+                and manual_time.date().isoformat() == publish_date
+                and manual_time.utcoffset() == datetime.timedelta(hours=9)
+            ):
+                raise ValueError(
+                    "evergreen guide requires a same-day KST manual schedule"
+                )
+        elif publication_mode == "scheduled":
+            expected_schedule = regular_schedule_for_identity(identity)
+            if not expected_schedule or scheduled_at != expected_schedule:
+                raise ValueError(
+                    "evergreen guide scheduled publication requires Wednesday 18:00 KST"
+                )
+        else:
+            raise ValueError("unsupported evergreen guide publication_mode")
     else:
         category = plain(day.get("category")) or category_for_identity(identity)
         publication_mode = "scheduled"

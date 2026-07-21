@@ -247,7 +247,7 @@ def valid_automation_source(day="2026-07-25"):
     return source
 
 
-def valid_guide_source(day="2026-07-21"):
+def valid_guide_source(day="2026-07-22"):
     source = valid_daily_source(day)
     source.update(
         {
@@ -255,8 +255,8 @@ def valid_guide_source(day="2026-07-21"):
             "content_type": "evergreen_guide",
             "content_label": "개발 가이드",
             "category": category_for_content_type("evergreen_guide", day),
-            "publication_mode": "manual_extra",
-            "scheduled_at": f"{day}T14:00:00+09:00",
+            "publication_mode": "scheduled",
+            "scheduled_at": f"{day}T18:00:00+09:00",
             "primary_query": "2026 백엔드 개발자 로드맵 Java Spring DB Docker 공부 순서",
             "tags": ["백엔드 개발자", "백엔드 로드맵", "Java", "Spring Boot", "PostgreSQL"],
         }
@@ -297,12 +297,21 @@ class EditorialQualityTests(unittest.TestCase):
         source = valid_guide_source()
 
         reasons = source_quality_reasons(
-            source, resolve_draft_identity("2026-07-21-guide")
+            source, resolve_draft_identity("2026-07-22-guide")
         )
 
         self.assertNotIn("quality_identity", reasons)
         self.assertNotIn("quality_editorial", reasons)
         self.assertNotIn("quality_depth", reasons)
+
+    def test_scheduled_guide_is_rejected_outside_wednesday(self):
+        source = valid_guide_source("2026-07-23")
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-23-guide")
+        )
+
+        self.assertIn("quality_identity", reasons)
 
     def test_rendered_editorial_leaves_must_be_strings(self):
         mutations = (

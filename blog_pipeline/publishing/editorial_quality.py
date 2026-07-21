@@ -10,7 +10,7 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from .draft_identity import category_for_identity
+from .draft_identity import category_for_identity, regular_schedule_for_identity
 
 
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
@@ -574,17 +574,22 @@ def _identity_reasons(source, identity):
                 f"{identity.publish_date}T18:00:00+09:00"
             )
     elif identity.content_type == "evergreen_guide":
-        scheduled = _aware_datetime(source.get("scheduled_at"))
-        invalid = invalid or not (
-            manual_extra
-            and scheduled
-            and scheduled.date() == publish_day
-            and scheduled.utcoffset() == timedelta(hours=9)
-        )
+        if manual_extra:
+            scheduled = _aware_datetime(source.get("scheduled_at"))
+            invalid = invalid or not (
+                scheduled
+                and scheduled.date() == publish_day
+                and scheduled.utcoffset() == timedelta(hours=9)
+            )
+        else:
+            expected_schedule = regular_schedule_for_identity(identity)
+            invalid = invalid or publication_mode != "scheduled"
+            invalid = invalid or not expected_schedule
+            invalid = invalid or source.get("scheduled_at") != expected_schedule
     else:
         invalid = invalid or publication_mode != "scheduled"
-        invalid = invalid or source.get("scheduled_at") != (
-            f"{identity.publish_date}T09:00:00+09:00"
+        invalid = invalid or source.get("scheduled_at") != regular_schedule_for_identity(
+            identity
         )
     if invalid:
         return ["quality_identity"]

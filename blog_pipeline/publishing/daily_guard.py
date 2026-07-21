@@ -13,7 +13,11 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
-from .draft_identity import category_for_identity, resolve_draft_identity
+from .draft_identity import (
+    category_for_identity,
+    regular_schedule_for_identity,
+    resolve_draft_identity,
+)
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
 from .editorial_quality import (
     DEPTH_POLICIES,
@@ -892,13 +896,16 @@ def _source_preflight_diagnostics(source, identity):
     publish_day = date.fromisoformat(identity.publish_date)
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
     expected_category = category_for_identity(identity)
+    regular_schedule = regular_schedule_for_identity(identity)
+    is_manual_extra = source.get("publication_mode") == "manual_extra"
     publication_mode = (
-        "manual_extra" if identity.content_type == "evergreen_guide" else "scheduled"
+        "manual_extra" if is_manual_extra or not regular_schedule else "scheduled"
     )
-    scheduled_hour = {
-        "automation_case": "18:00:00",
-        "evergreen_guide": "14:00:00",
-    }.get(identity.content_type, "09:00:00")
+    scheduled_at = (
+        str(source.get("scheduled_at") or "").strip()
+        if is_manual_extra
+        else regular_schedule
+    ) or f"{identity.publish_date}T14:00:00+09:00"
     expected_identity = {
         "schema_version": 3,
         "format": "lead-story-v1",
@@ -910,7 +917,7 @@ def _source_preflight_diagnostics(source, identity):
         "content_label": identity.content_label,
         "category": expected_category,
         "publication_mode": publication_mode,
-        "scheduled_at": f"{identity.publish_date}T{scheduled_hour}+09:00",
+        "scheduled_at": scheduled_at,
     }
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
     editorial_lengths = {

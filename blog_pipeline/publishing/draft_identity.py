@@ -12,6 +12,7 @@ _AUTOMATION_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-automation$")
 _GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
 
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
+WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
     "automation_case": "업무자동화",
@@ -54,6 +55,27 @@ def category_for_identity(identity):
         identity.content_type,
         identity.publish_date,
     )
+
+
+def regular_schedule_for_identity(identity):
+    """Return the canonical KST schedule for a recurring draft, if eligible."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    if identity.content_type == "daily_news":
+        hour = "09:00:00"
+    elif identity.content_type == "automation_case":
+        if publish_day.weekday() != 5:
+            return None
+        hour = "18:00:00"
+    elif identity.content_type == "evergreen_guide":
+        if (
+            publish_day < WEEKLY_GUIDE_SCHEDULE_START
+            or publish_day.weekday() != 2
+        ):
+            return None
+        hour = "18:00:00"
+    else:
+        return None
+    return f"{identity.publish_date}T{hour}+09:00"
 
 
 def resolve_draft_identity(draft_id, payload=None):
