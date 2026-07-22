@@ -1,0 +1,92 @@
+{
+  "title": "Idempotency-Key로 중복 주문을 막는 API 설계와 PostgreSQL 구현",
+  "title_candidates": [
+    "Idempotency-Key로 중복 주문을 막는 API 설계와 PostgreSQL 구현"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-07-22-guide",
+  "publish_date": "2026-07-22",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-22T18:00:00+09:00",
+  "tags": [
+    "Idempotency-Key",
+    "멱등성",
+    "REST API",
+    "PostgreSQL",
+    "주문 API",
+    "결제 API",
+    "재시도",
+    "백엔드"
+  ],
+  "meta_description": "주문 버튼을 한 번 눌렀는데 주문이 두 건 생기는 문제는 사용자의 실수만으로 설명할 수 없다. 서버가 주문을 저장한 뒤 응답이 끊기면, 앱과 프록시는 성공 여부를 모른 채 같은 POST 요청을 재시도… POST 재시도는 성공 여부가 불명확한 네트워크 실패에서 시작된다. 클라이언트가 논…",
+  "key_summary": [
+    "1. Idempotency-Key로 중복 주문을 막는 API 설계와 PostgreSQL 구현",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Idempotency-Key로 중복 주문을 막는 API 설계와 PostgreSQL 구현"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 11,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-07-22.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-22-guide.html",
+  "before_ad_html": "docs/tistory/2026-07-22-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-22-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-22-guide-adfit.html",
+  "source_sha256": "9ca5002b25bd0a7cd459e3f1d0775cdeabc31348db4d101c3fa36c7d216a2927",
+  "html_sha256": "93175fb662460ce1effa92b84268e11026ebd0e3e8569704eefcfda3314dc4f9",
+  "adfit_sha256": "c08af53e96f60907a1d851772f13a5dc400ac22a9e3168fdc69f999370ea543d",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22-guide/중복주문-방지-대표.webp",
+      "path": "docs/tistory/assets/2026-07-22-guide/중복주문-방지-대표.webp",
+      "original_url": "",
+      "alt": "응답이 끊긴 주문 요청이 같은 키 재시도로 단 하나의 주문 결과에 도달하는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22-guide/키-재시도-요청흐름.webp",
+      "path": "docs/tistory/assets/2026-07-22-guide/키-재시도-요청흐름.webp",
+      "original_url": "",
+      "alt": "첫 요청이 키와 주문 응답을 저장하고 같은 키 재시도가 저장 응답을 받는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22-guide/키-해시-상태분기.webp",
+      "path": "docs/tistory/assets/2026-07-22-guide/키-해시-상태분기.webp",
+      "original_url": "",
+      "alt": "같은 키에서 해시와 처리 상태에 따라 저장 응답 진행 상태 충돌로 나뉘는 기준",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-22-guide/키-주문-트랜잭션.webp",
+      "path": "docs/tistory/assets/2026-07-22-guide/키-주문-트랜잭션.webp",
+      "original_url": "",
+      "alt": "키 레코드 주문 최종 응답을 하나의 데이터베이스 트랜잭션으로 묶는 구조",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
