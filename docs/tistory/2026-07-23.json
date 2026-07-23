@@ -1,0 +1,82 @@
+{
+  "title": "Firefox 153 컨테이너 탭, 계정은 나누고 쿠키는 어떻게 분리할까",
+  "title_candidates": [
+    "Firefox 153 컨테이너 탭, 계정은 나누고 쿠키는 어떻게 분리할까",
+    "Firefox 153, 컨테이너 기능을 브라우저 기본 미리보기로 도입",
+    "Firefox 153에서 업무와 개인 브라우징의 쿠키를 컨테이너별로 분리하는 구조: 한 브라우저 창에서 계정을 나눠 쓰면…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-23",
+  "publish_date": "2026-07-23",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-23T09:00:00+09:00",
+  "tags": [
+    "Firefox 153",
+    "컨테이너 탭",
+    "쿠키 분리",
+    "개인정보 보호",
+    "다중 로그인",
+    "브라우저 설정"
+  ],
+  "meta_description": "회사 Google 계정으로 문서를 열어 둔 창에서 개인 계정의 메일을 확인해야 할 때가 있다. 지금까지는 프로필을 바꾸거나 확장 기능을 설치하는 방식이 익숙했다. Mozilla는 7월 21일 Fire… Mozilla는 Firefox 153에서 컨테이너를 기본 기능으로 미리보기 제공한다…",
+  "key_summary": [
+    "1. Firefox 153, 컨테이너 기능을 브라우저 기본 미리보기로 도입",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Firefox 153 컨테이너 탭, 계정은 나누고 쿠키는 어떻게 분리할까"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-23.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-23.html",
+  "before_ad_html": "docs/tistory/2026-07-23-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-23-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-23-adfit.html",
+  "source_sha256": "6bccc110e6c548995cd3e484baeec77b83ebd94a5513b2da0c4169e87dc21e9a",
+  "html_sha256": "32cdf258b82b903821b9415e2d48a851046a22ef1acb9b0bfc7fcf8cfa385bc1",
+  "adfit_sha256": "5148e574c111fc82e5e282c221fdcf2251b55ff832583a44e9ee01e0f42ed9f9",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/파이어폭스-컨테이너-대표.webp",
+      "path": "docs/tistory/assets/2026-07-23/파이어폭스-컨테이너-대표.webp",
+      "original_url": "",
+      "alt": "업무와 개인 컨테이너가 각각의 쿠키를 보관하고 컨테이너 사이 추적이 분리되는 Firefox 대표 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/컨테이너-쿠키-비교.webp",
+      "path": "docs/tistory/assets/2026-07-23/컨테이너-쿠키-비교.webp",
+      "original_url": "",
+      "alt": "일반 탭의 공유 쿠키와 컨테이너 탭의 업무·개인 쿠키를 전후로 비교한 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/컨테이너-선택-흐름.webp",
+      "path": "docs/tistory/assets/2026-07-23/컨테이너-선택-흐름.webp",
+      "original_url": "",
+      "alt": "새 탭에서 업무·개인·금융 관리자 목적에 따라 컨테이너를 선택하는 흐름도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

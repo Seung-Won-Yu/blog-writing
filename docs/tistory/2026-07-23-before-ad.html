@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 23 (목) · 약 9분</p>
+    <p class="digest-lead">회사 Google 계정으로 문서를 열어 둔 창에서 개인 계정의 메일을 확인해야 할 때가 있다. 지금까지는 프로필을 바꾸거나 확장 기능을 설치하는 방식이 익숙했다. Mozilla는 7월 21일 Firefox 153에 컨테이너 기능을 브라우저 기본 기능으로 미리보기 도입했다. 같은 창에서도 업무·개인·쇼핑·금융처럼 맥락을 나눠 로그인 쿠키와 추적 정보를 각각 보관하는 것이 핵심이다. 다만 이것은 익명 모드나 완전한 신원 은닉 기능이 아니므로, 어디까지 분리되는지부터 알아야 실제로 쓸모가 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/파이어폭스-컨테이너-대표.webp" alt="업무와 개인 컨테이너가 각각의 쿠키를 보관하고 컨테이너 사이 추적이 분리되는 Firefox 대표 도식" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Mozilla Firefox Blog · 2026. 7. 22</p>
+    <h3>Firefox 153, 컨테이너 기능을 브라우저 기본 미리보기로 도입</h3>
+    <p class="digest-blurb">Mozilla는 Firefox 153에서 컨테이너를 기본 기능으로 미리보기 제공한다. 컨테이너마다 쿠키와 광고 추적 정보를 분리해 같은 창에서 여러 로그인 맥락을 관리할 수 있으며, 기존 확장은 계속 병행해 사용할 수 있다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 바뀌었나: 확장 기능에서 기본 기능으로</h4><p>Firefox의 Multi-Account Containers는 오랫동안 확장 기능으로 제공됐다. Firefox 153에서는 컨테이너를 새 탭 버튼을 길게 누르거나 탭을 우클릭하는 흐름, 그리고 설정 화면에서 만들고 관리하는 기본 기능으로 꺼내 놓았다. Mozilla는 기존 확장을 쓰는 사람도 당장 제거할 필요가 없고, 처음 버전에는 확장의 모든 기능이 들어 있지 않다고 분명히 적었다. 따라서 이번 변화는 기능을 완전히 교체했다기보다, 별도 설치 없이 기본 분리 기능을 시작할 수 있게 한 미리보기다.</p><p>가장 실용적인 변화는 한 창 안에서 맥락을 눈에 보이게 구분할 수 있다는 점이다. 업무용 Microsoft 365, 개인 Gmail, 쇼핑몰, 은행처럼 로그인이 겹치면 안 되는 일을 각각의 컨테이너 탭에 넣는다. 탭 색과 아이콘, 이름을 달리할 수 있어 계정을 잘못 선택하는 실수도 줄일 수 있다. 여러 프로필을 완전히 전환하는 것보다 가볍지만, 각 탭이 어떤 목적으로 열렸는지는 사용자가 직접 정해야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/컨테이너-쿠키-비교.webp" alt="일반 탭의 공유 쿠키와 컨테이너 탭의 업무·개인 쿠키를 전후로 비교한 도식" width="1200" height="630" loading="lazy"><figcaption>일반 탭은 하나의 쿠키 저장소를 공유하지만, 컨테이너 탭은 업무·개인별 쿠키 저장소를 따로 둔다. 같은 도메인이라도 컨테이너가 다르면 로그인 상태가 분리되는 이유다.</figcaption></figure><h4 class="digest-subheading">컨테이너가 실제로 나누는 것: 쿠키와 사이트 데이터</h4><p>웹사이트가 로그인 상태를 기억하는 대표 수단은 쿠키다. 컨테이너는 탭을 어떤 컨테이너에서 열었는지에 따라 쿠키와 사이트 데이터를 별도 공간에 저장한다. 그래서 같은 서비스에 회사 계정과 개인 계정을 동시에 로그인해 둘 수 있다. Mozilla의 안내는 컨테이너 안에서 쿠키와 광고 추적이 격리된다고 설명한다. 광고나 추천이 완전히 사라진다는 약속이 아니라, 다른 컨테이너의 쿠키를 그대로 읽어 맥락을 이어 가기 어렵게 만든다는 뜻으로 이해하는 편이 정확하다.</p><div class="digest-table-wrap" role="region" aria-label="프로필·일반 탭·컨테이너의 역할을 섞지 않기 위한 비교" tabindex="0"><table class="digest-data-table"><caption>프로필·일반 탭·컨테이너의 역할을 섞지 않기 위한 비교</caption><thead><tr><th scope="col">방법</th><th scope="col">로그인 쿠키</th><th scope="col">잘 맞는 상황</th><th scope="col">주의할 점</th></tr></thead><tbody><tr><td>일반 탭</td><td>같은 프로필 안에서 공유</td><td>계정 하나로 단순하게 사용</td><td>다른 계정으로 로그인하면 세션이 바뀔 수 있음</td></tr><tr><td>컨테이너 탭</td><td>컨테이너별로 분리</td><td>업무·개인·고객 계정을 함께 사용</td><td>미리보기이며 확장의 일부 기능은 아직 없음</td></tr><tr><td>브라우저 프로필</td><td>프로필 단위로 넓게 분리</td><td>설정·확장까지 구분해야 함</td><td>창과 프로필을 전환하는 부담이 큼</td></tr></tbody></table></div><p>이 차이는 팀 계정 공유를 정당화하지 않는다. 컨테이너는 한 사람이 여러 합법적 계정 맥락을 관리하는 도구다. 조직 계정의 접근 권한, 감사 기록, 다중 인증 정책은 서비스와 조직의 규칙을 따라야 한다. 여러 고객의 관리자 계정을 다루는 경우에도 브라우저 분리가 권한 검토를 대신하지는 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-23/컨테이너-선택-흐름.webp" alt="새 탭에서 업무·개인·금융 관리자 목적에 따라 컨테이너를 선택하는 흐름도" width="1200" height="630" loading="lazy"><figcaption>컨테이너는 탭을 연 뒤 스스로 목적을 판별하지 않는다. 새 탭을 열 때 업무·개인·관리자처럼 목적에 맞는 컨테이너를 선택해야 쿠키 경계가 유지된다.</figcaption></figure></div>
+  </div>
+</section>
+</article>
