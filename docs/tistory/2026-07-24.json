@@ -1,0 +1,82 @@
+{
+  "title": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
+  "title_candidates": [
+    "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
+    "Google Meet, 회의록·스크립트·녹화를 Drive의 회의별 폴더로 자동 정리",
+    "Google Meet 회의가 끝난 뒤 회의록·스크립트·녹화 파일이 Drive의 회의별 폴더로 모이는 구조: 메일과 캘린더…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-24",
+  "publish_date": "2026-07-24",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-24T09:00:00+09:00",
+  "tags": [
+    "Google Meet",
+    "Google Drive",
+    "회의록",
+    "회의 녹화",
+    "업무 자동화",
+    "Google Workspace"
+  ],
+  "meta_description": "회의가 끝난 뒤 녹화 영상은 Drive에서, 스크립트는 Calendar 첨부에서, Gemini 회의록은 메일 링크에서 다시 찾곤 했다. 파일이 만들어지는 기능보다 ‘어디에 저장됐는지’ 기억하는 일이… Google Meet 회의가 끝나면 호스트의 내 드라이브에 Google Meet 폴더…",
+  "key_summary": [
+    "1. Google Meet, 회의록·스크립트·녹화를 Drive의 회의별 폴더로 자동 정리",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-24.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-24.html",
+  "before_ad_html": "docs/tistory/2026-07-24-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-24-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-24-adfit.html",
+  "source_sha256": "aaff081b3c62fc6f4dc3ef92b682c44ef78390babefb250a7b0e8cdbc0889689",
+  "html_sha256": "4f629df49979726fe9fc3232f2c7443bf617e445e88e8f7120050c64bf75637e",
+  "adfit_sha256": "d4cf8710782a31c471290b66c2da635bc78074e37a985d65693077cdebeac466",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/구글미트-회의자료-자동정리-대표.webp",
+      "path": "docs/tistory/assets/2026-07-24/구글미트-회의자료-자동정리-대표.webp",
+      "original_url": "",
+      "alt": "회의록·스크립트·녹화 파일이 Google Meet 회의별 폴더 하나로 자동 정리되는 전후 비교 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/구글미트-드라이브-공식화면.webp",
+      "path": "docs/tistory/assets/2026-07-24/구글미트-드라이브-공식화면.webp",
+      "original_url": "",
+      "alt": "내 드라이브의 Google Meet 폴더 아래 개별 회의와 반복 회의 하위 폴더가 표시된 Google 공식 화면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/호스트-원본-참석자-바로가기.webp",
+      "path": "docs/tistory/assets/2026-07-24/호스트-원본-참석자-바로가기.webp",
+      "original_url": "",
+      "alt": "호스트 Drive의 회의 자료 원본과 접근 권한을 거쳐 참석자 Drive에 생기는 바로가기를 구분한 구조도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

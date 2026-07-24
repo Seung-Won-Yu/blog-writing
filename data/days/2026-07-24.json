@@ -1,0 +1,420 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-07-24",
+  "publish_date": "2026-07-24",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "최신 IT·개발 소식",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-24T09:00:00+09:00",
+  "date_label": "2026. 7. 24",
+  "weekday": "금",
+  "primary_query": "Google Meet Google Drive Google Meet folder meeting notes transcripts recordings recurring meeting shortcuts Legacy Meet Recordings July 2026",
+  "tags": [
+    "Google Meet",
+    "Google Drive",
+    "회의록",
+    "회의 녹화",
+    "업무 자동화",
+    "Google Workspace"
+  ],
+  "visual": {
+    "subject": "Google Meet 회의가 끝난 뒤 회의록·스크립트·녹화 파일이 Drive의 회의별 폴더로 모이는 구조",
+    "hook": "메일과 캘린더에서 따로 찾던 회의 자료가 한 폴더로 모이면 무엇이 편해지고, 기존 자동화는 무엇을 확인해야 할까?",
+    "motif": "흩어진 회의 산출물이 Google Meet 폴더로 모이고 참석자에게는 원본이 아닌 바로가기가 생기는 모습",
+    "cover": {
+      "label": "흩어진 회의 자료가 회의별 폴더 하나로 모이는 변화",
+      "scene_label": [
+        "회의록",
+        "스크립트",
+        "녹화 파일",
+        "회의별 폴더"
+      ],
+      "steps": "기존의 흩어진 회의 자료 → Google Meet 상위 폴더 → 회의별 하위 폴더로 자동 정리",
+      "curiosity_hook": "반복 회의의 자료도 날짜마다 흩어지지 않고 한곳에서 이어질까?",
+      "logic_type": "before_after",
+      "content_role": "hook"
+    },
+    "assets": [
+      {
+        "label": "실제 Google Drive에서 새 회의 폴더가 보이는 위치",
+        "scene_label": [
+          "내 드라이브",
+          "Google Meet 폴더",
+          "회의별 하위 폴더",
+          "반복 회의"
+        ],
+        "steps": "내 드라이브 → Google Meet → 개별 회의 또는 반복 회의 폴더",
+        "curiosity_hook": "업데이트가 적용되면 Drive의 어느 위치에서 회의 자료를 찾게 될까?",
+        "evidence_type": "screenshot",
+        "origin": "capture",
+        "content_role": "explanation",
+        "logic_type": "evidence",
+        "source_url": "https://workspaceupdates.googleblog.com/2026/07/google-meet-now-organizes-your-meeting-notes-transcripts-and-recordings-in-your-Google-Drive.html",
+        "capture_note": "Google Workspace 공식 발표에 포함된 Google Drive 화면을 원본 비율로 확보했으며, 공개 데모 계정 외 개인정보나 실제 사용자 자료는 포함하지 않았다.",
+        "capture_tool": "browser",
+        "capture_target": "Google Workspace Updates 공식 발표의 Google Drive 화면",
+        "captured_at": "2026-07-24T09:09:59+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "호스트의 원본과 참석자의 바로가기가 나뉘는 공유 구조",
+        "scene_label": [
+          "호스트 원본",
+          "참석자 바로가기",
+          "접근 권한",
+          "같은 회의 자료"
+        ],
+        "steps": "호스트 Drive에 원본 저장 → 접근 권한 확인 → 참석자 Drive에는 같은 원본을 가리키는 바로가기 생성",
+        "curiosity_hook": "참석자 Drive에 보이는 파일은 복사본일까, 같은 원본을 가리키는 바로가기일까?",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "content_role": "explanation",
+        "logic_type": "architecture",
+        "generation_prompt": "Use case: infographic-diagram. Korean technical news blog explanation image, 1200×630 landscape. Explain Google Meet artifact sharing after a meeting. Center-left: one large source folder labeled \"호스트 원본\" containing three files labeled \"회의록\", \"스크립트\", \"녹화\". In the middle, one clear gate labeled \"접근 권한\". On the right, two small Drive folders both labeled \"참석자 바로가기\", connected to the single source only through the access gate. Make the difference between one source and multiple shortcuts unmistakable with one-direction arrows. Flat warm-white editorial diagram with navy and teal lines, large mobile-readable Korean labels, generous spacing, no headline or footer copy. No people, fake product UI, dashboard, generic computer, invented metrics, logos, watermark, neon, English sentences, question mark, or presentation-card styling.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "호스트 원본",
+          "접근 권한",
+          "참석자 바로가기",
+          "회의록",
+          "스크립트",
+          "녹화"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
+    "opening": "회의가 끝난 뒤 녹화 영상은 Drive에서, 스크립트는 Calendar 첨부에서, Gemini 회의록은 메일 링크에서 다시 찾곤 했다. 파일이 만들어지는 기능보다 ‘어디에 저장됐는지’ 기억하는 일이 더 번거로운 셈이다. Google은 7월 22일 Meet의 회의록·스크립트·녹화 파일을 Drive의 새 Google Meet 폴더 아래에 회의별로 자동 정리한다고 발표했다. 반복 회의는 같은 하위 폴더를 사용하고, 접근 권한이 있는 참석자에게는 자신의 Drive에서 원본으로 가는 바로가기도 제공한다. 다만 모든 참석자에게 새 복사본을 나눠 주는 변화는 아니며, 기존 폴더 이름을 기준으로 만든 자동화는 점검이 필요하다.",
+    "closing": "이번 변화의 핵심은 새로운 회의록 기능이 아니라 이미 생성되던 산출물의 주소 체계를 정돈한 데 있다. 호스트는 Google Meet 폴더에서 회의별 원본을 관리하고, 참석자는 권한이 있는 자료의 바로가기로 같은 원본을 찾는다. 적용 뒤에는 반복 회의 폴더 하나를 열어 회의록·스크립트·녹화가 예상대로 모이는지 확인하고, Meet Recordings라는 이름을 찾는 스크립트가 있다면 새 구조를 기준으로 고쳐야 한다.",
+    "action": "Drive의 내 드라이브에서 Google Meet 폴더가 생겼는지 확인하고, 기존 Meet Recordings 폴더명을 사용하는 자동화가 있는지 함께 점검해 보자.",
+    "audience_problem": "회의 산출물이 메일·캘린더·Drive의 서로 다른 경로에 흩어져 있어 지난 회의의 회의록과 녹화 파일을 다시 찾는 데 시간이 든다.",
+    "reader_takeaway": "새 Google Meet 폴더 구조, 호스트 원본과 참석자 바로가기의 차이, 반복 회의 처리 방식과 기존 자동화의 점검 지점을 한 번에 이해한다.",
+    "why_now": "Google은 2026년 7월 22일부터 빠른 출시 도메인에 새 폴더 구조를 배포하고, 7월 30일부터 예정 출시 도메인에 적용한다고 밝혔다.",
+    "topic_key": "Google Meet Drive 회의 자료 자동 정리",
+    "reader_question": "Google Meet 회의록·스크립트·녹화 파일은 앞으로 어디에 저장되고, 호스트와 참석자에게 각각 어떻게 보일까?",
+    "entities": [
+      "Google Meet",
+      "Google Drive",
+      "Google Workspace",
+      "Gemini 회의록"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "checklist"
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "Google Meet, 회의록·스크립트·녹화를 Drive의 회의별 폴더로 자동 정리",
+      "source": "Google Workspace Updates",
+      "url": "https://workspaceupdates.googleblog.com/2026/07/google-meet-now-organizes-your-meeting-notes-transcripts-and-recordings-in-your-Google-Drive.html",
+      "published_at": "2026-07-22T16:48:25.286000+00:00",
+      "blurb_kr": "Google Meet 회의가 끝나면 호스트의 내 드라이브에 Google Meet 폴더가 생성되고, 회의록·스크립트·녹화가 회의별 하위 폴더로 정리된다. 반복 회의의 여러 회차는 같은 폴더를 사용하며, 자료 접근 권한이 있는 참석자에게는 자신의 Google Meet 폴더에 원본 바로가기가 표시된다.",
+      "references": [
+        {
+          "title": "Google Meet now organizes your meeting notes, transcripts, and recordings in your Google Drive",
+          "url": "https://workspaceupdates.googleblog.com/2026/07/google-meet-now-organizes-your-meeting-notes-transcripts-and-recordings-in-your-Google-Drive.html",
+          "kind": "official"
+        },
+        {
+          "title": "Use Transcripts with Google Meet",
+          "url": "https://support.google.com/meet/answer/12849897?hl=en",
+          "kind": "documentation"
+        },
+        {
+          "title": "Take notes for me in Google Meet",
+          "url": "https://support.google.com/meet/answer/14754931?hl=en",
+          "kind": "documentation"
+        },
+        {
+          "title": "Google Meet Security & Privacy for users",
+          "url": "https://support.google.com/meet/answer/9852160?hl=en",
+          "kind": "documentation"
+        },
+        {
+          "title": "Google Meet review: interface, recording and AI note-taking",
+          "url": "https://www.techradar.com/reviews/google-hangouts-meet",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "무엇이 바뀌었나: 파일 생성보다 저장 위치가 달라졌다"
+        },
+        {
+          "t": "p",
+          "text": "Google Meet은 원래도 녹화 영상, 회의 스크립트, Gemini가 만든 회의록을 Drive에 저장했다. 문제는 자료가 회의 단위로 묶이지 않았다는 점이다. 호스트의 내 드라이브에 파일이 생기더라도 사용자는 메일 알림이나 Calendar 일정의 첨부 링크를 다시 따라가야 했다. 이번 업데이트 뒤에는 호스트의 내 드라이브에 ‘Google Meet’이라는 상위 폴더가 생기고, 그 아래에 개별 회의 이름을 기준으로 한 하위 폴더가 만들어진다. 한 회의에서 생성된 회의록·스크립트·녹화가 같은 위치에 모이므로 회의 이름만 기억해도 자료를 찾을 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "회의 자료 저장 구조가 어떻게 달라지는지 비교",
+          "headers": [
+            "확인 항목",
+            "기존",
+            "새 구조"
+          ],
+          "rows": [
+            [
+              "호스트 저장 위치",
+              "내 드라이브에 생성되지만 회의별 정리가 약함",
+              "내 드라이브/Google Meet/회의별 폴더"
+            ],
+            [
+              "반복 회의",
+              "회차별 파일을 이름과 날짜로 찾아야 함",
+              "같은 반복 회의의 여러 회차가 한 폴더를 공유"
+            ],
+            [
+              "참석자 접근",
+              "메일·Calendar 링크에 의존",
+              "권한이 있으면 자신의 Google Meet 폴더에 바로가기 표시"
+            ],
+            [
+              "기존 녹화 폴더",
+              "Meet Recordings",
+              "Google Meet/Legacy Meet Recordings로 이동·이름 변경"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Google이 공개한 실제 Drive 화면에서는 내 드라이브 아래 Google Meet 폴더가 생기고, 개별 회의와 반복 회의가 각각 하위 폴더로 나타난다. 화면의 날짜와 용량은 기능을 설명하기 위한 데모 값이다. 출처: Google Workspace Updates."
+        },
+        {
+          "t": "h",
+          "text": "반복 회의는 회차마다 새 폴더를 만들지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "매주 같은 Calendar 일정으로 여는 팀 회의는 회차마다 별도 폴더를 만들지 않고 같은 회의 폴더를 공유한다. 예를 들어 ‘주간 제품 회의’가 매주 금요일 반복된다면 7월 24일 회의록과 7월 31일 녹화가 같은 상위 맥락 안에 쌓인다. 파일 이름과 수정 날짜로 각 회차를 구분해야 하지만, 프로젝트 자료가 여러 폴더로 흩어지는 문제는 줄어든다. 반대로 이름이 비슷해도 서로 다른 일정으로 만든 회의라면 같은 폴더라고 단정할 수 없다. 자동 정리의 기준은 사람이 느끼는 주제 유사도가 아니라 Meet과 Calendar가 인식하는 회의 인스턴스다."
+        },
+        {
+          "t": "p",
+          "text": "업무 흐름도 단순해진다. 회의가 끝난 뒤 메일함에서 요약 링크를 찾는 대신 Drive의 Google Meet 폴더를 열고 회의 이름을 검색하면 된다. Calendar 일정에도 스크립트 같은 산출물이 계속 연결되므로 기존 접근 경로가 사라지는 것은 아니다. 새 폴더는 자료를 한곳에서 탐색하기 위한 기본 주소를 추가한 변화에 가깝다."
+        },
+        {
+          "t": "h",
+          "text": "참석자에게 생기는 것은 복사본이 아니라 바로가기다"
+        },
+        {
+          "t": "p",
+          "text": "Google의 설명에서 중요한 표현은 ‘접근 권한이 있는 참석자’와 ‘바로가기’다. 회의에 참석했다는 이유만으로 모든 녹화와 회의록이 각자의 Drive에 복제되는 것은 아니다. 원본은 호스트 쪽 Drive에 유지되고, 해당 자료를 열 권한이 있는 참석자에게만 자신의 Google Meet 폴더에서 원본을 가리키는 바로가기가 보인다. 따라서 바로가기를 다른 폴더로 옮겨도 원본 소유권이 바뀌지 않으며, 원본의 공유 권한이 회수되거나 파일이 삭제되면 기존처럼 접근할 수 없게 된다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "호스트 Drive에는 원본 한 벌이 저장되고, 접근 권한을 가진 참석자에게는 그 원본을 가리키는 바로가기가 생긴다. 바로가기는 별도 복사본이나 추가 권한이 아니다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "기존 자동화는 Meet Recordings라는 이름부터 점검해야 한다"
+        },
+        {
+          "t": "p",
+          "text": "기존 ‘Meet Recordings’ 폴더는 새 Google Meet 폴더 아래로 이동하고 ‘Legacy Meet Recordings’로 이름이 바뀐다. Google은 폴더 이름이나 식별자에 의존하는 API 스크립트와 자동화 워크플로를 감사하라고 관리자에게 안내했다. Apps Script나 Drive API에서 폴더 이름이 정확히 ‘Meet Recordings’인 항목을 찾도록 만들었다면 새 파일을 놓칠 가능성이 있다. 폴더가 이동했다고 해서 모든 환경에서 식별자가 어떻게 보존될지 추측하지 말고, 실제 계정에서 새 상위 폴더와 기존 폴더의 ID를 다시 조회하는 편이 안전하다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "코드와 노코드 자동화에서 ‘Meet Recordings’ 문자열을 검색한다.",
+            "새 파일 감시 범위가 Google Meet 하위의 회의별 폴더까지 포함되는지 확인한다.",
+            "폴더 이름만으로 파일을 찾는다면 파일 유형·회의 이름·생성 시각 같은 조건을 함께 사용한다.",
+            "바로가기를 원본 파일로 오인해 중복 처리하지 않도록 Drive 항목 유형을 확인한다.",
+            "전환 기간에는 Meet Recordings와 Google Meet 폴더가 함께 보일 수 있으므로 한쪽을 성급히 삭제하지 않는다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "특히 새 파일이 들어오면 Slack 알림을 보내거나 녹화 영상을 다른 저장소로 복사하는 자동화는 하위 폴더 깊이가 달라지는 영향을 받기 쉽다. 기존에는 한 폴더만 감시했다면 이제 회의별 하위 폴더가 동적으로 만들어지는 상황을 처리해야 한다. 반면 Calendar 이벤트에 연결된 파일 링크를 기준으로 후속 작업을 시작하는 흐름은 폴더 이름 변화의 영향을 덜 받을 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "모든 사용자가 모든 산출물을 만들 수 있다는 뜻은 아니다"
+        },
+        {
+          "t": "p",
+          "text": "새 폴더 구조는 모든 Google Workspace 고객에게 배포되지만, 폴더 안에 들어갈 기능의 사용 조건까지 없애는 것은 아니다. 예를 들어 회의 스크립트는 지원되는 Workspace 버전과 기기, 조직 설정이 필요하며 조직과 호스트의 Drive에 충분한 저장 공간이 있어야 한다. Google의 도움말 기준 지원 언어에는 한국어가 포함된다. 녹화와 Gemini 회의록도 계정 요금제와 관리자의 기능 설정, 호스트 권한에 따라 사용할 수 있는 범위가 다르다. 개인 무료 Google 계정에서 Workspace의 모든 회의 산출물이 자동으로 생긴다고 이해하면 안 된다."
+        },
+        {
+          "t": "p",
+          "text": "자동 시작을 설정해도 호스트나 공동 호스트가 웹에서 회의에 들어오기 전에는 녹화·스크립트·회의록이 시작되지 않을 수 있다. 스크립트는 회의가 길수록 처리 시간이 더 필요하고, 모든 참석자가 나가면 자동으로 중단된다. 참가자에게는 기능이 켜졌다는 경고가 표시되며, 조직 관리자는 녹화·스크립트·회의록에 명시적 동의를 요구하도록 설정할 수 있다. 파일이 바로 보이지 않을 때는 기능 실패로 단정하기보다 처리 시간과 권한, 저장 공간을 차례로 확인해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "적용 일정과 실제 확인 순서"
+        },
+        {
+          "t": "p",
+          "text": "빠른 출시 도메인은 7월 22일부터 1~3일에 걸쳐 배포되고, 예정 출시 도메인은 7월 30일부터 1~3일에 걸쳐 배포된다. 따라서 같은 회사라도 조직의 출시 설정에 따라 폴더가 보이는 날짜가 다를 수 있다. 전환 직후에는 기존 Meet Recordings와 새 Google Meet 폴더가 잠시 함께 보일 수 있다. 새 구조가 보이지 않는다면 먼저 관리 콘솔의 출시 트랙을 확인하고, 배포 기간이 지난 뒤 짧은 테스트 회의에서 스크립트나 회의록을 하나 생성해 보는 것이 빠르다."
+        },
+        {
+          "t": "table",
+          "caption": "회의 자료가 보이지 않을 때 확인할 순서",
+          "headers": [
+            "증상",
+            "먼저 확인할 것",
+            "판단"
+          ],
+          "rows": [
+            [
+              "Google Meet 폴더가 없음",
+              "조직의 빠른 출시·예정 출시 일정",
+              "아직 배포 전일 수 있음"
+            ],
+            [
+              "폴더는 있지만 자료가 없음",
+              "회의 중 녹화·스크립트·회의록 기능이 실제 시작됐는지",
+              "폴더 생성과 산출물 생성은 별개"
+            ],
+            [
+              "참석자에게 바로가기가 없음",
+              "해당 참석자의 원본 파일 접근 권한",
+              "참석만으로 자동 권한이 생기지는 않음"
+            ],
+            [
+              "스크립트 생성이 지연됨",
+              "회의 길이, 조직·호스트 저장 공간, 처리 시간",
+              "긴 회의는 완료까지 시간이 더 걸림"
+            ],
+            [
+              "자동화가 새 파일을 못 찾음",
+              "폴더명과 하위 폴더 감시 범위",
+              "기존 경로 규칙 수정 필요"
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "text": "오늘 확인할 체크리스트"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "내 드라이브에 Google Meet 폴더가 생성됐는지 확인한다.",
+            "반복 회의 폴더에 서로 다른 회차의 산출물이 함께 정리되는지 확인한다.",
+            "호스트 원본과 참석자 바로가기를 구분하고 실제 공유 권한을 점검한다.",
+            "Meet Recordings 폴더 이름을 사용하는 Apps Script·Drive API·노코드 자동화를 찾는다.",
+            "새 하위 폴더가 생겨도 자동화가 파일을 감지하는지 테스트한다.",
+            "회의록·스크립트·녹화가 필요한 계정에서 요금제와 관리자 설정, 저장 공간을 확인한다.",
+            "민감한 회의는 참석자 안내와 조직의 동의 정책을 먼저 확인한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "첫 확인은 실제 업무 회의보다 짧은 테스트 회의가 좋다. 호스트 한 명과 참석자 한 명으로 스크립트 또는 회의록을 만든 뒤, 호스트에게는 원본이 어디에 생기고 참석자에게는 어떤 바로가기가 보이는지 비교한다. 그 결과를 기준으로 팀 문서와 자동화 경로를 바꾸면 파일을 잃거나 같은 자료를 두 번 처리하는 실수를 줄일 수 있다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "Windows 로그인에 FIDO2 보안 키를 더한 Google Workspace, 바뀌는 지점과 준비 순서",
+      "url": "https://won0322.tistory.com/138",
+      "reason": "Google Workspace 기능의 적용 범위와 관리자·사용자 준비 사항을 구분해서 확인하는 흐름으로 이어진다."
+    },
+    {
+      "title": "웹페이지가 바뀌었을 때만 알려주는 변경 감지기 만들기: Python 직접 실험",
+      "url": "https://won0322.tistory.com/137",
+      "reason": "Drive 폴더 구조처럼 외부 서비스의 변화에 의존하는 자동화를 어떻게 감지하고 점검할지 함께 생각해 볼 수 있다."
+    }
+  ],
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-07-24/구글미트-회의자료-자동정리-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/구글미트-회의자료-자동정리-대표.webp",
+      "alt": "회의록·스크립트·녹화 파일이 Google Meet 회의별 폴더 하나로 자동 정리되는 전후 비교 도식",
+      "generation_prompt": "Use case: infographic-diagram. Korean technical news blog cover, 1200×630 landscape. Create ONLY the visual relationship, with no headline, no subtitle, no footer sentence, no BEFORE/AFTER badges, and no English except the exact product folder name \"Google Meet\". Left third: three clearly separated file icons with only these labels: \"회의록\", \"스크립트\", \"녹화\". A single bold arrow points right. Right two-thirds: one large folder hierarchy labeled \"Google Meet\" with a meeting-specific subfolder labeled \"주간 회의\", containing the same three labeled file icons. Make the folder hierarchy occupy most of the frame and readable at mobile thumbnail size. Flat warm-white editorial diagram, navy and teal with tiny amber accents, generous spacing, natural editorial illustration rather than presentation cards. No people, generic laptop, fake product UI, dashboard, invented metrics, brand logo, watermark, neon, glossy stock style, question mark, exclamation mark, or any other text.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 23682,
+      "quality": 82,
+      "sha256": "e08a7636e4d1aea76afe0faef9e44c81edac6e7f7931cb25f95040fa61f66a2f"
+    },
+    "visual_1": {
+      "origin": "capture",
+      "path": "docs/tistory/assets/2026-07-24/구글미트-드라이브-공식화면.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/구글미트-드라이브-공식화면.webp",
+      "alt": "내 드라이브의 Google Meet 폴더 아래 개별 회의와 반복 회의 하위 폴더가 표시된 Google 공식 화면",
+      "capture_tool": "browser",
+      "capture_target": "Google Workspace Updates 공식 발표의 Google Drive 화면",
+      "captured_at": "2026-07-24T09:09:59+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 34124,
+      "quality": 82,
+      "sha256": "0cf5c6e82792d1170a9d666fc6f02839c12d412758b920fbd3fc988ed711354b",
+      "capture_sha256": "0cf5c6e82792d1170a9d666fc6f02839c12d412758b920fbd3fc988ed711354b"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-07-24/호스트-원본-참석자-바로가기.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-24/호스트-원본-참석자-바로가기.webp",
+      "alt": "호스트 Drive의 회의 자료 원본과 접근 권한을 거쳐 참석자 Drive에 생기는 바로가기를 구분한 구조도",
+      "generation_prompt": "Use case: infographic-diagram. Korean technical news blog explanation image, 1200×630 landscape. Explain Google Meet artifact sharing after a meeting. Center-left: one large source folder labeled \"호스트 원본\" containing three files labeled \"회의록\", \"스크립트\", \"녹화\". In the middle, one clear gate labeled \"접근 권한\". On the right, two small Drive folders both labeled \"참석자 바로가기\", connected to the single source only through the access gate. Make the difference between one source and multiple shortcuts unmistakable with one-direction arrows. Flat warm-white editorial diagram with navy and teal lines, large mobile-readable Korean labels, generous spacing, no headline or footer copy. No people, fake product UI, dashboard, generic computer, invented metrics, logos, watermark, neon, English sentences, question mark, or presentation-card styling.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 34650,
+      "quality": 82,
+      "sha256": "ff79d5309200ec1380fb6d4b2c45fbb01577a6e64c1c957b389e599ed2916ed1"
+    }
+  }
+}
