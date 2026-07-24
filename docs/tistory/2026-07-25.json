@@ -1,0 +1,82 @@
+{
+  "title": "GitHub Copilot AI 크레딧, 팀별 비용 한도는 어떻게 나눌까",
+  "title_candidates": [
+    "GitHub Copilot AI 크레딧, 팀별 비용 한도는 어떻게 나눌까",
+    "GitHub, 비용센터 화면에서 Copilot AI 크레딧 풀 관리 지원",
+    "GitHub Copilot의 공유 AI 크레딧을 팀별 비용센터 경계로 나누고, 한도 뒤의 추가 지출을 예산으로 막는 구조…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-25",
+  "publish_date": "2026-07-25",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-25T09:00:00+09:00",
+  "tags": [
+    "GitHub Copilot",
+    "AI 크레딧",
+    "비용센터",
+    "사용량 과금",
+    "FinOps",
+    "GitHub Enterprise"
+  ],
+  "meta_description": "Copilot을 여러 팀에 배포하면 월말에 먼저 생기는 질문은 ‘누가 얼마나 썼나’보다 ‘한 팀의 사용이 다른 팀 몫까지 먼저 썼나’일 때가 많다. GitHub는 7월 20일 비용센터를 만들거나 편집… GitHub Enterprise Cloud의 Copilot Business·Ente…",
+  "key_summary": [
+    "1. GitHub, 비용센터 화면에서 Copilot AI 크레딧 풀 관리 지원",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GitHub Copilot AI 크레딧, 팀별 비용 한도는 어떻게 나눌까"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-25.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-25.html",
+  "before_ad_html": "docs/tistory/2026-07-25-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-25-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-25-adfit.html",
+  "source_sha256": "7294839892182902b7e615010dfc129da0c012e542eac4d853134ccb2e7e30c2",
+  "html_sha256": "61e126f123a96b2da7e26768f63d890f4d556c9a8a5c9741354d3cd2b8e9f8b8",
+  "adfit_sha256": "9676fbff1e486b4b3b61e3acf4428bc40eb42bbc149757960df33e34019735ad",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25/깃허브코파일럿-비용센터-AI크레딧-대표.webp",
+      "path": "docs/tistory/assets/2026-07-25/깃허브코파일럿-비용센터-AI크레딧-대표.webp",
+      "original_url": "",
+      "alt": "공유 AI 크레딧이 두 비용센터의 라이선스 기준 한도로 나뉘고 한도 도달 뒤 정책이 갈리는 흐름을 보이는 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25/AI크레딧풀-비용센터예산-비교.webp",
+      "path": "docs/tistory/assets/2026-07-25/AI크레딧풀-비용센터예산-비교.webp",
+      "original_url": "",
+      "alt": "포함 AI 크레딧 풀 한도와 비용센터 예산이 각각 막는 사용 단계가 다른 것을 보여 주는 흐름도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25/비용센터-설정-준비순서.webp",
+      "path": "docs/tistory/assets/2026-07-25/비용센터-설정-준비순서.webp",
+      "original_url": "",
+      "alt": "Copilot 라이선스 확인부터 사용자와 팀 배정, 비용센터 설정, 월별 사용량 확인까지 이어지는 준비 순서 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
