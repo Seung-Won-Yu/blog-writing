@@ -1,0 +1,25 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 25 (토) · 약 10분</p>
+    <p class="digest-lead">AI에게 ‘공지 버튼을 추가해 달라’고 부탁한 뒤 코드를 훑어보고 바로 배포하면, 버튼 하나가 아무 반응 없이 멈춘 채 독자에게 닿을 수 있다. 이번에는 개인정보가 없는 로컬 공지 페이지에서 클릭 함수가 빠진 상태를 일부러 만들었다. 실제 브라우저로 버튼을 눌러 ReferenceError와 화면 정지를 확인한 뒤, 변경 한 덩어리만 고쳐 Git 커밋으로 남기고 다시 같은 버튼을 눌렀다. 목표는 AI의 답변을 평가하는 일이 아니라, 작은 수정도 보내기 전에 확인할 수 있는 짧은 안전망을 만드는 것이다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/AI-수정-버튼-검증-대표.webp" alt="AI 수정으로 멈춘 공지 버튼을 확인하고 작은 Git 복구 커밋으로 정상 동작을 되찾는 대표 일러스트" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">업무자동화 실험</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실행 기록 · Git 공식 문서 · 2026. 7. 25</p>
+    <h3>AI 수정 버튼을 실제 클릭으로 검증한 Git·Playwright 실험</h3>
+    <p class="digest-blurb">로컬 공지 페이지에서 빠진 클릭 함수를 실제 브라우저 오류로 확인하고, 작은 Git 복구 커밋 뒤 같은 버튼을 다시 눌러 결과를 비교했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">AI 수정안은 ‘완성’이 아니라 클릭할 후보</h4><p>문구와 버튼을 한 번에 고쳐 주는 AI 답변은 편하지만, 화면에서 가장 중요한 연결 하나가 빠질 수 있다. 이번 테스트에서는 공지 페이지의 ‘공지 열기’ 버튼에 showNotice() 호출만 남기고 함수를 일부러 넣지 않았다. 기대 결과는 클릭 뒤 안내문이 바뀌는 것이었다. 실제로는 브라우저 콘솔에 ReferenceError: showNotice is not defined가 기록됐고, 안내문은 ‘아직 공지를 열지 않았습니다.’에서 멈췄다. 이 글의 화면과 로그는 외부 계정·실서비스가 아닌 임시 로컬 페이지에서만 얻었다.</p><h4 class="digest-subheading">격리 환경과 준비한 입력</h4><p>macOS에서 Python 3.9.6의 http.server로 127.0.0.1:8765만 열고, Node 20.20.2와 Playwright CLI로 그 주소를 읽었다. 입력은 제목, 버튼, 안내문만 있는 한 장의 HTML이었다. 버튼의 onclick에는 존재하지 않는 함수 이름을 두었고, 개인정보·토큰·외부 API는 사용하지 않았다. Git 저장소도 이 임시 폴더 안에서만 만들었다.</p><pre class="digest-code-block language-bash"><code>python3 -m http.server 8765 --bind 127.0.0.1 --directory /tmp/button-check
+# 별도 터미널에서
+playwright-cli open http://127.0.0.1:8765
+playwright-cli snapshot
+# snapshot의 ‘공지 열기’ 버튼을 클릭</code></pre><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-오류-실제-캡처.webp" alt="로컬 공지 페이지에서 버튼을 클릭했지만 안내문이 바뀌지 않은 실제 Playwright 캡처" width="1200" height="630" loading="lazy"><figcaption>실제 실패 화면. 버튼을 클릭했지만 안내문은 그대로였고, 같은 클릭에서 브라우저 콘솔은 showNotice가 정의되지 않았다고 기록했다.</figcaption></figure><h4 class="digest-subheading">오류를 본 뒤 바꾼 것은 한 함수뿐</h4><p>실패를 확인한 뒤에는 페이지 디자인이나 문구를 다시 만들지 않았다. 안내문 요소를 찾아 실제 공지 문자열을 넣는 showNotice 함수만 추가했다. 그리고 git diff --check로 공백 오류가 없는지 먼저 확인하고 그 한 파일만 커밋했다. Git 공식 문서의 restore는 작업 트리의 변경을 특정 상태로 되돌릴 수 있다고 설명한다. 이번에는 함수 하나를 복구한 커밋을 남겼으므로, 다음 실험에서 문제가 생겨도 그 직전 상태와 비교하거나 되돌릴 기준이 남는다.</p><pre class="digest-code-block language-javascript"><code>function showNotice() {
+  document.querySelector(&#x27;#notice&#x27;).textContent =
+    &#x27;공지: 금요일 16시에 문서 검토를 시작합니다.&#x27;;
+}</code></pre></div>
+  </div>
+</section>
+</article>

@@ -1,0 +1,450 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-07-25-automation",
+  "publish_date": "2026-07-25",
+  "date_label": "2026. 7. 25",
+  "weekday": "토",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "category": "자동화·실험",
+  "scheduled_at": "2026-07-25T18:00:00+09:00",
+  "publication_mode": "scheduled",
+  "primary_query": "AI가 수정한 웹페이지 버튼 오류 Git으로 복구하기",
+  "tags": [
+    "AI 코딩",
+    "Git",
+    "웹페이지 테스트",
+    "Playwright",
+    "오류 복구",
+    "업무자동화"
+  ],
+  "editorial": {
+    "headline": "AI가 고친 웹페이지 버튼, 보내기 전에 확인하는 법: Git·Playwright 직접 실험",
+    "opening": "AI에게 ‘공지 버튼을 추가해 달라’고 부탁한 뒤 코드를 훑어보고 바로 배포하면, 버튼 하나가 아무 반응 없이 멈춘 채 독자에게 닿을 수 있다. 이번에는 개인정보가 없는 로컬 공지 페이지에서 클릭 함수가 빠진 상태를 일부러 만들었다. 실제 브라우저로 버튼을 눌러 ReferenceError와 화면 정지를 확인한 뒤, 변경 한 덩어리만 고쳐 Git 커밋으로 남기고 다시 같은 버튼을 눌렀다. 목표는 AI의 답변을 평가하는 일이 아니라, 작은 수정도 보내기 전에 확인할 수 있는 짧은 안전망을 만드는 것이다.",
+    "closing": "AI가 만든 코드가 틀렸다는 사실보다 중요한 것은, 틀린 상태를 작은 범위에서 발견하고 되돌릴 수 있는가다. 버튼 하나를 눌러 보고, 오류가 나면 변경 범위를 좁혀 확인하고, 동작한 상태를 Git 커밋으로 남기면 다음 수정도 비교할 기준이 생긴다. 이 실험은 로컬 예제만 다뤘으므로 실제 서비스에서는 테스트 환경과 리뷰 절차를 별도로 갖춰야 한다.",
+    "action": "오늘 수정한 페이지에서 가장 중요한 버튼 하나를 고르고, 배포 전 브라우저 클릭과 Git diff 확인을 한 번씩 해 보자.",
+    "audience_problem": "AI에게 웹페이지 문구나 버튼을 수정받은 뒤, 코드가 그럴듯해 보여 실제 클릭 확인 없이 공유하거나 배포하려는 사람을 위한 실험이다.",
+    "reader_takeaway": "로컬 페이지에서 버튼 클릭, 브라우저 오류 확인, 작은 수정, Git diff와 커밋, 재클릭 순서로 AI 수정안을 검증하는 최소 절차를 재현할 수 있다.",
+    "why_now": "AI 코딩 도구가 작은 화면 수정을 빠르게 만들어 주지만, 사용자가 실제로 누르는 흐름까지 자동으로 보장하지는 않는다.",
+    "topic_key": "ai-web-button-git-playwright-check",
+    "reader_question": "AI가 만든 웹페이지 수정안을 배포하기 전에 버튼 하나가 정말 동작하는지 어떻게 짧고 안전하게 확인할 수 있을까?",
+    "entities": [
+      "Git",
+      "Playwright CLI",
+      "MDN",
+      "로컬 HTTP 서버"
+    ],
+    "coverage": [
+      "problem",
+      "setup",
+      "implementation",
+      "evidence",
+      "comparison",
+      "failure",
+      "rollback"
+    ]
+  },
+  "visual": {
+    "subject": "AI 수정으로 빠진 버튼 함수를 실제 클릭으로 발견하고 작은 Git 복구 커밋으로 되돌린 로컬 실험",
+    "hook": "그럴듯한 AI 수정안도 버튼을 한 번 누르면 놓친 연결을 바로 찾을 수 있을까?",
+    "motif": "멈춘 공지 버튼, 오류 로그, 복구 커밋의 연결",
+    "cover": {
+      "label": "버튼 검증 전후",
+      "scene_label": [
+        "공지 버튼",
+        "오류 표시",
+        "복구 커밋"
+      ],
+      "steps": "AI 수정본의 버튼을 누르고 오류를 확인한 뒤 작은 복구 커밋으로 정상 동작을 되찾는 장면이다.",
+      "curiosity_hook": "한 번의 클릭이 배포 전 무엇을 찾아낼까?",
+      "logic_type": "comparison",
+      "content_role": "hook"
+    },
+    "assets": [
+      {
+        "label": "실패한 공지 버튼 화면",
+        "scene_label": [
+          "로컬 공지 페이지",
+          "공지 열기 버튼",
+          "변하지 않은 안내문"
+        ],
+        "steps": "함수가 없는 버튼을 실제 브라우저에서 클릭했지만 안내문이 그대로 남은 상태를 Playwright로 캡처했다.",
+        "curiosity_hook": "버튼이 눌린 것처럼 보여도 결과가 없으면 어디를 확인할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-07-25 KST에 개인정보 없는 임시 로컬 페이지를 Playwright로 열고, 함수가 빠진 공지 버튼을 직접 클릭한 뒤 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "http://127.0.0.1:8765/ 의 실패한 #notice-button",
+        "captured_at": "2026-07-25T19:18:00+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "복구된 버튼의 실제 결과",
+        "scene_label": [
+          "공지 열기 클릭",
+          "갱신된 안내문",
+          "로컬 브라우저"
+        ],
+        "steps": "showNotice 함수를 추가한 커밋 뒤 같은 버튼을 눌러 공지 문구가 바뀐 화면을 같은 환경에서 캡처했다.",
+        "curiosity_hook": "수정이 끝났다는 판단을 화면에서 어떻게 확인할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-07-25 KST에 같은 임시 페이지에 누락된 함수를 추가하고 Git 커밋한 뒤 Playwright로 버튼과 갱신된 문구를 직접 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "http://127.0.0.1:8765/ 의 복구된 #notice-button",
+        "captured_at": "2026-07-25T19:19:00+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "클릭에서 복구까지의 순서",
+        "scene_label": [
+          "버튼 클릭",
+          "오류 로그",
+          "작은 복구"
+        ],
+        "steps": "클릭, 오류 확인, 한 덩어리 수정, 재클릭이라는 네 단계를 이어서 보여 주는 기사 고유 도식이다.",
+        "curiosity_hook": "오류를 보자마자 큰 리팩터링 대신 어떤 순서로 좁힐까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean blog article explanation image, 1200×630 landscape\nPrimary request: An article-specific Korean editorial flow diagram showing a local webpage button verification workflow: left, a browser card labeled \"버튼 클릭\"; center, a small coral error card labeled \"오류 로그\"; right, a Git commit card and a repaired browser card labeled \"작은 복구\". Connect the three stages with arrows.\nStyle/medium: clean flat editorial diagram with paper texture, not a software dashboard.\nComposition/framing: three large stages centered across the middle, high contrast and readable on mobile.\nLighting/mood: calm and instructional.\nColor palette: warm off-white, deep teal, coral warning, charcoal.\nText (verbatim): \"버튼 클릭\", \"오류 로그\", \"작은 복구\". Use only these three Korean labels, accurately.\nConstraints: no logos, no brand names, no fake terminal output, no numerical charts, no watermark.\nAvoid: generic computer desk, AI robot, glowing brain, fake UI, tiny text, English gibberish.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "버튼 클릭",
+          "오류 로그",
+          "작은 복구"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "news": [
+    {
+      "title_kr": "AI 수정 버튼을 실제 클릭으로 검증한 Git·Playwright 실험",
+      "blurb_kr": "로컬 공지 페이지에서 빠진 클릭 함수를 실제 브라우저 오류로 확인하고, 작은 Git 복구 커밋 뒤 같은 버튼을 다시 눌러 결과를 비교했다.",
+      "published_at": "2026-07-25T10:18:00+09:00",
+      "source": "Git 공식 문서",
+      "url": "https://git-scm.com/docs/git-restore",
+      "references": [
+        {"title": "Git restore", "url": "https://git-scm.com/docs/git-restore", "kind": "documentation"},
+        {"title": "MDN ReferenceError: not defined", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined", "kind": "reference"},
+        {"title": "Playwright screenshots", "url": "https://playwright.dev/docs/screenshots", "kind": "official"}
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "AI 수정안은 ‘완성’이 아니라 클릭할 후보"
+        },
+        {
+          "t": "p",
+          "text": "문구와 버튼을 한 번에 고쳐 주는 AI 답변은 편하지만, 화면에서 가장 중요한 연결 하나가 빠질 수 있다. 이번 테스트에서는 공지 페이지의 ‘공지 열기’ 버튼에 showNotice() 호출만 남기고 함수를 일부러 넣지 않았다. 기대 결과는 클릭 뒤 안내문이 바뀌는 것이었다. 실제로는 브라우저 콘솔에 ReferenceError: showNotice is not defined가 기록됐고, 안내문은 ‘아직 공지를 열지 않았습니다.’에서 멈췄다. 이 글의 화면과 로그는 외부 계정·실서비스가 아닌 임시 로컬 페이지에서만 얻었다."
+        },
+        {
+          "t": "h",
+          "text": "격리 환경과 준비한 입력"
+        },
+        {
+          "t": "p",
+          "text": "macOS에서 Python 3.9.6의 http.server로 127.0.0.1:8765만 열고, Node 20.20.2와 Playwright CLI로 그 주소를 읽었다. 입력은 제목, 버튼, 안내문만 있는 한 장의 HTML이었다. 버튼의 onclick에는 존재하지 않는 함수 이름을 두었고, 개인정보·토큰·외부 API는 사용하지 않았다. Git 저장소도 이 임시 폴더 안에서만 만들었다."
+        },
+        {
+          "t": "code",
+          "language": "bash",
+          "text": "python3 -m http.server 8765 --bind 127.0.0.1 --directory /tmp/button-check\n# 별도 터미널에서\nplaywright-cli open http://127.0.0.1:8765\nplaywright-cli snapshot\n# snapshot의 ‘공지 열기’ 버튼을 클릭"
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "실제 실패 화면. 버튼을 클릭했지만 안내문은 그대로였고, 같은 클릭에서 브라우저 콘솔은 showNotice가 정의되지 않았다고 기록했다."
+        },
+        {
+          "t": "h",
+          "text": "오류를 본 뒤 바꾼 것은 한 함수뿐"
+        },
+        {
+          "t": "p",
+          "text": "실패를 확인한 뒤에는 페이지 디자인이나 문구를 다시 만들지 않았다. 안내문 요소를 찾아 실제 공지 문자열을 넣는 showNotice 함수만 추가했다. 그리고 git diff --check로 공백 오류가 없는지 먼저 확인하고 그 한 파일만 커밋했다. Git 공식 문서의 restore는 작업 트리의 변경을 특정 상태로 되돌릴 수 있다고 설명한다. 이번에는 함수 하나를 복구한 커밋을 남겼으므로, 다음 실험에서 문제가 생겨도 그 직전 상태와 비교하거나 되돌릴 기준이 남는다."
+        },
+        {
+          "t": "code",
+          "language": "javascript",
+          "text": "function showNotice() {\n  document.querySelector('#notice').textContent =\n    '공지: 금요일 16시에 문서 검토를 시작합니다.';\n}"
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "table",
+          "caption": "같은 로컬 버튼을 두 번 클릭한 결과",
+          "headers": [
+            "상태",
+            "클릭 뒤 화면",
+            "콘솔",
+            "다음 행동"
+          ],
+          "rows": [
+            [
+              "함수 누락",
+              "안내문 그대로",
+              "ReferenceError",
+              "함수 존재와 선택자 확인"
+            ],
+            [
+              "함수 복구",
+              "공지 문구로 갱신",
+              "새 JavaScript 오류 없음",
+              "diff 확인 후 커밋"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "복구 커밋 뒤 같은 버튼을 실제로 다시 누른 화면. 안내문이 공지 내용으로 바뀌어 기대 결과와 맞는지 확인했다."
+        },
+        {
+          "t": "h",
+          "text": "화면 확인과 Git 기록은 서로 다른 안전망"
+        },
+        {
+          "t": "p",
+          "text": "브라우저 클릭은 사용자가 보는 결과를 확인하고, Git diff는 무엇이 바뀌었는지 확인한다. 둘 중 하나만으로는 부족하다. 화면이 정상이어도 무관한 파일이 섞일 수 있고, diff가 작아도 이벤트 연결이 틀릴 수 있다. 그래서 수정 전후 같은 버튼을 누르고, 커밋 전에는 diff와 diff --check를 보는 순서를 사용했다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "실제 화면이 아니라, 이번 실험의 클릭·오류 확인·작은 복구·재클릭 순서를 설명하는 기사 전용 도식이다."
+        },
+        {
+          "t": "h",
+          "text": "실패를 키우지 않는 재사용 체크리스트"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "실서비스가 아니라 복사한 테스트 페이지와 가짜 문구로 먼저 확인한다.",
+            "한 번에 한 버튼 또는 한 사용자 흐름만 고르고, 기대 결과를 짧은 문장으로 적는다.",
+            "클릭 뒤 화면 변화와 브라우저 콘솔 오류를 같이 본다.",
+            "오류가 나면 큰 재작성 대신 함수·선택자·데이터 한 연결씩 좁힌다.",
+            "커밋 전 git diff --check를 실행하고, 동작한 상태를 작은 커밋으로 남긴다.",
+            "토큰·개인정보·운영 URL은 로그와 캡처에 넣지 않는다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "적용 범위와 되돌리는 방법"
+        },
+        {
+          "t": "p",
+          "text": "이 실험은 정적 HTML 버튼 하나만 검증했다. 로그인, 결제, 권한, 배포 환경 차이, 서버 응답 오류까지 대신 검증하지 않는다. 실제 제품에서는 테스트 계정과 별도 스테이징 환경, 팀의 리뷰 규칙이 필요하다. 임시 서버는 Ctrl+C로 멈추고 임시 폴더를 지우면 된다. 실제 저장소에서는 잘못된 변경이 커밋되기 전에는 git restore로 작업 트리를 되돌릴 수 있지만, 공유된 커밋을 무심코 강제 푸시로 덮어쓰면 안 된다."
+        },
+        {
+          "t": "h",
+          "text": "AI 수정안을 받을 때 먼저 적을 한 줄"
+        },
+        {
+          "t": "p",
+          "text": "수정을 요청하기 전에 ‘이 버튼을 누르면 어떤 문구가 어디에 나타나야 하는가’를 한 문장으로 적었다. 이번에는 공지 열기 버튼을 누르면 안내문 영역이 금요일 16시 검토 일정으로 바뀌어야 한다는 문장이었다. 이 한 줄이 있으면 AI가 반환한 코드의 길이나 설명의 자신감 대신, 실제로 확인할 결과가 생긴다. 버튼이 여러 개라면 결제처럼 위험한 흐름부터가 아니라, 가장 짧고 되돌리기 쉬운 내부 페이지나 데모에서 이 기준을 연습하는 편이 좋다. 기대 결과가 모호하면 오류가 없더라도 수정이 맞았는지 판단할 수 없다. 예를 들어 저장 버튼이라면 저장되었다는 토스트가 보이는지, 목록 버튼이라면 목록 항목이 실제로 늘어나는지처럼 관찰 가능한 결과를 정한다. 색이 바뀌는 것만으로는 데이터가 반영됐는지 알 수 없으므로, 사용자가 다음에 하는 행동까지 연결해 적는다. 이 문장은 테스트 도구의 명령을 외우지 못해도 적용할 수 있고, AI에게 재수정을 요청할 때도 빠진 결과를 구체적으로 전달하는 기준이 된다."
+        },
+        {
+          "t": "h",
+          "text": "오류 메시지는 원인 전체가 아니라 다음 질문"
+        },
+        {
+          "t": "p",
+          "text": "ReferenceError는 함수 이름을 찾지 못했다는 관찰일 뿐, 서비스 전체를 다시 만들라는 신호는 아니다. 먼저 철자가 같은지, 함수가 실제로 로드되는지, 클릭 대상과 선택자가 같은지처럼 연결 한 곳씩만 확인한다. 이번 페이지에서는 onclick 속성의 showNotice 호출은 있었지만 함수 선언이 없었다. 따라서 디자인을 바꾸거나 라이브러리를 추가하지 않고 함수 한 개만 넣었다. 수정 범위를 작게 유지하면 브라우저에서 다시 확인했을 때 무엇이 결과를 바꿨는지도 선명하다."
+        },
+        {
+          "t": "p",
+          "text": "팀이나 실제 배포에서 추가할 경계"
+        },
+        {
+          "t": "p",
+          "text": "로컬에서 버튼 하나가 동작했다고 해서 운영 환경의 접근성, 권한, 네트워크 실패, 분석 태그, 모바일 레이아웃까지 검증된 것은 아니다. 실제 업무에서는 민감한 데이터가 없는 스테이징 계정으로 같은 흐름을 확인하고, 변경 내용은 동료가 읽을 수 있는 diff로 남긴다. 특히 권한이나 결제를 건드리는 AI 제안은 자동 실행하지 말고 승인 절차와 로그 보관 규칙을 먼저 적용해야 한다. 이 글의 절차는 큰 품질 보증을 대체하지 않고, 가장 싸고 빠른 첫 번째 확인으로 쓰는 것이 알맞다. 실행 결과를 공유할 때는 어떤 브라우저와 데이터로 확인했는지, 확인하지 않은 범위는 무엇인지도 함께 적는다. 그러면 다음 사람이 같은 결과를 재현하기 쉬워지고, 화면 캡처 한 장만 보고 운영 반영을 결정하는 일을 줄일 수 있다."
+        },
+        {
+          "t": "quote",
+          "text": "AI가 만든 수정안을 신뢰하는 가장 빠른 방법은 더 길게 읽는 일이 아니라, 사용자가 누르는 한 번을 실제로 확인하는 일이다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
+      "url": "https://won0322.tistory.com/132",
+      "reason": "변경을 바로 적용하기 전 범위와 실행 조건을 나누어 확인하는 방법을 이어서 볼 수 있다."
+    },
+    {
+      "title": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
+      "url": "https://won0322.tistory.com/126",
+      "reason": "로컬 결과와 실제 배포 환경이 다를 수 있다는 점을 점검하는 데 연결된다."
+    }
+  ],
+  "references": [
+    {
+      "title": "Git restore",
+      "url": "https://git-scm.com/docs/git-restore"
+    },
+    {
+      "title": "MDN JavaScript error reference",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined"
+    },
+    {
+      "title": "Playwright screenshots",
+      "url": "https://playwright.dev/docs/screenshots"
+    }
+  ],
+  "verification": {
+    "mode": "executed",
+    "started_at": "2026-07-25T19:18:00+09:00",
+    "completed_at": "2026-07-25T19:20:00+09:00",
+    "command_exit_code": 0,
+    "stdout_excerpt": "실패 상태 클릭 뒤 ReferenceError: showNotice is not defined가 기록되고 안내문은 그대로였다. 함수 추가 커밋 뒤 같은 클릭은 공지 문구로 안내문을 갱신했다.",
+    "environment": {
+      "os": "macOS",
+      "runtime": "Python 3.9.6; Node v20.20.2",
+      "tool_version": "Playwright CLI via npx",
+      "source_revision": "임시 Git 저장소: 9162b8d 함수 누락 상태, e6b8cdc 함수 복구 상태"
+    },
+    "commands": [
+      "python3 -m http.server 8765 --bind 127.0.0.1 --directory /tmp/blog-saturday-20260725",
+      "playwright-cli open http://127.0.0.1:8765",
+      "playwright-cli snapshot && playwright-cli click <공지-열기-ref>",
+      "git diff --check && git add index.html && git commit -m 'restore missing notice handler'"
+    ],
+    "input_fixture": "개인정보가 없는 임시 HTML 공지 페이지에 ‘공지 열기’ 버튼과 빈 안내문을 만들고, 첫 상태에서는 showNotice 함수를 의도적으로 누락했다.",
+    "expected": "함수가 누락된 첫 클릭은 화면을 갱신하지 못하고 오류를 기록하며, 함수 하나를 복구한 뒤 같은 버튼을 누르면 공지 문구가 안내문에 표시돼야 한다.",
+    "actual": "첫 클릭은 안내문을 바꾸지 못했고 브라우저가 ReferenceError를 기록했다. 함수 추가 후 Git 커밋하고 다시 클릭하자 안내문이 ‘공지: 금요일 16시에 문서 검토를 시작합니다.’로 바뀌었다.",
+    "failure": "초기 Playwright 래퍼를 실행 권한으로 직접 호출했을 때 permission denied가 발생해, 같은 공식 래퍼를 bash로 호출하도록 조건을 바꾼 뒤 브라우저 검증을 다시 실행했다.",
+    "rollback": "실험이 끝나면 127.0.0.1 로컬 서버를 중지하고 임시 폴더를 삭제한다. 실제 저장소에서 커밋 전 변경은 git restore로 되돌리고, 공유된 커밋은 팀 규칙에 맞는 revert를 사용한다.",
+    "evidence_files": [
+      "visual_1",
+      "visual_2"
+    ],
+    "measurement_files": [],
+    "problem_lane": "바이브 코딩 기초",
+    "tool_brand": "Git·Playwright"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/AI-수정-버튼-검증-대표.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/AI-수정-버튼-검증-대표.webp",
+      "alt": "AI 수정으로 멈춘 공지 버튼을 확인하고 작은 Git 복구 커밋으로 정상 동작을 되찾는 대표 일러스트",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: illustration-story\nAsset type: Korean blog article cover, 1200×630 landscape\nPrimary request: Editorial illustration for a specific hands-on experiment: a Korean office worker reviews an AI-edited weekly notice webpage on a laptop. The center shows a real-looking but non-branded web page with one teal button and a visible small warning symbol; beside it is a Git commit timeline with a broken version and a restored version. The visual story is \"check the button before trusting an AI edit\".\nScene/backdrop: calm home-office desk, only laptop, small notebook, and two modest commit cards; no dashboard.\nSubject: webpage button error and recovery through a small Git commit.\nStyle/medium: warm, precise flat editorial illustration with paper texture, not a product UI mockup.\nComposition/framing: laptop and the two commit cards occupy the central 60%, enough mobile-safe contrast.\nLighting/mood: clear afternoon light, practical and calm.\nColor palette: off-white, deep teal, coral warning accent, charcoal.\nText (verbatim): \"버튼 확인\" and \"작은 복구 커밋\" in short Korean labels only, large and legible.\nConstraints: article-specific objects, no logos, no code that looks executable, no fake terminal, no charts, no watermark.\nAvoid: generic developer desk, AI robot, glowing brain, fake analytics dashboard, English gibberish, excess text.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 66826,
+      "quality": 82,
+      "sha256": "247881894d5c851e6273a7183fff5b4d7161f5d71901e48c903ea3d8cec9678e"
+    },
+    "visual_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-오류-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-오류-실제-캡처.webp",
+      "alt": "로컬 공지 페이지에서 버튼을 클릭했지만 안내문이 바뀌지 않은 실제 Playwright 캡처",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "http://127.0.0.1:8765/ 의 실패한 #notice-button",
+      "captured_at": "2026-07-25T19:18:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 8974,
+      "quality": 82,
+      "sha256": "f33f9ad5aa010b9303e38b995b112f00ff04e444372a2186adc04adbcadb582b",
+      "capture_sha256": "f33f9ad5aa010b9303e38b995b112f00ff04e444372a2186adc04adbcadb582b"
+    },
+    "visual_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-복구-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-복구-실제-캡처.webp",
+      "alt": "누락된 함수를 복구한 뒤 공지 문구가 표시된 실제 Playwright 캡처",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "http://127.0.0.1:8765/ 의 복구된 #notice-button",
+      "captured_at": "2026-07-25T19:19:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 9582,
+      "quality": 82,
+      "sha256": "5fc1a90522594490d649d1411c88408bcb68b145cd68178f39c7685525fa681f",
+      "capture_sha256": "5fc1a90522594490d649d1411c88408bcb68b145cd68178f39c7685525fa681f"
+    },
+    "visual_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-오류-복구-흐름.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-오류-복구-흐름.webp",
+      "alt": "버튼 클릭과 오류 로그, 작은 복구를 연결한 한국어 설명 도식",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean blog article explanation image, 1200×630 landscape\nPrimary request: An article-specific Korean editorial flow diagram showing a local webpage button verification workflow: left, a browser card labeled \"버튼 클릭\"; center, a small coral error card labeled \"오류 로그\"; right, a Git commit card and a repaired browser card labeled \"작은 복구\". Connect the three stages with arrows.\nStyle/medium: clean flat editorial diagram with paper texture, not a software dashboard.\nComposition/framing: three large stages centered across the middle, high contrast and readable on mobile.\nLighting/mood: calm and instructional.\nColor palette: warm off-white, deep teal, coral warning, charcoal.\nText (verbatim): \"버튼 클릭\", \"오류 로그\", \"작은 복구\". Use only these three Korean labels, accurately.\nConstraints: no logos, no brand names, no fake terminal output, no numerical charts, no watermark.\nAvoid: generic computer desk, AI robot, glowing brain, fake UI, tiny text, English gibberish.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 64568,
+      "quality": 82,
+      "sha256": "1eb830733f08d422d08130118a35a68b3422c8be1a9daf458d7ff71b4ba2f34b"
+    }
+  }
+}

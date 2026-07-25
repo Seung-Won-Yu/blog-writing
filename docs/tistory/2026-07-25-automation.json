@@ -1,0 +1,92 @@
+{
+  "title": "AI가 고친 웹페이지 버튼, 보내기 전에 확인하는 법: Git·Playwright 직접 실험",
+  "title_candidates": [
+    "AI가 고친 웹페이지 버튼, 보내기 전에 확인하는 법: Git·Playwright 직접 실험",
+    "AI 수정 버튼을 실제 클릭으로 검증한 Git·Playwright 실험",
+    "AI 수정으로 빠진 버튼 함수를 실제 클릭으로 발견하고 작은 Git 복구 커밋으로 되돌린 로컬 실험: 그럴듯한 AI 수정…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-07-25-automation",
+  "publish_date": "2026-07-25",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-25T18:00:00+09:00",
+  "tags": [
+    "AI 코딩",
+    "Git",
+    "웹페이지 테스트",
+    "Playwright",
+    "오류 복구",
+    "업무자동화"
+  ],
+  "meta_description": "AI에게 ‘공지 버튼을 추가해 달라’고 부탁한 뒤 코드를 훑어보고 바로 배포하면, 버튼 하나가 아무 반응 없이 멈춘 채 독자에게 닿을 수 있다. 이번에는 개인정보가 없는 로컬 공지 페이지에서 클릭 함… 로컬 공지 페이지에서 빠진 클릭 함수를 실제 브라우저 오류로 확인하고, 작은 Git…",
+  "key_summary": [
+    "1. AI 수정 버튼을 실제 클릭으로 검증한 Git·Playwright 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI가 고친 웹페이지 버튼, 보내기 전에 확인하는 법: Git·Playwright 직접 실험"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-07-25.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-25-automation.html",
+  "before_ad_html": "docs/tistory/2026-07-25-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-25-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-25-automation-adfit.html",
+  "source_sha256": "f5dc16b83c03d45168d7bc6ab600f8591b321731e696c589cbbccd5538a5b5e4",
+  "html_sha256": "330971e65f62c7e2ef033072d01c4b5eb400a7f6c614997714ea5cdb6c13a52a",
+  "adfit_sha256": "13925ec4ae3cf9b55b024df8b6ec467eebd57c3e4ec0a8bb194db8eeb71cc17e",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/AI-수정-버튼-검증-대표.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/AI-수정-버튼-검증-대표.webp",
+      "original_url": "",
+      "alt": "AI 수정으로 멈춘 공지 버튼을 확인하고 작은 Git 복구 커밋으로 정상 동작을 되찾는 대표 일러스트",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-오류-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-오류-실제-캡처.webp",
+      "original_url": "",
+      "alt": "로컬 공지 페이지에서 버튼을 클릭했지만 안내문이 바뀌지 않은 실제 Playwright 캡처",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-복구-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-복구-실제-캡처.webp",
+      "original_url": "",
+      "alt": "누락된 함수를 복구한 뒤 공지 문구가 표시된 실제 Playwright 캡처",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-25-automation/버튼-오류-복구-흐름.webp",
+      "path": "docs/tistory/assets/2026-07-25-automation/버튼-오류-복구-흐름.webp",
+      "original_url": "",
+      "alt": "버튼 클릭과 오류 로그, 작은 복구를 연결한 한국어 설명 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
