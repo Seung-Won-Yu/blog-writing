@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "day": "2026-07-26",
-  "generated_at": "2026-07-25T22:11:16.592981+00:00",
+  "day": "2026-07-27",
+  "generated_at": "2026-07-26T22:14:09.713666+00:00",
   "review_required": true,
   "selection": {
     "mode": "lead_shortlist",
@@ -12,141 +12,11 @@
     "min_reader_relevance": 2,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 1,
-    "recently_selected_excluded": 15,
+    "recently_selected_excluded": 5,
     "recent_url_excluded": 5,
-    "recent_publisher_excluded": 10
+    "recent_publisher_excluded": 0
   },
   "candidates": [
-    {
-      "id": "9cfe67797555",
-      "title": "Claude Opus 5 is now available in GitHub Copilot",
-      "normalized_title": "claude opus 5 is now available in github copilot",
-      "url": "https://github.blog/changelog/2026-07-24-claude-opus-5-is-now-available-in-github-copilot",
-      "published_at": "2026-07-24T16:40:04+00:00",
-      "summary": "Claude Opus 5, Anthropic’s newest Opus model, is now available in GitHub Copilot. It is designed for complex, long-running coding tasks that require careful reasoning, effective tool use, and reliable… The post Claude Opus 5 is now available in GitHub Copilot appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 15,
-      "recent_publisher": true
-    },
-    {
-      "id": "fca8d05549f9",
-      "title": "Copilot cloud agent for Linear is now generally available",
-      "normalized_title": "copilot cloud agent for linear is now generally available",
-      "url": "https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available",
-      "published_at": "2026-07-23T22:32:23+00:00",
-      "summary": "You can now assign issues in Linear to Copilot cloud agent, our asynchronous, autonomous background agent. When you assign a Linear issue to Copilot, it will: Analyze the issue contents… The post Copilot cloud agent for Linear is now generally available appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 1
-      },
-      "topic_tags": [
-        "cloud",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": [
-          "cloud"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 1,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": true
-    },
     {
       "id": "2f41a0c9f127",
       "title": "GitHub Mobile: Fix failing Actions checks with Copilot cloud agent",
@@ -211,7 +81,7 @@
         "freshness": 3
       },
       "lead_score": 14,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "932591afba7f",
@@ -631,11 +501,11 @@
       "recent_publisher": false
     },
     {
-      "id": "c0246f1dc3e5",
-      "title": "구글, AI 에이전트 '제미나이 스파크' 확대 출시...월 20달러 프로 요금제도 적용",
-      "normalized_title": "구글 ai 에이전트 제미나이 스파크 확대 출시 월 20달러 프로 요금제도 적용",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213166",
-      "published_at": "2026-07-25T06:13:39+00:00",
+      "id": "a1a8325ff897",
+      "title": "오픈AI, 에이전트 외부 해킹 일주일간 몰라...\"탈출 지침까지 남겨\"",
+      "normalized_title": "오픈ai 에이전트 외부 해킹 일주일간 몰라 탈출 지침까지 남겨",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213181",
+      "published_at": "2026-07-26T01:38:35+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -653,10 +523,10 @@
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 6,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
         "deep": 0
       },
       "topic_tags": [
@@ -664,81 +534,16 @@
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 2,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "요금",
-          "AI"
-        ],
-        "reader_impact": [
-          "요금"
-        ],
-        "reader_consequence": [
-          "확대"
-        ],
-        "practical": [
-          "출시"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false,
-      "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
-    },
-    {
-      "id": "9295ede08beb",
-      "title": "BGP ORIGIN attribute manipulation and its impact on the Internet",
-      "normalized_title": "bgp origin attribute manipulation and its impact on the internet",
-      "url": "https://blog.cloudflare.com/bgp-origin-attribute",
-      "published_at": "2026-07-24T17:25:28+00:00",
-      "summary": "By doing in-depth testing, we found nearly 70% of BGP paths experience ORIGIN attribute rewrites by transit providers seeking traffic advantages. We examine the global impact of this practice and argue for deprecating ORIGIN in route selection.",
-      "source_id": "cloudflare-blog",
-      "source_family": "cloudflare-blog",
-      "source_name": "Cloudflare Blog",
-      "group": "official",
-      "source_weight": 4,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 4",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 3
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [],
+        "broad": [
+          "AI"
+        ],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [],
@@ -746,10 +551,140 @@
       },
       "lead_score_breakdown": {
         "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 3,
-        "evidence": 5,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
         "freshness": 5
+      },
+      "lead_score": 7,
+      "recent_publisher": false
+    },
+    {
+      "id": "9cfe67797555",
+      "title": "Claude Opus 5 is now available in GitHub Copilot",
+      "normalized_title": "claude opus 5 is now available in github copilot",
+      "url": "https://github.blog/changelog/2026-07-24-claude-opus-5-is-now-available-in-github-copilot",
+      "published_at": "2026-07-24T16:40:04+00:00",
+      "summary": "Claude Opus 5, Anthropic’s newest Opus model, is now available in GitHub Copilot. It is designed for complex, long-running coding tasks that require careful reasoning, effective tool use, and reliable… The post Claude Opus 5 is now available in GitHub Copilot appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot"
+        ],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 13,
+      "recent_publisher": false
+    },
+    {
+      "id": "fca8d05549f9",
+      "title": "Copilot cloud agent for Linear is now generally available",
+      "normalized_title": "copilot cloud agent for linear is now generally available",
+      "url": "https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available",
+      "published_at": "2026-07-23T22:32:23+00:00",
+      "summary": "You can now assign issues in Linear to Copilot cloud agent, our asynchronous, autonomous background agent. When you assign a Linear issue to Copilot, it will: Analyze the issue contents… The post Copilot cloud agent for Linear is now generally available appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 1
+      },
+      "topic_tags": [
+        "cloud",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot"
+        ],
+        "deep": [
+          "cloud"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 5,
+        "explanatory_depth": 1,
+        "evidence": 5,
+        "freshness": 3
       },
       "lead_score": 14,
       "recent_publisher": false
@@ -813,7 +748,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "4eca8b66164d",
@@ -998,7 +933,7 @@
         "freshness": 3
       },
       "lead_score": 13,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "69e481323262",
@@ -1362,308 +1297,11 @@
       "recent_publisher": false
     },
     {
-      "id": "e02d2d5dc2f6",
-      "title": "\"국산 칩 안 쓰면 반역자\"…중국, AI 기업들에 '강력 경고'",
-      "normalized_title": "국산 칩 안 쓰면 반역자 중국 ai 기업들에 강력 경고",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213176",
-      "published_at": "2026-07-25T09:28:44+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [
-          "경고"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "6c297b0a6292",
-      "title": "젠슨 황, 한국 정부·기업과 회동…”25년 협력, AI 혁신으로 확장”",
-      "normalized_title": "젠슨 황 한국 정부 기업과 회동 25년 협력 ai 혁신으로 확장",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213174",
-      "published_at": "2026-07-25T08:22:25+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "94ceda0bba6b",
-      "title": "‘샌프란시스코 AI 서밋’서 한국-빅테크 협약 6건 체결…”반도체부터 AX까지 협력”",
-      "normalized_title": "샌프란시스코 ai 서밋 서 한국 빅테크 협약 6건 체결 반도체부터 ax까지 협력",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213173",
-      "published_at": "2026-07-25T07:08:32+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "cd13d10270d3",
-      "title": "[AI 이슈 트렌드] 쿠팡 화재·삼전닉스 레버리지 논란...BTS 월드컵·영화 '호프'도 눈길",
-      "normalized_title": "ai 이슈 트렌드 쿠팡 화재 삼전닉스 레버리지 논란 bts 월드컵 영화 호프 도 눈길",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213170",
-      "published_at": "2026-07-25T06:49:39+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "74c2d33f1383",
-      "title": "모건스탠리 \"스페이스X 주가 100달러 하락 시 AI 사업 가치 '0달러'...지나친 저평가\"",
-      "normalized_title": "모건스탠리 스페이스x 주가 100달러 하락 시 ai 사업 가치 0달러 지나친 저평가",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213164",
-      "published_at": "2026-07-25T06:44:57+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "9f8c32ee1a7a",
-      "title": "소프트뱅크, 스위스 로봇 스타트업 그라비스 인수 검토...피지컬 AI 확장 속도",
-      "normalized_title": "소프트뱅크 스위스 로봇 스타트업 그라비스 인수 검토 피지컬 ai 확장 속도",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213159",
-      "published_at": "2026-07-25T01:32:29+00:00",
+      "id": "1fe8f2c16df1",
+      "title": "딥시크, 2차 투자 유치 돌연 중단...\"IPO 준비하며 AI 연구 집중\"",
+      "normalized_title": "딥시크 2차 투자 유치 돌연 중단 ipo 준비하며 ai 연구 집중",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213180",
+      "published_at": "2026-07-26T06:28:03+00:00",
       "summary": "",
       "source_id": "aitimes",
       "source_family": "aitimes",
@@ -1682,6 +1320,203 @@
       ],
       "lane_scores": {
         "broad": 6,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "중단",
+          "AI"
+        ],
+        "reader_impact": [
+          "중단"
+        ],
+        "reader_consequence": [
+          "중단"
+        ],
+        "practical": [],
+        "deep": [
+          "연구"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 10"
+    },
+    {
+      "id": "38dbd10b279f",
+      "title": "KAIST-엔비디아, 피지컬 AI 테크놀로지센터 설립…파운데이션 모델 공동 연구",
+      "normalized_title": "kaist 엔비디아 피지컬 ai 테크놀로지센터 설립 파운데이션 모델 공동 연구",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213187",
+      "published_at": "2026-07-26T06:15:29+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "연구",
+          "모델"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 9,
+      "recent_publisher": false
+    },
+    {
+      "id": "f7e07d1f8f4e",
+      "title": "SKT, 스타트업 3곳에 독자 AI 모델 'A.X K1' API 지원",
+      "normalized_title": "skt 스타트업 3곳에 독자 ai 모델 a x k1 api 지원",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213185",
+      "published_at": "2026-07-26T03:03:30+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 1,
+        "deep": 2
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [
+          "지원"
+        ],
+        "practical": [
+          "API"
+        ],
+        "deep": [
+          "API",
+          "모델"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "937c87df557b",
+      "title": "머스크 \"첨단 AI, 배포 전 경쟁사가 2주간 '동료 평가' 해야\"",
+      "normalized_title": "머스크 첨단 ai 배포 전 경쟁사가 2주간 동료 평가 해야",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213183",
+      "published_at": "2026-07-26T02:25:20+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
@@ -1692,7 +1527,7 @@
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 2,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
@@ -1700,7 +1535,6 @@
       },
       "raw_lane_matches": {
         "broad": [
-          "로봇",
           "AI"
         ],
         "reader_impact": [],
@@ -1716,137 +1550,6 @@
         "freshness": 5
       },
       "lead_score": 7,
-      "recent_publisher": false
-    },
-    {
-      "id": "326b863429f4",
-      "title": "Claude Cookbook: 에이전트부터 RAG·멀티모달·운영까지",
-      "normalized_title": "claude cookbook 에이전트부터 rag 멀티모달 운영까지",
-      "url": "https://news.hada.io/topic?id=31793",
-      "published_at": "2026-07-24T23:23:04+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "cb38ac956c36",
-      "title": "AI 모델 선택에 매몰되면 안 되는 이유",
-      "normalized_title": "ai 모델 선택에 매몰되면 안 되는 이유",
-      "url": "https://www.itworld.co.kr/article/4199733/ai-%eb%aa%a8%eb%8d%b8-%ec%84%a0%ed%83%9d%ec%97%90-%eb%a7%a4%eb%aa%b0%eb%90%98%eb%a9%b4-%ec%95%88-%eb%90%98%eb%8a%94-%ec%9d%b4%ec%9c%a0.html",
-      "published_at": "2026-07-24T00:42:54+00:00",
-      "summary": "지난 한 주 동안 매일 LLM 모델 선택 화면을 노려보면서 어떤 모델을 선택하는 것이 좋을지 고민했다. 아마 다른 많은 이들이 마찬가지일 것이다. 오픈AI가 GPT-5.6 솔(Sol), 테라, 루나를 출시했다. 솔은 최상위 모델이고 테라는 솔의 지능 대부분을 보다 저렴한 비용으로 제공하며, 루나는 거기서 한 단계 더 저렴한 모델이다. 앤트로픽은 6월 말 클로드 소넷 5를, 그 전달에는 오퍼스 4.8을 출시했고, 그 사이에 페이블 5도 내놨다. 한편 몇 달 전까지만 해도 모델 경쟁에서 앞서가는 듯했던 구글은 현재 기술 뉴스레터 운영자 게르겔리 오로즈의 비판을 받고 있다. 오로즈는 제미나이가 소프트웨어 개발 영역의 최상위권에서 밀려났고 주요 모델 출시 경쟁에서도 한참 뒤처졌다고 주장했다. 이 주장이 맞을 수도 있고, 얼마 뒤에 또 다시 틀렸음이 드러날 수도 있다. 솔직히 이제는 시장을 따라가기도 버겁다. 필자는 챗GPT와 클로드를 꾸준히 사용하지만 대부분의 경우 어떤 모델을 선택해야 하는지에 대한 명확한 생각은 없다. 필자는 가장 크고 가장 비싸 보이는 모델을 선택하는 경향이 있는데, 상대적으로 작은 모델을 선택할 때 감수해야 하는 불이익이 무엇인지조차 모르기 때문이다. “인스턴트(Instant)”라는 이름은 뭔가 위험하게 느껴지는 반면 “씽킹(Thinking)”은 어쩐지 비싸고 강력한 모델처럼 느껴진다. 링크드인에서 간단히 설문조사 를 해보니 모델 선택에 대해 고민하기는 다른 이들도 마찬가지였다. 아마 기업도 대부분 다르지 않을 것이다. 모델의 유통기한 다만, 모델에 대한 이런 고민이 실제로 중요한지에 대해 생각해볼 필요는 있다. 모델은 상하지 않는다. 즉, 기업이 3개월 전에 프로덕션에 구축한 모델은 지금도 처음 선택했을 때와 똑같은 성능을 발휘한다. 여기서 일반적으로 “구식”이라는 말은 그보다 더 좋은 새로운 것이 나왔다는 의미지, 배포한 모델이 보험 청구 요약 작업이나 고객지원 티켓 분류 작업을 갑자기 못하게 됐다는 의미가 아니다. (다시 말해, 일단 제대로 동작하는 시스템을 구축했다면 “오퍼스 200.2가 더 좋을 것 같다”는 생각은 성능이 아닌 FOMO의 문제다.) 게다가 대부분의 기업 워크로드는 프론티어 영역에 해당되지도 않는다. 추출, 요약, 분류, 문서 비교, 고객 서비스 지원 등의 작업은 많은 경우 비교적 작고 값싼 모델로도 충분하다. GPT-5.6 모델 3총사에 대한 오픈AI의 홍보도 단순히 솔이 더 뛰어나다는 것이 아니라 테라와 루나가 지능, 지연, 비용 면에서 다양하게 조합할 수 있다는 것이다. 오픈AI에 따르면 가장 저렴한 등급의 모델인 루나는 이전 세대 모델의 최고 성능에 근접한 성능을 절반 이하의 비용(추정)으로 제공한다. 물론 현실적인 문제는 어디서 시작해야 하는지다. 기업이 실제 작업을 시작하기 전에 모든 모델, 모든 추론 설정, 모든 가격 등급을 테스트할 수는 없다. 필자는 다음과 같이 조언하고 싶다. (정작 스스로는 그렇게 하지 못하지만, 변명하자면 필자는 기업 전략을 수립하는 입장이 아니고 비용에 대해서도 기업만큼 민감하지는 않다.) 먼저 작업이 가능하다고 판단되는 가장 저렴하면서 신뢰할 만한 모델부터 시작한다. 이 모델에 실제 환경을 대표하는 예제 모음을 제공하고, 테스트를 시작하기 전에 어느 정도를 합격선으로 볼 것인지에 대한 기준을 정해야 한다. 기준을 통과한다면 거기서 멈추고 통과하지 못한다면 한 등급 위 모델로 올리거나 해당 작업에 더 적합한 강점을 가진 모델을 시도한다. 너무 단순해서 의구심이 들 수도 있겠지만, 필자를 포함한 많은 사람이 이러한 제품을 사용하는 방식을 반대 방향으로 뒤집은 것이라고 보면 된다. 사람은 무엇을 잃을지 모른다는 두려움으로 인해 가장 큰 모델부터 사용하기 시작하지만 기업은 낮은 단계에서 시작하고, 더 높은 지능에 비용을 지불하기 전에 그 타당성에 대한 증거를 요구해야 한다. 물론 예외도 있다. 자율 코딩, 복잡한 연구, 중대한 추론과 같은 까다로운 작업에서는 처음부터 프론티어 모델을 사용하는 것이 시간을 절약하는 방법일 수도 있다. 그러나 이 경우에도 목표는 먼저 품질의 기준선을 정한 다음 더 값싼 모델이 그 기준을 충족할 수 있는지 테스트하는 데 두어야 한다. 즉 “어떤 모델이 가장 좋은가?”가 아니라 “이 작업을 위한 기준을 안정적으로 충족하는 가장 값싼 모델은 무엇인가?”로 질문을 바꾸는 것이다. 많은 워크로드에서는 벤치마크 점수가 몇 점 더 높은 것보다 비용 절감이 훨씬 더 중요하다. 필자가 2023년에도 주장했듯이 AI에 대한 과장된 이야기에 현혹되는 것은 누구에게도 도움이 되지 않는다. 이번 주 X에서 화제가 된 벤치마크 스크린샷에 따라 모델 전략이 좌우된다면 그것은 전략이 아니다. 적어도 실행 가능한 전략은 아니다. 모델을 선택하고, 잡음은 무시해야 한다. 물론 그 잡음이 중요한 신호를 시사할 때는 예외다. 상위 모델이 빛을 발하는 순간 프론티어 영역의 발전이 항상 점진적으로 진행되지는 않는 만큼 업그레이드를 고려할 만한 상황도 있다. 대표적인 예가 코딩이다. 코드의 다음 몇 줄을 제안하는 모델과, 리포지토리를 분석하고 변경을 계획하고 툴을 사용하고 테스트를 실행하고 스스로의 실수를 찾으면서 장기간에 걸쳐 작업할 수 있는 모델 사이에는 큰 차이가 있다. 자동 완성 경험이 조금 더 좋아지는 정도가 아니라 개발 워크플로우를 재편할 수 있을 정도의 차이다. 18개월 전에 나온 모델을 기반으로 표준화한 다음 성공했다고 선언해서는 안 되는 이유가 이것이다. 경우에 따라, 특히 소프트웨어 개발을 비롯한 에이전틱 작업에서는 더 좋은 모델을 사용할 때 생산성 향상이 빠르게 누적될 수 있다. 특정 범위 작업의 50%가 아닌 80%를 안정적으로 완료하는 모델은 인간과 기계의 역할 분담 방식을 완전히 새롭게 재설계해야 할 명확한 근거가 될 수 있다. 그러나 업그레이드에는 비용이 든다. 지시를 해석하고 툴을 호출하고 컨텍스트를 관리하고 요청을 거부하고 실패하는 방식은 모델마다 다르다. 한 모델에 맞게 조정된 프롬프트와 스캐폴딩을 다른 모델로 옮기면 제대로 작동하지 않을 수 있다. 또는 비용이 폭발적으로 증가할 수도 있다. 실제로 오라클에 있는 필자의 한 동료는 이번 주에 GPT 5.5에서 했던 것과 같은 작업을 GPT 5.6에서 실행한 결과 비용이 훨씬 더 많이 들었다고 한다. 사소한 API 변경이라 해도 재검증과 그에 따른 영향은 사소하지 않다. 결과적으로 기업은 두 가지 나쁜 선택지 사이에 놓이게 된다. 가만히 있다가 유의미한 발전을 놓치거나, 새 모델이 출시될 때마다 쫓아다니며 막연한 희망으로 프로덕션 시스템 테스트를 반복하는 것이다. 그렇다면 어떻게 해야 할까? 모델에 대한 베팅은 그만 그 질문에 대한 답은 LLM에 베팅하지 말고 해야 할 작업에 베팅하라는 것이다. 어떤 모델이 가장 빠른지를 따지지 말고 개선하고자 하는 작업이 무엇인지를 파악하라. 좋은 결과란 무엇인가? 그 워크플로우에서 감당할 수 있는 지연과 비용은 어느 정도인가? 사람이 개입하기 전까지 얼만큼의 오작동을 감내할 수 있는가? 이러한 질문에 대한 답을 찾으면 모델 선택의 불확실성이 줄어든다. 어려운 코드 마이그레이션 작업이라면 GPT-5.6 솔 또는 클로드 소넷 5를 사용할 만한 타당성이 있을 것이다. 반복적인 분류 작업이라면 루나 또는 다른 소형 모델로도 가능할 수 있다. 규제 대상 워크플로우라면 특정 데이터 제어 기능을 제공하는 모델이나 배포 옵션이 필요할 수 있다. 경우에 따라, 예를 들면 지금 이 글을 쓰는 작업에서는 LLM이 아예 적절한 모델이 아닐 수도 있다. (AI 업체에는 미안한 말이지만, 대신 필자가 저지른 실수를 두고 AI 업체를 탓할 일은 없다.) 이 부분에서 평가가 기업 AI 전략의 핵심이 된다. 대부분의 기업에서 문제는 AI 품질이 아니라 측정에 있다. 즉, 유의미한 유일한 리더보드는 실제 회사의 작업을 바탕으로 구축한 자체 평가 체계다. 새 모델이 실질적으로 품질을 개선하는가? 그렇다면 사용하라. 비용이나 지연을 줄여주는가? 이것 역시 도입할 타당성을 제공한다. 재검증에 따르는 비용과 노력을 감당할 가치가 있는 개선을 제공하는가? 그렇다면 계속 진행하면 된다. 모델 출시에 지나치게 얽매이지 않기 모델은 중요하지만 AI의 성공을 좌우하는 것은 결국 회사의 데이터, 회사의 워크플로우, 회사의 통합 환경임을 항상 기억해야 한다. 이것이 화려한 AI 뒤의 재미없는 현실이다. 검색, 메모리, 거버넌스, 데이터 품질, 관찰가능성, 피드백 루프는 새 모델 출시만큼 흥미롭지는 않지만 이러한 요소야말로 실제 AI를 작동하게 하는 요소들이다. 다시 말하지만, 새로운 것을 고려할 시점이 될 때 상기해야 할 원칙은 평가 기준을 안정적으로 통과하는 가장 값싼 모델을 기본 선택지로 삼는다는 것이다. 측정을 통해 추가 비용을 지불할 가치가 입증되는 경우에 한해 어려운 작업을 더 고성능 모델로 넘겨야 한다. 여기서 팁은 시스템이 특정 프롬프트에 가장 적합한 모델에 알아서 연결하도록 하고 직원에게는 이 과정을 보이지 않도록 하는 것이다. 데이터 변환 업체 dbt 랩스(dbt Labs)의 존 루이스는 “최선의 모델은 ‘자동(Auto)’이다. 여기에 반대하는 의견은 듣지 않겠다”고 말했다. 오픈AI도 자체 마이그레이션 가이드 에서 대표적인 작업에 대해 모델을 테스트하되 모든 설정을 무조건 최대로 높이기보다는 낮은 추론 수준도 시험해볼 것을 권장한다. 개인적으로는 앞으로도 계속 최신, 최고 옵션을 선택할 것 같다. 칼럼 쓰는 작업에는 공식적인 평가 체계도 없고 어차피 추가로 드는 비용도 이미 내고 있는 구독료 정도가 전부이기 때문에다. 그러나 기업에는 그런 여유가 없다. dl-itworldkorea@foundryco.com",
-      "source_id": "itworld-korea",
-      "source_family": "itworld",
-      "source_name": "ITWorld Korea",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 5
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools",
-        "automation"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 5
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "코딩",
-          "출시",
-          "API",
-          "프롬프트"
-        ],
-        "deep": [
-          "API",
-          "성능",
-          "벤치마크",
-          "연구",
-          "모델"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 5,
-        "explanatory_depth": 5,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 18,
       "recent_publisher": false
     },
     {
@@ -1908,7 +1611,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "ebb99c6171b9",
@@ -1967,7 +1670,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "e3da40c8fb23",
@@ -2330,7 +2033,7 @@
         "freshness": 3
       },
       "lead_score": 13,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "7e7a522206d4",
@@ -2451,7 +2154,7 @@
         "freshness": 3
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "268e6f2a79ee",
@@ -2934,6 +2637,249 @@
       "recent_publisher": false
     },
     {
+      "id": "85044769b233",
+      "title": "일자리에 무슨 일이 벌어지고 있나? AI 과대광고와 현실 구분하기",
+      "normalized_title": "일자리에 무슨 일이 벌어지고 있나 ai 과대광고와 현실 구분하기",
+      "url": "https://news.hada.io/topic?id=31837",
+      "published_at": "2026-07-26T19:35:32+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "일자리",
+          "AI"
+        ],
+        "reader_impact": [
+          "일자리"
+        ],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
+    },
+    {
+      "id": "98ff8c742f73",
+      "title": "Show GN: 엄랭으로 틱택토 AI를 만들어 봤습니다.",
+      "normalized_title": "show gn 엄랭으로 틱택토 ai를 만들어 봤습니다",
+      "url": "https://news.hada.io/topic?id=31827",
+      "published_at": "2026-07-26T11:39:14+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "5afacd633140",
+      "title": "젠슨황의 Open Weights and American AI Leadership에 담긴 의미",
+      "normalized_title": "젠슨황의 open weights and american ai leadership에 담긴 의미",
+      "url": "https://news.hada.io/topic?id=31824",
+      "published_at": "2026-07-26T07:35:10+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "c3330f793a14",
+      "title": "엔비디아, LLM 배포 가속 '모델익스프레스' 발표...\"서버 대기 8분에서 1분대로 단축\"",
+      "normalized_title": "엔비디아 llm 배포 가속 모델익스프레스 발표 서버 대기 8분에서 1분대로 단축",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213179",
+      "published_at": "2026-07-26T03:19:54+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 8,
+      "recent_publisher": false
+    },
+    {
       "id": "850233a1af33",
       "title": "Google basically confirms the Pixel 11 is getting a price hike",
       "normalized_title": "google basically confirms the pixel 11 is getting a price hike",
@@ -3000,208 +2946,34 @@
       "selection_reason": "핵심뉴스 후보 4 · 점수 11"
     },
     {
-      "id": "a8b32afd62e6",
-      "title": "Claude Opus 5, Artificial Analysis 지능 리더보드 1위",
-      "normalized_title": "claude opus 5 artificial analysis 지능 리더보드 1위",
-      "url": "https://news.hada.io/topic?id=31807",
-      "published_at": "2026-07-25T16:34:50+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "2bcdca4ae352",
-      "title": "Chrome이 Gemini 팝업용 전역 단축키를 무단 등록",
-      "normalized_title": "chrome이 gemini 팝업용 전역 단축키를 무단 등록",
-      "url": "https://news.hada.io/topic?id=31806",
-      "published_at": "2026-07-25T10:01:01+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Chrome"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "0b34c2f25f87",
-      "title": "Show GN: 에이전트의 토큰낭비를 잡는 CLI를 만들었습니다! (공개 트레이스 6,780개)",
-      "normalized_title": "show gn 에이전트의 토큰낭비를 잡는 cli를 만들었습니다 공개 트레이스 6 780개",
-      "url": "https://news.hada.io/topic?id=31802",
-      "published_at": "2026-07-25T06:13:37+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "774a111bccd2",
-      "title": "엔비디아·MS·메타 \"오픈소스 막지 마라\"...미국 정부에 공동 서한",
-      "normalized_title": "엔비디아 ms 메타 오픈소스 막지 마라 미국 정부에 공동 서한",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213165",
-      "published_at": "2026-07-25T01:08:43+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
+      "id": "9295ede08beb",
+      "title": "BGP ORIGIN attribute manipulation and its impact on the Internet",
+      "normalized_title": "bgp origin attribute manipulation and its impact on the internet",
+      "url": "https://blog.cloudflare.com/bgp-origin-attribute",
+      "published_at": "2026-07-24T17:25:28+00:00",
+      "summary": "By doing in-depth testing, we found nearly 70% of BGP paths experience ORIGIN attribute rewrites by transit providers seeking traffic advantages. We examine the global impact of this practice and argue for deprecating ORIGIN in route selection.",
+      "source_id": "cloudflare-blog",
+      "source_family": "cloudflare-blog",
+      "source_name": "Cloudflare Blog",
+      "group": "official",
       "source_weight": 4,
       "lane_bias": {
-        "broad": 4
+        "practical": 1,
+        "deep": 3
       },
       "requires_manual_review": true,
       "score": 7,
       "score_reasons": [
         "출처 가중치 4",
-        "48시간 이내"
+        "공식 출처",
+        "7일 이내"
       ],
       "lane_scores": {
-        "broad": 4,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
-        "deep": 0
+        "deep": 3
       },
       "topic_tags": [],
       "unknown_publication_date": false,
@@ -3209,197 +2981,11 @@
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "오픈소스"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 8,
-      "recent_publisher": false
-    },
-    {
-      "id": "b6ca0ef15716",
-      "title": "앤트로픽, '클로드 오퍼스 5' 출시...\"페이블 5 성능에 가격은 절반\"",
-      "normalized_title": "앤트로픽 클로드 오퍼스 5 출시 페이블 5 성능에 가격은 절반",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213161",
-      "published_at": "2026-07-25T00:24:09+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "가격"
-        ],
-        "reader_impact": [
-          "가격"
-        ],
-        "reader_consequence": [],
-        "practical": [
-          "출시"
-        ],
-        "deep": [
-          "성능"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "f8c51b3fda47",
-      "title": "Substack의 AI 투명성 도구를 둘러싼 작가들의 반응",
-      "normalized_title": "substack의 ai 투명성 도구를 둘러싼 작가들의 반응",
-      "url": "https://news.hada.io/topic?id=31797",
-      "published_at": "2026-07-24T23:30:00+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "도구"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "beacb9c7e096",
-      "title": "AI 투자 실패로 Oracle, 직원 2만 1,000명 해고",
-      "normalized_title": "ai 투자 실패로 oracle 직원 2만 1 000명 해고",
-      "url": "https://news.hada.io/topic?id=31796",
-      "published_at": "2026-07-24T23:28:18+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [],
@@ -3408,11 +2994,11 @@
       "lead_score_breakdown": {
         "reader_relevance": 0,
         "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
+        "explanatory_depth": 3,
+        "evidence": 5,
+        "freshness": 3
       },
-      "lead_score": 10,
+      "lead_score": 12,
       "recent_publisher": false
     },
     {
@@ -4129,7 +3715,7 @@
         "freshness": 1
       },
       "lead_score": 12,
-      "recent_publisher": true
+      "recent_publisher": false
     },
     {
       "id": "fae7eebfbe40",
@@ -4373,11 +3959,11 @@
       "recent_publisher": false
     },
     {
-      "id": "c10c4b822ae4",
-      "title": "IRGC, 바레인의 Amazon 데이터 센터를 파괴했다고 주장",
-      "normalized_title": "irgc 바레인의 amazon 데이터 센터를 파괴했다고 주장",
-      "url": "https://news.hada.io/topic?id=31809",
-      "published_at": "2026-07-25T20:35:21+00:00",
+      "id": "b7d147110d24",
+      "title": "Stripe, OpenRouter 인수 협상 착수",
+      "normalized_title": "stripe openrouter 인수 협상 착수",
+      "url": "https://news.hada.io/topic?id=31838",
+      "published_at": "2026-07-26T20:51:12+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4428,20 +4014,20 @@
       "recent_publisher": false
     },
     {
-      "id": "b29647af0073",
-      "title": "Postgres LISTEN/NOTIFY는 실제로 확장 가능함",
-      "normalized_title": "postgres listen notify는 실제로 확장 가능함",
-      "url": "https://news.hada.io/topic?id=31808",
-      "published_at": "2026-07-25T18:34:47+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
+      "id": "e1fc916d10d9",
+      "title": "Apple is banking on privacy to set its smart glasses apart",
+      "normalized_title": "apple is banking on privacy to set its smart glasses apart",
+      "url": "https://www.theverge.com/tech/971101/apple-smart-glasses-privacy",
+      "published_at": "2026-07-26T19:36:38+00:00",
+      "summary": "According to Mark Gurman, Apple is planning to reveal its first smart glasses at WWDC next June, with an expectation that they'll launch by the end of 2027. Part of the hold-up may be around the company's efforts to get its privacy features and messaging in order. Smart glasses in general, and Meta's in particular, […]",
+      "source_id": "the-verge",
+      "source_family": "verge",
+      "source_name": "The Verge",
+      "group": "general_editorial",
       "source_weight": 3,
       "lane_bias": {
-        "practical": 1,
-        "deep": 1
+        "broad": 2,
+        "practical": 1
       },
       "requires_manual_review": true,
       "score": 6,
@@ -4450,164 +4036,50 @@
         "48시간 이내"
       ],
       "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
+        "broad": 3,
+        "reader_impact": 1,
         "reader_consequence": 0,
         "practical": 1,
-        "deep": 2
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": [
-          "Postgres"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "e3ec6755eba4",
-      "title": "Show GN: 캐치마인드 좋아하세요?",
-      "normalized_title": "show gn 캐치마인드 좋아하세요",
-      "url": "https://news.hada.io/topic?id=31803",
-      "published_at": "2026-07-25T06:24:27+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
         "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "b3b4aa0e16d5",
-      "title": "인도 정부, GitHub에 Bluetooth 채팅 앱 Bitchat 삭제 명령",
-      "normalized_title": "인도 정부 github에 bluetooth 채팅 앱 bitchat 삭제 명령",
-      "url": "https://news.hada.io/topic?id=31800",
-      "published_at": "2026-07-25T04:33:19+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 2,
-        "deep": 1
       },
       "topic_tags": [
-        "developer_tools"
+        "privacy"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 1,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
         "broad": [
-          "앱"
+          "privacy"
         ],
-        "reader_impact": [],
-        "reader_consequence": [
-          "삭제"
+        "reader_impact": [
+          "privacy"
         ],
-        "practical": [
-          "GitHub"
-        ],
+        "reader_consequence": [],
+        "practical": [],
         "deep": []
       },
       "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 0,
         "evidence": 3,
         "freshness": 5
       },
-      "lead_score": 11,
+      "lead_score": 10,
       "recent_publisher": false
     },
     {
-      "id": "a4f6a43a796d",
-      "title": "databasement - 웹UI 기반 셀프호스팅 DB 백업 관리자",
-      "normalized_title": "databasement 웹ui 기반 셀프호스팅 db 백업 관리자",
-      "url": "https://news.hada.io/topic?id=31799",
-      "published_at": "2026-07-25T00:31:02+00:00",
+      "id": "5823130f4444",
+      "title": "현대 하드웨어 시대에 마이크로커널을 다시 검토해야 할지도 모름",
+      "normalized_title": "현대 하드웨어 시대에 마이크로커널을 다시 검토해야 할지도 모름",
+      "url": "https://news.hada.io/topic?id=31836",
+      "published_at": "2026-07-26T19:01:41+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -4629,7 +4101,7 @@
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
-        "deep": 2
+        "deep": 1
       },
       "topic_tags": [],
       "unknown_publication_date": false,
@@ -4638,194 +4110,656 @@
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 0,
-        "deep": 1
+        "deep": 0
       },
       "raw_lane_matches": {
         "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "07c59d001abc",
+      "title": "The US is charging an American citizen for wiping his phone at the border",
+      "normalized_title": "the us is charging an american citizen for wiping his phone at the border",
+      "url": "https://www.theverge.com/policy/971097/us-charging-american-citizen-wiping-phone-duress-password",
+      "published_at": "2026-07-26T18:45:50+00:00",
+      "summary": "The government is prosecuting US citizen Sam Tunick for allegedly providing authorities with a \"duress password\" that wiped his phone when they tried to seize it at Atlanta's Hartsfield-Jackson airport on January 24th, 2025. Federal agents detained Tunick at the airport, allegedly questioning him about child exploitation images. However, a motion filed by Tunick's lawyers […]",
+      "source_id": "the-verge",
+      "source_family": "verge",
+      "source_name": "The Verge",
+      "group": "general_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "broad": 2,
+        "practical": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 0,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 9,
+      "recent_publisher": false
+    },
+    {
+      "id": "7b95597d973e",
+      "title": "낯선 변화를 마주하며: Fly.io의 Sprites 전환",
+      "normalized_title": "낯선 변화를 마주하며 fly io의 sprites 전환",
+      "url": "https://news.hada.io/topic?id=31835",
+      "published_at": "2026-07-26T18:43:01+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "2a716b65f616",
+      "title": "Brolly - 날씨 예보를 평문으로 보여주는 사이트",
+      "normalized_title": "brolly 날씨 예보를 평문으로 보여주는 사이트",
+      "url": "https://news.hada.io/topic?id=31834",
+      "published_at": "2026-07-26T18:40:01+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "4629b52b90ba",
+      "title": "미국과의 컴퓨팅 격차 관련 발언 유출 후 DeepSeek의 자금 조달 중단(녹취록) [PDF]",
+      "normalized_title": "미국과의 컴퓨팅 격차 관련 발언 유출 후 deepseek의 자금 조달 중단 녹취록 pdf",
+      "url": "https://news.hada.io/topic?id=31833",
+      "published_at": "2026-07-26T18:37:01+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 2,
+        "reader_consequence": 2,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 2,
+        "reader_consequence": 2,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "중단"
+        ],
+        "reader_impact": [
+          "중단",
+          "유출"
+        ],
+        "reader_consequence": [
+          "중단",
+          "유출"
+        ],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false
+    },
+    {
+      "id": "dd6ea71b9593",
+      "title": "8달러짜리 마이크로컨트롤러에서 2,890만 매개변수 LLM 실행하기",
+      "normalized_title": "8달러짜리 마이크로컨트롤러에서 2 890만 매개변수 llm 실행하기",
+      "url": "https://news.hada.io/topic?id=31832",
+      "published_at": "2026-07-26T15:32:54+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "003de7536f30",
+      "title": "Bitchat이 Radicle에 공개됨",
+      "normalized_title": "bitchat이 radicle에 공개됨",
+      "url": "https://news.hada.io/topic?id=31831",
+      "published_at": "2026-07-26T14:38:51+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "7755b2fe59f8",
+      "title": "Flock 감시 카메라를 무력화하는 자경단 운동의 확산",
+      "normalized_title": "flock 감시 카메라를 무력화하는 자경단 운동의 확산",
+      "url": "https://news.hada.io/topic?id=31830",
+      "published_at": "2026-07-26T14:35:51+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "8b21a44c7400",
+      "title": "Taylor Farms, 사이클로스포라 리콜 발표 연기 위해 백악관에 연락",
+      "normalized_title": "taylor farms 사이클로스포라 리콜 발표 연기 위해 백악관에 연락",
+      "url": "https://news.hada.io/topic?id=31826",
+      "published_at": "2026-07-26T11:33:06+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "b99a1410a10e",
+      "title": "메모리 안전성 절대주의자들",
+      "normalized_title": "메모리 안전성 절대주의자들",
+      "url": "https://news.hada.io/topic?id=31822",
+      "published_at": "2026-07-26T06:02:03+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "e2946c308e3f",
+      "title": "면접 후 연락이 끊겼나요?",
+      "normalized_title": "면접 후 연락이 끊겼나요",
+      "url": "https://news.hada.io/topic?id=31821",
+      "published_at": "2026-07-26T05:33:06+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
+      "id": "cb38ac956c36",
+      "title": "AI 모델 선택에 매몰되면 안 되는 이유",
+      "normalized_title": "ai 모델 선택에 매몰되면 안 되는 이유",
+      "url": "https://www.itworld.co.kr/article/4199733/ai-%eb%aa%a8%eb%8d%b8-%ec%84%a0%ed%83%9d%ec%97%90-%eb%a7%a4%eb%aa%b0%eb%90%98%eb%a9%b4-%ec%95%88-%eb%90%98%eb%8a%94-%ec%9d%b4%ec%9c%a0.html",
+      "published_at": "2026-07-24T00:42:54+00:00",
+      "summary": "지난 한 주 동안 매일 LLM 모델 선택 화면을 노려보면서 어떤 모델을 선택하는 것이 좋을지 고민했다. 아마 다른 많은 이들이 마찬가지일 것이다. 오픈AI가 GPT-5.6 솔(Sol), 테라, 루나를 출시했다. 솔은 최상위 모델이고 테라는 솔의 지능 대부분을 보다 저렴한 비용으로 제공하며, 루나는 거기서 한 단계 더 저렴한 모델이다. 앤트로픽은 6월 말 클로드 소넷 5를, 그 전달에는 오퍼스 4.8을 출시했고, 그 사이에 페이블 5도 내놨다. 한편 몇 달 전까지만 해도 모델 경쟁에서 앞서가는 듯했던 구글은 현재 기술 뉴스레터 운영자 게르겔리 오로즈의 비판을 받고 있다. 오로즈는 제미나이가 소프트웨어 개발 영역의 최상위권에서 밀려났고 주요 모델 출시 경쟁에서도 한참 뒤처졌다고 주장했다. 이 주장이 맞을 수도 있고, 얼마 뒤에 또 다시 틀렸음이 드러날 수도 있다. 솔직히 이제는 시장을 따라가기도 버겁다. 필자는 챗GPT와 클로드를 꾸준히 사용하지만 대부분의 경우 어떤 모델을 선택해야 하는지에 대한 명확한 생각은 없다. 필자는 가장 크고 가장 비싸 보이는 모델을 선택하는 경향이 있는데, 상대적으로 작은 모델을 선택할 때 감수해야 하는 불이익이 무엇인지조차 모르기 때문이다. “인스턴트(Instant)”라는 이름은 뭔가 위험하게 느껴지는 반면 “씽킹(Thinking)”은 어쩐지 비싸고 강력한 모델처럼 느껴진다. 링크드인에서 간단히 설문조사 를 해보니 모델 선택에 대해 고민하기는 다른 이들도 마찬가지였다. 아마 기업도 대부분 다르지 않을 것이다. 모델의 유통기한 다만, 모델에 대한 이런 고민이 실제로 중요한지에 대해 생각해볼 필요는 있다. 모델은 상하지 않는다. 즉, 기업이 3개월 전에 프로덕션에 구축한 모델은 지금도 처음 선택했을 때와 똑같은 성능을 발휘한다. 여기서 일반적으로 “구식”이라는 말은 그보다 더 좋은 새로운 것이 나왔다는 의미지, 배포한 모델이 보험 청구 요약 작업이나 고객지원 티켓 분류 작업을 갑자기 못하게 됐다는 의미가 아니다. (다시 말해, 일단 제대로 동작하는 시스템을 구축했다면 “오퍼스 200.2가 더 좋을 것 같다”는 생각은 성능이 아닌 FOMO의 문제다.) 게다가 대부분의 기업 워크로드는 프론티어 영역에 해당되지도 않는다. 추출, 요약, 분류, 문서 비교, 고객 서비스 지원 등의 작업은 많은 경우 비교적 작고 값싼 모델로도 충분하다. GPT-5.6 모델 3총사에 대한 오픈AI의 홍보도 단순히 솔이 더 뛰어나다는 것이 아니라 테라와 루나가 지능, 지연, 비용 면에서 다양하게 조합할 수 있다는 것이다. 오픈AI에 따르면 가장 저렴한 등급의 모델인 루나는 이전 세대 모델의 최고 성능에 근접한 성능을 절반 이하의 비용(추정)으로 제공한다. 물론 현실적인 문제는 어디서 시작해야 하는지다. 기업이 실제 작업을 시작하기 전에 모든 모델, 모든 추론 설정, 모든 가격 등급을 테스트할 수는 없다. 필자는 다음과 같이 조언하고 싶다. (정작 스스로는 그렇게 하지 못하지만, 변명하자면 필자는 기업 전략을 수립하는 입장이 아니고 비용에 대해서도 기업만큼 민감하지는 않다.) 먼저 작업이 가능하다고 판단되는 가장 저렴하면서 신뢰할 만한 모델부터 시작한다. 이 모델에 실제 환경을 대표하는 예제 모음을 제공하고, 테스트를 시작하기 전에 어느 정도를 합격선으로 볼 것인지에 대한 기준을 정해야 한다. 기준을 통과한다면 거기서 멈추고 통과하지 못한다면 한 등급 위 모델로 올리거나 해당 작업에 더 적합한 강점을 가진 모델을 시도한다. 너무 단순해서 의구심이 들 수도 있겠지만, 필자를 포함한 많은 사람이 이러한 제품을 사용하는 방식을 반대 방향으로 뒤집은 것이라고 보면 된다. 사람은 무엇을 잃을지 모른다는 두려움으로 인해 가장 큰 모델부터 사용하기 시작하지만 기업은 낮은 단계에서 시작하고, 더 높은 지능에 비용을 지불하기 전에 그 타당성에 대한 증거를 요구해야 한다. 물론 예외도 있다. 자율 코딩, 복잡한 연구, 중대한 추론과 같은 까다로운 작업에서는 처음부터 프론티어 모델을 사용하는 것이 시간을 절약하는 방법일 수도 있다. 그러나 이 경우에도 목표는 먼저 품질의 기준선을 정한 다음 더 값싼 모델이 그 기준을 충족할 수 있는지 테스트하는 데 두어야 한다. 즉 “어떤 모델이 가장 좋은가?”가 아니라 “이 작업을 위한 기준을 안정적으로 충족하는 가장 값싼 모델은 무엇인가?”로 질문을 바꾸는 것이다. 많은 워크로드에서는 벤치마크 점수가 몇 점 더 높은 것보다 비용 절감이 훨씬 더 중요하다. 필자가 2023년에도 주장했듯이 AI에 대한 과장된 이야기에 현혹되는 것은 누구에게도 도움이 되지 않는다. 이번 주 X에서 화제가 된 벤치마크 스크린샷에 따라 모델 전략이 좌우된다면 그것은 전략이 아니다. 적어도 실행 가능한 전략은 아니다. 모델을 선택하고, 잡음은 무시해야 한다. 물론 그 잡음이 중요한 신호를 시사할 때는 예외다. 상위 모델이 빛을 발하는 순간 프론티어 영역의 발전이 항상 점진적으로 진행되지는 않는 만큼 업그레이드를 고려할 만한 상황도 있다. 대표적인 예가 코딩이다. 코드의 다음 몇 줄을 제안하는 모델과, 리포지토리를 분석하고 변경을 계획하고 툴을 사용하고 테스트를 실행하고 스스로의 실수를 찾으면서 장기간에 걸쳐 작업할 수 있는 모델 사이에는 큰 차이가 있다. 자동 완성 경험이 조금 더 좋아지는 정도가 아니라 개발 워크플로우를 재편할 수 있을 정도의 차이다. 18개월 전에 나온 모델을 기반으로 표준화한 다음 성공했다고 선언해서는 안 되는 이유가 이것이다. 경우에 따라, 특히 소프트웨어 개발을 비롯한 에이전틱 작업에서는 더 좋은 모델을 사용할 때 생산성 향상이 빠르게 누적될 수 있다. 특정 범위 작업의 50%가 아닌 80%를 안정적으로 완료하는 모델은 인간과 기계의 역할 분담 방식을 완전히 새롭게 재설계해야 할 명확한 근거가 될 수 있다. 그러나 업그레이드에는 비용이 든다. 지시를 해석하고 툴을 호출하고 컨텍스트를 관리하고 요청을 거부하고 실패하는 방식은 모델마다 다르다. 한 모델에 맞게 조정된 프롬프트와 스캐폴딩을 다른 모델로 옮기면 제대로 작동하지 않을 수 있다. 또는 비용이 폭발적으로 증가할 수도 있다. 실제로 오라클에 있는 필자의 한 동료는 이번 주에 GPT 5.5에서 했던 것과 같은 작업을 GPT 5.6에서 실행한 결과 비용이 훨씬 더 많이 들었다고 한다. 사소한 API 변경이라 해도 재검증과 그에 따른 영향은 사소하지 않다. 결과적으로 기업은 두 가지 나쁜 선택지 사이에 놓이게 된다. 가만히 있다가 유의미한 발전을 놓치거나, 새 모델이 출시될 때마다 쫓아다니며 막연한 희망으로 프로덕션 시스템 테스트를 반복하는 것이다. 그렇다면 어떻게 해야 할까? 모델에 대한 베팅은 그만 그 질문에 대한 답은 LLM에 베팅하지 말고 해야 할 작업에 베팅하라는 것이다. 어떤 모델이 가장 빠른지를 따지지 말고 개선하고자 하는 작업이 무엇인지를 파악하라. 좋은 결과란 무엇인가? 그 워크플로우에서 감당할 수 있는 지연과 비용은 어느 정도인가? 사람이 개입하기 전까지 얼만큼의 오작동을 감내할 수 있는가? 이러한 질문에 대한 답을 찾으면 모델 선택의 불확실성이 줄어든다. 어려운 코드 마이그레이션 작업이라면 GPT-5.6 솔 또는 클로드 소넷 5를 사용할 만한 타당성이 있을 것이다. 반복적인 분류 작업이라면 루나 또는 다른 소형 모델로도 가능할 수 있다. 규제 대상 워크플로우라면 특정 데이터 제어 기능을 제공하는 모델이나 배포 옵션이 필요할 수 있다. 경우에 따라, 예를 들면 지금 이 글을 쓰는 작업에서는 LLM이 아예 적절한 모델이 아닐 수도 있다. (AI 업체에는 미안한 말이지만, 대신 필자가 저지른 실수를 두고 AI 업체를 탓할 일은 없다.) 이 부분에서 평가가 기업 AI 전략의 핵심이 된다. 대부분의 기업에서 문제는 AI 품질이 아니라 측정에 있다. 즉, 유의미한 유일한 리더보드는 실제 회사의 작업을 바탕으로 구축한 자체 평가 체계다. 새 모델이 실질적으로 품질을 개선하는가? 그렇다면 사용하라. 비용이나 지연을 줄여주는가? 이것 역시 도입할 타당성을 제공한다. 재검증에 따르는 비용과 노력을 감당할 가치가 있는 개선을 제공하는가? 그렇다면 계속 진행하면 된다. 모델 출시에 지나치게 얽매이지 않기 모델은 중요하지만 AI의 성공을 좌우하는 것은 결국 회사의 데이터, 회사의 워크플로우, 회사의 통합 환경임을 항상 기억해야 한다. 이것이 화려한 AI 뒤의 재미없는 현실이다. 검색, 메모리, 거버넌스, 데이터 품질, 관찰가능성, 피드백 루프는 새 모델 출시만큼 흥미롭지는 않지만 이러한 요소야말로 실제 AI를 작동하게 하는 요소들이다. 다시 말하지만, 새로운 것을 고려할 시점이 될 때 상기해야 할 원칙은 평가 기준을 안정적으로 통과하는 가장 값싼 모델을 기본 선택지로 삼는다는 것이다. 측정을 통해 추가 비용을 지불할 가치가 입증되는 경우에 한해 어려운 작업을 더 고성능 모델로 넘겨야 한다. 여기서 팁은 시스템이 특정 프롬프트에 가장 적합한 모델에 알아서 연결하도록 하고 직원에게는 이 과정을 보이지 않도록 하는 것이다. 데이터 변환 업체 dbt 랩스(dbt Labs)의 존 루이스는 “최선의 모델은 ‘자동(Auto)’이다. 여기에 반대하는 의견은 듣지 않겠다”고 말했다. 오픈AI도 자체 마이그레이션 가이드 에서 대표적인 작업에 대해 모델을 테스트하되 모든 설정을 무조건 최대로 높이기보다는 낮은 추론 수준도 시험해볼 것을 권장한다. 개인적으로는 앞으로도 계속 최신, 최고 옵션을 선택할 것 같다. 칼럼 쓰는 작업에는 공식적인 평가 체계도 없고 어차피 추가로 드는 비용도 이미 내고 있는 구독료 정도가 전부이기 때문에다. 그러나 기업에는 그런 여유가 없다. dl-itworldkorea@foundryco.com",
+      "source_id": "itworld-korea",
+      "source_family": "itworld",
+      "source_name": "ITWorld Korea",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "broad": 2,
+        "practical": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 3,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai",
+        "developer_tools",
+        "automation"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 4,
+        "deep": 5
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "코딩",
+          "출시",
+          "API",
+          "프롬프트"
+        ],
         "deep": [
-          "DB"
+          "API",
+          "성능",
+          "벤치마크",
+          "연구",
+          "모델"
         ]
       },
       "lead_score_breakdown": {
         "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 2,
+        "actionability": 5,
+        "explanatory_depth": 5,
         "evidence": 3,
-        "freshness": 5
+        "freshness": 3
       },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "015ffebf6dd5",
-      "title": "Sony가 클래식 Walkman을 다시 출시할 수 없는 이유",
-      "normalized_title": "sony가 클래식 walkman을 다시 출시할 수 없는 이유",
-      "url": "https://news.hada.io/topic?id=31795",
-      "published_at": "2026-07-24T23:27:17+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "출시"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false
-    },
-    {
-      "id": "6297a4784110",
-      "title": "Buz – 최신 Zig와 1초 미만 증분 빌드를 지원하는 Bun 포크",
-      "normalized_title": "buz 최신 zig와 1초 미만 증분 빌드를 지원하는 bun 포크",
-      "url": "https://news.hada.io/topic?id=31794",
-      "published_at": "2026-07-24T23:24:45+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [
-          "지원"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false
-    },
-    {
-      "id": "c2f81bacc7ad",
-      "title": "Em 대시는 놀라운 문장부호다",
-      "normalized_title": "em 대시는 놀라운 문장부호다",
-      "url": "https://news.hada.io/topic?id=31792",
-      "published_at": "2026-07-24T23:18:37+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
+      "lead_score": 16,
       "recent_publisher": false
     },
     {
@@ -6606,8 +6540,8 @@
       },
       "lead_score": 12,
       "recent_publisher": false,
-      "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
+      "lead_rank": 3,
+      "selection_reason": "핵심뉴스 후보 3 · 점수 12"
     },
     {
       "id": "13dc5104dc60",
@@ -6667,11 +6601,11 @@
       "recent_publisher": false
     },
     {
-      "id": "603176217572",
-      "title": "블랙 필을 먹지 마라",
-      "normalized_title": "블랙 필을 먹지 마라",
-      "url": "https://news.hada.io/topic?id=31798",
-      "published_at": "2026-07-25T00:03:53+00:00",
+      "id": "32440b92fc09",
+      "title": "수학의 어두운 밤",
+      "normalized_title": "수학의 어두운 밤",
+      "url": "https://news.hada.io/topic?id=31839",
+      "published_at": "2026-07-26T21:34:56+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -7444,6 +7378,71 @@
       "selection_reason": "핵심뉴스 후보 1 · 점수 18"
     },
     {
+      "id": "85044769b233",
+      "title": "일자리에 무슨 일이 벌어지고 있나? AI 과대광고와 현실 구분하기",
+      "normalized_title": "일자리에 무슨 일이 벌어지고 있나 ai 과대광고와 현실 구분하기",
+      "url": "https://news.hada.io/topic?id=31837",
+      "published_at": "2026-07-26T19:35:32+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "일자리",
+          "AI"
+        ],
+        "reader_impact": [
+          "일자리"
+        ],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
+    },
+    {
       "id": "dd6f0f07f108",
       "title": "Google Credential Provider for Windows (GCPW) now supports FIDO2-compliant physical security keys as a second factor for authentication",
       "normalized_title": "google credential provider for windows gcpw now supports fido2 compliant physical security keys as a second factor for authentication",
@@ -7506,76 +7505,8 @@
       },
       "lead_score": 12,
       "recent_publisher": false,
-      "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
-    },
-    {
-      "id": "c0246f1dc3e5",
-      "title": "구글, AI 에이전트 '제미나이 스파크' 확대 출시...월 20달러 프로 요금제도 적용",
-      "normalized_title": "구글 ai 에이전트 제미나이 스파크 확대 출시 월 20달러 프로 요금제도 적용",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213166",
-      "published_at": "2026-07-25T06:13:39+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 6,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 2,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "요금",
-          "AI"
-        ],
-        "reader_impact": [
-          "요금"
-        ],
-        "reader_consequence": [
-          "확대"
-        ],
-        "practical": [
-          "출시"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false,
       "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
+      "selection_reason": "핵심뉴스 후보 3 · 점수 12"
     },
     {
       "id": "850233a1af33",
@@ -7642,6 +7573,74 @@
       "recent_publisher": false,
       "lead_rank": 4,
       "selection_reason": "핵심뉴스 후보 4 · 점수 11"
+    },
+    {
+      "id": "1fe8f2c16df1",
+      "title": "딥시크, 2차 투자 유치 돌연 중단...\"IPO 준비하며 AI 연구 집중\"",
+      "normalized_title": "딥시크 2차 투자 유치 돌연 중단 ipo 준비하며 ai 연구 집중",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213180",
+      "published_at": "2026-07-26T06:28:03+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 6,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "중단",
+          "AI"
+        ],
+        "reader_impact": [
+          "중단"
+        ],
+        "reader_consequence": [
+          "중단"
+        ],
+        "practical": [],
+        "deep": [
+          "연구"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 10"
     }
   ],
   "lead_shortlist": [
@@ -7726,6 +7725,71 @@
       "selection_reason": "핵심뉴스 후보 1 · 점수 18"
     },
     {
+      "id": "85044769b233",
+      "title": "일자리에 무슨 일이 벌어지고 있나? AI 과대광고와 현실 구분하기",
+      "normalized_title": "일자리에 무슨 일이 벌어지고 있나 ai 과대광고와 현실 구분하기",
+      "url": "https://news.hada.io/topic?id=31837",
+      "published_at": "2026-07-26T19:35:32+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "일자리",
+          "AI"
+        ],
+        "reader_impact": [
+          "일자리"
+        ],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
+    },
+    {
       "id": "dd6f0f07f108",
       "title": "Google Credential Provider for Windows (GCPW) now supports FIDO2-compliant physical security keys as a second factor for authentication",
       "normalized_title": "google credential provider for windows gcpw now supports fido2 compliant physical security keys as a second factor for authentication",
@@ -7788,76 +7852,8 @@
       },
       "lead_score": 12,
       "recent_publisher": false,
-      "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 12"
-    },
-    {
-      "id": "c0246f1dc3e5",
-      "title": "구글, AI 에이전트 '제미나이 스파크' 확대 출시...월 20달러 프로 요금제도 적용",
-      "normalized_title": "구글 ai 에이전트 제미나이 스파크 확대 출시 월 20달러 프로 요금제도 적용",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=213166",
-      "published_at": "2026-07-25T06:13:39+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 9,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 6,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 2,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "요금",
-          "AI"
-        ],
-        "reader_impact": [
-          "요금"
-        ],
-        "reader_consequence": [
-          "확대"
-        ],
-        "practical": [
-          "출시"
-        ],
-        "deep": []
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false,
       "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 11"
+      "selection_reason": "핵심뉴스 후보 3 · 점수 12"
     },
     {
       "id": "850233a1af33",
@@ -7924,6 +7920,74 @@
       "recent_publisher": false,
       "lead_rank": 4,
       "selection_reason": "핵심뉴스 후보 4 · 점수 11"
+    },
+    {
+      "id": "1fe8f2c16df1",
+      "title": "딥시크, 2차 투자 유치 돌연 중단...\"IPO 준비하며 AI 연구 집중\"",
+      "normalized_title": "딥시크 2차 투자 유치 돌연 중단 ipo 준비하며 ai 연구 집중",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=213180",
+      "published_at": "2026-07-26T06:28:03+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 6,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "중단",
+          "AI"
+        ],
+        "reader_impact": [
+          "중단"
+        ],
+        "reader_consequence": [
+          "중단"
+        ],
+        "practical": [],
+        "deep": [
+          "연구"
+        ]
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "lead_rank": 5,
+      "selection_reason": "핵심뉴스 후보 5 · 점수 10"
     }
   ],
   "errors": [
