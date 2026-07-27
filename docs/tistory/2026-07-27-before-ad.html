@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 27 (월) · 약 10분</p>
+    <p class="digest-lead">정적 자바스크립트 파일인데도 응답에 Set-Cookie가 붙어 캐시가 비어 버리는 경우가 있다. 원본 애플리케이션을 당장 고칠 수 없다면, 요청이 들어오는 순간의 캐시 규칙만으로는 해결할 수 없다. Cloudflare가 공개한 Cache Response Rules는 원본 서버가 응답한 뒤, 그 응답을 캐시에 쓰기 직전에 Cache-Control과 일부 헤더를 조정한다. 다만 이 기능은 무엇이 캐시 키가 될지를 다시 정하는 도구가 아니며, 로그인·개인화 응답까지 넓게 건드리면 오히려 위험해진다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-27/클라우드플레어-응답캐시규칙-대표.webp" alt="요청 규칙, 원본 응답, 응답 캐시 규칙, 캐시 저장 사이의 응답 단계 제어 지점을 보여 주는 도식" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Cloudflare Blog · 2026. 7. 23</p>
+    <h3>Cloudflare, 원본 응답 뒤 캐시 설정을 바꾸는 Cache Response Rules 공개</h3>
+    <p class="digest-blurb">Cloudflare는 원본 서버의 응답을 받은 뒤 캐시에 저장하기 전 Cache-Control 지시문을 고치고, 캐시 태그를 관리하거나 Set-Cookie·ETag·Last-Modified 헤더를 제거할 수 있는 Cache Response Rules를 소개했다. 요청 단계 Cache Rules가 캐시 키와 조회 여부를 정하는 것과 달리, 새 규칙은 응답을 본 뒤 캐시 방식과 일부 저장 여부를 조정한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 바뀌었나: 응답을 본 뒤에 캐시를 조정하는 단계</h4><p>Cloudflare의 Cache Response Rules는 원본 서버가 응답한 뒤, 그 결과가 Cloudflare 캐시에 기록되기 전에 실행된다. 여기서 Cache-Control 지시문을 바꾸고, purge by tag에 쓰는 캐시 태그를 관리하며, Set-Cookie·ETag·Last-Modified 같은 헤더를 제거할 수 있다. 원본 코드나 로드밸런서 설정을 고치기 어려운 조직에는 유용한 위치다. 예를 들어 정적 파일에 습관적으로 세션 쿠키가 붙어 캐시 대상에서 빠지는 문제를, 정적 경로에 한정해 응답 단계에서 다룰 수 있다.</p><div class="digest-table-wrap" role="region" aria-label="두 규칙은 실행 시점과 바꿀 수 있는 대상이 다르다" tabindex="0"><table class="digest-data-table"><caption>두 규칙은 실행 시점과 바꿀 수 있는 대상이 다르다</caption><thead><tr><th scope="col">구분</th><th scope="col">Cache Rules</th><th scope="col">Cache Response Rules</th></tr></thead><tbody><tr><td>실행 시점</td><td>원본에 가기 전 요청 단계</td><td>원본 응답을 받은 뒤 캐시 저장 전</td></tr><tr><td>주요 질문</td><td>조회할지, 어떤 키로 찾을지</td><td>응답을 보고 어떻게 저장·전달할지</td></tr><tr><td>대표 작업</td><td>캐시 키·우회·TTL 설정</td><td>Cache-Control 조정·헤더 제거·태그 관리</td></tr><tr><td>할 수 없는 일</td><td>응답 헤더를 근거로 판단</td><td>이미 정해진 캐시 키를 다시 설계</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-27/요청규칙-응답규칙-비교.webp" alt="요청 단계와 응답 단계가 각각 캐시 키와 응답 헤더를 다루는 범위를 비교한 도식" width="1200" height="630" loading="lazy"><figcaption>요청 단계는 아직 응답을 보지 못한다. 응답 단계는 원본이 보낸 헤더를 읽을 수 있지만, 이미 정해진 캐시 키를 되돌릴 수는 없다.</figcaption></figure><h4 class="digest-subheading">왜 기존 Cache Rules만으로는 해결되지 않았나</h4><p>캐시에는 서로 다른 질문이 있다. 요청이 들어왔을 때는 URL, 확장자, 요청 헤더처럼 이미 가진 정보로 캐시를 조회할지와 어떤 키를 쓸지 정한다. 하지만 Set-Cookie나 원본의 Cache-Control, ETag, Last-Modified는 원본이 답한 뒤에야 알 수 있다. 요청 단계에서 이 값을 근거로 규칙을 만들 수 없는 이유다. Cloudflare의 설명대로 응답 단계 규칙은 ‘무엇’을 캐시 키로 삼을지 바꾸지 못하며, 이미 캐시 조회가 불가능하다고 판정된 요청을 나중에 되살리는 도구도 아니다.</p><p>대신 응답 단계는 캐시가 응답을 받아들이는 방식에 마지막 조정을 할 수 있다. Cache Rule의 Edge TTL이 원본 응답과 충돌하는 경우에도 Cache Response Rule이 설정한 Cache-Control이 우선한다. 따라서 두 규칙을 같은 목적의 중복 설정으로 쌓기보다, 요청 단계에는 키·우회·기본 정책을 두고 응답 단계에는 원본 헤더에서 발견되는 예외를 두는 편이 읽기 쉽다.</p><h4 class="digest-subheading">Set-Cookie를 제거하기 전, 먼저 응답의 성격을 나눠야 한다</h4><p>Set-Cookie는 단순한 잡음이 아닐 수 있다. 로그인 상태, 장바구니, 지역·실험 분기처럼 방문자마다 달라지는 응답에 붙었다면 이를 제거하고 캐시하는 것은 다른 사람의 상태를 섞는 사고로 이어질 수 있다. 반대로 빌드 산출물인 CSS·JS·글꼴처럼 URL 버전이 고정되고 사용자별 내용이 전혀 없는 경로에 프레임워크 쿠키가 붙는 경우라면, 좁은 표현식으로 실험할 이유가 생긴다. 경로뿐 아니라 응답 상태와 Content-Type까지 함께 확인하는 습관이 필요하다.</p></div>
+  </div>
+</section>
+</article>

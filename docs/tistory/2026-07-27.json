@@ -1,0 +1,82 @@
+{
+  "title": "Cloudflare Cache Response Rules: 원본 응답 뒤 캐시를 고치는 법",
+  "title_candidates": [
+    "Cloudflare Cache Response Rules: 원본 응답 뒤 캐시를 고치는 법",
+    "Cloudflare, 원본 응답 뒤 캐시 설정을 바꾸는 Cache Response Rules 공개",
+    "Cloudflare가 원본 응답을 받은 뒤 캐시에 쓰기 전에 헤더와 캐시 지시문을 조정하는 Cache Response R…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-27",
+  "publish_date": "2026-07-27",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-27T09:00:00+09:00",
+  "tags": [
+    "Cloudflare",
+    "CDN 캐시",
+    "Cache Response Rules",
+    "Cache-Control",
+    "Set-Cookie",
+    "웹 성능"
+  ],
+  "meta_description": "정적 자바스크립트 파일인데도 응답에 Set-Cookie가 붙어 캐시가 비어 버리는 경우가 있다. 원본 애플리케이션을 당장 고칠 수 없다면, 요청이 들어오는 순간의 캐시 규칙만으로는 해결할 수 없다.… Cloudflare는 원본 서버의 응답을 받은 뒤 캐시에 저장하기 전 Cache-Co…",
+  "key_summary": [
+    "1. Cloudflare, 원본 응답 뒤 캐시 설정을 바꾸는 Cache Response Rules 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Cloudflare Cache Response Rules: 원본 응답 뒤 캐시를 고치는 법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-27.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-27.html",
+  "before_ad_html": "docs/tistory/2026-07-27-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-27-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-27-adfit.html",
+  "source_sha256": "92a6e84e3f43bf3a3f9bc160de02e4082a35c08f3fbab2877b5d59ea05a20910",
+  "html_sha256": "a5422d5c3098c920166350fa52dfaae53bf804924b73890ca66fede39e5e559c",
+  "adfit_sha256": "0e74cf26d777a4d54d60dc1ec2aa5de317f8062ad975b299d7379789d588b78e",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-27/클라우드플레어-응답캐시규칙-대표.webp",
+      "path": "docs/tistory/assets/2026-07-27/클라우드플레어-응답캐시규칙-대표.webp",
+      "original_url": "",
+      "alt": "요청 규칙, 원본 응답, 응답 캐시 규칙, 캐시 저장 사이의 응답 단계 제어 지점을 보여 주는 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-27/요청규칙-응답규칙-비교.webp",
+      "path": "docs/tistory/assets/2026-07-27/요청규칙-응답규칙-비교.webp",
+      "original_url": "",
+      "alt": "요청 단계와 응답 단계가 각각 캐시 키와 응답 헤더를 다루는 범위를 비교한 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-27/응답캐시규칙-검증순서.webp",
+      "path": "docs/tistory/assets/2026-07-27/응답캐시규칙-검증순서.webp",
+      "original_url": "",
+      "alt": "응답 헤더 확인부터 정적 경로 테스트, 캐시 상태 검증, 되돌리기까지 이어지는 안전한 적용 순서 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
