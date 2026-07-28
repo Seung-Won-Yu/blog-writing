@@ -174,6 +174,21 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("content_role: hook", contract)
         self.assertIn("content_role: explanation", contract)
 
+    def test_all_editorial_contracts_require_varied_cover_art_direction(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            GUIDE_CONTRACT,
+            SATURDAY_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("`art_direction`", contract)
+                self.assertIn("`composition_type`", contract)
+                self.assertIn("`palette_family`", contract)
+                self.assertIn("최근 7개 대표", contract)
+                self.assertIn("three_column_cards", contract)
+
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 

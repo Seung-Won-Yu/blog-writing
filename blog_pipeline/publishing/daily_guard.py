@@ -20,6 +20,7 @@ from .draft_identity import (
 )
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
 from .editorial_quality import (
+    COVER_VARIETY_POLICY_START,
     DEPTH_POLICIES,
     EDITORIAL_LENGTH_RULES,
     PUBLISH_GATE_START,
@@ -67,6 +68,18 @@ SCHEMA_EXCEPTIONS = (
     ValueError,
     OverflowError,
 )
+
+
+def _cover_style_signature(day):
+    visual = day.get("visual") if isinstance(day, dict) else {}
+    cover = visual.get("cover") if isinstance(visual, dict) else {}
+    if not isinstance(cover, dict):
+        return ()
+    signature = tuple(
+        str(cover.get(field) or "").strip().casefold()
+        for field in ("art_direction", "composition_type", "palette_family")
+    )
+    return signature if all(signature) else ()
 
 
 def canonical_url(value):
@@ -445,6 +458,7 @@ def find_recent_draft_duplicates(
         if isinstance(current_day.get("verification"), dict)
         else {}
     )
+    current_cover_signature = _cover_style_signature(current_day)
     if identity.content_type == "automation_case":
         from blog_pipeline.collection.collect_automation import (
             _automation_source_fingerprint,
@@ -496,6 +510,33 @@ def find_recent_draft_duplicates(
                 continue
         previous_news = previous.get("news")
         if not isinstance(previous_news, list):
+            continue
+        previous_cover_signature = _cover_style_signature(previous)
+        if (
+            current_date >= COVER_VARIETY_POLICY_START
+            and offset <= 7
+            and current_cover_signature
+            and current_cover_signature == previous_cover_signature
+        ):
+            current_item = next(
+                (item for item in current_news if isinstance(item, dict)), {}
+            )
+            previous_item = next(
+                (item for item in previous_news if isinstance(item, dict)), {}
+            )
+            duplicates.append(
+                {
+                    "current_index": 1,
+                    "current_title": str(current_item.get("title_kr") or ""),
+                    "previous_day": previous_day,
+                    "previous_draft_id": previous_draft_id,
+                    "previous_index": 1,
+                    "previous_title": str(previous_item.get("title_kr") or ""),
+                    "reason": "same_cover_style_signature",
+                    "match": " / ".join(current_cover_signature),
+                    "similarity": 1.0,
+                }
+            )
             continue
 
         if identity.content_type == "automation_case":

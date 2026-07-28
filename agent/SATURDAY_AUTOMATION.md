@@ -101,6 +101,8 @@
 
 생성 전 프롬프트는 `용도 → 실제 대상 → 구도 → 시각 스타일 → 색·조명 → 필수 물체 → 짧은 한국어 → 금지 요소` 순으로 작성합니다. 실제 버튼, 폴더, 메일, 문서, 전후 결과처럼 그 글만의 물체와 관계를 화면 중심 45~70%에 둡니다. 생성 직후 1초 안에 주제가 읽히는지, 캡션의 원인·결과와 같은 장면인지, 한국어가 정확한지, 모바일에서 핵심이 보이는지 확인하고 하나라도 실패하면 해당 이미지만 다시 생성합니다.
 
+2026-07-29 이후 대표 브리프와 `images.cover`에는 같은 `art_direction`, `composition_type`, `palette_family`을 기록하고 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 실험의 문제·버튼·실패·복구 결과 중 하나를 한 장면의 초점으로 삼습니다. 본문 도식은 원리와 실행 순서를 맡습니다. 고정 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 쓰지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`는 대표 이미지에서 금지합니다.
+
 `visual.assets`마다 `label`, `scene_label`, `steps`, `curiosity_hook`, `evidence_type`, `origin`을 기록합니다. `origin`은 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 `imagegen` 중 하나입니다. `imagegen`에는 실제 `generation_prompt`, `generation_model`, 모바일에서도 읽히는 짧은 `korean_labels` 2~6개를 기록합니다. 브리프와 대응 `images.visual_N`의 프롬프트·모델 값은 정확히 일치해야 합니다. `images.cover`와 각 `images.visual_N`에도 같은 `origin`을 기록해 브리프와 파일 출처가 일치해야 합니다. 생성 도식에는 짧은 한국어 설명을 넣고, 한글 파일명과 독자가 봐야 할 결과를 적은 HTML 캡션을 사용합니다.
 
 `capture`와 `annotated_capture`에는 브리프와 이미지 양쪽에 같은 `capture_tool`, `capture_target`, `captured_at`을 기록합니다. `capture_tool`은 `browser`, `computer-use`, `playwright`, `system-screenshot`, `terminal` 중 실제 사용한 도구만 쓰고, `captured_at`은 타임존이 있는 ISO 시각으로 예약 시각 14일 이내에서 기록합니다. 최적화기가 실제 WebP 파일과 같은 `capture_sha256`을 이미지에 기록하며, 이 해시는 기록과 파일의 일치를 검증할 뿐 캡처 사실 자체를 대신하지 않습니다. 실제 화면인지는 실행 과정·출력·전후 상태와 함께 교차 확인합니다.

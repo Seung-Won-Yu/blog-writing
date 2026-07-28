@@ -155,6 +155,9 @@ def valid_daily_source(day="2026-07-19"):
                 "curiosity_hook": "이 변경이 지금 해결하는 불편은 무엇일까?",
                 "logic_type": "before_after",
                 "content_role": "hook",
+                "art_direction": "editorial_scenario",
+                "composition_type": "asymmetric_single_scene",
+                "palette_family": "cobalt_coral_paper",
             },
             "assets": [first_visual, second_visual],
         },
@@ -166,7 +169,12 @@ def valid_daily_source(day="2026-07-19"):
             "image_policy": "webp-v1",
         },
         "images": {
-            "cover": image_asset(),
+            "cover": {
+                **image_asset(),
+                "art_direction": "editorial_scenario",
+                "composition_type": "asymmetric_single_scene",
+                "palette_family": "cobalt_coral_paper",
+            },
             "visual_1": image_asset(),
             "visual_2": image_asset(),
         },
@@ -772,6 +780,33 @@ class EditorialQualityTests(unittest.TestCase):
         reasons = source_quality_reasons(source, resolve_draft_identity(day))
 
         self.assertNotIn("quality_visual_roles", reasons)
+
+    def test_july_29_cover_requires_a_declared_visual_signature(self):
+        day = "2026-07-29"
+        source = valid_daily_source(day)
+        source["visual"]["cover"].pop("palette_family")
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_variety", reasons)
+
+    def test_july_29_cover_rejects_repeated_card_template_composition(self):
+        day = "2026-07-29"
+        source = valid_daily_source(day)
+        source["visual"]["cover"]["composition_type"] = "three_column_cards"
+        source["images"]["cover"]["composition_type"] = "three_column_cards"
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_variety", reasons)
+
+    def test_july_29_cover_accepts_matching_editorial_scene_signature(self):
+        day = "2026-07-29"
+        source = valid_daily_source(day)
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertNotIn("quality_visual_variety", reasons)
 
     def test_complete_future_daily_source_passes_the_source_quality_gate(self):
         day = "2026-07-19"

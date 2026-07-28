@@ -17,6 +17,7 @@ DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
+COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -94,6 +95,12 @@ BANNED_EDITORIAL_PHRASES = {
     "자동 생성 데일리 다이제스트",
     "본문은 핵심 내용 요약과 학습용 문제로 구성",
     "승원의 메모",
+}
+BANNED_COVER_COMPOSITIONS = {
+    "three_column_cards",
+    "four_step_cards",
+    "centered_dashboard_grid",
+    "title_slide",
 }
 EDITORIAL_LENGTH_RULES = {
     "headline": (25, 70),
@@ -964,6 +971,22 @@ def _visual_role_reasons(source, identity):
             similarity = len(left & right) / min(len(left), len(right))
             if similarity >= 0.75:
                 return ["quality_visual_roles"]
+
+    if date.fromisoformat(identity.publish_date) >= COVER_VARIETY_POLICY_START:
+        images = source.get("images") if isinstance(source.get("images"), dict) else {}
+        cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
+        style_keys = ("art_direction", "composition_type", "palette_family")
+        if (
+            any(not _strict_text(cover.get(key)) for key in style_keys)
+            or any(not _strict_text(cover_image.get(key)) for key in style_keys)
+            or any(
+                plain(cover.get(key)) != plain(cover_image.get(key))
+                for key in style_keys
+            )
+            or plain(cover.get("composition_type")).casefold()
+            in BANNED_COVER_COMPOSITIONS
+        ):
+            return ["quality_visual_variety"]
     return []
 
 

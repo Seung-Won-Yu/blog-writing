@@ -17,6 +17,51 @@ from blog_pipeline.publishing.daily_guard import (
 
 
 class DailyGuardTests(unittest.TestCase):
+    def test_recent_cover_style_signature_must_change(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            signature = {
+                "art_direction": "editorial_scenario",
+                "composition_type": "asymmetric_single_scene",
+                "palette_family": "cobalt_coral_paper",
+            }
+            self.write_json(
+                root / "data" / "days" / "2026-07-29.json",
+                {
+                    "visual": {"cover": signature},
+                    "editorial": {"topic_key": "previous-topic"},
+                    "news": [
+                        {
+                            "title_kr": "이전 글",
+                            "url": "https://example.com/previous",
+                        }
+                    ],
+                },
+            )
+            current = {
+                "visual": {"cover": signature},
+                "editorial": {"topic_key": "current-topic"},
+                "news": [
+                    {
+                        "title_kr": "현재 글",
+                        "url": "https://example.net/current",
+                    }
+                ],
+            }
+
+            duplicates = find_recent_draft_duplicates(
+                "2026-07-30", current, root=root, window_days=60
+            )
+            current["visual"]["cover"]["palette_family"] = "violet_lime_dark"
+            varied = find_recent_draft_duplicates(
+                "2026-07-30", current, root=root, window_days=60
+            )
+
+        self.assertEqual(
+            duplicates[0]["reason"], "same_cover_style_signature"
+        )
+        self.assertEqual(varied, [])
+
     def test_final_saturday_guard_blocks_recent_repository_and_primary_query(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

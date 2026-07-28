@@ -63,6 +63,10 @@
    - `logic_type`: `flow`, `before_after`, `comparison`, `conditional`, `timeline`, `architecture`, `evidence` 중 하나
    - `condition`: `logic_type`이 `conditional`일 때만 쓰며 `DNS·IP를 변경한 경우`처럼 분기 조건을 정확히 기록
 
+   2026-07-29 이후 대표 브리프와 `images.cover`에는 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
+
+   대표 이미지는 정보 전체를 요약하는 교재 도식이 아니라 독자가 글을 열 이유가 되는 한 장면이어야 합니다. 실제 대상과 막힌 지점·선택·의외의 결과 중 하나를 크게 보여 주고, `editorial_scenario`, `single_object_conflict`, `cutaway_process`, `before_after_scene`, `annotated_closeup`, `spatial_comparison`처럼 주제에 맞는 아트 디렉션을 선택합니다. 같은 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 삼지 않습니다. `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`는 대표 이미지 구성으로 금지합니다. 반대로 본문 이미지는 정확한 흐름도·비교표·구조도를 맡으며 대표와 색·구도·질문을 반복하지 않습니다.
+
    설명 도식에는 모바일에서도 읽히는 짧은 한국어 설명을 직접 넣습니다. 불가피한 제품명·표준명·코드 외에는 영어 문장을 쓰지 않습니다. 세부 의미와 출처는 정확한 HTML 캡션으로 보충합니다. 파일은 `일반업데이트-보안업데이트-비교.png`처럼 내용을 알 수 있는 한글 파일명을 사용합니다.
 
    제목을 가렸을 때도 해당 기사만 떠올릴 수 있도록 실제 대상·변화·관계를 보여 줍니다. 핵심 대상은 화면의 약 45~70%를 차지하게 하고 작은 모바일 썸네일에서도 흐름이 읽혀야 합니다. 설명 이미지 유형은 다음처럼 주제에 맞게 고릅니다.
