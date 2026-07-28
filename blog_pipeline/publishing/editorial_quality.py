@@ -110,7 +110,12 @@ BANNED_COVER_COMPOSITIONS = {
     "dashboard",
 }
 REQUIRED_COVER_KIND = "editorial_scene"
-REQUIRED_COVER_PROMPT_PREFIX = "use case: editorial-scene"
+REQUIRED_COVER_PROMPT_PREFIXES = (
+    "use case: illustration-story",
+    "use case: photorealistic-natural",
+    "use case: stylized-concept",
+)
+REQUIRED_COVER_PROMPT_TOKEN = "asset intent: editorial-scene"
 EDITORIAL_LENGTH_RULES = {
     "headline": (25, 70),
     "opening": (180, 1200),
@@ -997,7 +1002,8 @@ def _visual_role_reasons(source, identity):
             in BANNED_COVER_COMPOSITIONS
             or plain(cover.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
             or plain(cover_image.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
-            or not cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIX)
+            or not cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIXES)
+            or REQUIRED_COVER_PROMPT_TOKEN not in cover_prompt
         ):
             return ["quality_visual_variety"]
     return []

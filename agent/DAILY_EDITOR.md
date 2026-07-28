@@ -63,7 +63,7 @@
    - `logic_type`: `flow`, `before_after`, `comparison`, `conditional`, `timeline`, `architecture`, `evidence` 중 하나
    - `condition`: `logic_type`이 `conditional`일 때만 쓰며 `DNS·IP를 변경한 경우`처럼 분기 조건을 정확히 기록
 
-   2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 대표 이미지 생성 프롬프트는 반드시 `Use case: editorial-scene`으로 시작하며 `infographic-diagram`으로 시작하지 않습니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
+   2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 대표 이미지 생성 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 `infographic-diagram`으로 시작하지 않습니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
 
    대표 이미지는 정보 전체를 요약하는 교재 도식이 아니라 독자가 글을 열 이유가 되는 한 장면이어야 합니다. 실제 대상과 막힌 지점·선택·의외의 결과 중 하나를 크게 보여 주고, 필요하면 주제와 직접 관련된 사람·손·물건·공간을 사용합니다. 단, 포괄적인 개발자와 노트북 장면은 금지합니다. `editorial_scenario`, `single_object_conflict`, `cutaway_process`, `before_after_scene`, `annotated_closeup`, `spatial_comparison`처럼 주제에 맞는 아트 디렉션을 선택합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 같은 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 삼지 않습니다. `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지 구성으로 금지합니다. 반대로 본문 이미지는 정확한 흐름도·비교표·구조도를 맡으며 대표와 색·구도·질문을 반복하지 않습니다.
 

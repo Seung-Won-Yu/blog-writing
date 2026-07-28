@@ -173,7 +173,8 @@ def valid_daily_source(day="2026-07-19"):
             "cover": {
                 **image_asset(),
                 "generation_prompt": (
-                    "Use case: editorial-scene. 실제 사용자가 변경 전후의 "
+                    "Use case: illustration-story. "
+                    "Asset intent: editorial-scene. 실제 사용자가 변경 전후의 "
                     "결과를 한 장면에서 발견하는 한국어 편집 일러스트"
                 ),
                 "cover_kind": "editorial_scene",
@@ -811,6 +812,17 @@ class EditorialQualityTests(unittest.TestCase):
         source = valid_daily_source(day)
         source["images"]["cover"]["generation_prompt"] = (
             "Use case: infographic-diagram. 단계별 흐름을 보여 주는 도표"
+        )
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_variety", reasons)
+
+    def test_july_29_cover_rejects_missing_editorial_scene_token(self):
+        day = "2026-07-29"
+        source = valid_daily_source(day)
+        source["images"]["cover"]["generation_prompt"] = (
+            "Use case: illustration-story. 실제 사용자의 문제를 보여 주는 장면"
         )
 
         reasons = source_quality_reasons(source, resolve_draft_identity(day))
