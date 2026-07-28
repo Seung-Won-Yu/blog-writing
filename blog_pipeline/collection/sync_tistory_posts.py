@@ -41,11 +41,11 @@ def parse_public_posts(xml_text, *, blog_url=BLOG_URL):
     return sorted(posts, key=lambda post: post["id"])
 
 
-def build_catalog(xml_text, *, previous=None, now=None):
+def build_catalog(xml_text, *, previous=None, now=None, allow_shrink=False):
     posts = parse_public_posts(xml_text)
     previous_posts = previous.get("posts", []) if isinstance(previous, dict) else []
     minimum = max(1, int(len(previous_posts) * 0.9))
-    if len(posts) < minimum:
+    if len(posts) < minimum and not allow_shrink:
         raise ValueError(
             f"tistory_sitemap_shrank:{len(posts)}<{minimum}"
         )
@@ -82,6 +82,11 @@ def main(argv=None):
     )
     parser.add_argument("--sitemap-url", default=SITEMAP_URL)
     parser.add_argument("--output", default="config/tistory_public_posts.json")
+    parser.add_argument(
+        "--allow-shrink",
+        action="store_true",
+        help="의도적으로 공개 글을 대량 정리한 직후 새 sitemap을 기준선으로 승인합니다.",
+    )
     args = parser.parse_args(argv)
 
     output = Path(args.output)
@@ -91,7 +96,11 @@ def main(argv=None):
             previous = json.loads(output.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             previous = None
-    catalog = build_catalog(fetch_url(args.sitemap_url), previous=previous)
+    catalog = build_catalog(
+        fetch_url(args.sitemap_url),
+        previous=previous,
+        allow_shrink=args.allow_shrink,
+    )
     changed = write_catalog(catalog, output)
     print(
         "Tistory 공개 글 동기화: {}건 / {}".format(

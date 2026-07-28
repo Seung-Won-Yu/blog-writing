@@ -40,6 +40,17 @@ class TistoryPostSyncTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "tistory_sitemap_shrank"):
             build_catalog(SITEMAP, previous=previous)
 
+    def test_allows_confirmed_intentional_sitemap_shrink(self):
+        previous = {"posts": [{"id": index} for index in range(20)]}
+
+        catalog = build_catalog(
+            SITEMAP,
+            previous=previous,
+            allow_shrink=True,
+        )
+
+        self.assertEqual([post["id"] for post in catalog["posts"]], [126, 132])
+
     def test_writes_only_changed_catalog(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "catalog.json"

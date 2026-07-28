@@ -310,6 +310,19 @@ def valid_guide_source(day="2026-07-22"):
 
 
 class EditorialQualityTests(unittest.TestCase):
+    def test_rejects_legacy_automatic_digest_language(self):
+        source = valid_daily_source()
+        source["editorial"]["opening"] = (
+            "자동 생성 데일리 다이제스트 형식으로 여러 소식을 묶었습니다. "
+            + repeated_text("낡은 다이제스트", 5)
+        )
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-19")
+        )
+
+        self.assertIn("quality_style", reasons)
+
     def test_evergreen_guide_has_its_own_category_schedule_and_depth_policy(self):
         source = valid_guide_source()
 
