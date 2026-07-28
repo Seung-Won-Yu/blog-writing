@@ -155,6 +155,7 @@ def valid_daily_source(day="2026-07-19"):
                 "curiosity_hook": "이 변경이 지금 해결하는 불편은 무엇일까?",
                 "logic_type": "before_after",
                 "content_role": "hook",
+                "cover_kind": "editorial_scene",
                 "art_direction": "editorial_scenario",
                 "composition_type": "asymmetric_single_scene",
                 "palette_family": "cobalt_coral_paper",
@@ -171,6 +172,11 @@ def valid_daily_source(day="2026-07-19"):
         "images": {
             "cover": {
                 **image_asset(),
+                "generation_prompt": (
+                    "Use case: editorial-scene. 실제 사용자가 변경 전후의 "
+                    "결과를 한 장면에서 발견하는 한국어 편집 일러스트"
+                ),
+                "cover_kind": "editorial_scene",
                 "art_direction": "editorial_scenario",
                 "composition_type": "asymmetric_single_scene",
                 "palette_family": "cobalt_coral_paper",
@@ -795,6 +801,17 @@ class EditorialQualityTests(unittest.TestCase):
         source = valid_daily_source(day)
         source["visual"]["cover"]["composition_type"] = "three_column_cards"
         source["images"]["cover"]["composition_type"] = "three_column_cards"
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_variety", reasons)
+
+    def test_july_29_cover_rejects_infographic_prompt(self):
+        day = "2026-07-29"
+        source = valid_daily_source(day)
+        source["images"]["cover"]["generation_prompt"] = (
+            "Use case: infographic-diagram. 단계별 흐름을 보여 주는 도표"
+        )
 
         reasons = source_quality_reasons(source, resolve_draft_identity(day))
 

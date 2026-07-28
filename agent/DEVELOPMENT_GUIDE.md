@@ -95,7 +95,7 @@
 - 생성 도식에는 모바일에서 읽히는 짧은 한국어 라벨을 넣고 세부 설명은 HTML 캡션으로 보충합니다.
 - 파일명은 `JWT-인증-요청흐름.webp`처럼 내용을 알 수 있는 한글로 만듭니다.
 
-2026-07-29 이후 대표 브리프와 `images.cover`에는 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 한 장면의 초점과 시각적 질문을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`는 대표 구성에서 제외합니다.
+2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 대표 프롬프트는 `Use case: editorial-scene`으로 시작하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 독자가 겪는 실패·선택·결과를 보여 주는 한 장면을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 구성에서 제외합니다.
 
 포괄적인 컴퓨터, 개발자 책상, AI 로봇·빛나는 뇌, 맥락 없는 차트, 가짜 UI·터미널, 로고만 큰 그림, PPT 카드형 썸네일은 금지합니다. 대표와 본문 이미지의 구도를 반복하지 않습니다.
 

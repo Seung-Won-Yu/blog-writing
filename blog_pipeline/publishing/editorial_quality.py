@@ -101,7 +101,16 @@ BANNED_COVER_COMPOSITIONS = {
     "four_step_cards",
     "centered_dashboard_grid",
     "title_slide",
+    "linear_flow",
+    "process_diagram",
+    "roadmap",
+    "comparison_grid",
+    "timeline_cards",
+    "split_panel_infographic",
+    "dashboard",
 }
+REQUIRED_COVER_KIND = "editorial_scene"
+REQUIRED_COVER_PROMPT_PREFIX = "use case: editorial-scene"
 EDITORIAL_LENGTH_RULES = {
     "headline": (25, 70),
     "opening": (180, 1200),
@@ -976,6 +985,7 @@ def _visual_role_reasons(source, identity):
         images = source.get("images") if isinstance(source.get("images"), dict) else {}
         cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
         style_keys = ("art_direction", "composition_type", "palette_family")
+        cover_prompt = plain(cover_image.get("generation_prompt")).casefold()
         if (
             any(not _strict_text(cover.get(key)) for key in style_keys)
             or any(not _strict_text(cover_image.get(key)) for key in style_keys)
@@ -985,6 +995,9 @@ def _visual_role_reasons(source, identity):
             )
             or plain(cover.get("composition_type")).casefold()
             in BANNED_COVER_COMPOSITIONS
+            or plain(cover.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
+            or plain(cover_image.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
+            or not cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIX)
         ):
             return ["quality_visual_variety"]
     return []

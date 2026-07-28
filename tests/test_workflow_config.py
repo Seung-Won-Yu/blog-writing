@@ -186,8 +186,11 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("`art_direction`", contract)
                 self.assertIn("`composition_type`", contract)
                 self.assertIn("`palette_family`", contract)
+                self.assertIn("`cover_kind: editorial_scene`", contract)
+                self.assertIn("`Use case: editorial-scene`", contract)
                 self.assertIn("최근 7개 대표", contract)
                 self.assertIn("three_column_cards", contract)
+                self.assertIn("대표 이미지에는 단계 화살표", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
