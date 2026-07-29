@@ -99,6 +99,7 @@
     "max_per_family": 1,
     "min_lead_score": 8,
     "min_reader_relevance": 2,
+    "fallback_min_reader_relevance": 1,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 1
   },

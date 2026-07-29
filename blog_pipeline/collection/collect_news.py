@@ -565,23 +565,48 @@ def build_inbox(
         minimum_reader_relevance = int(
             selection.get("min_reader_relevance", 0)
         )
-        lead_pool = [
-            candidate
-            for candidate in eligible_candidates
-            if int(candidate.get("lead_score", 0)) >= minimum
-            and not candidate.get("unknown_publication_date")
-            and int(
-                candidate.get("lead_score_breakdown", {}).get(
-                    "reader_relevance", 0
-                )
+        fallback_reader_relevance = int(
+            selection.get(
+                "fallback_min_reader_relevance",
+                minimum_reader_relevance,
             )
-            >= minimum_reader_relevance
-        ]
-        selected = select_lead_shortlist(
-            lead_pool,
-            max_items=int(selection.get("max_items", 5)),
-            max_per_source=int(selection.get("max_per_source", 1)),
-            max_per_family=selection.get("max_per_family", 1),
+        )
+
+        def select_with_relevance(relevance):
+            lead_pool = [
+                candidate
+                for candidate in eligible_candidates
+                if int(candidate.get("lead_score", 0)) >= minimum
+                and not candidate.get("unknown_publication_date")
+                and int(
+                    candidate.get("lead_score_breakdown", {}).get(
+                        "reader_relevance", 0
+                    )
+                )
+                >= relevance
+            ]
+            return select_lead_shortlist(
+                lead_pool,
+                max_items=int(selection.get("max_items", 5)),
+                max_per_source=int(selection.get("max_per_source", 1)),
+                max_per_family=selection.get("max_per_family", 1),
+            )
+
+        selected = select_with_relevance(minimum_reader_relevance)
+        required_selected = int(
+            config.get("collection_quality", {}).get("min_selected", 1)
+        )
+        fallback_applied = (
+            len(selected) < required_selected
+            and fallback_reader_relevance < minimum_reader_relevance
+        )
+        if fallback_applied:
+            selected = select_with_relevance(fallback_reader_relevance)
+        selection["reader_relevance_fallback_applied"] = fallback_applied
+        selection["effective_min_reader_relevance"] = (
+            fallback_reader_relevance
+            if fallback_applied
+            else minimum_reader_relevance
         )
     else:
         selected = select_candidates(

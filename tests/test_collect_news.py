@@ -468,6 +468,69 @@ class InboxTests(unittest.TestCase):
         self.assertTrue(all(item.get("lead_rank") for item in result["selected"]))
         self.assertTrue(all("audience_lane" not in item for item in result["selected"]))
 
+    def test_lead_shortlist_relaxes_reader_relevance_only_when_minimum_is_missing(self):
+        sources = []
+        feeds = {}
+        for index in range(3):
+            source_id = f"source-{index}"
+            url = f"https://{source_id}.example/feed"
+            sources.append(
+                {
+                    "id": source_id,
+                    "name": source_id,
+                    "group": "official",
+                    "source_family": source_id,
+                    "type": "rss",
+                    "url": url,
+                    "enabled": True,
+                }
+            )
+            feeds[url] = (
+                RSS_XML.replace(
+                    "GitHub Actions 보안 업데이트",
+                    f"GitHub Actions 보안 업데이트 {index}",
+                ).replace(
+                    "https://example.com/actions?utm_source=rss",
+                    f"https://{source_id}.example/article",
+                )
+            )
+        config = {
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 5,
+                "max_per_source": 1,
+                "max_per_family": 1,
+                "min_lead_score": 8,
+                "min_reader_relevance": 2,
+                "fallback_min_reader_relevance": 1,
+            },
+            "collection_quality": {"min_selected": 3},
+            "sources": sources,
+        }
+
+        def assign_lead_score(candidate):
+            source_index = int(candidate["source_id"].rsplit("-", 1)[-1])
+            candidate["lead_score"] = 12 - source_index
+            candidate["lead_score_breakdown"] = {
+                "reader_relevance": 2 if source_index < 2 else 1
+            }
+            return candidate
+
+        with patch(
+            "blog_pipeline.collection.collect_news.score_lead_candidate",
+            side_effect=assign_lead_score,
+        ):
+            result = build_inbox(
+                config,
+                fetch_text=lambda url: feeds[url],
+                now=NOW,
+                day_id="2026-07-12",
+            )
+
+        self.assertEqual(len(result["selected"]), 3)
+        self.assertTrue(result["selection"]["reader_relevance_fallback_applied"])
+        self.assertEqual(result["selection"]["effective_min_reader_relevance"], 1)
+
     def test_filters_items_older_than_the_collection_age_limit(self):
         config = {
             "max_age_days": 14,
