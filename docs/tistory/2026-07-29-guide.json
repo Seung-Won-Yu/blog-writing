@@ -1,0 +1,92 @@
+{
+  "title": "Redis 토큰 버킷으로 API 레이트 리밋 설계하기: 429 응답부터 Lua 구현까지",
+  "title_candidates": [
+    "Redis 토큰 버킷으로 API 레이트 리밋 설계하기: 429 응답부터 Lua 구현까지",
+    "Redis 토큰 버킷으로 과도한 API 호출을 제어하는 실전 설계"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-07-29-guide",
+  "publish_date": "2026-07-29",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-29T18:00:00+09:00",
+  "tags": [
+    "API 레이트 리밋",
+    "Redis",
+    "토큰 버킷",
+    "Lua",
+    "HTTP 429",
+    "API 보안",
+    "백엔드"
+  ],
+  "meta_description": "로그인 API가 평소보다 많이 호출된다고 해서 모두 공격은 아니다. 모바일 앱의 재시도, 잘못된 배치 작업, 한 사용자의 빠른 클릭도 같은 증상으로 보인다. 그러나 제한이 없으면 인증 서비스와 데이터… 토큰 버킷은 짧은 정상 버스트는 허용하면서 평균 호출량을 제한한다. Redis의 L…",
+  "key_summary": [
+    "1. Redis 토큰 버킷으로 과도한 API 호출을 제어하는 실전 설계",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Redis 토큰 버킷으로 API 레이트 리밋 설계하기: 429 응답부터 Lua 구현까지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-07-29.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-29-guide.html",
+  "before_ad_html": "docs/tistory/2026-07-29-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-29-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-29-guide-adfit.html",
+  "source_sha256": "aa99d6282fc3f19fec5388777420b32c3dfc44a407e268d8363f629dfed2a5c4",
+  "html_sha256": "d08714f86c9e1607ac4903c362be9ef9334f32f4d14c13ad693b4ef23a23b17f",
+  "adfit_sha256": "23862d29ac88cde1a23a93e05d5c6fea040776f6ba1e1b48556bb25fec585a43",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29-guide/레이트리밋-대표.webp",
+      "path": "docs/tistory/assets/2026-07-29-guide/레이트리밋-대표.webp",
+      "original_url": "",
+      "alt": "정상 요청은 통과하고 토큰이 소진된 과도한 요청은 429 대기열로 향하는 API 관문",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29-guide/토큰버킷-원리.webp",
+      "path": "docs/tistory/assets/2026-07-29-guide/토큰버킷-원리.webp",
+      "original_url": "",
+      "alt": "토큰 버킷이 시간에 따라 토큰을 보충하고 요청마다 소비하는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29-guide/Redis-Lua-원자실행.webp",
+      "path": "docs/tistory/assets/2026-07-29-guide/Redis-Lua-원자실행.webp",
+      "original_url": "",
+      "alt": "Redis Lua가 토큰 계산과 TTL 저장을 원자적으로 실행하는 구조",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29-guide/레이트리밋-키선택.webp",
+      "path": "docs/tistory/assets/2026-07-29-guide/레이트리밋-키선택.webp",
+      "original_url": "",
+      "alt": "공개 검색과 로그인에 맞춰 IP와 계정 조합 키를 선택하는 기준",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
