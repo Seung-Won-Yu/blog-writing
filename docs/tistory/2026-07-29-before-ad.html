@@ -1,0 +1,26 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 29 (수) · 약 12분</p>
+    <p class="digest-lead">보안 스캐너가 오픈소스로 공개됐다는 소식을 보면 곧바로 저장소에 설치해 보고 싶어진다. 하지만 Codex Security는 소스 코드와 CLI·TypeScript SDK가 공개된 것, 실제 스캔 서비스를 사용할 수 있는 것이 같은 의미가 아니다. 패키지는 내려받을 수 있어도 현재 스캔 기능은 제한된 베타 접근권한이 필요하다. 결과 파일에는 소스 코드 일부와 취약점 재현 정보가 들어갈 수 있고, 한 번의 스캔에서 발견 항목이 사라졌다고 문제가 해결됐다고 단정할 수도 없다. 설치 명령보다 접근조건, 결과 보관 위치, 불완전한 검사 판정, CI 실패 기준을 먼저 정해야 하는 이유다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29/Codex-Security-오픈소스-접근문턱-대표.webp" alt="열린 오픈소스 상자에서 나온 보안 검사 도구가 별도 출입증이 필요한 스캔 문턱 앞에 멈춘 편집 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · OpenAI Codex Security · 2026. 7. 29</p>
+    <h3>OpenAI, Codex Security CLI·SDK 오픈소스 공개</h3>
+    <p class="digest-blurb">OpenAI는 보유하거나 평가 권한이 있는 코드에서 보안 문제를 찾고 검증하는 Codex Security의 CLI와 TypeScript SDK를 Apache 2.0 라이선스로 공개했다. npm 패키지 0.1.1과 로컬 스캔·결과 내보내기·검증·패치·CI 연동 기능을 확인할 수 있지만, 실제 스캔은 현재 제한된 베타 접근권한이 필요하고 1.0 전 공개 API는 마이너 버전에서도 바뀔 수 있다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 공개됐나: CLI·SDK·실행 환경을 직접 볼 수 있다</h4><p>공개 저장소에는 Codex Security CLI와 TypeScript SDK, Dockerfile과 강화된 일괄 스캔용 Compose 예시, 보안 프로필이 포함돼 있다. 라이선스는 Apache 2.0이며 npm의 @openai/codex-security 패키지는 7월 28일 0.1.1이 배포됐다. CLI에서는 한 저장소 스캔뿐 아니라 기존 스캔 목록·비교, 발견 항목 검증, 패치 생성, SARIF·CSV·JSON 내보내기, pre-commit 훅과 일괄 스캔 기능을 제공한다.</p><p>여기서 오픈소스의 의미는 설치 과정과 클라이언트 동작, 자동화 인터페이스를 검토하고 팀 흐름에 맞게 연결할 수 있다는 것이다. 보안 분석 모델과 스캔 서비스 전체가 로컬 프로그램으로 바뀌었다는 뜻은 아니다. 공식 문서는 현재 CLI와 SDK를 제한된 베타로 안내하며, 승인된 접근권한이 있어야 스캔을 실행할 수 있다고 설명한다.</p><div class="digest-table-wrap" role="region" aria-label="공개된 것과 별도로 확인해야 하는 조건" tabindex="0"><table class="digest-data-table"><caption>공개된 것과 별도로 확인해야 하는 조건</caption><thead><tr><th scope="col">구분</th><th scope="col">현재 확인 가능한 범위</th><th scope="col">주의할 점</th></tr></thead><tbody><tr><td>소스와 라이선스</td><td>GitHub 저장소와 Apache 2.0 라이선스</td><td>서버 측 스캔 서비스 공개와는 다름</td></tr><tr><td>설치 패키지</td><td>npm CLI·TypeScript SDK 0.1.1</td><td>1.0 전에는 마이너 버전에서도 API 변경 가능</td></tr><tr><td>실제 스캔</td><td>계정 로그인 또는 API 키 인증</td><td>인증과 별도로 승인된 베타 접근권한 필요</td></tr><tr><td>자동화</td><td>CI·SARIF·검증·패치·일괄 스캔</td><td>저장소 권한과 결과 보관 정책을 먼저 결정</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29/Codex-Security-공개범위-접근조건.webp" alt="공개된 GitHub 소스와 npm CLI·SDK를 실제 스캔에 필요한 베타 접근권한과 로그인·API 키 조건과 구분한 도식" width="1200" height="630" loading="lazy"><figcaption>GitHub 소스와 npm 패키지는 공개돼 누구나 확인할 수 있지만, 실제 스캔 실행은 별도의 베타 접근권한과 계정 로그인 또는 API 키 인증을 모두 확인해야 한다.</figcaption></figure><h4 class="digest-subheading">설치 전에 확인할 것: 접근권한과 실행 환경</h4><p>공식 요구사항은 macOS·Linux·Windows와 Node.js 22 이상이다. 스캔과 결과 내보내기에는 Python 3.10 이상도 필요하며 Python 3.10 환경에서는 tomli가 추가로 필요할 수 있다. 인증은 OpenAI 계정 로그인이나 API 키를 사용할 수 있다. 환경 변수의 OPENAI_API_KEY 또는 CODEX_API_KEY가 저장된 로그인보다 우선하므로, 로컬에서 예상하지 않은 조직 키로 실행되지 않는지도 확인해야 한다.</p><p>접근권한이 없다면 패키지 설치와 로그인에 성공해도 스캔 단계에서 막힐 수 있다. 이 경우 권한을 넓혀 가며 우회하기보다 공식 베타 접근 여부를 먼저 확인해야 한다. 조직 저장소를 시험할 때는 소유하거나 평가 허가를 받은 코드만 대상으로 삼고, API 키는 개인 셸 기록이나 저장소 설정 파일에 남기지 않는다.</p><pre class="digest-code-block language-bash"><code>node --version
+python3 --version
+npm install @openai/codex-security
+npx codex-security login
+
+# 실제 비용과 범위를 확인하는 준비 단계
+npx codex-security scan ./my-repo \
+  --output-dir &quot;$HOME/codex-security-results/my-repo&quot; \
+  --dry-run</code></pre><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-29/Codex-Security-스캔결과-재검증.webp" alt="대상 저장소에서 dry-run과 스캔을 거쳐 저장소 밖 결과 폴더에 산출물을 보관하고 validate로 재검증하는 흐름" width="1200" height="630" loading="lazy"><figcaption>대상과 예상 범위를 dry-run으로 확인한 뒤 산출물을 저장소 밖의 비공개 폴더에 보관한다. findings·report·coverage를 함께 검토하고 수정 뒤에는 원래 발견 항목을 validate로 다시 확인한다.</figcaption></figure></div>
+  </div>
+</section>
+</article>
