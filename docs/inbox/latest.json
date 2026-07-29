@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-07-29",
-  "generated_at": "2026-07-29T00:37:34.521959+00:00",
+  "generated_at": "2026-07-29T00:42:30.117213+00:00",
   "review_required": true,
   "selection": {
     "mode": "lead_shortlist",
@@ -4866,6 +4866,61 @@
       "recent_publisher": false
     },
     {
+      "id": "65232cb09159",
+      "title": "기업은 왜 자신도 모르게 제품-시장 적합성을 잃게 될까",
+      "normalized_title": "기업은 왜 자신도 모르게 제품 시장 적합성을 잃게 될까",
+      "url": "https://news.hada.io/topic?id=31932",
+      "published_at": "2026-07-29T00:41:01+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false
+    },
+    {
       "id": "c8d54ee35026",
       "title": "Openship - 내장 CI/CD를 갖춘 셀프 호스팅 배포 플랫폼",
       "normalized_title": "openship 내장 ci cd를 갖춘 셀프 호스팅 배포 플랫폼",
@@ -5600,65 +5655,6 @@
         "freshness": 5
       },
       "lead_score": 9,
-      "recent_publisher": false
-    },
-    {
-      "id": "53561458586f",
-      "title": "오픈 모델이 예상 밖의 해방감을 준 이유",
-      "normalized_title": "오픈 모델이 예상 밖의 해방감을 준 이유",
-      "url": "https://news.hada.io/topic?id=31917",
-      "published_at": "2026-07-28T19:31:44+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 2
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [
-          "예상"
-        ],
-        "practical": [],
-        "deep": [
-          "모델"
-        ]
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
       "recent_publisher": false
     },
     {
@@ -7965,5 +7961,10 @@
       "selection_reason": "핵심뉴스 후보 5 · 점수 10"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "source_id": "yozmit",
+      "message": "HTTP Error 405: Not Allowed"
+    }
+  ]
 }
