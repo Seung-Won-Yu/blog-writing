@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 7. 30 (목) · 약 10분</p>
+    <p class="digest-lead">월요일 아침, 저장소마다 Dependabot PR이 몇 개씩 쌓여 있으면 가장 먼저 하는 일은 알림을 끄는 일이 되기 쉽다. 그런데 일반 버전 업데이트와 이미 알려진 취약점의 패치를 같은 속도로 묶어 두면, 소음을 줄이는 설정이 보안 대응까지 늦출 수 있다. GitHub가 최근 소개한 운영 방식의 핵심은 PR 수를 무작정 줄이는 데 있지 않다. 일상적인 업데이트는 검토 가능한 리듬으로 묶고, 보안 업데이트는 별도 규칙과 우선순위로 계속 흐르게 만드는 데 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-30/Dependabot-두-업데이트-속도-대표.webp" alt="같은 패키지 선반의 상자가 주간 검토 바구니와 보안 경보가 켜진 빠른 통로로 갈라지는 Dependabot 편집 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · GitHub Blog · 2026. 7. 30</p>
+    <h3>Dependabot PR을 묶고 일반 업데이트의 속도를 늦추되 보안 업데이트는 빠르게 유지하는 방법</h3>
+    <p class="digest-blurb">GitHub는 Dependabot의 그룹화와 주기 조절로 일반 업데이트 PR의 소음을 낮추면서 보안 업데이트는 빠르게 처리하는 운영 사례를 소개했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 바뀌었나: 업데이트 PR을 한 속도로 다루지 않는다</h4><p>GitHub가 소개한 최근 사례는 Dependabot의 기본값을 그대로 두는 대신, 업데이트의 성격에 따라 대기열을 나누는 방식이다. 일반 버전 업데이트는 관련 패키지를 하나의 PR로 묶고 주기를 늦춰 검토 시간을 확보한다. 반면 보안 업데이트는 알려진 취약점과 연결된 패치이므로 같은 느린 주기에 묶어 두지 않고 빠르게 검토할 수 있게 둔다. 목표는 자동화가 만든 PR 숫자를 최소화하는 것이 아니라, 사람이 실제로 처리할 수 있는 대기열을 만드는 것이다.</p><div class="digest-table-wrap" role="region" aria-label="두 업데이트 흐름을 분리하는 이유" tabindex="0"><table class="digest-data-table"><caption>두 업데이트 흐름을 분리하는 이유</caption><thead><tr><th scope="col">구분</th><th scope="col">시작 신호</th><th scope="col">운영 목표</th><th scope="col">검토 리듬</th></tr></thead><tbody><tr><td>일반 버전 업데이트</td><td>새 릴리스</td><td>호환성·변경 영향 확인</td><td>그룹화와 주기 조절</td></tr><tr><td>보안 업데이트</td><td>취약점 권고·Dependabot alert</td><td>노출 기간 단축</td><td>우선 검토·별도 처리</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-30/Dependabot-일반과-보안-업데이트-비교.webp" alt="일반 업데이트는 주간 그룹 PR로, 보안 업데이트는 취약점 알림 뒤 빠른 PR로 이어지는 두 갈래 Dependabot 흐름" width="1200" height="630" loading="lazy"><figcaption>일반 업데이트와 보안 업데이트는 같은 패키지 변경을 다룰 수 있어도 생성되는 신호와 팀이 원하는 처리 시간이 다르다. 그룹화는 이 차이를 지우는 기능이 아니라 일반 대기열을 정리하는 도구다.</figcaption></figure><h4 class="digest-subheading">왜 PR 수를 줄이면 오히려 보안이 약해질 수 있나</h4><p>묶음 PR은 검토 문맥을 줄여 준다. 예를 들어 테스트 도구나 린터처럼 함께 움직이는 개발 의존성을 매주 한 PR로 보면, 열 개의 작은 PR을 따로 열어 보는 것보다 변경 이유와 CI 결과를 한 번에 읽기 쉽다. 하지만 너무 넓은 묶음은 반대 효과도 낸다. 실패 원인이 어느 패키지인지 찾기 어려워지고, 긴급 패치가 큰 일반 업데이트 묶음의 승인 대기열에 갇힐 수 있다. 따라서 그룹은 위험도와 변경 성격이 비슷한 범위에서 시작하는 편이 낫다.</p><p>연구와 현장 운영 자료가 공통으로 보여 주는 문제도 알림 피로다. PR이 많아지면 팀은 빈도를 낮추거나 제한을 걸게 되지만, 그 설정이 실제 취약점 대응에 어떤 영향을 주는지 따로 확인하지 않으면 보안 신호까지 묻힌다. GOV.UK의 개발자 가이드도 관련 의존성을 그룹으로 묶되, 각 팀이 PR 검토·병합의 책임을 계속 진다고 명시한다. 자동 생성은 책임을 없애는 기능이 아니다.</p><h4 class="digest-subheading">보안 업데이트 그룹에는 먼저 켜져 있어야 하는 기능이 있다</h4></div>
+  </div>
+</section>
+</article>

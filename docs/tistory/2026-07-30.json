@@ -1,0 +1,82 @@
+{
+  "title": "Dependabot 알림은 줄이고 보안 패치는 늦추지 않는 그룹 설정법",
+  "title_candidates": [
+    "Dependabot 알림은 줄이고 보안 패치는 늦추지 않는 그룹 설정법",
+    "Dependabot PR을 묶고 일반 업데이트의 속도를 늦추되 보안 업데이트는 빠르게 유지하는 방법",
+    "일반 의존성 업데이트는 검토 가능한 주간 묶음으로, 취약점 패치는 별도 빠른 경로로 운영하는 Dependabot 설정:…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-07-30",
+  "publish_date": "2026-07-30",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-30T09:00:00+09:00",
+  "tags": [
+    "Dependabot",
+    "의존성 관리",
+    "공급망 보안",
+    "GitHub Actions",
+    "보안 업데이트",
+    "dependabot.yml"
+  ],
+  "meta_description": "월요일 아침, 저장소마다 Dependabot PR이 몇 개씩 쌓여 있으면 가장 먼저 하는 일은 알림을 끄는 일이 되기 쉽다. 그런데 일반 버전 업데이트와 이미 알려진 취약점의 패치를 같은 속도로 묶어… GitHub는 Dependabot의 그룹화와 주기 조절로 일반 업데이트 PR의 소음…",
+  "key_summary": [
+    "1. Dependabot PR을 묶고 일반 업데이트의 속도를 늦추되 보안 업데이트는 빠르게 유지하는 방법",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Dependabot 알림은 줄이고 보안 패치는 늦추지 않는 그룹 설정법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-07-30.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-07-30.html",
+  "before_ad_html": "docs/tistory/2026-07-30-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-07-30-after-ad.html",
+  "adfit_html": "docs/tistory/2026-07-30-adfit.html",
+  "source_sha256": "c9d5960f4174533506ddd83187cd7fb63101f477a641eb5e6cfdc0439bd5524d",
+  "html_sha256": "9e438727102f158804af143f34929f7369c2f4ca1a8abe0571d3f14153d4269e",
+  "adfit_sha256": "d09b01312501d22d57375c503a29db63b779416b63968f0daa40c7f65b3b8392",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-30/Dependabot-두-업데이트-속도-대표.webp",
+      "path": "docs/tistory/assets/2026-07-30/Dependabot-두-업데이트-속도-대표.webp",
+      "original_url": "",
+      "alt": "같은 패키지 선반의 상자가 주간 검토 바구니와 보안 경보가 켜진 빠른 통로로 갈라지는 Dependabot 편집 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-30/Dependabot-일반과-보안-업데이트-비교.webp",
+      "path": "docs/tistory/assets/2026-07-30/Dependabot-일반과-보안-업데이트-비교.webp",
+      "original_url": "",
+      "alt": "일반 업데이트는 주간 그룹 PR로, 보안 업데이트는 취약점 알림 뒤 빠른 PR로 이어지는 두 갈래 Dependabot 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-30/Dependabot-보안-그룹-선행조건.webp",
+      "path": "docs/tistory/assets/2026-07-30/Dependabot-보안-그룹-선행조건.webp",
+      "original_url": "",
+      "alt": "Dependency graph와 Dependabot alerts, 보안 업데이트 설정 뒤 groups 규칙 순서를 확인하는 흐름",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
