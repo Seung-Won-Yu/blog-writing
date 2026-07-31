@@ -1,0 +1,370 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-07-31",
+  "publish_date": "2026-07-31",
+  "date_label": "2026. 7. 31",
+  "weekday": "금",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-31T09:00:00+09:00",
+  "category": "최신 IT·개발 소식",
+  "primary_query": "Google Forms Gemini quiz generation availability review answers English alpha",
+  "tags": [
+    "Google Forms",
+    "Gemini",
+    "온라인 퀴즈",
+    "Google Workspace",
+    "교육 도구",
+    "평가 설계"
+  ],
+  "editorial": {
+    "headline": "Google Forms의 Gemini 퀴즈 생성, 질문보다 먼저 확인할 4가지",
+    "opening": "짧은 교육 세션이 끝나고 이해도를 확인할 퀴즈가 필요할 때, 빈 Google Forms에 문항을 하나씩 넣는 일부터 시작하면 정작 검토할 시간이 줄어든다. Google은 Forms 안에서 Gemini에게 퀴즈 초안을 만들도록 하는 기능을 공개했다. 하지만 이 기능은 모든 계정에 즉시 열리는 일반 버튼이 아니며, 영어·데스크톱·관리자 설정이라는 조건도 함께 갖고 있다. 빠르게 만든 초안을 그대로 발행하기보다, 답·배점·공개 범위를 확인하는 흐름을 먼저 잡아야 하는 이유다.",
+    "closing": "Gemini가 Forms에 넣어 주는 것은 퀴즈의 완성본이 아니라 검토 가능한 첫 초안이다. 접근 조건을 확인하고, 학습 목표와 자료 범위를 프롬프트에 적고, 정답과 배점을 사람이 다시 읽은 뒤 공개 범위를 정하면 생성 속도는 실제 운영 시간 절약으로 이어진다. 특히 정답이 하나로 정해지지 않는 문항과 최신 사실을 묻는 문항은 생성 결과를 신뢰도 높은 자료와 다시 대조하는 단계를 빼지 말자.",
+    "action": "관리자에게 Gemini Alpha 또는 Workspace Experiments 접근 여부를 확인한 뒤, 10문항이 아닌 3문항짜리 내부 지식 확인 퀴즈로 정답·배점·게시 흐름을 먼저 점검한다.",
+    "audience_problem": "교육·온보딩·사내 안내 뒤 짧은 확인 퀴즈를 만들어야 하지만, 질문 작성 시간은 줄이면서도 정답과 공개 설정의 오류는 피하고 싶은 Google Workspace 사용자에게 맞춘 글이다.",
+    "reader_takeaway": "Gemini로 Google Forms 퀴즈 초안을 만드는 정확한 접근 조건과 생성 뒤 검토 순서, 사람이 반드시 결정해야 하는 범위를 구분할 수 있다.",
+    "why_now": "Google Workspace Updates가 2026년 7월 30일 Forms에서 Gemini로 새 퀴즈를 빠르게 만드는 기능을 알렸고, 공식 도움말이 이용 조건과 생성·검토·게시 순서를 구체화했다.",
+    "topic_key": "Google Forms Gemini 퀴즈 생성과 검토 절차",
+    "reader_question": "Gemini가 만든 Google Forms 퀴즈를 빠르게 쓰되, 접근 조건과 정답·배점·게시 설정은 어떻게 안전하게 확인할 수 있을까?",
+    "entities": [
+      "Google Forms",
+      "Gemini",
+      "Google Workspace",
+      "Gemini Alpha",
+      "Workspace Experiments"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "checklist"
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "visual": {
+    "subject": "Google Forms에서 Gemini가 퀴즈 초안을 만들고 사람이 정답·배점·게시 범위를 검토하는 흐름",
+    "hook": "퀴즈를 몇 초 만에 만들 수 있어도, 공개 버튼을 누르기 전 사람이 확인해야 할 것은 무엇일까?",
+    "motif": "수업 자료 한 장에서 나온 질문 카드 초안이 정답 열쇠와 배점 저울을 거쳐 공개 봉투로 들어가는 장면",
+    "screenshot_unavailable_reason": "기능은 Gemini Alpha 또는 Workspace Experiments 및 조직별 관리자 설정에 따라 보이므로, 이 실행 환경에서 실제 계정 화면을 재현하지 않는다. 가짜 UI 대신 공식 메뉴 경로와 검토 순서를 설명 도식으로 제시한다.",
+    "cover": {
+      "label": "자동 생성된 퀴즈를 공개 전에 멈춰 세우는 검토 지점",
+      "scene_label": [
+        "수업 자료",
+        "질문 카드 초안",
+        "정답 열쇠",
+        "공개 봉투"
+      ],
+      "steps": "자료와 목표를 입력해 초안을 만들고, 정답과 배점을 확인한 다음 공개 범위를 결정한다",
+      "curiosity_hook": "생성 속도가 빨라질수록 어느 지점에서 사람이 멈춰 확인해야 할까",
+      "logic_type": "conditional",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "annotated_closeup",
+      "composition_type": "quiz-draft-review-desk",
+      "palette_family": "cobalt_apricot_paper"
+    },
+    "assets": [
+      {
+        "label": "Gemini 퀴즈 생성에서 사람 검토까지의 순서",
+        "scene_label": [
+          "학습 목표",
+          "퀴즈 초안",
+          "정답과 배점",
+          "게시 범위"
+        ],
+        "steps": "학습 목표 입력 → 퀴즈 초안 생성 → 정답·배점 표시 확인 → 응답자 범위 정한 뒤 게시",
+        "curiosity_hook": "생성 버튼 뒤에 실제로 남는 네 번의 확인은 무엇일까",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "content_role": "explanation",
+        "logic_type": "flow",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical news blog explanation image, 1200x630 landscape. Show one continuous paper pathway for creating a Google Forms quiz with Gemini, using four clear checkpoints in Korean: '학습 목표', '퀴즈 초안', '정답·배점 확인', '게시 범위'. Use physical objects: a curriculum sheet, question cards, a small answer-key stamp, and a sealed publish envelope. Show the order with a restrained curved path, not a dashboard or separate cards. Large short Korean labels only. Cobalt ink, apricot review marks, warm paper background, crisp flat editorial diagram. No logos, no fake UI screenshots, no people, laptops, robots, English sentences, charts, watermarks, neon, or invented data.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "학습 목표",
+          "퀴즈 초안",
+          "정답·배점 확인",
+          "게시 범위"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "자동 생성에 맡길 내용과 사람이 결정할 내용을 가르는 기준",
+        "scene_label": [
+          "문항 초안",
+          "사실 확인",
+          "정답 키",
+          "응답자 설정"
+        ],
+        "steps": "Gemini는 문항 초안을 제안하고, 사람은 사실·정답·배점·공개 대상을 확인한다",
+        "curiosity_hook": "빠르게 생성할 수 있는 일과 책임을 남겨야 하는 일은 어디서 갈릴까",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "content_role": "explanation",
+        "logic_type": "comparison",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical news blog explanation image, 1200x630 landscape. Create a tactile editorial comparison using a single long worktable, not split panels. On the left, a pencil tray labeled '초안 만들기' with question cards; on the right, four deliberate review tools labeled '사실 확인', '정답 키', '배점', '응답자 설정'. A clear hand-off seam in the middle says '사람이 최종 확인'. Use large readable Korean labels, cobalt, warm paper and apricot accents. No product logos, fake browser UI, people, laptops, robots, generic AI imagery, English sentences, dashboards, charts, watermarks, neon, or invented metrics.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "초안 만들기",
+          "사실 확인",
+          "정답 키",
+          "배점",
+          "응답자 설정",
+          "사람이 최종 확인"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "Google Forms에서 Gemini로 새 퀴즈를 빠르게 만드는 기능",
+      "source": "Google Workspace Updates",
+      "url": "https://workspaceupdates.googleblog.com/2026/07/use-gemini-in-google-forms-to-quickly-create-a-new-quiz.html",
+      "published_at": "2026-07-30T15:42:17+00:00",
+      "blurb_kr": "Google은 Google Forms의 Gemini가 프롬프트와 자료를 바탕으로 퀴즈 초안을 만들고 정답·배점을 포함하도록 하는 기능을 안내했다.",
+      "references": [
+        {
+          "title": "Use Gemini in Google Forms to quickly create a new quiz",
+          "url": "https://workspaceupdates.googleblog.com/2026/07/use-gemini-in-google-forms-to-quickly-create-a-new-quiz.html",
+          "kind": "official"
+        },
+        {
+          "title": "Create a form with Gemini in Google Forms",
+          "url": "https://support.google.com/docs/answer/16346789?hl=en-GB",
+          "kind": "documentation"
+        },
+        {
+          "title": "Create a form or quiz | Google Forms API",
+          "url": "https://developers.google.com/workspace/forms/api/guides/create-form-quiz",
+          "kind": "documentation"
+        },
+        {
+          "title": "I used Gemini in Google Forms to auto-build a survey and analyze responses for me",
+          "url": "https://www.techradar.com/ai-platforms-assistants/i-used-gemini-in-google-forms-to-auto-build-a-survey-and-analyze-responses-for-me",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "무엇이 바뀌었나: 빈 퀴즈 대신 검토할 초안부터 만든다"
+        },
+        {
+          "t": "p",
+          "text": "Google Workspace Updates는 Google Forms에서 Gemini에게 새 퀴즈를 만들도록 요청하는 흐름을 소개했다. ‘Help me create’에 주제와 조건을 적으면 Gemini가 퀴즈 초안을 만들고, 퀴즈로 생성된 경우 정답과 배점도 함께 넣는다. 객관식·체크박스·그리드·단답형·장문형을 섞을 수 있다는 점도 공식 도움말에 명시돼 있다. 바뀐 것은 문항 편집기가 사라진 것이 아니라, 사람이 빈 화면에서 시작하지 않아도 된다는 점이다."
+        },
+        {
+          "t": "table",
+          "caption": "자동 생성 전후에 누가 결정하는가",
+          "headers": [
+            "단계",
+            "Gemini가 돕는 일",
+            "사람이 확인할 일"
+          ],
+          "rows": [
+            [
+              "초안",
+              "프롬프트를 바탕으로 문항 구성 제안",
+              "학습 목표와 범위가 빠지지 않았는지 확인"
+            ],
+            [
+              "정답·배점",
+              "생성 퀴즈에 정답과 점수 포함",
+              "정답의 유일성·점수 비중·부분 점수 판단"
+            ],
+            [
+              "게시",
+              "퀴즈 생성 뒤 게시 흐름 제공",
+              "응답자 범위와 공개 시점 결정"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Gemini는 퀴즈 초안을 빠르게 만들지만, 정답·배점·게시 범위는 생성 결과를 읽은 뒤 사람이 확정하는 순서가 남는다."
+        },
+        {
+          "t": "h",
+          "text": "먼저 확인할 접근 조건: 모든 Forms 계정에 바로 보이지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "공식 도움말은 이 퀴즈 생성 기능을 Gemini Alpha 또는 Google Workspace Experiments의 일부로 설명한다. 조직 관리자가 Gemini Alpha 기능 접근을 제어하며, 메뉴가 보이지 않으면 조직에서 Alpha 기능이 활성화되지 않았을 수 있다. 현재 공식 안내 기준으로 퀴즈 생성은 영어로만 제공되고 데스크톱에서 이용한다. 따라서 동료에게 ‘Forms에 버튼이 생겼다’고 안내하기 전에 계정 유형, 조직의 관리자 정책, 언어 조건을 같이 확인해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "일반적인 ‘Help me create a form’ 기능과도 구분할 필요가 있다. 같은 도움말에서 Forms 생성 자체는 적격 Google Workspace 또는 Google AI 요금제가 필요하다고 안내하지만, 퀴즈 생성은 그 위에 Alpha·실험 프로그램 조건을 더 적고 있다. 구독이 있다고 해서 퀴즈 생성 메뉴까지 동일하게 열리는 것으로 단정하면 안 된다."
+        },
+        {
+          "t": "h",
+          "text": "좋은 프롬프트는 질문 수보다 평가 경계를 먼저 적는다"
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "p",
+          "text": "처음 요청할 때는 ‘보안 교육 퀴즈 10개’처럼 주제만 적기보다 대상, 확인하려는 행동, 포함·제외할 자료를 함께 적는 편이 검토가 쉽다. 예를 들어 신입 개발자 대상이라면 어떤 정책 문서의 어느 범위인지, 객관식과 단답형을 각각 몇 개로 할지, 정답 설명이 필요한지까지 적을 수 있다. 공식 도움말도 복잡한 폼을 만들 때 프롬프트에 세부 사항을 포함하라고 권한다."
+        },
+        {
+          "t": "code",
+          "language": "text",
+          "text": "신입 개발자용 5문항 퀴즈를 만들어 줘.\n주제는 사내 비밀번호 관리자 사용 규칙이고,\n첨부한 온보딩 문서의 1~2장만 근거로 삼아.\n객관식 4문항과 단답형 1문항으로 구성하고,\n각 문항의 정답과 배점을 제안해 줘.\n정책에 없는 추측성 사례는 넣지 마."
+        },
+        {
+          "t": "p",
+          "text": "이런 요청은 결과의 사실성을 보장하지는 않는다. 다만 사람이 확인해야 할 경계를 문항마다 추적할 수 있게 만든다. 특히 최신 정책, 법·보안 지침, 제품 가격처럼 바뀔 수 있는 내용은 생성된 문장을 원문과 다시 대조해야 한다. 독립 사용기에서도 Forms 생성은 빠르지만, 질문 구조와 응답 분석의 유용성은 사용자가 요구 사항을 얼마나 구체적으로 적는지에 달려 있다고 설명한다."
+        },
+        {
+          "t": "h",
+          "text": "생성 뒤에는 정답과 배점을 먼저 보고, 공개는 마지막에 한다"
+        },
+        {
+          "t": "p",
+          "text": "공식 순서는 초안을 만든 뒤 ‘Show answer key’로 정답과 점수를 검토하고, 필요하면 프롬프트를 고쳐 다시 생성한 다음 퀴즈를 만든다. 새 버전을 만들면 이전 버전으로 돌아갈 수 없다는 안내도 있으므로, 바꾸기 전 초안에서 달라진 문항을 비교해 두는 편이 안전하다. 퀴즈를 만든 뒤에도 개별 질문이나 답안 키를 편집할 수 있으며, 그 다음에야 Publish와 응답자 관리 단계로 넘어간다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "자동화가 맡는 것은 문항 초안이다. 사실 확인, 정답 키, 배점, 누구에게 언제 공개할지는 사람이 최종 결정해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "기존 방식과 비교하면: 편집 시간은 줄어도 검토 책임은 줄지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "직접 만들 때는 문항 작성과 형식 선택을 사람이 모두 하지만, 생성 방식에서는 초안 생성 시간이 줄어든다. 그 대신 잘못된 전제나 모호한 답이 여러 문항으로 한꺼번에 퍼질 수 있다. 정답이 하나여야 하는 객관식에는 특히 주의가 필요하다. 그럴듯한 오답보다 중요한 것은, 질문이 제공한 자료만으로 하나의 답에 도달하는지다. 점수는 난이도보다 학습 목표의 중요도에 따라 사람이 다시 배분하는 편이 낫다."
+        },
+        {
+          "t": "h",
+          "text": "바로 적용할 체크리스트"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "관리자에게 Gemini Alpha 또는 Workspace Experiments 접근 가능 여부와 계정 대상 범위를 확인한다.",
+            "데스크톱·영어 조건에서 Forms의 Help me create 메뉴가 실제로 보이는지 확인한다.",
+            "프롬프트에 대상·자료 범위·문항 형식·제외할 내용을 적고 작은 퀴즈부터 만든다.",
+            "Show answer key에서 모든 정답과 배점, 특히 복수 해석 가능한 문항을 다시 읽는다.",
+            "Publish 전에는 응답자 범위와 공유 시점을 정하고, 새 버전을 만들기 전에는 기존 초안을 기록한다."
+          ]
+        },
+        {
+          "t": "quote",
+          "text": "퀴즈 생성의 속도는 질문을 대신 쓰는 데서 끝나지 않는다. 사람이 무엇을 확인해야 하는지 더 빨리 드러나게 만들 때 비로소 운영 시간이 줄어든다."
+        },
+        {
+          "t": "p",
+          "text": "작은 내부 퀴즈로 시작해 보자. 세 문항 정도를 만들고, 원문 자료에서 정답을 찾을 수 있는지와 응답자가 실제로 볼 범위가 맞는지 확인한다. 이 확인이 익숙해진 뒤에야 긴 교육 과정이나 외부 응답자가 있는 설문으로 넓히는 편이 안전하다."
+        }
+      ]
+    }
+  ],
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-07-31/Google-Forms-Gemini-퀴즈-검토-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-31/Google-Forms-Gemini-퀴즈-검토-대표.webp",
+      "alt": "수업 자료에서 나온 퀴즈 초안이 정답 열쇠와 배점 저울을 거쳐 공개 봉투로 향하는 Google Forms 편집 장면",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. Create a 1200x630 landscape Korean technology news cover as one tactile close-up editorial scene. On a warm paper desk, a curriculum sheet feeds three physical question cards toward a small brass answer-key token and a compact balance scale; beyond them sits one sealed cobalt publish envelope. Make the review pause obvious with a single apricot marker between draft cards and the envelope. The core objects occupy 60 percent of the frame. Cut-paper editorial illustration, crisp shadows, cobalt ink, apricot accents, paper texture. No text, logos, fake UI, split panels, dashboards, laptops, people, robots, generic AI imagery, flowcharts, cards, watermark, neon, glossy stock photography, or invented numbers.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "art_direction": "annotated_closeup",
+      "composition_type": "quiz-draft-review-desk",
+      "palette_family": "cobalt_apricot_paper",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 87700,
+      "quality": 82,
+      "sha256": "cb0b89e945cad04e961a51f40fd8277aa2c72e488b72bf6ce84c0882f4880d18"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-07-31/Gemini-퀴즈-생성-검토-순서.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-31/Gemini-퀴즈-생성-검토-순서.webp",
+      "alt": "학습 목표부터 퀴즈 초안, 정답과 배점 확인, 게시 범위 결정까지 이어지는 Gemini 퀴즈 검토 순서",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical news blog explanation image, 1200x630 landscape. Show one continuous paper pathway for creating a Google Forms quiz with Gemini, using four clear checkpoints in Korean: '학습 목표', '퀴즈 초안', '정답·배점 확인', '게시 범위'. Use physical objects: a curriculum sheet, question cards, a small answer-key stamp, and a sealed publish envelope. Show the order with a restrained curved path, not a dashboard or separate cards. Large short Korean labels only. Cobalt ink, apricot review marks, warm paper background, crisp flat editorial diagram. No logos, no fake UI screenshots, no people, laptops, robots, English sentences, charts, watermarks, neon, or invented data.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 77452,
+      "quality": 82,
+      "sha256": "c1234e0454d5fc709e42422fb67b5546cd9d332deecee6a32d518978490e4b59"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-07-31/퀴즈-생성-사람-검토-기준.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-07-31/퀴즈-생성-사람-검토-기준.webp",
+      "alt": "문항 초안 생성과 사실 확인·정답 키·배점·응답자 설정을 구분하는 Google Forms 퀴즈 검토 기준",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical news blog explanation image, 1200x630 landscape. Create a tactile editorial comparison using a single long worktable, not split panels. On the left, a pencil tray labeled '초안 만들기' with question cards; on the right, four deliberate review tools labeled '사실 확인', '정답 키', '배점', '응답자 설정'. A clear hand-off seam in the middle says '사람이 최종 확인'. Use large readable Korean labels, cobalt, warm paper and apricot accents. No product logos, fake browser UI, people, laptops, robots, generic AI imagery, English sentences, dashboards, charts, watermarks, neon, or invented metrics.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 127612,
+      "quality": 82,
+      "sha256": "b46a83d259ca7bda52be5b7d90b0c5a446e25a7bc4f7dc0fb697fdd880c22c57"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
+      "url": "https://won0322.tistory.com/145",
+      "reason": "Google Workspace 자동 생성 결과도 저장 위치와 공유 범위를 사람이 확인해야 한다는 점을 이어서 볼 수 있다."
+    },
+    {
+      "title": "Windows 로그인에 FIDO2 보안 키를 더한 Google Workspace, 바뀌는 지점과 준비 순서",
+      "url": "https://won0322.tistory.com/141",
+      "reason": "새 Workspace 기능을 쓰기 전 관리자 설정과 적용 범위를 점검하는 방법을 함께 확인할 수 있다."
+    }
+  ]
+}
