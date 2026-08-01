@@ -1,0 +1,91 @@
+{
+  "title": "여러 CSV를 중복 없이 주간 보고서로 합치기: Python 직접 실험",
+  "title_candidates": [
+    "여러 CSV를 중복 없이 주간 보고서로 합치기: Python 직접 실험",
+    "두 CSV를 중복 없이 합친 Python csv 실험",
+    "두 개의 업무 CSV에서 같은 행을 제외하고 팀별 주간 보고서를 저장한 실제 실험: 파일을 합치기 전에 같은 업무 한 행…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-08-01-automation",
+  "publish_date": "2026-08-01",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-01T18:00:00+09:00",
+  "tags": [
+    "CSV",
+    "업무자동화",
+    "Python",
+    "주간 보고서",
+    "중복 제거"
+  ],
+  "meta_description": "월요일과 화요일에 받은 업무 CSV를 합치면 같은 일이 두 번 들어갈 수 있다. 이번에는 개인정보 없는 네 행의 테스트 CSV를 실제로 합쳤다. 중복 기준을 날짜·팀·업무로 정하고, 한 행을 제외한… 개인정보 없는 테스트 CSV 네 행에서 한 중복을 제외하고 팀별 시간을 새 보고서로…",
+  "key_summary": [
+    "1. 두 CSV를 중복 없이 합친 Python csv 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 여러 CSV를 중복 없이 주간 보고서로 합치기: Python 직접 실험"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-08-01.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-01-automation.html",
+  "before_ad_html": "docs/tistory/2026-08-01-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-01-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-01-automation-adfit.html",
+  "source_sha256": "de3ae29ae8c87b8eec5bcd064ebc8d33ad996c6a1c3cce312e260e66cad3027b",
+  "html_sha256": "8c2a40d5d6abb2caca60ffa2aa6dd80952a2279251263306bbcac129921809aa",
+  "adfit_sha256": "f58d5591732fd78a6827d6f1bad1b16c3099222429630974a9be3065eb2fd03d",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-보고서-대표.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-보고서-대표.webp",
+      "original_url": "",
+      "alt": "두 업무 CSV에서 중복 행을 찾아 주간 보고서를 저장하는 대표 일러스트",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/입력-4행-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/입력-4행-실제-캡처.webp",
+      "original_url": "",
+      "alt": "두 테스트 CSV에서 네 행을 읽은 실제 Playwright 캡처",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-제외-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-제외-실제-캡처.webp",
+      "original_url": "",
+      "alt": "중복 한 행을 제외해 팀별 합계를 저장한 실제 Playwright 캡처",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-제외-도식.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-제외-도식.webp",
+      "original_url": "",
+      "alt": "두 CSV 입력에서 중복을 제외하고 주간 보고서를 만드는 설명 일러스트",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

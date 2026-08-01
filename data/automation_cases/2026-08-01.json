@@ -1,0 +1,479 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-01-automation",
+  "publish_date": "2026-08-01",
+  "date_label": "2026. 8. 1",
+  "weekday": "토",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "category": "자동화·실험",
+  "scheduled_at": "2026-08-01T18:00:00+09:00",
+  "publication_mode": "scheduled",
+  "primary_query": "여러 CSV 파일을 중복 없이 주간 보고서로 합치기",
+  "tags": [
+    "CSV",
+    "업무자동화",
+    "Python",
+    "주간 보고서",
+    "중복 제거"
+  ],
+  "editorial": {
+    "headline": "여러 CSV를 중복 없이 주간 보고서로 합치기: Python 직접 실험",
+    "opening": "월요일과 화요일에 받은 업무 CSV를 합치면 같은 일이 두 번 들어갈 수 있다. 이번에는 개인정보 없는 네 행의 테스트 CSV를 실제로 합쳤다. 중복 기준을 날짜·팀·업무로 정하고, 한 행을 제외한 뒤 팀별 시간을 보고서로 저장했다. 기대한 결과는 세 행 보관과 팀별 60분·45분 합계였다. 실제 출력도 그 값과 같았다.",
+    "closing": "파일을 합치는 일은 복잡한 도구보다 중복 기준을 먼저 문장으로 정하는 일이 중요하다. 작은 공개 테스트 파일에서 결과를 확인한 뒤 실제 업무 파일에는 사본으로 적용하는 편이 안전하다.",
+    "action": "다음 주 보고서에서 파일 두 개만 골라, 중복을 판단할 열 세 개를 먼저 적어 보자.",
+    "audience_problem": "여러 사람이 보낸 CSV를 한 표로 합칠 때 같은 업무가 두 번 계산될까 걱정하는 사람을 위한 실험이다.",
+    "reader_takeaway": "Python 표준 csv 모듈로 두 파일을 읽고, 중복 행을 제외한 뒤 팀별 시간을 새 CSV로 저장하는 최소 흐름을 재현할 수 있다.",
+    "why_now": "주간 보고서와 간단한 집계는 반복되지만, 중복 기준이 불분명하면 자동화가 오히려 잘못된 합계를 빠르게 만든다.",
+    "topic_key": "csv-weekly-report-deduplicate",
+    "reader_question": "여러 CSV를 합칠 때 같은 업무를 한 번만 계산하려면 어떻게 확인할까?",
+    "entities": [
+      "Python csv",
+      "CSV",
+      "Playwright"
+    ],
+    "coverage": [
+      "problem",
+      "setup",
+      "implementation",
+      "evidence",
+      "comparison",
+      "failure",
+      "rollback"
+    ]
+  },
+  "visual": {
+    "subject": "두 개의 업무 CSV에서 같은 행을 제외하고 팀별 주간 보고서를 저장한 실제 실험",
+    "hook": "파일을 합치기 전에 같은 업무 한 행을 찾아낼 수 있을까?",
+    "motif": "중복 행, 보관 행, 완성 보고서",
+    "cover": {
+      "label": "중복 행을 찾는 순간",
+      "scene_label": [
+        "두 CSV",
+        "지운 중복",
+        "저장 보고서"
+      ],
+      "steps": "두 업무 파일을 맞대어 보고 같은 행 한 개를 제외한 뒤 보고서를 저장하는 장면이다.",
+      "curiosity_hook": "합계가 틀어지기 전 어떤 행을 먼저 볼까?",
+      "logic_type": "scene",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "warm-paper-editorial",
+      "composition_type": "close_document_scene",
+      "palette_family": "sage-apricot-charcoal"
+    },
+    "assets": [
+      {
+        "label": "합치기 전 실제 입력",
+        "scene_label": [
+          "monday.csv",
+          "tuesday.csv",
+          "4행 입력"
+        ],
+        "steps": "실행 스크립트가 두 테스트 CSV에서 총 네 행을 읽은 결과를 Playwright로 캡처했다.",
+        "curiosity_hook": "같은 업무가 어느 파일에서 겹쳤을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-08-01 KST에 개인정보 없는 임시 CSV 두 개를 Python으로 읽고, 실제 결과 HTML을 Playwright로 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "file:///tmp/blog-saturday-20260801/before.html",
+        "captured_at": "2026-08-01T14:13:00+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "중복 제외 뒤 실제 보고서",
+        "scene_label": [
+          "3행 보관",
+          "운영 60분",
+          "콘텐츠 45분"
+        ],
+        "steps": "중복 행을 제외하고 weekly_report.csv를 만든 실제 결과 HTML을 같은 환경에서 캡처했다.",
+        "curiosity_hook": "제외한 뒤 어떤 합계가 남았을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-08-01 KST에 같은 임시 입력을 실행해 weekly_report.csv를 저장한 실제 결과를 Playwright로 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "file:///tmp/blog-saturday-20260801/after.html",
+        "captured_at": "2026-08-01T14:13:00+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "중복 제외 규칙 도식",
+        "scene_label": [
+          "두 입력",
+          "중복 제외",
+          "주간 보고서"
+        ],
+        "steps": "두 입력에서 같은 키를 한 번만 남겨 보고서로 보내는 원리를 설명하는 기사 전용 일러스트다.",
+        "curiosity_hook": "제외 기준은 파일 이름이 아니라 무엇일까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: infographic-diagram Asset type: Korean blog article explanation image Primary request: article-specific illustrated explanation of cleaning two CSV work logs: a coral duplicate record is set aside and a single sage-green weekly report file remains. Text (verbatim): 중복 제외, 주간 보고서. Constraints: no logos, no fake terminal output, no fake dashboard, no charts, no watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "중복 제외",
+          "주간 보고서"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "news": [
+    {
+      "title_kr": "두 CSV를 중복 없이 합친 Python csv 실험",
+      "blurb_kr": "개인정보 없는 테스트 CSV 네 행에서 한 중복을 제외하고 팀별 시간을 새 보고서로 저장했다.",
+      "published_at": "2026-08-01T14:13:00+09:00",
+      "source": "Python csv 공식 문서",
+      "url": "https://docs.python.org/3/library/csv.html",
+      "references": [
+        {
+          "title": "Python csv",
+          "url": "https://docs.python.org/3/library/csv.html",
+          "kind": "reference"
+        },
+        {
+          "title": "Python defaultdict",
+          "url": "https://docs.python.org/3/library/collections.html#collections.defaultdict",
+          "kind": "official"
+        },
+        {
+          "title": "Playwright screenshots",
+          "url": "https://playwright.dev/docs/screenshots",
+          "kind": "official"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "같은 일이 두 번 계산되는 순간"
+        },
+        {
+          "t": "p",
+          "text": "파일을 한 폴더에 모으는 것만으로 보고서가 되지는 않는다. 이 실험에서는 날짜·팀·업무가 모두 같은 행을 중복으로 정했다. 실제 입력은 monday.csv 2행과 tuesday.csv 2행, 모두 가상 업무 문구였다."
+        },
+        {
+          "t": "h",
+          "text": "격리한 입력과 기대 결과"
+        },
+        {
+          "t": "p",
+          "text": "macOS의 임시 폴더에서 Python 3.9.6 표준 라이브러리만 사용했다. 기대 결과는 입력 4행, 보관 3행, 중복 1행이며 운영 60분과 콘텐츠 45분이다. 계정, API 키, 실제 업무 파일은 사용하지 않았다."
+        },
+        {
+          "t": "code",
+          "language": "python",
+          "text": "key = (row['date'], row['team'], row['task'])\nif key not in seen:\n    seen.add(key)\n    clean.append(row)"
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "실제 실행 전 결과 화면. 두 테스트 파일에서 네 행을 읽은 상태를 Playwright로 캡처했다."
+        },
+        {
+          "t": "h",
+          "text": "중복 기준을 코드에 넣기"
+        },
+        {
+          "t": "p",
+          "text": "행 전체를 비교하면 사소한 메모 차이에도 같은 업무를 놓칠 수 있다. 반대로 팀 이름만 보면 서로 다른 일을 지울 수 있다. 이번에는 날짜·팀·업무 세 열을 묶어 키로 삼았다."
+        },
+        {
+          "t": "p",
+          "text": "중복 판단은 기술 문제가 아니라 업무 약속이기도 하다. 같은 날짜에 같은 팀이 같은 점검을 두 번 했다면 이번 규칙은 한 행을 지우므로 실제 업무를 과소 집계할 수 있다. 반대로 담당자와 취합 담당자가 같은 일을 각각 보냈다면 두 행을 남기면 시간이 두 배가 된다. 그래서 자동화를 실행하기 전에는 날짜·팀·업무가 같으면 한 번으로 본다는 가정을 작은 표본에서 먼저 확인했다. 실제 조직에서는 담당자, 시간, 작업 번호처럼 더 구체적인 열을 키에 넣어야 할 수도 있다."
+        },
+        {
+          "t": "p",
+          "text": "입력 정리도 결과만큼 중요하다. CSV는 단순해 보이지만 헤더 이름이 달라지거나 빈 줄이 섞이면 코드가 기대한 값을 찾지 못한다. 이번 테스트 파일은 date, team, task, minutes라는 같은 헤더를 썼고 숫자는 정수 분으로 제한했다. 실제 파일을 적용할 때는 첫 행의 헤더와 날짜 형식부터 출력해 확인하고, 예상하지 못한 열이나 빈 값은 조용히 넘기지 않는 편이 낫다. 누락을 자동으로 0으로 바꾸면 보고서가 그럴듯해 보여도 원인을 찾기 어려워진다."
+        },
+        {
+          "t": "p",
+          "text": "집계 결과는 사람이 읽는 화면과 다음 프로그램이 읽는 파일을 모두 남겼다. 화면에는 입력·보관·제외 행 수를 보이고 weekly_report.csv에는 팀과 분만 적었다. 이렇게 분리하면 회의에서 숫자를 확인하는 사람은 화면을 보고 다음 보고서 단계는 CSV를 사용할 수 있다. 다만 이 파일은 합계만 담으므로 어떤 행이 제외됐는지까지 추적하려면 제외 목록 CSV를 별도로 저장해야 한다. 이번 실험은 중복이 한 행뿐이라 표준 출력에 그 수를 기록했지만, 실제 적용에서는 제외 사유와 원본 파일 이름을 함께 남기는 편이 좋다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "table",
+          "caption": "실제 실행 결과",
+          "headers": [
+            "항목",
+            "값",
+            "확인 방법"
+          ],
+          "rows": [
+            [
+              "입력",
+              "4행",
+              "두 CSV 읽기"
+            ],
+            [
+              "보관",
+              "3행",
+              "중복 키 제외"
+            ],
+            [
+              "제외",
+              "1행",
+              "같은 날짜·팀·업무"
+            ],
+            [
+              "보고서",
+              "운영 60분 / 콘텐츠 45분",
+              "weekly_report.csv"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "실제 실행 뒤 결과 화면. 중복 한 행을 제외한 팀별 합계가 weekly_report.csv에 저장됐다."
+        },
+        {
+          "t": "p",
+          "text": "실무에서 이 흐름을 반복하려면 파일 이름도 규칙으로 만든다. 예를 들어 월별 폴더 안에 팀별 입력 파일을 두고, 결과 파일에는 실행 날짜와 규칙 버전을 붙이면 나중에 숫자가 달라졌을 때 비교하기 쉽다. 다만 자동으로 폴더 안의 모든 파일을 읽는 방식은 오래된 사본과 내려받은 파일까지 섞을 수 있다. 처음에는 명시적으로 두 파일을 지정하고, 결과가 안정된 뒤에만 대상 폴더와 확장자 제한을 추가하는 편이 안전하다. 또한 분 단위 합계는 단순하지만 근무 시간이나 비용처럼 민감한 값에는 휴게 시간, 시간대, 승인 상태 같은 별도 규칙이 필요하다. 이 예제의 60분과 45분은 테스트 데이터에서 직접 계산한 값일 뿐, 업무량이나 생산성을 측정한 수치가 아니다. 자동화를 조직에 연결할 때는 누가 입력을 수정할 수 있는지, 결과 파일을 어디에 보관하는지, 잘못된 결과를 누가 승인 없이 삭제할 수 있는지도 정해야 한다. 권한이 없는 공유 폴더나 외부 서비스에 원본을 자동 업로드하지 않고 로컬 사본으로 시작한 이유도 여기에 있다. 보고서가 틀렸을 때 가장 빠른 복구는 자동화를 더 복잡하게 만드는 일이 아니라, 입력 파일과 제외 규칙을 다시 읽고 작은 표본으로 재실행하는 일이다."
+        },
+        {
+          "t": "p",
+          "text": "재현할 때는 먼저 제공한 네 행과 동일한 구조로 파일을 만들고 실행 뒤 결과 CSV를 열어 보자. 입력 행 수와 보관 행 수가 기대와 다르면 즉시 실제 파일 전체에 적용하지 말고, 중복 키에 넣은 열을 한 개씩 확인한다. 이 순서는 수백 행의 보고서에서도 같은 방식으로 작동하지만, 큰 파일의 처리 시간이나 메모리 사용량은 이번에 측정하지 않았으므로 별도 성능 검증이 필요하다."
+        },
+        {
+          "t": "p",
+          "text": "마지막으로 결과를 다른 사람이 확인할 수 있게 만들려면 실행 조건을 함께 남긴다. 이번에는 운영체제, Python과 Node 버전, Playwright 버전, 입력 파일의 행 수, 실제 표준 출력을 기록했다. 같은 명령이라도 CSV의 인코딩이나 열 이름이 달라지면 결과가 바뀔 수 있으므로, 문제를 전달할 때는 원본 대신 익명화한 최소 입력과 기대 결과를 함께 준비하는 편이 좋다. 이 글의 화면은 모두 그 최소 입력에서 나온 것이며, 실제 고객 정보나 회사 문서는 사용하지 않았다. 보고서 자동화는 한 번의 실행보다 다음 주에도 같은 기준으로 다시 확인할 수 있는 기록을 남길 때 더 쓸모가 커진다."
+        },
+        {
+          "t": "p",
+          "text": "숫자가 맞는다는 말도 무엇과 비교했는지 없으면 확인할 수 없다. 이번에는 예상한 네 행·세 행·한 행과 실제 출력이 정확히 같은지, 그리고 최종 CSV의 두 팀 합계가 화면에 보인 값과 같은지를 차례로 확인했다. 이처럼 자동화는 입력, 규칙, 출력 세 가지를 한 번에 볼 수 있을 때 수정 범위를 좁히기 쉽다."
+        },
+        {
+          "t": "h",
+          "text": "코드는 짧고 결과는 파일로 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "실행 출력은 input_rows 4, kept_rows 3, duplicate_rows 1을 기록했다. 새 CSV에는 운영 60, 콘텐츠 45가 저장됐다. 화면만 보지 않고 결과 파일을 다시 읽는 이유는, 자동화의 판단이 최종 파일에도 반영됐는지 확인하기 위해서다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "실제 화면이 아니라, 이번 실험의 두 입력·중복 제외·주간 보고서 관계를 설명하는 기사 전용 도식이다."
+        },
+        {
+          "t": "h",
+          "text": "처음 캡처가 실패한 이유"
+        },
+        {
+          "t": "p",
+          "text": "첫 Playwright 캡처는 Chromium 실행 파일이 없어 실패했다. 브라우저를 설치한 뒤 같은 로컬 HTML을 다시 캡처했다. 이 실패는 CSV 처리 실패가 아니라 증거 화면을 만드는 도구 준비 실패였으므로, 둘을 구분해 기록했다."
+        },
+        {
+          "t": "h",
+          "text": "실제 파일에 적용하기 전 체크"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "원본 CSV는 복사본으로만 시작한다.",
+            "중복을 뜻하는 열과 예외를 팀과 먼저 합의한다.",
+            "제외한 행도 별도 목록으로 남긴다.",
+            "처음에는 파일 두 개와 수십 행으로 결과를 눈으로 확인한다.",
+            "개인정보와 고객 식별자는 캡처·로그에 넣지 않는다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "범위와 되돌리는 방법"
+        },
+        {
+          "t": "p",
+          "text": "이 실험은 날짜·팀·업무가 완전히 같은 행만 제외한다. 오탈자, 시간대, 서로 다른 파일 형식, 금액 합계의 검증까지 해결하지 않는다. 잘못된 규칙이 의심되면 생성한 weekly_report.csv를 버리고 원본 사본에서 기준을 고쳐 다시 실행한다."
+        },
+        {
+          "t": "quote",
+          "text": "자동화의 첫 번째 결과물은 완성된 표가 아니라, 무엇을 같은 일로 볼지 드러낸 기준이다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
+      "url": "https://won0322.tistory.com/132",
+      "reason": "자동 처리 전에 조건과 예외를 분리해 확인하는 흐름을 연결한다."
+    },
+    {
+      "title": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
+      "url": "https://won0322.tistory.com/126",
+      "reason": "작은 설정 차이가 실제 결과를 바꾸므로 검증 화면을 남기는 방법과 이어진다."
+    }
+  ],
+  "references": [
+    {
+      "title": "Python csv",
+      "url": "https://docs.python.org/3/library/csv.html"
+    },
+    {
+      "title": "Python defaultdict",
+      "url": "https://docs.python.org/3/library/collections.html#collections.defaultdict"
+    },
+    {
+      "title": "Playwright screenshots",
+      "url": "https://playwright.dev/docs/screenshots"
+    }
+  ],
+  "verification": {
+    "mode": "executed",
+    "started_at": "2026-08-01T14:12:00+09:00",
+    "completed_at": "2026-08-01T14:13:00+09:00",
+    "command_exit_code": 0,
+    "stdout_excerpt": "{\"input_rows\": 4, \"kept_rows\": 3, \"duplicate_rows\": 1, \"totals\": {\"운영\": 60, \"콘텐츠\": 45}}",
+    "environment": {
+      "os": "macOS",
+      "runtime": "Python 3.9.6; Node v20.20.2",
+      "tool_version": "Playwright 1.55.0 Chromium 140.0.7339.16",
+      "source_revision": "Python 3.9.6 표준 csv·collections 모듈; 임시 스크립트 /tmp/blog-saturday-20260801/report.py"
+    },
+    "commands": [
+      "python3 /tmp/blog-saturday-20260801/report.py",
+      "npx --yes playwright@1.55.0 install chromium",
+      "npx --yes playwright@1.55.0 screenshot --viewport-size='1200,630' file:///tmp/blog-saturday-20260801/after.html /tmp/blog-saturday-20260801/after.png"
+    ],
+    "input_fixture": "개인정보가 없는 monday.csv와 tuesday.csv에 날짜·팀·업무·분 열을 각각 두 행씩 넣었고, 콘텐츠 초안 검토 행 한 개를 의도적으로 중복했다.",
+    "expected": "네 입력 행에서 날짜·팀·업무가 같은 중복 한 행을 제외해 세 행을 보관하고, 운영 60분과 콘텐츠 45분을 weekly_report.csv에 저장해야 한다.",
+    "actual": "실제 출력은 입력 4행, 보관 3행, 중복 1행이었다. weekly_report.csv에는 운영 60과 콘텐츠 45가 저장됐고, 두 결과 화면을 Playwright로 캡처했다.",
+    "failure": "처음 Playwright screenshot은 Chromium 실행 파일이 없어 실패했다. npx playwright install chromium으로 브라우저를 설치한 뒤 같은 로컬 HTML 캡처를 다시 실행해 성공했다.",
+    "rollback": "임시 폴더와 생성한 weekly_report.csv를 삭제하면 실험 입력은 사라진다. 실제 업무에는 원본을 덮어쓰지 말고 결과 파일을 폐기한 뒤 중복 기준을 고쳐 사본에서 다시 실행한다.",
+    "evidence_files": [
+      "visual_1",
+      "visual_2"
+    ],
+    "measurement_files": [],
+    "problem_lane": "보고서·표",
+    "tool_brand": "Python csv"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-보고서-대표.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-보고서-대표.webp",
+      "alt": "두 업무 CSV에서 중복 행을 찾아 주간 보고서를 저장하는 대표 일러스트",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: illustration-story Asset type: a final Korean blog cover illustration Primary request: Korean office worker highlights one duplicate record on a weekly CSV paper report before saving the corrected report. Style/medium: warm editorial illustration. Composition/framing: one centered report and hand, no panels. Text (verbatim): 중복 제외, 보고서 저장. Constraints: Asset intent: editorial-scene, no logos, no fake UI, no watermark. Avoid: dashboard, diagram, AI robot, English gibberish.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "art_direction": "warm-paper-editorial",
+      "composition_type": "close_document_scene",
+      "palette_family": "sage-apricot-charcoal",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 72044,
+      "quality": 82,
+      "sha256": "8a36bde66270a1cea0a112974296ce32267e378ec8cacdf3ac57bd5a03596d99"
+    },
+    "visual_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/입력-4행-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/입력-4행-실제-캡처.webp",
+      "alt": "두 테스트 CSV에서 네 행을 읽은 실제 Playwright 캡처",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "file:///tmp/blog-saturday-20260801/before.html",
+      "captured_at": "2026-08-01T14:13:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 15124,
+      "quality": 82,
+      "sha256": "a3745cac578d6393eac140b91fdfd0494a344c386aa765955e580849d52f187e",
+      "capture_sha256": "a3745cac578d6393eac140b91fdfd0494a344c386aa765955e580849d52f187e"
+    },
+    "visual_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-제외-실제-캡처.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-제외-실제-캡처.webp",
+      "alt": "중복 한 행을 제외해 팀별 합계를 저장한 실제 Playwright 캡처",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "file:///tmp/blog-saturday-20260801/after.html",
+      "captured_at": "2026-08-01T14:13:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 16338,
+      "quality": 82,
+      "sha256": "6acb61d8a02c3db30c6d8fb09676386d4d0ef67b62a6914adad35f8e7e8494fc",
+      "capture_sha256": "6acb61d8a02c3db30c6d8fb09676386d4d0ef67b62a6914adad35f8e7e8494fc"
+    },
+    "visual_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-01-automation/중복-제외-도식.webp",
+      "path": "docs/tistory/assets/2026-08-01-automation/중복-제외-도식.webp",
+      "alt": "두 CSV 입력에서 중복을 제외하고 주간 보고서를 만드는 설명 일러스트",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: infographic-diagram Asset type: Korean blog article explanation image Primary request: article-specific illustrated explanation of cleaning two CSV work logs: a coral duplicate record is set aside and a single sage-green weekly report file remains. Text (verbatim): 중복 제외, 주간 보고서. Constraints: no logos, no fake terminal output, no fake dashboard, no charts, no watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 40810,
+      "quality": 82,
+      "sha256": "b7eba518c596c53049df04452638303906668faae1ebd895adf940ded2b6f4b6"
+    }
+  }
+}
