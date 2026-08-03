@@ -19,6 +19,7 @@ GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
+NATURAL_VOICE_POLICY_START = date(2026, 8, 4)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -96,6 +97,82 @@ BANNED_EDITORIAL_PHRASES = {
     "자동 생성 데일리 다이제스트",
     "본문은 핵심 내용 요약과 학습용 문제로 구성",
     "승원의 메모",
+}
+FUTURE_AI_CLICHES = {
+    "이번 글에서는",
+    "본 글에서는",
+    "지금부터 알아보겠습니다",
+    "살펴보겠습니다",
+    "알아보겠습니다",
+    "다음과 같습니다",
+    "결론적으로",
+    "요약하자면",
+    "도움이 되길 바랍니다",
+}
+REPORT_ONLY_HEADINGS = {
+    "개요",
+    "배경",
+    "현황",
+    "분석",
+    "결론",
+    "요약",
+    "시사점",
+    "제언",
+}
+CLICKBAIT_TITLE_PHRASES = {
+    "충격",
+    "소름",
+    "대박",
+    "역대급",
+    "무조건 봐야",
+    "안 보면 손해",
+}
+TITLE_INTENT_MARKERS = {
+    "방법",
+    "이유",
+    "차이",
+    "기준",
+    "확인",
+    "해결",
+    "바뀐",
+    "적용",
+    "막는",
+    "줄이는",
+    "늘리는",
+    "어떻게",
+    "왜",
+    "까지",
+    "전후",
+    "순서",
+    "선택",
+    "설정",
+    "실험",
+    "구현",
+    "로드맵",
+}
+GENERIC_TAGS = {
+    "ai",
+    "it",
+    "개발",
+    "뉴스",
+    "정보",
+    "최신",
+    "오늘",
+    "블로그",
+}
+SEARCH_STOP_WORDS = {
+    "그리고",
+    "그러나",
+    "위한",
+    "대한",
+    "에서",
+    "으로",
+    "하는",
+    "있는",
+    "없는",
+    "이번",
+    "오늘",
+    "최신",
 }
 BANNED_COVER_COMPOSITIONS = {
     "three_column_cards",
@@ -305,6 +382,19 @@ def _strict_text_list(value, *, minimum=0):
         and len(value) >= minimum
         and all(_strict_text(item) for item in value)
     )
+
+
+def _search_terms(value):
+    return {
+        token
+        for token in re.findall(r"[0-9a-z가-힣+#.]+", plain(value).casefold())
+        if len(token) >= 2 and token not in SEARCH_STOP_WORDS
+    }
+
+
+def _shares_search_term(value, terms):
+    compact = re.sub(r"\s+", "", plain(value).casefold())
+    return any(term in compact or compact in term for term in terms if len(term) >= 2)
 
 
 def _schema_reasons(source, identity, *, require_images=True):
@@ -689,6 +779,33 @@ def _editorial_reasons(source, identity):
     return reasons
 
 
+def _search_metadata_reasons(source, identity):
+    """Keep future titles useful in search without turning them into clickbait."""
+    if date.fromisoformat(identity.publish_date) < NATURAL_VOICE_POLICY_START:
+        return []
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    headline = plain(editorial.get("headline"))
+    searchable = headline.casefold()
+    primary_terms = _search_terms(source.get("primary_query"))
+    entities = editorial.get("entities") if isinstance(editorial.get("entities"), list) else []
+    primary_terms.update(
+        term for entity in entities for term in _search_terms(entity)
+    )
+    tags = source.get("tags") if isinstance(source.get("tags"), list) else []
+    normalized_tags = [plain(tag).casefold() for tag in tags]
+    matched_tags = sum(_shares_search_term(tag, primary_terms) for tag in tags)
+    invalid = (
+        not primary_terms
+        or not _shares_search_term(headline, primary_terms)
+        or not any(marker in searchable for marker in TITLE_INTENT_MARKERS)
+        or any(phrase in searchable for phrase in CLICKBAIT_TITLE_PHRASES)
+        or any(tag.startswith("#") or len(tag) > 30 for tag in normalized_tags)
+        or any(tag in GENERIC_TAGS for tag in normalized_tags)
+        or matched_tags < 2
+    )
+    return ["quality_search_metadata"] if invalid else []
+
+
 def _revisit_value_reasons(source, identity):
     """Require one durable artifact and three explicit return reasons."""
     if date.fromisoformat(identity.publish_date) < REVISIT_VALUE_POLICY_START:
@@ -860,12 +977,40 @@ def _depth_reasons(source, identity):
     return ["quality_depth"] if invalid else []
 
 
-def _prose_reasons(source):
+def _prose_reasons(source, identity):
     values = [plain(value) for value in _text_values(source)]
     searchable = "\n".join(values).casefold()
     reasons = []
     if any(phrase in searchable for phrase in BANNED_EDITORIAL_PHRASES):
         reasons.append("quality_style")
+
+    if date.fromisoformat(identity.publish_date) >= NATURAL_VOICE_POLICY_START:
+        news = source.get("news") if isinstance(source.get("news"), list) else []
+        item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+        content = item.get("content") if isinstance(item.get("content"), list) else []
+        headings = [
+            plain(block.get("text"))
+            for block in content
+            if isinstance(block, dict) and block.get("t") == "h"
+        ]
+        paragraphs = [
+            plain(block.get("text"))
+            for block in content
+            if isinstance(block, dict) and block.get("t") == "p" and plain(block.get("text"))
+        ]
+        opening = plain(
+            (source.get("editorial") or {}).get("opening")
+            if isinstance(source.get("editorial"), dict)
+            else ""
+        ).casefold()
+        unnatural = (
+            any(phrase in searchable for phrase in FUTURE_AI_CLICHES)
+            or any(heading in REPORT_ONLY_HEADINGS for heading in headings)
+            or any(opening.startswith(prefix) for prefix in ("오늘은", "이번 글은", "이 글은"))
+            or len(paragraphs) < max(4, len(headings) - 1)
+        )
+        if unnatural:
+            reasons.append("quality_natural_voice")
 
     long_segments = [
         re.sub(r"\s+", " ", value).strip().casefold()
@@ -1247,12 +1392,13 @@ def source_authoring_reasons(source, identity):
         lambda: _identity_reasons(source, identity),
         lambda: _schema_reasons(source, identity, require_images=False),
         lambda: _editorial_reasons(source, identity),
+        lambda: _search_metadata_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
-        lambda: _prose_reasons(source),
+        lambda: _prose_reasons(source, identity),
         lambda: _visual_role_reasons(source, identity),
     )
     reasons = _run_quality_validators(validators)

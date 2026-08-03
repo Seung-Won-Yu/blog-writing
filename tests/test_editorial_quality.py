@@ -245,6 +245,7 @@ def valid_automation_source(day="2026-07-25"):
     )
     source["editorial"].update(
         {
+            "headline": "메일 첨부파일을 날짜별로 자동 정리하는 방법: Python 실험",
             "topic_key": "email-attachment-folder-automation",
             "reader_question": "반복해서 내려받는 메일 첨부파일을 날짜별 폴더에 안전하게 자동 정리할 수 있을까?",
             "entities": ["Python"],
@@ -320,6 +321,7 @@ def valid_guide_source(day="2026-07-22"):
     )
     source["editorial"].update(
         {
+            "headline": "2026 백엔드 개발자 로드맵: Java·Spring·PostgreSQL 공부 순서",
             "topic_key": "backend-developer-roadmap-2026",
             "reader_question": "백엔드 개발자가 되려면 2026년에는 어떤 기술을 어떤 순서로 공부해야 할까?",
             "entities": ["Java 25", "Spring Boot 4", "PostgreSQL 18"],
@@ -852,6 +854,31 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertIn("quality_style", reasons)
         self.assertIn("quality_repetition", reasons)
+
+    def test_august_posts_reject_report_headings_and_ai_intro_cliches(self):
+        source = valid_daily_source("2026-08-04")
+        source["editorial"]["opening"] = (
+            "이번 글에서는 새 기능을 살펴보겠습니다. "
+            + repeated_text("구체적인 사용 장면", 5)
+        )
+        source["news"][0]["content"][0]["text"] = "개요"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-04")
+        )
+
+        self.assertIn("quality_natural_voice", reasons)
+
+    def test_august_posts_require_search_aligned_title_and_tags(self):
+        source = valid_daily_source("2026-08-04")
+        source["editorial"]["headline"] = "충격적인 소식을 지금 확인해야 하는 이유와 놀라운 결과"
+        source["tags"] = ["뉴스", "정보", "최신", "오늘", "블로그"]
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-04")
+        )
+
+        self.assertIn("quality_search_metadata", reasons)
 
     def test_non_numeric_generation_revision_fails_closed_without_crashing(self):
         source = valid_daily_source()

@@ -301,6 +301,15 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`imagegen`", contract)
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
 
+    def test_all_editorial_contracts_require_natural_search_focused_writing(self):
+        for path in (EDITOR_CONTRACT, SATURDAY_CONTRACT, GUIDE_CONTRACT):
+            with self.subTest(path=path.name):
+                contract = path.read_text(encoding="utf-8")
+                self.assertIn("핵심 검색어", contract)
+                self.assertIn("태그 5~8개", contract)
+                self.assertIn("보고서", contract)
+                self.assertIn("이번 글에서는", contract)
+
     def test_saturday_contract_matches_the_enforced_experiment_schema(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
