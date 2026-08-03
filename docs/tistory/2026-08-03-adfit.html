@@ -1,0 +1,42 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 3 (월) · 약 10분</p>
+    <p class="digest-lead">프라이버시 프록시 장애는 평범한 HTTP 요청 하나가 어디에서 끊겼는지조차 바로 알기 어렵게 만든다. 클라이언트, 릴레이, 게이트웨이, 대상 서버가 각자 다른 정보를 보고, 요청 내용은 암호화되어 있기 때문이다. Cloudflare가 공개한 pvcli는 이 복잡한 경로를 curl과 비슷한 명령으로 재현하고 상세 로그까지 볼 수 있게 한다. 다만 명령이 짧아졌다고 OHTTP의 프라이버시 보장이 자동으로 생기는 것은 아니다. 어떤 서버가 IP를 보고 어떤 서버가 내용을 보는지, 그리고 쿠키나 인증 정보가 왜 별도 문제인지부터 확인해야 안전하게 테스트할 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-대표.webp" alt="릴레이가 IP 주소 표지만 보고 게이트웨이가 봉인된 요청의 내용만 여는 OHTTP 프라이버시 프록시 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Cloudflare Blog · 2026. 7. 27</p>
+    <h3>Cloudflare, OHTTP·프라이버시 프록시를 재현하는 pvcli를 오픈소스로 공개</h3>
+    <p class="digest-blurb">Cloudflare는 릴레이·게이트웨이·대상 서버 사이의 OHTTP 요청을 curl과 비슷한 방식으로 실행하고 상세 로그를 확인할 수 있는 Rust 기반 privacy-client(pvcli)를 Apache-2.0으로 공개했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 바뀌었나: 복잡한 OHTTP 요청을 한 CLI에서 재현할 수 있다</h4><p>Cloudflare는 privacy-client, 즉 pvcli를 Apache-2.0 라이선스로 공개했다. 이 도구는 일반 HTTP 요청과 HTTP/3 요청을 실행할 수 있고, OHTTP 모드에서는 릴레이와 게이트웨이를 지정해 실제 요청 경로를 재현한다. 이전에는 바이너리 HTTP 인코딩을 확인하고 여러 스크립트를 이어 붙이며 각 단계의 실패를 추적해야 했던 작업을, curl과 닮은 인자와 상세 로그로 좁힐 수 있게 된 변화다.</p><p>다만 pvcli는 프라이버시 기능을 켜는 스위치가 아니다. OHTTP는 클라이언트, 릴레이, 게이트웨이, 대상 서버의 역할을 나눠 신원과 요청 내용을 한 당사자가 함께 알지 못하게 하는 프로토콜이다. 도구를 쓰기 전에 이 분리가 실제 배포에서도 유지되는지부터 확인해야 한다.</p><div class="digest-table-wrap" role="region" aria-label="OHTTP 테스트에서 역할별로 확인할 것" tabindex="0"><table class="digest-data-table"><caption>OHTTP 테스트에서 역할별로 확인할 것</caption><thead><tr><th scope="col">당사자</th><th scope="col">볼 수 있는 것</th><th scope="col">먼저 확인할 질문</th></tr></thead><tbody><tr><td>릴레이</td><td>클라이언트 연결 정보와 암호화된 요청</td><td>평문이나 식별 헤더를 다음 홉에 남기지 않는가</td></tr><tr><td>게이트웨이</td><td>복호화한 요청과 릴레이 연결</td><td>클라이언트 IP를 직접 받지 않는가</td></tr><tr><td>클라이언트</td><td>게이트웨이 공개 키와 릴레이 주소</td><td>대상·키·릴레이 조합이 허가된 것인가</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-경로.webp" alt="클라이언트와 릴레이, 게이트웨이, 대상 사이에서 IP와 암호화 요청 내용이 분리되는 OHTTP 경로도" width="1200" height="630" loading="lazy"><figcaption>OHTTP는 릴레이가 클라이언트 IP를 보되 평문을 보지 못하고, 게이트웨이가 평문을 보되 클라이언트 IP를 보지 못하게 역할을 분리한다.</figcaption></figure><h4 class="digest-subheading">OHTTP의 핵심은 암호화 하나가 아니라 두 서버의 분리다</h4><p>RFC 9458에서 클라이언트는 게이트웨이의 공개 키로 요청을 암호화한 뒤 릴레이에 보낸다. 릴레이는 암호문을 게이트웨이에 전달하고, 게이트웨이가 복호화해 대상에 요청을 보낸다. 응답은 반대 방향으로 다시 암호화되어 돌아온다. 이 구조에서 릴레이는 누가 보냈는지에 가까운 연결 정보를 알지만 요청 평문은 읽지 못하고, 게이트웨이는 요청을 처리하지만 클라이언트의 직접 IP를 보지 못한다.</p><p>여기에는 중요한 전제가 있다. 릴레이와 게이트웨이는 서로 다른, 공모하지 않는 운영 주체여야 한다. 둘을 같은 주체가 함께 운영하거나 정보를 합칠 수 있다면 역할 분리의 목적은 약해진다. 또한 전송 경로를 나눠도 쿠키, 로그인 토큰, 고유 식별자처럼 요청 본문·헤더에 담긴 상태 정보는 대상이 요청을 다시 연결하는 단서가 될 수 있다.</p><h4 class="digest-subheading">일반 HTTP 디버깅과 무엇이 다른가</h4></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><p>일반 HTTPS 호출은 클라이언트와 서버 사이의 한 연결을 확인하는 것으로 시작할 수 있다. OHTTP에서는 실패 지점이 더 많다. 게이트웨이 키를 가져오는 단계, 클라이언트 암호화, 릴레이 전달, 게이트웨이 복호화, 대상 응답, 응답 재암호화가 모두 경계가 된다. Cloudflare가 pvcli를 만든 이유도 고객별 일회성 클라이언트와 원시 바이트 확인에 드는 시간을 줄이기 위해서다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-일반HTTP-로그-비교.webp" alt="일반 HTTP의 단일 서버 검사와 OHTTP의 분리된 경로를 쿠키와 인증 정보 주의 표지로 비교한 도식" width="1200" height="630" loading="lazy"><figcaption>OHTTP는 연결 경로를 나누지만 쿠키와 인증 정보가 요청 내용에 들어가면 별도의 연결 단서가 될 수 있다. 테스트 로그에도 그 값을 그대로 남기지 않는다.</figcaption></figure><p>그래서 로그의 목적도 달라진다. 상세 로그는 어떤 홉과 어떤 암호화 단계에서 문제가 생겼는지 확인하는 데 유용하지만, 운영 로그에 인증 헤더·개인 식별자·요청 본문을 무심코 보관하는 이유가 되어서는 안 된다. 테스트용 공개 echo 대상에서는 보낼 데이터를 최소화하고, 실제 환경에서는 마스킹과 보존 기간을 먼저 정하는 편이 안전하다.</p><h4 class="digest-subheading">pvcli로 공개 경로를 먼저 검증하는 최소 순서</h4><p>공식 안내의 설치 방법은 Rust 도구체인을 준비한 뒤 Git 저장소에서 cargo install로 pvcli를 설치하는 방식이다. 설치 뒤에는 먼저 일반 GET 요청이나 제공된 trace 대상처럼 민감하지 않은 주소에서 명령 형식과 네트워크 경로를 확인한다. 그 다음 OHTTP 테스트를 할 때만 릴레이는 --first-hop, 게이트웨이는 --proxy로 분리해 넣는다.</p><pre class="digest-code-block language-bash"><code># Rust 설치 뒤 pvcli 설치
+cargo install --git https://github.com/cloudflareresearch/pvcli
+
+# 공개 OHTTP 예제: 민감한 헤더·실제 사용자 데이터는 넣지 않는다
+pvcli --ohttp \
+  --first-hop https://relay-cloudflare.ohttp.info \
+  --proxy https://gateway.ohttp.info \
+  -X POST \
+  --header &#x27;content-type: application/json&#x27; \
+  --data &#x27;{&quot;test&quot;:1}&#x27; \
+  https://target.ohttp.info/anything</code></pre><p>이 명령은 공개 예제의 릴레이·게이트웨이·echo 대상을 사용한다. 조직의 실제 엔드포인트를 넣을 때는 대상이 OHTTP를 지원하는지, 게이트웨이 키 구성이 맞는지, 릴레이용 인증 헤더와 대상용 헤더를 혼동하지 않는지를 따로 확인한다. pvcli에는 릴레이에만 보낼 헤더를 위한 --first-hop-header와 릴레이 mTLS 인증서·키 인자도 있으므로, 비밀값을 셸 기록과 CI 출력에서 제외해야 한다.</p><h4 class="digest-subheading">통과 신호와 실패 신호를 분리해 읽는 법</h4><p>성공 신호는 단순히 200 응답을 받는 것보다 구체적이다. 공개 echo 대상으로 보낸 테스트라면 대상이 요청 메서드와 의도한 테스트 본문을 받았는지, 그리고 클라이언트 IP 대신 프록시 경로의 정보만 보이는지를 함께 확인한다. 반대로 키 구성 오류, 게이트웨이 미지원 대상, 릴레이 인증 실패는 서로 다른 단계의 문제다. -v 또는 더 높은 상세 수준의 로그를 한 테스트에만 붙여 단계별 메시지를 보되, 공유 전에 민감한 헤더를 삭제한다.</p><p>롤백도 설정 변경처럼 다룬다. 새 릴레이나 게이트웨이를 실서비스 트래픽에 붙이기 전에, 대상별 허용 목록과 실패 시 직접 연결 또는 기존 경로로 되돌리는 조건을 정한다. OHTTP는 상태를 이어 가는 일반 웹 세션에 항상 맞지 않는다. RFC는 쿠키와 인증처럼 요청 간 상태를 유지하는 기능이 연결 가능성을 다시 만들 수 있다고 설명한다. 로그인 세션을 그대로 감싸는 용도로 추측해 적용하지 말아야 하는 이유다.</p><h4 class="digest-subheading">배포 전에 확인할 체크리스트</h4><ul class="digest-bullet-list"><li>릴레이와 게이트웨이가 서로 다른 신뢰 경계에 있고, 운영 정보가 결합되지 않는지 확인한다.</li><li>대상과 게이트웨이의 OHTTP 지원 범위·공개 키·허용된 릴레이 조합을 문서로 확인한다.</li><li>공개 echo 대상에서 먼저 경로와 응답을 검증하고 실제 사용자 데이터는 테스트에 넣지 않는다.</li><li>쿠키·인증 헤더·고유 식별자가 요청을 다시 연결할 수 있음을 팀의 로그 정책에 반영한다.</li><li>상세 로그는 짧게 보관하고 비밀값을 마스킹하며, 실패 시 원래 경로로 돌아갈 조건을 정한다.</li></ul><p>pvcli는 프라이버시 프록시를 쉽게 쓰게 하기보다, 복잡한 경계를 눈앞의 명령과 로그로 끌어내린다. 테스트가 끝난 뒤에도 릴레이는 무엇을 보고 게이트웨이는 무엇을 못 보는지, 요청 안에는 어떤 연결 단서가 남는지 설명할 수 있다면 그때 비로소 도구가 운영에 도움이 된다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://blog.cloudflare.com/open-sourcing-our-privacy-proxy-cli/" target="_blank" rel="noopener">We’re open-sourcing our privacy proxy CLI</a><span>공식</span></li><li><a href="https://github.com/cloudflareresearch/pvcli" target="_blank" rel="noopener">pvcli source repository</a><span>공식 문서</span></li><li><a href="https://www.rfc-editor.org/rfc/rfc9458.html" target="_blank" rel="noopener">RFC 9458: Oblivious HTTP</a><span>독립 자료</span></li><li><a href="https://developers.cloudflare.com/privacy-gateway/" target="_blank" rel="noopener">Cloudflare Privacy Gateway overview</a><span>공식 문서</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/141"><b>AI 모델 평가가 운영망을 넘었다면: 샌드박스에 추가해야 할 4가지 경계</b><span>외부 도구·네트워크에 접근하는 테스트에서 권한과 격리 경계를 먼저 설계하는 관점을 이어 볼 수 있다.</span></a></li><li><a href="https://won0322.tistory.com/147"><b>Cloudflare Cache Response Rules: 원본 응답 뒤 캐시를 고치는 법</b><span>Cloudflare 요청 경로를 다룰 때 규칙이 적용되는 단계와 실제 응답을 분리해 확인하는 방법을 연결한다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">pvcli의 가치는 OHTTP를 일반 프록시처럼 보이게 만드는 데 있지 않다. 릴레이와 게이트웨이를 나눈 설계, 요청마다 새 암호화 문맥이 필요한 이유, 로그에 무엇을 남기면 안 되는지를 실제 명령과 함께 확인하게 하는 데 있다. 먼저 공개 echo 대상에서 경로와 응답을 검증하고, 그 다음에만 조직의 릴레이·게이트웨이 조합으로 범위를 좁히자. 프라이버시 프록시의 성공 신호는 요청이 통과했다는 한 줄이 아니라, 어느 당사자가 어떤 정보를 볼 수 없는지 설명할 수 있는 상태다.</p>
+  <div class="digest-action"><b>직접 확인해보려면</b><span>테스트 환경에서 공개 OHTTP echo 대상에 한 번 요청한 뒤, 릴레이 URL·게이트웨이 URL·헤더·로그 보존 범위를 표로 나눠 기록해 본다.</span></div>
+</section>
+</article>

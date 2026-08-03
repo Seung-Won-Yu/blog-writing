@@ -1,0 +1,83 @@
+{
+  "title": "OHTTP를 한 줄로 테스트하는 pvcli: 프라이버시 프록시에서 먼저 확인할 경계",
+  "title_candidates": [
+    "OHTTP를 한 줄로 테스트하는 pvcli: 프라이버시 프록시에서 먼저 확인할 경계",
+    "Cloudflare, OHTTP·프라이버시 프록시를 재현하는 pvcli를 오픈소스로 공개",
+    "OHTTP 요청이 클라이언트·릴레이·게이트웨이·대상 서버를 지나며 IP와 평문을 분리하는 경로: 명령은 한 줄인데, 요청…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-03",
+  "publish_date": "2026-08-03",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-03T09:00:00+09:00",
+  "tags": [
+    "OHTTP",
+    "Oblivious HTTP",
+    "프라이버시",
+    "프록시",
+    "Rust",
+    "CLI",
+    "HTTP/3"
+  ],
+  "meta_description": "프라이버시 프록시 장애는 평범한 HTTP 요청 하나가 어디에서 끊겼는지조차 바로 알기 어렵게 만든다. 클라이언트, 릴레이, 게이트웨이, 대상 서버가 각자 다른 정보를 보고, 요청 내용은 암호화되어 있… Cloudflare는 릴레이·게이트웨이·대상 서버 사이의 OHTTP 요청을 curl…",
+  "key_summary": [
+    "1. Cloudflare, OHTTP·프라이버시 프록시를 재현하는 pvcli를 오픈소스로 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: OHTTP를 한 줄로 테스트하는 pvcli: 프라이버시 프록시에서 먼저 확인할 경계"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-03.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-03.html",
+  "before_ad_html": "docs/tistory/2026-08-03-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-03-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-03-adfit.html",
+  "source_sha256": "6f0eeefcddaa6c2feffa6809c2b9dca7c52b82eb1d70c78d1a01aba4791d586a",
+  "html_sha256": "b832ed1bd32236f7734f30349d706465883fff8d21c6c9b96129dae88ebba80c",
+  "adfit_sha256": "871deb821010c418df947fc97bd53182d1a76b33a4d993aafc653bca788f11a9",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-대표.webp",
+      "path": "docs/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-대표.webp",
+      "original_url": "",
+      "alt": "릴레이가 IP 주소 표지만 보고 게이트웨이가 봉인된 요청의 내용만 여는 OHTTP 프라이버시 프록시 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-경로.webp",
+      "path": "docs/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-경로.webp",
+      "original_url": "",
+      "alt": "클라이언트와 릴레이, 게이트웨이, 대상 사이에서 IP와 암호화 요청 내용이 분리되는 OHTTP 경로도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-일반HTTP-로그-비교.webp",
+      "path": "docs/tistory/assets/2026-08-03/OHTTP-일반HTTP-로그-비교.webp",
+      "original_url": "",
+      "alt": "일반 HTTP의 단일 서버 검사와 OHTTP의 분리된 경로를 쿠키와 인증 정보 주의 표지로 비교한 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 3 (월) · 약 10분</p>
+    <p class="digest-lead">프라이버시 프록시 장애는 평범한 HTTP 요청 하나가 어디에서 끊겼는지조차 바로 알기 어렵게 만든다. 클라이언트, 릴레이, 게이트웨이, 대상 서버가 각자 다른 정보를 보고, 요청 내용은 암호화되어 있기 때문이다. Cloudflare가 공개한 pvcli는 이 복잡한 경로를 curl과 비슷한 명령으로 재현하고 상세 로그까지 볼 수 있게 한다. 다만 명령이 짧아졌다고 OHTTP의 프라이버시 보장이 자동으로 생기는 것은 아니다. 어떤 서버가 IP를 보고 어떤 서버가 내용을 보는지, 그리고 쿠키나 인증 정보가 왜 별도 문제인지부터 확인해야 안전하게 테스트할 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-대표.webp" alt="릴레이가 IP 주소 표지만 보고 게이트웨이가 봉인된 요청의 내용만 여는 OHTTP 프라이버시 프록시 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Cloudflare Blog · 2026. 7. 27</p>
+    <h3>Cloudflare, OHTTP·프라이버시 프록시를 재현하는 pvcli를 오픈소스로 공개</h3>
+    <p class="digest-blurb">Cloudflare는 릴레이·게이트웨이·대상 서버 사이의 OHTTP 요청을 curl과 비슷한 방식으로 실행하고 상세 로그를 확인할 수 있는 Rust 기반 privacy-client(pvcli)를 Apache-2.0으로 공개했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">무엇이 바뀌었나: 복잡한 OHTTP 요청을 한 CLI에서 재현할 수 있다</h4><p>Cloudflare는 privacy-client, 즉 pvcli를 Apache-2.0 라이선스로 공개했다. 이 도구는 일반 HTTP 요청과 HTTP/3 요청을 실행할 수 있고, OHTTP 모드에서는 릴레이와 게이트웨이를 지정해 실제 요청 경로를 재현한다. 이전에는 바이너리 HTTP 인코딩을 확인하고 여러 스크립트를 이어 붙이며 각 단계의 실패를 추적해야 했던 작업을, curl과 닮은 인자와 상세 로그로 좁힐 수 있게 된 변화다.</p><p>다만 pvcli는 프라이버시 기능을 켜는 스위치가 아니다. OHTTP는 클라이언트, 릴레이, 게이트웨이, 대상 서버의 역할을 나눠 신원과 요청 내용을 한 당사자가 함께 알지 못하게 하는 프로토콜이다. 도구를 쓰기 전에 이 분리가 실제 배포에서도 유지되는지부터 확인해야 한다.</p><div class="digest-table-wrap" role="region" aria-label="OHTTP 테스트에서 역할별로 확인할 것" tabindex="0"><table class="digest-data-table"><caption>OHTTP 테스트에서 역할별로 확인할 것</caption><thead><tr><th scope="col">당사자</th><th scope="col">볼 수 있는 것</th><th scope="col">먼저 확인할 질문</th></tr></thead><tbody><tr><td>릴레이</td><td>클라이언트 연결 정보와 암호화된 요청</td><td>평문이나 식별 헤더를 다음 홉에 남기지 않는가</td></tr><tr><td>게이트웨이</td><td>복호화한 요청과 릴레이 연결</td><td>클라이언트 IP를 직접 받지 않는가</td></tr><tr><td>클라이언트</td><td>게이트웨이 공개 키와 릴레이 주소</td><td>대상·키·릴레이 조합이 허가된 것인가</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-03/OHTTP-릴레이-게이트웨이-경로.webp" alt="클라이언트와 릴레이, 게이트웨이, 대상 사이에서 IP와 암호화 요청 내용이 분리되는 OHTTP 경로도" width="1200" height="630" loading="lazy"><figcaption>OHTTP는 릴레이가 클라이언트 IP를 보되 평문을 보지 못하고, 게이트웨이가 평문을 보되 클라이언트 IP를 보지 못하게 역할을 분리한다.</figcaption></figure><h4 class="digest-subheading">OHTTP의 핵심은 암호화 하나가 아니라 두 서버의 분리다</h4><p>RFC 9458에서 클라이언트는 게이트웨이의 공개 키로 요청을 암호화한 뒤 릴레이에 보낸다. 릴레이는 암호문을 게이트웨이에 전달하고, 게이트웨이가 복호화해 대상에 요청을 보낸다. 응답은 반대 방향으로 다시 암호화되어 돌아온다. 이 구조에서 릴레이는 누가 보냈는지에 가까운 연결 정보를 알지만 요청 평문은 읽지 못하고, 게이트웨이는 요청을 처리하지만 클라이언트의 직접 IP를 보지 못한다.</p><p>여기에는 중요한 전제가 있다. 릴레이와 게이트웨이는 서로 다른, 공모하지 않는 운영 주체여야 한다. 둘을 같은 주체가 함께 운영하거나 정보를 합칠 수 있다면 역할 분리의 목적은 약해진다. 또한 전송 경로를 나눠도 쿠키, 로그인 토큰, 고유 식별자처럼 요청 본문·헤더에 담긴 상태 정보는 대상이 요청을 다시 연결하는 단서가 될 수 있다.</p><h4 class="digest-subheading">일반 HTTP 디버깅과 무엇이 다른가</h4></div>
+  </div>
+</section>
+</article>
