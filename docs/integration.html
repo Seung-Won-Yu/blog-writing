@@ -385,7 +385,7 @@
           <div class="builder">
             <section class="markup-box">
               <div class="step-head"><h2><label for="imageMarkup">③ 이미지 태그 붙여넣기</label></h2><span class="step-state" id="imageStepState" data-complete="false">입력 전</span></div>
-              <p>HTML 모드에서 방금 올린 이미지 줄 전체를 복사해 넣으세요. 티스토리가 만든 <code>[##_Image|..._##]</code> 형식도 정상입니다.</p>
+              <p>HTML 모드에서 방금 올린 이미지 줄 전체를 복사해 넣으세요. 반드시 티스토리가 만든 <code>[##_Image|..._##]</code> 태그를 사용하세요. 만료되는 <code>blog.kakaocdn.net?...expires=...</code> 주소는 차단합니다.</p>
               <textarea class="markup-input" id="imageMarkup" spellcheck="false" placeholder="여기에 티스토리 이미지 한 줄 전체를 붙여넣으세요"></textarea>
             </section>
             <section class="markup-box">
@@ -487,8 +487,19 @@
       return paragraph ? paragraph[0].trim() : tokens[0];
     }
 
+    function hasExpiringTistoryImageUrl(value) {
+      const parsed = parseMarkup(value);
+      return Array.from(parsed.querySelectorAll("img")).some((image) => {
+        const src = String(image.getAttribute("src") || "");
+        const isTistoryCdn = /(?:blog\.kakaocdn\.net|img\d*\.daumcdn\.net)/i.test(src);
+        const hasSignedExpiry = /(?:[?&]|%26)(?:expires|signature)(?:=|%3D)/i.test(src);
+        return isTistoryCdn && hasSignedExpiry;
+      });
+    }
+
     function extractImageMarkup(value) {
       const text = String(value || "");
+      if (hasExpiringTistoryImageUrl(text)) return "";
       const parsed = parseMarkup(value);
       const figures = Array.from(parsed.querySelectorAll("figure")).filter((figure) => {
         return figure.querySelector("img") && figure.dataset.keType !== "revenue";
@@ -533,7 +544,8 @@
     }
 
     function isFinalHtmlStructurallyValid(value) {
-      if (!value || value.includes(imageMarker) || value.includes(adMarker)) return false;
+      if (!value || value.includes(imageMarker) || value.includes(adMarker)
+          || hasExpiringTistoryImageUrl(value)) return false;
       const parsed = parseMarkup(value);
       const articles = parsed.querySelectorAll("article");
       const images = parsed.querySelectorAll("article img");
