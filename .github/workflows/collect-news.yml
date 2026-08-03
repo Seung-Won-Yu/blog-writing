@@ -2,9 +2,9 @@ name: Collect daily news
 
 on:
   schedule:
-    # 06:17 KST. Recent scheduled runs started about 51-57 minutes late,
-    # so this leaves a reliable buffer before the 08:00 Codex editor.
-    - cron: '17 21 * * *'
+    # 05:17 KST. GitHub schedule delay still leaves a wide buffer before the
+    # 09:00 Codex editor.
+    - cron: '17 20 * * *'
   workflow_dispatch:
 
 permissions:

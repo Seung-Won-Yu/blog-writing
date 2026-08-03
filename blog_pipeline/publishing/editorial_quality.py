@@ -18,6 +18,7 @@ AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
+REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -116,6 +117,30 @@ REQUIRED_COVER_PROMPT_PREFIXES = (
     "use case: stylized-concept",
 )
 REQUIRED_COVER_PROMPT_TOKEN = "asset intent: editorial-scene"
+ARTICLE_SHAPES = {
+    "change_impact",
+    "hands_on_test",
+    "decision_guide",
+    "troubleshooting",
+    "research_interpretation",
+}
+REVISIT_ARTIFACT_TYPES = {
+    "command_recipe",
+    "configuration",
+    "decision_matrix",
+    "checklist",
+    "troubleshooting_tree",
+    "experiment_fixture",
+}
+RENDER_FAMILIES = {
+    "photorealistic_natural",
+    "editorial_collage",
+    "flat_illustration",
+    "ink_drawing",
+    "isometric_model",
+    "tactile_paper",
+    "macro_object",
+}
 EDITORIAL_LENGTH_RULES = {
     "headline": (25, 70),
     "opening": (180, 1200),
@@ -368,6 +393,10 @@ def _schema_reasons(source, identity, *, require_images=True):
                 )
         elif kind != "ad_break":
             invalid = True
+        if "reusable" in block:
+            invalid |= not isinstance(block.get("reusable"), bool)
+        if "reuse_label" in block:
+            invalid |= not _strict_text(block.get("reuse_label"))
 
     related = source.get("related_posts")
     if not isinstance(related, list):
@@ -660,6 +689,48 @@ def _editorial_reasons(source, identity):
     return reasons
 
 
+def _revisit_value_reasons(source, identity):
+    """Require one durable artifact and three explicit return reasons."""
+    if date.fromisoformat(identity.publish_date) < REVISIT_VALUE_POLICY_START:
+        return []
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    revisit = editorial.get("revisit") if isinstance(editorial.get("revisit"), dict) else {}
+    triggers = revisit.get("update_triggers")
+    normalized_triggers = (
+        [plain(value).casefold() for value in triggers]
+        if isinstance(triggers, list)
+        else []
+    )
+    invalid = (
+        plain(editorial.get("article_shape")) not in ARTICLE_SHAPES
+        or any(
+            not _strict_text(revisit.get(key))
+            for key in ("quick_answer", "reuse_case", "failure_case")
+        )
+        or plain(revisit.get("artifact_type")) not in REVISIT_ARTIFACT_TYPES
+        or not 2 <= len(normalized_triggers) <= 4
+        or any(len(value) < 4 for value in normalized_triggers)
+        or len(set(normalized_triggers)) != len(normalized_triggers)
+    )
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    marked_reusable = [
+        block
+        for block in content
+        if isinstance(block, dict)
+        and block.get("reusable") is True
+    ]
+    if (
+        len(marked_reusable) != 1
+        or marked_reusable[0].get("t") not in {"code", "table", "ul"}
+        or not _strict_text(marked_reusable[0].get("reuse_label"))
+    ):
+        invalid = True
+    return ["quality_revisit_value"] if invalid else []
+
+
 def _korean_content_reasons(source):
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
     news = source.get("news") if isinstance(source.get("news"), list) else []
@@ -758,13 +829,21 @@ def _depth_reasons(source, identity):
     visuals = [block for block in blocks if block.get("t") == "visual"]
     ad_indexes = [index for index, block in enumerate(blocks) if block.get("t") == "ad_break"]
     policy = DEPTH_POLICIES[identity.content_type]
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    article_shape = plain(editorial.get("article_shape"))
+    minimum_visuals = policy["minimum_visuals"]
+    if (
+        date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START
+        and article_shape in {"hands_on_test", "troubleshooting", "research_interpretation"}
+    ):
+        minimum_visuals = max(minimum_visuals, 3)
     block_types = {block.get("t") for block in blocks}
     invalid = (
         malformed_blocks
         or not policy["minimum_headings"]
         <= len(headings)
         <= policy["maximum_headings"]
-        or not policy["minimum_visuals"]
+        or not minimum_visuals
         <= len(visuals)
         <= policy["maximum_visuals"]
         or not policy["minimum_minutes"]
@@ -948,6 +1027,19 @@ def _visual_reasons(source, identity):
         origin in {"capture", "annotated_capture"} for origin in origins
     ):
         reasons.append("quality_visual_provenance")
+    if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
+        editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+        article_shape = plain(editorial.get("article_shape"))
+        if article_shape in {"hands_on_test", "troubleshooting"} and not any(
+            origin in {"capture", "annotated_capture", "measured_chart"}
+            for origin in origins
+        ):
+            reasons.append("quality_visual_evidence")
+        if article_shape == "research_interpretation" and not any(
+            origin in {"annotated_capture", "measured_chart"}
+            for origin in origins
+        ):
+            reasons.append("quality_visual_evidence")
     return reasons
 
 
@@ -1006,6 +1098,13 @@ def _visual_role_reasons(source, identity):
             or REQUIRED_COVER_PROMPT_TOKEN not in cover_prompt
         ):
             return ["quality_visual_variety"]
+        if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
+            render_family = plain(cover.get("render_family"))
+            if (
+                render_family not in RENDER_FAMILIES
+                or render_family != plain(cover_image.get("render_family"))
+            ):
+                return ["quality_visual_variety"]
     return []
 
 
@@ -1148,6 +1247,7 @@ def source_authoring_reasons(source, identity):
         lambda: _identity_reasons(source, identity),
         lambda: _schema_reasons(source, identity, require_images=False),
         lambda: _editorial_reasons(source, identity),
+        lambda: _revisit_value_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),

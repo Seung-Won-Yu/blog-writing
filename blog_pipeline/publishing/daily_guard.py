@@ -24,6 +24,7 @@ from .editorial_quality import (
     DEPTH_POLICIES,
     EDITORIAL_LENGTH_RULES,
     PUBLISH_GATE_START,
+    REVISIT_VALUE_POLICY_START,
     estimate_read_minutes,
     source_authoring_reasons,
     source_quality_reasons,
@@ -80,6 +81,35 @@ def _cover_style_signature(day):
         for field in ("art_direction", "composition_type", "palette_family")
     )
     return signature if all(signature) else ()
+
+
+def _cover_render_family(day):
+    visual = day.get("visual") if isinstance(day, dict) else {}
+    cover = visual.get("cover") if isinstance(visual, dict) else {}
+    cover = cover if isinstance(cover, dict) else {}
+    return str(cover.get("render_family") or "").strip().casefold()
+
+
+def _body_logic_signature(day):
+    visual = day.get("visual") if isinstance(day, dict) else {}
+    assets = visual.get("assets") if isinstance(visual, dict) else []
+    assets = assets if isinstance(assets, list) else []
+    signature = tuple(
+        str(asset.get("logic_type") or "").strip().casefold()
+        for asset in assets if isinstance(asset, dict)
+    )
+    return signature if signature and all(signature) else ()
+
+
+def _all_body_images_are_generated(day):
+    visual = day.get("visual") if isinstance(day, dict) else {}
+    assets = visual.get("assets") if isinstance(visual, dict) else []
+    assets = assets if isinstance(assets, list) else []
+    origins = [
+        str(asset.get("origin") or "").strip().casefold()
+        for asset in assets if isinstance(asset, dict)
+    ]
+    return bool(origins) and all(origin == "imagegen" for origin in origins)
 
 
 def canonical_url(value):
@@ -459,6 +489,12 @@ def find_recent_draft_duplicates(
         else {}
     )
     current_cover_signature = _cover_style_signature(current_day)
+    current_render_family = _cover_render_family(current_day)
+    current_logic_signature = _body_logic_signature(current_day)
+    current_article_shape = str(
+        current_editorial.get("article_shape") or ""
+    ).strip().casefold()
+    current_all_imagegen = _all_body_images_are_generated(current_day)
     if identity.content_type == "automation_case":
         from blog_pipeline.collection.collect_automation import (
             _automation_source_fingerprint,
@@ -476,6 +512,10 @@ def find_recent_draft_duplicates(
         ).strip()
     duplicates = []
     automation_rotation_checked = False
+    previous_sources_seen = 0
+    nearest_shape_checked = False
+    nearest_logic_checked = False
+    recent_all_imagegen = []
 
     for offset in range(1, window_days + 1):
         previous_day = (current_date - timedelta(days=offset)).isoformat()
@@ -511,6 +551,101 @@ def find_recent_draft_duplicates(
         previous_news = previous.get("news")
         if not isinstance(previous_news, list):
             continue
+        previous_sources_seen += 1
+        previous_editorial = (
+            previous.get("editorial")
+            if isinstance(previous.get("editorial"), dict)
+            else {}
+        )
+        current_item = next(
+            (item for item in current_news if isinstance(item, dict)), {}
+        )
+        previous_item = next(
+            (item for item in previous_news if isinstance(item, dict)), {}
+        )
+
+        if current_date >= REVISIT_VALUE_POLICY_START:
+            previous_shape = str(
+                previous_editorial.get("article_shape") or ""
+            ).strip().casefold()
+            if not nearest_shape_checked:
+                nearest_shape_checked = True
+                if current_article_shape and current_article_shape == previous_shape:
+                    duplicates.append(
+                        {
+                            "current_index": 1,
+                            "current_title": str(current_item.get("title_kr") or ""),
+                            "previous_day": previous_day,
+                            "previous_draft_id": previous_draft_id,
+                            "previous_index": 1,
+                            "previous_title": str(previous_item.get("title_kr") or ""),
+                            "reason": "recent_article_shape",
+                            "match": current_article_shape,
+                            "similarity": 1.0,
+                        }
+                    )
+                    continue
+
+            previous_render_family = _cover_render_family(previous)
+            if (
+                previous_sources_seen <= 3
+                and current_render_family
+                and current_render_family == previous_render_family
+            ):
+                duplicates.append(
+                    {
+                        "current_index": 1,
+                        "current_title": str(current_item.get("title_kr") or ""),
+                        "previous_day": previous_day,
+                        "previous_draft_id": previous_draft_id,
+                        "previous_index": 1,
+                        "previous_title": str(previous_item.get("title_kr") or ""),
+                        "reason": "recent_render_family",
+                        "match": current_render_family,
+                        "similarity": 1.0,
+                    }
+                )
+                continue
+
+            previous_logic_signature = _body_logic_signature(previous)
+            if not nearest_logic_checked:
+                nearest_logic_checked = True
+                if (
+                    current_logic_signature
+                    and current_logic_signature == previous_logic_signature
+                ):
+                    duplicates.append(
+                        {
+                            "current_index": 1,
+                            "current_title": str(current_item.get("title_kr") or ""),
+                            "previous_day": previous_day,
+                            "previous_draft_id": previous_draft_id,
+                            "previous_index": 1,
+                            "previous_title": str(previous_item.get("title_kr") or ""),
+                            "reason": "same_visual_logic_signature",
+                            "match": " / ".join(current_logic_signature),
+                            "similarity": 1.0,
+                        }
+                    )
+                    continue
+
+            if current_all_imagegen and len(recent_all_imagegen) < 2:
+                recent_all_imagegen.append(_all_body_images_are_generated(previous))
+                if len(recent_all_imagegen) == 2 and all(recent_all_imagegen):
+                    duplicates.append(
+                        {
+                            "current_index": 1,
+                            "current_title": str(current_item.get("title_kr") or ""),
+                            "previous_day": previous_day,
+                            "previous_draft_id": previous_draft_id,
+                            "previous_index": 1,
+                            "previous_title": str(previous_item.get("title_kr") or ""),
+                            "reason": "recent_all_imagegen",
+                            "match": "three consecutive generated-only articles",
+                            "similarity": 1.0,
+                        }
+                    )
+                    continue
         previous_cover_signature = _cover_style_signature(previous)
         if (
             current_date >= COVER_VARIETY_POLICY_START
@@ -585,11 +720,6 @@ def find_recent_draft_duplicates(
                 )
                 continue
 
-        previous_editorial = (
-            previous.get("editorial")
-            if isinstance(previous.get("editorial"), dict)
-            else {}
-        )
         previous_topic_key = str(
             previous_editorial.get("topic_key") or ""
         ).strip().casefold()

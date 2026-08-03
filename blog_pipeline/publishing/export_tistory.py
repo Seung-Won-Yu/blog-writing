@@ -52,6 +52,14 @@ REFERENCE_KIND_LABELS = {
     "reference": "참고 자료",
     "research": "연구",
 }
+REVISIT_ARTIFACT_LABELS = {
+    "command_recipe": "복사할 명령",
+    "configuration": "재사용 설정",
+    "decision_matrix": "판단표",
+    "checklist": "점검표",
+    "troubleshooting_tree": "문제 해결 순서",
+    "experiment_fixture": "재현용 예제",
+}
 MIN_PUBLISH_REVISION = 7
 TISTORY_ADFIT_MARKER = (
     '<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" '
@@ -92,6 +100,17 @@ def safe_int(value):
         return int(value or 0)
     except (TypeError, ValueError, OverflowError):
         return 0
+
+
+def wrap_reusable_block(block, body):
+    if not body or block.get("reusable") is not True:
+        return body
+    label = plain(block.get("reuse_label")) or "다시 쓸 수 있는 자료"
+    return (
+        f'<section class="digest-reusable" aria-label="{esc(label)}">'
+        f'<p class="digest-reusable-label">저장해 두고 다시 쓰기 · {esc(label)}</p>'
+        f"{body}</section>"
+    )
 
 
 def source_date_label(value):
@@ -220,16 +239,21 @@ def render_content_blocks(blocks, images=None):
             caption_html = f"<caption>{esc(caption)}</caption>" if caption else ""
             aria = f' aria-label="{esc(caption)}"' if caption else ""
             rows.append(
-                f'<div class="digest-table-wrap" role="region"{aria} tabindex="0">'
-                f'<table class="digest-data-table">{caption_html}'
-                f"<thead><tr>{head_html}</tr></thead><tbody>{body_html}</tbody></table></div>"
+                wrap_reusable_block(
+                    block,
+                    f'<div class="digest-table-wrap" role="region"{aria} tabindex="0">'
+                    f'<table class="digest-data-table">{caption_html}'
+                    f"<thead><tr>{head_html}</tr></thead><tbody>{body_html}</tbody></table></div>",
+                )
             )
             continue
         if block_type in {"ul", "list"}:
             items = block.get("items") if isinstance(block.get("items"), list) else []
             item_html = "".join(f"<li>{esc(item)}</li>" for item in items if plain(item))
             if item_html:
-                rows.append(f'<ul class="digest-bullet-list">{item_html}</ul>')
+                rows.append(wrap_reusable_block(
+                    block, f'<ul class="digest-bullet-list">{item_html}</ul>'
+                ))
             continue
         if block_type == "code":
             code = str(block.get("text") or "").strip("\n")
@@ -238,7 +262,10 @@ def render_content_blocks(blocks, images=None):
             language = re.sub(r"[^a-z0-9_-]+", "", plain(block.get("language")).lower())
             language_class = f" language-{language}" if language else ""
             rows.append(
-                f'<pre class="digest-code-block{language_class}"><code>{esc(code)}</code></pre>'
+                wrap_reusable_block(
+                    block,
+                    f'<pre class="digest-code-block{language_class}"><code>{esc(code)}</code></pre>',
+                )
             )
             continue
         text = plain(block.get("text"))
@@ -757,6 +784,39 @@ def build_closing_section(editorial):
 </section>""".strip()
 
 
+def build_revisit_section(editorial):
+    editorial = editorial or {}
+    revisit = (
+        editorial.get("revisit")
+        if isinstance(editorial.get("revisit"), dict)
+        else {}
+    )
+    quick = plain(revisit.get("quick_answer"))
+    reuse = plain(revisit.get("reuse_case"))
+    failure = plain(revisit.get("failure_case"))
+    if not all((quick, reuse, failure)):
+        return ""
+    artifact = REVISIT_ARTIFACT_LABELS.get(
+        plain(revisit.get("artifact_type")), "재사용 자료"
+    )
+    triggers = (
+        revisit.get("update_triggers")
+        if isinstance(revisit.get("update_triggers"), list)
+        else []
+    )
+    trigger_html = "".join(f"<li>{esc(value)}</li>" for value in triggers if plain(value))
+    return f"""
+<aside class="digest-revisit" aria-label="이 글을 다시 찾을 때">
+  <p class="digest-section-label">다시 찾을 때 · {esc(artifact)}</p>
+  <dl>
+    <div><dt>처음 읽기</dt><dd>{esc(quick)}</dd></div>
+    <div><dt>적용할 때</dt><dd>{esc(reuse)}</dd></div>
+    <div><dt>막혔을 때</dt><dd>{esc(failure)}</dd></div>
+  </dl>
+  {f'<p class="digest-revisit-trigger">다시 확인할 변화</p><ul>{trigger_html}</ul>' if trigger_html else ''}
+</aside>""".strip()
+
+
 def render_post(day_id, day):
     label = plain(day.get("date_label"))
     weekday = plain(day.get("weekday"))
@@ -764,6 +824,8 @@ def render_post(day_id, day):
     news = day.get("news") or []
     editorial = day.get("editorial") or {}
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
+    revisit_html = build_revisit_section(editorial)
+    revisit_insert = f"\n\n  {revisit_html}" if revisit_html else ""
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     if is_lead_story(day):
@@ -784,7 +846,7 @@ def render_post(day_id, day):
     <p class="digest-lead">{esc(lead)}</p>
   </section>
 
-  {build_editorial_image(images.get("cover"), "cover")}
+  {build_editorial_image(images.get("cover"), "cover")}{revisit_insert}
 
   <h2 class="digest-news-heading">{section_heading}</h2>
   {build_lead_news_section(lead_story, images, analysis_label)}
@@ -800,7 +862,7 @@ def render_post(day_id, day):
     <p class="digest-lead">{esc(lead)}</p>
   </section>
 
-  {build_editorial_image(images.get("cover"), "cover")}
+  {build_editorial_image(images.get("cover"), "cover")}{revisit_insert}
 
   {build_throughline_section(editorial)}
 

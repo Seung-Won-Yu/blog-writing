@@ -17,6 +17,88 @@ from blog_pipeline.publishing.daily_guard import (
 
 
 class DailyGuardTests(unittest.TestCase):
+    @staticmethod
+    def rotation_source(title, url, shape, render_family, logic_types, origins=None):
+        origins = origins or ["imagegen"] * len(logic_types)
+        return {
+            "editorial": {"topic_key": title, "article_shape": shape},
+            "visual": {
+                "cover": {
+                    "render_family": render_family,
+                    "art_direction": f"direction-{title}",
+                    "composition_type": f"composition-{title}",
+                    "palette_family": f"palette-{title}",
+                },
+                "assets": [
+                    {"logic_type": logic, "origin": origin}
+                    for logic, origin in zip(logic_types, origins)
+                ],
+            },
+            "news": [{"title_kr": title, "url": url}],
+        }
+
+    def test_future_drafts_rotate_article_shape(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            previous = self.rotation_source(
+                "이전 글", "https://example.com/a", "decision_guide",
+                "ink_drawing", ["comparison", "evidence"],
+            )
+            current = self.rotation_source(
+                "현재 글", "https://example.net/b", "decision_guide",
+                "flat_illustration", ["flow", "conditional"],
+            )
+            self.write_json(root / "data/days/2026-08-04.json", previous)
+
+            duplicates = find_recent_draft_duplicates(
+                "2026-08-05", current, root=root
+            )
+
+        self.assertEqual(duplicates[0]["reason"], "recent_article_shape")
+
+    def test_future_drafts_rotate_cover_render_family(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            previous = self.rotation_source(
+                "이전 글", "https://example.com/a", "change_impact",
+                "editorial_collage", ["comparison", "evidence"],
+            )
+            current = self.rotation_source(
+                "현재 글", "https://example.net/b", "decision_guide",
+                "editorial_collage", ["flow", "conditional"],
+            )
+            self.write_json(root / "data/days/2026-08-04.json", previous)
+
+            duplicates = find_recent_draft_duplicates(
+                "2026-08-05", current, root=root
+            )
+
+        self.assertEqual(duplicates[0]["reason"], "recent_render_family")
+
+    def test_future_drafts_require_real_evidence_after_two_generated_only_posts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = self.rotation_source(
+                "첫 글", "https://example.com/a", "change_impact",
+                "ink_drawing", ["comparison"],
+            )
+            second = self.rotation_source(
+                "둘째 글", "https://example.com/b", "hands_on_test",
+                "flat_illustration", ["flow"],
+            )
+            current = self.rotation_source(
+                "현재 글", "https://example.net/c", "decision_guide",
+                "editorial_collage", ["conditional"],
+            )
+            self.write_json(root / "data/days/2026-08-04.json", first)
+            self.write_json(root / "data/days/2026-08-05.json", second)
+
+            duplicates = find_recent_draft_duplicates(
+                "2026-08-06", current, root=root
+            )
+
+        self.assertEqual(duplicates[0]["reason"], "recent_all_imagegen")
+
     def test_recent_cover_style_signature_must_change(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

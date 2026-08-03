@@ -1339,6 +1339,87 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   line-height: 1.72 !important;
 }
 
++.daily-digest-post .digest-revisit {
+  margin: 32px 0 42px !important;
+  padding: 22px 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  color: var(--sw-text) !important;
+}
+
+.daily-digest-post .digest-revisit > .digest-section-label {
+  margin: 0 0 14px !important;
+}
+
+.daily-digest-post .digest-revisit dl {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  margin: 0 !important;
+}
+
+.daily-digest-post .digest-revisit dl > div {
+  min-width: 0 !important;
+}
+
+.daily-digest-post .digest-revisit dt,
+.daily-digest-post .digest-revisit dd {
+  margin: 0 !important;
+}
+
+.daily-digest-post .digest-revisit dt {
+  color: var(--sw-ink) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.daily-digest-post .digest-revisit dd {
+  margin-top: 6px !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+}
+
+.daily-digest-post .digest-revisit-trigger {
+  margin: 18px 0 7px !important;
+  color: var(--sw-ink) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.daily-digest-post .digest-revisit ul {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.daily-digest-post .digest-revisit li {
+  color: var(--sw-muted) !important;
+  font-size: 13.5px !important;
+}
+
+.daily-digest-post .digest-revisit li::before {
+  margin-right: 6px !important;
+  color: var(--sw-accent) !important;
+  content: "•" !important;
+}
+
+.daily-digest-post .digest-reusable {
+  margin: 24px 0 !important;
+  padding: 2px 0 2px 16px !important;
+  border-left: 3px solid var(--sw-accent) !important;
+}
+
+.daily-digest-post .digest-reusable-label {
+  margin: 0 0 10px !important;
+  color: var(--sw-accent) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .02em !important;
+}
+
 .daily-digest-post .digest-closing {
   margin: 44px 0 0 !important;
   padding: 24px 0 0 !important;
@@ -1930,6 +2011,11 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   .daily-digest-post .digest-terms {
     padding-right: 0 !important;
     padding-left: 0 !important;
+  }
+
+  .daily-digest-post .digest-revisit dl {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
   }
 
   .daily-digest-post .digest-action {

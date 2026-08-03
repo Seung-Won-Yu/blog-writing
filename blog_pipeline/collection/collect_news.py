@@ -7,10 +7,12 @@ import email.utils
 import hashlib
 import json
 import re
+import time
 from html import escape, unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
@@ -803,17 +805,29 @@ def write_inbox(inbox, output_dir):
     }
 
 
-def fetch_url(url, timeout=20):
+def fetch_url(url, timeout=20, retry_delay=0.5):
     request = Request(
         url,
         headers={
-            "User-Agent": "blog-writing-news-review/1.0",
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/126.0 Safari/537.36"
+            ),
             "Accept": "application/rss+xml, application/atom+xml, application/xml, text/html;q=0.9, */*;q=0.5",
+            "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.7,en;q=0.5",
+            "Cache-Control": "no-cache",
         },
     )
-    with urlopen(request, timeout=timeout) as response:
-        charset = response.headers.get_content_charset() or "utf-8"
-        return response.read().decode(charset, errors="replace")
+    for attempt in range(2):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                charset = response.headers.get_content_charset() or "utf-8"
+                return response.read().decode(charset, errors="replace")
+        except HTTPError as error:
+            if attempt or error.code not in {405, 408, 429, 500, 502, 503, 504}:
+                raise
+            time.sleep(max(0, retry_delay))
 
 
 def collection_quality_result(inbox, config):

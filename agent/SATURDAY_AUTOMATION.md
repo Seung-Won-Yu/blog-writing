@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 토요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 매일 08:00 제작·09:00 발행 준비되는 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 매일 09:00 실행되는 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
 사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비토요일 실행은 계속 건너뜁니다.
 
@@ -101,7 +101,9 @@
 
 생성 전 프롬프트는 `용도 → 실제 대상 → 구도 → 시각 스타일 → 색·조명 → 필수 물체 → 짧은 한국어 → 금지 요소` 순으로 작성합니다. 실제 버튼, 폴더, 메일, 문서, 전후 결과처럼 그 글만의 물체와 관계를 화면 중심 45~70%에 둡니다. 생성 직후 1초 안에 주제가 읽히는지, 캡션의 원인·결과와 같은 장면인지, 한국어가 정확한지, 모바일에서 핵심이 보이는지 확인하고 하나라도 실패하면 해당 이미지만 다시 생성합니다.
 
-2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 실험의 문제·버튼·실패·복구 결과 중 하나를 실제 행동이 보이는 한 장면의 초점으로 삼습니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 본문 도식은 원리와 실행 순서를 맡습니다. 고정 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 쓰지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지에서 금지합니다.
+2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 실험의 문제·버튼·실패·복구 결과 중 하나를 실제 행동이 보이는 한 장면의 초점으로 삼습니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 본문 도식은 원리와 실행 순서를 맡습니다. 고정 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 쓰지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지에서 금지합니다.
+
+2026-08-04 이후 `editorial.article_shape`은 `hands_on_test` 또는 `troubleshooting`을 우선하되 주제에 따라 `decision_guide`, `research_interpretation`, `change_impact`를 쓸 수 있습니다. 직전 글과 같은 전개는 금지합니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 실제로 다시 실행할 `code`, `table`, `ul` 블록 정확히 하나에 `reusable: true`와 `reuse_label`을 넣습니다. 실험 fixture·완전한 명령·실패 복구 순서 중 하나는 독자가 그대로 재현할 수 있어야 합니다.
 
 `visual.assets`마다 `label`, `scene_label`, `steps`, `curiosity_hook`, `evidence_type`, `origin`을 기록합니다. `origin`은 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 `imagegen` 중 하나입니다. `imagegen`에는 실제 `generation_prompt`, `generation_model`, 모바일에서도 읽히는 짧은 `korean_labels` 2~6개를 기록합니다. 브리프와 대응 `images.visual_N`의 프롬프트·모델 값은 정확히 일치해야 합니다. `images.cover`와 각 `images.visual_N`에도 같은 `origin`을 기록해 브리프와 파일 출처가 일치해야 합니다. 생성 도식에는 짧은 한국어 설명을 넣고, 한글 파일명과 독자가 봐야 할 결과를 적은 HTML 캡션을 사용합니다.
 

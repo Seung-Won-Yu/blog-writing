@@ -1,7 +1,7 @@
 import copy
 import math
 import unittest
-from datetime import date
+from datetime import date, timedelta
 
 from blog_pipeline.publishing.draft_identity import (
     category_for_content_type,
@@ -121,7 +121,7 @@ def valid_daily_source(day="2026-07-19"):
         {"t": "p", "text": repeated_text("실패 조건", 10)},
         {"t": "p", "text": repeated_text("다음 행동", 10)},
     ]
-    return {
+    source = {
         "schema_version": 3,
         "format": "lead-story-v1",
         "draft_id": day,
@@ -159,6 +159,7 @@ def valid_daily_source(day="2026-07-19"):
                 "art_direction": "editorial_scenario",
                 "composition_type": "asymmetric_single_scene",
                 "palette_family": "cobalt_coral_paper",
+                "render_family": "editorial_collage",
             },
             "assets": [first_visual, second_visual],
         },
@@ -181,6 +182,7 @@ def valid_daily_source(day="2026-07-19"):
                 "art_direction": "editorial_scenario",
                 "composition_type": "asymmetric_single_scene",
                 "palette_family": "cobalt_coral_paper",
+                "render_family": "editorial_collage",
             },
             "visual_1": image_asset(),
             "visual_2": image_asset(),
@@ -190,7 +192,7 @@ def valid_daily_source(day="2026-07-19"):
                 "title_kr": "일반 사용자가 확인할 새 기능 변경",
                 "source": "공식 발표",
                 "url": "https://example.com/announcement",
-                "published_at": "2026-07-18T22:00:00+09:00",
+                "published_at": f"{(publish_day - timedelta(days=1)).isoformat()}T22:00:00+09:00",
                 "blurb_kr": "새 기능의 적용 범위와 확인 방법이 공식 발표됐다.",
                 "references": [
                     {"kind": "official", "title": "공식 발표", "url": "https://example.com/announcement"},
@@ -205,10 +207,31 @@ def valid_daily_source(day="2026-07-19"):
             {"title": "관련 글 2", "url": "https://won0322.tistory.com/121", "reason": "업데이트 적용 전후 점검법을 연결해 볼 수 있다."},
         ],
     }
+    if publish_day >= date(2026, 8, 4):
+        source["editorial"].update(
+            {
+                "article_shape": "decision_guide",
+                "revisit": {
+                    "quick_answer": "변경의 핵심과 내 환경의 적용 여부를 먼저 판단한다.",
+                    "reuse_case": "설정 전에 판단표를 복사해 현재 값과 목표 값을 기록한다.",
+                    "failure_case": "적용 결과가 다르면 실패 조건과 되돌리기 순서부터 확인한다.",
+                    "artifact_type": "decision_matrix",
+                    "update_triggers": ["공식 기본값 변경", "지원 버전 변경"],
+                },
+            }
+        )
+        reusable = next(
+            block for block in source["news"][0]["content"] if block.get("t") == "table"
+        )
+        reusable.update(
+            {"reusable": True, "reuse_label": "적용 전후 판단표"}
+        )
+    return source
 
 
 def valid_automation_source(day="2026-07-25"):
     source = valid_daily_source(day)
+    cover_image = copy.deepcopy(source["images"]["cover"])
     source.update(
         {
             "draft_id": f"{day}-automation",
@@ -234,16 +257,20 @@ def valid_automation_source(day="2026-07-25"):
         visual_asset("annotated_capture", "screenshot", "성공과 예외가 나뉜 실제 실행 결과"),
     ]
     source["images"] = {
-        "cover": image_asset("imagegen"),
+        "cover": cover_image,
         "visual_1": image_asset("capture"),
         "visual_2": image_asset("imagegen"),
         "visual_3": image_asset("annotated_capture"),
     }
+    capture_time = f"{(date.fromisoformat(day) - timedelta(days=1)).isoformat()}T18:10:00+09:00"
+    for index in (1, 3):
+        source["visual"]["assets"][index - 1]["captured_at"] = capture_time
+        source["images"][f"visual_{index}"]["captured_at"] = capture_time
     source["generation"]["image_provider"] = "mixed"
     source["verification"] = {
         "mode": "executed",
-        "started_at": "2026-07-24T18:00:00+09:00",
-        "completed_at": "2026-07-24T18:12:00+09:00",
+        "started_at": f"{(date.fromisoformat(day) - timedelta(days=1)).isoformat()}T18:00:00+09:00",
+        "completed_at": f"{(date.fromisoformat(day) - timedelta(days=1)).isoformat()}T18:12:00+09:00",
         "command_exit_code": 0,
         "stdout_excerpt": "3개 파일 처리 완료, 1개 잘못된 날짜 형식은 오류 목록으로 분류됨",
         "environment": {
@@ -318,13 +345,106 @@ def valid_guide_source(day="2026-07-22"):
         {
             "source": "백엔드 로드맵 참고 자료",
             "url": "https://roadmap.sh/backend",
-            "published_at": "2026-07-20T12:00:00+09:00",
+            "published_at": f"{(date.fromisoformat(day) - timedelta(days=2)).isoformat()}T12:00:00+09:00",
         }
     )
     return source
 
 
 class EditorialQualityTests(unittest.TestCase):
+    def test_all_future_content_lanes_satisfy_new_contract(self):
+        cases = [
+            ("2026-08-04", valid_daily_source("2026-08-04")),
+            ("2026-08-05-guide", valid_guide_source("2026-08-05")),
+            ("2026-08-08-automation", valid_automation_source("2026-08-08")),
+        ]
+        for draft_id, source in cases:
+            with self.subTest(draft_id=draft_id):
+                self.assertEqual(
+                    source_quality_reasons(
+                        source, resolve_draft_identity(draft_id)
+                    ),
+                    [],
+                )
+
+    def test_future_cover_requires_a_declared_render_family(self):
+        source = valid_daily_source("2026-08-04")
+        source["visual"]["cover"].pop("render_family")
+
+        self.assertIn(
+            "quality_visual_variety",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+    def test_hands_on_article_requires_real_visual_evidence(self):
+        source = valid_daily_source("2026-08-04")
+        source["editorial"]["article_shape"] = "hands_on_test"
+        source["visual"]["assets"].append(
+            visual_asset(label="실행 결과에서 성공과 실패를 구분하는 신호")
+        )
+        source["images"]["visual_3"] = image_asset()
+        source["news"][0]["content"].insert(
+            -1,
+            {
+                "t": "visual",
+                "image": "visual_3",
+                "caption": "실행 결과에서 성공과 실패를 가르는 신호를 보여 준다.",
+            },
+        )
+
+        self.assertIn(
+            "quality_visual_evidence",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+    def test_future_article_requires_revisit_value_contract(self):
+        source = valid_daily_source("2026-08-04")
+        self.assertNotIn(
+            "quality_revisit_value",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+        del source["editorial"]["revisit"]
+        self.assertIn(
+            "quality_revisit_value",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+    def test_future_article_requires_exactly_one_reusable_block(self):
+        source = valid_daily_source("2026-08-04")
+        reusable = next(
+            block for block in source["news"][0]["content"] if block.get("reusable")
+        )
+        reusable.pop("reusable")
+        reusable.pop("reuse_label")
+
+        self.assertIn(
+            "quality_revisit_value",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+        source = valid_daily_source("2026-08-04")
+        extra = next(
+            block for block in source["news"][0]["content"] if block.get("t") == "ul"
+        )
+        extra["reusable"] = True
+        self.assertIn(
+            "quality_revisit_value",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
     def test_rejects_legacy_automatic_digest_language(self):
         source = valid_daily_source()
         source["editorial"]["opening"] = (

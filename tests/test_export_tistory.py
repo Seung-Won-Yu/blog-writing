@@ -157,6 +157,26 @@ LEAD_DAY = {
 
 
 class OptionalLearningSectionsTests(unittest.TestCase):
+    def test_revisit_and_reusable_artifact_are_visible_in_final_html(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["editorial"]["revisit"] = {
+            "quick_answer": "핵심 변화를 먼저 판단한다.",
+            "reuse_case": "판단표를 복사해 적용한다.",
+            "failure_case": "실패 조건부터 다시 확인한다.",
+            "artifact_type": "decision_matrix",
+            "update_triggers": ["기본값 변경", "지원 버전 변경"],
+        }
+        table = next(
+            block for block in day["news"][0]["content"] if block.get("t") == "table"
+        )
+        table.update({"reusable": True, "reuse_label": "적용 판단표"})
+
+        html = render_post("2026-08-04", day)
+
+        self.assertIn("다시 찾을 때 · 판단표", html)
+        self.assertIn("처음 읽기", html)
+        self.assertIn("저장해 두고 다시 쓰기 · 적용 판단표", html)
+
     def test_fallback_copy_does_not_claim_to_have_quiz_or_images(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
 

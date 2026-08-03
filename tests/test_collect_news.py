@@ -3,12 +3,14 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from urllib.error import HTTPError
 from unittest.mock import patch
 
 from blog_pipeline.collection.collect_news import (
     _source_item_is_recent,
     build_inbox,
     collection_quality_result,
+    fetch_url,
     load_recent_publisher_hosts,
     load_recent_processed_urls,
     parse_feed,
@@ -29,6 +31,25 @@ RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>
   </item>
 </channel></rss>
 """
+
+
+class _FetchResponse:
+    class Headers:
+        @staticmethod
+        def get_content_charset():
+            return "utf-8"
+
+    headers = Headers()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+    @staticmethod
+    def read():
+        return "정상 응답".encode("utf-8")
 
 
 ATOM_XML = """<?xml version="1.0" encoding="UTF-8"?>
@@ -99,6 +120,24 @@ DEFAULT_CONFIG = Path(__file__).parents[1] / "config" / "news_sources.json"
 
 
 class FeedParserTests(unittest.TestCase):
+    def test_fetch_retries_one_transient_http_error_with_browser_headers(self):
+        failure = HTTPError(
+            "https://example.com/feed", 405, "method not allowed", {}, None
+        )
+        with patch(
+            "blog_pipeline.collection.collect_news.urlopen",
+            side_effect=[failure, _FetchResponse()],
+        ) as mocked_urlopen, patch(
+            "blog_pipeline.collection.collect_news.time.sleep"
+        ):
+            body = fetch_url("https://example.com/feed", retry_delay=0)
+
+        request = mocked_urlopen.call_args_list[0].args[0]
+        self.assertEqual(body, "정상 응답")
+        self.assertIn("Mozilla/5.0", request.headers["User-agent"])
+        self.assertIn("ko-KR", request.headers["Accept-language"])
+        self.assertEqual(mocked_urlopen.call_count, 2)
+
     def test_parses_rss_item_and_strips_html_summary(self):
         items = parse_feed(RSS_XML, "https://example.com/feed")
 

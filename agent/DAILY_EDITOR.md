@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 데일리 심층뉴스 편집 계약
 
-이 문서는 매일 08:00 KST에 실행되어 09:00 발행 준비를 끝내는 Codex 편집자의 유일한 작업 계약입니다. GitHub Actions는 예약 실행 지연을 고려해 06:17 KST에 뉴스 수집·중복 제거·후보 5건 우선순위 계산을 시작합니다. Codex는 그중 핵심뉴스 1건을 골라 추가 조사, 심층 집필, 설명 이미지 제작, HTML 생성, 검수와 GitHub Pages 배포를 담당합니다. 티스토리 붙여넣기와 09:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매일 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. GitHub Actions는 예약 실행 지연을 고려해 05:17 KST에 뉴스 수집·중복 제거·후보 5건 우선순위 계산을 시작합니다. Codex는 그중 핵심뉴스 1건을 골라 추가 조사, 심층 집필, 설명 이미지 제작, HTML 생성, 검수와 GitHub Pages 배포를 담당합니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
 
 ## 운영 흐름
 
@@ -25,7 +25,7 @@
    - 표·차트·타임라인·비교·동작 흐름 중 주제에 맞는 설명 시각물이 가능한가
    - 최근 60일 글과 URL이나 핵심 질문이 겹치지 않는가
 
-   후보끼리 비교할 때는 `검색 지속성 30 · 실제 문제 해결성 25 · 현재 관심도 20 · 독창적 해설 가능성 15 · 기존 글 연결성 10`의 100점 편집 점수를 사용합니다. 이 점수는 수집기의 `lead_score`를 바꾸지 않으며, 후보 5건 중 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 보조 기준입니다.
+   후보끼리 비교할 때는 `검색 지속성 30 · 실제 문제 해결성 25 · 현재 관심도 20 · 독창적 해설 가능성 15 · 기존 글 연결성 10`의 100점 편집 점수를 사용합니다. 이 점수는 수집기의 `lead_score`를 바꾸지 않으며, 후보 5건 중 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 보조 기준입니다. 후보함의 `reader_relevance_fallback_applied`가 `true`이면 원래 `min_reader_relevance` 미만 후보를 발행 이유만으로 선택하지 않습니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 일반 독자의 문제를 해결하는 새 후보를 찾고, 찾지 못하면 억지로 전문 뉴스 글을 만들지 않습니다.
 
    같은 canonical URL은 제외합니다. 제목이 거의 같거나 결론이 같은 사건도 제외합니다. 후속 보도는 이전 글 이후 달라진 사실이 제목과 본문에 분명할 때만 선택합니다.
 
@@ -63,7 +63,7 @@
    - `logic_type`: `flow`, `before_after`, `comparison`, `conditional`, `timeline`, `architecture`, `evidence` 중 하나
    - `condition`: `logic_type`이 `conditional`일 때만 쓰며 `DNS·IP를 변경한 경우`처럼 분기 조건을 정확히 기록
 
-   2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 대표 이미지 생성 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 `infographic-diagram`으로 시작하지 않습니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
+   2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후에는 두 곳에 같은 `render_family`도 기록하며 값은 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 하나입니다. 최근 3개 글과 같은 `render_family`은 쓰지 않습니다. 대표 이미지 생성 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 `infographic-diagram`으로 시작하지 않습니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
 
    대표 이미지는 정보 전체를 요약하는 교재 도식이 아니라 독자가 글을 열 이유가 되는 한 장면이어야 합니다. 실제 대상과 막힌 지점·선택·의외의 결과 중 하나를 크게 보여 주고, 필요하면 주제와 직접 관련된 사람·손·물건·공간을 사용합니다. 단, 포괄적인 개발자와 노트북 장면은 금지합니다. `editorial_scenario`, `single_object_conflict`, `cutaway_process`, `before_after_scene`, `annotated_closeup`, `spatial_comparison`처럼 주제에 맞는 아트 디렉션을 선택합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 같은 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 삼지 않습니다. `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지 구성으로 금지합니다. 반대로 본문 이미지는 정확한 흐름도·비교표·구조도를 맡으며 대표와 색·구도·질문을 반복하지 않습니다.
 
@@ -78,6 +78,8 @@
    - 사용법: 실제 설정과 동작 결과를 연결한 예제 그림
 
    조건부 사건은 필수 순서의 가운데에 놓지 않습니다. `~한 경우`, `변경 시`, `실패했을 때` 같은 조건 라벨을 단 별도 분기로 그립니다. 대표는 문제·결과를 한 장면으로 보여 주고, 본문 이미지는 원리·비교·조건·실제 조작을 맡아 같은 구도를 반복하지 않습니다.
+
+   직전 글과 본문 이미지의 `logic_type` 순서 전체가 같으면 안 됩니다. 최근 두 글의 본문 이미지가 모두 `imagegen`이었다면 이번 글에는 실제 캡처·주석 캡처·실측 차트 중 하나를 반드시 넣습니다. `hands_on_test`와 `troubleshooting`은 실제 증거를 최소 1개, `research_interpretation`은 주석 캡처 또는 실측 차트를 최소 1개 사용합니다. 이 세 유형은 본문 시각물도 최소 3개입니다.
 
    설정·사용법이 핵심인 글은 실제 제품 화면이나 공식 문서 화면 1장을 우선 사용합니다. 직접 캡처한 화면은 계정·IP·토큰·개인정보를 가리고 `capture_note`를 기록합니다. 공식 화면은 `source_url`을 기록하고 캡션에 출처를 밝힙니다. 공개 화면을 확보할 수 없으면 `visual.screenshot_unavailable_reason`과 정확한 메뉴 경로를 남깁니다. 생성 이미지로 가짜 UI·가짜 터미널·가짜 측정 화면을 만들지 않습니다.
 
@@ -134,7 +136,9 @@
 - 제목의 핵심 검색어는 한 번만 쓰고 독자의 실제 문제·의외의 결과·얻는 답 중 하나를 함께 담습니다. 보통 35~60자 안에서 모바일 2~3줄을 목표로 하며, 제품·표준명이 길어지는 경우에만 예외를 둡니다.
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
 - 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
-- 흐름은 `무엇이 바뀌었나 → 왜 이런 변화가 생겼나 → 기존 방식과 비교 → 실제 설정·사용법 → 남는 한계 → 바로 확인할 체크리스트`를 기본으로 하되 주제에 맞게 조정합니다.
+- 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
+- `editorial.revisit`에는 첫 방문용 `quick_answer`, 적용할 때 다시 볼 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
+- `code`, `table`, `ul` 중 실제 복사·적용 가능한 블록 정확히 하나에 `reusable: true`와 구체적인 `reuse_label`을 넣습니다. 단순 요약표를 재사용 자료로 표시하지 않습니다.
 - 표는 비교가 실제로 쉬워질 때 1~3개 사용합니다. 설정·코드가 핵심이면 복사 가능한 코드 예제를 넣습니다.
 - 본문 설명 이미지 2~6장을 관련 문단 직후에 배치하고, 캡션은 그림에서 읽어야 할 결론을 설명합니다.
 - 참고 자료 목록과 관련 글 2개를 본문 하단에 둡니다.
@@ -161,7 +165,7 @@
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason` 기록
