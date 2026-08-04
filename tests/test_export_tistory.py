@@ -157,7 +157,7 @@ LEAD_DAY = {
 
 
 class OptionalLearningSectionsTests(unittest.TestCase):
-    def test_revisit_and_reusable_artifact_are_visible_in_final_html(self):
+    def test_revisit_metadata_stays_internal_and_reusable_artifact_is_visible(self):
         day = copy.deepcopy(LEAD_DAY)
         day["editorial"]["revisit"] = {
             "quick_answer": "핵심 변화를 먼저 판단한다.",
@@ -173,8 +173,9 @@ class OptionalLearningSectionsTests(unittest.TestCase):
 
         html = render_post("2026-08-04", day)
 
-        self.assertIn("다시 찾을 때 · 판단표", html)
-        self.assertIn("처음 읽기", html)
+        self.assertNotIn("digest-revisit", html)
+        self.assertNotIn("다시 찾을 때 · 판단표", html)
+        self.assertNotIn("처음 읽기", html)
         self.assertIn("저장해 두고 다시 쓰기 · 적용 판단표", html)
 
     def test_fallback_copy_does_not_claim_to_have_quiz_or_images(self):

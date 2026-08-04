@@ -52,14 +52,6 @@ REFERENCE_KIND_LABELS = {
     "reference": "참고 자료",
     "research": "연구",
 }
-REVISIT_ARTIFACT_LABELS = {
-    "command_recipe": "복사할 명령",
-    "configuration": "재사용 설정",
-    "decision_matrix": "판단표",
-    "checklist": "점검표",
-    "troubleshooting_tree": "문제 해결 순서",
-    "experiment_fixture": "재현용 예제",
-}
 MIN_PUBLISH_REVISION = 7
 TISTORY_ADFIT_MARKER = (
     '<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" '
@@ -784,39 +776,6 @@ def build_closing_section(editorial):
 </section>""".strip()
 
 
-def build_revisit_section(editorial):
-    editorial = editorial or {}
-    revisit = (
-        editorial.get("revisit")
-        if isinstance(editorial.get("revisit"), dict)
-        else {}
-    )
-    quick = plain(revisit.get("quick_answer"))
-    reuse = plain(revisit.get("reuse_case"))
-    failure = plain(revisit.get("failure_case"))
-    if not all((quick, reuse, failure)):
-        return ""
-    artifact = REVISIT_ARTIFACT_LABELS.get(
-        plain(revisit.get("artifact_type")), "재사용 자료"
-    )
-    triggers = (
-        revisit.get("update_triggers")
-        if isinstance(revisit.get("update_triggers"), list)
-        else []
-    )
-    trigger_html = "".join(f"<li>{esc(value)}</li>" for value in triggers if plain(value))
-    return f"""
-<aside class="digest-revisit" aria-label="이 글을 다시 찾을 때">
-  <p class="digest-section-label">다시 찾을 때 · {esc(artifact)}</p>
-  <dl>
-    <div><dt>처음 읽기</dt><dd>{esc(quick)}</dd></div>
-    <div><dt>적용할 때</dt><dd>{esc(reuse)}</dd></div>
-    <div><dt>막혔을 때</dt><dd>{esc(failure)}</dd></div>
-  </dl>
-  {f'<p class="digest-revisit-trigger">다시 확인할 변화</p><ul>{trigger_html}</ul>' if trigger_html else ''}
-</aside>""".strip()
-
-
 def render_post(day_id, day):
     label = plain(day.get("date_label"))
     weekday = plain(day.get("weekday"))
@@ -824,8 +783,6 @@ def render_post(day_id, day):
     news = day.get("news") or []
     editorial = day.get("editorial") or {}
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
-    revisit_html = build_revisit_section(editorial)
-    revisit_insert = f"\n\n  {revisit_html}" if revisit_html else ""
     title_flow = " / ".join(plain(item.get("title_kr")) for item in news[:3])
     lead = plain(editorial.get("opening")) or f"오늘은 {title_flow} 흐름을 중심으로 읽어봅니다."
     if is_lead_story(day):
@@ -846,7 +803,7 @@ def render_post(day_id, day):
     <p class="digest-lead">{esc(lead)}</p>
   </section>
 
-  {build_editorial_image(images.get("cover"), "cover")}{revisit_insert}
+  {build_editorial_image(images.get("cover"), "cover")}
 
   <h2 class="digest-news-heading">{section_heading}</h2>
   {build_lead_news_section(lead_story, images, analysis_label)}
@@ -862,7 +819,7 @@ def render_post(day_id, day):
     <p class="digest-lead">{esc(lead)}</p>
   </section>
 
-  {build_editorial_image(images.get("cover"), "cover")}{revisit_insert}
+  {build_editorial_image(images.get("cover"), "cover")}
 
   {build_throughline_section(editorial)}
 

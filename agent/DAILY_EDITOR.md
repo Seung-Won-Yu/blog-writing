@@ -140,13 +140,13 @@
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
 - 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
-- `editorial.revisit`에는 첫 방문용 `quick_answer`, 적용할 때 다시 볼 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
+- `editorial.revisit`에는 첫 방문용 `quick_answer`, 적용할 때 다시 볼 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. 이 값은 품질 검사용 내부 메타데이터이므로 `다시 찾을 때`, `처음 읽기`, `적용할 때`, `막혔을 때` 같은 별도 상자로 출력하지 않습니다. 대신 핵심 답은 도입과 설명에, 재사용 내용은 본문의 `code`·`table`·`ul` 하나에, 실패 조건과 재확인 변화는 한계·마무리 문단에 자연스럽게 녹입니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
 - `code`, `table`, `ul` 중 실제 복사·적용 가능한 블록 정확히 하나에 `reusable: true`와 구체적인 `reuse_label`을 넣습니다. 단순 요약표를 재사용 자료로 표시하지 않습니다.
 - 표는 비교가 실제로 쉬워질 때 1~3개 사용합니다. 설정·코드가 핵심이면 복사 가능한 코드 예제를 넣습니다.
 - 본문 설명 이미지 2~6장을 관련 문단 직후에 배치하고, 캡션은 그림에서 읽어야 할 결론을 설명합니다.
 - 참고 자료 목록과 관련 글 2개를 본문 하단에 둡니다.
 - `quiz`, `terms`, 억지 목차, 반복 요약은 넣지 않습니다.
-- 광고 태그는 글마다 1개만 유지하고, 첫 번째 완결된 핵심 설명 뒤 전체 비광고 블록의 35~45% 위치에 `ad_break`를 둡니다.
+- 광고 태그는 글마다 1개만 유지하고, 첫 번째 완결된 핵심 설명 뒤 전체 비광고 블록의 35~45% 위치에 `ad_break`를 둡니다. 블록 순서는 반드시 `완결 문단·표·목록·코드·인용 → ad_break → 다음 h`여야 하며 `h → ad_break → 첫 설명`은 금지합니다.
 - 제목·도입·표·이미지·마무리에서 같은 문장을 바꿔 쓰며 반복하지 않습니다.
 
 ## 문체와 사실 기준
@@ -202,7 +202,8 @@
 - 이미지 안 짧은 한국어 설명과 HTML 캡션이 서로 모순되지 않는가
 - 대표 이미지와 설명 이미지가 포괄적인 AI·컴퓨터 그림이 아닌가
 - 이미지가 WebP, 1200×630, 장당 256KB, 전체 2MB 이내인가
-- 광고가 정확히 1개이며 전체 35~45% 위치에서 완결된 섹션 뒤에 있는가
+- 광고가 정확히 1개이며 전체 35~45% 위치에서 `완결 문단·표·목록·코드·인용 → 광고 → 다음 소제목` 순서인가
+- `editorial.revisit` 값이 별도 내부 메모 상자로 노출되지 않고 본문에 자연스럽게 반영됐는가
 - 관련 글 2개가 주제상 자연스럽고 `https://won0322.tistory.com/<숫자>` 형식의 실제 공개 글인가
 - 데스크톱·모바일에서 좌우 여백, 표·코드 스크롤, 이미지 글자가 깨지지 않는가
 - 본문에 `style=`이나 중첩 패딩, 중복 제목이 없는가

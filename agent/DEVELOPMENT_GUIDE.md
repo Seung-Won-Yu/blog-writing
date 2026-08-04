@@ -82,7 +82,7 @@
 - 표 1~3개, 필요한 경우 복사 가능한 최소 코드·설정을 넣습니다.
 - 용어를 처음 쓸 때 짧게 풀고, 개념끼리 어떤 순서로 이어지는지 보여 줍니다.
 - 장점만 나열하지 않고 쓰지 말아야 할 조건, 실패 방식, 비용·보안·운영 한계를 적습니다.
-- 광고는 정확히 1개, 첫 완결된 핵심 섹션 뒤이자 전체 비광고 블록의 35~45% 위치에 `ad_break`로 둡니다.
+- 광고는 정확히 1개, 첫 완결된 핵심 섹션 뒤이자 전체 비광고 블록의 35~45% 위치에 `ad_break`로 둡니다. 블록 순서는 반드시 `완결 문단·표·목록·코드·인용 → ad_break → 다음 h`여야 하며 소제목과 첫 설명 사이에는 넣지 않습니다.
 - `정리해보겠습니다`, `개발자 편집자의 견해`, `자동화로 작성했습니다`, 근거 없는 전망과 과장된 성공담을 쓰지 않습니다.
 
 ## 자연스러운 블로그 문체
@@ -108,7 +108,7 @@
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 독자가 겪는 실패·선택·결과를 보여 주는 한 장면을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 구성에서 제외합니다.
 
-2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나이며 직전 같은 유형 글과 반복하지 않습니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 본문의 `code`, `table`, `ul` 중 실제 재사용 가능한 블록 정확히 하나에 `reusable: true`와 `reuse_label`을 넣습니다. 독자는 처음에는 개념을 이해하고, 두 번째에는 그 블록을 복사·적용하고, 세 번째에는 실패 조건이나 버전 변경을 확인할 수 있어야 합니다.
+2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나이며 직전 같은 유형 글과 반복하지 않습니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이 내부 메타데이터를 `다시 찾을 때` 같은 별도 상자로 출력하지 않습니다. 핵심 답·재사용 방법·실패 조건·재확인 변화는 도입, 재사용 블록, 한계와 마무리 문단에 자연스럽게 녹입니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 본문의 `code`, `table`, `ul` 중 실제 재사용 가능한 블록 정확히 하나에 `reusable: true`와 `reuse_label`을 넣습니다. 독자는 처음에는 개념을 이해하고, 두 번째에는 그 블록을 복사·적용하고, 세 번째에는 실패 조건이나 버전 변경을 확인할 수 있어야 합니다.
 
 직전 같은 유형 글과 본문 `logic_type` 순서 전체를 반복하지 않습니다. 최근 두 글이 생성 이미지만 썼다면 실제 문서·제품 화면의 주석 캡처 또는 검증 가능한 실측 차트를 최소 1개 넣습니다. `hands_on_test`, `troubleshooting`, `research_interpretation`은 본문 시각물을 최소 3개 사용하고 실제 근거 요건을 지킵니다.
 
@@ -148,6 +148,7 @@ git diff --cached --check
 - 코드·표·이미지가 각각 본문의 이해를 높이는가
 - 대표 1장과 설명 3~6장이 포괄적이거나 서로 중복되지 않는가
 - 관련 글은 실제 `https://won0322.tistory.com/<숫자>` 공개 글인가
-- 광고가 정확히 1개이며 전체 35~45% 위치인가
+- 광고가 정확히 1개이며 전체 35~45% 위치에서 `완결 블록 → 광고 → 다음 소제목` 순서인가
+- `editorial.revisit`가 별도 내부 메모 상자로 노출되지 않고 본문에 자연스럽게 반영됐는가
 - 수요일 18:00 예약값과 `개발 가이드` 카테고리가 정확한가
 - 최종 가드·묶음·테스트·Pages 배포가 모두 성공했는가

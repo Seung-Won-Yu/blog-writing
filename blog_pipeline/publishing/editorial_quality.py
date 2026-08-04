@@ -20,6 +20,7 @@ VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
 NATURAL_VOICE_POLICY_START = date(2026, 8, 4)
+AD_FLOW_POLICY_START = date(2026, 8, 4)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -974,6 +975,11 @@ def _depth_reasons(source, identity):
         non_ad_count = max(1, len(blocks) - 1)
         position = ad_indexes[0] / non_ad_count
         invalid = not 0.35 <= position <= 0.45
+    if not invalid and date.fromisoformat(identity.publish_date) >= AD_FLOW_POLICY_START:
+        ad_index = ad_indexes[0]
+        previous_type = blocks[ad_index - 1].get("t") if ad_index > 0 else ""
+        next_type = blocks[ad_index + 1].get("t") if ad_index + 1 < len(blocks) else ""
+        invalid = previous_type not in {"p", "table", "ul", "code", "quote"} or next_type != "h"
     return ["quality_depth"] if invalid else []
 
 

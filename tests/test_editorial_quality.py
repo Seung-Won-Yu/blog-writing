@@ -300,8 +300,11 @@ def valid_automation_source(day="2026-07-25"):
     )
     content = source["news"][0]["content"]
     ad = next(block for block in content if block.get("t") == "ad_break")
-    content.remove(ad)
-    content.insert(8, ad)
+    ad_index = content.index(ad)
+    content.insert(
+        ad_index,
+        {"t": "p", "text": "구현에 들어가기 전 입력과 기대 결과를 한 번 더 확인한다."},
+    )
     return source
 
 
@@ -341,8 +344,11 @@ def valid_guide_source(day="2026-07-22"):
         ]
     )
     ad = next(block for block in content if block.get("t") == "ad_break")
-    content.remove(ad)
-    content.insert(8, ad)
+    ad_index = content.index(ad)
+    content.insert(
+        ad_index,
+        {"t": "p", "text": "학습 순서를 고르기 전 현재 수준과 완성할 결과를 먼저 적는다."},
+    )
     source["news"][0].update(
         {
             "source": "백엔드 로드맵 참고 자료",
@@ -879,6 +885,33 @@ class EditorialQualityTests(unittest.TestCase):
         )
 
         self.assertIn("quality_search_metadata", reasons)
+
+    def test_august_posts_reject_ad_between_heading_and_first_paragraph(self):
+        source = valid_daily_source("2026-08-04")
+        content = source["news"][0]["content"]
+        ad = next(block for block in content if block.get("t") == "ad_break")
+        content.remove(ad)
+        heading_index = next(
+            index
+            for index, block in enumerate(content)
+            if block.get("t") == "h" and block.get("text") == "실제로 확인하는 방법"
+        )
+        content.insert(heading_index + 1, ad)
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-04")
+        )
+
+        self.assertIn("quality_depth", reasons)
+
+    def test_august_posts_accept_ad_after_complete_section_before_heading(self):
+        source = valid_daily_source("2026-08-04")
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-04")
+        )
+
+        self.assertNotIn("quality_depth", reasons)
 
     def test_non_numeric_generation_revision_fails_closed_without_crashing(self):
         source = valid_daily_source()
