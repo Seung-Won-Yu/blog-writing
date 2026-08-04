@@ -8,8 +8,8 @@
   <title>Dependabot 알림은 줄이고 보안 패치는 늦추지 않는 그룹 설정법 · 본문 미리보기</title>
   <link rel="stylesheet" href="tistory-style.css">
   <style>
-    html { background: #f5f7f9; }
-    body.preview-page { min-height: 100vh; margin: 0; overflow-wrap: anywhere; }
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
     .preview-page #container .content-wrap { max-width: none; }
     .preview-page #content {
       float: none;
@@ -83,8 +83,7 @@ groups:
 </section>
 
   <section class="digest-closing">
-  <p class="digest-closing-copy">Dependabot의 좋은 설정은 PR 개수가 가장 적은 설정이 아니다. 팀이 매주 읽고 테스트할 수 있는 일반 업데이트의 묶음과, 취약점이 발견됐을 때 기다리지 않는 보안 경로를 함께 만드는 설정이다. 그룹 규칙의 순서와 대상 디렉터리, 보안 업데이트의 선행 기능을 확인하고 작은 저장소에서 먼저 운영해 보자. 알림 수가 줄어든 뒤에도 보안 PR의 생성·검토·병합 시간이 늘지 않는다면 그때 비로소 소음을 줄인 것이다.</p>
-  <div class="digest-action"><b>직접 확인해보려면</b><span>이번 주에는 저장소 하나의 dependabot.yml에서 일반 업데이트 그룹 하나만 먼저 만들고, 보안 업데이트 PR이 별도로 생성되는지 Security 탭에서 확인한다.</span></div>
+  <p class="digest-closing-copy">Dependabot의 좋은 설정은 PR 개수가 가장 적은 설정이 아니다. 팀이 매주 읽고 테스트할 수 있는 일반 업데이트의 묶음과, 취약점이 발견됐을 때 기다리지 않는 보안 경로를 함께 만드는 설정이다. 그룹 규칙의 순서와 대상 디렉터리, 보안 업데이트의 선행 기능을 확인하고 작은 저장소에서 먼저 운영해 보자. 알림 수가 줄어든 뒤에도 보안 PR의 생성·검토·병합 시간이 늘지 않는다면 그때 비로소 소음을 줄인 것이다. 이번 주에는 저장소 하나의 dependabot.yml에서 일반 업데이트 그룹 하나만 먼저 만들고, 보안 업데이트 PR이 별도로 생성되는지 Security 탭에서 확인한다.</p>
 </section>
 </article>
 

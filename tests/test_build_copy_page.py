@@ -543,6 +543,7 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn("script-src 'none'", page)
         self.assertIn("style-src 'self' 'unsafe-inline'", page)
         self.assertIn('<link rel="stylesheet" href="tistory-style.css">', page)
+        self.assertIn("body.preview-page { height: auto;", page)
         self.assertIn("한글 제목 · 본문 미리보기", page)
         self.assertEqual(SKIN_CSS_PATH.name, "style.css")
         self.assertIn('<body id="tt-body-page"', page)

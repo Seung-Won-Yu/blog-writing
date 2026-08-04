@@ -46,8 +46,8 @@
   "after_ad_html": "docs/tistory/2026-08-01-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-01-adfit.html",
   "source_sha256": "7aa686533e3601e9b469bd2c8c4f98506d1bc33e5227bea69a62b0e96b31c4b4",
-  "html_sha256": "0549704b7509b2c1c7014caf817732ac4d2bfdbc76a93df854b873c96332d17d",
-  "adfit_sha256": "cdccc01ed9f3293cc57c32e7edca64e3b2f89502e7648484c5c6ed69bd5ebdd6",
+  "html_sha256": "fe2eaf1c7d3837201245e98ee488d412f84c39d936c8bcc28327c56214478dac",
+  "adfit_sha256": "9ad29bc5fb42d0d4e2463a1baab03f99139ca4a4747cc80a695a23534a3e503f",
   "image_assets": [
     {
       "kind": "cover",

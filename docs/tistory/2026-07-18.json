@@ -10,6 +10,7 @@
   "publish_date": "2026-07-18",
   "content_type": "daily_news",
   "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
   "scheduled_at": "2026-07-18T09:00:00+09:00",
   "tags": [
     "WordPress",
@@ -28,11 +29,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
     "추천 제목: WordPress 7.0.2 보안 업데이트: Cloudflare WAF가 있어도 패치해야 하는 이유"
   ],
   "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-18.json",
   "source_page": null,
@@ -40,6 +43,9 @@
   "before_ad_html": "docs/tistory/2026-07-18-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-18-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-18-adfit.html",
+  "source_sha256": "af58118470d158451fa50eba1c7f51c35d709d587a9e30b126476f4e219b145d",
+  "html_sha256": "f8f598d18446eb26f0887b2f5d0622a7c2aa1df2edc5e7f3ff3c5b312f9948f1",
+  "adfit_sha256": "55ae787fc94fb5c356f74bf8c49d5ae0179fd15225d95702b1af6d2636e928c0",
   "image_assets": [
     {
       "kind": "cover",

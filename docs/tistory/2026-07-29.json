@@ -46,8 +46,8 @@
   "after_ad_html": "docs/tistory/2026-07-29-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-29-adfit.html",
   "source_sha256": "b834ed404c6c9fe6d7113732dcb1972fbf0ec205f12a9efe2532d68827d86bcd",
-  "html_sha256": "2a5b0549033d4eaa9f35f9547dac312cc6f028b713d783db963dae7e7819230b",
-  "adfit_sha256": "ea96e1a9717c9b986253805cf3d933aa545f0113f7e9f4aa8202e7d168447973",
+  "html_sha256": "7e7060d5d2b4fcf9014376fcd25f9ecd1648e90e6f2470d1d62ab3e47b73f967",
+  "adfit_sha256": "47e0acbcc6425d0c74eae02166a8d87208530a28b6751bb73e2eea9d3306244d",
   "image_assets": [
     {
       "kind": "cover",

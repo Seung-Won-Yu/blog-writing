@@ -10,6 +10,7 @@
   "publish_date": "2026-07-19",
   "content_type": "daily_news",
   "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
   "scheduled_at": "2026-07-19T09:00:00+09:00",
   "tags": [
     "Hugging Face",
@@ -44,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-07-19-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-19-adfit.html",
   "source_sha256": "ebc6eb04c0d83301ae12725982d82800abb64c6046cb9b8bd3fd5b8ff71a6e06",
-  "html_sha256": "f8f1fbef123c6da10e91f46b0fc6c972bbe673e7927e9a2cf8b65bde554c3e0b",
-  "adfit_sha256": "70162ddbeb22a2cb3b17ca50908d74210b33aa0839b1a980c4f02000ee5f67c5",
+  "html_sha256": "c4b9e926ff8e375945319b6f74c6147f4d26d209a27d0b849a09aea42df3cf8c",
+  "adfit_sha256": "cbde1ed7d7ed47f70a10beb3b7f0dad6055de52a64a7aa68cce6783f1a4ca479",
   "image_assets": [
     {
       "kind": "cover",

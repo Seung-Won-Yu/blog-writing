@@ -1,5 +1,5 @@
 {
-  "title": "메타는 왜 '인스타 사진 AI 연동'을 사흘 만에 멈췄을까",
+  "title": "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
   "title_candidates": [
     "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단",
     "메타, 인스타그램 게시물 AI 활용 자동 연동 기능 사흘 만에 철회 외 2건",
@@ -7,6 +7,12 @@
     "메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단 (2026. 7. 12)"
   ],
   "category": "데일리IT뉴스",
+  "draft_id": "2026-07-12",
+  "publish_date": "2026-07-12",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-12T09:00:00+09:00",
   "tags": [
     "AI",
     "IT뉴스",
@@ -33,11 +39,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
     "추천 제목: 메타, '인스타 사진 AI 활용' 반발에 사흘 만에 자동 연동 중단"
   ],
   "generation_provider": "gemini",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-12.json",
   "source_page": null,
@@ -45,6 +53,9 @@
   "before_ad_html": "docs/tistory/2026-07-12-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-12-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-12-adfit.html",
+  "source_sha256": "1bae33d221346ae1ebe7bd4f170016ebad504c9a39ab6bf24ea311d12bd06b3d",
+  "html_sha256": "8a1c8d3a57390d28937e7c222c963ceb4d332c32c9eae374d5dca95a33cbe862",
+  "adfit_sha256": "804048f9beee84ff04cd86a60f6f45860a08753fe82a631fd80e26886c712644",
   "image_assets": [
     {
       "kind": "cover",

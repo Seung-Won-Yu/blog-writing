@@ -8,8 +8,8 @@
   <title>AI가 고친 웹페이지 버튼, 보내기 전에 확인하는 법: Git·Playwright 직접 실험 · 본문 미리보기</title>
   <link rel="stylesheet" href="tistory-style.css">
   <style>
-    html { background: #f5f7f9; }
-    body.preview-page { min-height: 100vh; margin: 0; overflow-wrap: anywhere; }
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
     .preview-page #container .content-wrap { max-width: none; }
     .preview-page #content {
       float: none;
@@ -70,8 +70,7 @@ playwright-cli snapshot
 </section>
 
   <section class="digest-closing">
-  <p class="digest-closing-copy">AI가 만든 코드가 틀렸다는 사실보다 중요한 것은, 틀린 상태를 작은 범위에서 발견하고 되돌릴 수 있는가다. 버튼 하나를 눌러 보고, 오류가 나면 변경 범위를 좁혀 확인하고, 동작한 상태를 Git 커밋으로 남기면 다음 수정도 비교할 기준이 생긴다. 이 실험은 로컬 예제만 다뤘으므로 실제 서비스에서는 테스트 환경과 리뷰 절차를 별도로 갖춰야 한다.</p>
-  <div class="digest-action"><b>직접 확인해보려면</b><span>오늘 수정한 페이지에서 가장 중요한 버튼 하나를 고르고, 배포 전 브라우저 클릭과 Git diff 확인을 한 번씩 해 보자.</span></div>
+  <p class="digest-closing-copy">AI가 만든 코드가 틀렸다는 사실보다 중요한 것은, 틀린 상태를 작은 범위에서 발견하고 되돌릴 수 있는가다. 버튼 하나를 눌러 보고, 오류가 나면 변경 범위를 좁혀 확인하고, 동작한 상태를 Git 커밋으로 남기면 다음 수정도 비교할 기준이 생긴다. 이 실험은 로컬 예제만 다뤘으므로 실제 서비스에서는 테스트 환경과 리뷰 절차를 별도로 갖춰야 한다. 오늘 수정한 페이지에서 가장 중요한 버튼 하나를 고르고, 배포 전 브라우저 클릭과 Git diff 확인을 한 번씩 해 보자.</p>
 </section>
 </article>
 

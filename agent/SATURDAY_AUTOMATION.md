@@ -76,9 +76,10 @@
 
 기본 흐름은 다음과 같습니다.
 
-`반복되는 문제 장면 → 자동화 목표와 선택 이유 → 준비 환경 → 단계별 구현 → 실제 실행 화면·결과 → 수동 방식과 비교 → 실패·한계 → 재사용 체크리스트`
+`반복되는 문제 장면 → 자동화 목표와 선택 이유 → 준비 환경 → 단계별 구현 → 실제 실행 화면·결과 → 수동 방식과 비교 → 실패·한계 → 다시 실행할 조건`
 
 - 첫 5문장 안에 실제 반복 작업과 자동화 후 확인할 결과를 보여 줍니다.
+- 구현 순서가 실제 실행 순서일 때만 소제목에 번호를 붙입니다. 문제·실패·결과를 설명하는 장은 질문형·장면형 제목으로 연결합니다.
 - 설치·버전·코드보다 수동 작업의 불편, 완성 화면, 줄어든 단계처럼 일반 독자가 먼저 이해할 장면을 앞에 둡니다.
 - 복사 가능한 최소 코드·설정을 넣고 버전과 실행 위치를 명시합니다.
 - 비교가 쉬워질 때 HTML 표 1~3개를 사용합니다.
@@ -113,7 +114,9 @@
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 실험의 문제·버튼·실패·복구 결과 중 하나를 실제 행동이 보이는 한 장면의 초점으로 삼습니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 본문 도식은 원리와 실행 순서를 맡습니다. 고정 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 쓰지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지에서 금지합니다.
 
-2026-08-04 이후 `editorial.article_shape`은 `hands_on_test` 또는 `troubleshooting`을 우선하되 주제에 따라 `decision_guide`, `research_interpretation`, `change_impact`를 쓸 수 있습니다. 직전 글과 같은 전개는 금지합니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이 내부 메타데이터를 `다시 찾을 때` 같은 별도 상자로 출력하지 않습니다. 핵심 답·재사용 방법·실패 조건·재확인 변화는 도입, 재사용 블록, 한계와 마무리 문단에 자연스럽게 녹입니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 실제로 다시 실행할 `code`, `table`, `ul` 블록 정확히 하나에 `reusable: true`와 `reuse_label`을 넣습니다. 실험 fixture·완전한 명령·실패 복구 순서 중 하나는 독자가 그대로 재현할 수 있어야 합니다.
+2026-08-04 이후 `editorial.article_shape`은 `hands_on_test` 또는 `troubleshooting`을 우선하되 주제에 따라 `decision_guide`, `research_interpretation`, `change_impact`를 쓸 수 있습니다. 직전 글과 같은 전개는 금지합니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이는 편집용 내부 메타데이터일 뿐 본문에 그대로 옮기거나 `다시 찾을 때` 같은 상자로 출력하지 않습니다. 핵심 답·실패 조건·재확인 변화는 필요한 문단에 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 실제로 다시 실행할 `code`, `table`, `ul` 블록 하나에 `reusable: true`와 `reuse_label`을 내부 메타데이터로 넣되, 별도 제목·상자·배지 없이 일반 본문 요소로 출력합니다. 실험 fixture·완전한 명령·실패 복구 순서 중 하나는 독자가 그대로 재현할 수 있어야 합니다.
+
+`editorial.action`은 `closing` 뒤에 이어지는 자연스러운 마지막 문장으로 작성합니다. `직접 확인해보려면` 같은 고정 제목이나 별도 행동 유도 상자는 사용하지 않습니다.
 
 `visual.assets`마다 `label`, `scene_label`, `steps`, `curiosity_hook`, `evidence_type`, `origin`을 기록합니다. `origin`은 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 `imagegen` 중 하나입니다. `imagegen`에는 실제 `generation_prompt`, `generation_model`, 모바일에서도 읽히는 짧은 `korean_labels` 2~6개를 기록합니다. 브리프와 대응 `images.visual_N`의 프롬프트·모델 값은 정확히 일치해야 합니다. `images.cover`와 각 `images.visual_N`에도 같은 `origin`을 기록해 브리프와 파일 출처가 일치해야 합니다. 생성 도식에는 짧은 한국어 설명을 넣고, 한글 파일명과 독자가 봐야 할 결과를 적은 HTML 캡션을 사용합니다.
 

@@ -140,8 +140,9 @@
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
 - 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
-- `editorial.revisit`에는 첫 방문용 `quick_answer`, 적용할 때 다시 볼 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. 이 값은 품질 검사용 내부 메타데이터이므로 `다시 찾을 때`, `처음 읽기`, `적용할 때`, `막혔을 때` 같은 별도 상자로 출력하지 않습니다. 대신 핵심 답은 도입과 설명에, 재사용 내용은 본문의 `code`·`table`·`ul` 하나에, 실패 조건과 재확인 변화는 한계·마무리 문단에 자연스럽게 녹입니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
-- `code`, `table`, `ul` 중 실제 복사·적용 가능한 블록 정확히 하나에 `reusable: true`와 구체적인 `reuse_label`을 넣습니다. 단순 요약표를 재사용 자료로 표시하지 않습니다.
+- 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.
+- `editorial.revisit`에는 첫 방문용 `quick_answer`, 다시 활용할 수 있는 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. 이는 편집자가 글의 지속 가치를 점검하는 내부 메타데이터일 뿐입니다. 값을 본문에 그대로 옮기거나 `다시 찾을 때`, `처음 읽기`, `적용할 때`, `막혔을 때` 같은 상자로 출력하지 않습니다. 글의 흐름에 필요한 핵심 답·실패 조건·변경 조건만 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
+- `code`, `table`, `ul`이 실제로 복사·비교·점검에 유용할 때만 최대 하나에 `reusable: true`와 구체적인 `reuse_label`을 내부 메타데이터로 넣습니다. 뉴스 주제에 맞지 않으면 재사용 블록을 만들지 않습니다. 이 메타데이터는 별도 제목·상자·배지로 출력하지 않습니다.
 - 표는 비교가 실제로 쉬워질 때 1~3개 사용합니다. 설정·코드가 핵심이면 복사 가능한 코드 예제를 넣습니다.
 - 본문 설명 이미지 2~6장을 관련 문단 직후에 배치하고, 캡션은 그림에서 읽어야 할 결론을 설명합니다.
 - 참고 자료 목록과 관련 글 2개를 본문 하단에 둡니다.
@@ -171,14 +172,14 @@
 - 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: 뉴스 심층글`, `category: 최신 IT·개발 소식`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다.
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
-- `editorial.headline`, `opening`, `closing`, `action`
+- `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
 - `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason` 기록
 - `generation`, `images.cover`, `images.visual_1`부터 실제 사용 이미지까지
 
-모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `checklist`을 모두 포함합니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
+모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `decision`을 모두 포함합니다. `decision`은 별도 체크리스트를 강요하는 항목이 아니라 독자가 선택하거나 확인할 기준이 본문에 자연스럽게 설명됐는지 확인하는 내부 분류입니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
 
 `editorial` 문자열 길이는 `headline 25~70`, `opening 180~1200`, `closing 100~1000`, `action 30~500`, `audience_problem 40~500`, `reader_takeaway 40~500`, `why_now 40~500`, `topic_key 6~100`, `reader_question 30~300`자입니다. `visual.assets[*].scene_label`은 쉼표로 합친 문자열이 아니라 비어 있지 않은 문자열 2~4개의 JSON 배열로 기록합니다.
 

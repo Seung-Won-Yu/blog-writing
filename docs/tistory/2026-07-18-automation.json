@@ -10,6 +10,7 @@
   "publish_date": "2026-07-18",
   "content_type": "automation_case",
   "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
   "scheduled_at": "2026-07-18T18:00:00+09:00",
   "tags": [
     "Playwright",
@@ -33,6 +34,8 @@
     "추천 제목: Playwright로 반복 점검 등록 자동화하기: 버튼 이름 오류를 실제 실행으로 고친 기록"
   ],
   "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/automation_cases/2026-07-18.json",
   "source_page": null,
@@ -40,6 +43,9 @@
   "before_ad_html": "docs/tistory/2026-07-18-automation-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-18-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-18-automation-adfit.html",
+  "source_sha256": "6fdc45bab43c63089c37e07ed069f9b905f097f04261cbec73ae4283217a3ace",
+  "html_sha256": "a4a54780ffd47cf6738b2ed74ebaf9569d77c9b5cc95c1fa85a3f5ec8ef34388",
+  "adfit_sha256": "0041a073a08cb8277d38c5e3ff55e0c099eebba47e1d70f0a2d9b781f26ce602",
   "image_assets": [
     {
       "kind": "cover",

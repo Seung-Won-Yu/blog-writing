@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-07-25-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-25-automation-adfit.html",
   "source_sha256": "f5dc16b83c03d45168d7bc6ab600f8591b321731e696c589cbbccd5538a5b5e4",
-  "html_sha256": "330971e65f62c7e2ef033072d01c4b5eb400a7f6c614997714ea5cdb6c13a52a",
-  "adfit_sha256": "13925ec4ae3cf9b55b024df8b6ec467eebd57c3e4ec0a8bb194db8eeb71cc17e",
+  "html_sha256": "9768c034ef3955d3cb3d9c8b54c6305fe1d011080d9a343694978922bbaa2312",
+  "adfit_sha256": "67af962f0487c6e3af29ef95db3c5be5f7be572daa1bdb4075831ac902030a1f",
   "image_assets": [
     {
       "kind": "cover",

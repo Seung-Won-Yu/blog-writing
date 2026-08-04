@@ -7,6 +7,12 @@
     "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법 (2026. 7. 15)"
   ],
   "category": "데일리IT뉴스",
+  "draft_id": "2026-07-15",
+  "publish_date": "2026-07-15",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-15T09:00:00+09:00",
   "tags": [
     "AI",
     "IT뉴스",
@@ -33,11 +39,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
     "추천 제목: 250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법"
   ],
   "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-15.json",
   "source_page": null,
@@ -45,6 +53,9 @@
   "before_ad_html": "docs/tistory/2026-07-15-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-15-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-15-adfit.html",
+  "source_sha256": "271718e6a23bc32dcdedd5a91371d8b8560174e2ee1d452dba392148300c2f6b",
+  "html_sha256": "b3e1da5e869c6a1b7b511b5a1e576fec59849db65d9c4f39173bff8e5fd295d9",
+  "adfit_sha256": "03f8ddf9bcfe974cd3158e90e0d0b4120955d6f0f3a7d576fa8b97815a7f2a1d",
   "image_assets": [
     {
       "kind": "cover",

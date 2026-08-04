@@ -196,8 +196,8 @@ def render_preview_page(draft, fragment):
   <title>{esc(draft.get("title"))} · 본문 미리보기</title>
   <link rel="stylesheet" href="tistory-style.css">
   <style>
-    html {{ background: #f5f7f9; }}
-    body.preview-page {{ min-height: 100vh; margin: 0; overflow-wrap: anywhere; }}
+    html {{ height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }}
+    body.preview-page {{ height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }}
     .preview-page #container .content-wrap {{ max-width: none; }}
     .preview-page #content {{
       float: none;

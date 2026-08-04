@@ -42,13 +42,21 @@ VISUAL_QA_KEYS = {
     "text_reviewed",
     "not_generic",
 }
-DAILY_COVERAGE = {
+DAILY_COVERAGE_LEGACY = {
     "change",
     "mechanism",
     "comparison",
     "application",
     "limits",
     "checklist",
+}
+DAILY_COVERAGE = {
+    "change",
+    "mechanism",
+    "comparison",
+    "application",
+    "limits",
+    "decision",
 }
 AUTOMATION_COVERAGE = {
     "problem",
@@ -759,7 +767,13 @@ def _editorial_reasons(source, identity):
     required_coverage = {
         "automation_case": AUTOMATION_COVERAGE,
         "evergreen_guide": GUIDE_COVERAGE,
-    }.get(identity.content_type, DAILY_COVERAGE)
+    }.get(identity.content_type)
+    if required_coverage is None:
+        required_coverage = (
+            DAILY_COVERAGE
+            if date.fromisoformat(identity.publish_date) >= NATURAL_VOICE_POLICY_START
+            else DAILY_COVERAGE_LEGACY
+        )
     coverage_values = editorial.get("coverage")
     coverage = {
         plain(value).casefold()
@@ -840,11 +854,16 @@ def _revisit_value_reasons(source, identity):
         if isinstance(block, dict)
         and block.get("reusable") is True
     ]
-    if (
+    reusable_count_invalid = (
         len(marked_reusable) != 1
-        or marked_reusable[0].get("t") not in {"code", "table", "ul"}
+        if identity.content_type in {"evergreen_guide", "automation_case"}
+        else len(marked_reusable) > 1
+    )
+    reusable_metadata_invalid = bool(marked_reusable) and (
+        marked_reusable[0].get("t") not in {"code", "table", "ul"}
         or not _strict_text(marked_reusable[0].get("reuse_label"))
-    ):
+    )
+    if reusable_count_invalid or reusable_metadata_invalid:
         invalid = True
     return ["quality_revisit_value"] if invalid else []
 

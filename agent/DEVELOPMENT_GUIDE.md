@@ -74,11 +74,12 @@
 
 전체는 약 10~20분 분량, 소제목 6~9개로 작성합니다. 기본 흐름은 다음과 같습니다.
 
-`독자의 구체적 문제 → 핵심 원리 → 요청·데이터 동작 흐름 → 선택지 비교 → 실행 가능한 예제 → 보안·운영 주의 → 적용 계획과 체크리스트`
+`독자의 구체적 문제 → 핵심 원리 → 요청·데이터 동작 흐름 → 선택지 비교 → 실행 가능한 예제 → 보안·운영 주의 → 적용 조건·한계·다음 단계`
 
 - 제목은 `핵심 검색어 + 독자가 해결할 문제나 얻게 될 결과`로 만들고 핵심 검색어를 앞 20자 안에 둡니다. 보통 35~65자로 쓰며 클릭베이트나 검색어 나열은 금지합니다.
 - 태그 5~8개는 `핵심 기술`, `구체적 문제`, `세부 기능`, `사용 상황`을 섞고 최소 2개를 `primary_query`와 직접 연결합니다. `AI`, `IT`, `개발`, `정보` 같은 넓은 단어만으로 채우지 않습니다.
 - 첫 5문장 안에 실제 문제 장면, 이 글에서 풀 질문, 읽고 얻을 결과를 둡니다.
+- 실제 순서가 중요한 튜토리얼이 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문형·결과형 제목을 섞어 교재 목차처럼 보이지 않게 합니다.
 - 표 1~3개, 필요한 경우 복사 가능한 최소 코드·설정을 넣습니다.
 - 용어를 처음 쓸 때 짧게 풀고, 개념끼리 어떤 순서로 이어지는지 보여 줍니다.
 - 장점만 나열하지 않고 쓰지 말아야 할 조건, 실패 방식, 비용·보안·운영 한계를 적습니다.
@@ -108,7 +109,9 @@
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 독자가 겪는 실패·선택·결과를 보여 주는 한 장면을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 구성에서 제외합니다.
 
-2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나이며 직전 같은 유형 글과 반복하지 않습니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이 내부 메타데이터를 `다시 찾을 때` 같은 별도 상자로 출력하지 않습니다. 핵심 답·재사용 방법·실패 조건·재확인 변화는 도입, 재사용 블록, 한계와 마무리 문단에 자연스럽게 녹입니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 본문의 `code`, `table`, `ul` 중 실제 재사용 가능한 블록 정확히 하나에 `reusable: true`와 `reuse_label`을 넣습니다. 독자는 처음에는 개념을 이해하고, 두 번째에는 그 블록을 복사·적용하고, 세 번째에는 실패 조건이나 버전 변경을 확인할 수 있어야 합니다.
+2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나이며 직전 같은 유형 글과 반복하지 않습니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이는 편집용 내부 메타데이터일 뿐 본문에 그대로 옮기거나 `다시 찾을 때` 같은 상자로 출력하지 않습니다. 핵심 답·실패 조건·재확인 변화는 필요한 문단에 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 본문의 `code`, `table`, `ul` 중 실제로 바로 적용할 수 있는 블록 하나에 `reusable: true`와 `reuse_label`을 내부 메타데이터로 넣되, 별도 제목·상자·배지 없이 일반 본문 요소로 출력합니다.
+
+`editorial.action`은 `closing` 뒤에 이어지는 자연스러운 마지막 문장으로 작성합니다. `직접 확인해보려면` 같은 고정 제목이나 별도 행동 유도 상자는 사용하지 않습니다.
 
 직전 같은 유형 글과 본문 `logic_type` 순서 전체를 반복하지 않습니다. 최근 두 글이 생성 이미지만 썼다면 실제 문서·제품 화면의 주석 캡처 또는 검증 가능한 실측 차트를 최소 1개 넣습니다. `hands_on_test`, `troubleshooting`, `research_interpretation`은 본문 시각물을 최소 3개 사용하고 실제 근거 요건을 지킵니다.
 

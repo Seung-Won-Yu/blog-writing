@@ -8,8 +8,8 @@
   <title>Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지 · 본문 미리보기</title>
   <link rel="stylesheet" href="tistory-style.css">
   <style>
-    html { background: #f5f7f9; }
-    body.preview-page { min-height: 100vh; margin: 0; overflow-wrap: anywhere; }
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
     .preview-page #container .content-wrap { max-width: none; }
     .preview-page #content {
       float: none;
@@ -73,8 +73,7 @@ updates:
 </section>
 
   <section class="digest-closing">
-  <p class="digest-closing-copy">Dependabot의 3일 쿨다운은 업데이트를 포기하는 기능이 아니라, 새 릴리스와 내 저장소 사이에 짧은 관찰 구간을 만드는 기본값이다. 보안 수정은 빠르게 검토하고 일반 버전은 위험도에 따라 기다리되, 어느 쪽도 테스트와 사람의 판단을 생략해서는 안 된다.</p>
-  <div class="digest-action"><b>직접 확인해보려면</b><span>저장소의 .github/dependabot.yml과 자동 병합 규칙을 함께 열어 일반 업데이트의 대기 기간, 보안 PR의 우선순위, 필수 CI 검사를 한 번에 확인한다.</span></div>
+  <p class="digest-closing-copy">Dependabot의 3일 쿨다운은 업데이트를 포기하는 기능이 아니라, 새 릴리스와 내 저장소 사이에 짧은 관찰 구간을 만드는 기본값이다. 보안 수정은 빠르게 검토하고 일반 버전은 위험도에 따라 기다리되, 어느 쪽도 테스트와 사람의 판단을 생략해서는 안 된다. 저장소의 .github/dependabot.yml과 자동 병합 규칙을 함께 열어 일반 업데이트의 대기 기간, 보안 PR의 우선순위, 필수 CI 검사를 한 번에 확인한다.</p>
 </section>
 </article>
 

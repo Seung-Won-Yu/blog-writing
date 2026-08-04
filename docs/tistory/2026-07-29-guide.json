@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-07-29-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-29-guide-adfit.html",
   "source_sha256": "aa99d6282fc3f19fec5388777420b32c3dfc44a407e268d8363f629dfed2a5c4",
-  "html_sha256": "d08714f86c9e1607ac4903c362be9ef9334f32f4d14c13ad693b4ef23a23b17f",
-  "adfit_sha256": "23862d29ac88cde1a23a93e05d5c6fea040776f6ba1e1b48556bb25fec585a43",
+  "html_sha256": "0983e72dd82028d1173f750fe31c71972be2eabe5ead5e3ee540ebe6e6267998",
+  "adfit_sha256": "80bdbbb978c4b04eba0303bc4448680b5aed35d5d79be1319a5c471ca6f10f06",
   "image_assets": [
     {
       "kind": "cover",

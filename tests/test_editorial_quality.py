@@ -100,6 +100,7 @@ def image_asset(origin="imagegen"):
 
 def valid_daily_source(day="2026-07-19"):
     publish_day = date.fromisoformat(day)
+    decision_coverage = "decision" if publish_day >= date(2026, 8, 4) else "checklist"
     weekdays = ["월", "화", "수", "목", "금", "토", "일"]
     first_visual = visual_asset(label="기존 방식과 새 방식의 조건 차이")
     second_visual = visual_asset(label="설정에서 결과를 확인하는 실제 순서")
@@ -145,7 +146,7 @@ def valid_daily_source(day="2026-07-19"):
             "topic_key": "user-facing-update-conditions",
             "reader_question": "이번 변경이 내 사용 흐름에서 무엇을 바꾸고 어디서 확인할 수 있을까?",
             "entities": ["Example Product"],
-            "coverage": ["change", "mechanism", "comparison", "application", "limits", "checklist"],
+            "coverage": ["change", "mechanism", "comparison", "application", "limits", decision_coverage],
         },
         "visual": {
             "cover": {
@@ -426,7 +427,7 @@ class EditorialQualityTests(unittest.TestCase):
             ),
         )
 
-    def test_future_article_requires_exactly_one_reusable_block(self):
+    def test_future_daily_allows_no_reusable_block_but_rejects_multiple(self):
         source = valid_daily_source("2026-08-04")
         reusable = next(
             block for block in source["news"][0]["content"] if block.get("reusable")
@@ -434,12 +435,33 @@ class EditorialQualityTests(unittest.TestCase):
         reusable.pop("reusable")
         reusable.pop("reuse_label")
 
-        self.assertIn(
+        self.assertNotIn(
             "quality_revisit_value",
             source_quality_reasons(
                 source, resolve_draft_identity("2026-08-04")
             ),
         )
+
+    def test_future_guides_and_automation_require_one_practical_artifact(self):
+        for draft_id, source in (
+            ("2026-08-05-guide", valid_guide_source("2026-08-05")),
+            ("2026-08-08-automation", valid_automation_source("2026-08-08")),
+        ):
+            reusable = next(
+                block
+                for block in source["news"][0]["content"]
+                if block.get("reusable")
+            )
+            reusable.pop("reusable")
+            reusable.pop("reuse_label")
+
+            with self.subTest(draft_id=draft_id):
+                self.assertIn(
+                    "quality_revisit_value",
+                    source_quality_reasons(
+                        source, resolve_draft_identity(draft_id)
+                    ),
+                )
 
         source = valid_daily_source("2026-08-04")
         extra = next(

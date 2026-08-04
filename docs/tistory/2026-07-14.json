@@ -7,6 +7,12 @@
     "딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까 (2026. 7. 14)"
   ],
   "category": "데일리IT뉴스",
+  "draft_id": "2026-07-14",
+  "publish_date": "2026-07-14",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-14T09:00:00+09:00",
   "tags": [
     "AI",
     "IT뉴스",
@@ -33,11 +39,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "관련된 정처기/개발일지 글이 있으면 본문 하단에 내부 링크 1개 추가하기",
     "추천 제목: 딥페이크 얼굴, 1시간 훈련하면 정말 두 배 더 잘 찾을까"
   ],
   "generation_provider": "github-models",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-14.json",
   "source_page": null,
@@ -45,6 +53,9 @@
   "before_ad_html": "docs/tistory/2026-07-14-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-14-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-14-adfit.html",
+  "source_sha256": "7ce80a344e83bd54fdc0075a75e91c991b9593067faef14edc095ff52d84a4ea",
+  "html_sha256": "14be322e57dc6ba654db60c0b0c1c3d2aadbdc6633291dc928d5287c9f0284f9",
+  "adfit_sha256": "964170873745872ccfb52cd922b10eeef8b5a96c8590bb9075c6ea10909a75db",
   "image_assets": [
     {
       "kind": "cover",

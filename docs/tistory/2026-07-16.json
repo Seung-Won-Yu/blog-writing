@@ -3,10 +3,15 @@
   "title_candidates": [
     "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
     "Dependabot 기본 3일 쿨다운, 무엇이 바뀌었나",
-    "Dependabot 3일 쿨다운: 새 패키지를 바로 받지 않는 이유와 설정법",
-    "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지 (2026. 7. 16)"
+    "Dependabot 3일 쿨다운: 새 패키지를 바로 받지 않는 이유와 설정법"
   ],
   "category": "데일리IT뉴스",
+  "draft_id": "2026-07-16",
+  "publish_date": "2026-07-16",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-07-16T09:00:00+09:00",
   "tags": [
     "Dependabot",
     "GitHub",
@@ -27,11 +32,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
     "추천 제목: Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지"
   ],
   "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-16.json",
   "source_page": null,
@@ -39,6 +46,9 @@
   "before_ad_html": "docs/tistory/2026-07-16-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-16-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-16-adfit.html",
+  "source_sha256": "6a8221c5133f06984b0512e6cc5359c97bb822265a73da6498a3fa5a30c017f7",
+  "html_sha256": "79942c33cdb846811350d77fb0f2b3e2a77ff037a8c63e1a176793893f0ab857",
+  "adfit_sha256": "75934e05240f92ab5f044c4dc59a5e43cf446e4fc35cdba69624f0ad079a173b",
   "image_assets": [
     {
       "kind": "cover",

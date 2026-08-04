@@ -10,6 +10,7 @@
   "publish_date": "2026-07-17",
   "content_type": "daily_news",
   "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
   "scheduled_at": "2026-07-17T09:00:00+09:00",
   "tags": [
     "Cloudflare",
@@ -28,11 +29,13 @@
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 데일리IT뉴스로 지정하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
     "추천 제목: Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법"
   ],
   "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-17.json",
   "source_page": null,
@@ -40,6 +43,9 @@
   "before_ad_html": "docs/tistory/2026-07-17-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-17-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-17-adfit.html",
+  "source_sha256": "791cd816d75940aa051d358ea202fc4bedfe0c8429f487ced09359775ff50e33",
+  "html_sha256": "2ac24656490aabc108c3f93ea4f8b92384595cdf136093f5bf059621de00fb7e",
+  "adfit_sha256": "4341e43f0ede38f77e31c3e3b62ae2f96f2104e1ddf35da6b8a4bd00a027fdde",
   "image_assets": [
     {
       "kind": "cover",

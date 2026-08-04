@@ -157,7 +157,7 @@ LEAD_DAY = {
 
 
 class OptionalLearningSectionsTests(unittest.TestCase):
-    def test_revisit_metadata_stays_internal_and_reusable_artifact_is_visible(self):
+    def test_revisit_and_reuse_metadata_stay_internal_while_artifact_is_visible(self):
         day = copy.deepcopy(LEAD_DAY)
         day["editorial"]["revisit"] = {
             "quick_answer": "핵심 변화를 먼저 판단한다.",
@@ -174,9 +174,12 @@ class OptionalLearningSectionsTests(unittest.TestCase):
         html = render_post("2026-08-04", day)
 
         self.assertNotIn("digest-revisit", html)
+        self.assertNotIn("digest-reusable", html)
         self.assertNotIn("다시 찾을 때 · 판단표", html)
         self.assertNotIn("처음 읽기", html)
-        self.assertIn("저장해 두고 다시 쓰기 · 적용 판단표", html)
+        self.assertNotIn("저장해 두고 다시 쓰기", html)
+        self.assertNotIn("적용 판단표", html)
+        self.assertIn('class="digest-data-table"', html)
 
     def test_fallback_copy_does_not_claim_to_have_quiz_or_images(self):
         html = render_post("2026-07-13", FALLBACK_DAY)
@@ -657,7 +660,8 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertIn("자동화 결과를 어떻게 확인", html)
         self.assertIn("오늘 고른 뉴스", html)
         self.assertIn('class="digest-closing"', html)
-        self.assertIn("직접 확인해보려면", html)
+        self.assertNotIn("직접 확인해보려면", html)
+        self.assertNotIn('class="digest-action"', html)
         self.assertNotIn("CLOSING NOTE", html)
         self.assertNotIn("오늘의 메모", html)
         self.assertIn("적용 지점을 한 줄", html)
