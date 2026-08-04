@@ -1,0 +1,93 @@
+{
+  "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+  "title_candidates": [
+    "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+    "숨은 Word 텍스트가 Copilot 문서 작업을 바꾸고 다음 문서로 이어질 수 있다는 연구 사례 공개",
+    "Word 문서에 숨은 명령이 Copilot의 입력이 되기 전 사람이 확인하고 승인하는 문서 검토 경계: 눈에는 보이지 않…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-04",
+  "publish_date": "2026-08-04",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-04T09:00:00+09:00",
+  "tags": [
+    "Microsoft 365 Copilot",
+    "Word 보안",
+    "간접 프롬프트 인젝션",
+    "문서 검토",
+    "Microsoft Defender",
+    "AI 보안",
+    "DLP"
+  ],
+  "meta_description": "공유받은 Word 문서를 Copilot에게 요약·편집시키는 순간, 사람에게는 보이지 않는 문장이 모델에는 지시처럼 들어갈 수 있다. 최근 공개된 연구 사례는 숨은 텍스트가 Copilot의 문서 작업에… 연구자는 숨은 텍스트가 포함된 Word 문서를 Copilot이 자료로 읽을 때 그…",
+  "key_summary": [
+    "1. 숨은 Word 텍스트가 Copilot 문서 작업을 바꾸고 다음 문서로 이어질 수 있다는 연구 사례 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-04.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-04.html",
+  "before_ad_html": "docs/tistory/2026-08-04-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-04-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-04-adfit.html",
+  "source_sha256": "20d4670eb199af562929142fd1e0fa4f29ca15ddb3874ef9dce2d7205885803c",
+  "html_sha256": "ab0156f367934672c3f38bef53546a67bee10ab6559d3086e341b7cbf622ffe6",
+  "adfit_sha256": "ca47510be9ceb2636ebf3f1a407676f7369e41d9ab2ced9ce01f6ee5c2c844af",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-04/Word-Copilot-숨은명령-대표.webp",
+      "path": "docs/tistory/assets/2026-08-04/Word-Copilot-숨은명령-대표.webp",
+      "original_url": "",
+      "alt": "흰 Word 문서의 숨은 문장이 드러나고 사람이 변경 검토표 앞에서 승인을 멈춘 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-04/Word-Copilot-숨은지시-입력경로.webp",
+      "path": "docs/tistory/assets/2026-08-04/Word-Copilot-숨은지시-입력경로.webp",
+      "original_url": "",
+      "alt": "공유 Word 문서의 숨은 지시가 Copilot 입력을 거쳐 변경된 초안으로 이어지는 흐름도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-04/Copilot-외부문서-승인흐름.webp",
+      "path": "docs/tistory/assets/2026-08-04/Copilot-외부문서-승인흐름.webp",
+      "original_url": "",
+      "alt": "외부 문서가 들어올 때 자동 검색 제한과 변경 승인, 감사 기록으로 분기하는 보안 점검 흐름도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-04/Microsoft-Learn-간접프롬프트인젝션-방어.webp",
+      "path": "docs/tistory/assets/2026-08-04/Microsoft-Learn-간접프롬프트인젝션-방어.webp",
+      "original_url": "",
+      "alt": "Microsoft Learn의 간접 프롬프트 인젝션 방어 문서 제목과 문서·이메일 기반 외부 콘텐츠 위험 설명",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
