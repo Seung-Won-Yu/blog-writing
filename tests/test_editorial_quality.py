@@ -427,6 +427,16 @@ class EditorialQualityTests(unittest.TestCase):
             ),
         )
 
+    def test_future_article_rejects_internal_revisit_labels_in_visible_copy(self):
+        source = valid_daily_source("2026-08-04")
+        source["news"][0]["content"][0]["text"] = "다시 찾을 때 · 점검표"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-04")
+        )
+
+        self.assertIn("quality_natural_voice", reasons)
+
     def test_future_daily_allows_no_reusable_block_but_rejects_multiple(self):
         source = valid_daily_source("2026-08-04")
         reusable = next(
@@ -1038,6 +1048,20 @@ class EditorialQualityTests(unittest.TestCase):
         reasons = source_quality_reasons(source, resolve_draft_identity(day))
 
         self.assertNotIn("quality_visual_variety", reasons)
+
+    def test_august_cover_rejects_text_heavy_label_set(self):
+        day = "2026-08-04"
+        source = valid_daily_source(day)
+        source["visual"]["cover"]["korean_labels"] = [
+            "첫 번째 설명",
+            "두 번째 설명",
+            "세 번째 설명",
+            "네 번째 설명",
+        ]
+
+        reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+        self.assertIn("quality_visual_variety", reasons)
 
     def test_complete_future_daily_source_passes_the_source_quality_gate(self):
         day = "2026-07-19"

@@ -37,7 +37,7 @@
 
 후보는 `검색 지속성 30 · 문제 해결성 25 · 학습 가치 20 · 실제 예제 가능성 15 · 시각 설명 가능성 10`으로 비교합니다. 최근 365일 가이드의 canonical URL, `primary_query`, 핵심 질문과 겹치면 다른 주제를 고릅니다. 최근 뉴스에서 다룬 제품을 그대로 다시 소개하지 않습니다. 최신 사건이 출발점이어도 글의 중심은 오래 남는 원리·판단 기준·실행법이어야 합니다.
 
-주제는 `Java·Spring·PostgreSQL·API`, `인증·보안·운영`, `AI 개발 도구와 비용·권한`, `실제 프로젝트의 설계·오류·복구` 축을 순환합니다. 관련 글은 같은 축에서 2개를 먼저 고르고, 글 끝의 다음 학습 단계가 어느 글인지 이유까지 분명히 씁니다.
+주제는 `Java·Spring·PostgreSQL·API`, `인증·보안·운영`, `AI 개발 도구와 비용·권한`, `실제 프로젝트의 설계·오류·복구` 축을 순환합니다. 관련 글은 같은 축의 최신 변화를 다룬 글 1개와 직접 적용한 실험·프로젝트 글 1개를 우선합니다. 연결이 억지스러우면 자리를 채우지 말고, 실제로 다음 학습·적용 단계가 되는 글만 이유와 함께 연결합니다.
 
 요즘IT 같은 매체와 커뮤니티 글은 독자의 질문을 찾는 보조 자료로만 씁니다. 문장·목차·표·이미지를 옮기거나 순서만 바꿔 재서술하지 않습니다.
 
@@ -106,6 +106,8 @@
 - 수치 차트는 확인된 자료나 직접 측정값만 사용하고 단위·기간·출처·환경을 남깁니다.
 - 생성 도식에는 모바일에서 읽히는 짧은 한국어 라벨을 넣고 세부 설명은 HTML 캡션으로 보충합니다.
 - 파일명은 `JWT-인증-요청흐름.webp`처럼 내용을 알 수 있는 한글로 만듭니다.
+
+대표 이미지의 한국어 라벨은 없거나 1~3개만 사용하고, 제목과 목차를 이미지 안에 다시 써 넣지 않습니다. 본문 설명 이미지는 정확한 절차·비교·구조를 2~6개의 짧은 라벨로 보여 줍니다.
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 독자가 겪는 실패·선택·결과를 보여 주는 한 장면을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 구성에서 제외합니다.
 

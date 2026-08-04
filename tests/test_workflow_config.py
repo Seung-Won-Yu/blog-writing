@@ -192,6 +192,19 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("three_column_cards", contract)
                 self.assertIn("대표 이미지에는 단계 화살표", contract)
 
+    def test_all_editorial_contracts_keep_cover_text_light_and_links_natural(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            GUIDE_CONTRACT,
+            SATURDAY_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("대표 이미지의 한국어 라벨", contract)
+                self.assertIn("1~3개", contract)
+                self.assertIn("억지", contract)
+
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 

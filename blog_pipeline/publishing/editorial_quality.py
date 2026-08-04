@@ -118,6 +118,17 @@ FUTURE_AI_CLICHES = {
     "요약하자면",
     "도움이 되길 바랍니다",
 }
+INTERNAL_REVISIT_LABELS = {
+    "다시 찾을 때",
+    "처음 읽기",
+    "적용할 때",
+    "막혔을 때",
+    "다시 확인할 변화",
+    "재방문 가치",
+    "reuse_case",
+    "failure_case",
+    "update_triggers",
+}
 REPORT_ONLY_HEADINGS = {
     "개요",
     "배경",
@@ -1030,6 +1041,7 @@ def _prose_reasons(source, identity):
         ).casefold()
         unnatural = (
             any(phrase in searchable for phrase in FUTURE_AI_CLICHES)
+            or any(phrase in searchable for phrase in INTERNAL_REVISIT_LABELS)
             or any(heading in REPORT_ONLY_HEADINGS for heading in headings)
             or any(opening.startswith(prefix) for prefix in ("오늘은", "이번 글은", "이 글은"))
             or len(paragraphs) < max(4, len(headings) - 1)
@@ -1270,9 +1282,23 @@ def _visual_role_reasons(source, identity):
             return ["quality_visual_variety"]
         if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
             render_family = plain(cover.get("render_family"))
+            raw_cover_labels = cover.get("korean_labels", [])
+            cover_labels = (
+                [plain(label) for label in raw_cover_labels]
+                if isinstance(raw_cover_labels, list)
+                else []
+            )
             if (
                 render_family not in RENDER_FAMILIES
                 or render_family != plain(cover_image.get("render_family"))
+                or not isinstance(raw_cover_labels, list)
+                or len(cover_labels) > 3
+                or len({label.casefold() for label in cover_labels})
+                != len(cover_labels)
+                or any(
+                    not re.search(r"[가-힣]", label) or len(label) > 12
+                    for label in cover_labels
+                )
             ):
                 return ["quality_visual_variety"]
     return []
