@@ -1,0 +1,534 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-05-guide",
+  "publish_date": "2026-08-05",
+  "date_label": "2026. 8. 5",
+  "weekday": "수",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-05T18:00:00+09:00",
+  "primary_query": "PostgreSQL EXPLAIN ANALYZE 느린 쿼리 인덱스 통계 읽는 법",
+  "tags": [
+    "PostgreSQL EXPLAIN ANALYZE",
+    "느린 쿼리",
+    "PostgreSQL 인덱스",
+    "쿼리 플래너",
+    "실행 계획",
+    "ANALYZE 통계",
+    "Spring 데이터베이스"
+  ],
+  "editorial": {
+    "headline": "PostgreSQL EXPLAIN ANALYZE로 느린 쿼리 해결하기: 인덱스와 통계 읽는 법",
+    "opening": "운영에서 주문 목록 API가 느려졌는데, 개발 환경에서는 같은 SQL이 금방 끝나는 장면이 있다. 인덱스가 없다고 단정하고 추가했다가 쓰기 비용만 키우는 경우도 흔하다. 이 글은 PostgreSQL의 EXPLAIN ANALYZE 결과에서 어디를 먼저 읽고, 예상 행 수와 실제 행 수의 차이를 어떻게 해석하며, 인덱스·통계·쿼리 형태 중 무엇을 고칠지 결정하는 순서를 다룬다.",
+    "closing": "실행 계획은 PostgreSQL이 고른 경로의 영수증이다. 가장 비싼 노드와 예상·실제 행 수 차이부터 확인하면 인덱스를 무작정 늘리는 일을 줄일 수 있다. 먼저 복제 가능한 읽기 쿼리 하나에서 EXPLAIN ANALYZE를 수집하고, 가설을 하나만 바꾼 뒤 같은 조건에서 다시 비교하자.",
+    "action": "이번 주에는 가장 오래 걸리는 읽기 쿼리 하나를 골라 계획 전문, 파라미터, 실행 시각, 테이블 통계 갱신 여부를 함께 남겨 두자.",
+    "audience_problem": "PostgreSQL을 쓰는 서비스에서 특정 목록·검색 API만 간헐적으로 느려질 때, 인덱스를 감으로 추가하지 않고 실행 계획으로 원인을 좁히려는 백엔드 개발자.",
+    "reader_takeaway": "EXPLAIN ANALYZE의 cost·actual time·rows·loops를 읽고, 순차 스캔·조인·정렬·통계 오차를 구분하며, 안전하게 인덱스와 통계를 검증하는 절차를 적용할 수 있다.",
+    "why_now": "PostgreSQL 플래너는 통계와 비용 모델을 사용해 실행 경로를 고르므로 데이터 분포와 쿼리 조건이 바뀌면 과거에 맞았던 인덱스도 기대와 다르게 동작할 수 있다. 공식 문서의 EXPLAIN·통계 설명과 운영 분석 자료를 함께 보면 이 판단을 재현 가능하게 만들 수 있다.",
+    "topic_key": "postgresql-explain-analyze-slow-query-index-statistics",
+    "reader_question": "EXPLAIN ANALYZE에서 느린 지점을 찾고, 인덱스를 추가할지 통계를 갱신할지 SQL을 바꿀지 어떻게 결정할까?",
+    "entities": [
+      "PostgreSQL",
+      "EXPLAIN ANALYZE",
+      "query planner",
+      "B-tree index",
+      "ANALYZE",
+      "pg_stat_statements"
+    ],
+    "coverage": [
+      "foundation",
+      "request_flow",
+      "stack",
+      "data",
+      "security",
+      "operations",
+      "plan"
+    ],
+    "article_shape": "troubleshooting",
+    "revisit": {
+      "quick_answer": "가장 큰 actual time 노드와 예상 rows 대비 실제 rows 오차를 먼저 읽고, 그 다음에만 인덱스·통계·SQL 변경을 고른다.",
+      "reuse_case": "장애 티켓이나 성능 점검에서 EXPLAIN ANALYZE 결과와 재현 조건을 같은 형식으로 남길 때 사용한다.",
+      "failure_case": "운영 쓰기 경로에서 무심코 EXPLAIN ANALYZE를 실행하거나, 하나의 느린 계획만 보고 인덱스를 추가하면 부하와 쓰기 비용을 키울 수 있다.",
+      "artifact_type": "troubleshooting_tree",
+      "update_triggers": [
+        "PostgreSQL 주 버전 업그레이드",
+        "데이터 분포가 크게 바뀜",
+        "새 인덱스 또는 쿼리 배포"
+      ]
+    }
+  },
+  "visual": {
+    "cover": {
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "render_family": "macro_object",
+      "art_direction": "macro editorial still life",
+      "composition_type": "evidence trail",
+      "palette_family": "slate-lime",
+      "label": "느린 쿼리의 흔적을 따라 실행 계획에서 병목을 찾는 장면",
+      "scene_label": [
+        "느린 노드",
+        "실제 행 수"
+      ],
+      "steps": "돋보기 아래의 실행 계획 종이에서 오래 걸린 노드와 행 수 오차가 드러난다.",
+      "curiosity_hook": "인덱스가 있어도 왜 이 요청만 느릴까?",
+      "logic_type": "editorial_scene",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Wide 1200x630 Korean editorial macro photograph of a printed PostgreSQL execution-plan paper on a dark slate desk, a small physical magnifying glass revealing one highlighted branch and a pile of tiny data tokens beside it; one lime sticky marker reads exactly '느린 노드', one small marker reads exactly '실제 행 수'. Natural side light, tactile paper grain, spacious no-text composition. No computer, no programmer desk, no monitor, no fake terminal, no fake UI, no cards, no arrows, no dashboard, no chart, no logo, no robot.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "느린 노드",
+        "실제 행 수"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "label": "PostgreSQL 공식 EXPLAIN 문서에서 실제 계획 노드를 확인하는 화면",
+        "scene_label": [
+          "EXPLAIN",
+          "계획 노드",
+          "cost",
+          "rows"
+        ],
+        "steps": "공식 문서의 계획 트리 설명과 순차 스캔 예제를 화면에서 확인한다.",
+        "curiosity_hook": "공식 문서는 계획 노드와 cost·rows를 어떻게 설명할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "origin": "capture",
+        "source_url": "https://www.postgresql.org/docs/current/using-explain.html",
+        "capture_tool": "playwright",
+        "capture_target": "PostgreSQL 18 Using EXPLAIN 공식 문서 전체 화면",
+        "captured_at": "2026-08-05T14:08:00+09:00",
+        "capture_note": "공개 PostgreSQL 공식 문서에서 EXPLAIN 기본 설명과 Seq Scan 예제를 2026-08-05 KST에 캡처했다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "예상 행 수와 실제 행 수 차이로 통계 문제를 가르는 기준",
+        "scene_label": [
+          "예상 20행",
+          "실제 8,000행",
+          "통계 확인"
+        ],
+        "steps": "예상과 실제 행 수가 크게 벌어진 지점은 통계·상관관계·조건 분포를 재검토한다.",
+        "curiosity_hook": "플래너가 왜 적은 행을 예상했는데 수천 행을 읽었을까?",
+        "evidence_type": "diagram",
+        "logic_type": "comparison",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: infographic-diagram. 1200x630 Korean comparison diagram: a small estimated stack labelled exactly '예상 20행' beside a much taller real stack labelled exactly '실제 8,000행', leading to a magnifier labelled '통계 확인'. Technical printmaking illustration, ochre paper with deep plum ink and green accent, short large labels only, no fake product UI, no terminal, no computer, no people, no dashboard, no generic chart.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "예상 20행",
+          "실제 8,000행",
+          "통계 확인"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "순차 스캔과 인덱스 스캔을 조건별로 선택하는 흐름",
+        "scene_label": [
+          "많이 읽음",
+          "적게 찾음",
+          "정렬 필요"
+        ],
+        "steps": "필터 선택도와 필요한 정렬·반환 열을 기준으로 스캔 방식과 인덱스 설계를 검토한다.",
+        "curiosity_hook": "순차 스캔은 항상 실패이고 인덱스 스캔은 항상 성공일까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "condition": "필터가 적은 행을 고르고 정렬 순서가 맞을 때만 인덱스 후보를 검증한다.",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. 1200x630 Korean decision illustration about PostgreSQL scan choice: a database book opens to three compact paths labeled exactly '많이 읽음', '적게 찾음', '정렬 필요'. Show a full-page sweep, a narrow index tab, and an ordered bookmark as physical metaphors. Flat ink drawing, warm gray paper, burgundy and teal accents, no arrows across a process flow, no fake UI, no computer, no terminal, no dashboard, no chart, no people.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "많이 읽음",
+          "적게 찾음",
+          "정렬 필요"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-05-guide/PostgreSQL-실행계획-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-실행계획-대표.webp",
+      "alt": "실행 계획 종이에서 느린 노드와 실제 행 수를 돋보기로 확인하는 장면",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Wide 1200x630 Korean editorial macro photograph of a printed PostgreSQL execution-plan paper on a dark slate desk, a small physical magnifying glass revealing one highlighted branch and a pile of tiny data tokens beside it; one lime sticky marker reads exactly '느린 노드', one small marker reads exactly '실제 행 수'. Natural side light, tactile paper grain, spacious no-text composition. No computer, no programmer desk, no monitor, no fake terminal, no fake UI, no cards, no arrows, no dashboard, no chart, no logo, no robot.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "render_family": "macro_object",
+      "art_direction": "macro editorial still life",
+      "composition_type": "evidence trail",
+      "palette_family": "slate-lime",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 77372,
+      "quality": 82,
+      "sha256": "6863debd399de70fb5230b2fdc82d072661257b05aca0dcca53840d946e944e3"
+    },
+    "visual_1": {
+      "origin": "capture",
+      "path": "docs/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
+      "alt": "PostgreSQL 공식 EXPLAIN 문서의 계획 노드와 순차 스캔 예제 화면",
+        "capture_tool": "playwright",
+      "capture_target": "PostgreSQL 18 Using EXPLAIN 공식 문서 전체 화면",
+      "captured_at": "2026-08-05T14:08:00+09:00",
+      "capture_sha256": "ef14f774b0828f540ea31451ccf9991dff772d858658a23e1675a7fcb12fe86d",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 4674,
+      "quality": 82,
+      "sha256": "ef14f774b0828f540ea31451ccf9991dff772d858658a23e1675a7fcb12fe86d"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-05-guide/예상행-실제행-통계확인.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/예상행-실제행-통계확인.webp",
+      "alt": "예상 20행과 실제 8000행의 차이를 통계 확인으로 이어 보는 도식",
+      "generation_prompt": "Use case: infographic-diagram. 1200x630 Korean comparison diagram: a small estimated stack labelled exactly '예상 20행' beside a much taller real stack labelled exactly '실제 8,000행', leading to a magnifier labelled '통계 확인'. Technical printmaking illustration, ochre paper with deep plum ink and green accent, short large labels only, no fake product UI, no terminal, no computer, no people, no dashboard, no generic chart.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 145740,
+      "quality": 82,
+      "sha256": "921a6c4bb986b38a04ca77d97eb50d039d9ea5a436848eb07ac68e1b2d632cbe"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-05-guide/순차스캔-인덱스선택.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/순차스캔-인덱스선택.webp",
+      "alt": "많이 읽는 조건과 적게 찾고 정렬이 필요한 조건을 구분하는 PostgreSQL 스캔 선택 도식",
+      "generation_prompt": "Use case: scientific-educational. 1200x630 Korean decision illustration about PostgreSQL scan choice: a database book opens to three compact paths labeled exactly '많이 읽음', '적게 찾음', '정렬 필요'. Show a full-page sweep, a narrow index tab, and an ordered bookmark as physical metaphors. Flat ink drawing, warm gray paper, burgundy and teal accents, no arrows across a process flow, no fake UI, no computer, no terminal, no dashboard, no chart, no people.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 117366,
+      "quality": 82,
+      "sha256": "1047a573df121ba61433cfe1fb0175cd524e8ab3bdea94036b238f813a3bb61f"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "PostgreSQL EXPLAIN ANALYZE로 느린 쿼리를 해결하는 법",
+      "source": "PostgreSQL 공식 문서·PGDG Wiki·pganalyze 운영 자료 교차 확인",
+      "url": "https://www.postgresql.org/docs/current/using-explain.html",
+      "published_at": "2026-08-05T14:00:00+09:00",
+      "blurb_kr": "EXPLAIN ANALYZE는 계획의 예상 비용뿐 아니라 실제 시간·행 수·반복 횟수를 보여 준다. 가장 비싼 노드와 추정 오차를 먼저 확인하면 순차 스캔, 조인, 정렬, 오래된 통계 중 어느 가설을 검증할지 정할 수 있다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "PostgreSQL Documentation: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        {
+          "kind": "official",
+          "title": "PostgreSQL Documentation: Planner Statistics",
+          "url": "https://www.postgresql.org/docs/current/planner-stats.html"
+        },
+        {
+          "kind": "official",
+          "title": "PostgreSQL Documentation: EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/sql-explain.html"
+        },
+        {
+          "kind": "independent",
+          "title": "pganalyze: How to interpret EXPLAIN ANALYZE",
+          "url": "https://pganalyze.com/blog/how-to-read-postgres-explain-analyze"
+        },
+        {
+          "kind": "reference",
+          "title": "PGDG Wiki: Slow Query Questions",
+          "url": "https://wiki.postgresql.org/wiki/Slow_Query_Questions"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "주문 목록만 느려질 때, 먼저 계획을 보관한다"
+        },
+        {
+          "t": "p",
+          "text": "느린 요청을 만났을 때 SQL 문자열만 복사하면 원인이 반쯤 사라진다. 바인드 값, 실행 시각, 반환 행 수, 트랜잭션 격리 수준, 데이터 양이 계획 선택에 영향을 준다. 우선 읽기 전용 복제본이나 안전한 스테이징에서 같은 파라미터로 실행 계획을 남긴다. 운영 원본에서 EXPLAIN ANALYZE를 실행하면 쿼리가 실제로 수행되므로, 잠금·쓰기·대량 갱신 경로에는 별도 승인과 제한 시간이 필요하다."
+        },
+        {
+          "t": "p",
+          "text": "PostgreSQL의 EXPLAIN은 플래너가 고른 예상 경로를, ANALYZE 옵션은 실제 실행 뒤의 시간과 행 수를 보여 준다. 계획은 하나의 정답지가 아니라 당시 통계와 비용 설정으로 계산한 선택이다. 그래서 ‘Seq Scan이 보였으니 인덱스를 만든다’보다 ‘얼마나 읽었고, 얼마나 틀리게 예상했으며, 어디서 기다렸는가’를 먼저 묻는 편이 안전하다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "실행 계획은 루트에서 시작하되, 실제 시간이 큰 하위 노드와 rows·loops를 함께 읽어야 병목을 정확히 좁힐 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "EXPLAIN ANALYZE의 네 숫자가 말하는 것"
+        },
+        {
+          "t": "p",
+          "text": "cost는 PostgreSQL 내부 비용 단위라서 밀리초와 같지 않다. actual time은 노드가 첫 행과 마지막 행을 내기까지 걸린 실제 시간이고, rows는 한 번의 실행에서 낸 행 수, loops는 그 노드가 반복된 횟수다. 안쪽 노드가 빠르게 보여도 loops가 수천 번이면 총 비용이 커질 수 있다. 실제 총량은 대략 마지막 시간과 반복 횟수를 함께 보며 판단한다."
+        },
+        {
+          "t": "table",
+          "caption": "계획에서 처음 확인할 신호",
+          "headers": [
+            "신호",
+            "의미",
+            "다음 질문"
+          ],
+          "rows": [
+            [
+              "actual time이 큰 노드",
+              "대기나 읽기가 오래 걸린 지점",
+              "정렬·조인·디스크 읽기 중 무엇인가?"
+            ],
+            [
+              "rows 추정 오차",
+              "플래너의 선택 근거가 틀릴 수 있음",
+              "통계·조건 분포가 최신인가?"
+            ],
+            [
+              "loops가 큰 노드",
+              "작은 작업이 반복되어 누적됨",
+              "조인 순서나 상위 행 수가 과한가?"
+            ],
+            [
+              "Sort Method의 디스크 사용",
+              "work_mem을 넘어 임시 파일을 사용",
+              "반환·정렬 범위를 줄일 수 있는가?"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "출력은 들여쓰기 구조대로 읽는다. 상위 Limit나 Aggregate의 시간이 길어도 원인이 아닐 수 있고, 그 아래의 Sort 또는 Nested Loop가 시간을 만든 경우가 많다. BUFFERS 옵션을 함께 쓰면 shared hit는 캐시에 있던 페이지, read는 디스크에서 읽은 페이지라는 힌트를 준다. 다만 버퍼 수가 곧 사용자 체감 시간은 아니므로 락 대기·네트워크·애플리케이션 직렬화도 별도 관측해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "예상 20행인데 실제 8,000행이면 통계부터 의심한다"
+        },
+        {
+          "t": "p",
+          "text": "플래너는 ANALYZE가 수집한 표본 통계로 조건에 맞는 행 수를 추정한다. 특정 상태값이 최근 급증했거나, 두 컬럼 값이 강하게 연관되어 있는데 독립이라고 가정하면 예상 rows와 실제 rows가 크게 갈라진다. 이런 오차는 Nested Loop처럼 행 수에 민감한 조인을 선택하게 만들 수 있다. 인덱스를 만들기 전에 autovacuum의 analyze가 제때 실행되는지와 컬럼 통계 목표값을 확인한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "예상 행 수와 실제 행 수가 크게 벌어지면 플래너의 비용 계산도 흔들릴 수 있으므로 통계와 조건 분포를 먼저 확인한다."
+        },
+        {
+          "t": "code",
+          "language": "sql",
+          "reusable": true,
+          "reuse_label": "느린 읽기 쿼리의 안전한 계획 수집",
+          "text": "-- 운영에서는 읽기 전용 복제본 또는 트랜잭션 제한 환경을 우선 사용한다\nEXPLAIN (ANALYZE, BUFFERS, VERBOSE)\nSELECT id, created_at, total_amount\nFROM orders\nWHERE customer_id = 42\n  AND status = 'PAID'\nORDER BY created_at DESC\nLIMIT 50;\n\n-- 통계가 오래되었다는 가설을 검증할 때만 실행한다\nANALYZE orders;"
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "순차 스캔이 보여도 실패라고 단정하지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "ANALYZE는 통계를 새로 만들지만, 모든 성능 문제의 즉시 처방은 아니다. 대량 적재 직후처럼 분포가 바뀐 경우에는 효과가 있을 수 있지만, 잘못된 조인 조건이나 과도한 결과 집합을 가리지는 못한다. 통계 갱신 전후에는 같은 파라미터와 비슷한 부하에서 계획 전문을 비교하고, 예상·실제 rows 차이가 줄었는지 기록한다."
+        },
+        {
+          "t": "p",
+          "text": "테이블의 큰 비율을 읽어야 한다면 순차 스캔은 인덱스와 테이블을 오가는 것보다 빠를 수 있다. 반대로 선택도가 높은 조건으로 소수 행만 찾고 정렬 순서도 맞춰야 한다면 B-tree 인덱스가 후보가 된다. 인덱스는 조회를 돕지만 INSERT·UPDATE·DELETE마다 유지 비용과 저장 공간을 추가한다. 필요한 열을 INCLUDE로 넣어 index-only scan을 노릴 수 있지만, 가시성 맵과 실제 반환 열을 함께 봐야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "많이 읽는 조건에서는 순차 스캔이 합리적일 수 있고, 적은 행·정렬 요구가 함께 있을 때 인덱스 설계의 가치가 커진다."
+        },
+        {
+          "t": "table",
+          "caption": "가설별로 먼저 바꿀 한 가지",
+          "headers": [
+            "계획 신호",
+            "우선 검증",
+            "성급한 처방"
+          ],
+          "rows": [
+            [
+              "실제 rows가 예상보다 훨씬 큼",
+              "ANALYZE 시점·데이터 분포·확장 통계",
+              "무관한 단일 인덱스 추가"
+            ],
+            [
+              "Sort가 디스크를 사용",
+              "LIMIT·정렬 키·work_mem의 세션 범위",
+              "전역 work_mem 대폭 증가"
+            ],
+            [
+              "Nested Loop의 loops가 큼",
+              "상위 입력 행 수와 조인 조건",
+              "힌트처럼 조인 방식을 강제"
+            ],
+            [
+              "전체 테이블의 큰 비율을 읽음",
+              "반환 범위와 필터 선택도",
+              "Seq Scan을 무조건 금지"
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "text": "인덱스는 쿼리 한 개가 아니라 쓰기 비용까지 계산한다"
+        },
+        {
+          "t": "p",
+          "text": "인덱스 후보는 WHERE의 동등 조건, 범위 조건, ORDER BY, 조인 키를 한 쿼리 형태로 놓고 검토한다. 복합 B-tree에서는 앞쪽 컬럼 순서가 중요하다. 예를 들어 customer_id로 좁힌 뒤 created_at DESC로 최근 50건을 가져오는 패턴이라면 그 순서를 따르는 인덱스가 후보가 될 수 있다. 하지만 status처럼 값 종류가 적은 컬럼 하나만으로는 기대보다 많은 행을 읽을 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "운영 테이블에 인덱스를 만들 때는 CREATE INDEX CONCURRENTLY가 일반적인 선택지지만, 트랜잭션 블록 안에서 실행할 수 없고 실패·재시도 절차도 준비해야 한다. 새 인덱스가 실제 계획에 선택되는지, 쓰기 지연과 디스크 사용량은 얼마나 변했는지 확인한 뒤에만 남긴다. 사용하지 않는 인덱스 제거도 바로 실행하지 말고 충분한 관측 기간과 롤백 계획을 둔다."
+        },
+        {
+          "t": "h",
+          "text": "요청에서 데이터베이스까지 같은 조건을 재현한다"
+        },
+        {
+          "t": "p",
+          "text": "웹 요청이 느리다고 해서 SQL 하나만 원인은 아니다. 커넥션 풀 대기, 긴 트랜잭션, 잠금, ORM이 만든 N+1 쿼리, 페이지네이션 없는 대량 반환이 데이터베이스 계획과 겹칠 수 있다. 요청 ID로 애플리케이션 타이밍과 데이터베이스 로그를 연결하고, pg_stat_statements 같은 집계는 자주 실행되는 후보를 찾는 데 사용한다. 민감한 바인드 값이나 고객 데이터가 담긴 계획은 티켓·채팅에 그대로 올리지 않는다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "EXPLAIN ANALYZE는 실행하므로 UPDATE·DELETE·장시간 쿼리에 무심코 붙이지 않고, 제한 시간과 승인된 환경을 정한다.",
+            "계획과 로그를 공유할 때 고객 ID, 이메일, 토큰, 내부 스키마 이름 등 민감한 값은 마스킹한다.",
+            "동일 SQL이라도 파라미터와 캐시 상태가 다르면 계획·시간이 달라질 수 있으니 재현 조건을 함께 기록한다.",
+            "인덱스 변경 전후에는 p95 지연뿐 아니라 쓰기 지연, 임시 파일, 디스크 사용량을 함께 관측한다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "한 번에 하나의 가설만 바꾸는 점검 순서"
+        },
+        {
+          "t": "p",
+          "text": "먼저 느린 요청을 집계에서 고르고, 실제 파라미터와 안전한 실행 환경을 확보한다. 둘째 계획에서 가장 오래 걸린 노드와 rows 오차를 표시한다. 셋째 통계 갱신, 쿼리 범위 축소, 인덱스 후보 중 원인과 직접 연결되는 가설 하나만 선택한다. 마지막으로 같은 조건에서 계획과 p95를 비교하고, 효과가 없으면 변경을 되돌린 뒤 다음 가설로 이동한다. 이 기록이 쌓이면 다음 장애에서 ‘인덱스를 더 만들자’는 막연한 논의를 줄일 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "성능 티켓에 남길 최소 기록",
+          "headers": [
+            "항목",
+            "기록 예",
+            "이유"
+          ],
+          "rows": [
+            [
+              "재현 조건",
+              "파라미터·실행 시각·데이터 규모",
+              "계획 선택의 전제를 보존"
+            ],
+            [
+              "계획 전문",
+              "EXPLAIN ANALYZE BUFFERS 출력",
+              "병목과 rows 오차 비교"
+            ],
+            [
+              "변경 하나",
+              "ANALYZE 또는 인덱스 후보",
+              "원인과 효과를 분리"
+            ],
+            [
+              "결과",
+              "p95·읽기·쓰기 영향",
+              "회귀와 부작용 확인"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "느린 쿼리 대응의 목표는 특정 스캔 이름을 없애는 일이 아니라, 현재 데이터와 요청 패턴에 맞는 경로를 증명하는 일이다. 계획을 보관하고 통계·인덱스·쿼리를 한 번에 하나씩 검증하면 다음 데이터 증가에도 다시 사용할 수 있는 운영 기준이 남는다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서",
+      "url": "https://won0322.tistory.com/135",
+      "reason": "Spring 요청이 PostgreSQL까지 이동하는 기본 흐름을 복습한 뒤 실행 계획 분석을 적용할 수 있다."
+    },
+    {
+      "title": "Redis 토큰 버킷으로 API 레이트 리밋 설계하기",
+      "url": "https://won0322.tistory.com/140",
+      "reason": "느린 경로를 보호하는 API 운영 관점과 데이터베이스 병목 분석을 함께 연결할 수 있다."
+    }
+  ]
+}

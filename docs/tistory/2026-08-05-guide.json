@@ -1,0 +1,92 @@
+{
+  "title": "PostgreSQL EXPLAIN ANALYZE로 느린 쿼리 해결하기: 인덱스와 통계 읽는 법",
+  "title_candidates": [
+    "PostgreSQL EXPLAIN ANALYZE로 느린 쿼리 해결하기: 인덱스와 통계 읽는 법",
+    "PostgreSQL EXPLAIN ANALYZE로 느린 쿼리를 해결하는 법"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-08-05-guide",
+  "publish_date": "2026-08-05",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-05T18:00:00+09:00",
+  "tags": [
+    "PostgreSQL EXPLAIN ANALYZE",
+    "느린 쿼리",
+    "PostgreSQL 인덱스",
+    "쿼리 플래너",
+    "실행 계획",
+    "ANALYZE 통계",
+    "Spring 데이터베이스"
+  ],
+  "meta_description": "운영에서 주문 목록 API가 느려졌는데, 개발 환경에서는 같은 SQL이 금방 끝나는 장면이 있다. 인덱스가 없다고 단정하고 추가했다가 쓰기 비용만 키우는 경우도 흔하다. 이 글은 PostgreSQL의… EXPLAIN ANALYZE는 계획의 예상 비용뿐 아니라 실제 시간·행 수·반복 횟…",
+  "key_summary": [
+    "1. PostgreSQL EXPLAIN ANALYZE로 느린 쿼리를 해결하는 법",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: PostgreSQL EXPLAIN ANALYZE로 느린 쿼리 해결하기: 인덱스와 통계 읽는 법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 11,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-08-05.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-05-guide.html",
+  "before_ad_html": "docs/tistory/2026-08-05-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-05-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-05-guide-adfit.html",
+  "source_sha256": "3efcc70db84f725f49305f59282388807cee30c3e5db01febcec31bfea3ff3e1",
+  "html_sha256": "a1fb5a5bd9514db735481a553ca74695809b0c24e82d93ce32ab029258817baf",
+  "adfit_sha256": "cb26ad7784c57c22a84a1fd06c5ab1d6f5ca0155fd67d33a72c6fab195339608",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-실행계획-대표.webp",
+      "path": "docs/tistory/assets/2026-08-05-guide/PostgreSQL-실행계획-대표.webp",
+      "original_url": "",
+      "alt": "실행 계획 종이에서 느린 노드와 실제 행 수를 돋보기로 확인하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
+      "path": "docs/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
+      "original_url": "",
+      "alt": "PostgreSQL 공식 EXPLAIN 문서의 계획 노드와 순차 스캔 예제 화면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/예상행-실제행-통계확인.webp",
+      "path": "docs/tistory/assets/2026-08-05-guide/예상행-실제행-통계확인.webp",
+      "original_url": "",
+      "alt": "예상 20행과 실제 8000행의 차이를 통계 확인으로 이어 보는 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/순차스캔-인덱스선택.webp",
+      "path": "docs/tistory/assets/2026-08-05-guide/순차스캔-인덱스선택.webp",
+      "original_url": "",
+      "alt": "많이 읽는 조건과 적게 찾고 정렬이 필요한 조건을 구분하는 PostgreSQL 스캔 선택 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

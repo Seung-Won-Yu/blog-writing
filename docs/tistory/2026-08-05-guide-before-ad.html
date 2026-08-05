@@ -1,0 +1,28 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 5 (수) · 약 11분</p>
+    <p class="digest-lead">운영에서 주문 목록 API가 느려졌는데, 개발 환경에서는 같은 SQL이 금방 끝나는 장면이 있다. 인덱스가 없다고 단정하고 추가했다가 쓰기 비용만 키우는 경우도 흔하다. 이 글은 PostgreSQL의 EXPLAIN ANALYZE 결과에서 어디를 먼저 읽고, 예상 행 수와 실제 행 수의 차이를 어떻게 해석하며, 인덱스·통계·쿼리 형태 중 무엇을 고칠지 결정하는 순서를 다룬다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-실행계획-대표.webp" alt="실행 계획 종이에서 느린 노드와 실제 행 수를 돋보기로 확인하는 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">개발 가이드</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">최신 기준 · PostgreSQL 공식 문서·PGDG Wiki·pganalyze 운영 자료 교차 확인 · 2026. 8. 5</p>
+    <h3>PostgreSQL EXPLAIN ANALYZE로 느린 쿼리를 해결하는 법</h3>
+    <p class="digest-blurb">EXPLAIN ANALYZE는 계획의 예상 비용뿐 아니라 실제 시간·행 수·반복 횟수를 보여 준다. 가장 비싼 노드와 추정 오차를 먼저 확인하면 순차 스캔, 조인, 정렬, 오래된 통계 중 어느 가설을 검증할지 정할 수 있다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">주문 목록만 느려질 때, 먼저 계획을 보관한다</h4><p>느린 요청을 만났을 때 SQL 문자열만 복사하면 원인이 반쯤 사라진다. 바인드 값, 실행 시각, 반환 행 수, 트랜잭션 격리 수준, 데이터 양이 계획 선택에 영향을 준다. 우선 읽기 전용 복제본이나 안전한 스테이징에서 같은 파라미터로 실행 계획을 남긴다. 운영 원본에서 EXPLAIN ANALYZE를 실행하면 쿼리가 실제로 수행되므로, 잠금·쓰기·대량 갱신 경로에는 별도 승인과 제한 시간이 필요하다.</p><p>PostgreSQL의 EXPLAIN은 플래너가 고른 예상 경로를, ANALYZE 옵션은 실제 실행 뒤의 시간과 행 수를 보여 준다. 계획은 하나의 정답지가 아니라 당시 통계와 비용 설정으로 계산한 선택이다. 그래서 ‘Seq Scan이 보였으니 인덱스를 만든다’보다 ‘얼마나 읽었고, 얼마나 틀리게 예상했으며, 어디서 기다렸는가’를 먼저 묻는 편이 안전하다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp" alt="PostgreSQL 공식 EXPLAIN 문서의 계획 노드와 순차 스캔 예제 화면" width="1200" height="630" loading="lazy"><figcaption>실행 계획은 루트에서 시작하되, 실제 시간이 큰 하위 노드와 rows·loops를 함께 읽어야 병목을 정확히 좁힐 수 있다.</figcaption></figure><h4 class="digest-subheading">EXPLAIN ANALYZE의 네 숫자가 말하는 것</h4><p>cost는 PostgreSQL 내부 비용 단위라서 밀리초와 같지 않다. actual time은 노드가 첫 행과 마지막 행을 내기까지 걸린 실제 시간이고, rows는 한 번의 실행에서 낸 행 수, loops는 그 노드가 반복된 횟수다. 안쪽 노드가 빠르게 보여도 loops가 수천 번이면 총 비용이 커질 수 있다. 실제 총량은 대략 마지막 시간과 반복 횟수를 함께 보며 판단한다.</p><div class="digest-table-wrap" role="region" aria-label="계획에서 처음 확인할 신호" tabindex="0"><table class="digest-data-table"><caption>계획에서 처음 확인할 신호</caption><thead><tr><th scope="col">신호</th><th scope="col">의미</th><th scope="col">다음 질문</th></tr></thead><tbody><tr><td>actual time이 큰 노드</td><td>대기나 읽기가 오래 걸린 지점</td><td>정렬·조인·디스크 읽기 중 무엇인가?</td></tr><tr><td>rows 추정 오차</td><td>플래너의 선택 근거가 틀릴 수 있음</td><td>통계·조건 분포가 최신인가?</td></tr><tr><td>loops가 큰 노드</td><td>작은 작업이 반복되어 누적됨</td><td>조인 순서나 상위 행 수가 과한가?</td></tr><tr><td>Sort Method의 디스크 사용</td><td>work_mem을 넘어 임시 파일을 사용</td><td>반환·정렬 범위를 줄일 수 있는가?</td></tr></tbody></table></div><p>출력은 들여쓰기 구조대로 읽는다. 상위 Limit나 Aggregate의 시간이 길어도 원인이 아닐 수 있고, 그 아래의 Sort 또는 Nested Loop가 시간을 만든 경우가 많다. BUFFERS 옵션을 함께 쓰면 shared hit는 캐시에 있던 페이지, read는 디스크에서 읽은 페이지라는 힌트를 준다. 다만 버퍼 수가 곧 사용자 체감 시간은 아니므로 락 대기·네트워크·애플리케이션 직렬화도 별도 관측해야 한다.</p><h4 class="digest-subheading">예상 20행인데 실제 8,000행이면 통계부터 의심한다</h4><p>플래너는 ANALYZE가 수집한 표본 통계로 조건에 맞는 행 수를 추정한다. 특정 상태값이 최근 급증했거나, 두 컬럼 값이 강하게 연관되어 있는데 독립이라고 가정하면 예상 rows와 실제 rows가 크게 갈라진다. 이런 오차는 Nested Loop처럼 행 수에 민감한 조인을 선택하게 만들 수 있다. 인덱스를 만들기 전에 autovacuum의 analyze가 제때 실행되는지와 컬럼 통계 목표값을 확인한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/예상행-실제행-통계확인.webp" alt="예상 20행과 실제 8000행의 차이를 통계 확인으로 이어 보는 도식" width="1200" height="630" loading="lazy"><figcaption>예상 행 수와 실제 행 수가 크게 벌어지면 플래너의 비용 계산도 흔들릴 수 있으므로 통계와 조건 분포를 먼저 확인한다.</figcaption></figure><pre class="digest-code-block language-sql"><code>-- 운영에서는 읽기 전용 복제본 또는 트랜잭션 제한 환경을 우선 사용한다
+EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
+SELECT id, created_at, total_amount
+FROM orders
+WHERE customer_id = 42
+  AND status = &#x27;PAID&#x27;
+ORDER BY created_at DESC
+LIMIT 50;
+
+-- 통계가 오래되었다는 가설을 검증할 때만 실행한다
+ANALYZE orders;</code></pre></div>
+  </div>
+</section>
+</article>
