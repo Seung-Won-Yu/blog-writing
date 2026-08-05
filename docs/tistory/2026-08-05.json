@@ -1,0 +1,93 @@
+{
+  "title": "GPT-5.6 가격 인하 뒤, 에이전트 비용을 줄이는 모델 분리법",
+  "title_candidates": [
+    "GPT-5.6 가격 인하 뒤, 에이전트 비용을 줄이는 모델 분리법",
+    "OpenAI, GPT-5.6 Luna와 Terra API 가격 인하 및 Sol Fast mode 발표",
+    "GPT-5.6 Luna와 Terra의 가격 인하 뒤, 자동화 단계별로 모델을 나누는 비용 판단: 모델 가격이 내려갔을 때…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-05",
+  "publish_date": "2026-08-05",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-05T09:00:00+09:00",
+  "tags": [
+    "GPT-5.6",
+    "OpenAI API",
+    "Luna",
+    "Terra",
+    "AI 비용 최적화",
+    "프롬프트 캐싱",
+    "에이전트 자동화"
+  ],
+  "meta_description": "자동화가 한 번의 답변으로 끝나지 않으면 비용표는 생각보다 빨리 복잡해진다. 요구사항을 해석하고, 파일을 읽고, 코드를 고치고, 테스트를 돌리고, 실패를 다시 분석하는 단계가 한 묶음으로 움직이기 때… OpenAI는 GPT-5.6 Luna의 API 가격을 80%, Terra를 20%…",
+  "key_summary": [
+    "1. OpenAI, GPT-5.6 Luna와 Terra API 가격 인하 및 Sol Fast mode 발표",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GPT-5.6 가격 인하 뒤, 에이전트 비용을 줄이는 모델 분리법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-05.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-05.html",
+  "before_ad_html": "docs/tistory/2026-08-05-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-05-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-05-adfit.html",
+  "source_sha256": "eacce352c6d4da7332caeb084ebac006e2aab0fa99da25ac6183d5d967bf0a98",
+  "html_sha256": "84e47edbc0d86cb3c9a2c4dc0e2b1083a28957844dfcce6d12dcfe5045ba81da",
+  "adfit_sha256": "f6dae7d0d9bdc8096ca974213ed0fc45c115fb6a9e20b1516ec9ff8b4f56ac26",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/GPT-5.6-모델분리-대표.webp",
+      "path": "docs/tistory/assets/2026-08-05/GPT-5.6-모델분리-대표.webp",
+      "original_url": "",
+      "alt": "하나의 작업 바구니가 계획 도구와 반복 처리 도구로 갈라지고 고성능과 저비용 표식이 붙은 등각 작업대",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/GPT-5.6-모델가격-비교.webp",
+      "path": "docs/tistory/assets/2026-08-05/GPT-5.6-모델가격-비교.webp",
+      "original_url": "",
+      "alt": "Sol, Terra, Luna의 역할과 입력·출력 100만 토큰당 가격을 비교한 세 개의 세로 미터",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/에이전트-모델배치-분기.webp",
+      "path": "docs/tistory/assets/2026-08-05/에이전트-모델배치-분기.webp",
+      "original_url": "",
+      "alt": "계획, 실행, 테스트, 재검토로 이어지고 실패 또는 변경 시 재검토로 분기하는 에이전트 작업 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/OpenAI-GPT-5.6-가격-발표문.webp",
+      "path": "docs/tistory/assets/2026-08-05/OpenAI-GPT-5.6-가격-발표문.webp",
+      "original_url": "",
+      "alt": "OpenAI Developers GPT-5.6 Sol 모델 문서의 입력·출력·캐시 입력 가격과 긴 컨텍스트 조건",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 5 (수) · 약 8분</p>
+    <p class="digest-lead">자동화가 한 번의 답변으로 끝나지 않으면 비용표는 생각보다 빨리 복잡해진다. 요구사항을 해석하고, 파일을 읽고, 코드를 고치고, 테스트를 돌리고, 실패를 다시 분석하는 단계가 한 묶음으로 움직이기 때문이다. OpenAI는 7월 30일부터 GPT-5.6 Luna의 API 가격을 입력 100만 토큰당 0.20달러, 출력 100만 토큰당 1.20달러로 낮추고, Terra도 입력 2달러·출력 12달러로 조정했다. 이 변화의 핵심은 가장 싼 모델을 모든 요청에 붙이는 데 있지 않다. 불확실성을 줄이는 판단 단계와 이미 명세가 정해진 반복 단계를 분리해야, 비용을 줄이면서 결과가 흔들릴 때 돌아갈 지점도 남는다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/GPT-5.6-모델분리-대표.webp" alt="하나의 작업 바구니가 계획 도구와 반복 처리 도구로 갈라지고 고성능과 저비용 표식이 붙은 등각 작업대" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · OpenAI · 2026. 7. 30</p>
+    <h3>OpenAI, GPT-5.6 Luna와 Terra API 가격 인하 및 Sol Fast mode 발표</h3>
+    <p class="digest-blurb">OpenAI는 GPT-5.6 Luna의 API 가격을 80%, Terra를 20% 낮추고 Sol에는 Fast mode를 도입했다. 가격표의 변화는 자동화 전체를 하나의 모델로 바꾸라는 신호보다, 단계별 품질 기준과 비용을 다시 배치할 계기다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">가격표만 바꾸면 자동화 비용은 왜 그대로일까</h4><p>에이전트 비용은 모델 이름 하나가 아니라 입력·출력 토큰, 캐시, 도구 호출, 실패 후 재시도를 합친 결과다. 특히 코드 수정이나 문서 처리처럼 출력이 길어지는 작업은 입력 단가만 보고 판단하면 오차가 커진다. OpenAI의 현재 발표 기준으로 Luna는 입력 100만 토큰당 0.20달러와 출력 1.20달러, Terra는 입력 2달러와 출력 12달러다. Sol은 가격을 유지하되 Fast mode를 API에 추가했다. 따라서 먼저 해야 할 일은 ‘더 싼 모델로 교체’가 아니라 자동화가 어느 단계에서 긴 출력을 만들고, 어느 단계에서 실패를 되돌리는지 기록하는 일이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05/GPT-5.6-모델가격-비교.webp" alt="Sol, Terra, Luna의 역할과 입력·출력 100만 토큰당 가격을 비교한 세 개의 세로 미터" width="1200" height="630" loading="lazy"><figcaption>같은 100만 토큰 기준이라도 입력과 출력 단가, 그리고 맡길 작업의 성격이 다르다. 긴 생성물은 출력 단가까지 함께 계산해야 한다.</figcaption></figure><h4 class="digest-subheading">계획과 반복 실행을 같은 품질 기준으로 묶지 말기</h4><p>명세가 모호하거나 여러 파일의 원인을 좁혀야 하는 계획 단계는 잘못된 방향을 잡았을 때 뒤의 호출을 모두 낭비하게 만든다. 이때는 높은 판단력과 검토를 남기는 편이 비용 절감보다 중요하다. 반대로 입력 형식과 성공 조건이 고정된 변환, 초안 생성, 테스트 실행, 결과 분류는 저비용 모델을 시험하기 좋은 후보다. OpenAI도 예시로 Sol이 불확실성을 해소하고 계획을 세운 뒤 Luna가 잘 정의된 변경·테스트·평가를 처리하는 배치를 제시한다.</p><div class="digest-table-wrap" role="region" aria-label="단계별로 먼저 확인할 모델 배치 기준" tabindex="0"><table class="digest-data-table"><caption>단계별로 먼저 확인할 모델 배치 기준</caption><thead><tr><th scope="col">작업 단계</th><th scope="col">저비용 전환 전 질문</th><th scope="col">되돌려야 하는 신호</th></tr></thead><tbody><tr><td>계획·원인 분석</td><td>성공 조건과 영향 범위가 명확한가</td><td>요구사항 충돌·원인 불명</td></tr><tr><td>반복 구현</td><td>입력 형식과 수정 범위가 고정됐는가</td><td>수정 범위 이탈·출력 길이 급증</td></tr><tr><td>테스트·분류</td><td>통과 기준을 기계적으로 확인할 수 있는가</td><td>실패 반복·도구 오류</td></tr><tr><td>최종 검토</td><td>사람 또는 규칙 기반 승인 지점이 있는가</td><td>보안·금전·배포 영향</td></tr></tbody></table></div><p>여기서 ‘저비용’은 낮은 품질을 뜻하지 않는다. 같은 품질 기준을 통과하는 범위가 확인됐을 때만 모델을 옮긴다는 뜻이다. 평가는 실제 프롬프트, 도구 결과, 실패 사례를 포함해야 한다. 벤치마크는 후보를 좁히는 자료이지, 특정 저장소나 업무 흐름에서의 성공을 보장하지 않는다.</p></div>
+  </div>
+</section>
+</article>
