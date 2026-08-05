@@ -838,6 +838,52 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn("quality_reference_mix", reasons)
         self.assertIn("quality_source_freshness", reasons)
 
+    def test_daily_source_after_recency_policy_requires_exception_after_72_hours(self):
+        source = valid_daily_source("2026-08-06")
+        source["news"][0]["published_at"] = "2026-08-02T08:59:00+09:00"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-06")
+        )
+
+        self.assertIn("quality_source_freshness", reasons)
+
+    def test_daily_source_accepts_documented_high_value_exception_within_seven_days(self):
+        source = valid_daily_source("2026-08-06")
+        source["news"][0]["published_at"] = "2026-08-02T08:59:00+09:00"
+        source["editorial"]["freshness_exception"] = {
+            "reason": "최근 후보보다 자동화 비용을 직접 줄이는 모델 배치 판단을 구체적으로 설명할 수 있어 예외로 선택한다.",
+            "lasting_value": "가격 발표 뒤에도 계획과 반복 실행을 분리하는 기준은 여러 에이전트 업무에서 계속 재사용할 수 있다.",
+            "fresher_candidates_rejected": [
+                "최신 보안 평가 발표는 독자가 당장 적용할 설정과 비용 판단 기준이 부족했다.",
+                "최신 통신사 사례는 특정 기업 홍보 비중이 높고 일반 개발자가 재사용할 절차가 적었다.",
+            ],
+        }
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-06")
+        )
+
+        self.assertNotIn("quality_source_freshness", reasons)
+
+    def test_daily_source_rejects_items_older_than_seven_days_even_with_exception(self):
+        source = valid_daily_source("2026-08-06")
+        source["news"][0]["published_at"] = "2026-07-29T08:59:00+09:00"
+        source["editorial"]["freshness_exception"] = {
+            "reason": "최근 후보보다 독자가 실제로 적용할 수 있는 판단 기준이 많아 예외로 선택하려는 오래된 원문이다.",
+            "lasting_value": "발표 이후에도 여러 자동화 작업에서 반복해서 사용할 수 있는 비용과 품질 분리 원칙을 제공한다.",
+            "fresher_candidates_rejected": [
+                "최신 후보 하나는 단순 발표여서 독자가 적용할 구체적인 조건을 제공하지 못했다.",
+                "최신 후보 다른 하나는 기존 글과 핵심 질문과 결론이 거의 같아 제외했다.",
+            ],
+        }
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-06")
+        )
+
+        self.assertIn("quality_source_freshness", reasons)
+
     def test_future_posts_require_korean_editorial_and_prose(self):
         source = valid_daily_source()
         source["editorial"]["headline"] = (

@@ -21,6 +21,7 @@ COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
 NATURAL_VOICE_POLICY_START = date(2026, 8, 4)
 AD_FLOW_POLICY_START = date(2026, 8, 4)
+SOURCE_RECENCY_POLICY_START = date(2026, 8, 6)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -954,6 +955,34 @@ def _source_freshness_reasons(source, identity):
     scheduled = scheduled.astimezone(timezone.utc)
     if published > scheduled + timedelta(hours=6):
         return ["quality_source_freshness"]
+    if (
+        identity.content_type == "daily_news"
+        and date.fromisoformat(identity.publish_date) >= SOURCE_RECENCY_POLICY_START
+    ):
+        source_age = scheduled - published
+        if source_age > timedelta(days=7):
+            return ["quality_source_freshness"]
+        if source_age > timedelta(hours=72):
+            editorial = (
+                source.get("editorial")
+                if isinstance(source.get("editorial"), dict)
+                else {}
+            )
+            exception = editorial.get("freshness_exception")
+            if not isinstance(exception, dict):
+                return ["quality_source_freshness"]
+            reason = plain(exception.get("reason"))
+            lasting_value = plain(exception.get("lasting_value"))
+            rejected = exception.get("fresher_candidates_rejected")
+            rejected = rejected if isinstance(rejected, list) else []
+            rejected = [plain(item) for item in rejected if plain(item)]
+            if (
+                not 40 <= len(reason) <= 500
+                or not 40 <= len(lasting_value) <= 500
+                or not 2 <= len(rejected) <= 5
+                or any(not 20 <= len(item) <= 300 for item in rejected)
+            ):
+                return ["quality_source_freshness"]
     if (
         identity.content_type == "daily_news"
         and published < scheduled - timedelta(days=14)

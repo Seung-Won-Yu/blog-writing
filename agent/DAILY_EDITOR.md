@@ -25,6 +25,12 @@
    - 표·차트·타임라인·비교·동작 흐름 중 주제에 맞는 설명 시각물이 가능한가
    - 최근 60일 글과 URL이나 핵심 질문이 겹치지 않는가
 
+   기본 원문은 예약 시각 기준 72시간 이내에 발표된 소식으로 선택합니다. 72시간 이내 후보가 핵심 선정 기준을 충족하면, 오래된 소식의 검색 지속성 점수가 조금 높더라도 최신 후보를 우선합니다. 수집 실패를 주제 선택의 예외 사유로 삼지 않습니다.
+
+   72시간을 넘긴 원문은 발표 후 7일 이내이면서, 최신 후보로는 대체할 수 없는 실제 문제·판단 기준·적용 가치가 명확할 때만 예외로 선택합니다. 이때 `editorial.freshness_exception`에 `reason`, `lasting_value`, `fresher_candidates_rejected`를 기록합니다. `fresher_candidates_rejected`는 당일 후보함에서 실제로 검토한 72시간 이내 후보 2건 이상과 이 블로그의 독자 문제를 더 잘 해결하지 못한 이유를 짧은 문장으로 적습니다. 이 메타데이터는 편집 검증용이며 본문의 점검표나 메모 상자로 출력하지 않습니다. 7일을 넘긴 소식은 데일리 뉴스로 쓰지 않고 수요일 가이드 주제로 전환하거나 보류합니다.
+
+   최근 3일 데일리 글 중 `freshness_exception`을 사용한 글이 있으면 또다시 오래된 원문을 선택하지 않습니다. 예외 원문을 쓴 글은 '오늘 발표'처럼 포장하지 않고, 제목과 도입에 실제 발표일과 지금 다시 볼 이유를 자연스럽게 밝힙니다.
+
    최종 주제는 `실전 개발 문제 해결`, `AI·업무자동화 활용`, `실제 프로젝트에서 다시 쓰일 기술` 중 하나와 연결돼야 합니다. 블로그의 기존 축과 이어지지 않는 화제성 기사, 원문을 요약하는 것 외에 새 가치가 없는 기사는 점수가 높아도 선택하지 않습니다. 관련 글은 같은 축의 오래가는 기준 글 1개와 직접 실행한 실험·프로젝트 글 1개를 우선합니다. 둘 중 어느 한 쪽도 자연스럽게 이어지지 않으면 역할을 억지로 채우지 말고 주제상 가장 가까운 공개 글만 선택합니다.
 
    후보끼리 비교할 때는 `검색 지속성 30 · 실제 문제 해결성 25 · 현재 관심도 20 · 독창적 해설 가능성 15 · 기존 글 연결성 10`의 100점 편집 점수를 사용합니다. 이 점수는 수집기의 `lead_score`를 바꾸지 않으며, 후보 5건 중 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 보조 기준입니다. 후보함의 `reader_relevance_fallback_applied`가 `true`이면 원래 `min_reader_relevance` 미만 후보를 발행 이유만으로 선택하지 않습니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 일반 독자의 문제를 해결하는 새 후보를 찾고, 찾지 못하면 억지로 전문 뉴스 글을 만들지 않습니다.
@@ -175,7 +181,7 @@
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`. 72시간을 넘긴 원문의 허용된 예외에만 `freshness_exception`(`reason`, `lasting_value`, `fresher_candidates_rejected` 문자열 배열)를 추가합니다.
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason` 기록

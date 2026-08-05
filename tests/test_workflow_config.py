@@ -151,6 +151,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("긴급 보안·서비스 장애", contract)
         self.assertIn("반복 브랜드를 제목에서 제외", contract)
         self.assertIn("대표 이미지는 새 핵심 대상", contract)
+        self.assertIn("기본 원문은 예약 시각 기준 72시간 이내", contract)
+        self.assertIn("`editorial.freshness_exception`", contract)
+        self.assertIn("7일을 넘긴 소식은 데일리 뉴스로 쓰지 않고", contract)
+        self.assertIn("최근 3일 데일리 글", contract)
+        self.assertIn("본문의 점검표나 메모 상자로 출력하지 않습니다", contract)
 
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
