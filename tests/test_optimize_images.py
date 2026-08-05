@@ -207,6 +207,56 @@ class OptimizeImagesTests(unittest.TestCase):
         self.assertIn("image_digest_mismatch:visual_1", result["reasons"])
         self.assertIn("invalid_image_file:visual_2", result["reasons"])
 
+    def test_inspection_rejects_a_full_page_capture_shrunk_to_a_sliver(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id = "2026-07-19"
+            asset_dir = root / "docs" / "tistory" / "assets" / day_id
+            asset_dir.mkdir(parents=True)
+            assets = {}
+            for kind, filename in (
+                ("cover", "대표-이미지.webp"),
+                ("visual_1", "공식문서-캡처.webp"),
+                ("visual_2", "설명-이미지.webp"),
+            ):
+                path = asset_dir / filename
+                if kind == "visual_1":
+                    image = Image.new("RGB", (1200, 630), "#fcfbf7")
+                    strip = Image.effect_noise((48, 610), 45).convert("RGB")
+                    image.paste(strip, (576, 10))
+                else:
+                    image = Image.effect_noise((1200, 630), 50).convert("RGB")
+                image.save(path, "WEBP", quality=82)
+                assets[kind] = {
+                    "origin": "capture" if kind == "visual_1" else "imagegen",
+                    "path": path.relative_to(root).as_posix(),
+                    "url": f"https://blog.example/{filename}",
+                    "alt": "공식 문서에서 핵심 코드와 설명을 읽을 수 있게 캡처한 이미지",
+                    "width": 1200,
+                    "height": 630,
+                    "format": "webp",
+                    "bytes": path.stat().st_size,
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                }
+            source = root / "data" / "days" / f"{day_id}.json"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 3,
+                        "format": "lead-story-v1",
+                        "generation": {"image_policy": "webp-v1"},
+                        "images": assets,
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = inspect_draft_images(day_id, root=root)
+
+        self.assertIn("narrow_capture_content:visual_1", result["reasons"])
+
     def test_rejects_an_automation_asset_that_points_into_the_daily_namespace(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

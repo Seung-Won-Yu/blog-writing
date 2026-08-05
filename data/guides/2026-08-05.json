@@ -108,9 +108,9 @@
         "origin": "capture",
         "source_url": "https://www.postgresql.org/docs/current/using-explain.html",
         "capture_tool": "playwright",
-        "capture_target": "PostgreSQL 18 Using EXPLAIN 공식 문서 전체 화면",
-        "captured_at": "2026-08-05T14:08:00+09:00",
-        "capture_note": "공개 PostgreSQL 공식 문서에서 EXPLAIN 기본 설명과 Seq Scan 예제를 2026-08-05 KST에 캡처했다.",
+        "capture_target": "PostgreSQL 18 Using EXPLAIN Basics의 Seq Scan·cost·rows 확대 화면",
+        "captured_at": "2026-08-05T15:00:28+09:00",
+        "capture_note": "공개 PostgreSQL 공식 문서에서 EXPLAIN Basics 설명과 Seq Scan·cost·rows 예제가 한 화면에 읽히도록 확대 캡처했다.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -217,10 +217,10 @@
       "path": "docs/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-05-guide/PostgreSQL-EXPLAIN-공식문서.webp",
       "alt": "PostgreSQL 공식 EXPLAIN 문서의 계획 노드와 순차 스캔 예제 화면",
-        "capture_tool": "playwright",
-      "capture_target": "PostgreSQL 18 Using EXPLAIN 공식 문서 전체 화면",
-      "captured_at": "2026-08-05T14:08:00+09:00",
-      "capture_sha256": "ef14f774b0828f540ea31451ccf9991dff772d858658a23e1675a7fcb12fe86d",
+      "capture_tool": "playwright",
+      "capture_target": "PostgreSQL 18 Using EXPLAIN Basics의 Seq Scan·cost·rows 확대 화면",
+      "captured_at": "2026-08-05T15:00:28+09:00",
+      "capture_sha256": "f48fba08590905c663ebe8a82e6aed82d649dabe9934c7781b60aba581e26fd4",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -231,9 +231,9 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 4674,
+      "bytes": 81280,
       "quality": 82,
-      "sha256": "ef14f774b0828f540ea31451ccf9991dff772d858658a23e1675a7fcb12fe86d"
+      "sha256": "f48fba08590905c663ebe8a82e6aed82d649dabe9934c7781b60aba581e26fd4"
     },
     "visual_2": {
       "origin": "imagegen",

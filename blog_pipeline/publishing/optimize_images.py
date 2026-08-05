@@ -15,7 +15,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageChops, ImageOps
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
 from .draft_identity import resolve_draft_identity
@@ -32,6 +32,7 @@ IMAGE_POLICY = "webp-v1"
 IMAGE_POLICY_START = dt.date(2026, 7, 16)
 IMAGE_CONTENT_POLICY_START = dt.date(2026, 7, 19)
 QUALITY_STEPS = tuple(range(82, 9, -4))
+MIN_CAPTURE_CONTENT_WIDTH_RATIO = 0.18
 
 
 def _atomic_write_json(path, value):
@@ -89,6 +90,37 @@ def _as_int(value):
         return int(value)
     except (TypeError, ValueError):
         return None
+
+
+def _capture_content_width_ratio(image):
+    """Estimate whether a capture is a thin full-page sliver on a blank canvas."""
+    rgb = image.convert("RGB")
+    corner_size = max(1, min(rgb.size) // 50)
+    corner_boxes = (
+        (0, 0, corner_size, corner_size),
+        (rgb.width - corner_size, 0, rgb.width, corner_size),
+        (0, rgb.height - corner_size, corner_size, rgb.height),
+        (
+            rgb.width - corner_size,
+            rgb.height - corner_size,
+            rgb.width,
+            rgb.height,
+        ),
+    )
+    samples = []
+    for box in corner_boxes:
+        resized = rgb.crop(box).resize((1, 1), Image.Resampling.BOX)
+        samples.append(resized.getpixel((0, 0)))
+    background = tuple(
+        sorted(sample[channel] for sample in samples)[len(samples) // 2]
+        for channel in range(3)
+    )
+    difference = ImageChops.difference(rgb, Image.new("RGB", rgb.size, background))
+    mask = difference.convert("L").point(lambda value: 255 if value >= 18 else 0)
+    bounds = mask.getbbox()
+    if not bounds:
+        return 0.0
+    return (bounds[2] - bounds[0]) / rgb.width
 
 
 def save_bounded_webp(
@@ -205,10 +237,14 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
                 digest_path = source
             else:
                 staged_target = stage_root / f"{index:02d}-{target.name}"
+                preserve_full_frame = (
+                    is_lead_story(day)
+                    and asset.get("origin") not in {"capture", "annotated_capture"}
+                )
                 result = save_bounded_webp(
                     source_image,
                     staged_target,
-                    preserve_full_frame=is_lead_story(day),
+                    preserve_full_frame=preserve_full_frame,
                 )
                 staged_outputs.append((staged_target, target))
                 digest_path = staged_target
@@ -342,6 +378,11 @@ def inspect_draft_images(draft_id, *, root=ROOT):
                     grayscale = opened.convert("L")
                     grayscale_extrema = grayscale.getextrema()
                     grayscale_entropy = grayscale.entropy()
+                    capture_width_ratio = (
+                        _capture_content_width_ratio(opened)
+                        if asset.get("origin") in {"capture", "annotated_capture"}
+                        else None
+                    )
             except (OSError, ValueError):
                 reasons.append(f"invalid_image_file:{kind}")
                 continue
@@ -354,6 +395,11 @@ def inspect_draft_images(draft_id, *, root=ROOT):
                 or grayscale_entropy < 0.2
             ):
                 reasons.append(f"low_information_image:{kind}")
+            if (
+                capture_width_ratio is not None
+                and capture_width_ratio < MIN_CAPTURE_CONTENT_WIDTH_RATIO
+            ):
+                reasons.append(f"narrow_capture_content:{kind}")
             if (
                 str(asset.get("format") or "").casefold() != "webp"
                 or _as_int(asset.get("width")) != IMAGE_SIZE[0]

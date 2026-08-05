@@ -91,7 +91,7 @@
 
    직전 글과 본문 이미지의 `logic_type` 순서 전체가 같으면 안 됩니다. 최근 두 글의 본문 이미지가 모두 `imagegen`이었다면 이번 글에는 실제 캡처·주석 캡처·실측 차트 중 하나를 반드시 넣습니다. `hands_on_test`와 `troubleshooting`은 실제 증거를 최소 1개, `research_interpretation`은 주석 캡처 또는 실측 차트를 최소 1개 사용합니다. 이 세 유형은 본문 시각물도 최소 3개입니다.
 
-   설정·사용법이 핵심인 글은 실제 제품 화면이나 공식 문서 화면 1장을 우선 사용합니다. 직접 캡처한 화면은 계정·IP·토큰·개인정보를 가리고 `capture_note`를 기록합니다. 공식 화면은 `source_url`을 기록하고 캡션에 출처를 밝힙니다. 공개 화면을 확보할 수 없으면 `visual.screenshot_unavailable_reason`과 정확한 메뉴 경로를 남깁니다. 생성 이미지로 가짜 UI·가짜 터미널·가짜 측정 화면을 만들지 않습니다.
+   설정·사용법이 핵심인 글은 실제 제품 화면이나 공식 문서 화면 1장을 우선 사용합니다. 직접 캡처한 화면은 계정·IP·토큰·개인정보를 가리고 `capture_note`를 기록합니다. 공식 화면은 `source_url`을 기록하고 캡션에 출처를 밝힙니다. 공개 화면을 확보할 수 없으면 `visual.screenshot_unavailable_reason`과 정확한 메뉴 경로를 남깁니다. 생성 이미지로 가짜 UI·가짜 터미널·가짜 측정 화면을 만들지 않습니다. 문서·제품 화면은 `--full-page` 전체 페이지 캡처를 금지하고, 본문에서 설명할 제목·코드·설정이 한 화면에 읽히는 뷰포트 또는 요소 단위로 캡처합니다. 1200×630 변환 후에도 내용이 가느다란 세로 띠가 되거나 390px 모바일에서 핵심 텍스트를 읽을 수 없으면 발행하지 않습니다.
 
    `capture`·`annotated_capture`는 브리프와 대응 `images.visual_N` 양쪽에 같은 `capture_tool`, `capture_target`, `captured_at`을 넣습니다. `capture_tool`은 `browser`, `computer-use`, `playwright`, `system-screenshot`, `terminal` 중 실제 사용한 도구, `captured_at`은 예약 시각 14일 이내의 타임존 포함 ISO 시각입니다. 최적화기가 실제 최종 파일과 같은 `capture_sha256`을 자동 기록합니다. 실측 차트는 `measurement_source`, `unit`, `sample_count`, `measurement_environment`, 2~20개의 `data_points`(`label`, 유한한 숫자 `value`)를 넣습니다. NaN·무한대·중복 라벨은 금지하며 최적화기가 이 측정 필드 전체의 `measurement_sha256`을 자동 기록합니다.
 
