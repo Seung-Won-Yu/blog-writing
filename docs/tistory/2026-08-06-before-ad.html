@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 6 (목) · 약 9분</p>
+    <p class="digest-lead">월말에 Copilot 청구서를 확인하는 팀이라면, 이제 ‘지난달에 얼마나 썼나’를 보는 화면 하나만으로는 부족하다. GitHub가 Copilot Billing Preview 앱을 종료하면서 사용량·예산·비용 센터 관리는 GitHub Billing 설정으로 옮겨 갔다. 이 변화는 앱의 주소가 바뀌었다는 공지에 그치지 않는다. 누구의 AI credits가 어느 예산을 소진하는지, 알림만 받을지 실제 사용을 중지할지, 그리고 숫자가 튀었을 때 어떤 원시 자료를 내보낼지를 한 곳에서 다시 정해야 한다는 뜻이다. 특히 여러 조직과 계정을 함께 쓰는 개발팀은 ‘대시보드를 본다’와 ‘비용이 커지기 전에 행동한다’를 분리해서 설계할 필요가 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-06/Copilot-비용경계-대표.webp" alt="닫힌 청구서 미리보기 창 옆에서 세 개의 예산 봉투가 비용 차단 레버로 이어지는 Copilot 비용 관리 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · GitHub Changelog · 2026. 8. 5</p>
+    <h3>GitHub, Copilot Billing Preview 앱 종료 후 Billing 설정으로 비용 관리 통합</h3>
+    <p class="digest-blurb">GitHub는 Copilot Billing Preview 앱을 종료하고 AI usage, 예산, 사용자별 예산, 비용 센터, 사용량 보고서와 Billing API로 Copilot 비용을 확인·관리하도록 안내했다. 이번 변화의 핵심은 청구서 조회를 넘어 실제 비용 제어의 범위와 동작을 다시 점검하는 데 있다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">사라진 것은 미리보기 앱이고, 사라지지 않은 것은 비용 책임이다</h4><p>GitHub는 8월 3일 Copilot Billing Preview 앱을 종료했다. 이 앱은 사용량 기반 과금으로 옮겨 가는 동안 청구서를 미리 살펴보는 역할을 했지만, GitHub는 이제 기본 Billing 설정이 사용자별 예산, 비용 센터, AI credits 배분처럼 앱의 보고서보다 넓은 정보를 제공한다고 설명한다. 따라서 기존 앱을 열어 보던 습관을 새 화면으로 옮기는 것만으로는 충분하지 않다. 팀은 사용량을 보는 사람, 예산을 정하는 사람, 한도를 넘겼을 때 작업 중단을 승인하는 사람이 같은지부터 확인해야 한다.</p><p>먼저 GitHub Billing의 AI usage 화면에서 사용량을 그룹화·필터·내보내기 할 수 있다. 이 화면은 ‘이번 달 비용이 얼마인가’를 확인하는 출발점이다. 하지만 비용이 늘어난 뒤 원인을 보는 기능과, 늘기 전에 경계를 거는 기능은 다르다. 예산은 후자를 위한 도구이며, 사용량 보고서와 Billing API는 이상치를 더 세밀하게 되짚을 때 쓴다. 조회 화면 하나를 예산 통제라고 부르면, 누가 무엇을 멈출 수 있는지가 흐려진다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-06/Copilot-예산범위-비교.webp" alt="AI credits 사용량을 사용자 예산, 조직 예산, 비용 센터라는 세 가지 관리 범위에서 나란히 비교하는 그림" width="1200" height="630" loading="lazy"><figcaption>Copilot AI credits는 한 개의 숫자로만 보지 말고 사용자·조직·비용 센터 중 실제 책임을 나눌 수 있는 경계에 연결해야 한다. 알림과 중지는 같은 동작이 아니다.</figcaption></figure><h4 class="digest-subheading">예산 범위는 비용을 보는 단위가 아니라 행동을 정하는 단위다</h4><p>GitHub Docs는 사용량 기반 Copilot에서 사용자, 조직, 비용 센터, 엔터프라이즈 수준의 예산 제어가 AI credits 사용 방식에 영향을 준다고 설명한다. 사용자별 예산은 Copilot AI credits에만 지원되며, 기본으로 적용하는 보편 예산과 특정 사용자에게 우선하는 개별 예산이 있다. 즉 사용량이 많은 몇 사람을 따로 관찰하고 싶다면 팀 전체 예산을 더 잘게 쪼개는 대신, 어떤 예산이 우선하는지까지 이해해야 한다.</p><div class="digest-table-wrap" role="region" aria-label="Preview 앱 종료 뒤 먼저 정할 비용 관리 범위" tabindex="0"><table class="digest-data-table"><caption>Preview 앱 종료 뒤 먼저 정할 비용 관리 범위</caption><thead><tr><th scope="col">범위</th><th scope="col">먼저 답할 질문</th><th scope="col">적합한 상황</th></tr></thead><tbody><tr><td>사용자</td><td>특정 사용자의 AI credits를 따로 추적하거나 제한할 필요가 있는가</td><td>고사용량 역할을 따로 관리할 때</td></tr><tr><td>조직</td><td>같은 조직 라이선스의 추가 사용 비용을 한 경계에서 볼 것인가</td><td>팀별 월간 책임을 정할 때</td></tr><tr><td>비용 센터</td><td>사업·프로젝트별로 비용을 구분해야 하는가</td><td>엔터프라이즈의 부서별 비용 배분</td></tr><tr><td>엔터프라이즈</td><td>여러 조직의 총 지출을 어디서 통제할 것인가</td><td>중앙 FinOps 또는 플랫폼 팀</td></tr></tbody></table></div><p>이 표는 특정 범위가 항상 더 낫다는 뜻이 아니다. 팀이 한 조직 안에서 공용 기능을 시험한다면 조직 예산으로 시작하는 편이 단순할 수 있다. 반대로 여러 제품 팀의 사용량을 하나의 청구서에서 나눠 봐야 한다면 비용 센터가 필요하다. 중요한 것은 예산 이름을 많이 만드는 일이 아니라, 예산 경계를 넘었을 때 연락받을 사람과 다음 행동을 미리 정하는 일이다.</p></div>
+  </div>
+</section>
+</article>

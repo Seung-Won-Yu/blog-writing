@@ -1,0 +1,83 @@
+{
+  "title": "GitHub Copilot 비용을 줄이는 예산 설정 기준, 미리보기 앱 종료 뒤",
+  "title_candidates": [
+    "GitHub Copilot 비용을 줄이는 예산 설정 기준, 미리보기 앱 종료 뒤",
+    "GitHub, Copilot Billing Preview 앱 종료 후 Billing 설정으로 비용 관리 통합",
+    "사라진 Copilot Billing Preview 앱 대신, 팀이 사용자·조직·비용 센터별 예산 경계를 다시 세우는 장면…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-06",
+  "publish_date": "2026-08-06",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-06T09:00:00+09:00",
+  "tags": [
+    "GitHub Copilot",
+    "Copilot 비용 관리",
+    "AI credits",
+    "GitHub 예산 설정",
+    "사용량 기반 과금",
+    "개발팀 FinOps",
+    "GitHub Billing"
+  ],
+  "meta_description": "월말에 Copilot 청구서를 확인하는 팀이라면, 이제 ‘지난달에 얼마나 썼나’를 보는 화면 하나만으로는 부족하다. GitHub가 Copilot Billing Preview 앱을 종료하면서 사용량·예… GitHub는 Copilot Billing Preview 앱을 종료하고 AI usa…",
+  "key_summary": [
+    "1. GitHub, Copilot Billing Preview 앱 종료 후 Billing 설정으로 비용 관리 통합",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GitHub Copilot 비용을 줄이는 예산 설정 기준, 미리보기 앱 종료 뒤"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-06.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-06.html",
+  "before_ad_html": "docs/tistory/2026-08-06-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-06-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-06-adfit.html",
+  "source_sha256": "603669518bcaca64817c99503f9b2957d0b18193c473bb7bd77a0294adcc7733",
+  "html_sha256": "651a2f7d426560343c4ef14756ba2da52725869e5f51acc9a0491de7c8d05864",
+  "adfit_sha256": "e55cf2d49762ea6f0c0863f5b8064ecd37c927a2c17f66c13be1ce828c51d581",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-06/Copilot-비용경계-대표.webp",
+      "path": "docs/tistory/assets/2026-08-06/Copilot-비용경계-대표.webp",
+      "original_url": "",
+      "alt": "닫힌 청구서 미리보기 창 옆에서 세 개의 예산 봉투가 비용 차단 레버로 이어지는 Copilot 비용 관리 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-06/Copilot-예산범위-비교.webp",
+      "path": "docs/tistory/assets/2026-08-06/Copilot-예산범위-비교.webp",
+      "original_url": "",
+      "alt": "AI credits 사용량을 사용자 예산, 조직 예산, 비용 센터라는 세 가지 관리 범위에서 나란히 비교하는 그림",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-06/GitHub-Copilot-예산-문서.webp",
+      "path": "docs/tistory/assets/2026-08-06/GitHub-Copilot-예산-문서.webp",
+      "original_url": "",
+      "alt": "GitHub Docs의 Copilot 사용량 기반 예산 문서에서 AI credits 풀과 예산 제어를 설명하는 부분",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
