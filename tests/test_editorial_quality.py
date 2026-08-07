@@ -953,6 +953,25 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertIn("quality_natural_voice", reasons)
 
+    def test_august_posts_reject_headings_that_expose_editorial_intent(self):
+        fixtures = (
+            (valid_daily_source("2026-08-04"), "2026-08-04"),
+            (valid_guide_source("2026-08-05"), "2026-08-05-guide"),
+            (valid_automation_source("2026-08-08"), "2026-08-08-automation"),
+        )
+        headings = (
+            "독자에게 미치는 영향",
+            "개발자에게 미치는 영향과 대응",
+            "우리에게 미치는 영향",
+        )
+
+        for (source, draft_id), heading in zip(fixtures, headings):
+            source["news"][0]["content"][0]["text"] = heading
+            reasons = source_quality_reasons(
+                source, resolve_draft_identity(draft_id)
+            )
+            self.assertIn("quality_natural_voice", reasons)
+
     def test_august_posts_require_search_aligned_title_and_tags(self):
         source = valid_daily_source("2026-08-04")
         source["editorial"]["headline"] = "충격적인 소식을 지금 확인해야 하는 이유와 놀라운 결과"

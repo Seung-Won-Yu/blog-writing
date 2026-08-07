@@ -319,7 +319,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("도구명을 지워도", contract)
         self.assertIn("대중 공감도", contract)
         self.assertIn("이메일·문서·PDF·표·일정·파일", contract)
-        self.assertIn("결과를 제목 앞부분", contract)
+        self.assertIn("완성한 작업이나 해결한 문제를 제목 앞부분", contract)
         self.assertIn("`origin`", contract)
         self.assertIn("`imagegen`", contract)
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)

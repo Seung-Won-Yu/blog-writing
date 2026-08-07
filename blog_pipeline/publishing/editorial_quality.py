@@ -140,6 +140,14 @@ REPORT_ONLY_HEADINGS = {
     "시사점",
     "제언",
 }
+EXPLICIT_EDITORIAL_HEADINGS = {
+    "독자에게 미치는 영향",
+    "사용자에게 미치는 영향",
+    "개발자에게 미치는 영향",
+    "우리에게 미치는 영향",
+    "왜 중요한가",
+    "독자가 얻는 것",
+}
 CLICKBAIT_TITLE_PHRASES = {
     "충격",
     "소름",
@@ -1072,6 +1080,11 @@ def _prose_reasons(source, identity):
             any(phrase in searchable for phrase in FUTURE_AI_CLICHES)
             or any(phrase in searchable for phrase in INTERNAL_REVISIT_LABELS)
             or any(heading in REPORT_ONLY_HEADINGS for heading in headings)
+            or any(
+                phrase in heading
+                for heading in headings
+                for phrase in EXPLICIT_EDITORIAL_HEADINGS
+            )
             or any(opening.startswith(prefix) for prefix in ("오늘은", "이번 글은", "이 글은"))
             or len(paragraphs) < max(4, len(headings) - 1)
         )
