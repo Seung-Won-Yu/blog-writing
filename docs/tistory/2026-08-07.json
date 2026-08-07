@@ -1,0 +1,93 @@
+{
+  "title": "AEO란? AI 검색에 인용되는 글과 기존 SEO의 실제 차이",
+  "title_candidates": [
+    "AEO란? AI 검색에 인용되는 글과 기존 SEO의 실제 차이",
+    "Cloudflare, AI 답변 인용과 에이전트 준비도를 측정하는 AEO 도구 공개",
+    "수많은 문서 중 근거와 출처가 분명한 한 장이 AI 답변의 인용 문서로 선택되는 장면: 비슷한 글 사이에서 왜 이 문서…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-07",
+  "publish_date": "2026-08-07",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-07T09:00:00+09:00",
+  "tags": [
+    "AEO",
+    "AI 검색",
+    "SEO",
+    "Google AI Overviews",
+    "Bing Webmaster Tools",
+    "검색엔진최적화",
+    "콘텐츠 최적화"
+  ],
+  "meta_description": "검색 결과 1페이지에 올라가는 일과 AI 답변 안에서 출처로 선택되는 일은 얼핏 같은 목표처럼 보인다. 그런데 방문 경로는 다르다. 전자는 제목을 보고 클릭하게 만들고, 후자는 답변을 뒷받침할 근거로… Cloudflare는 AI 에이전트가 사이트를 읽고 행동할 수 있는 준비도와 주요…",
+  "key_summary": [
+    "1. Cloudflare, AI 답변 인용과 에이전트 준비도를 측정하는 AEO 도구 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AEO란? AI 검색에 인용되는 글과 기존 SEO의 실제 차이"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-07.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-07.html",
+  "before_ad_html": "docs/tistory/2026-08-07-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-07-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-07-adfit.html",
+  "source_sha256": "d750a0041fb9eb376fc5a1294220e3ed350d0a3c8eacc4fb3f4bc5ad14762e4b",
+  "html_sha256": "21e2974f4474378e354ff5a6eb2523e08b5668af0ca2f66f14d642b5c323abe1",
+  "adfit_sha256": "07556807846560145efa30e03bffe61305242607f1bf27bfce6fe2ff9f829a10",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-07/AI검색-인용문서-대표.webp",
+      "path": "docs/tistory/assets/2026-08-07/AI검색-인용문서-대표.webp",
+      "original_url": "",
+      "alt": "수많은 자료 더미 가운데 출처 탭과 인용 클립이 달린 한 문서가 말풍선 프레임 안에서 선택된 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-07/SEO-AEO-노출방식-비교.webp",
+      "path": "docs/tistory/assets/2026-08-07/SEO-AEO-노출방식-비교.webp",
+      "original_url": "",
+      "alt": "SEO의 검색 결과 클릭과 AEO의 AI 답변 출처 인용이 크롤링, 색인, 유용한 원문을 공통 기반으로 두는 비교 그림",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-07/AI인용-페이지구조.webp",
+      "path": "docs/tistory/assets/2026-08-07/AI인용-페이지구조.webp",
+      "original_url": "",
+      "alt": "한 질문에 바로 답하기, 근거와 예시, 출처와 확인 날짜, 관련 글 연결로 구성된 AI 인용 페이지 구조",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-07/Google-AI검색-SEO-공식문서.webp",
+      "path": "docs/tistory/assets/2026-08-07/Google-AI검색-SEO-공식문서.webp",
+      "original_url": "",
+      "alt": "Google Search Central의 AI 기능 SEO 권장사항과 별도 AI 파일이나 마크업이 필요 없다는 문단을 주황색 테두리로 강조한 화면",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
