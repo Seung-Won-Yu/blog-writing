@@ -1,0 +1,535 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-08-automation",
+  "publish_date": "2026-08-08",
+  "date_label": "2026. 8. 8",
+  "weekday": "토",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "category": "자동화·실험",
+  "scheduled_at": "2026-08-08T18:00:00+09:00",
+  "publication_mode": "scheduled",
+  "primary_query": "im-not-ai 사용법 AI 글투 진단 변경률",
+  "tags": [
+    "im-not-ai",
+    "AI 글쓰기",
+    "한국어 윤문",
+    "AI 글투 진단",
+    "변경률 검사",
+    "Codex 스킬",
+    "오픈소스 실험"
+  ],
+  "editorial": {
+    "headline": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+    "opening": "문장을 자연스럽게 고쳤는데 사실·논지·말투까지 달라졌다면 윤문에 성공했다고 보기 어렵다. GitHub의 im-not-ai는 한국어에서 반복되는 번역투와 기계적 전환 표현을 찾고, 글의 상태에 따라 수정 강도를 나누는 공개 프로젝트다. 이번 실험에서는 전역 설치나 AI 윤문 호출을 하지 않고 v2.3.0의 결정적 Python 스크립트만 격리 실행했다. 반복 표현을 넣은 합성 문장은 standard, 경험을 구체적으로 적은 합성 문장은 light로 갈렸다. 원문과 크게 다른 문장을 넣자 변경률 73.1%에서 실제로 중단됐고, 의미를 유지한 작은 수정은 22.5%로 통과했다.",
+    "closing": "im-not-ai의 흥미로운 지점은 문장을 무조건 사람처럼 보이게 만드는 데 있지 않았다. 손댈 양을 먼저 나누고, 고친 뒤에는 원문과 얼마나 멀어졌는지 다시 계산하는 데 있었다. 이번에 확인한 것은 이 두 결정적 스크립트의 동작뿐이며 최종 윤문 품질이나 AI 작성 여부 판별 능력은 검증하지 않았다.",
+    "action": "직접 적용한다면 공개되지 않은 문서보다 짧은 테스트 문단부터 복사본으로 실행하고, 변경률과 수치·출처 보존 여부를 함께 확인한 뒤 범위를 넓히는 편이 안전하다.",
+    "audience_problem": "AI 초안을 다듬을 때 상투적인 문장은 줄이고 싶지만, 원래 주장과 사실까지 바뀔까 걱정하는 사람을 위한 공개 도구 실험이다.",
+    "reader_takeaway": "im-not-ai의 라우팅과 변경률 게이트를 설치 없이 작은 샘플에 실행하고, 결과를 글쓴이 판별이 아닌 수정 범위 통제로 읽는 방법을 재현할 수 있다.",
+    "why_now": "생성형 AI 초안을 업무 문서와 블로그에 쓰는 일이 늘면서 자연스러운 문체보다 사실·논지·출처를 보존하는 윤문 기준이 더 중요해졌고, 프로젝트 v2.3.0은 결정적 게이트와 검증 근거를 보강했다.",
+    "topic_key": "im-not-ai-korean-writing-route-change-rate",
+    "reader_question": "AI 글투를 줄이면서 원래 의미를 지켰는지 im-not-ai로 어떻게 확인할까?",
+    "entities": [
+      "im-not-ai",
+      "Humanize KR",
+      "Python",
+      "Codex Skills"
+    ],
+    "coverage": [
+      "problem",
+      "setup",
+      "implementation",
+      "evidence",
+      "comparison",
+      "failure",
+      "rollback"
+    ],
+    "article_shape": "hands_on_test",
+    "revisit": {
+      "quick_answer": "문장 신호로 수정 강도를 먼저 고르고, 변경률이 50%를 넘으면 윤문본을 채택하지 않는다.",
+      "reuse_case": "AI 초안·번역 초안·보고서 문체를 다듬기 전에 원문 보존 기준을 정할 때 같은 테스트 입력과 명령을 다시 쓴다.",
+      "failure_case": "수치·고유명사·출처가 달라지거나 변경률이 50% 이상이면 결과를 버리고 원문 복사본에서 수정 범위를 줄인다.",
+      "artifact_type": "experiment_fixture",
+      "update_triggers": [
+        "im-not-ai 라우팅 임계 변경",
+        "변경률 경고와 중단 기준 변경",
+        "Codex 스킬 설치 방식 변경"
+      ]
+    }
+  },
+  "visual": {
+    "subject": "한국어 AI 초안을 고치기 전에 수정 강도와 변경률을 실제 스크립트로 확인하는 실험",
+    "hook": "자연스럽게 고친 문장이 원래 뜻에서 멀어지는 순간을 어디서 멈출까?",
+    "motif": "교정 원고, 돋보기, 변경률 안전 게이트",
+    "cover": {
+      "label": "과한 윤문을 멈추는 순간",
+      "scene_label": [
+        "교정 원고",
+        "의미 보존",
+        "수정 중단"
+      ],
+      "steps": "반복 표현이 표시된 원고를 돋보기로 살피고, 원래 의미가 남은 원고 앞에서 과도한 수정 경고가 멈추는 장면이다.",
+      "curiosity_hook": "문장이 매끄러워져도 원래 글이 아니게 되는 경계는 어디일까?",
+      "logic_type": "scene",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "sunlit-editorial-photography",
+      "composition_type": "overhead-proofreading-scene",
+      "palette_family": "cream-teal-vermilion",
+      "render_family": "photorealistic_natural"
+    },
+    "assets": [
+      {
+        "label": "두 문장 유형의 실제 라우팅 결과",
+        "scene_label": [
+          "STANDARD",
+          "LIGHT",
+          "위험도와 점수"
+        ],
+        "steps": "같은 스크립트에 반복 표현 합성 문장과 경험 중심 합성 문장을 넣어 서로 다른 route_hint가 나온 실제 결과를 비교한다.",
+        "curiosity_hook": "딱딱한 문장과 이미 자연스러운 문장은 같은 강도로 고쳐질까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-08-08 KST에 im-not-ai v2.3.0 prepare_monolith_input.py를 개인정보 없는 합성 문장 두 개에 실행하고 결과를 로컬 HTML로 표시해 Playwright로 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "http://127.0.0.1:8766/tmp/saturday-im-not-ai/route-report.html",
+        "captured_at": "2026-08-08T18:16:37+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "22.5% 통과와 73.1% 중단",
+        "scene_label": [
+          "22.5% OK",
+          "30% 경고",
+          "50% 중단",
+          "73.1% ABORT"
+        ],
+        "steps": "원문을 조금 줄인 수정과 주제까지 바꾼 수정의 변경률을 verify_change_rate.py로 계산한 실제 결과다.",
+        "curiosity_hook": "매끄러운 문장이라도 어느 정도 달라지면 버려야 할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "capture",
+        "capture_note": "2026-08-08 KST에 verify_change_rate.py가 출력한 22.5% OK와 73.1% ABORT 값을 로컬 HTML에 그대로 옮겨 Playwright로 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "http://127.0.0.1:8766/tmp/saturday-im-not-ai/change-report.html",
+        "captured_at": "2026-08-08T18:16:38+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "수정 강도 세 경로와 변경률 게이트",
+        "scene_label": [
+          "가벼운 수정",
+          "표준 수정",
+          "정밀 수정",
+          "50% 중단"
+        ],
+        "steps": "원고를 먼저 진단해 세 가지 수정 강도 중 하나로 보내고, 고친 문장이 원문에서 너무 멀어지면 마지막 게이트에서 멈추는 구조를 설명한다.",
+        "curiosity_hook": "모든 글을 무겁게 고치지 않고도 의미를 지킬 수 있을까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational infographic. Asset type: Korean technology blog explanation image. Primary request: show one Korean manuscript being diagnosed, routed through three different editing intensities represented by a pencil, a pencil with checklist, and multiple pages with tabs, then reunited as one meaning-preserved manuscript. Add a warm-to-red change-width safety bar that stops at 50 percent. No computers, robots, generic AI imagery, fake terminal, dashboard, logos or watermark. Bright paper texture, navy, teal and orange accents, exact visual relationships, mobile-readable composition.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "가벼운 수정",
+          "표준 수정",
+          "정밀 수정",
+          "50% 중단"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "news": [
+    {
+      "title_kr": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+      "blurb_kr": "im-not-ai v2.3.0의 라우팅과 변경률 검사 스크립트를 합성 한국어 문장에 실행해 수정 강도와 강제 중단 기준을 확인했다.",
+      "published_at": "2026-08-08T18:25:00+09:00",
+      "source": "epoko77-ai/im-not-ai v2.3.0",
+      "url": "https://github.com/epoko77-ai/im-not-ai",
+      "references": [
+        {
+          "title": "im-not-ai README",
+          "url": "https://github.com/epoko77-ai/im-not-ai",
+          "kind": "official"
+        },
+        {
+          "title": "im-not-ai v2.3.0 release",
+          "url": "https://github.com/epoko77-ai/im-not-ai/releases/tag/v2.3.0",
+          "kind": "official"
+        },
+        {
+          "title": "prepare_monolith_input.py",
+          "url": "https://github.com/epoko77-ai/im-not-ai/blob/v2.3.0/scripts/prepare_monolith_input.py",
+          "kind": "source"
+        },
+        {
+          "title": "verify_change_rate.py",
+          "url": "https://github.com/epoko77-ai/im-not-ai/blob/v2.3.0/scripts/verify_change_rate.py",
+          "kind": "source"
+        },
+        {
+          "title": "AI 에이전트와 함께 쓰는 기획·디자인 도구 6가지",
+          "url": "https://yozm.wishket.com/magazine/detail/3885/",
+          "kind": "reference"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "문장이 매끄러운데 내 글은 아닌 순간"
+        },
+        {
+          "t": "p",
+          "text": "AI 초안을 다듬을 때 가장 눈에 띄는 문제는 안전한 결론 전환어, 양면을 맞추는 문장, 과장된 평가 표현이 반복되는 것이다. 이런 말을 지우는 일은 어렵지 않다. 더 어려운 문제는 문장이 자연스러워지는 동안 원래 주장과 사실도 조금씩 바뀌는 것이다. 블로그 글이라면 글쓴이의 경험이 사라지고, 업무 문서라면 숫자와 책임 범위가 흐려질 수 있다. 자연스러움만 점수로 삼으면 많이 고친 결과가 더 좋아 보이는 함정이 생긴다."
+        },
+        {
+          "t": "p",
+          "text": "im-not-ai는 한국어 번역투, 기계적인 병렬, 피동 표현, 과도한 불릿과 접속사 등을 분류한 오픈소스 프로젝트다. README는 의미·사실·수치·고유명사를 유지하고 탐지된 구간만 고치며, 변경률이 30%를 넘으면 경고하고 50% 이상이면 중단하는 원칙을 내세운다. 이름만 보면 AI 판별기처럼 느껴질 수 있지만 이번에 실행한 코드는 글쓴이가 사람인지 AI인지 판정하지 않았다. 문장 신호를 세어 수정 경로를 추천하고, 수정 전후가 얼마나 달라졌는지를 계산했다."
+        },
+        {
+          "t": "h",
+          "text": "설치하지 않고 결정적 스크립트만 꺼냈다"
+        },
+        {
+          "t": "p",
+          "text": "검증 대상은 2026년 7월 22일 공개된 v2.3.0 태그와 커밋 82137e858763dadb99561f194c5c00465735017b다. 저장소는 별도 임시 폴더에 얕게 복제했고 install.sh는 실행하지 않았다. 전역 스킬 경로, 개인 문서, API 키도 건드리지 않았다. Python 3.9.6에서 prepare_monolith_input.py와 verify_change_rate.py 두 파일만 실행했다. 첫 번째는 원문 메트릭과 route_hint를 만들고, 두 번째는 원문과 수정본의 변경률을 계산해 종료 코드 0·1·2로 통과·경고·중단을 구분한다."
+        },
+        {
+          "t": "code",
+          "language": "bash",
+          "text": "git clone --depth 1 --branch v2.3.0 https://github.com/epoko77-ai/im-not-ai.git /tmp/im-not-ai\ncd /tmp/im-not-ai\npython3 scripts/prepare_monolith_input.py --run-dir /tmp/sample --genre blog\npython3 scripts/verify_change_rate.py --before /tmp/before.txt --after /tmp/after.txt",
+          "reusable": true,
+          "reuse_label": "im-not-ai 결정적 스크립트 최소 재현 명령"
+        },
+        {
+          "t": "p",
+          "text": "이 명령만으로 최종 윤문본이 만들어지는 것은 아니다. prepare_monolith_input.py는 정량 점수와 권고 경로를 원문 앞에 붙이는 전처리 단계다. 실제 문장 수정은 연결된 AI 스킬이 맡는다. 따라서 이번 실험은 ‘이 도구가 글을 얼마나 잘 고치는가’가 아니라 ‘수정 전에 강도를 나누고, 수정 뒤에 과도한 변화를 막는 코드가 설명대로 움직이는가’를 확인한 범위다."
+        },
+        {
+          "t": "h",
+          "text": "같은 한국어라도 손댈 양은 달랐다"
+        },
+        {
+          "t": "p",
+          "text": "첫 입력에는 결론 전환, 반대 관점, 안전한 종합 문구를 여러 번 반복하고 이중 피동 표현도 섞었다. 두 번째 입력은 회의 요약에서 납기일 하나를 놓칠 뻔한 장면과 그 뒤의 확인 습관을 구체적으로 적었다. 둘 다 실제 사람이나 업무 정보가 없는 합성 문장이다. 기대한 결과는 첫 입력이 두 번째보다 무거운 수정 경로를 받는 것이었다."
+        },
+        {
+          "t": "table",
+          "caption": "prepare_monolith_input.py 실제 실행 결과",
+          "headers": [
+            "입력",
+            "위험도·점수",
+            "route_hint",
+            "권고"
+          ],
+          "rows": [
+            [
+              "반복 표현 합성 문장",
+              "medium · 5",
+              "standard",
+              "진단 + 단일 윤문"
+            ],
+            [
+              "경험 중심 합성 문장",
+              "low · 2",
+              "light",
+              "최소 수정"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "im-not-ai v2.3.0 전처리 스크립트의 실제 결과. 반복 표현을 넣은 문장은 standard, 사건과 확인 행동을 적은 문장은 light로 나뉘었다. 이 값은 글쓴이 판별 결과가 아니라 수정 강도 권고다."
+        },
+        {
+          "t": "p",
+          "text": "실제 출력은 예상과 같았다. 다만 standard가 ‘나쁜 글’, light가 ‘사람이 쓴 글’을 뜻하지는 않는다. 저장소 코드도 route_hint를 권고로 다루며 사용자가 무시할 수 있게 한다. 특히 짧은 글에서는 문장 몇 개가 전체 점수에 크게 영향을 줄 수 있다. 이 결과는 두 개의 작은 합성 표본에서 경로 분기가 작동했다는 증거이지, 한국어 글 전체의 품질을 평가한 벤치마크가 아니다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "안전한 수정이라고 썼는데 66.7%에서 막혔다"
+        },
+        {
+          "t": "p",
+          "text": "변경률 실험에서는 일부러 한 번 실패했다. ‘생성형 AI는 업무 효율성을 향상시키는 혁신적인 도구입니다’라는 원문을 더 구체적인 문장으로 바꾸었지만, 문장 대부분을 새로 쓴 탓에 첫 결과는 66.7%였다. 내용이 비슷하다고 생각했어도 스크립트는 50% 중단선을 넘었다고 판정했다. 그래서 사실을 추가하지 않고 ‘향상시키는’을 ‘높이는’으로, ‘문제가 존재할 수 있다’를 ‘문제는 남을 수 있다’로만 줄여 다시 실행했다."
+        },
+        {
+          "t": "table",
+          "caption": "verify_change_rate.py 실제 변경률 판정",
+          "headers": [
+            "수정본",
+            "변경률",
+            "종료 판정",
+            "처리"
+          ],
+          "rows": [
+            [
+              "표현만 줄인 수정",
+              "22.5%",
+              "OK",
+              "채택 가능"
+            ],
+            [
+              "주제까지 바꾼 수정",
+              "73.1%",
+              "ABORT",
+              "채택 금지"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "결정적 변경률 검사 결과. 22.5%는 통과했고 73.1%는 강제 중단됐다. 30% 경고와 50% 중단은 im-not-ai v2.3.0 코드에 정의된 기준이다."
+        },
+        {
+          "t": "p",
+          "text": "변경률이 낮다고 사실 보존이 자동으로 증명되는 것도 아니다. 숫자 하나나 부정어 하나만 바뀌어도 문자 변화량은 작을 수 있다. 반대로 마크다운 제목과 불릿을 문장으로 바꾸면 뜻은 같아도 변경률이 커질 수 있다. 이 수치는 사람 검토를 없애는 점수가 아니라 검토할 이유를 빠르게 알려 주는 브레이크에 가깝다. 수치·날짜·고유명사·직접 인용은 변경률과 별개로 원문과 대조해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "무거운 경로가 항상 더 좋은 것은 아니다"
+        },
+        {
+          "t": "p",
+          "text": "프로젝트는 light, standard, heavy 세 경로를 둔다. light는 이미 자연스러운 글에 최소 수정을 권하고, standard는 진단 뒤 지배적인 패턴을 겨냥한다. heavy는 반복 신호가 많거나 1만5천 자를 넘는 초장문처럼 더 많은 검증이 필요한 경우에 쓴다. 모든 글을 heavy로 보내면 규칙과 원문을 여러 번 읽는 비용이 커지고, 손대지 않아도 될 문장까지 바뀔 가능성도 높아진다. 잘 쓴 부분을 보존하는 것이 기능의 일부라는 설계다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "실제 실행 화면이 아니라 구조를 설명하는 기사 전용 도식. 원고를 먼저 진단해 수정 강도를 나누고, 마지막 변경률 게이트에서 과도한 수정을 멈춘다."
+        },
+        {
+          "t": "p",
+          "text": "Codex에서는 저장소가 제공하는 단일 호출 스킬을 쓸 수 있고, README가 설명하는 다중 진단·finalize 경로는 Claude Code 쪽 구성이다. 설치 방식과 지원 범위는 바뀔 수 있으므로 실제 적용 전에는 현재 README와 릴리스 노트를 다시 확인해야 한다. 특히 install.sh는 전역 스킬 디렉터리에 심링크를 만들 수 있다. 기존에 같은 이름의 스킬이 있거나 자동 업데이트를 붙일 계획이라면 --dry-run과 설치 대상부터 확인하는 편이 안전하다. 이번 실험에서 전역 설치를 생략한 이유도 도구의 판단 코드와 설치 부작용을 분리하기 위해서였다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "공개 저장소의 태그나 커밋을 고정하고 README·설치 스크립트·권한 요구를 먼저 읽는다.",
+            "개인정보와 미공개 문서가 없는 짧은 복사본으로 라우팅과 변경률부터 확인한다.",
+            "수치·날짜·고유명사·출처·부정 표현은 변경률과 별개로 원문과 직접 대조한다.",
+            "30% 이상이면 바뀐 구간을 설명할 수 있는지 확인하고, 50% 이상이면 결과를 버린다.",
+            "AI 판별 회피나 출처 은폐에 쓰지 않고, 원래 작성자의 책임과 인용을 그대로 남긴다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "적용 범위가 어긋나면 원문으로 돌아간다"
+        },
+        {
+          "t": "p",
+          "text": "이번 실험은 macOS 26.5.2, Python 3.9.6, im-not-ai v2.3.0의 결정적 스크립트와 Headless Chrome 151에서 수행했다. AI 모델을 호출하지 않았고 최종 윤문본의 자연스러움, 표절 여부, 저자 판별 정확도, 긴 문서의 처리 비용은 측정하지 않았다. 화면의 두 표본과 두 수정본도 설명을 위한 최소 합성 데이터다. 다른 장르와 길이에서는 route_hint와 변경률이 달라질 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "결과가 이상하면 생성한 metrics 파일과 수정본을 삭제하고 원문 복사본에서 다시 시작한다. 전역 설치를 했다면 저장소의 uninstall 안내를 확인하되, 다른 스킬 폴더를 함께 지우지 않는다. 원문 의미가 흔들렸다면 프롬프트를 더 세게 쓰기보다 수정 대상을 ‘문두 접속사만’처럼 좁히는 편이 복구가 쉽다. 저장소가 업데이트되어 라우팅 임계나 30%·50% 기준이 바뀌면 같은 네 파일로 다시 실행하면 이전 결과와 바로 비교할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "윤문 도구의 결과를 채택할 책임은 여전히 글을 공개하는 사람에게 있다. 자연스러운 문체는 출처와 경험을 대신하지 않는다. 블로그라면 실제로 확인한 화면과 실패를 남기고, 업무 문서라면 승인자와 원본을 함께 보관해야 한다. 도구는 반복 표현을 찾는 데 도움을 줄 수 있지만 무엇을 말할지는 대신 정해 주지 않는다."
+        },
+        {
+          "t": "quote",
+          "text": "AI 티를 줄이는 가장 안전한 방법은 많이 고치는 일이 아니라, 왜 고쳤는지 설명할 수 있는 범위만 바꾸는 일이다."
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "title": "im-not-ai README",
+      "url": "https://github.com/epoko77-ai/im-not-ai"
+    },
+    {
+      "title": "im-not-ai v2.3.0 release",
+      "url": "https://github.com/epoko77-ai/im-not-ai/releases/tag/v2.3.0"
+    },
+    {
+      "title": "prepare_monolith_input.py",
+      "url": "https://github.com/epoko77-ai/im-not-ai/blob/v2.3.0/scripts/prepare_monolith_input.py"
+    },
+    {
+      "title": "verify_change_rate.py",
+      "url": "https://github.com/epoko77-ai/im-not-ai/blob/v2.3.0/scripts/verify_change_rate.py"
+    },
+    {
+      "title": "AI 에이전트와 함께 쓰는 기획·디자인 도구 6가지",
+      "url": "https://yozm.wishket.com/magazine/detail/3885/"
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트가 자꾸 엇나갈 때: 코딩 전 남길 3가지 문서",
+      "url": "https://won0322.tistory.com/195",
+      "reason": "AI 도구가 추측할 빈칸을 줄이고 완료 기준을 먼저 고정하는 방법으로 이어진다."
+    },
+    {
+      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+      "url": "https://won0322.tistory.com/190",
+      "reason": "외부 문서와 AI 변경 결과를 사람 승인과 원문 대조로 통제하는 기준을 함께 설명한다."
+    }
+  ],
+  "verification": {
+    "mode": "executed",
+    "started_at": "2026-08-08T18:05:00+09:00",
+    "completed_at": "2026-08-08T18:16:38+09:00",
+    "command_exit_code": 0,
+    "stdout_excerpt": "AI투 합성문: risk_band=medium, risk_score=5, route_hint=standard. 자연문 합성문: risk_band=low, risk_score=2, route_hint=light. 변경률 22.5%=OK(exit 0), 변경률 73.1%=ABORT(exit 2).",
+    "environment": {
+      "os": "macOS 26.5.2",
+      "runtime": "Python 3.9.6",
+      "tool_version": "im-not-ai v2.3.0; Headless Chrome 151.0.0.0 via Playwright CLI",
+      "source_revision": "epoko77-ai/im-not-ai tag v2.3.0; commit 82137e858763dadb99561f194c5c00465735017b"
+    },
+    "commands": [
+      "git clone --depth 1 --branch v2.3.0 https://github.com/epoko77-ai/im-not-ai.git /private/tmp/im-not-ai-20260808",
+      "python3 scripts/prepare_monolith_input.py --run-dir <test>/ai-like --genre blog",
+      "python3 scripts/prepare_monolith_input.py --run-dir <test>/natural --genre blog",
+      "python3 scripts/verify_change_rate.py --before <test>/before.txt --after <test>/safe-edit.txt",
+      "python3 scripts/verify_change_rate.py --before <test>/before.txt --after <test>/over-edit.txt"
+    ],
+    "input_fixture": "개인정보 없는 짧은 한국어 합성 문장 두 개와 같은 원문에서 표현만 줄인 수정본, 주제까지 바꾼 수정본을 별도 임시 폴더에 만들었다.",
+    "expected": "반복 전환 표현과 피동이 섞인 입력은 경험 중심 입력보다 무거운 경로를 받고, 50% 이상 바뀐 수정본은 종료 코드 2로 중단돼야 한다.",
+    "actual": "첫 입력은 standard, 둘째 입력은 light였다. 표현만 줄인 수정은 22.5%로 통과했고 주제를 바꾼 수정은 73.1%로 강제 중단됐다.",
+    "failure": "처음 안전 수정본이라고 만든 문장도 원문을 너무 많이 다시 써 변경률 66.7%로 중단됐다. 사실을 추가하지 않고 바꿀 표현을 두 군데로 줄인 뒤 22.5% 통과를 확인했다.",
+    "rollback": "임시 복제 폴더와 합성 입력·metrics 파일을 삭제하면 실험 변경이 사라진다. 전역 설치를 하지 않아 사용자 스킬 폴더와 개인 문서에는 되돌릴 변경이 없다.",
+    "evidence_files": [
+      "visual_1",
+      "visual_2"
+    ],
+    "measurement_files": [],
+    "problem_lane": "AI 글쓰기·문서",
+    "tool_brand": "im-not-ai"
+  },
+  "images": {
+    "cover": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/AI문장-윤문-안전실험-대표.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/AI문장-윤문-안전실험-대표.webp",
+      "alt": "반복 표현이 표시된 원고를 돋보기로 살피고 과도한 수정을 멈추는 윤문 안전 실험 장면",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Korean technology blog cover about diagnosing an AI-assisted Korean draft before editing and stopping excessive rewriting. Overhead sunlit proofreading desk with one marked manuscript, a teal magnifying glass held by one accurate human hand, one meaning-preserved manuscript, and a small orange safety warning that stops before over-editing. No faces, computers, robots, dashboards, flowchart panels, logos, watermark, fake UI or readable filler text. Cream paper, teal and vermilion accents, high-end magazine photography and illustration blend.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "art_direction": "sunlit-editorial-photography",
+      "composition_type": "overhead-proofreading-scene",
+      "palette_family": "cream-teal-vermilion",
+      "render_family": "photorealistic_natural",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 54938,
+      "quality": 82,
+      "sha256": "c7618959e8a4cfc653be6492c04ad9289266b11982d573b16664cfbb0482cac9"
+    },
+    "visual_1": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/im-not-ai-라우팅-실행결과.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/im-not-ai-라우팅-실행결과.webp",
+      "alt": "반복 표현 합성 문장은 standard, 경험 중심 합성 문장은 light로 나온 실제 라우팅 결과",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "http://127.0.0.1:8766/tmp/saturday-im-not-ai/route-report.html",
+      "captured_at": "2026-08-08T18:16:37+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 36474,
+      "quality": 82,
+      "sha256": "72a135440e08d4cf6192171287b95a87916e08f2ea4089a60969242c0186e066",
+      "capture_sha256": "72a135440e08d4cf6192171287b95a87916e08f2ea4089a60969242c0186e066"
+    },
+    "visual_2": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/im-not-ai-변경률-실행결과.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/im-not-ai-변경률-실행결과.webp",
+      "alt": "표현만 줄인 수정은 22.5%로 통과하고 주제를 바꾼 수정은 73.1%로 중단된 실제 변경률 결과",
+      "origin": "capture",
+      "capture_tool": "playwright",
+      "capture_target": "http://127.0.0.1:8766/tmp/saturday-im-not-ai/change-report.html",
+      "captured_at": "2026-08-08T18:16:38+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 30240,
+      "quality": 82,
+      "sha256": "f002ef1a899e59b9afd140fe4a3968ea60e7e532baa413dc1233815d80143275",
+      "capture_sha256": "f002ef1a899e59b9afd140fe4a3968ea60e7e532baa413dc1233815d80143275"
+    },
+    "visual_3": {
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/문장-진단-라우팅-변경률-도식.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/문장-진단-라우팅-변경률-도식.webp",
+      "alt": "한 원고를 세 가지 수정 강도로 나눈 뒤 변경률 50%에서 중단하는 im-not-ai 구조 도식",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: scientific-educational infographic. Asset type: Korean technology blog explanation image. Primary request: show one Korean manuscript being diagnosed, routed through three different editing intensities represented by a pencil, a pencil with checklist, and multiple pages with tabs, then reunited as one meaning-preserved manuscript. Add a warm-to-red change-width safety bar that stops at 50 percent. No computers, robots, generic AI imagery, fake terminal, dashboard, logos or watermark. Bright paper texture, navy, teal and orange accents, exact visual relationships, mobile-readable composition.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 42576,
+      "quality": 82,
+      "sha256": "95cfa9c170c4ff6e68d9b221dcc2df1aa80d30dd7008c9fe08f8e11a54f8a603"
+    }
+  }
+}

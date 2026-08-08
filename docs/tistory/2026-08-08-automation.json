@@ -1,0 +1,92 @@
+{
+  "title": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+  "title_candidates": [
+    "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+    "한국어 AI 초안을 고치기 전에 수정 강도와 변경률을 실제 스크립트로 확인하는 실험: 자연스럽게 고친 문장이 원래 뜻에서…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-08-08-automation",
+  "publish_date": "2026-08-08",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-08T18:00:00+09:00",
+  "tags": [
+    "im-not-ai",
+    "AI 글쓰기",
+    "한국어 윤문",
+    "AI 글투 진단",
+    "변경률 검사",
+    "Codex 스킬",
+    "오픈소스 실험"
+  ],
+  "meta_description": "문장을 자연스럽게 고쳤는데 사실·논지·말투까지 달라졌다면 윤문에 성공했다고 보기 어렵다. GitHub의 im-not-ai는 한국어에서 반복되는 번역투와 기계적 전환 표현을 찾고, 글의 상태에 따라 수… im-not-ai v2.3.0의 라우팅과 변경률 검사 스크립트를 합성 한국어 문장에…",
+  "key_summary": [
+    "1. im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-08-08.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-08-automation.html",
+  "before_ad_html": "docs/tistory/2026-08-08-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-08-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-08-automation-adfit.html",
+  "source_sha256": "255010864ec82f6f72c8af51aa895b2949c6f1c125c62302e81d76eac7417f81",
+  "html_sha256": "69468aeebb7f1ea962c70b50d1fc9b908c2593dd9bf25460c3788418b8265fab",
+  "adfit_sha256": "42f8d685769af38aad1c8d0cc954306c793ff6a1a98f091eaba7c5e5604c26aa",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/AI문장-윤문-안전실험-대표.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/AI문장-윤문-안전실험-대표.webp",
+      "original_url": "",
+      "alt": "반복 표현이 표시된 원고를 돋보기로 살피고 과도한 수정을 멈추는 윤문 안전 실험 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/im-not-ai-라우팅-실행결과.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/im-not-ai-라우팅-실행결과.webp",
+      "original_url": "",
+      "alt": "반복 표현 합성 문장은 standard, 경험 중심 합성 문장은 light로 나온 실제 라우팅 결과",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/im-not-ai-변경률-실행결과.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/im-not-ai-변경률-실행결과.webp",
+      "original_url": "",
+      "alt": "표현만 줄인 수정은 22.5%로 통과하고 주제를 바꾼 수정은 73.1%로 중단된 실제 변경률 결과",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08-automation/문장-진단-라우팅-변경률-도식.webp",
+      "path": "docs/tistory/assets/2026-08-08-automation/문장-진단-라우팅-변경률-도식.webp",
+      "original_url": "",
+      "alt": "한 원고를 세 가지 수정 강도로 나눈 뒤 변경률 50%에서 중단하는 im-not-ai 구조 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
