@@ -9,7 +9,7 @@
 1. 최신 `main`을 받고 당일 뉴스글이 먼저 완성됐는지 확인합니다.
 
    ```bash
-   git pull --ff-only origin main
+   python3 -m blog_pipeline.publishing.sync_main --remote origin --branch main
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.saturday_guard --today
    ```

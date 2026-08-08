@@ -7,7 +7,7 @@
 1. 최신 상태를 받고 당일 가드를 먼저 실행합니다.
 
    ```bash
-   git pull --ff-only origin main
+   python3 -m blog_pipeline.publishing.sync_main --remote origin --branch main
    python3 -m blog_pipeline.publishing.daily_guard --today
    ```
 
