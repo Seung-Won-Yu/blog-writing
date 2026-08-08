@@ -815,6 +815,40 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertIn("quality_visual_provenance", reasons)
 
+    def test_daily_capture_allows_same_day_late_recovery(self):
+        source = valid_daily_source("2026-07-24")
+        source["visual"]["assets"][0] = visual_asset(
+            "annotated_capture", "screenshot", "늦게 복구한 공식 화면"
+        )
+        source["images"]["visual_1"] = image_asset("annotated_capture")
+        source["generation"]["image_provider"] = "mixed"
+        capture_time = "2026-07-24T21:30:00+09:00"
+        source["visual"]["assets"][0]["captured_at"] = capture_time
+        source["images"]["visual_1"]["captured_at"] = capture_time
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-24")
+        )
+
+        self.assertNotIn("quality_visual_provenance", reasons)
+
+    def test_daily_capture_rejects_next_day_recovery(self):
+        source = valid_daily_source("2026-07-24")
+        source["visual"]["assets"][0] = visual_asset(
+            "annotated_capture", "screenshot", "다음 날 복구한 공식 화면"
+        )
+        source["images"]["visual_1"] = image_asset("annotated_capture")
+        source["generation"]["image_provider"] = "mixed"
+        capture_time = "2026-07-25T00:01:00+09:00"
+        source["visual"]["assets"][0]["captured_at"] = capture_time
+        source["images"]["visual_1"]["captured_at"] = capture_time
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-07-24")
+        )
+
+        self.assertIn("quality_visual_provenance", reasons)
+
     def test_saturday_execution_requires_timestamps_exit_code_and_output(self):
         source = valid_automation_source()
         source["verification"].pop("command_exit_code")

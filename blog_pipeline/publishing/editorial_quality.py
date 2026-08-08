@@ -1192,12 +1192,17 @@ def _visual_reasons(source, identity):
                 plain(brief.get(key)) == plain(image.get(key))
                 for key in ("capture_tool", "capture_target", "captured_at")
             )
+            capture_deadline = (
+                scheduled.replace(hour=23, minute=59, second=59, microsecond=999999)
+                if scheduled
+                else None
+            )
             valid_time = bool(
                 scheduled
                 and captured
                 and scheduled - timedelta(days=14)
                 <= captured
-                <= scheduled + timedelta(hours=6)
+                <= capture_deadline
             )
             image_digest = plain(image.get("sha256")).casefold()
             capture_digest = plain(image.get("capture_sha256")).casefold()

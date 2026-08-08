@@ -1,0 +1,513 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-08",
+  "publish_date": "2026-08-08",
+  "date_label": "2026. 8. 8",
+  "weekday": "토",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "최신 IT·개발 소식",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-08T09:00:00+09:00",
+  "primary_query": "청소년 AI 챗봇 안전 기준 부모 통제 디지털 웰빙 APA",
+  "tags": [
+    "청소년 AI",
+    "AI 챗봇",
+    "자녀 보호",
+    "디지털 웰빙",
+    "ChatGPT 부모 통제",
+    "AI 안전",
+    "APA 청소년 권고"
+  ],
+  "editorial": {
+    "headline": "청소년 AI 챗봇 안전 기준: 친구·상담사처럼 믿기 전에 확인할 것",
+    "opening": "숙제를 묻던 AI 챗봇에 어느 날 친구 관계나 불안한 마음까지 털어놓기 시작했다면, 사용 시간을 줄이는 것만으로는 충분하지 않다. 말투는 다정해도 챗봇은 관계를 맺거나 진단을 내리는 사람이 아니고, 답변에는 틀린 정보와 과도한 동조가 섞일 수 있다. OpenAI가 8월 6일 미국심리학회(APA)와 청소년 정신건강·AI 협력을 발표한 이유도 차단과 허용 사이에 아직 채워야 할 근거와 사용 기준이 많기 때문이다. 두 기관의 발표, APA의 청소년 AI 권고, UNICEF의 아동 중심 AI 지침, 실제 부모 통제 기능을 함께 놓고 가정과 서비스가 어디에 경계를 세워야 하는지 확인했다.",
+    "closing": "청소년의 AI 사용을 안전하게 만드는 핵심은 대화를 몰래 들여다보는 감시가 아니다. 챗봇이 맡아도 되는 일과 사람이 이어받아야 하는 순간을 먼저 합의하고, 민감한 정보는 입력하지 않으며, 수면·학교·친구 관계가 밀릴 때 사용 방식부터 다시 보는 것이다. 제품의 연령 추정과 부모 통제는 이 합의를 돕는 보조 장치일 뿐 완벽한 판별기나 전문 돌봄의 대체물이 아니다. AI가 늘 곁에 있는 시대일수록 답변의 편리함보다 사람에게 돌아오는 길이 짧아야 한다.",
+    "action": "가정이나 학교에서 사용하는 AI 한 가지를 골라 사용 목적, 입력하지 않을 정보, 사람에게 바로 말할 상황을 짧게 합의해 두자.",
+    "audience_problem": "청소년이 AI를 학습 도구로 쓰는 것과 정서적 의존이 커지는 상황을 어떻게 구분할지, 부모 통제 기능을 켜면 무엇이 달라지고 무엇은 해결되지 않는지 판단하기 어렵다.",
+    "reader_takeaway": "AI 챗봇의 도움 범위와 사람에게 전환해야 할 신호를 구분하고, 부모·학교·서비스 개발자가 적용할 수 있는 안전 경계를 실제 기능과 독립 권고에 맞춰 정할 수 있다.",
+    "why_now": "OpenAI와 APA가 2026년 8월 6일 청소년의 AI 사용, 위기 순간의 지원, 부모·임상가용 자원 개발을 함께 추진한다고 발표했고 관련 부모 통제 문서도 최근 갱신됐다.",
+    "topic_key": "청소년 AI 챗봇 안전 경계",
+    "reader_question": "청소년이 AI 챗봇을 학습과 고민 상담에 함께 쓸 때 어디까지 허용하고 어떤 순간에 부모·교사·전문가가 이어받아야 하는가?",
+    "entities": [
+      "OpenAI",
+      "미국심리학회",
+      "UNICEF",
+      "ChatGPT 부모 통제"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "decision_guide",
+    "revisit": {
+      "quick_answer": "AI는 학습·정보 탐색과 생각 정리를 도울 수 있지만 관계·진단·위기 대응을 대신할 수 없으므로 사용 목적, 개인정보, 시간, 사람에게 전환할 조건을 함께 정해야 한다.",
+      "reuse_case": "자녀가 새 AI 서비스나 AI 친구 기능을 사용하기 시작했거나 학교에서 생성형 AI 사용 규칙을 만들 때 경계와 대화 기준을 다시 확인한다.",
+      "failure_case": "부모 통제를 켰는데도 수면·학교생활·사람 관계가 밀리거나 AI 답변을 절대적인 판단으로 받아들이면 기능 설정이 아니라 사용 목적과 사람 지원 연결부터 다시 점검한다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "ChatGPT 부모 통제 기능 변경",
+        "APA 청소년 AI 권고 갱신",
+        "국내 청소년 AI 이용 지침 발표",
+        "AI 동반자 서비스의 연령 정책 변경"
+      ]
+    }
+  },
+  "visual": {
+    "hook": "다정한 답변이 계속 이어질수록, 화면 밖 사람에게 돌아오는 문은 어디에 있어야 할까?",
+    "subject": "청소년의 손에 든 AI 대화 화면과 가족·교사에게 이어지는 현실의 문을 한 장면으로 보여 준다",
+    "motif": "종이로 만든 휴대전화, 말풍선, 열린 방문, 가족 식탁, 경계선",
+    "cover": {
+      "label": "AI 대화가 길어질수록 화면 밖 사람에게 돌아오는 문이 더 가까워야 하는 이유",
+      "scene_label": [
+        "AI 말풍선",
+        "열린 방문",
+        "가족 식탁",
+        "경계선"
+      ],
+      "steps": "청소년이 들고 있는 AI 대화 화면 뒤로 부모·교사와 대화할 수 있는 열린 현실 공간이 이어지며, 챗봇과 사람 지원 사이의 경계를 한 장면에 담는다",
+      "curiosity_hook": "휴대전화 속 다정한 말풍선보다 뒤쪽의 열린 문이 더 밝게 보이는 이유는 무엇일까",
+      "evidence_type": "diagram",
+      "origin": "imagegen",
+      "logic_type": "conditional",
+      "condition": "고민이 정보 탐색을 넘어 정서적 의존이나 위기 신호로 이어지는 경우",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "editorial_scenario",
+      "composition_type": "phone-and-open-door-scene",
+      "palette_family": "coral_sage_warm_gray",
+      "render_family": "editorial_collage",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "AI 대화",
+        "사람에게 연결"
+      ],
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: 1200x630 Korean technology blog cover. Scene/backdrop: tactile editorial collage made from cut paper, fabric, pencil texture and small photographic fragments; a quiet home hallway connected to a family dining room, warm natural afternoon light. Subject: in the foreground, a teenager shown only as a simple side silhouette from shoulder up, holding one paper-crafted smartphone with abstract unreadable chat bubbles; behind the phone, a real open doorway leads to a warm table where two trusted adult silhouettes are present and visibly available to talk. A thin coral paper boundary separates the phone space from the human-support space but stops at the open doorway. The doorway and people must feel closer and safer, not dramatic. Composition/framing: one continuous scene, strong central phone and open door, no panels, no flowchart, no cards. Text (verbatim): only two small Korean labels, \"AI 대화\" near the phone and \"사람에게 연결\" near the doorway. Style/medium: sophisticated Korean magazine editorial collage, handcrafted edges, believable scale, restrained emotion, mobile-readable focal silhouette. Constraints: exactly one teenager silhouette, exactly one phone, exactly two distant adult silhouettes; anatomically normal simple hands if visible; no extra fingers, limbs, faces or duplicated bodies; no fake app UI, no logos, no medical symbols, no warning triangle, no robot, no brain, no laptop, no dashboard, no arrows, no title text, no chart, no neon, no watermark, no garbled Korean."
+    },
+    "assets": [
+      {
+        "label": "AI 챗봇이 도울 수 있는 일과 사람에게 넘겨야 하는 일은 어디에서 갈리는가",
+        "scene_label": [
+          "정보 탐색",
+          "생각 정리",
+          "관계",
+          "위기 대응"
+        ],
+        "steps": "AI가 도울 수 있는 정보 탐색·생각 정리와 사람이 맡아야 하는 관계·진단·위기 대응을 같은 저울의 양쪽에 두어 역할 차이를 보여 준다",
+        "curiosity_hook": "다정한 문장과 실제 돌봄은 어느 지점에서 다른가",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "정보 탐색",
+          "생각 정리",
+          "관계와 돌봄",
+          "위기 대응"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "generation_prompt": "Use case: scientific-educational. Asset type: 1200x630 explanatory image for Korean readers. Lesson objective: distinguish tasks an AI chatbot may assist with from responsibilities that must remain with people. Scene: one large physical balance scale on a clean pale blue background, not a card layout. Left pan contains a book, magnifying glass and note sheet with exact labels \"정보 탐색\" and \"생각 정리\". Right pan contains two people talking and a lifebuoy with exact labels \"관계와 돌봄\" and \"위기 대응\". Place one short exact note under the scale: \"도움과 대체는 다르다\". Visual logic: the scale is balanced but the objects are visibly different types; no implication that AI diagnoses or treats. Large mobile-readable Korean, navy and warm coral with one yellow accent. Constraints: no product logo, no fake chat UI, no medical diagnosis, no robot, no brain, no laptops, no multiple cards, no percentages, no extra text, no English, no watermark, no garbled Korean."
+      },
+      {
+        "label": "평소 사용에서 사람의 도움으로 바로 전환해야 하는 신호는 어떤 순서로 확인하는가",
+        "scene_label": [
+          "일상 유지",
+          "사용 조정",
+          "사람에게 알림",
+          "긴급 도움"
+        ],
+        "steps": "수면·학교·친구 관계가 유지되는 평소 사용에서 변화가 생기면 대화와 설정을 조정하고, 심각한 위기 신호가 있으면 AI 답변을 기다리지 않고 사람과 전문 지원으로 전환한다",
+        "curiosity_hook": "사용 시간보다 먼저 바뀌는 일상 신호는 무엇일까",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "condition": "수면·학교생활·사람 관계가 밀리거나 심각한 위해·위기 신호가 나타나는 경우",
+        "content_role": "explanation",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "일상 유지",
+          "사용 조정",
+          "사람에게 알림",
+          "긴급 도움"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "generation_prompt": "Use case: infographic-diagram. Asset type: 1200x630 Korean safety decision graphic. Canvas: a single gently curving path across a calm cream background, not a box flowchart and not a dashboard. Start with a green everyday scene containing sleep, school book and two friends, exact label \"일상 유지\". At the middle fork, show a clock and conversation icon, exact label \"사용 조정\". One coral branch leads immediately to a trusted adult and counselor doorway, exact labels \"사람에게 알림\" and \"긴급 도움\". Add one exact sentence at the bottom: \"위기 신호는 AI 답변을 기다리지 않는다\". Visual logic: ordinary use continues only while daily life is intact; interference or serious risk branches to human support. Large Korean text, sage green, navy, coral, plenty of whitespace. Constraints: no diagnosis terms, no self-harm imagery, no fake app UI, no product logos, no robots, no laptops, no multiple cards, no invented numbers, no extra text, no English, no watermark, no garbled Korean."
+      },
+      {
+        "label": "부모 통제는 대화 감시가 아니라 어떤 기능과 시간을 조정하는 장치인가",
+        "scene_label": [
+          "대화 비공개",
+          "조용한 시간",
+          "기능 설정",
+          "안전 알림"
+        ],
+        "steps": "OpenAI 도움말의 부모 통제 개요와 관리 항목을 한 화면에서 강조해 대화 열람은 제공하지 않고 일부 기능·시간·제한적 안전 알림을 조정한다는 범위를 확인한다",
+        "curiosity_hook": "부모 계정을 연결하면 자녀의 대화 내용까지 보이게 될까",
+        "evidence_type": "screenshot",
+        "origin": "annotated_capture",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "capture_tool": "playwright",
+        "capture_target": "OpenAI Help Center의 ChatGPT 부모 통제 개요와 관리 기능",
+        "captured_at": "2026-08-08T17:18:05+09:00",
+        "source_url": "https://help.openai.com/en/articles/12315553-parental-controls-in-chatgpt",
+        "capture_note": "공개 도움말에서 부모 통제의 범위와 대화 비공개 설명이 함께 보이도록 잘라 핵심 문단을 강조했다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "OpenAI와 미국심리학회, 청소년 정신건강과 책임 있는 AI 사용 기준 공동 개발",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-and-apa-partner-to-advance-responsible-ai/",
+      "published_at": "2026-08-06T06:00:00+00:00",
+      "blurb_kr": "OpenAI와 미국심리학회는 청소년이 AI를 사용하는 방식과 위기 순간의 지원, 부모·보호자·임상가용 자료, 발달 단계에 맞는 안전장치를 함께 연구하기로 했다. 협력 발표만으로 제품의 안전이 보장되는 것은 아니므로 APA와 UNICEF의 독립 권고, 실제 부모 통제 기능의 범위와 한계를 함께 확인했다.",
+      "references": [
+        {
+          "title": "Working with the American Psychological Association on youth mental health and AI",
+          "url": "https://openai.com/index/openai-and-apa-partner-to-advance-responsible-ai/",
+          "kind": "official"
+        },
+        {
+          "title": "Artificial intelligence and adolescent well-being: An APA health advisory",
+          "url": "https://www.apa.org/topics/artificial-intelligence-machine-learning/health-advisory-ai-adolescent-well-being",
+          "kind": "independent"
+        },
+        {
+          "title": "Guidance on AI and children, version 3.0",
+          "url": "https://www.unicef.org/innocenti/reports/policy-guidance-ai-children",
+          "kind": "independent"
+        },
+        {
+          "title": "Our approach to age prediction",
+          "url": "https://openai.com/index/our-approach-to-age-prediction/",
+          "kind": "documentation"
+        },
+        {
+          "title": "Parental controls in ChatGPT",
+          "url": "https://help.openai.com/en/articles/12315553-parental-controls-in-chatgpt",
+          "kind": "documentation"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "이번 협력은 챗봇을 상담사로 인정한 발표가 아니다"
+        },
+        {
+          "t": "p",
+          "text": "OpenAI와 APA가 8월 6일 밝힌 협력 범위는 크게 세 갈래다. 청소년이 어려움을 겪는 순간 AI가 정보를 찾고 현실의 지원으로 연결하는 방식, 부모·보호자와 임상가가 과의존과 부적절한 사용을 알아차릴 수 있는 자료, 청소년·가족·교사·상담가의 실제 경험을 반영하는 절차다. ‘AI가 상담을 더 잘한다’는 성능 발표가 아니라, 제품을 만드는 쪽에 발달심리와 임상 지식을 넣고 사람이 개입할 경계를 구체화하겠다는 약속에 가깝다."
+        },
+        {
+          "t": "p",
+          "text": "발표문도 AI가 현실의 관계와 돌봄을 강화해야지 대체해서는 안 된다고 선을 긋는다. 이 문장은 중요하다. 챗봇은 늦은 밤에도 즉시 답하고 비판하지 않는 말투를 유지할 수 있지만, 표정과 생활 변화를 직접 보지 못하고 진단 책임도 지지 않는다. 아직 개발할 자료와 안전장치를 협력 목표로 적었다는 사실은 현재 기능을 완성된 보호 체계로 오해하지 말아야 한다는 뜻이기도 하다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "AI는 정보 탐색과 생각 정리를 도울 수 있지만 관계·돌봄·진단·위기 대응을 대신하지 않는다. 다정한 문장과 책임을 지는 사람의 지원은 역할이 다르다."
+        },
+        {
+          "t": "p",
+          "text": "APA의 독립 권고는 이 경계를 더 분명히 한다. 청소년은 챗봇의 모의 공감과 사람의 이해를 구분하기 어렵거나, 친구·멘토처럼 말하는 시스템을 더 신뢰할 수 있다. 연구가 아직 발전 중이므로 AI가 청소년에게 모두 해롭다거나 반대로 충분히 안전하다고 단정하지 않는다. 대신 관계를 흉내 내는 설계, 개인정보, 유해 콘텐츠, 과도한 사용, 현실 관계를 밀어내는 변화를 따로 관찰하라고 권한다."
+        },
+        {
+          "t": "h",
+          "text": "사용 시간보다 먼저 ‘무엇을 맡겼는지’를 본다"
+        },
+        {
+          "t": "p",
+          "text": "한 시간 사용했다는 숫자만으로 건강한 사용과 위험한 사용을 가르기는 어렵다. 같은 30분이라도 영어 문장을 고치거나 어려운 개념을 질문한 경우와, 친구와의 갈등·자존감·건강 문제를 AI의 판단 하나로 결정한 경우는 다르다. 먼저 목적을 학습·아이디어·정보 탐색처럼 결과를 다시 확인할 수 있는 일과, 관계·건강·안전처럼 사람의 책임이 필요한 일로 나누는 편이 낫다."
+        },
+        {
+          "t": "table",
+          "caption": "청소년 AI 사용 목적에 따라 달라지는 확인 기준",
+          "headers": [
+            "사용 장면",
+            "AI가 도울 수 있는 범위",
+            "사람이 이어받을 순간"
+          ],
+          "rows": [
+            [
+              "학습·과제",
+              "개념 설명, 예시, 초안 피드백",
+              "출처가 없거나 답이 수업 기준과 충돌할 때"
+            ],
+            [
+              "친구·가족 고민",
+              "생각과 선택지를 글로 정리",
+              "관계를 끊거나 숨기라는 조언, AI만 찾게 될 때"
+            ],
+            [
+              "건강·정서",
+              "일반 정보와 도움 기관 탐색",
+              "진단·치료 판단, 심각한 불안이나 위해 신호가 있을 때"
+            ],
+            [
+              "개인정보",
+              "공개된 정보로 일반 질문",
+              "실명, 학교, 연락처, 진료·상담 내용 입력을 요구할 때"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "기준을 말로만 ‘조심해서 써’라고 두면 상황마다 해석이 달라진다. 숙제 답을 그대로 제출하지 않기, 건강·관계 결정을 AI 하나로 내리지 않기, 실명·학교·연락처·상담 기록을 입력하지 않기처럼 행동으로 확인할 수 있는 문장으로 바꾸는 편이 좋다. 청소년을 통제 대상으로만 놓지 않고 왜 그 경계가 필요한지 함께 정해야 숨겨서 쓰는 상황도 줄일 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "UNICEF의 아동 중심 AI 지침도 안전과 개인정보만 떼어 보지 않는다. 설명 가능성, 차별 방지, 발달과 웰빙, 참여와 통제권을 함께 요구한다. 서비스가 연령을 묻고 민감한 답변을 제한하더라도, 왜 제한됐는지 알 수 없거나 자신의 데이터를 지우고 기능을 끌 방법이 없다면 아동 중심 설계라고 보기 어렵다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "네 가지 경계가 있어야 설정도 제 역할을 한다"
+        },
+        {
+          "t": "p",
+          "text": "가정과 학교에서 합의할 경계는 복잡할 필요가 없다. 첫째는 목적이다. AI가 대신 결정하지 않고 초안·설명·선택지 정리까지만 맡긴다. 둘째는 정보다. 실명과 연락처뿐 아니라 학교·동아리·생활 동선처럼 조합하면 사람을 특정할 수 있는 정보도 줄인다. 셋째는 시간이다. 밤늦게 대화가 길어져 수면을 밀어내지 않도록 조용한 시간을 둔다. 넷째는 전환 조건이다. 일상에 변화가 생기거나 심각한 고민이 나오면 화면 안 답변을 더 찾기보다 화면 밖 사람에게 바로 말한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "평소 사용은 일상이 유지되는지 함께 보고, 수면·학교·친구 관계가 밀리면 목적과 시간을 조정한다. 심각한 위해나 위기 신호는 AI 답변을 기다리지 않고 보호자·교사·전문가·긴급 지원으로 전환한다."
+        },
+        {
+          "t": "p",
+          "text": "여기서 전환 조건은 진단표가 아니다. 부모가 대화 몇 줄을 보고 병명을 붙이는 대신, 평소와 다른 생활 변화를 대화의 시작점으로 삼는 기준이다. AI 사용 때문에 잠을 계속 줄이거나 학교생활과 취미를 피하고, 사람에게 말하기보다 챗봇만 찾는 흐름이 이어진다면 ‘앱을 뺏을까’보다 ‘이 도구에서 무엇을 얻고 있었는가’를 먼저 묻는 편이 낫다. 당장 자신이나 다른 사람의 안전이 걱정되는 상황에서는 일반적인 온라인 조언보다 지역의 긴급 서비스와 전문 지원을 우선해야 한다."
+        },
+        {
+          "t": "ul",
+          "reusable": true,
+          "reuse_label": "청소년 AI 사용 경계 대화 순서",
+          "items": [
+            "AI를 쓰는 목적을 학습·정보·아이디어·고민 정리 중 하나로 먼저 말한다.",
+            "실명, 학교, 연락처, 위치, 진료·상담 기록은 입력하지 않기로 합의한다.",
+            "답변의 출처가 없거나 중요한 판단이면 부모·교사·전문가와 다시 확인한다.",
+            "수면·학교·친구 관계가 밀리기 시작하면 사용 시간보다 목적과 의존부터 조정한다.",
+            "심각한 위해나 위기 신호는 챗봇 답변을 기다리지 않고 즉시 사람과 지역 지원에 연결한다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "부모 통제는 대화 감시 기능이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "ChatGPT의 부모 통제는 부모와 청소년 계정을 연결한 뒤 민감한 콘텐츠 감소, 모델 개선에 대화 사용 여부, 메모리, 음성·이미지 생성, Study Mode, ChatGPT Work의 네트워크·브라우저 기능과 조용한 시간을 일부 조정한다. 설정 변경이 기존 대화에 바로 적용되지 않을 수 있다는 안내도 있다. 기능을 켰다는 사실만 믿지 말고 새 대화에서 실제로 달라졌는지 확인해야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "부모 통제는 자녀의 대화를 실시간으로 읽는 기능이 아니다. 일부 기능과 조용한 시간을 관리하고 제한적인 상황에서 안전 알림을 받을 수 있지만, 알림은 전문 돌봄이나 긴급 서비스의 대체물이 아니다. 화면 출처: OpenAI Help Center."
+        },
+        {
+          "t": "p",
+          "text": "계정을 연결해도 부모가 청소년의 대화 내용을 열람하거나 실시간으로 감시할 수는 없다. 심각한 자해 우려나 폭력 관련 계정 조치처럼 제한적인 상황에서 시스템과 훈련된 검토자가 확인한 뒤 필요한 범위의 안전 알림을 보낼 수 있다고 설명한다. OpenAI도 이 알림이 완벽하지 않고 전문 돌봄과 긴급 서비스의 대체물이 아니라고 명시한다. 즉 부모 통제는 관계를 대신하는 감시 도구가 아니라, 가족이 합의한 기능과 시간 경계를 제품 안에 일부 반영하는 장치다."
+        },
+        {
+          "t": "h",
+          "text": "연령 추정이 틀릴 수 있다는 전제까지 읽어야 한다"
+        },
+        {
+          "t": "p",
+          "text": "OpenAI는 계정 생성 시 적은 나이뿐 아니라 계정 사용 기간, 주로 활동하는 시간대와 사용 패턴 같은 신호로 18세 미만 가능성을 추정한다고 설명한다. 확신이 없으면 더 안전한 경험을 적용하고, 성인이 잘못 분류되면 신원 확인으로 복구하는 경로를 둔다. 이는 연령 확인의 현실적인 보조 수단이지만 오분류 가능성과 추가적인 개인정보 처리를 함께 만든다. 보호 기능이 있다고 해서 연령을 완벽히 안다고 가정해서는 안 된다."
+        },
+        {
+          "t": "table",
+          "caption": "제품 기능과 가정의 역할을 섞지 않기 위한 구분",
+          "headers": [
+            "장치",
+            "할 수 있는 일",
+            "해결하지 못하는 일"
+          ],
+          "rows": [
+            [
+              "연령 추정",
+              "청소년 가능성이 높은 계정에 추가 보호 적용",
+              "나이와 상황을 항상 정확히 판별"
+            ],
+            [
+              "부모 통제",
+              "일부 기능·시간·데이터 설정 관리",
+              "모든 대화 감시와 과의존 원인 해결"
+            ],
+            [
+              "안전 알림",
+              "제한적인 심각 신호를 보호자에게 전달",
+              "전문가의 평가·치료·긴급 대응 대체"
+            ],
+            [
+              "가족 대화",
+              "목적·개인정보·사람 전환 조건 합의",
+              "제품의 오류와 유해 답변을 완전히 차단"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "기능 이름은 안전해 보여도 작동 범위가 서로 다르다. 민감한 콘텐츠 감소를 껐다고 성인 계정과 같아지는 것은 아니고, 조용한 시간은 한 번에 한 구간만 설정할 수 있다. 검색, 플러그인, 커넥터, 클라우드 브라우저와 코드의 네트워크 접근도 각각 다른 통제다. 자녀가 실제로 어떤 기능을 쓰는지 모르고 시간 제한 하나만 걸면 필요한 경계가 비어 있을 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "서비스를 만드는 쪽은 사람에게 넘기는 길을 설계해야 한다"
+        },
+        {
+          "t": "p",
+          "text": "청소년 대상 AI를 만드는 팀이라면 유해 문장을 막는 필터만으로 끝낼 수 없다. 연령에 맞는 기본값, 데이터 최소 수집과 삭제 방법, AI임을 분명히 알리는 표현, 사용을 멈추고 사람에게 연결되는 경로, 실패를 신고하고 검토하는 절차가 함께 있어야 한다. 정서적 지지를 제공하는 기능이라면 사용 시간을 늘리는 지표와 안전 지표가 충돌할 수 있다는 점도 제품 목표에 반영해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "이번 발표의 가치는 ‘전문가와 협력한다’는 문구 자체보다 앞으로 공개될 자료와 제품 변화가 어떤 기준을 충족하는지 확인할 출발점이 생겼다는 데 있다. 가족용 자료가 실제 행동으로 이어지는지, 임상가용 지침이 제품의 위기 연결과 맞물리는지, 청소년의 목소리가 정책에 어떻게 반영됐는지는 후속 공개에서 다시 봐야 한다. 협력 발표를 안전 인증서처럼 소비하지 않고 약속과 구현을 나눠 보는 태도가 필요하다."
+        },
+        {
+          "t": "p",
+          "text": "OpenAI·APA 협력 발표에서 예정된 작업 범위를 확인하고, APA의 청소년 AI 권고와 UNICEF 아동 중심 AI 지침으로 독립적인 경계를 대조했다. ChatGPT 연령 추정과 부모 통제 도움말은 현재 제품에서 실제로 조정할 수 있는 항목과 대화 비공개·안전 알림의 한계를 확인하는 데 사용했다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+      "url": "https://won0322.tistory.com/190",
+      "reason": "AI가 그럴듯하게 답해도 입력 문서와 숨은 지시를 사람이 다시 확인해야 하는 이유가 청소년의 답변 검증과 이어진다."
+    },
+    {
+      "title": "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법",
+      "url": "https://won0322.tistory.com/125",
+      "reason": "AI가 만든 결과를 그대로 실행하지 않고 출처·수치·권한과 사람 승인으로 되짚는 기준을 일상적인 AI 사용에도 적용할 수 있다."
+    }
+  ],
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "AI 챗봇을 보는 청소년 뒤로 부모와 교사에게 이어지는 열린 문이 보이는 장면",
+      "path": "docs/tistory/assets/2026-08-08/청소년-AI-안전기준-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08/청소년-AI-안전기준-대표.webp",
+      "cover_kind": "editorial_scene",
+      "art_direction": "editorial_scenario",
+      "composition_type": "phone-and-open-door-scene",
+      "palette_family": "coral_sage_warm_gray",
+      "render_family": "editorial_collage",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: 1200x630 Korean technology blog cover. Scene/backdrop: tactile editorial collage made from cut paper, fabric, pencil texture and small photographic fragments; a quiet home hallway connected to a family dining room, warm natural afternoon light. Subject: in the foreground, a teenager shown only as a simple side silhouette from shoulder up, holding one paper-crafted smartphone with abstract unreadable chat bubbles; behind the phone, a real open doorway leads to a warm table where two trusted adult silhouettes are present and visibly available to talk. A thin coral paper boundary separates the phone space from the human-support space but stops at the open doorway. The doorway and people must feel closer and safer, not dramatic. Composition/framing: one continuous scene, strong central phone and open door, no panels, no flowchart, no cards. Text (verbatim): only two small Korean labels, \"AI 대화\" near the phone and \"사람에게 연결\" near the doorway. Style/medium: sophisticated Korean magazine editorial collage, handcrafted edges, believable scale, restrained emotion, mobile-readable focal silhouette. Constraints: exactly one teenager silhouette, exactly one phone, exactly two distant adult silhouettes; anatomically normal simple hands if visible; no extra fingers, limbs, faces or duplicated bodies; no fake app UI, no logos, no medical symbols, no warning triangle, no robot, no brain, no laptop, no dashboard, no arrows, no title text, no chart, no neon, no watermark, no garbled Korean.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "AI 대화",
+        "사람에게 연결"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 108214,
+      "quality": 82,
+      "sha256": "24b94d312b0ebe9cf8bc660b7aebdebe05468342661f2a43b9710a7c850e1af3"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "정보 탐색과 생각 정리는 AI가 도울 수 있지만 관계와 돌봄, 위기 대응은 사람이 맡아야 함을 보여주는 저울",
+      "path": "docs/tistory/assets/2026-08-08/청소년-AI-안전기준-역할구분.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08/청소년-AI-안전기준-역할구분.webp",
+      "generation_prompt": "Use case: scientific-educational. Asset type: 1200x630 explanatory image for Korean readers. Lesson objective: distinguish tasks an AI chatbot may assist with from responsibilities that must remain with people. Scene: one large physical balance scale on a clean pale blue background, not a card layout. Left pan contains a book, magnifying glass and note sheet with exact labels \"정보 탐색\" and \"생각 정리\". Right pan contains two people talking and a lifebuoy with exact labels \"관계와 돌봄\" and \"위기 대응\". Place one short exact note under the scale: \"도움과 대체는 다르다\". Visual logic: the scale is balanced but the objects are visibly different types; no implication that AI diagnoses or treats. Large mobile-readable Korean, navy and warm coral with one yellow accent. Constraints: no product logo, no fake chat UI, no medical diagnosis, no robot, no brain, no laptops, no multiple cards, no percentages, no extra text, no English, no watermark, no garbled Korean.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 54070,
+      "quality": 82,
+      "sha256": "c9041f0df397c191871e23d65b2a172351c9e7ef2596a6cc977da9550998abd1"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "일상을 유지하다 사용을 조정하고 위험 신호가 생기면 사람과 긴급 도움으로 전환하는 경로",
+      "path": "docs/tistory/assets/2026-08-08/청소년-AI-안전기준-전환신호.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08/청소년-AI-안전기준-전환신호.webp",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: 1200x630 Korean safety decision graphic. Canvas: a single gently curving path across a calm cream background, not a box flowchart and not a dashboard. Start with a green everyday scene containing sleep, school book and two friends, exact label \"일상 유지\". At the middle fork, show a clock and conversation icon, exact label \"사용 조정\". One coral branch leads immediately to a trusted adult and counselor doorway, exact labels \"사람에게 알림\" and \"긴급 도움\". Add one exact sentence at the bottom: \"위기 신호는 AI 답변을 기다리지 않는다\". Visual logic: ordinary use continues only while daily life is intact; interference or serious risk branches to human support. Large Korean text, sage green, navy, coral, plenty of whitespace. Constraints: no diagnosis terms, no self-harm imagery, no fake app UI, no product logos, no robots, no laptops, no multiple cards, no invented numbers, no extra text, no English, no watermark, no garbled Korean.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 60818,
+      "quality": 82,
+      "sha256": "b5e7c1cb37ccae23c054ba4239406768128a11d0135e4c8d723eed52254e1262"
+    },
+    "visual_3": {
+      "origin": "annotated_capture",
+      "alt": "부모 통제가 대화 열람이나 실시간 감시가 아니며 선택한 설정과 제한적인 안전 알림을 제공한다고 명시한 OpenAI 도움말 화면",
+      "path": "docs/tistory/assets/2026-08-08/청소년-AI-안전기준-공식안내.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-08/청소년-AI-안전기준-공식안내.webp",
+      "capture_tool": "playwright",
+      "capture_target": "OpenAI Help Center의 ChatGPT 부모 통제 개요와 관리 기능",
+      "captured_at": "2026-08-08T17:18:05+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 54040,
+      "quality": 82,
+      "sha256": "ec8ac456acb0692acdc1dc06bf27b9e5d421c4d009d3a42d32f5cc6ed38de8e0",
+      "capture_sha256": "ec8ac456acb0692acdc1dc06bf27b9e5d421c4d009d3a42d32f5cc6ed38de8e0"
+    }
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  }
+}
