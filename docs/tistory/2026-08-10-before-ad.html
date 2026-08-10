@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 10 (월) · 약 12분</p>
+    <p class="digest-lead">‘간단한 내부 도구 하나 만들어 줘’라고 부탁했는데, 잠시 뒤에는 프레임워크와 패키지 수십 개, 컨테이너 이미지, 배포 설정까지 생겨 있다. 화면이 잘 뜬다는 사실만 보면 성공이다. 하지만 누가 어떤 패키지를 골랐는지, 외부 어디와 통신했는지, 어떤 비밀값을 읽었는지 답하지 못한다면 프로토타입은 이미 관리하기 어려운 운영 시스템이 됐다. AI 코딩 에이전트가 빠르게 만든 결과를 버리지 않으면서도 통제권을 놓치지 않으려면 코드 줄보다 변경의 출처와 권한 경계를 먼저 확인해야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-10/AI-에이전트-보안-대표.webp" alt="운영 서버실로 들어가기 전 소프트웨어 부품 상자를 확대경으로 검사하는 작업대" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · ITWorld Korea · 2026. 8. 7</p>
+    <h3>AI 코딩 에이전트가 만든 앱, 의존성과 권한을 추적하지 못하면 프로덕션 위험으로 이어진다</h3>
+    <p class="digest-blurb">ITWorld Korea는 AI 에이전트가 개발 속도를 높이는 동안 조직이 선택하지 않은 패키지와 컨테이너, 느슨한 인증, 넓은 인프라 접근이 검토 없이 운영 환경으로 넘어가는 문제를 짚었다. GitHub와 OpenAI의 공식 보안 문서를 함께 대조해 패키지 출처, 네트워크, 권한, 사람 승인으로 나눠 실제 적용 기준을 정리했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">프로토타입이 배포되는 순간 위험도 바뀐다</h4><p>AI 코딩 에이전트에게 내부 대시보드를 부탁하면 단순한 소스 파일만 생기지 않는다. 문제를 빨리 풀기 위해 웹 프레임워크와 라이브러리를 고르고, 데이터 저장소와 컨테이너 구성을 붙이고, 실행 명령까지 만든다. 처음에는 개인 실험이었어도 동료가 쓰기 시작하고 실제 데이터가 들어오면 어느 순간 운영 서비스가 된다. 그런데 보안 검토는 여전히 ‘나중에 할 일’로 남기 쉽다.</p><p>ITWorld Korea가 지적한 핵심도 속도 자체가 아니다. 사람이 명시적으로 선택하지 않은 구성요소가 늘고, 에이전트가 만든 인증과 네트워크 구성이 자연스럽게 기본값이 되는 동안 그 결정을 누가 소유하는지 흐려진다는 점이다. 화면이 뜨고 테스트가 통과했다는 신호는 기능이 움직인다는 뜻이지, 패키지 출처와 데이터 경계까지 안전하다는 증거는 아니다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-10/AI-에이전트-패키지-출처.webp" alt="패키지가 레지스트리에서 잠금파일과 출처 확인을 거쳐 빌드 산출물에 들어가는 흐름" width="1200" height="630" loading="lazy"><figcaption>에이전트가 패키지를 골라도 최종 선택은 저장소에 남는다. 선언 파일뿐 아니라 잠금파일의 버전·무결성 정보와 실제 빌드 산출물을 함께 확인해야 설치된 코드를 추적할 수 있다.</figcaption></figure><p>그래서 실험과 운영을 가르는 기준은 사용자 수보다 영향 범위가 더 적절하다. 실제 계정으로 로그인하는가, 사내 문서나 고객 데이터를 읽는가, 비용이 드는 외부 API를 호출하는가, 인터넷에 공개되는가, 자동 배포가 가능한가 중 하나라도 해당하면 운영 수준의 검토를 시작할 때다. 나중에 유명해지면 점검하겠다는 접근은 이미 사용자가 생긴 뒤 구조를 뜯어고치는 비용을 키운다.</p><h4 class="digest-subheading">에이전트가 고른 패키지는 내 선택으로 남는다</h4><p>package.json이나 requirements.txt에 새 이름이 추가됐다고 끝이 아니다. 잠금파일은 실제로 설치될 버전과 무결성 정보를 고정하고, 컨테이너의 베이스 이미지와 전이 의존성은 선언 파일 밖에서 더 많은 코드를 끌어온다. 에이전트가 ‘문제를 해결하는 패키지’를 찾았더라도 유지관리 상태, 배포 주체, 최근 변경, 알려진 취약점, 라이선스와 대체 가능성은 사람이 확인해야 한다. 이름이 비슷한 패키지나 최근 만들어진 패키지를 자동으로 받아들이면 타이포스쿼팅과 공급망 공격의 문이 열린다.</p><div class="digest-table-wrap" role="region" aria-label="AI 에이전트가 만든 변경을 파일별로 읽는 순서" tabindex="0"><table class="digest-data-table"><caption>AI 에이전트가 만든 변경을 파일별로 읽는 순서</caption><thead><tr><th scope="col">변경 흔적</th><th scope="col">확인할 질문</th><th scope="col">멈춰야 할 신호</th></tr></thead><tbody><tr><td>의존성 선언 파일</td><td>이 패키지가 꼭 필요한가, 공식 배포자가 맞는가</td><td>이유 없는 새 패키지나 이름이 비슷한 대체품</td></tr><tr><td>잠금파일</td><td>버전과 무결성 값이 예상 범위에서 바뀌었는가</td><td>설명할 수 없는 대규모 전이 의존성 변경</td></tr><tr><td>컨테이너 파일</td><td>베이스 이미지와 태그를 재현 가능하게 고정했는가</td><td>latest 태그나 출처 불명 이미지</td></tr><tr><td>CI 설정</td><td>설치 스크립트가 어떤 권한과 비밀값으로 실행되는가</td><td>외부 코드가 쓰기 권한으로 자동 실행</td></tr></tbody></table></div><p>GitHub의 Copilot 코딩 에이전트는 생성된 변경에 CodeQL과 의존성 검사를 적용하고, GitHub Advisory Database에서 악성 패키지와 높은 심각도의 취약점을 확인한다고 설명한다. 유용한 안전망이지만 모든 위험을 대신 판단하지는 않는다. 아직 신고되지 않은 문제, 과도한 기능, 유지보수 중단, 조직 정책과 맞지 않는 라이선스는 별도의 검토가 필요하다. 자동 검사는 승인 여부를 결정할 증거 중 하나로 보는 편이 안전하다.</p></div>
+  </div>
+</section>
+</article>

@@ -1,0 +1,83 @@
+{
+  "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+  "title_candidates": [
+    "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+    "AI 코딩 에이전트가 만든 앱, 의존성과 권한을 추적하지 못하면 프로덕션 위험으로 이어진다",
+    "운영 환경으로 들어가기 직전, 출처가 다른 소프트웨어 부품 상자를 검사대에서 여는 장면: 몇 분 만에 완성된 앱 상자 안…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-10",
+  "publish_date": "2026-08-10",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-10T09:00:00+09:00",
+  "tags": [
+    "AI 코딩 에이전트",
+    "소프트웨어 공급망 보안",
+    "패키지 보안",
+    "에이전트 권한",
+    "네트워크 허용 목록",
+    "GitHub Copilot",
+    "개발 자동화 보안"
+  ],
+  "meta_description": "‘간단한 내부 도구 하나 만들어 줘’라고 부탁했는데, 잠시 뒤에는 프레임워크와 패키지 수십 개, 컨테이너 이미지, 배포 설정까지 생겨 있다. 화면이 잘 뜬다는 사실만 보면 성공이다. 하지만 누가 어떤… ITWorld Korea는 AI 에이전트가 개발 속도를 높이는 동안 조직이 선택하지…",
+  "key_summary": [
+    "1. AI 코딩 에이전트가 만든 앱, 의존성과 권한을 추적하지 못하면 프로덕션 위험으로 이어진다",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-10.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-10.html",
+  "before_ad_html": "docs/tistory/2026-08-10-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-10-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-10-adfit.html",
+  "source_sha256": "343113cf8015bf72e6eedae7bad1e8ff7961d8ddf49d01151d4dc229d55a565d",
+  "html_sha256": "39b74de0673f795e184333eb79798be6e3f6646a4c1f92ee9cc16c80471aa317",
+  "adfit_sha256": "4910a1143267aea9acea48f91b5b3a9b92fb9795435c3cecec0a3f07b61165d4",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-10/AI-에이전트-보안-대표.webp",
+      "path": "docs/tistory/assets/2026-08-10/AI-에이전트-보안-대표.webp",
+      "original_url": "",
+      "alt": "운영 서버실로 들어가기 전 소프트웨어 부품 상자를 확대경으로 검사하는 작업대",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-10/AI-에이전트-패키지-출처.webp",
+      "path": "docs/tistory/assets/2026-08-10/AI-에이전트-패키지-출처.webp",
+      "original_url": "",
+      "alt": "패키지가 레지스트리에서 잠금파일과 출처 확인을 거쳐 빌드 산출물에 들어가는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-10/AI-에이전트-권한-경계.webp",
+      "path": "docs/tistory/assets/2026-08-10/AI-에이전트-권한-경계.webp",
+      "original_url": "",
+      "alt": "파일 수정, 외부 통신, 비밀값, 배포 승인을 서로 분리한 에이전트 권한 구조",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
