@@ -76,6 +76,8 @@
 
 검색형 제목은 완성한 작업이나 해결한 문제를 제목 앞부분에 놓고 핵심 검색어를 자연스럽게 붙이며 도구명은 뒤에 둡니다. 효용을 설명하는 대신 실제 자동화 대상과 결과를 말합니다. 예: `메일 첨부파일을 날짜별 폴더로 자동 정리하기: n8n 실험`. `충격`, `역대급`, `무조건` 같은 클릭베이트는 쓰지 않습니다. 태그 5~8개는 `자동화 대상`, `반복 문제`, `사용 도구`, `완성 결과`를 섞고 최소 2개를 `primary_query`와 직접 연결합니다. 전체는 약 10~15분 분량, 소제목 5~8개로 작성합니다.
 
+30일 이내의 `config/search_opportunities.json`을 확인하되, 실제 실험이 그 질문을 해결할 때만 사용합니다. `editorial.search_intent`에는 짧은 실제 검색어 `query`, 자동화하려는 구체적 반복 문제 `reader_need`, 실행 화면·코드·비교 중 답을 증명할 방식 `answer_format`을 기록합니다. `query`는 제목 앞 20자 안에 그대로 자연스럽게 둡니다. `related_posts`는 기반 원리를 설명하는 `foundation`과 다음 실행으로 이어지는 `next_step`을 각각 1개 이상 사용합니다.
+
 기본 흐름은 다음과 같습니다.
 
 `반복되는 문제 장면 → 자동화 목표와 선택 이유 → 준비 환경 → 단계별 구현 → 실제 실행 화면·결과 → 수동 방식과 비교 → 실패·한계 → 다시 실행할 조건`
@@ -150,7 +152,7 @@
 
 티스토리에서는 `실전 개발 노트 > 자동화·실험`을 선택합니다.
 
-그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`을 기록합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 
 `publish_date`는 토요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
 

@@ -22,6 +22,7 @@ REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
 NATURAL_VOICE_POLICY_START = date(2026, 8, 4)
 AD_FLOW_POLICY_START = date(2026, 8, 4)
 SOURCE_RECENCY_POLICY_START = date(2026, 8, 6)
+SEARCH_CONVERSION_POLICY_START = date(2026, 8, 11)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -203,6 +204,7 @@ SEARCH_STOP_WORDS = {
     "오늘",
     "최신",
 }
+RELATED_POST_ROLES = {"foundation", "next_step"}
 BANNED_COVER_COMPOSITIONS = {
     "three_column_cards",
     "four_step_cards",
@@ -839,6 +841,47 @@ def _search_metadata_reasons(source, identity):
         or matched_tags < 2
     )
     return ["quality_search_metadata"] if invalid else []
+
+
+def _search_conversion_reasons(source, identity):
+    """Turn one real search question into a focused title and useful next clicks."""
+    if date.fromisoformat(identity.publish_date) < SEARCH_CONVERSION_POLICY_START:
+        return []
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    intent = editorial.get("search_intent") if isinstance(editorial.get("search_intent"), dict) else {}
+    query = plain(intent.get("query"))
+    query_terms = _search_terms(query)
+    primary_terms = _search_terms(source.get("primary_query"))
+    headline = plain(editorial.get("headline"))
+    headline_prefix = re.sub(r"\s+", "", headline[:20].casefold())
+    compact_query = re.sub(r"\s+", "", query.casefold())
+
+    related = source.get("related_posts") if isinstance(source.get("related_posts"), list) else []
+    roles = {
+        plain(post.get("role")).casefold()
+        for post in related
+        if isinstance(post, dict)
+    }
+    related_valid = (
+        len(related) >= 2
+        and RELATED_POST_ROLES.issubset(roles)
+        and all(
+            isinstance(post, dict)
+            and plain(post.get("role")).casefold() in RELATED_POST_ROLES
+            and len(plain(post.get("reason"))) >= 12
+            for post in related
+        )
+    )
+    invalid = (
+        not 2 <= len(query) <= 40
+        or not query_terms
+        or not query_terms.intersection(primary_terms)
+        or compact_query not in headline_prefix
+        or len(plain(intent.get("reader_need"))) < 20
+        or len(plain(intent.get("answer_format"))) < 10
+        or not related_valid
+    )
+    return ["quality_search_conversion"] if invalid else []
 
 
 def _revisit_value_reasons(source, identity):
@@ -1491,6 +1534,7 @@ def source_authoring_reasons(source, identity):
         lambda: _schema_reasons(source, identity, require_images=False),
         lambda: _editorial_reasons(source, identity),
         lambda: _search_metadata_reasons(source, identity),
+        lambda: _search_conversion_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),

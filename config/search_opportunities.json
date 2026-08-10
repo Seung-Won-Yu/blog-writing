@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-08-10T16:40:00+09:00",
+  "source": "Google Search Console",
+  "opportunities": [
+    {
+      "query": "코파일럿 한도",
+      "page_url": "https://won0322.tistory.com/145",
+      "impressions": 12,
+      "clicks": 0,
+      "action": "retitle_existing",
+      "suggested_title": "GitHub Copilot 한도 설정: 팀별 AI 크레딧 예산 나누는 법",
+      "status": "review"
+    }
+  ]
+}

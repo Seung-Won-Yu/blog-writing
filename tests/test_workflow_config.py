@@ -101,6 +101,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "agent" / "DEVELOPMENT_GUIDE.md",
             ROOT / "config" / "tistory_public_posts.json",
+            ROOT / "config" / "search_opportunities.json",
             ROOT / "blog_pipeline" / "collection" / "sync_tistory_posts.py",
             ROOT / "blog_pipeline" / "collection" / "collect_news.py",
             ROOT / "blog_pipeline" / "collection" / "collect_automation.py",
@@ -214,6 +215,20 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("대표 이미지의 한국어 라벨", contract)
                 self.assertIn("1~3개", contract)
                 self.assertIn("억지", contract)
+
+    def test_all_editorial_contracts_require_search_intent_and_link_roles(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            GUIDE_CONTRACT,
+            SATURDAY_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("config/search_opportunities.json", contract)
+                self.assertIn("editorial.search_intent", contract)
+                self.assertIn("foundation", contract)
+                self.assertIn("next_step", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")

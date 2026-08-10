@@ -169,6 +169,13 @@
 - 광고 태그는 글마다 1개만 유지하고, 첫 번째 완결된 핵심 설명 뒤 전체 비광고 블록의 35~45% 위치에 `ad_break`를 둡니다. 블록 순서는 반드시 `완결 문단·표·목록·코드·인용 → ad_break → 다음 h`여야 하며 `h → ad_break → 첫 설명`은 금지합니다.
 - 제목·도입·표·이미지·마무리에서 같은 문장을 바꿔 쓰며 반복하지 않습니다.
 
+## 검색 노출을 실제 클릭으로 연결하기
+
+- `config/search_opportunities.json`이 30일 이내 자료이면 먼저 확인합니다. 노출은 있지만 클릭이 없는 검색어는 현재 주제가 그 질문에 정확히 답할 때만 사용합니다. 관련 없는 뉴스에 인기 검색어를 억지로 붙이지 않습니다.
+- 먼저 독자가 입력할 짧은 질문 하나를 `editorial.search_intent.query`로 확정합니다. 제목 앞 20자 안에 이 문구를 그대로 자연스럽게 넣고, 첫 두 문단에서 `reader_need`에 답하기 시작합니다.
+- `editorial.search_intent`에는 `query`, 그 검색어를 쓴 사람이 해결하려는 상황 `reader_need`, 표·코드·비교·실행 순서 중 답을 보여 줄 방식 `answer_format`을 기록합니다. 이는 내부 편집 메타데이터이며 본문에 항목명으로 노출하지 않습니다.
+- 관련 글은 `foundation` 1개와 `next_step` 1개를 우선합니다. `foundation`은 지금 글의 전제나 원리를 설명하고, `next_step`은 바로 이어서 적용할 설정·실험·가이드로 연결합니다. 단순히 최신 글이거나 같은 제품명이라는 이유만으로 넣지 않습니다.
+
 ## 문체와 사실 기준
 
 - 차분한 개발자가 친구에게 방금 확인한 내용을 설명하듯 씁니다. 정확한 정보는 유지하되 문서 요약이나 브리핑처럼 항목만 늘어놓지 않습니다.
@@ -194,10 +201,10 @@
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`. 72시간을 넘긴 원문의 허용된 예외에만 `freshness_exception`(`reason`, `lasting_value`, `fresher_candidates_rejected` 문자열 배열)를 추가합니다.
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`, `search_intent`. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. 72시간을 넘긴 원문의 허용된 예외에만 `freshness_exception`(`reason`, `lasting_value`, `fresher_candidates_rejected` 문자열 배열)를 추가합니다.
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
-- `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason` 기록
+- `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason`, 연결 역할 `role`을 기록합니다. 역할은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다.
 - `generation`, `images.cover`, `images.visual_1`부터 실제 사용 이미지까지
 
 모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `decision`을 모두 포함합니다. `decision`은 별도 체크리스트를 강요하는 항목이 아니라 독자가 선택하거나 확인할 기준이 본문에 자연스럽게 설명됐는지 확인하는 내부 분류입니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.

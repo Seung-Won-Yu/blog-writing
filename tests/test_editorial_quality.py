@@ -227,6 +227,16 @@ def valid_daily_source(day="2026-07-19"):
         reusable.update(
             {"reusable": True, "reuse_label": "적용 전후 판단표"}
         )
+    if publish_day >= date(2026, 8, 11):
+        source["primary_query"] = "새 기능 적용 조건과 확인 방법"
+        source["editorial"]["headline"] = "새 기능 적용 조건: 일반 사용자가 먼저 확인할 바뀐 점"
+        source["editorial"]["search_intent"] = {
+            "query": "새 기능 적용 조건",
+            "reader_need": "내 계정에 기능이 적용되는 조건과 확인 위치를 알고 싶다.",
+            "answer_format": "적용 조건 비교와 확인 순서를 함께 보여 준다.",
+        }
+        source["related_posts"][0]["role"] = "foundation"
+        source["related_posts"][1]["role"] = "next_step"
     return source
 
 
@@ -253,6 +263,12 @@ def valid_automation_source(day="2026-07-25"):
             "coverage": ["problem", "setup", "implementation", "evidence", "comparison", "failure", "rollback"],
         }
     )
+    if date.fromisoformat(day) >= date(2026, 8, 11):
+        source["editorial"]["search_intent"] = {
+            "query": "메일 첨부파일",
+            "reader_need": "반복해서 내려받는 첨부파일을 날짜별 폴더로 자동 분류하고 싶다.",
+            "answer_format": "실행 코드와 성공·실패 결과 화면으로 검증한다.",
+        }
     source["visual"]["assets"] = [
         visual_asset("capture", "screenshot", "자동화 실행 전 실제 입력 화면"),
         visual_asset("imagegen", "diagram", "입력부터 분류까지의 자동 처리 흐름"),
@@ -332,6 +348,12 @@ def valid_guide_source(day="2026-07-22"):
             "coverage": ["foundation", "request_flow", "stack", "data", "security", "operations", "plan"],
         }
     )
+    if date.fromisoformat(day) >= date(2026, 8, 11):
+        source["editorial"]["search_intent"] = {
+            "query": "백엔드 개발자 로드맵",
+            "reader_need": "백엔드 공부를 어떤 기술과 프로젝트 순서로 시작할지 알고 싶다.",
+            "answer_format": "기술 선택표와 12주 학습 순서를 함께 제공한다.",
+        }
     source["visual"]["assets"].append(
         visual_asset(label="12주 동안 기술을 쌓는 단계별 학습 순서")
     )
@@ -1016,6 +1038,42 @@ class EditorialQualityTests(unittest.TestCase):
         )
 
         self.assertIn("quality_search_metadata", reasons)
+
+    def test_search_conversion_contract_accepts_focused_query_and_link_roles(self):
+        cases = (
+            ("2026-08-11", valid_daily_source("2026-08-11")),
+            ("2026-08-12-guide", valid_guide_source("2026-08-12")),
+            ("2026-08-15-automation", valid_automation_source("2026-08-15")),
+        )
+        for draft_id, source in cases:
+            with self.subTest(draft_id=draft_id):
+                reasons = source_quality_reasons(
+                    source, resolve_draft_identity(draft_id)
+                )
+                self.assertNotIn("quality_search_conversion", reasons)
+
+    def test_search_conversion_contract_rejects_query_outside_title_opening(self):
+        source = valid_daily_source("2026-08-11")
+        source["editorial"]["headline"] = (
+            "일반 사용자가 업데이트 뒤에 먼저 확인해야 하는 새 기능 적용 조건"
+        )
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-11")
+        )
+
+        self.assertIn("quality_search_conversion", reasons)
+
+    def test_search_conversion_contract_requires_intent_and_two_link_roles(self):
+        source = valid_daily_source("2026-08-11")
+        del source["editorial"]["search_intent"]
+        source["related_posts"][1]["role"] = "foundation"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-11")
+        )
+
+        self.assertIn("quality_search_conversion", reasons)
 
     def test_august_posts_reject_ad_between_heading_and_first_paragraph(self):
         source = valid_daily_source("2026-08-04")
