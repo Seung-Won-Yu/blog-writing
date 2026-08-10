@@ -7,10 +7,12 @@
 1. 최신 `main`을 받고 당일 뉴스글이 완성됐는지 확인합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --remote origin --branch main
+   git pull --ff-only origin main
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.daily_guard --draft-id YYYY-MM-DD-guide
    ```
+
+   `git pull`이 `Could not resolve host`, 502, 503, 504 같은 일시적 네트워크 오류로 실패하면 같은 명령만 10초, 30초 뒤 최대 두 번 더 실행합니다. 세 번 모두 실패했을 때만 `BLOCKED`로 종료합니다.
 
 2. 수요일이 아니면 파일을 만들지 않고 종료합니다. 가드 결과가 `COMPLETE`면 같은 글을 다시 조사·집필·생성하지 않습니다. `PARTIAL`이면 출력된 누락 단계만 복구하고, `NEW`일 때만 전체 흐름을 한 번 수행합니다.
 

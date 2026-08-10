@@ -9,10 +9,12 @@
 1. 최신 `main`을 받고 당일 뉴스글이 먼저 완성됐는지 확인합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --remote origin --branch main
+   git pull --ff-only origin main
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.saturday_guard --today
    ```
+
+   `git pull`이 `Could not resolve host`, 502, 503, 504 같은 일시적 네트워크 오류로 실패하면 같은 명령만 10초, 30초 뒤 최대 두 번 더 실행합니다. 세 번 모두 실패했을 때만 `BLOCKED`로 종료합니다.
 
 2. `saturday_guard` 결과를 따릅니다.
 

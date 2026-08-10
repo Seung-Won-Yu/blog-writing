@@ -7,9 +7,11 @@
 1. 최신 상태를 받고 당일 가드를 먼저 실행합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --remote origin --branch main
+   git pull --ff-only origin main
    python3 -m blog_pipeline.publishing.daily_guard --today
    ```
+
+   `git pull`이 `Could not resolve host`, 502, 503, 504 같은 일시적 네트워크 오류로 실패하면 같은 명령만 10초, 30초 뒤 최대 두 번 더 실행합니다. 세 번 모두 실패했을 때만 `BLOCKED`로 종료합니다.
 
    - `COMPLETE`: 즉시 종료합니다. 원문 확인, 재집필, 이미지 재생성, 테스트, 커밋, 푸시를 반복하지 않습니다.
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
