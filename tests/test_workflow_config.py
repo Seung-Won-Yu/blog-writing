@@ -158,10 +158,14 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("최근 3일 데일리 글", contract)
         self.assertIn("본문의 점검표나 메모 상자로 출력하지 않습니다", contract)
         self.assertIn("후보 하나의 공식 근거가 부족하거나 중복이라고 해서", contract)
-        self.assertIn("상위 후보를 최대 12건까지 검토", contract)
+        self.assertIn("상위 후보를 최대 20건까지 검토", contract)
         self.assertIn("공식 제품 블로그·변경 기록·문서 최소 3곳", contract)
         self.assertIn("`selected` 일부만 확인했거나", contract)
         self.assertIn("실제 검토한 후보 제목과 탈락 이유", contract)
+        self.assertIn("`temporary_source_unavailable`", contract)
+        self.assertIn("한 후보의 원문 접근에 2분 이상 머물지 않습니다", contract)
+        self.assertIn("`RETRY_PENDING`", contract)
+        self.assertIn("09:25 재실행", contract)
 
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
