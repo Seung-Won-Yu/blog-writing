@@ -90,7 +90,15 @@ class SourceConfigTests(unittest.TestCase):
         self.assertNotIn("audience_lanes", config["selection"])
         self.assertNotIn("max_research_items", config["selection"])
         self.assertEqual(config["selection"]["exclude_recent_days"], 60)
-        self.assertEqual(config["selection"]["publisher_cooldown_days"], 1)
+        self.assertEqual(config["selection"]["publisher_cooldown_days"], 2)
+        self.assertEqual(config["selection"]["brand_cooldown_days"], 4)
+        self.assertEqual(config["selection"]["topic_cooldown_days"], 2)
+        self.assertEqual(config["selection"]["research_selection_penalty"], 2)
+        self.assertEqual(config["selection"]["max_per_topic_family"], 1)
+        self.assertEqual(
+            config["selection"]["fallback_min_reader_relevance"],
+            config["selection"]["min_reader_relevance"],
+        )
         self.assertEqual(config["max_age_days"], 14)
         self.assertEqual(config["selection"]["max_per_family"], 1)
         self.assertEqual(config["selection"]["min_lead_score"], 8)

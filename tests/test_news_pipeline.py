@@ -213,7 +213,7 @@ class RankingTests(unittest.TestCase):
 
         self.assertEqual(item["lane_scores"]["broad"], 2)
         self.assertEqual(item["raw_lane_scores"]["broad"], 0)
-        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 0)
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 1)
 
     def test_independent_and_general_editorial_sources_receive_explicit_evidence_scores(self):
         independent = make_candidate(
@@ -234,7 +234,7 @@ class RankingTests(unittest.TestCase):
         )
         self.assertEqual(general["lead_score_breakdown"]["evidence"], 3)
 
-    def test_practical_developer_keywords_are_not_counted_twice_as_reader_relevance(self):
+    def test_practical_developer_keywords_receive_capped_reader_relevance(self):
         item = make_candidate(
             raw(
                 "REST API endpoint for enterprise subscription management",
@@ -247,8 +247,31 @@ class RankingTests(unittest.TestCase):
 
         score_lead_candidate(item)
 
-        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 0)
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 2)
         self.assertEqual(item["lead_score_breakdown"]["actionability"], 5)
+
+    def test_practical_title_can_supply_reader_relevance(self):
+        item = make_candidate(
+            raw(
+                "PostgreSQL API 성능을 EXPLAIN으로 개선하기",
+                "https://engineering.example/postgres",
+            ),
+            source("engineering", "independent_editorial", weight=3),
+        )
+        score_candidate(
+            item,
+            [],
+            now=NOW,
+            audience_lanes={
+                "broad": {"match_scope": "title", "keywords": []},
+                "reader_impact": {"match_scope": "title", "keywords": []},
+                "practical": {"keywords": ["API", "EXPLAIN"]},
+                "deep": {"keywords": ["PostgreSQL", "성능"]},
+            },
+        )
+        score_lead_candidate(item)
+
+        self.assertEqual(item["lead_score_breakdown"]["reader_relevance"], 2)
 
     def test_deep_only_niche_api_does_not_outrank_a_broad_practical_story(self):
         general_story = make_candidate(
@@ -370,8 +393,79 @@ class RankingTests(unittest.TestCase):
         )
         self.assertIn("ai", reader_impact["topic_tags"])
 
+    def test_ai_topic_wins_when_one_story_matches_multiple_families(self):
+        item = make_candidate(
+            raw(
+                "VLM 보안 자동화 모델 운영",
+                "https://engineering.example/vllm",
+            ),
+            source("engineering", "independent_editorial", weight=3),
+        )
+
+        score_candidate(
+            item,
+            [],
+            now=NOW,
+            topic_keywords={
+                "security": ["보안"],
+                "automation": ["자동화"],
+                "ai": ["VLM", "모델"],
+            },
+            topic_priority=["ai", "security", "automation"],
+        )
+
+        self.assertEqual(item["topic_family"], "ai")
+
 
 class SelectionTests(unittest.TestCase):
+    def test_editorial_story_beats_slightly_higher_scored_research(self):
+        research = make_candidate(
+            raw("Strategy-first synthesis paper", "https://arxiv.example/paper"),
+            source("arxiv", "research", weight=4),
+        )
+        research["lead_score"] = 14
+        research["score"] = 14
+        editorial = make_candidate(
+            raw("현장에서 바로 쓰는 성능 개선", "https://tech.example/guide"),
+            source("tech-blog", "korean_editorial", weight=3),
+        )
+        editorial["lead_score"] = 13
+        editorial["score"] = 13
+
+        selected = select_lead_shortlist(
+            [research, editorial],
+            max_items=1,
+            research_selection_penalty=2,
+        )
+
+        self.assertEqual(selected[0]["source_id"], "tech-blog")
+
+    def test_lead_shortlist_limits_one_item_per_topic_family(self):
+        items = []
+        for index, topic_family in enumerate(
+            ["ai", "ai", "security", "cloud", "developer_tools"]
+        ):
+            item = make_candidate(
+                raw(f"핵심 기술 뉴스 {index}", f"https://source-{index}.example/post"),
+                source(f"source-{index}", "official", weight=5),
+            )
+            item["lead_score"] = 20 - index
+            item["topic_family"] = topic_family
+            items.append(item)
+
+        selected = select_lead_shortlist(
+            items,
+            max_items=5,
+            max_per_source=1,
+            max_per_family=1,
+            max_per_topic_family=1,
+        )
+
+        self.assertEqual(
+            [item["topic_family"] for item in selected],
+            ["ai", "security", "cloud", "developer_tools"],
+        )
+
     def test_selects_five_ranked_leads_with_source_family_diversity(self):
         items = []
         for index, (source_id, family) in enumerate(

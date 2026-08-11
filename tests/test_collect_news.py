@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from unittest.mock import patch
 
 from blog_pipeline.collection.collect_news import (
@@ -11,8 +11,10 @@ from blog_pipeline.collection.collect_news import (
     build_inbox,
     collection_quality_result,
     fetch_url,
+    load_recent_brand_tags,
     load_recent_publisher_hosts,
     load_recent_processed_urls,
+    load_recent_topic_families,
     parse_feed,
     parse_github_trending,
     parse_html_links,
@@ -138,6 +140,22 @@ class FeedParserTests(unittest.TestCase):
         self.assertIn("ko-KR", request.headers["Accept-language"])
         self.assertEqual(mocked_urlopen.call_count, 2)
 
+    def test_fetch_survives_three_transient_failures_before_success(self):
+        transient = HTTPError(
+            "https://example.com/feed", 405, "method not allowed", {}, None
+        )
+        with patch(
+            "blog_pipeline.collection.collect_news.urlopen",
+            side_effect=[transient, URLError("dns"), transient, _FetchResponse()],
+        ) as mocked_urlopen, patch(
+            "blog_pipeline.collection.collect_news.time.sleep"
+        ) as mocked_sleep:
+            body = fetch_url("https://example.com/feed", retry_delay=0)
+
+        self.assertEqual(body, "정상 응답")
+        self.assertEqual(mocked_urlopen.call_count, 4)
+        self.assertEqual(mocked_sleep.call_count, 3)
+
     def test_parses_rss_item_and_strips_html_summary(self):
         items = parse_feed(RSS_XML, "https://example.com/feed")
 
@@ -145,6 +163,16 @@ class FeedParserTests(unittest.TestCase):
         self.assertEqual(items[0]["title"], "GitHub Actions 보안 업데이트")
         self.assertEqual(items[0]["summary"], "AI 프롬프트 인젝션 탐지를 추가했습니다.")
         self.assertEqual(items[0]["published_at"], "2026-07-12T07:00:00+00:00")
+
+    def test_removes_invisible_formatting_characters_from_feed_titles(self):
+        feed = RSS_XML.replace(
+            "GitHub Actions 보안 업데이트",
+            "개발자\u200b 생산성\u2060 높이기",
+        )
+
+        items = parse_feed(feed, "https://example.com/feed")
+
+        self.assertEqual(items[0]["title"], "개발자 생산성 높이기")
 
     def test_parses_atom_entry(self):
         items = parse_feed(ATOM_XML, "https://arxiv.org/")
@@ -278,7 +306,7 @@ class InboxTests(unittest.TestCase):
         source_ids = {source["id"] for source in config["sources"]}
 
         self.assertGreaterEqual(config["max_workers"], 4)
-        self.assertGreaterEqual(len(source_ids), 17)
+        self.assertGreaterEqual(len(source_ids), 24)
         self.assertGreaterEqual(
             config["selection"]["min_reader_relevance"], 2
         )
@@ -290,7 +318,18 @@ class InboxTests(unittest.TestCase):
                 "microsoft-security",
                 "itworld-korea",
                 "the-verge",
+                "ars-technica",
+                "techcrunch",
                 "krebs-security",
+            }.issubset(source_ids)
+        )
+        self.assertTrue(
+            {
+                "toss-tech",
+                "lycorp-tech",
+                "naver-d2",
+                "infoq",
+                "stackoverflow-blog",
             }.issubset(source_ids)
         )
         google_sources = [
@@ -767,6 +806,176 @@ class InboxTests(unittest.TestCase):
             )
 
         self.assertEqual(hosts, {"blog.cloudflare.com", "github.blog"})
+
+    def test_loads_recent_brand_tags_from_completed_articles(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            metadata = output / "meta"
+            metadata.mkdir()
+            day = "2026-07-17"
+            source_path = output / f"{day}.json"
+            source_path.write_text(
+                json.dumps(
+                    {
+                        "editorial": {
+                            "topic_key": "Copilot 비용 관리",
+                            "entities": ["GitHub Copilot"],
+                        },
+                        "news": [{"title_kr": "GitHub 결제 변경"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (metadata / f"{day}.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": day,
+                        "publish_date": day,
+                        "content_type": "daily_news",
+                        "source": f"data/days/{day}.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            brands = load_recent_brand_tags(
+                output,
+                "2026-07-18",
+                4,
+                {"github": ["GitHub"], "copilot": ["Copilot"], "openai": ["OpenAI"]},
+                publish_meta_dir=metadata,
+            )
+
+        self.assertEqual(brands, {"github", "copilot"})
+
+    def test_loads_only_primary_recent_topic_family(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            metadata = output / "meta"
+            metadata.mkdir()
+            day = "2026-07-17"
+            (output / f"{day}.json").write_text(
+                json.dumps(
+                    {
+                        "headline": "GitHub AI 보안 자동화",
+                        "editorial": {"topic_key": "AI 모델 보안"},
+                        "news": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (metadata / f"{day}.json").write_text(
+                json.dumps(
+                    {
+                        "draft_id": day,
+                        "publish_date": day,
+                        "content_type": "daily_news",
+                        "source": f"data/days/{day}.json",
+                        "publish_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            topics = load_recent_topic_families(
+                output,
+                "2026-07-18",
+                2,
+                {
+                    "security": ["보안"],
+                    "automation": ["자동화"],
+                    "ai": ["AI", "모델"],
+                    "developer_tools": ["GitHub"],
+                },
+                publish_meta_dir=metadata,
+                topic_priority=["ai", "security", "automation", "developer_tools"],
+            )
+
+        self.assertEqual(topics, {"ai"})
+
+    def test_excludes_recent_brand_from_shortlist_but_keeps_candidate_visible(self):
+        config = {
+            "interest_keywords": [],
+            "brand_keywords": {"github": ["GitHub"]},
+            "audience_lanes": {"practical": {"keywords": ["API"]}},
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 2,
+                "max_per_source": 1,
+                "min_lead_score": 0,
+                "min_reader_relevance": 0,
+            },
+            "sources": [
+                {"id": "github", "name": "GitHub", "group": "official", "type": "rss", "url": "https://github.example/feed", "enabled": True},
+                {"id": "database", "name": "Database", "group": "official", "type": "rss", "url": "https://db.example/feed", "enabled": True},
+            ],
+        }
+        feeds = {
+            "https://github.example/feed": RSS_XML.replace("GitHub Actions 보안 업데이트", "GitHub API 변경"),
+            "https://db.example/feed": RSS_XML.replace("GitHub Actions 보안 업데이트", "PostgreSQL API 변경").replace("https://example.com/actions?utm_source=rss", "https://db.example/change"),
+        }
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda url: feeds[url],
+            now=NOW,
+            day_id="2026-07-12",
+            excluded_brands={"github"},
+        )
+
+        self.assertEqual([item["source_id"] for item in result["selected"]], ["database"])
+        github = next(item for item in result["candidates"] if item["source_id"] == "github")
+        self.assertEqual(github["recent_brands"], ["github"])
+        self.assertEqual(result["selection"]["recent_brand_excluded"], 1)
+
+    def test_excludes_recent_topic_from_shortlist_but_keeps_candidate_visible(self):
+        config = {
+            "interest_keywords": [],
+            "topic_keywords": {
+                "security": ["보안"],
+                "cloud": ["클라우드"],
+            },
+            "topic_priority": ["security", "cloud"],
+            "audience_lanes": {"practical": {"keywords": ["API"]}},
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 2,
+                "max_per_source": 1,
+                "min_lead_score": 0,
+                "min_reader_relevance": 0,
+            },
+            "sources": [
+                {"id": "security", "name": "Security", "group": "official", "type": "rss", "url": "https://security.example/feed", "enabled": True},
+                {"id": "cloud", "name": "Cloud", "group": "official", "type": "rss", "url": "https://cloud.example/feed", "enabled": True},
+            ],
+        }
+        feeds = {
+            "https://security.example/feed": RSS_XML.replace(
+                "GitHub Actions 보안 업데이트", "API 보안 패치"
+            ),
+            "https://cloud.example/feed": RSS_XML.replace(
+                "GitHub Actions 보안 업데이트", "API 클라우드 성능 개선"
+            ).replace(
+                "https://example.com/actions?utm_source=rss",
+                "https://cloud.example/change",
+            ),
+        }
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda url: feeds[url],
+            now=NOW,
+            day_id="2026-07-12",
+            excluded_topic_families={"security"},
+        )
+
+        self.assertEqual([item["source_id"] for item in result["selected"]], ["cloud"])
+        security = next(
+            item for item in result["candidates"] if item["source_id"] == "security"
+        )
+        self.assertTrue(security["recent_topic_family"])
+        self.assertEqual(result["selection"]["recent_topic_excluded"], 1)
 
     def test_incomplete_daily_source_is_not_treated_as_published_history(self):
         with tempfile.TemporaryDirectory() as temp_dir:

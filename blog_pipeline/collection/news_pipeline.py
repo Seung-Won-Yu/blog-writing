@@ -197,12 +197,24 @@ def _keyword_matches(normalized, keyword):
     return keyword in normalized
 
 
+def match_keyword_groups(text, keyword_groups):
+    """Return configured group names whose keywords occur in text."""
+    normalized = str(text or "").casefold()
+    return [
+        group
+        for group, keywords in (keyword_groups or {}).items()
+        if any(_keyword_matches(normalized, keyword) for keyword in keywords or [])
+    ]
+
+
 def score_candidate(
     candidate,
     interest_keywords,
     now=None,
     audience_lanes=None,
     topic_keywords=None,
+    topic_priority=None,
+    brand_keywords=None,
 ):
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -270,10 +282,10 @@ def score_candidate(
         raw_lane_matches[lane] = list(dict.fromkeys(lane_matches))
         lane_scores[lane] = raw_lane_scores[lane] + bias
 
-    topic_tags = []
-    for topic, keywords in (topic_keywords or {}).items():
-        if any(_keyword_matches(haystack, keyword) for keyword in keywords or []):
-            topic_tags.append(topic)
+    topic_tags = match_keyword_groups(haystack, topic_keywords)
+    priority = list(topic_priority or (topic_keywords or {}).keys())
+    topic_family = next((topic for topic in priority if topic in topic_tags), "other")
+    brand_tags = match_keyword_groups(haystack, brand_keywords)
 
     candidate["score"] = score
     candidate["score_reasons"] = reasons
@@ -281,6 +293,8 @@ def score_candidate(
     candidate["raw_lane_scores"] = raw_lane_scores
     candidate["raw_lane_matches"] = raw_lane_matches
     candidate["topic_tags"] = topic_tags
+    candidate["topic_family"] = topic_family
+    candidate["brand_tags"] = brand_tags
     return candidate
 
 
@@ -314,8 +328,12 @@ def score_lead_candidate(candidate):
             if reader_impact >= 1
             else 0
         )
+    technical_relevance = min(
+        2,
+        int(raw_lanes.get("practical", 0)) + int(raw_lanes.get("deep", 0)),
+    )
     breakdown = {
-        "reader_relevance": broad_relevance,
+        "reader_relevance": max(broad_relevance, technical_relevance),
         "actionability": min(5, int(lanes.get("practical", 0))),
         "explanatory_depth": min(5, int(lanes.get("deep", 0))),
         "evidence": {
@@ -339,12 +357,19 @@ def select_lead_shortlist(
     max_items=5,
     max_per_source=1,
     max_per_family=1,
+    max_per_topic_family=None,
+    research_selection_penalty=0,
 ):
     """Return the strongest diverse stories for the 09:00 editorial review."""
     ranked = sorted(
         candidates,
         key=lambda item: (
-            int(item.get("lead_score", 0)),
+            int(item.get("lead_score", 0))
+            - (
+                int(research_selection_penalty)
+                if item.get("group") == "research"
+                else 0
+            ),
             int(item.get("score", 0)),
             item.get("published_at", ""),
         ),
@@ -353,6 +378,7 @@ def select_lead_shortlist(
     selected = []
     source_counts = {}
     family_counts = {}
+    topic_counts = {}
     for item in ranked:
         source_id = item.get("source_id", "")
         family = item.get("source_family") or source_id
@@ -360,9 +386,16 @@ def select_lead_shortlist(
             continue
         if max_per_family is not None and family_counts.get(family, 0) >= int(max_per_family):
             continue
+        topic_family = item.get("topic_family") or "other"
+        if (
+            max_per_topic_family is not None
+            and topic_counts.get(topic_family, 0) >= int(max_per_topic_family)
+        ):
+            continue
         selected.append(item)
         source_counts[source_id] = source_counts.get(source_id, 0) + 1
         family_counts[family] = family_counts.get(family, 0) + 1
+        topic_counts[topic_family] = topic_counts.get(topic_family, 0) + 1
         if len(selected) >= int(max_items):
             break
     for rank, item in enumerate(selected, 1):

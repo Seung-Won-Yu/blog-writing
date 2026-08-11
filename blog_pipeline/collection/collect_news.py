@@ -8,11 +8,12 @@ import hashlib
 import json
 import re
 import time
+import unicodedata
 from html import escape, unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
@@ -21,6 +22,7 @@ from .news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
     make_candidate,
+    match_keyword_groups,
     score_candidate,
     score_lead_candidate,
     select_lead_shortlist,
@@ -141,7 +143,12 @@ def _strip_html(value):
     parser = _TextParser()
     parser.feed(str(value or ""))
     parser.close()
-    return " ".join(unescape(" ".join(parser.parts)).split())
+    text = " ".join(unescape(" ".join(parser.parts)).split())
+    return "".join(
+        character
+        for character in unicodedata.normalize("NFKC", text)
+        if unicodedata.category(character) not in {"Cc", "Cf"}
+    )
 
 
 def _normalise_date(value, default_timezone=dt.timezone.utc):
@@ -444,6 +451,78 @@ def load_recent_publisher_hosts(
     return hosts
 
 
+def _load_recent_group_tags(
+    days_dir,
+    day_id,
+    lookback_days,
+    keyword_groups,
+    publish_meta_dir=None,
+    group_priority=None,
+):
+    target_day = dt.date.fromisoformat(validate_day_id(day_id))
+    output = Path(days_dir)
+    metadata = _daily_publish_meta_dir(output, publish_meta_dir)
+    groups = set()
+    for days_ago in range(1, max(0, int(lookback_days)) + 1):
+        path = output / f"{(target_day - dt.timedelta(days=days_ago)).isoformat()}.json"
+        if not path.exists() or not _is_completed_daily_source(path, metadata):
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        editorial = payload.get("editorial") if isinstance(payload.get("editorial"), dict) else {}
+        parts = [
+            str(payload.get("headline") or ""),
+            str(editorial.get("headline") or ""),
+            str(editorial.get("topic_key") or ""),
+            " ".join(str(value) for value in editorial.get("entities", [])),
+        ]
+        for item in payload.get("news", []):
+            if isinstance(item, dict):
+                parts.extend([str(item.get("title_kr") or ""), str(item.get("blurb_kr") or "")])
+        matched = match_keyword_groups(" ".join(parts), keyword_groups)
+        if group_priority:
+            primary = next((group for group in group_priority if group in matched), None)
+            if primary:
+                groups.add(primary)
+        else:
+            groups.update(matched)
+    return groups
+
+
+def load_recent_brand_tags(
+    days_dir,
+    day_id,
+    lookback_days,
+    brand_keywords,
+    publish_meta_dir=None,
+):
+    """Return product/company tags visible in recent completed daily articles."""
+    return _load_recent_group_tags(
+        days_dir, day_id, lookback_days, brand_keywords, publish_meta_dir
+    )
+
+
+def load_recent_topic_families(
+    days_dir,
+    day_id,
+    lookback_days,
+    topic_keywords,
+    publish_meta_dir=None,
+    topic_priority=None,
+):
+    """Return broad topic families used by recent completed daily articles."""
+    return _load_recent_group_tags(
+        days_dir,
+        day_id,
+        lookback_days,
+        topic_keywords,
+        publish_meta_dir,
+        topic_priority,
+    )
+
+
 def build_inbox(
     config,
     fetch_text,
@@ -451,6 +530,8 @@ def build_inbox(
     day_id=None,
     excluded_urls=None,
     excluded_publisher_hosts=None,
+    excluded_brands=None,
+    excluded_topic_families=None,
 ):
     """Collect, rank, and select candidates without publishing anything."""
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -524,6 +605,8 @@ def build_inbox(
             now=now,
             audience_lanes=config.get("audience_lanes", {}),
             topic_keywords=config.get("topic_keywords", {}),
+            topic_priority=config.get("topic_priority", []),
+            brand_keywords=config.get("brand_keywords", {}),
         )
         score_lead_candidate(candidate)
     candidates.sort(
@@ -544,6 +627,14 @@ def build_inbox(
     eligible_candidates = []
     recent_url_excluded = 0
     recent_publisher_excluded = 0
+    recent_brand_excluded = 0
+    recent_topic_excluded = 0
+    blocked_brands = {str(value).strip() for value in excluded_brands or set() if str(value).strip()}
+    blocked_topics = {
+        str(value).strip()
+        for value in excluded_topic_families or set()
+        if str(value).strip() and str(value).strip() != "other"
+    }
     for candidate in candidates:
         recent_url = candidate.get("url") in canonical_excluded_urls
         recent_publisher = (
@@ -552,16 +643,30 @@ def build_inbox(
             and _publisher_host(candidate.get("url")) in recent_hosts
         )
         candidate["recent_publisher"] = recent_publisher
+        candidate["recent_brands"] = sorted(
+            blocked_brands.intersection(candidate.get("brand_tags") or [])
+        )
+        candidate["recent_topic_family"] = (
+            candidate.get("topic_family")
+            if candidate.get("topic_family") in blocked_topics
+            else ""
+        )
         if recent_url:
             recent_url_excluded += 1
         elif recent_publisher:
             recent_publisher_excluded += 1
+        elif candidate["recent_brands"]:
+            recent_brand_excluded += 1
+        elif candidate["recent_topic_family"]:
+            recent_topic_excluded += 1
         else:
             eligible_candidates.append(candidate)
     selection = dict(config.get("selection", {}))
     selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
     selection["recent_url_excluded"] = recent_url_excluded
     selection["recent_publisher_excluded"] = recent_publisher_excluded
+    selection["recent_brand_excluded"] = recent_brand_excluded
+    selection["recent_topic_excluded"] = recent_topic_excluded
     if selection.get("mode") == "lead_shortlist":
         minimum = int(selection.get("min_lead_score", 0))
         minimum_reader_relevance = int(
@@ -592,6 +697,10 @@ def build_inbox(
                 max_items=int(selection.get("max_items", 5)),
                 max_per_source=int(selection.get("max_per_source", 1)),
                 max_per_family=selection.get("max_per_family", 1),
+                max_per_topic_family=selection.get("max_per_topic_family"),
+                research_selection_penalty=int(
+                    selection.get("research_selection_penalty", 0)
+                ),
             )
 
         selected = select_with_relevance(minimum_reader_relevance)
@@ -805,29 +914,34 @@ def write_inbox(inbox, output_dir):
     }
 
 
-def fetch_url(url, timeout=20, retry_delay=0.5):
-    request = Request(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/126.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/atom+xml, application/xml, text/html;q=0.9, */*;q=0.5",
-            "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.7,en;q=0.5",
-            "Cache-Control": "no-cache",
-        },
-    )
-    for attempt in range(2):
+def fetch_url(url, timeout=20, retry_delay=0.5, max_attempts=4):
+    transient_statuses = {405, 408, 425, 429, 500, 502, 503, 504}
+    for attempt in range(max(1, int(max_attempts))):
+        request = Request(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/126.0 Safari/537.36"
+                ),
+                "Accept": "application/rss+xml, application/atom+xml, application/xml, text/html;q=0.9, */*;q=0.5",
+                "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.7,en;q=0.5",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+            },
+        )
         try:
             with urlopen(request, timeout=timeout) as response:
                 charset = response.headers.get_content_charset() or "utf-8"
                 return response.read().decode(charset, errors="replace")
         except HTTPError as error:
-            if attempt or error.code not in {405, 408, 429, 500, 502, 503, 504}:
+            if attempt + 1 >= max_attempts or error.code not in transient_statuses:
                 raise
-            time.sleep(max(0, retry_delay))
+        except (URLError, TimeoutError):
+            if attempt + 1 >= max_attempts:
+                raise
+        time.sleep(max(0, retry_delay) * (2**attempt))
 
 
 def collection_quality_result(inbox, config):
@@ -891,6 +1005,12 @@ def main(argv=None):
     publisher_cooldown_days = int(
         config.get("selection", {}).get("publisher_cooldown_days", 1)
     )
+    brand_cooldown_days = int(
+        config.get("selection", {}).get("brand_cooldown_days", 0)
+    )
+    topic_cooldown_days = int(
+        config.get("selection", {}).get("topic_cooldown_days", 0)
+    )
     excluded_urls = load_recent_processed_urls(
         args.published_days_dir,
         day_id,
@@ -903,6 +1023,21 @@ def main(argv=None):
         publisher_cooldown_days,
         publish_meta_dir=args.publish_meta_dir,
     )
+    excluded_brands = load_recent_brand_tags(
+        args.published_days_dir,
+        day_id,
+        brand_cooldown_days,
+        config.get("brand_keywords", {}),
+        publish_meta_dir=args.publish_meta_dir,
+    )
+    excluded_topic_families = load_recent_topic_families(
+        args.published_days_dir,
+        day_id,
+        topic_cooldown_days,
+        config.get("topic_keywords", {}),
+        publish_meta_dir=args.publish_meta_dir,
+        topic_priority=config.get("topic_priority", []),
+    )
     inbox = build_inbox(
         config,
         fetch_text=fetch_url,
@@ -910,6 +1045,8 @@ def main(argv=None):
         day_id=day_id,
         excluded_urls=excluded_urls,
         excluded_publisher_hosts=excluded_publisher_hosts,
+        excluded_brands=excluded_brands,
+        excluded_topic_families=excluded_topic_families,
     )
     quality = collection_quality_result(inbox, config)
     if not quality["ok"]:

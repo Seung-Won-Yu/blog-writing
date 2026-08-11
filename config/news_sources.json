@@ -35,7 +35,7 @@
         "중단", "장애", "일반 사용자", "AI", "인공지능", "보안", "앱",
         "업무", "생산성", "구독", "윈도우", "안드로이드", "아이폰",
         "free", "price", "billing",
-        "privacy", "photo", "job", "education",
+        "privacy", "breach", "data breach", "data leak", "ransomware", "photo", "job", "education",
         "smartphone", "Google Search", "health", "scam", "deepfake", "copyright",
         "regulation", "outage", "password", "browser", "email",
         "document", "calendar", "file", "backup", "security", "security update",
@@ -72,7 +72,9 @@
       "label": "바로 써보는 도구와 방법",
       "keywords": [
         "GitHub", "VS Code", "Copilot", "코딩", "개발자", "도구", "업데이트",
-        "출시", "오픈소스", "API", "자동화", "프롬프트", "대시보드", "무료"
+        "출시", "오픈소스", "API", "자동화", "프롬프트", "대시보드", "무료",
+        "Java", "Spring", "PostgreSQL", "Python", "TypeScript", "React",
+        "frontend", "backend", "Kubernetes", "DevOps", "성능", "장애"
       ]
     },
     "deep": {
@@ -85,23 +87,43 @@
     }
   },
   "topic_keywords": {
-    "ai": ["AI", "인공지능", "LLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트"],
-    "security": ["보안", "취약점", "security", "vulnerability", "패치", "malware", "phishing"],
+    "ai": ["AI", "인공지능", "LLM", "vLLM", "VLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트", "모델", "machine learning"],
+    "security": ["보안", "취약점", "security", "vulnerability", "패치", "malware", "phishing", "breach", "data breach", "data leak", "ransomware"],
     "privacy": ["개인정보", "privacy", "tracking", "추적", "저작권", "copyright"],
     "cloud": ["Cloudflare", "AWS", "Azure", "GCP", "cloud", "클라우드", "CDN", "cache", "캐시"],
     "developer_tools": ["GitHub", "VS Code", "API", "SDK", "framework", "developer", "개발자"],
     "automation": ["자동화", "automation", "workflow", "email", "calendar", "spreadsheet", "문서", "파일"]
+  },
+  "topic_priority": [
+    "ai", "security", "privacy", "automation", "cloud", "developer_tools"
+  ],
+  "brand_keywords": {
+    "github": ["GitHub"],
+    "copilot": ["Copilot"],
+    "openai": ["OpenAI", "ChatGPT", "GPT-"],
+    "google": ["Google", "Gemini", "Android", "Chrome", "Gmail"],
+    "cloudflare": ["Cloudflare"],
+    "microsoft": ["Microsoft", "Windows"],
+    "anthropic": ["Anthropic", "Claude"],
+    "meta": ["Meta", "Facebook", "Instagram"],
+    "apple": ["Apple", "iPhone", "iOS"],
+    "amazon": ["Amazon", "AWS"],
+    "mozilla": ["Mozilla", "Firefox"]
   },
   "selection": {
     "mode": "lead_shortlist",
     "max_items": 5,
     "max_per_source": 1,
     "max_per_family": 1,
+    "max_per_topic_family": 1,
     "min_lead_score": 8,
     "min_reader_relevance": 2,
-    "fallback_min_reader_relevance": 1,
+    "fallback_min_reader_relevance": 2,
     "exclude_recent_days": 60,
-    "publisher_cooldown_days": 1
+    "publisher_cooldown_days": 2,
+    "brand_cooldown_days": 4,
+    "topic_cooldown_days": 2,
+    "research_selection_penalty": 2
   },
   "sources": [
     {
@@ -132,6 +154,75 @@
       "weight": 3,
       "lane_bias": {"practical": 1, "deep": 1},
       "include_summary": false,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "toss-tech",
+      "name": "토스 테크",
+      "source_family": "toss",
+      "group": "korean_editorial",
+      "type": "rss",
+      "url": "https://toss.tech/rss.xml",
+      "weight": 4,
+      "lane_bias": {"practical": 3, "deep": 2},
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "lycorp-tech",
+      "name": "LY Corporation Tech Blog",
+      "source_family": "lycorp",
+      "group": "korean_editorial",
+      "type": "rss",
+      "url": "https://techblog.lycorp.co.jp/ko/feed/index.xml",
+      "weight": 3,
+      "lane_bias": {"practical": 2, "deep": 2},
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "naver-d2",
+      "name": "NAVER D2",
+      "source_family": "naver",
+      "group": "korean_editorial",
+      "type": "atom",
+      "url": "https://d2.naver.com/d2.atom",
+      "weight": 4,
+      "lane_bias": {"practical": 2, "deep": 3},
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "infoq",
+      "name": "InfoQ",
+      "source_family": "infoq",
+      "group": "independent_editorial",
+      "type": "rss",
+      "url": "https://feed.infoq.com/",
+      "weight": 3,
+      "lane_bias": {"practical": 2, "deep": 3},
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "stackoverflow-blog",
+      "name": "Stack Overflow Blog",
+      "source_family": "stackoverflow",
+      "group": "independent_editorial",
+      "type": "rss",
+      "url": "https://stackoverflow.blog/feed/",
+      "weight": 3,
+      "lane_bias": {"broad": 1, "practical": 2, "deep": 1},
+      "include_title_keywords": [
+        "developer", "engineering", "programming", "database", "API", "security",
+        "architecture", "Kubernetes", "cloud", "open source", "career", "code", "AI"
+      ],
+      "max_items": 10,
       "manual_review": true,
       "enabled": true
     },
@@ -320,6 +411,42 @@
         "AI", "privacy", "security", "phone", "smartphone", "app", "free",
         "price", "subscription", "job", "education", "health", "scam", "outage",
         "browser", "email", "copyright", "regulation"
+      ],
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "ars-technica",
+      "name": "Ars Technica",
+      "source_family": "ars-technica",
+      "group": "independent_editorial",
+      "type": "rss",
+      "url": "https://feeds.arstechnica.com/arstechnica/index",
+      "weight": 3,
+      "lane_bias": {"broad": 1, "practical": 2, "deep": 2},
+      "include_title_keywords": [
+        "security", "privacy", "browser", "database", "cloud", "open source",
+        "developer", "software", "Linux", "Windows", "Android", "ransomware",
+        "vulnerability", "outage", "API"
+      ],
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "techcrunch",
+      "name": "TechCrunch",
+      "source_family": "techcrunch",
+      "group": "general_editorial",
+      "type": "rss",
+      "url": "https://techcrunch.com/feed/",
+      "weight": 3,
+      "lane_bias": {"broad": 2, "practical": 1},
+      "include_title_keywords": [
+        "security", "privacy", "data breach", "cloud", "developer", "software",
+        "open source", "automation", "productivity", "browser", "app", "scam",
+        "regulation", "outage"
       ],
       "max_items": 10,
       "manual_review": true,
