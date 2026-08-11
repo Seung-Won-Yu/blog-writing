@@ -1,9 +1,9 @@
 {
-  "title": "GitHub Copilot 대화 관리: 최소화·이어보기·토큰 사용량 확인",
+  "title": "CEVA 데이터 유출: 배송 정보는 어떻게 은행·유통·Steam으로 번졌나",
   "title_candidates": [
-    "GitHub Copilot 대화 관리: 최소화·이어보기·토큰 사용량 확인",
-    "GitHub, Copilot 웹 채팅에 최소화·최근 대화·토큰 사용량 표시 추가",
-    "코드 변경 종이와 이어진 대화 리본을 보관 클립에 잠시 접어 두고 같은 문맥으로 돌아오는 장면: 길어진 대화를 닫지 않고…"
+    "CEVA 데이터 유출: 배송 정보는 어떻게 은행·유통·Steam으로 번졌나",
+    "CEVA 물류 데이터 유출, 은행·유통·Steam 고객 통지로 확산",
+    "배송 라벨 한 장에서 여러 브랜드의 고객 통지 봉투로 흔적이 퍼지는 물류 작업대: 한 번의 물류사 침해가 왜 서로 다른…"
   ],
   "category": "최신 IT·개발 소식",
   "draft_id": "2026-08-11",
@@ -13,17 +13,17 @@
   "publication_mode": "scheduled",
   "scheduled_at": "2026-08-11T09:00:00+09:00",
   "tags": [
-    "GitHub Copilot",
-    "Copilot Chat",
-    "대화 이어보기",
-    "토큰 사용량",
-    "AI 크레딧",
-    "GitHub 사용법",
-    "AI 코딩 도구"
+    "CEVA Logistics",
+    "데이터 유출",
+    "공급망 보안",
+    "배송 정보",
+    "피싱 대응",
+    "개인정보 보호",
+    "제3자 위험"
   ],
-  "meta_description": "긴 답변을 기다리는 동안 다른 이슈나 풀 리퀘스트를 확인하려고 탭을 옮겼다가, 조금 전 대화가 어디로 갔는지 찾느라 시간을 쓰는 일이 있다. GitHub가 8월 10일 공개한 Copilot 웹 채팅… GitHub는 github.com의 Copilot Chat에 대화창 최소화, 최근 대…",
+  "meta_description": "온라인 쇼핑몰에서 물건을 산 뒤 처음 보는 물류회사 이름으로 개인정보 유출 안내를 받는다면 당황하기 쉽다. 판매사에 입력한 이름·주소·전화번호가 주문 처리 과정에서 물류 파트너에게 전달되기 때문이다.… CEVA Logistics의 유럽 계약물류 시스템 침해가 여러 기업의 고객 통지로…",
   "key_summary": [
-    "1. GitHub, Copilot 웹 채팅에 최소화·최근 대화·토큰 사용량 표시 추가",
+    "1. CEVA 물류 데이터 유출, 은행·유통·Steam 고객 통지로 확산",
     "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
   ],
   "publish_checklist": [
@@ -33,10 +33,10 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: GitHub Copilot 대화 관리: 최소화·이어보기·토큰 사용량 확인"
+    "추천 제목: CEVA 데이터 유출: 배송 정보는 어떻게 은행·유통·Steam으로 번졌나"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 12,
+  "estimated_read_minutes": 11,
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-08-11.json",
@@ -45,37 +45,37 @@
   "before_ad_html": "docs/tistory/2026-08-11-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-11-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-11-adfit.html",
-  "source_sha256": "234407cdf3f84b0b42b034048a7765242e7ea06de9785202867f521b0adafc29",
-  "html_sha256": "341128b56362d9ac7f2dc8b98e3f74e1ceb669fbd8f887358666a9ca921caade",
-  "adfit_sha256": "edbd056c23ad61bd94cfe5cfb52acefec85c31f9f267425d3e7c58821ce238bc",
+  "source_sha256": "6cd35802acf756641e4d92224ac303fdb3a94ece8fcaa600ed03de44f66ef806",
+  "html_sha256": "7933bccda013997c88df457d9e58d752443f06f65948b74a6420c4555a18bc2d",
+  "adfit_sha256": "fc5dc020d0853114e9b8f6ec10a8a83f04c4fc6687502bb93aec64ffb0e0d828",
   "image_assets": [
     {
       "kind": "cover",
       "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/Copilot-대화관리-대표.webp",
-      "path": "docs/tistory/assets/2026-08-11/Copilot-대화관리-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/CEVA-배송정보-유출-대표.webp",
+      "path": "docs/tistory/assets/2026-08-11/CEVA-배송정보-유출-대표.webp",
       "original_url": "",
-      "alt": "코드 변경 종이와 이어진 대화 리본을 보관 클립에 잠시 접어 두고 사용량 눈금계를 확인하는 장면",
+      "alt": "배송 라벨이 붙은 택배 상자에서 은행 우편, 안경 케이스, 게임기 배송 상자로 정보 흔적이 퍼지는 장면",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_1",
       "title": "본문 이해 이미지 1",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/Copilot-대화관리-흐름.webp",
-      "path": "docs/tistory/assets/2026-08-11/Copilot-대화관리-흐름.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/CEVA-주문정보-이동경로.webp",
+      "path": "docs/tistory/assets/2026-08-11/CEVA-주문정보-이동경로.webp",
       "original_url": "",
-      "alt": "대화 시작부터 창 최소화, GitHub 탐색, 대화 이어보기, 사용량 확인으로 연결되는 흐름",
+      "alt": "고객 주문 정보가 판매사와 물류사로 이동하고 사고 뒤 고객 통지가 되돌아오는 경로",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_2",
       "title": "본문 이해 이미지 2",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/Copilot-토큰사용량-공식화면.webp",
-      "path": "docs/tistory/assets/2026-08-11/Copilot-토큰사용량-공식화면.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-11/CEVA-bol-공식공지.webp",
+      "path": "docs/tistory/assets/2026-08-11/CEVA-bol-공식공지.webp",
       "original_url": "",
-      "alt": "GitHub Copilot Chat에서 세션과 메시지 단위 토큰 사용량을 보여 주는 공식 화면",
+      "alt": "bol이 물류 파트너 보안 사고와 주문 처리 영향을 설명한 공식 공지 화면",
       "width": 1200,
       "height": 630
     }
