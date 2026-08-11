@@ -50,7 +50,7 @@
       "response",
       "unknowns"
     ],
-    "article_shape": "decision_guide",
+    "article_shape": "incident_trace",
     "rotation_exception": null,
     "search_intent": {
       "query": "CEVA 데이터 유출",

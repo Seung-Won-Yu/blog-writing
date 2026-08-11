@@ -229,6 +229,7 @@ ARTICLE_SHAPES = {
     "change_impact",
     "hands_on_test",
     "decision_guide",
+    "incident_trace",
     "troubleshooting",
     "research_interpretation",
 }
@@ -1302,7 +1303,7 @@ def _visual_reasons(source, identity):
     if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
         editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
         article_shape = plain(editorial.get("article_shape"))
-        if article_shape in {"hands_on_test", "troubleshooting"} and not any(
+        if article_shape in {"hands_on_test", "troubleshooting", "incident_trace"} and not any(
             origin in {"capture", "annotated_capture", "measured_chart"}
             for origin in origins
         ):

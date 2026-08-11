@@ -160,7 +160,7 @@
 - 태그 5~8개는 `핵심 제품·기술`, `독자가 겪는 문제`, `세부 기능·설정`, `사용 상황`을 섞습니다. `AI`, `IT`, `뉴스`, `정보`처럼 내용과 연결되지 않는 넓은 단어로 칸을 채우지 않습니다. 최소 2개는 `primary_query`의 실제 검색어와 직접 연결합니다.
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
 - 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
-- 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
+- 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 사고·유출·장애처럼 한 지점의 문제가 여러 서비스나 사용자에게 번지는 주제는 `incident_trace`를 사용해 `발생 지점 → 데이터·서비스 이동 경로 → 확인된 영향과 미확인 범위 → 지금 할 일` 순서로 추적합니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
 - 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.
 - `editorial.revisit`에는 첫 방문용 `quick_answer`, 다시 활용할 수 있는 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. 이는 편집자가 글의 지속 가치를 점검하는 내부 메타데이터일 뿐입니다. 값을 본문에 그대로 옮기거나 `다시 찾을 때`, `처음 읽기`, `적용할 때`, `막혔을 때` 같은 상자로 출력하지 않습니다. 글의 흐름에 필요한 핵심 답·실패 조건·변경 조건만 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
 - `code`, `table`, `ul`이 실제로 복사·비교·점검에 유용할 때만 최대 하나에 `reusable: true`와 구체적인 `reuse_label`을 내부 메타데이터로 넣습니다. 뉴스 주제에 맞지 않으면 재사용 블록을 만들지 않습니다. 이 메타데이터는 별도 제목·상자·배지로 출력하지 않습니다.

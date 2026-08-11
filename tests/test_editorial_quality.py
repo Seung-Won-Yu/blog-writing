@@ -432,6 +432,32 @@ class EditorialQualityTests(unittest.TestCase):
             ),
         )
 
+    def test_incident_trace_requires_real_visual_evidence(self):
+        source = valid_daily_source("2026-08-04")
+        source["editorial"]["article_shape"] = "incident_trace"
+
+        self.assertIn(
+            "quality_visual_evidence",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+        source["visual"]["assets"][0] = visual_asset(
+            origin="capture",
+            evidence_type="official_screen",
+            label="공식 사고 공지에서 확인한 영향 범위",
+        )
+        source["images"]["visual_1"] = image_asset(origin="capture")
+        source["generation"]["image_provider"] = "mixed"
+
+        self.assertNotIn(
+            "quality_visual_evidence",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
     def test_future_article_requires_revisit_value_contract(self):
         source = valid_daily_source("2026-08-04")
         self.assertNotIn(
