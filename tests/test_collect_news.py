@@ -493,6 +493,77 @@ class InboxTests(unittest.TestCase):
                 "전 소스 실패를 성공으로 처리하면서 마지막 정상 후보함까지 덮어쓰면 안 됩니다.",
             )
 
+    def test_main_persists_healthy_candidates_when_shortlist_needs_editorial_fallback(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config_path = root / "news_sources.json"
+            sources = [
+                {
+                    "id": f"source-{index}",
+                    "name": f"Source {index}",
+                    "type": "rss",
+                    "url": f"https://source-{index}.example/feed",
+                    "enabled": True,
+                }
+                for index in range(3)
+            ]
+            config_path.write_text(
+                json.dumps(
+                    {
+                        "collection_quality": {
+                            "min_successful_sources": 3,
+                            "min_candidate_sources": 3,
+                            "min_candidates": 5,
+                            "min_selected": 3,
+                        },
+                        "sources": sources,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            candidates = [
+                {
+                    "source_id": f"source-{index % 3}",
+                    "title": f"후보 {index}",
+                    "url": f"https://example.com/{index}",
+                }
+                for index in range(5)
+            ]
+            inbox = {
+                "day": "2026-08-12",
+                "candidates": candidates,
+                "selected": candidates[:2],
+                "errors": [],
+            }
+
+            with patch(
+                "blog_pipeline.collection.collect_news.build_inbox",
+                return_value=inbox,
+            ), patch(
+                "blog_pipeline.collection.collect_news.write_inbox",
+                return_value={
+                    "html": str(root / "inbox" / "index.html"),
+                    "removed": [],
+                },
+            ) as write_mock:
+                exit_code = collect_news_main(
+                    [
+                        "--day",
+                        "2026-08-12",
+                        "--config",
+                        str(config_path),
+                        "--output-dir",
+                        str(root / "inbox"),
+                        "--published-days-dir",
+                        str(root / "days"),
+                        "--publish-meta-dir",
+                        str(root / "tistory"),
+                    ]
+                )
+
+            self.assertEqual(exit_code, 0)
+            write_mock.assert_called_once_with(inbox, str(root / "inbox"))
+
     def test_builds_a_five_item_lead_shortlist_instead_of_lane_slots(self):
         sources = []
         feeds = {}

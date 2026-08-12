@@ -984,6 +984,13 @@ def collection_quality_result(inbox, config):
     }
 
 
+HARD_COLLECTION_FAILURE_REASONS = {
+    "insufficient_healthy_sources",
+    "insufficient_candidates",
+    "candidate_source_diversity",
+}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="여러 출처의 뉴스 후보함을 생성합니다.")
     day_group = parser.add_mutually_exclusive_group()
@@ -1049,24 +1056,40 @@ def main(argv=None):
         excluded_topic_families=excluded_topic_families,
     )
     quality = collection_quality_result(inbox, config)
-    if not quality["ok"]:
+    hard_reasons = [
+        reason
+        for reason in quality["reasons"]
+        if reason in HARD_COLLECTION_FAILURE_REASONS
+    ]
+    if hard_reasons:
         print(
-            "뉴스 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
+            "뉴스 후보함 생성 중단: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
                 quality["successful_sources"],
                 quality["candidate_sources"],
                 quality["candidates"],
                 quality["selected"],
-                ",".join(quality["reasons"]),
+                ",".join(hard_reasons),
             )
         )
         return 2
     paths = write_inbox(inbox, args.output_dir)
+    status = (
+        "뉴스 후보함 생성(추천 보완 필요)"
+        if quality["reasons"]
+        else "뉴스 후보함 생성"
+    )
     print(
-        "뉴스 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건 / 과거 원뉴스 {}개 정리\n{}".format(
+        "{}: 추천 {}건 / 전체 {}건 / 오류 {}건 / 과거 원뉴스 {}개 정리{}\n{}".format(
+            status,
             len(inbox["selected"]),
             len(inbox["candidates"]),
             len(inbox["errors"]),
             len(paths["removed"]),
+            (
+                " / " + ",".join(quality["reasons"])
+                if quality["reasons"]
+                else ""
+            ),
             paths["html"],
         )
     )
