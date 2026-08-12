@@ -9,12 +9,12 @@
 1. 최신 `main`을 받고 당일 뉴스글이 먼저 완성됐는지 확인합니다.
 
    ```bash
-   git pull --ff-only origin main
+   python3 -m blog_pipeline.publishing.sync_main --today --allow-current-inbox --attempts 3 --retry-delay 5
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.saturday_guard --today
    ```
 
-   `git pull`이 `Could not resolve host`, 502, 503, 504 같은 일시적 네트워크 오류로 실패하면 같은 명령만 10초, 30초 뒤 최대 두 번 더 실행합니다. 세 번 모두 실패했을 때만 `BLOCKED`로 종료합니다.
+   동기화 명령은 안전한 fast-forward를 세 번 시도합니다. DNS·502·503·504가 계속되어도 작업 트리가 깨끗하고 당일 뉴스 후보함이 유효하면 `LOCAL_CACHE_READY`로 제작을 계속합니다. 후보함이 오래됐거나 비었거나 작업 트리가 더러우면 중단합니다. fast-forward 불가 같은 비네트워크 오류는 우회하지 않습니다.
 
 2. `saturday_guard` 결과를 따릅니다.
 
@@ -176,6 +176,7 @@ python3 -m blog_pipeline.publishing.export_tistory --draft-id YYYY-MM-DD-automat
 python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m blog_pipeline.publishing.build_integration_page
 python3 -m unittest discover -s tests
+python3 -m blog_pipeline.publishing.sync_main --attempts 3 --retry-delay 5
 python3 -m blog_pipeline.publishing.saturday_guard --today --require-complete
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --stage
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --check
@@ -184,7 +185,7 @@ git diff --cached --check
 
 데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트의 당일 그룹에 `뉴스 심층글`과 `업무자동화 실험` 두 카드가 함께 있고 각각 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 독립 연결돼야 합니다.
 
-`publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+시작 시 `LOCAL_CACHE_READY`였더라도 스테이징 전에 위 엄격 동기화를 반드시 성공시킵니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고합니다. `publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 

@@ -174,6 +174,9 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
+        self.assertIn("sync_main --today --allow-current-inbox", contract)
+        self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("`LOCAL_CACHE_READY`", contract)
         self.assertIn(
             "publish_bundle --draft-id YYYY-MM-DD-automation --stage",
             contract,
@@ -186,6 +189,9 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
         contract = GUIDE_CONTRACT.read_text(encoding="utf-8")
 
+        self.assertIn("sync_main --today --allow-current-inbox", contract)
+        self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("`LOCAL_CACHE_READY`", contract)
         self.assertIn("daily_guard --draft-id YYYY-MM-DD-guide --source-only", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --stage", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --check", contract)
