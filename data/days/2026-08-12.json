@@ -1,0 +1,433 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-12",
+  "publish_date": "2026-08-12",
+  "date_label": "2026. 8. 12",
+  "weekday": "수",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "category": "최신 IT·개발 소식",
+  "scheduled_at": "2026-08-12T09:00:00+09:00",
+  "primary_query": "GitHub Copilot JetBrains 메모리 Ollama 설정",
+  "tags": [
+    "GitHub Copilot",
+    "JetBrains",
+    "Copilot Memory",
+    "Ollama",
+    "로컬 LLM",
+    "BYOK",
+    "AI 코딩 도구"
+  ],
+  "editorial": {
+    "headline": "GitHub Copilot JetBrains 메모리·Ollama 차이와 설정 순서",
+    "opening": "새 채팅을 열 때마다 빌드 명령과 코드 규칙을 다시 설명하는 일, 그리고 코딩 도구에서 내가 고른 로컬 모델을 써 보고 싶은 일은 닮아 보이지만 서로 다른 문제다. GitHub Copilot for JetBrains의 최신 업데이트는 이 둘을 한꺼번에 추가했다. Copilot Memory는 저장소의 규칙과 사용자 선호를 다음 작업으로 이어 주고, Ollama 연결은 사용할 모델 제공자를 바꾼다. 둘을 함께 켠다고 모든 Copilot 처리가 자동으로 로컬·비공개가 되는 것은 아니다. 기능의 경계부터 구분해야 설정도 안전해진다.",
+    "closing": "이번 업데이트의 가치는 기능 수보다 경계를 나눠 준 데 있다. 반복 설명이 문제라면 메모리를 검증하고, 모델 선택권이 필요하다면 Ollama를 시험하면 된다. 둘을 함께 쓸 때도 저장되는 정보와 모델로 전달되는 정보를 따로 확인해야 한다. 작은 테스트 저장소에서 기억의 정확성, 모델의 품질과 속도, 조직 정책을 차례로 점검하면 편리함은 얻고 뜻밖의 정보 노출이나 오래된 규칙 적용은 줄일 수 있다.",
+    "action": "JetBrains 플러그인과 IDE 호환 버전을 먼저 확인한 뒤, 민감하지 않은 테스트 저장소에서 메모리 한 항목과 Ollama 모델 한 개만 켜고 새 세션·브랜치 변경·모델 전환을 차례로 검증한다.",
+    "audience_problem": "Copilot Memory와 Ollama가 각각 무엇을 바꾸는지, 로컬 모델을 선택하면 저장소 정보도 모두 로컬에만 남는지 구분하기 어렵다.",
+    "reader_takeaway": "메모리와 Ollama의 역할·범위·주의점을 구분하고, 개인과 팀이 작은 저장소에서 안전하게 시험할 순서를 정할 수 있다.",
+    "why_now": "GitHub가 2026년 8월 11일 JetBrains용 Copilot 업데이트에서 지속 메모리와 Ollama BYOK, 기업 관리 설정을 함께 공개했고 JetBrains Marketplace에도 1.15.0 계열 플러그인 변경사항이 반영됐다.",
+    "topic_key": "GitHub Copilot for JetBrains 메모리와 Ollama BYOK",
+    "reader_question": "Copilot Memory와 Ollama는 각각 무엇을 바꾸며, 둘을 함께 쓰기 전에 어떤 항목을 확인해야 할까?",
+    "entities": [
+      "GitHub Copilot",
+      "JetBrains",
+      "Ollama",
+      "GitHub"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision",
+      "verification"
+    ],
+    "article_shape": "decision_guide",
+    "rotation_exception": "8월 10일 글은 코딩 에이전트의 패키지·권한·배포 보안을 다뤘고, 이번 글은 8월 11일 공개된 JetBrains 전용 메모리와 Ollama 설정의 실제 차이를 다루므로 독자 질문과 적용 범위가 분명히 다르다.",
+    "search_intent": {
+      "query": "GitHub Copilot",
+      "reader_need": "두 기능의 차이와 실제 설정 전 확인할 개인정보·관리·호환성 범위를 이해한다.",
+      "answer_format": "기능 비교, 공식 화면, 작은 저장소 검증 순서, 사용 상황별 선택 기준으로 설명한다."
+    },
+    "revisit": {
+      "quick_answer": "Copilot Memory는 저장소 규칙과 사용자 선호를 다음 세션에 이어 주는 기능이고, Ollama는 JetBrains에서 선택할 수 있는 BYOK 모델 제공자다. 하나는 문맥의 지속성, 다른 하나는 모델 선택을 바꾸며 서로의 보안 범위를 대신 보장하지 않는다.",
+      "reuse_case": "JetBrains에서 Copilot을 처음 설정하거나 팀 규칙을 반복 설명하는 비용을 줄이려 할 때, 메모리와 모델 제공자를 각각 선택하는 기준으로 다시 활용한다.",
+      "failure_case": "Ollama를 선택했다는 이유만으로 모든 Copilot 데이터가 로컬에만 머문다고 단정하거나, 메모리가 기억한 오래된 규칙을 검증 없이 적용하면 잘못된 코드와 정보 처리 문제가 생길 수 있다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "Copilot Memory의 공개 미리보기 정책 변경",
+        "JetBrains 플러그인 호환 버전 변경",
+        "Ollama BYOK 설정 및 지원 모델 변경",
+        "기업용 MCP·권한·관측성 관리 정책 변경"
+      ]
+    }
+  },
+  "visual": {
+    "hook": "프로젝트를 기억하는 기능과 로컬 모델을 고르는 기능은 어디에서 갈라질까?",
+    "subject": "반복 규칙이 꽂힌 프로젝트 바인더와 케이블로 연결된 소형 로컬 모델 장치",
+    "motif": "프로젝트 바인더, 반복 규칙 탭, 소형 연산 장치, IDE 편집 화면",
+    "cover": {
+      "label": "프로젝트 문맥을 기억하는 장치와 로컬 모델을 선택하는 연결을 한 작업대에서 대비",
+      "scene_label": [
+        "프로젝트 기억",
+        "로컬 모델 선택"
+      ],
+      "steps": "열린 프로젝트 바인더에는 반복되는 규칙을 뜻하는 색인 탭이 꽂혀 있고, 옆의 소형 연산 장치는 한 가닥 케이블로 코드 편집 화면에 연결된다",
+      "curiosity_hook": "기억을 켜는 것과 로컬 모델을 쓰는 것은 왜 같은 설정이 아닐까",
+      "evidence_type": "illustration",
+      "origin": "imagegen",
+      "logic_type": "contrast",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "memory-binder-local-model-workbench",
+      "composition_type": "single-workbench-two-tools",
+      "palette_family": "charcoal_warm_amber",
+      "render_family": "photorealistic_natural",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Asset type: Korean technology blog cover, 1200x630 landscape. Primary request: AI 코딩 도구의 지속 메모리와 로컬 모델 선택이 서로 다른 기능임을 실제 작업대 정물로 보여 준다. Scene/backdrop: 자연광이 드는 실제 개발 작업대. 왼쪽에는 프로젝트 파일을 뜻하는 열린 검은 바인더 하나가 있고, 여러 페이지에 동일한 위치로 반복되는 청록색과 주황색 색인 탭이 꽂혀 있어 규칙이 다음 세션으로 이어지는 느낌을 준다. 오른쪽에는 손바닥 크기의 무광 소형 연산 장치 하나가 놓이고 단 하나의 케이블로 중앙 뒤편의 어두운 코드 편집 화면에 연결된다. Style/medium: 현실적인 제품 사진과 시사 잡지 정물 사진 사이, 종이와 금속과 케이블의 질감이 자연스럽고 과장되지 않는다. Composition/framing: 바인더와 소형 장치가 한 장면 안에서 분명히 분리되지만 카드나 비교표처럼 나뉘지 않는다. 코드 화면은 배경으로만 흐릿하게 보인다. Lighting/mood: 따뜻한 오전 측면광, 차분하고 실용적인 실험 분위기. Color palette: 차콜, 따뜻한 미색, 청록 포인트, 절제된 주황. Text: 없음. Constraints: 한 개의 바인더, 한 개의 소형 장치, 한 가닥 케이블만 보인다. 사람과 손이 없다. Avoid: 얼굴, 사람, 일반적인 노트북 대표 이미지, 로봇, 뇌, 자물쇠, 구름 아이콘, 서버실, 해커, 대시보드, 카드 UI, 흐름도, 화살표, 문자, 숫자, 로고, 워터마크, 네온 사이버펑크."
+    },
+    "assets": [
+      {
+        "label": "프로젝트 기억과 로컬 모델이 JetBrains IDE의 서로 다른 층에 연결되는 구조",
+        "scene_label": [
+          "프로젝트 기억",
+          "로컬 모델",
+          "코드 편집기"
+        ],
+        "steps": "프로젝트 노트는 반복 규칙을 코드 편집기로 이어 주고, 소형 연산 장치는 답변에 사용할 모델을 코드 편집기에 제공한다",
+        "curiosity_hook": "같은 IDE에서 보이지만 기억과 모델 선택은 왜 따로 검증해야 할까",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "프로젝트 기억",
+          "로컬 모델",
+          "코드 편집기"
+        ],
+        "generation_prompt": "Use case: infographic-diagram. Asset intent: explanatory. Asset type: Korean technology blog explanatory image, 1200x630 landscape. Primary request: GitHub Copilot JetBrains에서 Copilot Memory와 Ollama가 서로 다른 층을 바꾼다는 점을 한눈에 설명한다. Scene/backdrop: 밝은 따뜻한 미색 배경. 중앙에는 하나의 어두운 코드 편집 창이 있다. 왼쪽 위에는 여러 세션으로 이어지는 프로젝트 노트 더미가 있고, 굵은 청록색 선 하나가 중앙 코드 편집 창으로 연결된다. 왼쪽 아래에는 작은 무광 로컬 연산 장치가 있고, 굵은 주황색 케이블 하나가 중앙 코드 편집 창으로 연결된다. 프로젝트 노트 옆에는 큰 한국어 라벨 \"프로젝트 기억\", 로컬 장치 옆에는 큰 한국어 라벨 \"로컬 모델\", 중앙 편집 창 아래에는 큰 한국어 라벨 \"코드 편집기\"를 둔다. 노트 경로는 규칙과 선호가 다음 세션에 이어지는 뜻이고, 장치 경로는 답변 모델 제공자를 선택하는 뜻이다. Style/medium: 절제된 편집 일러스트와 사실적인 물체 질감을 섞은 기술 잡지 도식, 모바일에서도 세 라벨이 명확하다. Composition/framing: 카드나 표가 아닌 하나의 중앙 장면과 두 개의 연결 경로. Color palette: 짙은 차콜, 청록, 절제된 주황, 따뜻한 미색. Text (verbatim): \"프로젝트 기억\", \"로컬 모델\", \"코드 편집기\". Constraints: 정확히 이 세 한국어 라벨만 사용한다. 한 개의 코드 편집 창, 한 개의 노트 더미, 한 개의 로컬 장치만 보인다. Avoid: 영어, 추가 글자, 로고, 사람, 얼굴, 로봇, 뇌, 자물쇠, 클라우드 아이콘, 대시보드, 카드 격자, 여러 패널, 작은 설명문, 워터마크, 깨진 한글.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "JetBrains 안에서 Ollama 제공자와 모델을 선택하는 공식 화면",
+        "scene_label": [
+          "Ollama 제공자",
+          "모델 선택"
+        ],
+        "steps": "공식 업데이트 화면에서 Ollama를 BYOK 제공자로 추가하고 사용할 모델을 선택하는 위치를 확인한다",
+        "curiosity_hook": "로컬 모델을 고르면 Copilot의 모든 기능도 자동으로 로컬이 될까",
+        "evidence_type": "screenshot",
+        "origin": "capture",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "source_url": "https://github.blog/changelog/2026-08-11-copilot-memory-and-ollama-in-github-copilot-for-jetbrains",
+        "capture_note": "GitHub 공식 변경 공지에 첨부된 Ollama 제공자·모델 선택 화면을 사용한다.",
+        "capture_tool": "terminal",
+        "capture_target": "GitHub Copilot Ollama model selection screenshot",
+        "captured_at": "2026-08-12T09:42:00+09:00",
+        "korean_labels": [],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "반복 규칙 탭이 꽂힌 프로젝트 바인더와 코드 화면에 연결된 소형 로컬 모델 장치",
+      "path": "docs/tistory/assets/2026-08-12/GitHub-Copilot-JetBrains-메모리-Ollama-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/GitHub-Copilot-JetBrains-메모리-Ollama-대표.webp",
+      "cover_kind": "editorial_scene",
+      "art_direction": "memory-binder-local-model-workbench",
+      "composition_type": "single-workbench-two-tools",
+      "palette_family": "charcoal_warm_amber",
+      "render_family": "photorealistic_natural",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Asset type: Korean technology blog cover, 1200x630 landscape. Primary request: AI 코딩 도구의 지속 메모리와 로컬 모델 선택이 서로 다른 기능임을 실제 작업대 정물로 보여 준다. Scene/backdrop: 자연광이 드는 실제 개발 작업대. 왼쪽에는 프로젝트 파일을 뜻하는 열린 검은 바인더 하나가 있고, 여러 페이지에 동일한 위치로 반복되는 청록색과 주황색 색인 탭이 꽂혀 있어 규칙이 다음 세션으로 이어지는 느낌을 준다. 오른쪽에는 손바닥 크기의 무광 소형 연산 장치 하나가 놓이고 단 하나의 케이블로 중앙 뒤편의 어두운 코드 편집 화면에 연결된다. Style/medium: 현실적인 제품 사진과 시사 잡지 정물 사진 사이, 종이와 금속과 케이블의 질감이 자연스럽고 과장되지 않는다. Composition/framing: 바인더와 소형 장치가 한 장면 안에서 분명히 분리되지만 카드나 비교표처럼 나뉘지 않는다. 코드 화면은 배경으로만 흐릿하게 보인다. Lighting/mood: 따뜻한 오전 측면광, 차분하고 실용적인 실험 분위기. Color palette: 차콜, 따뜻한 미색, 청록 포인트, 절제된 주황. Text: 없음. Constraints: 한 개의 바인더, 한 개의 소형 장치, 한 가닥 케이블만 보인다. 사람과 손이 없다. Avoid: 얼굴, 사람, 일반적인 노트북 대표 이미지, 로봇, 뇌, 자물쇠, 구름 아이콘, 서버실, 해커, 대시보드, 카드 UI, 흐름도, 화살표, 문자, 숫자, 로고, 워터마크, 네온 사이버펑크.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 52930,
+      "quality": null,
+      "sha256": "2779879d3036e6497bdfc7c92e12b9e9e49d0d7f94cc95f7b89408da867587ee"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "프로젝트 기억 노트와 로컬 모델 장치가 서로 다른 선으로 IDE에 연결된 그림",
+      "path": "docs/tistory/assets/2026-08-12/Copilot-메모리-Ollama-차이.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/Copilot-메모리-Ollama-차이.webp",
+      "generation_prompt": "Use case: infographic-diagram. Asset intent: explanatory. Asset type: Korean technology blog explanatory image, 1200x630 landscape. Primary request: GitHub Copilot JetBrains에서 Copilot Memory와 Ollama가 서로 다른 층을 바꾼다는 점을 한눈에 설명한다. Scene/backdrop: 밝은 따뜻한 미색 배경. 중앙에는 하나의 어두운 코드 편집 창이 있다. 왼쪽 위에는 여러 세션으로 이어지는 프로젝트 노트 더미가 있고, 굵은 청록색 선 하나가 중앙 코드 편집 창으로 연결된다. 왼쪽 아래에는 작은 무광 로컬 연산 장치가 있고, 굵은 주황색 케이블 하나가 중앙 코드 편집 창으로 연결된다. 프로젝트 노트 옆에는 큰 한국어 라벨 \"프로젝트 기억\", 로컬 장치 옆에는 큰 한국어 라벨 \"로컬 모델\", 중앙 편집 창 아래에는 큰 한국어 라벨 \"코드 편집기\"를 둔다. 노트 경로는 규칙과 선호가 다음 세션에 이어지는 뜻이고, 장치 경로는 답변 모델 제공자를 선택하는 뜻이다. Style/medium: 절제된 편집 일러스트와 사실적인 물체 질감을 섞은 기술 잡지 도식, 모바일에서도 세 라벨이 명확하다. Composition/framing: 카드나 표가 아닌 하나의 중앙 장면과 두 개의 연결 경로. Color palette: 짙은 차콜, 청록, 절제된 주황, 따뜻한 미색. Text (verbatim): \"프로젝트 기억\", \"로컬 모델\", \"코드 편집기\". Constraints: 정확히 이 세 한국어 라벨만 사용한다. 한 개의 코드 편집 창, 한 개의 노트 더미, 한 개의 로컬 장치만 보인다. Avoid: 영어, 추가 글자, 로고, 사람, 얼굴, 로봇, 뇌, 자물쇠, 클라우드 아이콘, 대시보드, 카드 격자, 여러 패널, 작은 설명문, 워터마크, 깨진 한글.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 40622,
+      "quality": null,
+      "sha256": "67932ffd543351ff73e4b85bbc629246d031d5927587df7745bafcc9f7d1c765"
+    },
+    "visual_2": {
+      "origin": "capture",
+      "alt": "JetBrains에서 Ollama 제공자와 모델을 고르는 GitHub Copilot 공식 화면",
+      "path": "docs/tistory/assets/2026-08-12/Copilot-Ollama-모델선택.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/Copilot-Ollama-모델선택.webp",
+      "source_url": "https://github.blog/changelog/2026-08-11-copilot-memory-and-ollama-in-github-copilot-for-jetbrains",
+      "capture_note": "GitHub 공식 변경 공지의 Ollama 제공자·모델 선택 화면이다.",
+      "capture_tool": "terminal",
+      "capture_target": "GitHub Copilot Ollama model selection screenshot",
+      "captured_at": "2026-08-12T09:42:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 59962,
+      "quality": null,
+      "sha256": "4975449a62f82ea0e491fd4c08e2051394a6db349cc95c7f3dabd53b782bb06c",
+      "capture_sha256": "4975449a62f82ea0e491fd4c08e2051394a6db349cc95c7f3dabd53b782bb06c"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "GitHub Copilot for JetBrains에 메모리와 Ollama 지원 추가",
+      "source": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-08-11-copilot-memory-and-ollama-in-github-copilot-for-jetbrains",
+      "published_at": "2026-08-11T20:15:55Z",
+      "blurb_kr": "GitHub가 JetBrains용 Copilot에 저장소 규칙과 사용자 선호를 이어 주는 메모리, Ollama BYOK 제공자, 기업 관리 설정과 여러 사용성 개선을 추가했다. 메모리와 로컬 모델 선택은 서로 다른 데이터 경계를 가지므로 각각 검증해야 한다.",
+      "references": [
+        {
+          "title": "Copilot memory and Ollama in GitHub Copilot for JetBrains",
+          "url": "https://github.blog/changelog/2026-08-11-copilot-memory-and-ollama-in-github-copilot-for-jetbrains",
+          "kind": "official"
+        },
+        {
+          "title": "About GitHub Copilot memory",
+          "url": "https://docs.github.com/en/copilot/concepts/agents/copilot-memory",
+          "kind": "official"
+        },
+        {
+          "title": "GitHub Copilot plugin versions for JetBrains",
+          "url": "https://plugins.jetbrains.com/plugin/17718-github-copilot--your-ai-pair-programmer/versions",
+          "kind": "independent"
+        },
+        {
+          "title": "Ollama Quickstart",
+          "url": "https://docs.ollama.com/quickstart",
+          "kind": "official"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "같은 업데이트에 들어왔지만 해결하는 문제는 다르다"
+        },
+        {
+          "t": "p",
+          "text": "GitHub가 8월 11일 공개한 JetBrains용 Copilot 업데이트의 눈에 띄는 항목은 지속 메모리와 Ollama 지원이다. JetBrains Marketplace의 1.15.0-261 계열 플러그인 변경 내역에도 두 기능이 함께 적혀 있으며, 해당 계열은 JetBrains 2026.1 빌드부터 호환된다. 그래서 하나의 ‘로컬 AI 기능’처럼 보기 쉽지만 실제로는 서로 다른 층을 바꾼다."
+        },
+        {
+          "t": "table",
+          "caption": "Copilot Memory와 Ollama가 바꾸는 것",
+          "headers": [
+            "구분",
+            "Copilot Memory",
+            "Ollama"
+          ],
+          "rows": [
+            [
+              "해결하는 문제",
+              "새 세션마다 프로젝트 규칙을 다시 설명하는 반복",
+              "JetBrains에서 사용할 모델 제공자와 모델 선택"
+            ],
+            [
+              "핵심 대상",
+              "저장소 사실과 사용자 선호",
+              "로컬에서 실행하는 Ollama 모델"
+            ],
+            [
+              "먼저 확인할 것",
+              "누가 만들고 공유하며 언제 삭제되는가",
+              "어떤 요청이 선택 모델로 가고 다른 기능은 어디서 처리되는가"
+            ],
+            [
+              "피해야 할 오해",
+              "채팅 원문 전체를 영구 저장한다고 단정",
+              "Ollama를 고르면 Copilot 전체가 자동으로 로컬이라고 단정"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "메모리는 ‘무엇을 기억할지’를 다루고 Ollama는 ‘어떤 모델로 답을 만들지’를 다룬다. 메모리를 끈 채 Ollama만 쓸 수도 있고, GitHub가 제공하는 모델을 쓰면서 메모리만 켤 수도 있다. 이 구분을 알아야 개인정보와 저장소 코드가 어디에 남는지 확인할 질문도 정확해진다."
+        },
+        {
+          "t": "h",
+          "text": "메모리는 대화 저장보다 좁고 구조적이다"
+        },
+        {
+          "t": "p",
+          "text": "GitHub 문서에서 Copilot Memory가 다루는 것은 저장소 단위의 사실과 사용자 단위의 선호다. 코딩 규칙, 아키텍처 결정, 빌드 명령, 프로젝트 규칙 같은 항목이 저장소 사실에 해당한다. 선호는 답변 방식처럼 한 사용자가 여러 저장소에서 이어 쓰려는 정보다. 저장소 사실에는 근거가 붙고 현재 브랜치를 기준으로 다시 확인되므로, 단순히 예전 채팅을 통째로 불러오는 기능과는 다르다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "프로젝트 기억은 규칙과 선호를 다음 세션으로 이어 주고, 로컬 모델은 IDE가 답변에 사용할 모델 제공자를 바꾼다. 같은 화면에서 쓰더라도 저장 범위와 실행 경로는 따로 확인해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "공유 범위도 알아둘 필요가 있다. 저장소에 쓰기 권한이 있고 메모리를 켠 사용자가 만든 저장소 사실은 같은 저장소에서 메모리를 사용할 권한이 있는 구성원과 공유될 수 있다. 반면 사용자 선호는 해당 사용자에게만 보인다. 저장소 소유자는 저장된 사실을 검토하고 삭제할 수 있고, 사용되거나 다시 검증되지 않은 사실과 선호는 28일 뒤 자동 삭제된다. 다만 사용되면 기간이 다시 시작될 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "현재 메모리는 공개 미리보기다. 기능과 적용 범위가 바뀔 수 있다는 뜻이다. 개인용 유료 플랜에서는 기본 활성화될 수 있고, 조직·기업 계정은 관리자가 정책을 허용한 뒤 사용자가 끌 수 있다. 팀에서 쓰려면 편리함보다 먼저 ‘저장소 사실에 넣지 말아야 할 정보’와 검토 책임자를 정하는 편이 안전하다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "Ollama를 고르면 모델 경로가 바뀐다"
+        },
+        {
+          "t": "p",
+          "text": "이번 업데이트에서 Ollama는 BYOK 제공자로 추가됐다. JetBrains 안에서 제공자를 구성하고 설치된 모델을 선택할 수 있다. 인터넷 연결이나 외부 API 사용을 줄이고 싶은 개인 실험, 사내에서 승인한 로컬 모델 비교, 비용과 응답 시간을 직접 통제하려는 상황에 유용하다. 하지만 ‘Ollama 모델을 선택했다’는 사실만으로 Copilot 플러그인의 모든 기능과 데이터가 로컬 장치 안에서 끝난다고 결론 내릴 수는 없다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "GitHub 공식 업데이트의 Ollama 제공자·모델 선택 화면. 여기서 바뀌는 것은 답변에 사용할 모델 선택이며, 메모리 저장 범위와 기업 정책은 별도로 확인해야 한다. 출처: GitHub Changelog."
+        },
+        {
+          "t": "p",
+          "text": "실제 경계는 기능별로 확인해야 한다. 선택한 모델에 전달되는 프롬프트와 코드 범위, Copilot 서비스가 처리하는 인증·텔레메트리·도구 호출, MCP 서버와 외부 도구가 받는 데이터는 같은 문제가 아니다. 민감한 저장소라면 네트워크 요청과 로그, 조직 정책을 별도로 확인하고 승인된 테스트 데이터로 먼저 동작을 관찰해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "모델 자체의 능력도 변수다. 로컬 모델은 장비 메모리와 GPU, 컨텍스트 길이, 도구 호출 지원에 따라 답변 품질과 속도가 크게 달라진다. 큰 모델 이름만 보고 고르기보다 현재 프로젝트에서 자주 하는 코드 설명, 테스트 작성, 리팩터링 한 가지를 정해 응답 시간과 수정 정확도를 함께 비교하는 편이 낫다."
+        },
+        {
+          "t": "h",
+          "text": "둘을 함께 켤 때는 작은 저장소로 먼저 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "업무 저장소에서 바로 켜기보다 민감한 값이 없는 작은 예제 저장소를 준비한다. README에 빌드 명령 하나와 코드 규칙 하나를 적고, 첫 세션에서 이를 설명한 뒤 새 세션을 연다. Copilot이 같은 규칙을 다시 불러오는지, 근거가 현재 브랜치 내용과 맞는지 확인한다. 그다음 브랜치에서 규칙을 바꾸고 오래된 사실을 그대로 적용하지 않는지도 본다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "JetBrains IDE와 Copilot 플러그인의 호환 버전을 확인한다.",
+            "민감하지 않은 저장소에서 기억할 규칙을 한두 개만 만든다.",
+            "새 세션과 다른 브랜치에서 기억의 근거와 최신성을 확인한다.",
+            "Ollama 제공자를 연결하고 모델 하나를 골라 같은 작업을 반복한다.",
+            "응답 품질·속도·도구 호출과 네트워크 요청을 비교한 뒤 범위를 넓힌다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 ‘테스트는 특정 명령으로 실행한다’는 규칙을 기억시킨 뒤 파일 구조와 명령을 바꿔 본다. 새 세션이 예전 명령을 고집하면 저장된 사실을 검토하거나 삭제해야 한다. Ollama 모델을 바꿨을 때는 같은 수정 요청으로 diff 크기, 테스트 통과 여부, 응답 시간을 기록한다. 메모리의 정확성과 모델의 성능을 한 번에 평가하지 말고 한 변수씩 바꾸는 것이 핵심이다."
+        },
+        {
+          "t": "h",
+          "text": "팀에서는 모델보다 정책 순서가 먼저다"
+        },
+        {
+          "t": "p",
+          "text": "GitHub는 이번 릴리스에서 기업 관리 설정도 확대했다. 관리자는 플러그인 사용 가능 여부, MCP 서버 접근, 권한 우회 동작, OpenTelemetry 관련 설정을 통제할 수 있다. 메모리 정책도 조직과 기업 수준에서 관리된다. 개인이 로컬 모델을 실행할 수 있다는 것과 회사 코드에서 사용해도 된다는 것은 다른 판단이다."
+        },
+        {
+          "t": "table",
+          "caption": "상황별로 먼저 켤 기능",
+          "headers": [
+            "상황",
+            "우선 선택",
+            "확인 기준"
+          ],
+          "rows": [
+            [
+              "매번 같은 프로젝트 규칙을 설명한다",
+              "Memory",
+              "저장 사실의 근거·공유 범위·삭제 방법"
+            ],
+            [
+              "로컬 모델의 품질과 속도를 비교한다",
+              "Ollama",
+              "모델별 정확도·자원 사용·도구 호출"
+            ],
+            [
+              "회사 저장소에서 팀이 함께 쓴다",
+              "관리 정책",
+              "MCP·권한·관측성·메모리 책임자"
+            ],
+            [
+              "반복 설명도 줄이고 로컬 모델도 쓴다",
+              "둘을 순차 적용",
+              "메모리와 모델 경계를 따로 검증"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "결국 좋은 설정은 기능을 많이 켠 상태가 아니라 문제 하나마다 책임지는 기능이 분명한 상태다. 메모리는 반복되는 프로젝트 문맥을 줄이는 데 쓰고, Ollama는 모델 선택과 실행 환경을 시험하는 데 쓴다. 두 기능의 결과가 만족스럽더라도 팀 저장소에서는 관리자 정책과 로그 범위를 확인한 뒤 적용해야 한다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "Copilot과 로컬 모델이 파일·명령·외부 도구에 접근할 때 최소 권한과 변경 검토 기준을 함께 적용할 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Codex Security 오픈소스 공개: 설치보다 먼저 확인할 접근권한과 CI 기준",
+      "url": "https://won0322.tistory.com/145",
+      "reason": "AI 개발 도구를 개인 실험에서 팀 CI로 넓힐 때 권한과 배포 경계를 어떻게 나눌지 이어서 볼 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "blocks": null,
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "title": "GitHub Copilot JetBrains 메모리·Ollama 차이와 설정 순서",
+  "title_candidates": [
+    "GitHub Copilot JetBrains 메모리·Ollama 차이와 설정 순서",
+    "GitHub Copilot for JetBrains에 메모리와 Ollama 지원 추가",
+    "반복 규칙이 꽂힌 프로젝트 바인더와 케이블로 연결된 소형 로컬 모델 장치: 프로젝트를 기억하는 기능과 로컬 모델을 고르는…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-12",
+  "publish_date": "2026-08-12",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-12T09:00:00+09:00",
+  "tags": [
+    "GitHub Copilot",
+    "JetBrains",
+    "Copilot Memory",
+    "Ollama",
+    "로컬 LLM",
+    "BYOK",
+    "AI 코딩 도구"
+  ],
+  "meta_description": "새 채팅을 열 때마다 빌드 명령과 코드 규칙을 다시 설명하는 일, 그리고 코딩 도구에서 내가 고른 로컬 모델을 써 보고 싶은 일은 닮아 보이지만 서로 다른 문제다. GitHub Copilot for… GitHub가 JetBrains용 Copilot에 저장소 규칙과 사용자 선호를 이어…",
+  "key_summary": [
+    "1. GitHub Copilot for JetBrains에 메모리와 Ollama 지원 추가",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GitHub Copilot JetBrains 메모리·Ollama 차이와 설정 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-12.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-12.html",
+  "before_ad_html": "docs/tistory/2026-08-12-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-12-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-12-adfit.html",
+  "source_sha256": "b8c5e6aa2c1000f54b17f5b82f809907be989e17b68d9f1e2e0f31a00de0ff1f",
+  "html_sha256": "4070d05e95c7db106475bc4afde2a48d4e171c351c08aefedf7b1f4162b07168",
+  "adfit_sha256": "b8d0d6ac2c033701f9c6f94e49ac0d709f3d18ecdc6390beabd6647d57a88520",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/GitHub-Copilot-JetBrains-메모리-Ollama-대표.webp",
+      "path": "docs/tistory/assets/2026-08-12/GitHub-Copilot-JetBrains-메모리-Ollama-대표.webp",
+      "original_url": "",
+      "alt": "반복 규칙 탭이 꽂힌 프로젝트 바인더와 코드 화면에 연결된 소형 로컬 모델 장치",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/Copilot-메모리-Ollama-차이.webp",
+      "path": "docs/tistory/assets/2026-08-12/Copilot-메모리-Ollama-차이.webp",
+      "original_url": "",
+      "alt": "프로젝트 기억 노트와 로컬 모델 장치가 서로 다른 선으로 IDE에 연결된 그림",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12/Copilot-Ollama-모델선택.webp",
+      "path": "docs/tistory/assets/2026-08-12/Copilot-Ollama-모델선택.webp",
+      "original_url": "",
+      "alt": "JetBrains에서 Ollama 제공자와 모델을 고르는 GitHub Copilot 공식 화면",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
