@@ -1,0 +1,92 @@
+{
+  "title": "OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검",
+  "title_candidates": [
+    "OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검",
+    "OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-08-12-guide",
+  "publish_date": "2026-08-12",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-12T18:00:00+09:00",
+  "tags": [
+    "OAuth 2.0 PKCE",
+    "인가 코드 플로우",
+    "리디렉션 URI",
+    "code_verifier",
+    "API 인증",
+    "토큰 보안",
+    "Spring Security"
+  ],
+  "meta_description": "모바일 앱이나 SPA에서 소셜 로그인을 붙인 뒤 콜백 URL에 code가 보이면, 그 값만 가로채도 토큰을 바꿀 수 있는지 불안해진다. PKCE는 인가 요청을 시작한 클라이언트만 그 코드를 토큰으로… PKCE는 인가 요청의 code_challenge와 토큰 요청의 code_verifi…",
+  "key_summary": [
+    "1. OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 13,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-08-12.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-12-guide.html",
+  "before_ad_html": "docs/tistory/2026-08-12-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-12-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-12-guide-adfit.html",
+  "source_sha256": "e63a269b380aa29ab7ad7fff9a8135b1f4a3ff0620a1fb37664bcad0b62cc0f1",
+  "html_sha256": "a477f51a59ebb3b957e1992a6383d2dc93feff2722efabda759fe770922ea619",
+  "adfit_sha256": "56bf7ce5fb9d8706ec8bb1c5d52723512fab875d148ba89f8d1971f152e7395a",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp",
+      "path": "docs/tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp",
+      "original_url": "",
+      "alt": "인가 코드를 가로채도 verifier가 없으면 토큰으로 바꾸지 못하는 PKCE 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp",
+      "path": "docs/tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp",
+      "original_url": "",
+      "alt": "PKCE verifier와 S256 challenge가 인가 코드 교환을 묶는 구조",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/리디렉션URI-완전일치.webp",
+      "path": "docs/tistory/assets/2026-08-12-guide/리디렉션URI-완전일치.webp",
+      "original_url": "",
+      "alt": "등록한 redirect URI와 요청 URI를 완전 일치로 비교하는 그림",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/토큰-수명-권한-회전.webp",
+      "path": "docs/tistory/assets/2026-08-12-guide/토큰-수명-권한-회전.webp",
+      "original_url": "",
+      "alt": "짧은 수명과 최소 권한, 회전으로 토큰 피해 범위를 줄이는 그림",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

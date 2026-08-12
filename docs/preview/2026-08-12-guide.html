@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">개발 가이드</span>
+              <h1>OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검</h1>
+              <span class="meta"><span class="date">2026-08-12 · 개발 가이드</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 12 (수) · 약 13분</p>
+    <p class="digest-lead">모바일 앱이나 SPA에서 소셜 로그인을 붙인 뒤 콜백 URL에 code가 보이면, 그 값만 가로채도 토큰을 바꿀 수 있는지 불안해진다. PKCE는 인가 요청을 시작한 클라이언트만 그 코드를 토큰으로 교환하도록 묶는 장치다. 이 글은 code_verifier와 S256 challenge가 언제 만들어지고, 리디렉션 URI·state·토큰 정책을 어디까지 함께 점검해야 하는지 실제 HTTP 요청 모양으로 정리한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp" alt="인가 코드를 가로채도 verifier가 없으면 토큰으로 바꾸지 못하는 PKCE 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">개발 가이드</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">최신 기준 · IETF RFC 9700·RFC 7636과 OWASP OAuth2 Cheat Sheet 교차 확인 · 2026. 8. 12</p>
+    <h3>OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검</h3>
+    <p class="digest-blurb">PKCE는 인가 요청의 code_challenge와 토큰 요청의 code_verifier를 연결해, 탈취한 인가 코드만으로 토큰을 교환하지 못하게 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">콜백 URL의 code만 복사해도 토큰이 나오는지부터 확인한다</h4><p>로그인 뒤 브라우저가 앱의 callback으로 돌아오면 URL에는 짧은 인가 코드가 붙는다. 이 코드는 access token이 아니지만, 토큰 엔드포인트가 코드만 보고 교환한다면 복사본을 얻은 쪽도 토큰을 받을 수 있다. PKCE(Proof Key for Code Exchange)는 인가 요청을 시작한 클라이언트가 따로 가진 verifier를 나중에 제출하게 해 이 교환을 묶는다.</p><p>OAuth 2.0의 역할을 먼저 나누면 구현이 덜 헷갈린다. authorization server는 사용자 인증과 동의를 처리하고 code를 발급한다. client는 앱이며, resource server는 access token을 검증해 API를 연다. OpenID Connect를 함께 쓴다면 ID token은 로그인한 사용자의 신원 정보이고, API 호출 권한을 나타내는 access token과 같은 용도가 아니다.</p><h4 class="digest-subheading">PKCE는 공개된 challenge와 숨겨 둔 verifier를 한 거래로 묶는다</h4><p>클라이언트는 로그인 시작 직전에 예측하기 어려운 code_verifier를 만들고, SHA-256을 거쳐 base64url로 인코딩한 code_challenge를 만든다. authorize 요청에는 challenge와 code_challenge_method=S256만 넣는다. redirect에서 받은 code를 token 엔드포인트로 보낼 때 원 verifier를 함께 보낸다. 인가 서버는 처음 저장한 challenge와 verifier로 다시 계산한 값을 비교한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp" alt="PKCE verifier와 S256 challenge가 인가 코드 교환을 묶는 구조" width="1200" height="630" loading="lazy"><figcaption>PKCE의 공개 challenge는 먼저 보내도 되지만, 원 verifier는 토큰 교환 시점까지 클라이언트가 보관해야 한다.</figcaption></figure><pre class="digest-code-block language-javascript"><code>const bytes = crypto.getRandomValues(new Uint8Array(32));
+const verifier = btoa(String.fromCharCode(...bytes))
+  .replace(/\+/g, &#x27;-&#x27;).replace(/\//g, &#x27;_&#x27;).replace(/=+$/, &#x27;&#x27;);
+const digest = await crypto.subtle.digest(&#x27;SHA-256&#x27;, new TextEncoder().encode(verifier));
+const challenge = btoa(String.fromCharCode(...new Uint8Array(digest)))
+  .replace(/\+/g, &#x27;-&#x27;).replace(/\//g, &#x27;_&#x27;).replace(/=+$/, &#x27;&#x27;);
+
+// verifier는 현재 로그인 거래와 연결해 잠시만 보관한다.
+sessionStorage.setItem(&#x27;pkce_verifier&#x27;, verifier);</code></pre><p>verifier는 URL query, analytics 이벤트, 오류 메시지에 들어가면 안 된다. 브라우저 앱이라면 같은 탭의 짧은 로그인 거래에만 연결하고, callback 처리 성공·실패 어느 경우에도 지운다. 모바일 앱도 OS의 안전한 저장소를 장기 보관소로 오해하지 말고 거래 수명만큼만 다룬다.</p><p>인가 서버를 직접 운영한다면 challenge가 있던 거래에는 verifier 없는 token 요청을 절대 허용하지 않는다. 반대로 verifier가 왔는데 처음 요청에 challenge가 없었다면 PKCE 다운그레이드 시도로 보고 거절해야 한다. 이 짝 검증은 client_id와 인가 코드의 발급 이력에도 함께 묶여야 한다.</p><div class="digest-table-wrap" role="region" aria-label="각 값이 있어야 하는 곳" tabindex="0"><table class="digest-data-table"><caption>각 값이 있어야 하는 곳</caption><thead><tr><th scope="col">값</th><th scope="col">authorize 요청</th><th scope="col">token 요청</th><th scope="col">보관 원칙</th></tr></thead><tbody><tr><td>code_verifier</td><td>보내지 않음</td><td>원본을 보냄</td><td>거래 종료 뒤 삭제</td></tr><tr><td>code_challenge</td><td>S256 결과를 보냄</td><td>다시 보내지 않음</td><td>서버가 code와 연결</td></tr><tr><td>state</td><td>무작위 값을 보냄</td><td>callback에서 대조</td><td>사용 후 즉시 폐기</td></tr><tr><td>redirect_uri</td><td>등록값을 보냄</td><td>같은 값 사용</td><td>환경별로 명시 등록</td></tr></tbody></table></div></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">인가 요청과 토큰 교환은 이렇게 분리한다</h4><p>SPA·모바일 앱처럼 client secret을 안전하게 숨길 수 없는 public client는 PKCE가 특히 중요하다. RFC 9700은 public client에 PKCE를 요구하고, confidential client에도 코드 주입·오용 방지를 위해 권고한다. verifier를 매 거래마다 새로 만들지 않거나 plain 방식을 허용하면 PKCE의 보호가 약해진다. 현재 권장 방식은 S256이다.</p><pre class="digest-code-block language-http"><code>GET /authorize?response_type=code
+  &amp;client_id=web-client
+  &amp;redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fcallback
+  &amp;scope=orders.read
+  &amp;state=&lt;one-time-random-state&gt;
+  &amp;code_challenge=&lt;S256-challenge&gt;
+  &amp;code_challenge_method=S256
+
+POST /token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;code=&lt;callback-code&gt;
+&amp;redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fcallback
+&amp;client_id=web-client&amp;code_verifier=&lt;original-verifier&gt;</code></pre><p>BFF(backend for frontend)를 둘지 브라우저가 직접 토큰을 받을지는 앱의 배포 형태와 공격 표면에 따라 달라진다. 브라우저에 장기 토큰을 보관해야 하거나 여러 API를 같은 세션으로 묶어야 하면 서버가 세션 cookie를 관리하는 BFF가 운영하기 쉬울 수 있다. 반대로 제공자가 CORS와 PKCE를 지원하고 단일 SPA가 제한된 API만 쓴다면 public client PKCE가 단순하다. 어느 쪽이든 브라우저 XSS와 토큰 노출 위험은 별도로 줄여야 한다.</p><h4 class="digest-subheading">redirect URI는 편의를 위해 넓게 허용하지 않는다</h4><p>redirect URI는 code와 오류 정보를 돌려보내는 목적지다. RFC 9700은 native app의 localhost 포트 예외를 제외하면 등록된 URI와 정확한 문자열 일치를 요구한다. https://app.example.com/callback 과 https://app.example.com/callback/ 은 다른 문자열이다. 와일드카드, 쿼리 파라미터로 받는 임의의 다음 URL, 열린 redirector는 인가 응답을 공격자 쪽으로 넘길 길을 만든다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-12-guide/리디렉션URI-완전일치.webp" alt="등록한 redirect URI와 요청 URI를 완전 일치로 비교하는 그림" width="1200" height="630" loading="lazy"><figcaption>등록 URI와 요청 URI를 느슨하게 비교하지 말고, 배포 환경별 callback을 명시적으로 등록해 대조한다.</figcaption></figure><div class="digest-table-wrap" role="region" aria-label="흔한 구현 선택의 결과" tabindex="0"><table class="digest-data-table"><caption>흔한 구현 선택의 결과</caption><thead><tr><th scope="col">선택</th><th scope="col">언제 가능</th><th scope="col">막히는 공격 또는 문제</th><th scope="col">주의</th></tr></thead><tbody><tr><td>인가 코드 + PKCE S256</td><td>SPA·모바일·웹</td><td>코드 탈취·주입의 토큰 교환</td><td>verifier 재사용 금지</td></tr><tr><td>고정 verifier</td><td>어디서도 권장하지 않음</td><td>한 번 유출되면 모든 거래 약화</td><td>거래별 난수 필요</td></tr><tr><td>redirect URI 와일드카드</td><td>테스트 편의 목적</td><td>코드가 의도 밖 앱으로 전달</td><td>정확한 URI 등록</td></tr><tr><td>implicit flow</td><td>새 구현에서는 피함</td><td>URL fragment 토큰 노출·운영 복잡성</td><td>제공자 마이그레이션 계획</td></tr></tbody></table></div><h4 class="digest-subheading">state·nonce·PKCE는 서로 대체재가 아니다</h4><p>state는 요청을 시작한 브라우저 세션과 callback을 연결해 CSRF·혼선 검증에 쓰는 일회성 값이다. OpenID Connect의 nonce는 받은 ID token이 현재 인증 거래에서 나온 것인지 확인하는 데 쓰인다. PKCE는 code와 verifier의 결합을 검증한다. RFC 9700은 PKCE가 강한 공격자 상황에서 CSRF 보호에도 도움이 된다고 설명하지만, 구현에서 state 검증을 생략할 근거로 삼기보다 각 제공자의 OIDC·OAuth 요구를 문서대로 확인하는 편이 낫다.</p><h4 class="digest-subheading">토큰이 발급된 뒤에는 피해 범위를 작게 만든다</h4><p>PKCE는 인가 코드의 오용을 줄이는 도구이지, 이미 발급된 bearer access token의 재사용을 막아 주지는 않는다. scope를 API 단위로 최소화하고, access token 수명은 사용 환경과 위험도에 맞게 짧게 정한다. refresh token을 발급한다면 회전과 재사용 탐지를 지원하는지 제공자 정책을 확인한다. 로그·오류 추적에는 authorization header, code, verifier, refresh token을 남기지 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-12-guide/토큰-수명-권한-회전.webp" alt="짧은 수명과 최소 권한, 회전으로 토큰 피해 범위를 줄이는 그림" width="1200" height="630" loading="lazy"><figcaption>토큰 유출 피해는 짧은 수명, 필요한 scope만 부여, refresh token 회전으로 줄인다.</figcaption></figure><ul class="digest-bullet-list"><li>개발·스테이징·운영의 redirect URI를 분리해 각각 명시적으로 등록한다.</li><li>PKCE verifier와 state는 로그인 거래마다 새로 만들고 callback 처리 직후 삭제한다.</li><li>로그인 실패 로그에는 원인 코드만 남기고 code·token·verifier·개인정보는 마스킹한다.</li><li>제공자의 metadata에서 code_challenge_methods_supported와 토큰·회전 정책을 배포 전에 확인한다.</li></ul><h4 class="digest-subheading">배포 전에 HTTP 기록 한 줄씩 대조한다</h4><p>첫째 authorize 요청에 response_type=code, 정확한 redirect_uri, state, S256 challenge가 있는지 본다. 둘째 callback에서 state를 저장값과 비교하고 code를 한 번만 사용한다. 셋째 token 요청의 redirect_uri가 처음 값과 같고 verifier가 해당 거래의 원본인지 확인한다. 넷째 API에 필요한 최소 scope만 요청했는지, 만료·갱신 실패·로그아웃 때 토큰을 어떻게 폐기하는지 테스트한다. 이 네 지점을 CI의 통합 테스트 또는 IdP 샌드박스 체크리스트로 남기면 제공자를 바꿔도 흐름을 재사용할 수 있다.</p><p>OAuth 연동에서 안전한 선택은 비밀값을 클라이언트에 더 넣는 일이 아니다. code를 verifier에 묶고 callback의 목적지를 좁히며, 발급 뒤 권한과 수명을 관리하는 일이다. 이 순서를 기준으로 각 제공자의 최신 metadata와 문서를 대조하면 오래된 예제에서 비롯되는 빈틈을 줄일 수 있다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://www.rfc-editor.org/rfc/rfc9700.html" target="_blank" rel="noopener">RFC 9700: Best Current Practice for OAuth 2.0 Security</a><span>공식</span></li><li><a href="https://datatracker.ietf.org/doc/html/rfc7636" target="_blank" rel="noopener">RFC 7636: Proof Key for Code Exchange</a><span>공식</span></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/OAuth2_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP OAuth2 Cheat Sheet</a><span>독립 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/135"><b>2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서</b><span>OAuth callback이 백엔드 요청과 세션 처리로 이어지는 기본 흐름을 함께 복습할 수 있다.</span></a></li><li><a href="https://won0322.tistory.com/140"><b>Redis 토큰 버킷으로 API 레이트 리밋 설계하기</b><span>토큰 기반 API를 운영할 때 권한 관리와 요청 제한을 함께 적용하는 다음 단계다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">PKCE는 리디렉션에서 코드가 노출될 수 있다는 현실을 없애지 않고, 코드만으로는 토큰을 교환할 수 없게 만든다. 랜덤 verifier를 거래마다 새로 만들고 S256 challenge, 정확한 redirect URI, 짧은 토큰 수명을 같은 흐름으로 검증해야 한다. 다음 로그인 연동에서는 브라우저 개발자 도구의 네트워크 기록에서 authorize 요청의 S256 challenge와 token 요청의 verifier가 한 거래로 짝을 이루는지부터 확인하자.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>

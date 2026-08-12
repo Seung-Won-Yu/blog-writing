@@ -1,0 +1,26 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 12 (수) · 약 13분</p>
+    <p class="digest-lead">모바일 앱이나 SPA에서 소셜 로그인을 붙인 뒤 콜백 URL에 code가 보이면, 그 값만 가로채도 토큰을 바꿀 수 있는지 불안해진다. PKCE는 인가 요청을 시작한 클라이언트만 그 코드를 토큰으로 교환하도록 묶는 장치다. 이 글은 code_verifier와 S256 challenge가 언제 만들어지고, 리디렉션 URI·state·토큰 정책을 어디까지 함께 점검해야 하는지 실제 HTTP 요청 모양으로 정리한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp" alt="인가 코드를 가로채도 verifier가 없으면 토큰으로 바꾸지 못하는 PKCE 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">개발 가이드</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">최신 기준 · IETF RFC 9700·RFC 7636과 OWASP OAuth2 Cheat Sheet 교차 확인 · 2026. 8. 12</p>
+    <h3>OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검</h3>
+    <p class="digest-blurb">PKCE는 인가 요청의 code_challenge와 토큰 요청의 code_verifier를 연결해, 탈취한 인가 코드만으로 토큰을 교환하지 못하게 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">콜백 URL의 code만 복사해도 토큰이 나오는지부터 확인한다</h4><p>로그인 뒤 브라우저가 앱의 callback으로 돌아오면 URL에는 짧은 인가 코드가 붙는다. 이 코드는 access token이 아니지만, 토큰 엔드포인트가 코드만 보고 교환한다면 복사본을 얻은 쪽도 토큰을 받을 수 있다. PKCE(Proof Key for Code Exchange)는 인가 요청을 시작한 클라이언트가 따로 가진 verifier를 나중에 제출하게 해 이 교환을 묶는다.</p><p>OAuth 2.0의 역할을 먼저 나누면 구현이 덜 헷갈린다. authorization server는 사용자 인증과 동의를 처리하고 code를 발급한다. client는 앱이며, resource server는 access token을 검증해 API를 연다. OpenID Connect를 함께 쓴다면 ID token은 로그인한 사용자의 신원 정보이고, API 호출 권한을 나타내는 access token과 같은 용도가 아니다.</p><h4 class="digest-subheading">PKCE는 공개된 challenge와 숨겨 둔 verifier를 한 거래로 묶는다</h4><p>클라이언트는 로그인 시작 직전에 예측하기 어려운 code_verifier를 만들고, SHA-256을 거쳐 base64url로 인코딩한 code_challenge를 만든다. authorize 요청에는 challenge와 code_challenge_method=S256만 넣는다. redirect에서 받은 code를 token 엔드포인트로 보낼 때 원 verifier를 함께 보낸다. 인가 서버는 처음 저장한 challenge와 verifier로 다시 계산한 값을 비교한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp" alt="PKCE verifier와 S256 challenge가 인가 코드 교환을 묶는 구조" width="1200" height="630" loading="lazy"><figcaption>PKCE의 공개 challenge는 먼저 보내도 되지만, 원 verifier는 토큰 교환 시점까지 클라이언트가 보관해야 한다.</figcaption></figure><pre class="digest-code-block language-javascript"><code>const bytes = crypto.getRandomValues(new Uint8Array(32));
+const verifier = btoa(String.fromCharCode(...bytes))
+  .replace(/\+/g, &#x27;-&#x27;).replace(/\//g, &#x27;_&#x27;).replace(/=+$/, &#x27;&#x27;);
+const digest = await crypto.subtle.digest(&#x27;SHA-256&#x27;, new TextEncoder().encode(verifier));
+const challenge = btoa(String.fromCharCode(...new Uint8Array(digest)))
+  .replace(/\+/g, &#x27;-&#x27;).replace(/\//g, &#x27;_&#x27;).replace(/=+$/, &#x27;&#x27;);
+
+// verifier는 현재 로그인 거래와 연결해 잠시만 보관한다.
+sessionStorage.setItem(&#x27;pkce_verifier&#x27;, verifier);</code></pre><p>verifier는 URL query, analytics 이벤트, 오류 메시지에 들어가면 안 된다. 브라우저 앱이라면 같은 탭의 짧은 로그인 거래에만 연결하고, callback 처리 성공·실패 어느 경우에도 지운다. 모바일 앱도 OS의 안전한 저장소를 장기 보관소로 오해하지 말고 거래 수명만큼만 다룬다.</p><p>인가 서버를 직접 운영한다면 challenge가 있던 거래에는 verifier 없는 token 요청을 절대 허용하지 않는다. 반대로 verifier가 왔는데 처음 요청에 challenge가 없었다면 PKCE 다운그레이드 시도로 보고 거절해야 한다. 이 짝 검증은 client_id와 인가 코드의 발급 이력에도 함께 묶여야 한다.</p><div class="digest-table-wrap" role="region" aria-label="각 값이 있어야 하는 곳" tabindex="0"><table class="digest-data-table"><caption>각 값이 있어야 하는 곳</caption><thead><tr><th scope="col">값</th><th scope="col">authorize 요청</th><th scope="col">token 요청</th><th scope="col">보관 원칙</th></tr></thead><tbody><tr><td>code_verifier</td><td>보내지 않음</td><td>원본을 보냄</td><td>거래 종료 뒤 삭제</td></tr><tr><td>code_challenge</td><td>S256 결과를 보냄</td><td>다시 보내지 않음</td><td>서버가 code와 연결</td></tr><tr><td>state</td><td>무작위 값을 보냄</td><td>callback에서 대조</td><td>사용 후 즉시 폐기</td></tr><tr><td>redirect_uri</td><td>등록값을 보냄</td><td>같은 값 사용</td><td>환경별로 명시 등록</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>

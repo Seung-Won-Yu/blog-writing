@@ -1,0 +1,515 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-12-guide",
+  "publish_date": "2026-08-12",
+  "date_label": "2026. 8. 12",
+  "weekday": "수",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-12T18:00:00+09:00",
+  "primary_query": "OAuth 2.0 PKCE 구현 방법",
+  "tags": [
+    "OAuth 2.0 PKCE",
+    "인가 코드 플로우",
+    "리디렉션 URI",
+    "code_verifier",
+    "API 인증",
+    "토큰 보안",
+    "Spring Security"
+  ],
+  "editorial": {
+    "headline": "OAuth 2.0 PKCE 구현 방법: 인가 코드 탈취 막는 리디렉션 URI 점검",
+    "opening": "모바일 앱이나 SPA에서 소셜 로그인을 붙인 뒤 콜백 URL에 code가 보이면, 그 값만 가로채도 토큰을 바꿀 수 있는지 불안해진다. PKCE는 인가 요청을 시작한 클라이언트만 그 코드를 토큰으로 교환하도록 묶는 장치다. 이 글은 code_verifier와 S256 challenge가 언제 만들어지고, 리디렉션 URI·state·토큰 정책을 어디까지 함께 점검해야 하는지 실제 HTTP 요청 모양으로 정리한다.",
+    "closing": "PKCE는 리디렉션에서 코드가 노출될 수 있다는 현실을 없애지 않고, 코드만으로는 토큰을 교환할 수 없게 만든다. 랜덤 verifier를 거래마다 새로 만들고 S256 challenge, 정확한 redirect URI, 짧은 토큰 수명을 같은 흐름으로 검증해야 한다.",
+    "action": "다음 로그인 연동에서는 브라우저 개발자 도구의 네트워크 기록에서 authorize 요청의 S256 challenge와 token 요청의 verifier가 한 거래로 짝을 이루는지부터 확인하자.",
+    "audience_problem": "SPA 또는 모바일 앱에 OAuth 로그인을 연결하면서 코드 탈취와 잘못된 콜백 URL을 피하고 싶은 백엔드·프론트엔드 개발자.",
+    "reader_takeaway": "PKCE S256 요청을 만들고 토큰 교환을 검증하며, redirect URI·state·scope·토큰 회전의 점검 기준을 적용할 수 있다.",
+    "why_now": "RFC 9700은 public client의 PKCE 사용과 authorization server의 PKCE 지원을 요구하고, confidential client에도 PKCE를 권고한다. 오래된 implicit flow 예제 대신 인가 코드와 PKCE의 역할을 구분해 구현을 다시 점검할 필요가 있다.",
+    "topic_key": "oauth2-pkce-authorization-code-redirect-uri-security",
+    "reader_question": "OAuth 2.0 인가 코드가 콜백에서 노출돼도 PKCE는 어떻게 토큰 교환을 막고, 구현에서 무엇을 검증해야 할까?",
+    "entities": [
+      "OAuth 2.0",
+      "PKCE",
+      "RFC 7636",
+      "RFC 9700",
+      "authorization code",
+      "redirect URI"
+    ],
+    "coverage": [
+      "foundation",
+      "request_flow",
+      "stack",
+      "data",
+      "security",
+      "operations",
+      "plan"
+    ],
+    "article_shape": "decision_guide",
+    "search_intent": {
+      "query": "OAuth 2.0 PKCE 구현 방법",
+      "reader_need": "로그인 콜백의 code를 토큰으로 바꾸는 경로에서 PKCE와 redirect URI 검증을 빠뜨리지 않으려 한다.",
+      "answer_format": "HTTP 요청 예제, 선택 표, 배포 전 점검 목록"
+    },
+    "revisit": {
+      "quick_answer": "인가 요청마다 새 verifier를 만들고 S256 challenge를 보내며, 토큰 엔드포인트에서 원 verifier를 엄격히 대조한다.",
+      "reuse_case": "새 OAuth 제공자 연동 또는 기존 콜백 보안 점검 때 사용한다.",
+      "failure_case": "plain challenge·고정 verifier·와일드카드 redirect URI를 쓰면 코드 가로채기와 오발송 위험이 남는다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "OAuth 제공자의 PKCE 정책 변경",
+        "새 redirect URI 등록",
+        "토큰 수명 또는 scope 변경"
+      ]
+    }
+  },
+  "visual": {
+    "cover": {
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "render_family": "tactile_paper",
+      "art_direction": "tactile paper editorial collage",
+      "composition_type": "bridge intercept",
+      "palette_family": "cobalt-coral-cream",
+      "label": "인가 코드를 가로채도 검증할 비밀이 없으면 토큰으로 바꿀 수 없는 장면",
+      "scene_label": [
+        "검증할 비밀",
+        "인가 코드"
+      ],
+      "steps": "앱이 가진 verifier와 공개 challenge의 짝이 인가 코드 교환을 묶는다.",
+      "curiosity_hook": "콜백 URL의 code가 보였는데도 왜 토큰 교환이 실패할까?",
+      "logic_type": "editorial_scene",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. A paper authorization letter crosses a secure bridge between a phone-shaped app token and a locked API gate; a shadowy intercepting hand cannot use a copied blank letter. Tactile cut-paper and ink collage, cobalt, coral, warm cream, only label '검증할 비밀'. No UI, terminal, dashboard, cards, charts, arrows, logos, robots or watermark.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "검증할 비밀"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "label": "PKCE verifier와 S256 challenge가 인가 코드 교환을 묶는 구조",
+        "scene_label": [
+          "검증값",
+          "해시",
+          "공개값",
+          "인가 코드"
+        ],
+        "steps": "비밀 verifier로 만든 공개 challenge를 먼저 보내고 토큰 교환 때 원 verifier를 대조한다.",
+        "curiosity_hook": "공개 challenge만 보고 원 verifier를 만들 수 있을까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Korean explanatory diagram with labels code_verifier, S256, code_challenge, 인가 코드. A physical secret strip becomes public seal and later matches an authorization-code envelope. Pale gray paper, indigo and jade, no UI, terminal, computer, dashboard, chart, logo, watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "검증값",
+          "해시",
+          "공개값",
+          "인가 코드"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "등록한 redirect URI와 요청 URI를 완전 일치로 대조하는 기준",
+        "scene_label": [
+          "등록된 URI",
+          "요청 URI",
+          "완전 일치"
+        ],
+        "steps": "인가 서버는 미리 등록한 URI와 요청 URI를 정확한 문자열로 비교한다.",
+        "curiosity_hook": "끝의 슬래시 하나가 다른 콜백 URL도 허용해야 할까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "condition": "등록값과 요청값이 글자 단위까지 같을 때에만 인가 응답을 보낸다.",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: infographic-diagram. Korean paper-cut illustration showing a registry card '등록된 URI', callback letter '요청 URI', exact-match gauge '완전 일치'. Warm white, ultramarine and vermilion, no browser UI, terminal, computer, dashboard, charts, arrows, logos, watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "등록된 URI",
+          "요청 URI",
+          "완전 일치"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "짧은 수명·최소 권한·회전으로 토큰 피해 범위를 줄이는 운영 기준",
+        "scene_label": [
+          "짧은 수명",
+          "최소 권한",
+          "회전"
+        ],
+        "steps": "토큰 하나가 노출되어도 권한과 유효 시간을 좁히고 재사용을 탐지한다.",
+        "curiosity_hook": "PKCE만 넣으면 이미 발급된 access token도 안전할까?",
+        "evidence_type": "diagram",
+        "logic_type": "comparison",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Korean isometric clay and paper locked token pouch with labels 짧은 수명, 최소 권한, 회전. Midnight blue, pale peach, mint, no fake UI, terminal, computer, humans, dashboard, chart, logos, watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "짧은 수명",
+          "최소 권한",
+          "회전"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/OAuth-PKCE-대표.webp",
+      "alt": "인가 코드를 가로채도 verifier가 없으면 토큰으로 바꾸지 못하는 PKCE 장면",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. A paper authorization letter crosses a secure bridge between a phone-shaped app token and a locked API gate; a shadowy intercepting hand cannot use a copied blank letter. Tactile cut-paper and ink collage, cobalt, coral, warm cream, only label '검증할 비밀'. No UI, terminal, dashboard, cards, charts, arrows, logos, robots or watermark.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "render_family": "tactile_paper",
+      "art_direction": "tactile paper editorial collage",
+      "composition_type": "bridge intercept",
+      "palette_family": "cobalt-coral-cream",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 192570,
+      "quality": 82,
+      "sha256": "67cf26cff0709088d5815c84cd3639fa84b70677349148ad20d2244b2b026255"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/PKCE-검증자-챌린지.webp",
+      "alt": "PKCE verifier와 S256 challenge가 인가 코드 교환을 묶는 구조",
+      "generation_prompt": "Use case: scientific-educational. Korean explanatory diagram with labels code_verifier, S256, code_challenge, 인가 코드. A physical secret strip becomes public seal and later matches an authorization-code envelope. Pale gray paper, indigo and jade, no UI, terminal, computer, dashboard, chart, logo, watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 37206,
+      "quality": 82,
+      "sha256": "a225b0eba724c37ea8151c57b061b60a28826c3823f9a33fa735e39b3db9d7a7"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-12-guide/리디렉션URI-완전일치.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/리디렉션URI-완전일치.webp",
+      "alt": "등록한 redirect URI와 요청 URI를 완전 일치로 비교하는 그림",
+      "generation_prompt": "Use case: infographic-diagram. Korean paper-cut illustration showing a registry card '등록된 URI', callback letter '요청 URI', exact-match gauge '완전 일치'. Warm white, ultramarine and vermilion, no browser UI, terminal, computer, dashboard, charts, arrows, logos, watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 71144,
+      "quality": 82,
+      "sha256": "c34955e5c1a688e311c9f9ee401ff5ecc557a804d3e18acc7a1d78d93e7e3a9d"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-12-guide/토큰-수명-권한-회전.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-12-guide/토큰-수명-권한-회전.webp",
+      "alt": "짧은 수명과 최소 권한, 회전으로 토큰 피해 범위를 줄이는 그림",
+      "generation_prompt": "Use case: scientific-educational. Korean isometric clay and paper locked token pouch with labels 짧은 수명, 최소 권한, 회전. Midnight blue, pale peach, mint, no fake UI, terminal, computer, humans, dashboard, chart, logos, watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 42282,
+      "quality": 82,
+      "sha256": "fcbe2ca29b50b393603164f330a4e8f9d07e870c4b494d7cbbc457fac2fd5cca"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검",
+      "source": "IETF RFC 9700·RFC 7636과 OWASP OAuth2 Cheat Sheet 교차 확인",
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "published_at": "2026-08-12T14:00:00+09:00",
+      "blurb_kr": "PKCE는 인가 요청의 code_challenge와 토큰 요청의 code_verifier를 연결해, 탈취한 인가 코드만으로 토큰을 교환하지 못하게 한다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "RFC 9700: Best Current Practice for OAuth 2.0 Security",
+          "url": "https://www.rfc-editor.org/rfc/rfc9700.html"
+        },
+        {
+          "kind": "official",
+          "title": "RFC 7636: Proof Key for Code Exchange",
+          "url": "https://datatracker.ietf.org/doc/html/rfc7636"
+        },
+        {
+          "kind": "independent",
+          "title": "OWASP OAuth2 Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/OAuth2_Cheat_Sheet.html"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "콜백 URL의 code만 복사해도 토큰이 나오는지부터 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "로그인 뒤 브라우저가 앱의 callback으로 돌아오면 URL에는 짧은 인가 코드가 붙는다. 이 코드는 access token이 아니지만, 토큰 엔드포인트가 코드만 보고 교환한다면 복사본을 얻은 쪽도 토큰을 받을 수 있다. PKCE(Proof Key for Code Exchange)는 인가 요청을 시작한 클라이언트가 따로 가진 verifier를 나중에 제출하게 해 이 교환을 묶는다."
+        },
+        {
+          "t": "p",
+          "text": "OAuth 2.0의 역할을 먼저 나누면 구현이 덜 헷갈린다. authorization server는 사용자 인증과 동의를 처리하고 code를 발급한다. client는 앱이며, resource server는 access token을 검증해 API를 연다. OpenID Connect를 함께 쓴다면 ID token은 로그인한 사용자의 신원 정보이고, API 호출 권한을 나타내는 access token과 같은 용도가 아니다."
+        },
+        {
+          "t": "h",
+          "text": "PKCE는 공개된 challenge와 숨겨 둔 verifier를 한 거래로 묶는다"
+        },
+        {
+          "t": "p",
+          "text": "클라이언트는 로그인 시작 직전에 예측하기 어려운 code_verifier를 만들고, SHA-256을 거쳐 base64url로 인코딩한 code_challenge를 만든다. authorize 요청에는 challenge와 code_challenge_method=S256만 넣는다. redirect에서 받은 code를 token 엔드포인트로 보낼 때 원 verifier를 함께 보낸다. 인가 서버는 처음 저장한 challenge와 verifier로 다시 계산한 값을 비교한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "PKCE의 공개 challenge는 먼저 보내도 되지만, 원 verifier는 토큰 교환 시점까지 클라이언트가 보관해야 한다."
+        },
+        {
+          "t": "code",
+          "language": "javascript",
+          "reusable": true,
+          "reuse_label": "브라우저에서 PKCE S256 값 만들기",
+          "text": "const bytes = crypto.getRandomValues(new Uint8Array(32));\nconst verifier = btoa(String.fromCharCode(...bytes))\n  .replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, '');\nconst digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));\nconst challenge = btoa(String.fromCharCode(...new Uint8Array(digest)))\n  .replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, '');\n\n// verifier는 현재 로그인 거래와 연결해 잠시만 보관한다.\nsessionStorage.setItem('pkce_verifier', verifier);"
+        },
+        {
+          "t": "p",
+          "text": "verifier는 URL query, analytics 이벤트, 오류 메시지에 들어가면 안 된다. 브라우저 앱이라면 같은 탭의 짧은 로그인 거래에만 연결하고, callback 처리 성공·실패 어느 경우에도 지운다. 모바일 앱도 OS의 안전한 저장소를 장기 보관소로 오해하지 말고 거래 수명만큼만 다룬다."
+        },
+        {
+          "t": "p",
+          "text": "인가 서버를 직접 운영한다면 challenge가 있던 거래에는 verifier 없는 token 요청을 절대 허용하지 않는다. 반대로 verifier가 왔는데 처음 요청에 challenge가 없었다면 PKCE 다운그레이드 시도로 보고 거절해야 한다. 이 짝 검증은 client_id와 인가 코드의 발급 이력에도 함께 묶여야 한다."
+        },
+        {
+          "t": "table",
+          "caption": "각 값이 있어야 하는 곳",
+          "headers": [
+            "값",
+            "authorize 요청",
+            "token 요청",
+            "보관 원칙"
+          ],
+          "rows": [
+            [
+              "code_verifier",
+              "보내지 않음",
+              "원본을 보냄",
+              "거래 종료 뒤 삭제"
+            ],
+            [
+              "code_challenge",
+              "S256 결과를 보냄",
+              "다시 보내지 않음",
+              "서버가 code와 연결"
+            ],
+            [
+              "state",
+              "무작위 값을 보냄",
+              "callback에서 대조",
+              "사용 후 즉시 폐기"
+            ],
+            [
+              "redirect_uri",
+              "등록값을 보냄",
+              "같은 값 사용",
+              "환경별로 명시 등록"
+            ]
+          ]
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "인가 요청과 토큰 교환은 이렇게 분리한다"
+        },
+        {
+          "t": "p",
+          "text": "SPA·모바일 앱처럼 client secret을 안전하게 숨길 수 없는 public client는 PKCE가 특히 중요하다. RFC 9700은 public client에 PKCE를 요구하고, confidential client에도 코드 주입·오용 방지를 위해 권고한다. verifier를 매 거래마다 새로 만들지 않거나 plain 방식을 허용하면 PKCE의 보호가 약해진다. 현재 권장 방식은 S256이다."
+        },
+        {
+          "t": "code",
+          "language": "http",
+          "text": "GET /authorize?response_type=code\n  &client_id=web-client\n  &redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fcallback\n  &scope=orders.read\n  &state=<one-time-random-state>\n  &code_challenge=<S256-challenge>\n  &code_challenge_method=S256\n\nPOST /token\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code&code=<callback-code>\n&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fcallback\n&client_id=web-client&code_verifier=<original-verifier>"
+        },
+        {
+          "t": "p",
+          "text": "BFF(backend for frontend)를 둘지 브라우저가 직접 토큰을 받을지는 앱의 배포 형태와 공격 표면에 따라 달라진다. 브라우저에 장기 토큰을 보관해야 하거나 여러 API를 같은 세션으로 묶어야 하면 서버가 세션 cookie를 관리하는 BFF가 운영하기 쉬울 수 있다. 반대로 제공자가 CORS와 PKCE를 지원하고 단일 SPA가 제한된 API만 쓴다면 public client PKCE가 단순하다. 어느 쪽이든 브라우저 XSS와 토큰 노출 위험은 별도로 줄여야 한다."
+        },
+        {
+          "t": "h",
+          "text": "redirect URI는 편의를 위해 넓게 허용하지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "redirect URI는 code와 오류 정보를 돌려보내는 목적지다. RFC 9700은 native app의 localhost 포트 예외를 제외하면 등록된 URI와 정확한 문자열 일치를 요구한다. https://app.example.com/callback 과 https://app.example.com/callback/ 은 다른 문자열이다. 와일드카드, 쿼리 파라미터로 받는 임의의 다음 URL, 열린 redirector는 인가 응답을 공격자 쪽으로 넘길 길을 만든다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "등록 URI와 요청 URI를 느슨하게 비교하지 말고, 배포 환경별 callback을 명시적으로 등록해 대조한다."
+        },
+        {
+          "t": "table",
+          "caption": "흔한 구현 선택의 결과",
+          "headers": [
+            "선택",
+            "언제 가능",
+            "막히는 공격 또는 문제",
+            "주의"
+          ],
+          "rows": [
+            [
+              "인가 코드 + PKCE S256",
+              "SPA·모바일·웹",
+              "코드 탈취·주입의 토큰 교환",
+              "verifier 재사용 금지"
+            ],
+            [
+              "고정 verifier",
+              "어디서도 권장하지 않음",
+              "한 번 유출되면 모든 거래 약화",
+              "거래별 난수 필요"
+            ],
+            [
+              "redirect URI 와일드카드",
+              "테스트 편의 목적",
+              "코드가 의도 밖 앱으로 전달",
+              "정확한 URI 등록"
+            ],
+            [
+              "implicit flow",
+              "새 구현에서는 피함",
+              "URL fragment 토큰 노출·운영 복잡성",
+              "제공자 마이그레이션 계획"
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "text": "state·nonce·PKCE는 서로 대체재가 아니다"
+        },
+        {
+          "t": "p",
+          "text": "state는 요청을 시작한 브라우저 세션과 callback을 연결해 CSRF·혼선 검증에 쓰는 일회성 값이다. OpenID Connect의 nonce는 받은 ID token이 현재 인증 거래에서 나온 것인지 확인하는 데 쓰인다. PKCE는 code와 verifier의 결합을 검증한다. RFC 9700은 PKCE가 강한 공격자 상황에서 CSRF 보호에도 도움이 된다고 설명하지만, 구현에서 state 검증을 생략할 근거로 삼기보다 각 제공자의 OIDC·OAuth 요구를 문서대로 확인하는 편이 낫다."
+        },
+        {
+          "t": "h",
+          "text": "토큰이 발급된 뒤에는 피해 범위를 작게 만든다"
+        },
+        {
+          "t": "p",
+          "text": "PKCE는 인가 코드의 오용을 줄이는 도구이지, 이미 발급된 bearer access token의 재사용을 막아 주지는 않는다. scope를 API 단위로 최소화하고, access token 수명은 사용 환경과 위험도에 맞게 짧게 정한다. refresh token을 발급한다면 회전과 재사용 탐지를 지원하는지 제공자 정책을 확인한다. 로그·오류 추적에는 authorization header, code, verifier, refresh token을 남기지 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "토큰 유출 피해는 짧은 수명, 필요한 scope만 부여, refresh token 회전으로 줄인다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "개발·스테이징·운영의 redirect URI를 분리해 각각 명시적으로 등록한다.",
+            "PKCE verifier와 state는 로그인 거래마다 새로 만들고 callback 처리 직후 삭제한다.",
+            "로그인 실패 로그에는 원인 코드만 남기고 code·token·verifier·개인정보는 마스킹한다.",
+            "제공자의 metadata에서 code_challenge_methods_supported와 토큰·회전 정책을 배포 전에 확인한다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "배포 전에 HTTP 기록 한 줄씩 대조한다"
+        },
+        {
+          "t": "p",
+          "text": "첫째 authorize 요청에 response_type=code, 정확한 redirect_uri, state, S256 challenge가 있는지 본다. 둘째 callback에서 state를 저장값과 비교하고 code를 한 번만 사용한다. 셋째 token 요청의 redirect_uri가 처음 값과 같고 verifier가 해당 거래의 원본인지 확인한다. 넷째 API에 필요한 최소 scope만 요청했는지, 만료·갱신 실패·로그아웃 때 토큰을 어떻게 폐기하는지 테스트한다. 이 네 지점을 CI의 통합 테스트 또는 IdP 샌드박스 체크리스트로 남기면 제공자를 바꿔도 흐름을 재사용할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "OAuth 연동에서 안전한 선택은 비밀값을 클라이언트에 더 넣는 일이 아니다. code를 verifier에 묶고 callback의 목적지를 좁히며, 발급 뒤 권한과 수명을 관리하는 일이다. 이 순서를 기준으로 각 제공자의 최신 metadata와 문서를 대조하면 오래된 예제에서 비롯되는 빈틈을 줄일 수 있다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서",
+      "url": "https://won0322.tistory.com/135",
+      "reason": "OAuth callback이 백엔드 요청과 세션 처리로 이어지는 기본 흐름을 함께 복습할 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Redis 토큰 버킷으로 API 레이트 리밋 설계하기",
+      "url": "https://won0322.tistory.com/140",
+      "reason": "토큰 기반 API를 운영할 때 권한 관리와 요청 제한을 함께 적용하는 다음 단계다.",
+      "role": "next_step"
+    }
+  ]
+}
