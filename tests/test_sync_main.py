@@ -1,8 +1,12 @@
 import subprocess
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from blog_pipeline.publishing.sync_main import (
     is_transient_network_error,
+    local_inbox_fallback_ready,
     pull_with_retry,
 )
 
@@ -80,6 +84,74 @@ class SyncMainTests(unittest.TestCase):
         self.assertEqual(returncode, 1)
         self.assertEqual(len(calls), 3)
         self.assertEqual(sleeps, [1, 2])
+
+    def test_uses_current_inbox_after_transient_retry_limit(self):
+        calls = []
+
+        def runner(command, **kwargs):
+            calls.append((command, kwargs))
+            return result(1, "fatal: Could not resolve host: github.com")
+
+        returncode = pull_with_retry(
+            attempts=3,
+            retry_delay=0,
+            runner=runner,
+            sleeper=lambda _delay: None,
+            transient_fallback=lambda: True,
+        )
+
+        self.assertEqual(returncode, 0)
+        self.assertEqual(len(calls), 3)
+
+    def test_does_not_use_current_inbox_for_non_network_failure(self):
+        fallback_calls = []
+
+        returncode = pull_with_retry(
+            attempts=3,
+            retry_delay=0,
+            runner=lambda command, **kwargs: result(
+                128, "fatal: Not possible to fast-forward, aborting."
+            ),
+            sleeper=lambda _delay: None,
+            transient_fallback=lambda: fallback_calls.append(True) or True,
+        )
+
+        self.assertEqual(returncode, 128)
+        self.assertEqual(fallback_calls, [])
+
+    def test_local_inbox_fallback_requires_clean_current_candidates(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            inbox_dir = root / "docs" / "inbox"
+            inbox_dir.mkdir(parents=True)
+            (inbox_dir / "latest.json").write_text(
+                json.dumps(
+                    {
+                        "day": "2026-08-12",
+                        "candidates": [{"title": "검증 가능한 후보"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            clean = lambda command, **kwargs: result(0, stdout="")
+            dirty = lambda command, **kwargs: result(0, stdout=" M local.txt\n")
+
+            self.assertTrue(
+                local_inbox_fallback_ready(
+                    root, "2026-08-12", runner=clean
+                )
+            )
+            self.assertFalse(
+                local_inbox_fallback_ready(
+                    root, "2026-08-12", runner=dirty
+                )
+            )
+            self.assertFalse(
+                local_inbox_fallback_ready(
+                    root, "2026-08-11", runner=clean
+                )
+            )
 
     def test_recognizes_transient_gateway_error(self):
         self.assertTrue(
