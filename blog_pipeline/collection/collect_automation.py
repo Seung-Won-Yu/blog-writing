@@ -257,16 +257,27 @@ def build_automation_inbox(
         score_automation_candidate(candidate, criteria, source)
         candidates.append(candidate)
 
-    known_urls = {candidate.get("url") for candidate in candidates}
+    candidate_by_url = {
+        candidate.get("url"): candidate
+        for candidate in candidates
+        if candidate.get("url")
+    }
     for raw in config.get("evergreen_candidates", []):
         if not isinstance(raw, dict):
             continue
         candidate = _prepare_evergreen_candidate(raw)
-        if candidate is None or candidate["url"] in known_urls:
+        if candidate is None:
             continue
+        existing = candidate_by_url.get(candidate["url"])
+        if existing is not None:
+            if not raw.get("curate_matching_feed"):
+                continue
+            candidate["published_at"] = str(existing.get("published_at") or "")
+            candidates[candidates.index(existing)] = candidate
         score_automation_candidate(candidate, criteria, raw)
-        candidates.append(candidate)
-        known_urls.add(candidate["url"])
+        if existing is None:
+            candidates.append(candidate)
+        candidate_by_url[candidate["url"]] = candidate
 
     candidates.sort(
         key=lambda item: (

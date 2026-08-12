@@ -228,6 +228,7 @@
       "summary": "인기 순위를 다시 적는 대신 서로 다른 공개 에이전트 스킬에 같은 작은 개발 과제를 주고, 질문·계획·구현·검증·사람 승인을 어떻게 다루는지 비교한다.",
       "url": "https://yozm.wishket.com/magazine/detail/3895/",
       "source_name": "요즘IT(아이디어 발견)",
+      "curate_matching_feed": true,
       "problem_lane": "AI 에이전트 통제",
       "tool_brand": "Agent Skills",
       "experiment_type": "도구·워크플로 비교 실험",

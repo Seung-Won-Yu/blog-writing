@@ -503,6 +503,63 @@ class AutomationScoringTests(unittest.TestCase):
         )
         self.assertEqual(result["selected"][0]["source_kind"], "evergreen_guide")
 
+    def test_curated_evergreen_candidate_replaces_the_same_feed_url(self):
+        config = automation_config()
+        config["sources"] = [
+            {
+                "id": "editorial-feed",
+                "name": "편집 피드",
+                "group": "editorial",
+                "type": "rss",
+                "source_kind": "evergreen_editorial",
+                "url": "https://example.com/feed.xml",
+                "weight": 1,
+            }
+        ]
+        config["selection"]["max_items"] = 1
+        config["selection"]["max_candidates"] = 1
+        config["evergreen_candidates"] = [
+            {
+                "id": "curated-agent-skills",
+                "title": "AI 에이전트 스킬을 같은 과제로 비교하기",
+                "summary": "계획과 검증 행동을 직접 비교한다.",
+                "url": "https://example.com/article/1",
+                "source_name": "아이디어 발견",
+                "curate_matching_feed": True,
+                "problem_lane": "AI 에이전트 통제",
+                "tool_brand": "Agent Skills",
+                "criteria_bias": {
+                    "search_durability": 30,
+                    "problem_solving": 30,
+                    "reproducibility": 20,
+                    "visual_evidence": 10,
+                },
+            }
+        ]
+        feed = """<?xml version=\"1.0\"?><rss><channel><item>
+        <title>인기 스킬 Top5</title>
+        <link>https://example.com/article/1</link>
+        <description>별 수로 순위를 매긴 글</description>
+        <pubDate>Fri, 17 Jul 2026 01:00:00 GMT</pubDate>
+        </item></channel></rss>"""
+
+        result = build_automation_inbox(
+            config,
+            fetch_text=lambda _url: feed,
+            now=NOW,
+            day_id="2026-07-18",
+        )
+
+        self.assertEqual(len(result["candidates"]), 1)
+        self.assertEqual(
+            result["selected"][0]["title"],
+            "AI 에이전트 스킬을 같은 과제로 비교하기",
+        )
+        self.assertEqual(
+            result["selected"][0]["problem_lane"],
+            "AI 에이전트 통제",
+        )
+
     def test_scores_each_editorial_criterion_within_its_weight(self):
         config = automation_config()
         candidate = {
