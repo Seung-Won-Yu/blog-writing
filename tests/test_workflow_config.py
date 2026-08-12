@@ -176,6 +176,8 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("sync_main --today --allow-current-inbox", contract)
         self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("publish_bundle --draft-id YYYY-MM-DD-automation --resume-check", contract)
+        self.assertIn("sync_main --verify-current", contract)
         self.assertIn("`LOCAL_CACHE_READY`", contract)
         self.assertIn(
             "publish_bundle --draft-id YYYY-MM-DD-automation --stage",
@@ -191,6 +193,8 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("sync_main --today --allow-current-inbox", contract)
         self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --resume-check", contract)
+        self.assertIn("sync_main --verify-current", contract)
         self.assertIn("`LOCAL_CACHE_READY`", contract)
         self.assertIn("daily_guard --draft-id YYYY-MM-DD-guide --source-only", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --stage", contract)

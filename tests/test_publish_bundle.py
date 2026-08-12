@@ -98,6 +98,67 @@ class PublishBundleTests(unittest.TestCase):
             {str(path.relative_to(root)) for path in paths.values()},
         )
 
+    def test_resume_accepts_only_current_complete_bundle_changes(self):
+        from blog_pipeline.publishing.publish_bundle import (
+            publish_bundle_resume_reasons,
+            required_publish_bundle_paths,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            draft_id = "2026-08-12-guide"
+            for relative in required_publish_bundle_paths(draft_id, root=root):
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(relative, encoding="utf-8")
+
+            ready = publish_bundle_resume_reasons(draft_id, root=root)
+            unexpected = root / "notes.txt"
+            unexpected.write_text("user change", encoding="utf-8")
+            blocked = publish_bundle_resume_reasons(draft_id, root=root)
+
+        self.assertEqual(ready, [])
+        self.assertIn("unexpected_worktree_change:notes.txt", blocked)
+
+    def test_resume_requires_source_change(self):
+        from blog_pipeline.publishing.publish_bundle import (
+            publish_bundle_resume_reasons,
+            required_publish_bundle_paths,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            draft_id = "2026-08-12-guide"
+            required = required_publish_bundle_paths(draft_id, root=root)
+            for relative in required:
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(relative, encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=root, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "user.name=Test",
+                    "-c",
+                    "user.email=test@example.com",
+                    "commit",
+                    "-qm",
+                    "fixture",
+                ],
+                cwd=root,
+                check=True,
+            )
+            (root / "docs" / "index.html").write_text("changed", encoding="utf-8")
+            reasons = publish_bundle_resume_reasons(draft_id, root=root)
+
+        self.assertIn(
+            "source_not_changed:data/guides/2026-08-12.json",
+            reasons,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

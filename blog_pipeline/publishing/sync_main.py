@@ -91,6 +91,68 @@ def pull_with_retry(
     return 1
 
 
+def verify_remote_current(
+    remote: str = "origin",
+    branch: str = "main",
+    attempts: int = 3,
+    retry_delay: float = 2.0,
+    *,
+    runner: Callable[..., subprocess.CompletedProcess[str]] | None = None,
+    sleeper: Callable[[float], None] | None = None,
+) -> int:
+    """Fetch without touching the worktree and require local HEAD == remote branch."""
+
+    if attempts < 1:
+        raise ValueError("attempts must be at least 1")
+    if retry_delay < 0:
+        raise ValueError("retry_delay must not be negative")
+
+    run = runner or subprocess.run
+    sleep = sleeper or time.sleep
+    command = ["git", "fetch", "--no-tags", remote, branch]
+    for attempt in range(1, attempts + 1):
+        result = run(command, capture_output=True, text=True, check=False)
+        if result.stdout:
+            print(result.stdout, end="")
+        if result.stderr:
+            print(result.stderr, end="", file=sys.stderr)
+        if result.returncode == 0:
+            break
+        combined = f"{result.stdout}\n{result.stderr}"
+        if not is_transient_network_error(combined) or attempt == attempts:
+            return result.returncode
+        delay = retry_delay * (2 ** (attempt - 1))
+        print(
+            f"일시적 네트워크 오류입니다. {delay:g}초 후 "
+            f"원격 확인을 재시도합니다 ({attempt}/{attempts}).",
+            file=sys.stderr,
+        )
+        sleep(delay)
+
+    local = run(
+        ["git", "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    fetched = run(
+        ["git", "rev-parse", "FETCH_HEAD"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if local.returncode != 0 or fetched.returncode != 0:
+        return local.returncode or fetched.returncode or 1
+    if local.stdout.strip() != fetched.stdout.strip():
+        print(
+            "REMOTE_DIVERGED: 로컬 HEAD와 origin/main이 달라 자동 복구를 중단합니다.",
+            file=sys.stderr,
+        )
+        return 1
+    print("REMOTE_CURRENT: 로컬 HEAD와 origin/main이 일치합니다.")
+    return 0
+
+
 def local_inbox_fallback_ready(
     repo_root: str | Path,
     day_id: str,
@@ -129,6 +191,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--retry-delay", type=float, default=2.0)
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--allow-current-inbox", action="store_true")
+    parser.add_argument("--verify-current", action="store_true")
     day_group = parser.add_mutually_exclusive_group()
     day_group.add_argument("--today", action="store_true")
     day_group.add_argument("--day")
@@ -139,6 +202,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         day_id = args.day or dt.datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
+        if args.verify_current:
+            return verify_remote_current(
+                remote=args.remote,
+                branch=args.branch,
+                attempts=args.attempts,
+                retry_delay=args.retry_delay,
+            )
         fallback = None
         if args.allow_current_inbox:
             fallback = lambda: local_inbox_fallback_ready(args.repo_root, day_id)

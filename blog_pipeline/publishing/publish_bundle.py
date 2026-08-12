@@ -122,6 +122,42 @@ def stage_publish_bundle(draft_id, *, root=ROOT):
     return paths
 
 
+def publish_bundle_resume_reasons(draft_id, *, root=ROOT):
+    """Allow a retry only when every local change belongs to today's bundle."""
+    root = Path(root)
+    required = set(required_publish_bundle_paths(draft_id, root=root))
+    identity = resolve_draft_identity(draft_id)
+    try:
+        changed = set()
+        for command in (
+            ["git", "diff", "--name-only", "-z"],
+            ["git", "diff", "--cached", "--name-only", "-z"],
+            ["git", "ls-files", "--others", "--exclude-standard", "-z"],
+        ):
+            result = subprocess.run(
+                command,
+                cwd=root,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            changed.update(item for item in result.stdout.split("\0") if item)
+    except (OSError, subprocess.CalledProcessError):
+        return ["git_resume_check_failed"]
+
+    reasons = []
+    if not changed:
+        reasons.append("no_local_publish_bundle")
+    if identity.source not in changed:
+        reasons.append(f"source_not_changed:{identity.source}")
+    for path in sorted(changed - required):
+        reasons.append(f"unexpected_worktree_change:{path}")
+    for path in sorted(required):
+        if not (root / path).is_file():
+            reasons.append(f"missing_publish_bundle:{path}")
+    return reasons
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         description="Stage or verify one complete Tistory publish bundle."
@@ -133,6 +169,7 @@ def main(argv=None):
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("--stage", action="store_true")
     action.add_argument("--check", action="store_true")
+    action.add_argument("--resume-check", action="store_true")
     args = parser.parse_args(argv)
     draft_id = (
         args.draft_id
@@ -141,7 +178,11 @@ def main(argv=None):
     )
     try:
         staged = stage_publish_bundle(draft_id, root=ROOT) if args.stage else []
-        reasons = publish_bundle_tracking_reasons(draft_id, root=ROOT)
+        reasons = (
+            publish_bundle_resume_reasons(draft_id, root=ROOT)
+            if args.resume_check
+            else publish_bundle_tracking_reasons(draft_id, root=ROOT)
+        )
     except (FileNotFoundError, OSError, subprocess.CalledProcessError, ValueError) as error:
         staged = []
         reasons = [str(error)]

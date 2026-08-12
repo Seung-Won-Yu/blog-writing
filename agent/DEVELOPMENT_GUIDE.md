@@ -14,6 +14,8 @@
 
    동기화 명령은 안전한 fast-forward를 세 번 시도합니다. DNS·502·503·504가 계속되어도 작업 트리가 깨끗하고 당일 뉴스 후보함이 유효하면 `LOCAL_CACHE_READY`로 제작을 계속합니다. 후보함이 오래됐거나 비었거나 작업 트리가 더러우면 중단합니다. fast-forward 불가 같은 비네트워크 오류는 우회하지 않습니다.
 
+   14:25 재실행에서 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --resume-check`를 먼저 실행합니다. `READY`면 수요일 완성 묶음만 남은 상태이므로 `python3 -m blog_pipeline.publishing.sync_main --verify-current --attempts 3 --retry-delay 5`로 로컬 HEAD와 원격 main 일치를 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. `PARTIAL`이거나 원격 HEAD가 다르면 사용자·불완전 변경을 보호하기 위해 중단합니다.
+
 2. 수요일이 아니면 파일을 만들지 않고 종료합니다. 가드 결과가 `COMPLETE`면 같은 글을 다시 조사·집필·생성하지 않습니다. `PARTIAL`이면 출력된 누락 단계만 복구하고, `NEW`일 때만 전체 흐름을 한 번 수행합니다.
 
 3. 결과는 다른 글과 분리합니다.
@@ -154,7 +156,7 @@ python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide -
 git diff --cached --check
 ```
 
-데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 시작 시 `LOCAL_CACHE_READY`였더라도 스테이징 전에 위 엄격 동기화를 반드시 성공시킵니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고합니다. `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이고 실제 staged diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 GitHub Pages 루트에서 가이드 카드·미리보기·최종 HTML 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 시작 시 `LOCAL_CACHE_READY`였더라도 스테이징 전에 위 엄격 동기화를 반드시 성공시킵니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 14:25 재실행이 위 `--resume-check` 경로로 복구합니다. `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이고 실제 staged diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 GitHub Pages 루트에서 가이드 카드·미리보기·최종 HTML 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 

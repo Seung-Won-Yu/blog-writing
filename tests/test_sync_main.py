@@ -8,6 +8,7 @@ from blog_pipeline.publishing.sync_main import (
     is_transient_network_error,
     local_inbox_fallback_ready,
     pull_with_retry,
+    verify_remote_current,
 )
 
 
@@ -157,6 +158,50 @@ class SyncMainTests(unittest.TestCase):
         self.assertTrue(
             is_transient_network_error("The requested URL returned error: 503")
         )
+
+    def test_verify_remote_current_retries_fetch_without_touching_worktree(self):
+        outcomes = iter(
+            [
+                result(1, "fatal: Could not resolve host: github.com"),
+                result(0),
+                result(0, stdout="abc123\n"),
+                result(0, stdout="abc123\n"),
+            ]
+        )
+        calls = []
+        sleeps = []
+
+        def runner(command, **kwargs):
+            calls.append(command)
+            return next(outcomes)
+
+        returncode = verify_remote_current(
+            attempts=3,
+            retry_delay=2,
+            runner=runner,
+            sleeper=sleeps.append,
+        )
+
+        self.assertEqual(returncode, 0)
+        self.assertEqual(sleeps, [2])
+        self.assertEqual(calls[0], ["git", "fetch", "--no-tags", "origin", "main"])
+        self.assertNotIn("pull", calls[0])
+
+    def test_verify_remote_current_blocks_remote_advance(self):
+        outcomes = iter(
+            [
+                result(0),
+                result(0, stdout="local\n"),
+                result(0, stdout="remote\n"),
+            ]
+        )
+
+        returncode = verify_remote_current(
+            attempts=1,
+            runner=lambda command, **kwargs: next(outcomes),
+        )
+
+        self.assertEqual(returncode, 1)
 
 
 if __name__ == "__main__":
