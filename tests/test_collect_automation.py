@@ -214,6 +214,7 @@ class AutomationScoringTests(unittest.TestCase):
         }
         self.assertIn("im-not-ai-korean-writing-test", evergreen_ids)
         self.assertIn("vibe-coding-recovery-basics", evergreen_ids)
+        self.assertIn("agent-skills-same-task-comparison", evergreen_ids)
         self.assertGreaterEqual(len(config["evergreen_candidates"]), 6)
         self.assertTrue(
             all(
@@ -424,6 +425,29 @@ class AutomationScoringTests(unittest.TestCase):
             "id": "vibe-coding-recovery",
             "title": "바이브 코딩이 막힐 때 되돌리는 법",
             "summary": "Git 복구와 로컬·배포 차이를 직접 실습한다.",
+            "source_id": "yozmit-evergreen-dev",
+            "source_family": "yozmit-evergreen",
+            "source_kind": "evergreen_editorial",
+        }
+        score_automation_candidate(candidate, config["criteria"])
+
+        selected = select_automation_candidates(
+            [candidate],
+            config["selection"],
+        )
+
+        self.assertGreaterEqual(
+            candidate["raw_score_breakdown"]["broad_appeal"],
+            8,
+        )
+        self.assertEqual([item["id"] for item in selected], [candidate["id"]])
+
+    def test_default_policy_accepts_an_agent_skill_comparison_topic(self):
+        config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+        candidate = {
+            "id": "agent-skills",
+            "title": "AI 에이전트 스킬 비교: 코드부터 치는 실수를 막는 법",
+            "summary": "같은 과제로 계획, 리뷰, 검증과 복구 행동을 직접 비교한다.",
             "source_id": "yozmit-evergreen-dev",
             "source_family": "yozmit-evergreen",
             "source_kind": "evergreen_editorial",

@@ -14,6 +14,10 @@
     "GitHub Actions",
     "Playwright",
     "Docker",
+    "Claude Code",
+    "Codex",
+    "agent",
+    "skill",
     "self-hosted",
     "monitoring",
     "notification",
@@ -23,6 +27,8 @@
     "file",
     "document",
     "pdf",
+    "에이전트",
+    "스킬",
     "자동화",
     "워크플로",
     "이메일",
@@ -39,7 +45,9 @@
       "keywords": [
         "automation", "workflow", "self-hosted", "docker", "github actions",
         "playwright", "backup", "monitoring", "vibe coding", "open source", "writing", "beginner",
-        "자동화", "워크플로", "백업", "모니터링", "바이브 코딩", "오픈소스", "글쓰기", "윤문", "기초", "입문"
+        "agent", "agent skill", "claude code", "codex", "skills",
+        "자동화", "워크플로", "백업", "모니터링", "바이브 코딩", "오픈소스", "글쓰기", "윤문", "기초", "입문",
+        "AI 에이전트", "에이전트 스킬", "에이전트", "스킬"
       ]
     },
     "problem_solving": {
@@ -49,7 +57,9 @@
       "keywords": [
         "retry", "failure", "notification", "schedule", "sync", "backup", "scrape",
         "deploy", "test", "monitor", "alert", "debug", "verify", "rollback", "restore", "hallucination",
-        "실패", "알림", "예약", "동기화", "배포", "테스트", "디버깅", "검증", "되돌리기", "복구", "환각"
+        "planning", "review", "context", "memory", "guardrail",
+        "실패", "알림", "예약", "동기화", "배포", "테스트", "디버깅", "검증", "되돌리기", "복구", "환각",
+        "계획", "리뷰", "컨텍스트", "메모리", "통제"
       ]
     },
     "reproducibility": {
@@ -84,7 +94,8 @@
         "download", "webpage", "website", "이메일", "메일", "스프레드시트", "엑셀", "일정", "회의", "메모", "pdf",
         "파일", "폴더", "설문", "영수증", "청구서", "보고서", "알림", "사진", "문서",
         "백업", "다운로드", "웹페이지", "AI 글", "AI 초안", "AI 티", "바이브 코딩", "코딩",
-        "오픈소스", "글쓰기", "개발 입문", "비전공자", "앱 만들기"
+        "오픈소스", "글쓰기", "개발 입문", "비전공자", "앱 만들기",
+        "AI 에이전트", "에이전트", "에이전트 스킬", "스킬", "Claude Code", "Codex"
       ]
     }
   },
@@ -210,6 +221,18 @@
       "experiment_type": "개발·AI 실전 검증",
       "verification_hint": "요즘IT 원문을 요약하지 않고 Git·MDN·배포 플랫폼 공식 문서로 개념을 교차 확인한다. 별도 임시 폴더의 미니 웹페이지에서 오류·복구·로컬과 배포 차이를 직접 캡처",
       "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 8, "visual_evidence": 7, "broad_appeal": 8}
+    },
+    {
+      "id": "agent-skills-same-task-comparison",
+      "title": "AI 에이전트 스킬 비교: 코드부터 치는 실수를 어떻게 막을까",
+      "summary": "인기 순위를 다시 적는 대신 서로 다른 공개 에이전트 스킬에 같은 작은 개발 과제를 주고, 질문·계획·구현·검증·사람 승인을 어떻게 다루는지 비교한다.",
+      "url": "https://yozm.wishket.com/magazine/detail/3895/",
+      "source_name": "요즘IT(아이디어 발견)",
+      "problem_lane": "AI 에이전트 통제",
+      "tool_brand": "Agent Skills",
+      "experiment_type": "도구·워크플로 비교 실험",
+      "verification_hint": "요즘IT의 Top5 순서·문장·도표를 재사용하지 않는다. GitHub API로 비교 기준일의 스타·최근 활동·라이선스를 다시 확인하고, 공식 README와 스킬 파일을 읽은 뒤 성격이 다른 2~3개만 임시 복제본에서 같은 과제로 실행한다. 스타 수는 품질 순위가 아니므로 제한·잘 맞는 작업·사람 승인 지점·실패 복구를 같이 비교한다.",
+      "criteria_bias": {"search_durability": 8, "problem_solving": 8, "reproducibility": 7, "visual_evidence": 7, "broad_appeal": 8}
     }
   ],
   "selection": {
@@ -271,12 +294,12 @@
       "max_age_days": 60,
       "max_summary_chars": 900,
       "include_title_keywords": [
-        "AI", "ChatGPT", "Claude", "클로드", "바이브 코딩", "코딩", "개발",
-        "GitHub", "깃허브", "오픈소스", "프롬프트", "글쓰기", "자동화",
+        "AI", "ChatGPT", "Claude", "클로드", "Claude Code", "Codex", "바이브 코딩", "코딩", "개발",
+        "GitHub", "깃허브", "오픈소스", "프롬프트", "에이전트", "스킬", "서브에이전트", "글쓰기", "자동화",
         "앱", "웹사이트", "웹페이지"
       ],
       "experiment_type": "개발·AI 실전 검증",
-      "verification_hint": "요즘IT 글은 아이디어 발견에만 사용하고 원문을 재서술하지 않는다. 공식 저장소·공식 문서를 추가 확인한 뒤 작은 예제로 직접 실행하고 기대값·실제 결과·실패·복구를 기록",
+      "verification_hint": "요즘IT 글은 아이디어 발견에만 사용하고 원문을 재서술하지 않는다. 순위·비교글이면 공식 API로 지표와 기준일을 다시 확인하고, 인기도와 품질을 같은 것처럼 쓰지 않는다. 공식 저장소·공식 문서를 추가 확인한 뒤 성격이 다른 2~3개를 같은 작은 과제로 직접 비교하고 기대값·실제 결과·실패·복구를 기록",
       "criteria_bias": {
         "search_durability": 6,
         "problem_solving": 5,
