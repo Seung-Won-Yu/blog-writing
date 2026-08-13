@@ -121,6 +121,10 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_editor_contract_enforces_one_deep_story_single_run_and_deduplication(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
+        self.assertIn("git pull --ff-only origin main", contract)
+        self.assertIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("git rev-parse HEAD", contract)
+        self.assertNotIn("sync_main", contract)
         self.assertIn("daily_guard --today", contract)
         self.assertIn("daily_guard --today --source-only", contract)
         self.assertIn("원고 사전검사", contract)
@@ -174,11 +178,10 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("sync_main --today --allow-current-inbox", contract)
-        self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("git pull --ff-only origin main", contract)
+        self.assertIn("git ls-remote origin refs/heads/main", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-automation --resume-check", contract)
-        self.assertIn("sync_main --verify-current", contract)
-        self.assertIn("`LOCAL_CACHE_READY`", contract)
+        self.assertIn("git rev-parse HEAD", contract)
         self.assertIn(
             "publish_bundle --draft-id YYYY-MM-DD-automation --stage",
             contract,
@@ -191,11 +194,10 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
         contract = GUIDE_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("sync_main --today --allow-current-inbox", contract)
-        self.assertIn("sync_main --attempts 3 --retry-delay 5", contract)
+        self.assertIn("git pull --ff-only origin main", contract)
+        self.assertIn("git ls-remote origin refs/heads/main", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --resume-check", contract)
-        self.assertIn("sync_main --verify-current", contract)
-        self.assertIn("`LOCAL_CACHE_READY`", contract)
+        self.assertIn("git rev-parse HEAD", contract)
         self.assertIn("현업 도구·공개 지식 비교", contract)
         self.assertIn("인기도와 품질을 같은 것처럼", contract)
         self.assertIn("같은 입력으로 실행할 수 있는 비교", contract)

@@ -9,14 +9,14 @@
 1. 최신 `main`을 받고 당일 뉴스글이 먼저 완성됐는지 확인합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --today --allow-current-inbox --attempts 3 --retry-delay 5
+   git pull --ff-only origin main
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.saturday_guard --today
    ```
 
-   동기화 명령은 안전한 fast-forward를 세 번 시도합니다. DNS·502·503·504가 계속되어도 작업 트리가 깨끗하고 당일 뉴스 후보함이 유효하면 `LOCAL_CACHE_READY`로 제작을 계속합니다. 후보함이 오래됐거나 비었거나 작업 트리가 더러우면 중단합니다. fast-forward 불가 같은 비네트워크 오류는 우회하지 않습니다.
+   `git pull`은 예약 작업의 네트워크 권한이 적용되도록 Python 래퍼가 아닌 독립 명령으로 실행합니다. 일시적인 DNS·502·503·504라면 같은 직접 명령만 최대 세 번 재시도하고, 계속 실패하면 14:25 재실행에 넘깁니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
 
-   14:25 재실행에서 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --resume-check`를 먼저 실행합니다. `READY`면 토요일 완성 묶음만 남은 상태이므로 `python3 -m blog_pipeline.publishing.sync_main --verify-current --attempts 3 --retry-delay 5`로 로컬 HEAD와 원격 main 일치를 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. `PARTIAL`이거나 원격 HEAD가 다르면 사용자·불완전 변경을 보호하기 위해 중단합니다.
+   14:25 재실행에서 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --resume-check`를 먼저 실행합니다. `READY`면 `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
 
 2. `saturday_guard` 결과를 따릅니다.
 
@@ -183,7 +183,8 @@ python3 -m blog_pipeline.publishing.export_tistory --draft-id YYYY-MM-DD-automat
 python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m blog_pipeline.publishing.build_integration_page
 python3 -m unittest discover -s tests
-python3 -m blog_pipeline.publishing.sync_main --attempts 3 --retry-delay 5
+git ls-remote origin refs/heads/main
+git rev-parse HEAD
 python3 -m blog_pipeline.publishing.saturday_guard --today --require-complete
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --stage
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --check
@@ -192,7 +193,7 @@ git diff --cached --check
 
 데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트의 당일 그룹에 `뉴스 심층글`과 `업무자동화 실험` 두 카드가 함께 있고 각각 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 독립 연결돼야 합니다.
 
-시작 시 `LOCAL_CACHE_READY`였더라도 스테이징 전에 위 엄격 동기화를 반드시 성공시킵니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 14:25 재실행이 위 `--resume-check` 경로로 복구합니다. `publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+스테이징 전에 위 두 해시가 같은지 반드시 확인합니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 14:25 재실행이 위 `--resume-check` 경로로 복구합니다. `publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 

@@ -7,13 +7,13 @@
 1. 최신 상태를 받고 당일 가드를 먼저 실행합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --today --allow-current-inbox
+   git pull --ff-only origin main
    python3 -m blog_pipeline.publishing.daily_guard --today
    ```
 
-   이 명령은 안전한 fast-forward 동기화를 최대 세 번 시도합니다. DNS·502·503·504가 계속되어도 작업 트리가 깨끗하고 `docs/inbox/latest.json`에 당일 후보가 있으면 `LOCAL_CACHE_READY`로 편집을 계속합니다. 후보함이 오래됐거나 비었거나 작업 트리가 더러우면 중단합니다. fast-forward 불가처럼 네트워크 외 동기화 오류도 우회하지 않습니다.
+   `git pull`은 Python 래퍼 안에서 호출하지 않고 독립 명령으로 실행합니다. 예약 작업의 네트워크 권한이 실제 Git 명령에 적용되게 하기 위함입니다. 일시적인 DNS·502·503·504라면 같은 직접 명령만 최대 세 번 재시도합니다. 계속 실패하면 오래된 후보함으로 글을 만들지 않고 09:25 재실행에 넘깁니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
 
-   재실행 시 작업 트리가 더러우면 사용자 변경이라고 단정하지 않습니다. 먼저 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 실행합니다. `READY`면 당일 완성 묶음만 남은 상태이므로 `python3 -m blog_pipeline.publishing.sync_main --verify-current --attempts 3 --retry-delay 5`로 로컬 HEAD와 원격 main 일치를 확인하고, 원고·이미지를 다시 만들지 않은 채 9단계 최종 가드·스테이징부터 복구합니다. `PARTIAL`이거나 원격 HEAD가 다르면 사용자·불완전 변경을 보호하기 위해 중단합니다.
+   재실행 시 작업 트리가 더러우면 사용자 변경이라고 단정하지 않습니다. 먼저 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 실행합니다. `READY`면 당일 완성 묶음만 남은 상태입니다. `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인한 뒤, 원고·이미지를 다시 만들지 않고 9단계 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
 
    - `COMPLETE`: 즉시 종료합니다. 원문 확인, 재집필, 이미지 재생성, 테스트, 커밋, 푸시를 반복하지 않습니다.
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
@@ -133,10 +133,11 @@
    python3 -m unittest discover -s tests
    ```
 
-9. 최종 가드 전에 원격 동기화를 엄격 모드로 다시 확인합니다. 시작 시 `LOCAL_CACHE_READY`를 사용했더라도 여기서는 로컬 후보함 우회를 허용하지 않습니다. 동기화가 계속 실패하면 완성된 로컬 산출물은 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 09:25 재실행이 위 `--resume-check` 경로로 복구합니다. 성공하면 최종 가드와 당일 발행 묶음 검사를 진행합니다.
+9. 최종 가드 전에 원격 main과 로컬 HEAD가 같은지 엄격하게 확인합니다. 네트워크 명령은 Python 래퍼로 감싸지 않습니다. 원격 확인이 실패하거나 해시가 다르면 완성된 로컬 산출물은 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 09:25 재실행이 위 `--resume-check` 경로로 복구합니다. 해시가 같을 때만 최종 가드와 당일 발행 묶음 검사를 진행합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.sync_main --attempts 3 --retry-delay 5
+   git ls-remote origin refs/heads/main
+   git rev-parse HEAD
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.publish_bundle --today --stage
    python3 -m blog_pipeline.publishing.publish_bundle --today --check
