@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 13 (목) · 약 8분</p>
+    <p class="digest-lead">원격 MCP 서버를 여러 대로 늘렸는데도 특정 인스턴스가 죽을 때마다 일부 에이전트가 멈춘다면, 서버 수보다 세션이 먼저 문제일 수 있다. 2026-07-28 MCP 명세는 이 연결 고리를 프로토콜 기본값에서 없앴다. 이제 도구 호출은 이전 연결을 기억하는 서버가 아니라, 요청 하나만으로 처리할 수 있는 HTTP 엔드포인트를 목표로 한다. 다만 세션 헤더가 사라졌다고 애플리케이션의 상태까지 저절로 사라지는 것은 아니다. 주문 번호, 승인 단계, 장기 작업처럼 다음 호출로 이어져야 할 값은 요청마다 명시적으로 넘겨야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-Stateless-대표.webp" alt="하나의 MCP 요청이 세 대의 서버 캐비닛 중 어느 곳으로도 향하는 종이 질감 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · InfoQ · 2026. 8. 12</p>
+    <h3>MCP는 Stateless가 되고, 개발자는 이것이 다시 API가 되는지 묻는다</h3>
+    <p class="digest-blurb">MCP 2026-07-28 명세의 stateless 전환이 세션 기반 원격 도구 서버의 라우팅과 운영을 어떻게 바꾸는지 다룬다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">세션이 사라지면 요청은 어느 서버로 가도 된다</h4><p>이전 Streamable HTTP 방식에서는 먼저 initialize를 호출하고 서버가 준 Mcp-Session-Id를 이후 요청마다 들고 다녀야 했다. 2026-07-28에서는 이 초기 연결과 프로토콜 세션이 제거됐다. 도구 호출 하나가 필요한 버전과 기능 정보를 스스로 포함하므로, 로드밸런서는 그 요청을 특정 인스턴스에 고정하지 않아도 된다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-세션고정-비교.webp" alt="세션 고정 요청과 어느 MCP 서버에서나 처리되는 단독 요청을 비교한 기술 도식" width="1200" height="630" loading="lazy"><figcaption>세션 ID가 라우팅을 고정하던 구조와, 요청 하나가 어느 인스턴스에서도 처리되는 구조의 차이다.</figcaption></figure><p>이 변화가 곧바로 ‘MCP는 평범한 API다’라는 뜻은 아니다. JSON-RPC 도구 호출, 클라이언트 기능 협상, 다중 왕복 요청 같은 MCP 고유의 규칙은 남는다. 바뀐 것은 이 규칙을 연결을 열 때 한 번 교환하느냐, 각 요청에서 선언하느냐이다.</p><h4 class="digest-subheading">초기 연결 대신 _meta가 맡는 정보</h4><p>새 명세에서 프로토콜 버전과 클라이언트 기능은 요청의 _meta에 포함된다. 서버는 선언되지 않은 기능을 가정하면 안 되며, 필요한 기능이 없으면 오류로 돌려줘야 한다. 따라서 서버 코드에서 세션 객체에 숨겨 둔 기능 협상 결과가 있다면, 요청 검증 단계로 옮길 대상인지 먼저 점검해야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-명세-캡처.webp" alt="MCP 2026-07-28 공식 명세의 요청 메타데이터 표" width="1200" height="630" loading="lazy"><figcaption>공식 명세는 프로토콜 버전과 클라이언트 기능을 각 요청의 메타데이터로 다루도록 설명한다.</figcaption></figure><div class="digest-table-wrap" role="region" aria-label="프로토콜 세션과 애플리케이션 상태를 분리해 전환 범위를 확인한다." tabindex="0"><table class="digest-data-table"><caption>프로토콜 세션과 애플리케이션 상태를 분리해 전환 범위를 확인한다.</caption><thead><tr><th scope="col">기존 세션 중심</th><th scope="col">stateless 중심</th><th scope="col">운영에서 확인할 것</th></tr></thead><tbody><tr><td>initialize 후 세션 ID 유지</td><td>요청마다 버전·기능 선언</td><td>SDK가 새 메타데이터를 보낼 수 있는가</td></tr><tr><td>특정 인스턴스에 고정</td><td>어느 인스턴스나 처리</td><td>공유 세션 저장소 의존을 제거했는가</td></tr><tr><td>연결 상태에 기능 보관</td><td>필요한 상태는 명시적 참조</td><td>업무 상태 핸들을 어디에 저장할 것인가</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>

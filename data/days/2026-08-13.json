@@ -1,0 +1,399 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-13",
+  "publish_date": "2026-08-13",
+  "date_label": "2026. 8. 13",
+  "weekday": "목",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "최신 IT·개발 소식",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-13T09:00:00+09:00",
+  "primary_query": "MCP Stateless 전환",
+  "tags": [
+    "Model Context Protocol",
+    "MCP Stateless",
+    "MCP 서버",
+    "에이전트 도구",
+    "로드밸런싱",
+    "API 게이트웨이",
+    "AI 에이전트"
+  ],
+  "editorial": {
+    "headline": "MCP Stateless 전환: 세션 없는 서버로 바꾸기 전 확인할 4가지",
+    "opening": "원격 MCP 서버를 여러 대로 늘렸는데도 특정 인스턴스가 죽을 때마다 일부 에이전트가 멈춘다면, 서버 수보다 세션이 먼저 문제일 수 있다. 2026-07-28 MCP 명세는 이 연결 고리를 프로토콜 기본값에서 없앴다. 이제 도구 호출은 이전 연결을 기억하는 서버가 아니라, 요청 하나만으로 처리할 수 있는 HTTP 엔드포인트를 목표로 한다. 다만 세션 헤더가 사라졌다고 애플리케이션의 상태까지 저절로 사라지는 것은 아니다. 주문 번호, 승인 단계, 장기 작업처럼 다음 호출로 이어져야 할 값은 요청마다 명시적으로 넘겨야 한다.",
+    "closing": "Stateless MCP의 핵심은 서버를 잊게 만드는 일이 아니라, 서버가 기억해야 할 것과 도구 호출이 함께 들고 가야 할 것을 분리하는 데 있다. 세션 저장소와 고정 라우팅을 없애기 전에 프로토콜 버전, 요청 메타데이터, 상태 핸들, 클라이언트 호환성을 각각 확인하면 장애 지점을 줄이면서도 필요한 작업 맥락은 유지할 수 있다.",
+    "action": "운영 게이트웨이에 새 버전을 바로 기본값으로 바꾸기보다, 기존 버전과 함께 광고한 뒤 한 클라이언트의 `tools/list` 호출부터 새 헤더로 확인해 보자.",
+    "audience_problem": "MCP 서버를 여러 인스턴스로 운영하면서도 세션 고정, 재연결, 공유 저장소 때문에 장애 복구와 수평 확장이 복잡해진 개발자.",
+    "reader_takeaway": "2026-07-28 요청이 스스로 가져야 하는 메타데이터와 애플리케이션 상태 핸들을 구분하고, 구버전과 병행하는 순서로 전환할 수 있다.",
+    "why_now": "8월 12일 InfoQ가 MCP의 stateless 전환과 게이트웨이 영향을 짚었고, 공식 명세와 주요 구현체가 이미 새 버전의 병행 운영 방법을 공개했다.",
+    "topic_key": "MCP 2026-07-28 stateless 서버 운영 전환",
+    "reader_question": "MCP 세션이 사라진 뒤 원격 도구 서버를 어떻게 로드밸런서 뒤로 옮기고, 계속 이어져야 하는 작업 상태는 어디에 두어야 할까?",
+    "entities": [
+      "Model Context Protocol",
+      "MCP 2026-07-28",
+      "Streamable HTTP",
+      "Mcp-Method",
+      "Mcp-Session-Id"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "change_impact",
+    "revisit": {
+      "quick_answer": "프로토콜 세션을 제거하되 업무 상태는 요청의 명시적 핸들 또는 별도 저장소로 옮기고, 구·신 버전을 병행 지원한다.",
+      "reuse_case": "MCP 서버를 컨테이너나 서버리스 환경으로 확장하거나 게이트웨이 뒤에 배치할 때 적용한다.",
+      "failure_case": "세션 ID에 업무 상태를 숨겨 두었거나 새 버전을 이해하지 못하는 클라이언트가 있으면 기본 버전을 바꾸지 말고 병행 운영을 유지한다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "MCP SDK의 2026-07-28 지원",
+        "게이트웨이 지원 버전 변경",
+        "상태 저장 방식 변경",
+        "도구의 장기 작업 도입"
+      ]
+    },
+    "search_intent": {
+      "query": "MCP Stateless 전환",
+      "reader_need": "세션에 묶인 MCP 서버를 중단 없이 여러 인스턴스로 확장하는 방법을 알고 싶다.",
+      "answer_format": "비교표와 단계별 점검 순서"
+    }
+  },
+  "visual": {
+    "subject": "세션 고정 없이 여러 MCP 서버 인스턴스가 하나의 도구 호출을 처리하는 전환",
+    "hook": "한 서버가 기억하던 연결을 없애면 요청은 어디로 가야 할까?",
+    "motif": "요청 봉투, 세 개의 서버 캐비닛, 비어 있는 세션 목걸이, 게이트웨이",
+    "cover": {
+      "label": "하나의 요청이 특정 서버가 아닌 어느 인스턴스로도 향하는 순간",
+      "scene_label": [
+        "요청 봉투",
+        "로드밸런서",
+        "세 서버",
+        "세션 목걸이"
+      ],
+      "steps": "독립된 요청이 게이트웨이를 지나 동일한 세 서버 중 하나로 향하고, 더는 쓰이지 않는 세션 표식은 옆에 남는다",
+      "curiosity_hook": "서버가 이전 요청을 기억하지 않아도 도구 호출은 어떻게 이어질까",
+      "evidence_type": "diagram",
+      "origin": "imagegen",
+      "logic_type": "architecture",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "tactile-infrastructure-scene",
+      "composition_type": "single-request-crossroads",
+      "palette_family": "stone_indigo_moss",
+      "render_family": "tactile_paper",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "generation_prompt": "Use case: illustration-story Asset intent: editorial-scene. Tactile paper-cut editorial scene: one self-contained request envelope crosses a modest load balancer toward three identical small server cabinets; a dusty unused session-token lanyard lies aside. Warm stone, muted indigo, moss green. No text, labels, logos, arrows, cards, charts, dashboard, laptop, people, robots, neon, watermark or fake UI."
+    },
+    "assets": [
+      {
+        "label": "세션 고정 요청과 단독 처리 요청은 어느 서버에 도착할 수 있는가",
+        "scene_label": [
+          "세션 고정",
+          "요청 단독 처리",
+          "서버 인스턴스"
+        ],
+        "steps": "왼쪽은 세션 표식 때문에 한 서버로 돌아가고 오른쪽은 필요한 정보를 가진 요청이 세 서버 중 어디로든 도착하는 비교",
+        "curiosity_hook": "서버를 늘렸는데도 특정 인스턴스가 병목이 되는 이유는 무엇일까",
+        "evidence_type": "diagram",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "세션 고정",
+          "요청 단독 처리",
+          "어느 인스턴스나"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "generation_prompt": "Use case: infographic-diagram. Korean technical illustration comparing session-bound MCP and stateless MCP. Use exactly: 세션 고정, 요청 단독 처리, 어느 인스턴스나. No title, English, logos, fake terminal, metrics, cards, dashboards, people, laptop, robots or watermark."
+      },
+      {
+        "label": "공식 명세에서 요청마다 선언하는 프로토콜 정보는 무엇인가",
+        "scene_label": [
+          "MCP 명세",
+          "프로토콜 버전",
+          "클라이언트 기능",
+          "요청 메타데이터"
+        ],
+        "steps": "공식 명세의 요청 메타데이터 표에서 버전과 클라이언트 기능이 각 요청에 들어가는 조건을 확인한다",
+        "curiosity_hook": "초기 연결 대신 매 요청에 무엇을 넣어야 서버가 같은 규칙으로 동작할까",
+        "evidence_type": "screenshot",
+        "origin": "capture",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "capture_tool": "browser",
+        "capture_target": "https://modelcontextprotocol.io/specification/2026-07-28/basic/index",
+        "captured_at": "2026-08-13T09:31:23+09:00",
+        "source_url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/index",
+        "capture_note": "공개 MCP 명세의 Base Protocol 화면을 확인용으로 캡처한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "MCP는 Stateless가 되고, 개발자는 이것이 다시 API가 되는지 묻는다",
+      "source": "InfoQ",
+      "url": "https://www.infoq.com/news/2026/08/mcp-stateless-gateway",
+      "published_at": "2026-08-12T09:48:00+00:00",
+      "blurb_kr": "MCP 2026-07-28 명세의 stateless 전환이 세션 기반 원격 도구 서버의 라우팅과 운영을 어떻게 바꾸는지 다룬다.",
+      "references": [
+        {
+          "title": "MCP 2026-07-28 release candidate",
+          "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/",
+          "kind": "official"
+        },
+        {
+          "title": "SEP-2575: Make MCP Stateless",
+          "url": "https://modelcontextprotocol.io/seps/2575-stateless-mcp",
+          "kind": "official"
+        },
+        {
+          "title": "MCP 2026-07-28 specification overview",
+          "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/index",
+          "kind": "official"
+        },
+        {
+          "title": "AWS AgentCore Gateway and MCP 2026-07-28",
+          "url": "https://aws.amazon.com/blogs/machine-learning/how-agentcore-gateway-supports-the-mcp-2026-07-28-spec/",
+          "kind": "independent"
+        },
+        {
+          "title": "GitHub MCP Server supports next MCP specification",
+          "url": "https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "세션이 사라지면 요청은 어느 서버로 가도 된다"
+        },
+        {
+          "t": "p",
+          "text": "이전 Streamable HTTP 방식에서는 먼저 initialize를 호출하고 서버가 준 Mcp-Session-Id를 이후 요청마다 들고 다녀야 했다. 2026-07-28에서는 이 초기 연결과 프로토콜 세션이 제거됐다. 도구 호출 하나가 필요한 버전과 기능 정보를 스스로 포함하므로, 로드밸런서는 그 요청을 특정 인스턴스에 고정하지 않아도 된다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "세션 ID가 라우팅을 고정하던 구조와, 요청 하나가 어느 인스턴스에서도 처리되는 구조의 차이다."
+        },
+        {
+          "t": "p",
+          "text": "이 변화가 곧바로 ‘MCP는 평범한 API다’라는 뜻은 아니다. JSON-RPC 도구 호출, 클라이언트 기능 협상, 다중 왕복 요청 같은 MCP 고유의 규칙은 남는다. 바뀐 것은 이 규칙을 연결을 열 때 한 번 교환하느냐, 각 요청에서 선언하느냐이다."
+        },
+        {
+          "t": "h",
+          "text": "초기 연결 대신 _meta가 맡는 정보"
+        },
+        {
+          "t": "p",
+          "text": "새 명세에서 프로토콜 버전과 클라이언트 기능은 요청의 _meta에 포함된다. 서버는 선언되지 않은 기능을 가정하면 안 되며, 필요한 기능이 없으면 오류로 돌려줘야 한다. 따라서 서버 코드에서 세션 객체에 숨겨 둔 기능 협상 결과가 있다면, 요청 검증 단계로 옮길 대상인지 먼저 점검해야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "공식 명세는 프로토콜 버전과 클라이언트 기능을 각 요청의 메타데이터로 다루도록 설명한다."
+        },
+        {
+          "t": "table",
+          "caption": "프로토콜 세션과 애플리케이션 상태를 분리해 전환 범위를 확인한다.",
+          "headers": [
+            "기존 세션 중심",
+            "stateless 중심",
+            "운영에서 확인할 것"
+          ],
+          "rows": [
+            [
+              "initialize 후 세션 ID 유지",
+              "요청마다 버전·기능 선언",
+              "SDK가 새 메타데이터를 보낼 수 있는가"
+            ],
+            [
+              "특정 인스턴스에 고정",
+              "어느 인스턴스나 처리",
+              "공유 세션 저장소 의존을 제거했는가"
+            ],
+            [
+              "연결 상태에 기능 보관",
+              "필요한 상태는 명시적 참조",
+              "업무 상태 핸들을 어디에 저장할 것인가"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "MCP stateless 전환 점검표"
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "업무 상태까지 없애면 안 되는 이유"
+        },
+        {
+          "t": "p",
+          "text": "프로토콜 세션과 애플리케이션 상태는 다르다. 예를 들어 장바구니 ID, 승인 대기 단계, 비동기 작업의 진행 번호는 다음 호출에서 계속 필요하다. 이 값들을 서버 메모리에만 두면 stateless 라우팅에서 사라진다. 새 명세의 방향은 상태를 금지하는 것이 아니라, 필요한 상태를 요청 인자나 명시적 핸들로 전달해 어떤 인스턴스도 같은 저장소를 통해 해석할 수 있게 만드는 것이다."
+        },
+        {
+          "t": "p",
+          "text": "이 구분은 장애 대응에서도 차이를 만든다. 프로세스 메모리에만 남은 값은 인스턴스 교체와 함께 사라지지만, 요청에 포함된 안전한 참조 값과 내구성 있는 저장소의 레코드는 다른 인스턴스에서도 다시 조회할 수 있다. 참조 값 자체에 사용자 정보나 권한을 담아 두기보다, 서버가 매 요청의 인증 정보와 함께 검증할 수 있는 식별자로 제한하는 편이 안전하다."
+        },
+        {
+          "t": "h",
+          "text": "게이트웨이는 두 버전을 함께 열어 두는 편이 안전하다"
+        },
+        {
+          "t": "p",
+          "text": "새 버전은 호환성 단절을 포함한다. AWS AgentCore Gateway는 지원 버전 목록에 2025-11-25와 2026-07-28을 함께 두고, 클라이언트가 요청 헤더로 버전을 고르게 하는 방식을 제시한다. GitHub도 새 명세 지원 과정에서 Redis 세션과 요청별 깊은 패킷 검사를 줄였다고 밝혔다. 하지만 모든 클라이언트가 새 SDK를 쓴다는 보장은 없으므로, 서버와 클라이언트를 같은 날 한꺼번에 바꾸기보다 병행 지원이 먼저다."
+        },
+        {
+          "t": "p",
+          "text": "병행 운영 중에는 실패를 하나의 ‘연결 오류’로 뭉뚱그리지 않는 것이 좋다. 지원하지 않는 버전, 누락된 클라이언트 기능, 애플리케이션 상태 참조의 만료를 서로 다른 관측 항목으로 남기면 어느 층에서 되돌려야 하는지 분명해진다. 새 버전의 호출 비율과 오류 비율이 안정된 뒤에만 구버전의 광고를 중단해야, 이전 SDK를 쓴 자동화 작업을 예고 없이 끊지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "전환 전에는 이 네 가지를 순서대로 확인한다"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "클라이언트와 서버 SDK가 2026-07-28을 실제로 지원하는지 확인한다.",
+            "세션 ID나 프로세스 메모리에 숨겨 둔 업무 상태와 권한 맥락을 목록으로 만든다.",
+            "기존 버전과 새 버전을 동시에 광고하고, 새 헤더의 tools/list와 tools/call을 작은 트래픽에서 검증한다.",
+            "새 버전 요청이 실패할 때의 응답과 롤백 기준을 정하고, 구버전 지원을 제거하기 전 관측치를 남긴다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "단순해진 라우팅이 인증을 대신하지는 않는다"
+        },
+        {
+          "t": "p",
+          "text": "세션이 없어진다고 인증과 권한 확인이 자동으로 단순해지는 것은 아니다. 명세는 OAuth와 OpenID Connect에 더 가까운 방향으로 권한 처리를 강화했지만, 서버는 매 요청의 토큰과 요청 범위를 계속 검증해야 한다. 특히 clientInfo는 표시·로그·디버깅용 자기 신고 값이라 보안 판단 근거로 삼으면 안 된다. stateless는 장애와 확장의 복잡도를 줄이는 설계이고, 권한 검증을 생략하는 설계가 아니다."
+        },
+        {
+          "t": "h",
+          "text": "다음 배포에서 바뀌는 것은 서버 수가 아니라 경계다"
+        },
+        {
+          "t": "p",
+          "text": "MCP 서버가 세션을 잃어도 도구의 의미와 사용자의 권한은 남는다. 요청이 어느 인스턴스에 도착해도 같은 결과를 내도록 만들려면, 프로토콜 정보는 매 요청에 넣고 업무 상태는 명시적 저장소로 옮기며 클라이언트 버전은 병행 관리해야 한다. 이 세 경계가 분명해지면 로드밸런서는 더 단순해지고, 장애가 나도 특정 서버에 붙잡힌 연결을 복구하느라 멈추는 일은 줄어든다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/145",
+      "reason": "stateless 전환 뒤에도 요청별 권한 검증과 배포 승인이 남는다는 전제를 보완한다.",
+      "role": "foundation"
+    },
+    {
+      "title": "GitHub Copilot JetBrains 메모리·Ollama 차이와 설정 순서",
+      "url": "https://won0322.tistory.com/169",
+      "reason": "에이전트 도구의 기능 경계와 설정 검증을 실제 개발 환경에서 이어서 살펴볼 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-terra",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "하나의 MCP 요청이 세 대의 서버 캐비닛 중 어느 곳으로도 향하는 종이 질감 장면",
+      "path": "docs/tistory/assets/2026-08-13/MCP-Stateless-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-Stateless-대표.webp",
+      "cover_kind": "editorial_scene",
+      "art_direction": "tactile-infrastructure-scene",
+      "composition_type": "single-request-crossroads",
+      "palette_family": "stone_indigo_moss",
+      "render_family": "tactile_paper",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story Asset intent: editorial-scene. Tactile paper-cut editorial scene: one self-contained request envelope crosses a modest load balancer toward three identical small server cabinets; a dusty unused session-token lanyard lies aside. Warm stone, muted indigo, moss green. No text, labels, logos, arrows, cards, charts, dashboard, laptop, people, robots, neon, watermark or fake UI.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 63174,
+      "quality": 82,
+      "sha256": "cd1fa06bce6bd880f2d81bce3120af8d370498d732c1e149ecc86ad64fa40e50"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "세션 고정 요청과 어느 MCP 서버에서나 처리되는 단독 요청을 비교한 기술 도식",
+      "path": "docs/tistory/assets/2026-08-13/MCP-세션고정-비교.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-세션고정-비교.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Korean technical illustration comparing session-bound MCP and stateless MCP. Use exactly: 세션 고정, 요청 단독 처리, 어느 인스턴스나. No title, English, logos, fake terminal, metrics, cards, dashboards, people, laptop, robots or watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 36728,
+      "quality": 82,
+      "sha256": "17571153aa6da4272703f2219b05e363f7c19f7048e4e71ccff1f7b1de6b892a"
+    },
+    "visual_2": {
+      "origin": "capture",
+      "alt": "MCP 2026-07-28 공식 명세의 요청 메타데이터 표",
+      "path": "docs/tistory/assets/2026-08-13/MCP-명세-캡처.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-13/MCP-명세-캡처.webp",
+      "capture_tool": "browser",
+      "capture_target": "https://modelcontextprotocol.io/specification/2026-07-28/basic/index",
+      "captured_at": "2026-08-13T09:31:23+09:00",
+      "source_url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/index",
+      "capture_note": "공개 MCP 명세의 Base Protocol 화면을 확인용으로 캡처한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 50314,
+      "quality": 82,
+      "sha256": "71794681859ffd2c035c334f06594c5038e83f50ffb5e83c5bf818220234321b",
+      "capture_sha256": "71794681859ffd2c035c334f06594c5038e83f50ffb5e83c5bf818220234321b"
+    }
+  }
+}
