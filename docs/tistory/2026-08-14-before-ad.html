@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 14 (금) · 약 8분</p>
+    <p class="digest-lead">도메인 인증서 경보 메일은 대개 갱신이나 백업 인증서 때문에 온다. 그래서 받은편지함에서 넘기기 쉽지만, 누군가가 내 도메인을 포함한 인증서를 새로 발급받았다면 확인을 늦출 이유도 없다. Cloudflare는 8월 13일 Certificate Transparency Monitoring을 정식 제공으로 바꾸면서, 자사가 대신 발급한 인증서는 경보에서 자동으로 걸러 준다고 밝혔다. 남는 경보는 ‘무조건 사고’가 아니라, 발급 주체·DNS 이름·유효 기간을 빠르게 대조할 목록이 된다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/CT-모니터링-대표.webp" alt="봉인된 TLS 인증서와 승인된 발급 기록을 대조하는 종이 콜라주 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · Cloudflare Blog · 2026. 8. 13</p>
+    <h3>Certificate Transparency Monitoring 정식 제공과 인증서 경보 확인 방법</h3>
+    <p class="digest-blurb">Cloudflare가 Certificate Transparency Monitoring을 정식 제공으로 전환하고, Cloudflare가 발급한 인증서는 자동으로 경보에서 제외한다고 알렸다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">경보 메일은 인증서 자체보다 먼저 세 항목을 묻는다</h4><p>Certificate Transparency(CT)는 공개 TLS 인증서가 발급되거나 관찰될 때 그 존재를 공개 로그에 남겨, 누구나 CA의 발급 활동을 감사하고 의심스러운 발급을 알아차리게 하는 체계다. 로그는 오발급을 막지 않는다. 대신 이미 발급된 인증서가 숨기기 어려운 흔적을 남기므로, 도메인 소유자는 ‘내가 요청한 발급인가’를 확인할 출발점을 얻는다.</p><p>Cloudflare 문서는 모니터링을 기본 비활성(opt-in) 기능으로 설명한다. 켠 뒤에는 모니터링한 도메인을 덮는 인증서가 CA에서 발급돼 공개 CT 로그에 추가될 때 경보가 생긴다. 다만 Cloudflare가 사용자를 위해 발급한 인증서와 백업 인증서는 자동으로 걸러진다. 즉 경보가 왔다는 사실만으로 침해를 단정하지 말고, 자동 필터 뒤에 남은 외부 발급을 빠르게 대조해야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/CT-경보-세항목-대조.webp" alt="CT 인증서 경보의 발급자 DNS 이름 유효 기간을 정상 목록과 대조하는 도식" width="1200" height="630" loading="lazy"><figcaption>경보를 열면 발급자, DNS 이름, 유효 기간을 정상 발급 목록과 순서대로 대조한다. 하나라도 다르면 조사 경로로 넘긴다.</figcaption></figure><h4 class="digest-subheading">발급자·DNS 이름·유효 기간을 정상 기록과 대조한다</h4><p>첫째는 Issuer, 즉 발급 CA다. 팀이 Let’s Encrypt 자동 갱신만 쓰는 도메인에 다른 CA가 나타났다면 요청 주체를 찾아야 한다. 둘째는 DNS 이름이다. 루트 도메인만 관리한다고 생각했는데 낯선 하위 도메인이나 예상하지 못한 SAN이 들어 있으면, 신규 서비스 연결인지 오발급인지 확인 대상이 된다. 셋째는 유효 기간이다. 정상 갱신 창과 맞지 않는 발급은 담당자와 배포 기록을 함께 확인한다.</p><div class="digest-table-wrap" role="region" aria-label="세 항목을 모두 예상할 수 있어야 경보를 정상 발급으로 닫을 수 있다." tabindex="0"><table class="digest-data-table"><caption>세 항목을 모두 예상할 수 있어야 경보를 정상 발급으로 닫을 수 있다.</caption><thead><tr><th scope="col">경보 항목</th><th scope="col">정상으로 판단할 근거</th><th scope="col">다를 때의 다음 행동</th></tr></thead><tbody><tr><td>발급자</td><td>승인된 CA 또는 사용 중인 CDN·호스팅의 발급 경로</td><td>CA와 서비스 소유자에게 발급 요청 여부 확인</td></tr><tr><td>DNS 이름</td><td>도메인·하위 도메인·SAN의 승인 목록</td><td>새 서비스 연결 또는 오발급 가능성 조사</td></tr><tr><td>유효 기간</td><td>갱신 일정과 자동화 실행 기록</td><td>배포·갱신 기록을 확인하고 보안 담당자에게 전달</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>

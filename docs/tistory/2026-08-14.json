@@ -1,0 +1,93 @@
+{
+  "title": "CT 모니터링: Certificate Transparency 인증서 경보 확인 방법",
+  "title_candidates": [
+    "CT 모니터링: Certificate Transparency 인증서 경보 확인 방법",
+    "Certificate Transparency Monitoring 정식 제공과 인증서 경보 확인 방법",
+    "CT 로그에서 발견된 낯선 도메인 인증서 경보를 정상 발급 목록과 대조하는 운영 장면: 인증서 경보가 도착했을 때, 어떤…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-14",
+  "publish_date": "2026-08-14",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-14T09:00:00+09:00",
+  "tags": [
+    "Certificate Transparency",
+    "CT 모니터링",
+    "SSL 인증서",
+    "TLS 보안",
+    "Cloudflare",
+    "도메인 보안",
+    "인증서 관리"
+  ],
+  "meta_description": "도메인 인증서 경보 메일은 대개 갱신이나 백업 인증서 때문에 온다. 그래서 받은편지함에서 넘기기 쉽지만, 누군가가 내 도메인을 포함한 인증서를 새로 발급받았다면 확인을 늦출 이유도 없다. Cloudf… Cloudflare가 Certificate Transparency Monitorin…",
+  "key_summary": [
+    "1. Certificate Transparency Monitoring 정식 제공과 인증서 경보 확인 방법",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: CT 모니터링: Certificate Transparency 인증서 경보 확인 방법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-14.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-14.html",
+  "before_ad_html": "docs/tistory/2026-08-14-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-14-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-14-adfit.html",
+  "source_sha256": "c95b3288ed7d04bf9622d12c52e988604aed9091825fc2e71846dfae5e59d45b",
+  "html_sha256": "52a414d2adf28db4d503b6b7a70e01397d9f34700e7b0c6c5e336fd79b03b2a4",
+  "adfit_sha256": "35f117d76cf50ee257de80670526acba7a742462f30de516e6a966f3c9b8dbc4",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/CT-모니터링-대표.webp",
+      "path": "docs/tistory/assets/2026-08-14/CT-모니터링-대표.webp",
+      "original_url": "",
+      "alt": "봉인된 TLS 인증서와 승인된 발급 기록을 대조하는 종이 콜라주 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/CT-경보-세항목-대조.webp",
+      "path": "docs/tistory/assets/2026-08-14/CT-경보-세항목-대조.webp",
+      "original_url": "",
+      "alt": "CT 인증서 경보의 발급자 DNS 이름 유효 기간을 정상 목록과 대조하는 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/Cloudflare-CT-경보-설정.webp",
+      "path": "docs/tistory/assets/2026-08-14/Cloudflare-CT-경보-설정.webp",
+      "original_url": "",
+      "alt": "Cloudflare 공식 문서의 Certificate Transparency Monitoring 알림 설정 안내",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-14/CT-경보-증거-대응흐름.webp",
+      "path": "docs/tistory/assets/2026-08-14/CT-경보-증거-대응흐름.webp",
+      "original_url": "",
+      "alt": "CT 로그와 발급 기록을 인증기관 및 보안 담당자에게 연결하는 대응 흐름도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
