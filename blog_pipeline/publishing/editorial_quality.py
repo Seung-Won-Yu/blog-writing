@@ -383,6 +383,20 @@ def _aware_datetime(value):
     return parsed if parsed.tzinfo is not None else None
 
 
+def _backfill_deadline(source, scheduled):
+    """Allow truthful evidence timestamps for an explicitly recorded short backfill."""
+    backfill = source.get("backfill") if isinstance(source.get("backfill"), dict) else {}
+    created = _aware_datetime(backfill.get("created_at"))
+    reason = plain(backfill.get("reason"))
+    if not scheduled or not created or len(reason) < 20:
+        return None
+    if created.utcoffset() != timedelta(hours=9):
+        return None
+    if not scheduled < created <= scheduled + timedelta(hours=72):
+        return None
+    return created
+
+
 def measurement_digest(brief):
     record = {
         key: brief.get(key)
@@ -1241,6 +1255,9 @@ def _visual_reasons(source, identity):
                 if scheduled
                 else None
             )
+            backfill_deadline = _backfill_deadline(source, scheduled)
+            if capture_deadline and backfill_deadline:
+                capture_deadline = max(capture_deadline, backfill_deadline)
             valid_time = bool(
                 scheduled
                 and captured
@@ -1462,6 +1479,9 @@ def _experiment_reasons(source, identity):
     started = _aware_datetime(verification.get("started_at"))
     completed = _aware_datetime(verification.get("completed_at"))
     scheduled = _aware_datetime(source.get("scheduled_at"))
+    execution_deadline = _backfill_deadline(source, scheduled)
+    if not execution_deadline and scheduled:
+        execution_deadline = scheduled + timedelta(hours=6)
     valid_execution_time = bool(
         started
         and completed
@@ -1469,7 +1489,7 @@ def _experiment_reasons(source, identity):
         and scheduled - timedelta(days=14)
         <= started
         <= completed
-        <= scheduled + timedelta(hours=6)
+        <= execution_deadline
     )
     invalid = (
         verification.get("mode") != "executed"

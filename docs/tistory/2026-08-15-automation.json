@@ -1,0 +1,93 @@
+{
+  "title": "AI 에이전트 스킬 비교 실험: 코드부터 치지 않게 만드는 3가지 방식",
+  "title_candidates": [
+    "AI 에이전트 스킬 비교 실험: 코드부터 치지 않게 만드는 3가지 방식",
+    "AI 에이전트 스킬 저장소, 같은 코딩 과제로 비교해 보니",
+    "코드 작성 도장이 내려오기 전에 세 종류의 규칙이 각각 다른 방식으로 멈추게 하는 실험: 좋은 스킬은 코드를 더 많이 쓰…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-08-15-automation",
+  "publish_date": "2026-08-15",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-15T18:00:00+09:00",
+  "tags": [
+    "AI 에이전트",
+    "에이전트 스킬",
+    "Superpowers",
+    "Claude Code Skills",
+    "Codex Skills",
+    "코딩 자동화",
+    "프롬프트 엔지니어링"
+  ],
+  "meta_description": "AI 코딩 에이전트가 빨리 실패하는 장면은 대개 비슷하다. 취소 주문을 빼 달라는 한 줄을 보자마자 코드를 고치지만, 취소 상태가 어떤 문자열인지와 환불 주문을 어떻게 볼지는 확인하지 않는다. 인기… 인기 에이전트 스킬 저장소의 설계 철학을 소개한 글을 바탕으로 세 저장소를 같은 읽기…",
+  "key_summary": [
+    "1. AI 에이전트 스킬 저장소, 같은 코딩 과제로 비교해 보니",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 에이전트 스킬 비교 실험: 코드부터 치지 않게 만드는 3가지 방식"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-08-15.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-15-automation.html",
+  "before_ad_html": "docs/tistory/2026-08-15-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-15-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-15-automation-adfit.html",
+  "source_sha256": "1fd7c294a3158037358bba9a9f7b96188e667b94b5bd924bc2b9e766e0834ff3",
+  "html_sha256": "9e1ec6d3d42f3db90ad6a3926354d1047cf6121c27f6dde1d47112ae8e808cc1",
+  "adfit_sha256": "53f733108889e07598c7ddc3a2b6f09b717081d99776592562ccb8999fae0aff",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/AI에이전트-스킬비교-대표.webp",
+      "path": "docs/tistory/assets/2026-08-15-automation/AI에이전트-스킬비교-대표.webp",
+      "original_url": "",
+      "alt": "코드 작성 도장이 내려오기 전에 승인 게이트 질문 묶음 최소 변경 규칙이 멈추게 하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-첫응답-실험결과.webp",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-첫응답-실험결과.webp",
+      "original_url": "",
+      "alt": "동일한 모호한 주문 합계 과제에 세 AI 에이전트 스킬이 남긴 실제 첫 질문 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-저장소-재현조건.webp",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-저장소-재현조건.webp",
+      "original_url": "",
+      "alt": "실험에 사용한 세 스킬 저장소의 고정 커밋 스킬 파일 수 라이선스 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-통제방식-비교.webp",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-통제방식-비교.webp",
+      "original_url": "",
+      "alt": "승인 게이트 질문 묶음 최소 변경이 코딩 전 확인으로 이어지는 비교 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1270,6 +1270,47 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn("quality_experiment_evidence", missing)
         self.assertEqual(complete, [])
 
+    def test_short_explicit_backfill_accepts_truthful_next_day_evidence(self):
+        day = "2026-08-15"
+        source = valid_automation_source(day)
+        capture_time = "2026-08-16T09:10:00+09:00"
+        for index in (1, 3):
+            source["visual"]["assets"][index - 1]["captured_at"] = capture_time
+            source["images"][f"visual_{index}"]["captured_at"] = capture_time
+        source["verification"]["started_at"] = "2026-08-16T09:00:00+09:00"
+        source["verification"]["completed_at"] = "2026-08-16T09:20:00+09:00"
+        source["backfill"] = {
+            "created_at": "2026-08-16T09:30:00+09:00",
+            "reason": "정기 실행 누락 뒤 사용자가 전날 토요일 글의 재제작을 명시적으로 요청했다.",
+        }
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity(f"{day}-automation")
+        )
+
+        self.assertEqual(reasons, [])
+
+    def test_backfill_outside_seventy_two_hours_is_rejected(self):
+        day = "2026-08-15"
+        source = valid_automation_source(day)
+        capture_time = "2026-08-19T09:10:00+09:00"
+        for index in (1, 3):
+            source["visual"]["assets"][index - 1]["captured_at"] = capture_time
+            source["images"][f"visual_{index}"]["captured_at"] = capture_time
+        source["verification"]["started_at"] = "2026-08-19T09:00:00+09:00"
+        source["verification"]["completed_at"] = "2026-08-19T09:20:00+09:00"
+        source["backfill"] = {
+            "created_at": "2026-08-19T09:30:00+09:00",
+            "reason": "오래 지난 작업이 짧은 백필 예외로 통과하면 증거의 시점 검증 의미가 사라진다.",
+        }
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity(f"{day}-automation")
+        )
+
+        self.assertIn("quality_experiment_evidence", reasons)
+        self.assertIn("quality_visual_provenance", reasons)
+
 
 if __name__ == "__main__":
     unittest.main()

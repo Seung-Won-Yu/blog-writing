@@ -1,0 +1,93 @@
+{
+  "title": "AI 코딩 생산성 지표 측정 기준: 토큰 사용량 대신 볼 5가지",
+  "title_candidates": [
+    "AI 코딩 생산성 지표 측정 기준: 토큰 사용량 대신 볼 5가지",
+    "AI 코딩 토큰을 많이 쓰는 개발자가 더 생산적인가",
+    "쌓이는 AI 토큰 영수증과 검증된 소프트웨어 배포 결과를 서로 다른 저울에 올리는 장면: 많이 쓴 숫자와 실제로 끝낸 일…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-15",
+  "publish_date": "2026-08-15",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-15T09:00:00+09:00",
+  "tags": [
+    "AI 코딩",
+    "개발자 생산성",
+    "DORA 지표",
+    "GitHub Copilot",
+    "토큰 사용량",
+    "개발팀 성과",
+    "배포 지표"
+  ],
+  "meta_description": "AI 코딩 도구를 팀에 붙이면 가장 먼저 늘어나는 숫자는 토큰 사용량과 제안 수다. 숫자가 빠르게 커지니 생산성도 함께 오른 것처럼 보이지만, 토큰은 일을 끝내기 위해 소비한 입력 비용에 가깝다. 같… AI 토큰 소비량을 개발자 성과로 해석할 때 생기는 왜곡과 결과 중심 지표의 필요성…",
+  "key_summary": [
+    "1. AI 코딩 토큰을 많이 쓰는 개발자가 더 생산적인가",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 코딩 생산성 지표 측정 기준: 토큰 사용량 대신 볼 5가지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-15.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-15.html",
+  "before_ad_html": "docs/tistory/2026-08-15-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-15-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-15-adfit.html",
+  "source_sha256": "3520f5eeaf18cf38512903a3bef3aaf0e5c1e4c14b1b562654e1bb7530f02247",
+  "html_sha256": "a3f9bf4e8d5864509b746268e4147a6327a779b492f9a9689b3c0f2b81bee228",
+  "adfit_sha256": "de7ec53adaeb4961c647834ca73cefb15797dcfc039fdb42c9fc9826583c2fed",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15/AI코딩-생산성지표-대표.webp",
+      "path": "docs/tistory/assets/2026-08-15/AI코딩-생산성지표-대표.webp",
+      "original_url": "",
+      "alt": "쌓인 AI 토큰 영수증 대신 테스트와 배포가 끝난 변경 쪽으로 측정 바늘을 옮기는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15/AI사용량-배포결과-흐름.webp",
+      "path": "docs/tistory/assets/2026-08-15/AI사용량-배포결과-흐름.webp",
+      "original_url": "",
+      "alt": "AI 사용량에서 코드 변경과 검토 테스트를 거쳐 배포 결과로 이어지는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15/DORA-전달지표-공식근거.webp",
+      "path": "docs/tistory/assets/2026-08-15/DORA-전달지표-공식근거.webp",
+      "original_url": "",
+      "alt": "DORA 공식 문서에 제시된 전달량과 불안정성 지표 및 해석 주의점",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15/AI코딩-다중지표-판단도식.webp",
+      "path": "docs/tistory/assets/2026-08-15/AI코딩-다중지표-판단도식.webp",
+      "original_url": "",
+      "alt": "변경 리드타임 배포 빈도 실패율 복구 시간과 AI 사용량의 역할을 구분한 도식",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

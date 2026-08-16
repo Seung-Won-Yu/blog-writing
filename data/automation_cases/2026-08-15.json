@@ -1,0 +1,534 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-15-automation",
+  "publish_date": "2026-08-15",
+  "date_label": "2026. 8. 15",
+  "weekday": "토",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "category": "자동화·실험",
+  "scheduled_at": "2026-08-15T18:00:00+09:00",
+  "primary_query": "AI 에이전트 스킬 비교",
+  "tags": [
+    "AI 에이전트",
+    "에이전트 스킬",
+    "Superpowers",
+    "Claude Code Skills",
+    "Codex Skills",
+    "코딩 자동화",
+    "프롬프트 엔지니어링"
+  ],
+  "editorial": {
+    "headline": "AI 에이전트 스킬 비교 실험: 코드부터 치지 않게 만드는 3가지 방식",
+    "opening": "AI 코딩 에이전트가 빨리 실패하는 장면은 대개 비슷하다. 취소 주문을 빼 달라는 한 줄을 보자마자 코드를 고치지만, 취소 상태가 어떤 문자열인지와 환불 주문을 어떻게 볼지는 확인하지 않는다. 인기 스킬 저장소가 실제로 이 성급함을 막는지 확인하려고 같은 작은 Python 저장소와 같은 모호한 요구사항을 Superpowers, mattpocock/skills, Karpathy Guidelines에 각각 넣었다. 세 실행 모두 코드를 한 줄도 바꾸지 않고 멈췄지만, 멈추는 방식은 확실히 달랐다.",
+    "closing": "좋은 스킬은 답을 더 길게 만드는 문서가 아니라 잘못된 시작을 더 싸게 막는 제어 장치였다. 승인 게이트, 질문 묶음, 최소 변경 규칙은 각각 다른 팀 리듬에 맞는다. 설치 수나 별점보다 중요한 것은 내 작업에서 모호한 가정을 드러내고, 코딩 전에 멈추며, 검증 가능한 범위를 남기는지다.",
+    "action": "자주 맡기는 모호한 작업 하나를 골라 세 방식의 첫 응답만 비교하고, 팀이 답하기 쉬운 질문 형태를 하나 선택한다.",
+    "audience_problem": "AI 코딩 에이전트가 요구사항을 추측해 빠르게 코드를 만들지만 재작업이 반복되어, 어떤 스킬 규칙이 팀의 작업 방식에 맞는지 판단하기 어렵다.",
+    "reader_takeaway": "세 공개 스킬을 동일한 작은 과제에 적용한 실제 첫 응답을 비교하고 승인 게이트·질문 묶음·최소 변경 방식 중 맞는 통제를 고를 수 있다.",
+    "why_now": "에이전트 스킬 저장소가 빠르게 늘면서 기능 목록과 별점 대신 같은 과제에서 실제 행동을 비교할 기준이 필요해졌다.",
+    "topic_key": "AI 에이전트 스킬 동일 과제 비교 실험",
+    "reader_question": "Superpowers, mattpocock/skills, Karpathy Guidelines는 모호한 코딩 요구를 받았을 때 어떻게 다르게 멈출까?",
+    "entities": [
+      "obra/superpowers",
+      "mattpocock/skills",
+      "multica-ai/andrej-karpathy-skills",
+      "Codex"
+    ],
+    "coverage": [
+      "problem",
+      "setup",
+      "implementation",
+      "evidence",
+      "comparison",
+      "failure",
+      "rollback"
+    ],
+    "article_shape": "decision_guide",
+    "revisit": {
+      "quick_answer": "세 스킬 모두 코딩 전 멈췄고, Superpowers는 한 질문과 승인 게이트, mattpocock은 결정 묶음, Karpathy는 최소 질문과 검증 범위를 택했다.",
+      "reuse_case": "새 스킬을 설치하거나 팀 공통 에이전트 규칙을 바꿀 때 같은 fixture로 첫 응답과 파일 변경 여부를 다시 비교한다.",
+      "failure_case": "스킬이 질문 없이 파일을 바꾸거나 과제 밖 설계를 넓히면 실행을 취소하고 읽기 전용 첫 응답 시험으로 되돌린다.",
+      "artifact_type": "experiment_fixture",
+      "update_triggers": [
+        "각 저장소의 스킬 규칙 변경",
+        "Codex 모델·권한 동작 변경",
+        "팀의 승인·테스트 정책 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "AI 에이전트 스킬 비교",
+      "reader_need": "인기 스킬 저장소가 실제 코딩 전에 어떤 질문과 통제를 적용하는지 알고 싶다.",
+      "answer_format": "동일 과제의 실제 첫 응답과 선택 기준 비교"
+    }
+  },
+  "visual": {
+    "subject": "코드 작성 도장이 내려오기 전에 세 종류의 규칙이 각각 다른 방식으로 멈추게 하는 실험",
+    "hook": "좋은 스킬은 코드를 더 많이 쓰게 할까, 잘못된 첫 줄을 막을까?",
+    "motif": "코드 도장, 승인 게이트, 질문 쪽지, 최소 변경 띠",
+    "cover": {
+      "label": "코드 작성 직전 세 규칙이 먼저 작동하는 장면",
+      "scene_label": [
+        "승인 게이트",
+        "질문 묶음",
+        "최소 변경"
+      ],
+      "steps": "같은 모호한 요구사항 앞에서 서로 다른 통제 장치가 코드 작성을 멈춘다.",
+      "curiosity_hook": "세 스킬은 같은 빈칸을 어떤 질문으로 드러낼까?",
+      "logic_type": "comparison",
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "art_direction": "evidence-led-editorial",
+      "composition_type": "single-decision-moment",
+      "palette_family": "ink_cream_signal_orange",
+      "render_family": "editorial_collage",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. 1200x630 landscape. A single physical red 'write code' stamp is suspended just above paper but blocked by three distinct slim instruction tabs placed before it: one gate tab, one fan of question tabs, and one narrow verification strip. The scene should communicate that agent skills stop premature coding and force clarification first. High-end magazine still life, cream paper, black ink, cobalt and vermilion accents, tactile shadows. No readable text, logos, laptop, generic developer, robot, dashboard, cards, flowchart, neon, or watermark. No hands or people."
+    },
+    "assets": [
+      {
+        "label": "동일 과제에서 세 스킬이 남긴 실제 첫 응답",
+        "scene_label": [
+          "Superpowers",
+          "mattpocock/skills",
+          "Karpathy Guidelines"
+        ],
+        "steps": "같은 orders.py와 같은 요구사항에 대한 세 실행의 첫 응답을 나란히 비교한다.",
+        "curiosity_hook": "셋 모두 코드를 멈췄지만 질문 수는 왜 달랐을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "capture",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "playwright",
+        "capture_target": "local verified evidence report",
+        "captured_at": "2026-08-16T17:24:00+09:00",
+        "capture_note": "공개 공식 자료와 로컬 격리 실험 결과만 표시한 기사 전용 증거 화면을 캡처했다. 계정·토큰·개인 경로는 포함하지 않았다."
+      },
+      {
+        "label": "검증한 저장소 버전과 스킬 수",
+        "scene_label": [
+          "고정 커밋",
+          "SKILL.md 수",
+          "라이선스"
+        ],
+        "steps": "실험에 사용한 세 저장소의 커밋과 스킬 파일 수, 라이선스 확인 결과를 한 화면에 남긴다.",
+        "curiosity_hook": "인기 순위보다 먼저 고정해야 할 재현 조건은 무엇일까?",
+        "evidence_type": "screenshot",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "origin": "capture",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "playwright",
+        "capture_target": "local verified evidence report",
+        "captured_at": "2026-08-16T17:24:00+09:00",
+        "capture_note": "공개 공식 자료와 로컬 격리 실험 결과만 표시한 기사 전용 증거 화면을 캡처했다. 계정·토큰·개인 경로는 포함하지 않았다."
+      },
+      {
+        "label": "승인 게이트·질문 묶음·최소 변경의 차이",
+        "scene_label": [
+          "승인 게이트",
+          "질문 묶음",
+          "최소 변경",
+          "코딩 전 확인"
+        ],
+        "steps": "세 제어 방식이 모두 코딩 전 확인으로 모이지만 질문의 폭과 승인 방식이 다름을 보여 준다.",
+        "curiosity_hook": "내 팀에는 한 질문, 전체 결정표, 최소 규칙 중 무엇이 맞을까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: Korean technical comparison diagram, 1200x630 landscape. Compare three ways an AI coding agent pauses before editing. Use exact Korean labels: '승인 게이트', '질문 묶음', '최소 변경'. Show three distinct physical mechanisms: a closed gate before a code sheet, several numbered question slips, and a narrow scalpel-like edit strip ending in a check mark. Under all three, one common result labeled '코딩 전 확인'. Large mobile-readable Korean, cream paper, navy, teal and orange. No title, English, logos, fake UI, dashboard cards, people, laptops, robots, neon, or watermark.",
+        "korean_labels": [
+          "승인 게이트",
+          "질문 묶음",
+          "최소 변경",
+          "코딩 전 확인"
+        ]
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "코드 작성 도장이 내려오기 전에 승인 게이트 질문 묶음 최소 변경 규칙이 멈추게 하는 장면",
+      "path": "docs/tistory/assets/2026-08-15-automation/AI에이전트-스킬비교-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/AI에이전트-스킬비교-대표.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. 1200x630 landscape. A single physical red 'write code' stamp is suspended just above paper but blocked by three distinct slim instruction tabs placed before it: one gate tab, one fan of question tabs, and one narrow verification strip. The scene should communicate that agent skills stop premature coding and force clarification first. High-end magazine still life, cream paper, black ink, cobalt and vermilion accents, tactile shadows. No readable text, logos, laptop, generic developer, robot, dashboard, cards, flowchart, neon, or watermark. No hands or people.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "evidence-led-editorial",
+      "composition_type": "single-decision-moment",
+      "palette_family": "ink_cream_signal_orange",
+      "render_family": "editorial_collage",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 51588,
+      "quality": 82,
+      "sha256": "66f076e5a84b65746e6f1b3d670d48352b07bc1861c725677505cbf70020c4d8"
+    },
+    "visual_1": {
+      "origin": "capture",
+      "alt": "동일한 모호한 주문 합계 과제에 세 AI 에이전트 스킬이 남긴 실제 첫 질문 비교",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-첫응답-실험결과.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-첫응답-실험결과.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "playwright",
+      "capture_target": "local verified evidence report",
+      "captured_at": "2026-08-16T17:24:00+09:00",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 43124,
+      "quality": 82,
+      "sha256": "fa6c06695c8e48e2c3055d49a0a89521353299938affee7fa6c0f6cc413abdc6",
+      "capture_sha256": "fa6c06695c8e48e2c3055d49a0a89521353299938affee7fa6c0f6cc413abdc6"
+    },
+    "visual_2": {
+      "origin": "capture",
+      "alt": "실험에 사용한 세 스킬 저장소의 고정 커밋 스킬 파일 수 라이선스 비교",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-저장소-재현조건.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-저장소-재현조건.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "playwright",
+      "capture_target": "local verified evidence report",
+      "captured_at": "2026-08-16T17:24:00+09:00",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 35612,
+      "quality": 82,
+      "sha256": "22fe204bd91a44365fe63a84322801a2def54644c11835c75cb39c115bb9fd42",
+      "capture_sha256": "22fe204bd91a44365fe63a84322801a2def54644c11835c75cb39c115bb9fd42"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "승인 게이트 질문 묶음 최소 변경이 코딩 전 확인으로 이어지는 비교 도식",
+      "path": "docs/tistory/assets/2026-08-15-automation/세스킬-통제방식-비교.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-15-automation/세스킬-통제방식-비교.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: Korean technical comparison diagram, 1200x630 landscape. Compare three ways an AI coding agent pauses before editing. Use exact Korean labels: '승인 게이트', '질문 묶음', '최소 변경'. Show three distinct physical mechanisms: a closed gate before a code sheet, several numbered question slips, and a narrow scalpel-like edit strip ending in a check mark. Under all three, one common result labeled '코딩 전 확인'. Large mobile-readable Korean, cream paper, navy, teal and orange. No title, English, logos, fake UI, dashboard cards, people, laptops, robots, neon, or watermark.",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 69286,
+      "quality": 82,
+      "sha256": "075108f9c6e2209aa7207941e8269b8b4fd5d49a5e9ae39fb4133863722e0e74"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "AI 에이전트 스킬 저장소, 같은 코딩 과제로 비교해 보니",
+      "source": "요즘IT",
+      "url": "https://yozm.wishket.com/magazine/detail/3895/",
+      "published_at": "2026-08-12T09:00:00+09:00",
+      "blurb_kr": "인기 에이전트 스킬 저장소의 설계 철학을 소개한 글을 바탕으로 세 저장소를 같은 읽기 전용 과제에 직접 적용했다.",
+      "references": [
+        {
+          "title": "요즘 뜨는 AI 에이전트 스킬 저장소 TOP 5",
+          "url": "https://yozm.wishket.com/magazine/detail/3895/",
+          "kind": "independent"
+        },
+        {
+          "title": "obra/superpowers",
+          "url": "https://github.com/obra/superpowers",
+          "kind": "official"
+        },
+        {
+          "title": "mattpocock/skills",
+          "url": "https://github.com/mattpocock/skills",
+          "kind": "official"
+        },
+        {
+          "title": "multica-ai/andrej-karpathy-skills",
+          "url": "https://github.com/multica-ai/andrej-karpathy-skills",
+          "kind": "official"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "별점 대신 같은 모호한 과제를 건넸다"
+        },
+        {
+          "t": "p",
+          "text": "요즘IT 글은 인기 스킬 저장소가 단순 프롬프트 모음이 아니라 에이전트에게 일하는 절차를 가르치는 온보딩 문서라고 설명한다. 순위는 발견에 도움이 되지만 내 작업에 맞는지는 알려 주지 않는다. 그래서 기능 목록을 다시 요약하는 대신 세 저장소의 핵심 규칙을 고정한 뒤 동일한 작은 Python 과제에 적용했다."
+        },
+        {
+          "t": "p",
+          "text": "fixture에는 주문 목록의 합계를 계산하는 total_amount 함수와 테스트가 있다. 요구사항은 ‘취소 주문을 합계에서 제외하라’ 한 줄뿐이다. 어떤 문자열을 취소로 볼지, 환불된 주문까지 제외할지는 쓰지 않았다. 좋은 첫 행동은 그 빈칸을 확인하는 것이고, 나쁜 첫 행동은 임의의 문자열을 정해 바로 코드를 바꾸는 것이다."
+        },
+        {
+          "t": "code",
+          "language": "text",
+          "text": "과제: total_amount가 취소 주문을 제외하도록 수정한다.\n제약: 첫 응답만 작성하고 파일은 변경하지 않는다.\n일부러 비운 조건: 취소 상태 문자열, 환불 주문 처리",
+          "reusable": true,
+          "reuse_label": "에이전트 스킬 첫 응답 비교 fixture"
+        },
+        {
+          "t": "h",
+          "text": "세 저장소는 규모보다 통제 방식이 달랐다"
+        },
+        {
+          "t": "p",
+          "text": "실험 커밋에서 Superpowers는 14개의 SKILL.md를 갖고 있었고, 브레인스토밍 스킬은 요구가 명확해 보이더라도 질문과 설계 승인 전에는 구현하지 않는 하드 게이트를 둔다. mattpocock/skills는 35개의 스킬로 더 잘게 나뉘며, grilling은 남은 결정을 번호로 한꺼번에 제시하고 각 항목에 추천안을 붙인다. Karpathy Guidelines는 하나의 짧은 스킬에 가정 확인, 최소 변경, 테스트 목표를 묶는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "실험에 사용한 커밋과 SKILL.md 수를 고정했다. 별점은 계속 변하고 행동을 직접 설명하지 않아 비교 기준에서 제외했다."
+        },
+        {
+          "t": "p",
+          "text": "라이선스도 같지 않다. 확인 시점에 Superpowers와 mattpocock/skills는 MIT 라이선스를 표시했지만 Karpathy 파생 저장소는 GitHub 메타데이터에서 감지된 라이선스가 없었다. Karpathy가 직접 만들거나 보증한 저장소가 아니라는 안내도 읽어야 한다. 팀 공통 규칙으로 복사할 계획이라면 인기보다 출처와 라이선스를 먼저 확인해야 한다."
+        },
+        {
+          "t": "h",
+          "text": "같은 첫 응답인데 질문의 폭이 달랐다"
+        },
+        {
+          "t": "p",
+          "text": "세 실행은 같은 gpt-5.6-terra medium, 읽기 전용 sandbox, 임시 세션에서 수행했다. 스킬 파일과 과제 파일만 읽게 했고 첫 응답 뒤 종료했다. 결과는 세 경우 모두 git diff가 비어 있었다. 스킬을 붙였다는 사실보다 ‘코드를 바꾸지 않았다’는 행동이 먼저 확인됐다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "동일한 과제의 실제 첫 응답. 세 스킬 모두 멈췄지만 Superpowers는 한 질문, mattpocock은 추천이 붙은 두 결정, Karpathy는 짧은 두 조건을 물었다."
+        },
+        {
+          "t": "table",
+          "caption": "동일 과제 첫 응답 비교",
+          "headers": [
+            "방식",
+            "첫 응답",
+            "장점",
+            "주의점"
+          ],
+          "rows": [
+            [
+              "Superpowers",
+              "취소 상태의 정확한 문자열 하나를 질문",
+              "한 번에 한 결정이라 답하기 쉽고 승인 경계가 분명함",
+              "결정이 많으면 왕복 횟수가 늘 수 있음"
+            ],
+            [
+              "mattpocock/skills",
+              "취소 문자열·환불 처리 두 항목과 추천안 제시",
+              "의사결정 범위를 초기에 넓게 볼 수 있음",
+              "작은 작업에는 질문 묶음이 무겁게 느껴질 수 있음"
+            ],
+            [
+              "Karpathy Guidelines",
+              "취소 문자열·환불 포함 여부를 짧게 질문",
+              "규칙이 가볍고 기존 작업 흐름에 붙이기 쉬움",
+              "별도 승인 산출물과 단계는 팀이 보강해야 함"
+            ]
+          ]
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "Superpowers는 승인 전 구현 금지에 가장 강하다"
+        },
+        {
+          "t": "p",
+          "text": "Superpowers의 브레인스토밍 규칙은 먼저 작업 범위를 분류하고, 필요한 질문을 한 번에 하나씩 묻고, 설계를 제시한 뒤 명시적 승인을 기다린다. 이번 과제에서는 취소 상태 문자열 하나를 물어 첫 왕복을 작게 만들었다. 제품 동작과 데이터 계약을 바꾸는 작업처럼 잘못 시작했을 때 비용이 큰 팀에 어울린다."
+        },
+        {
+          "t": "p",
+          "text": "반면 아주 작은 수정에서도 승인 절차가 반복되면 답답할 수 있다. 모든 문구 수정과 테스트 이름 변경까지 같은 게이트를 적용하기보다, 외부 동작·데이터·권한처럼 되돌리기 비싼 변경에 강한 게이트를 두고 내부 리팩터링에는 더 가벼운 경로를 두는 편이 현실적이다."
+        },
+        {
+          "t": "h",
+          "text": "mattpocock은 결정의 지도를 먼저 펼친다"
+        },
+        {
+          "t": "p",
+          "text": "grilling 스킬은 해결책을 만들기 전에 남아 있는 의사결정을 번호로 제시하고 추천과 근거를 붙인다. 이번에는 취소 문자열을 CANCELLED로 둘지와 REFUNDED를 합계에 포함할지를 함께 물었다. 사용자는 번호별 답만 돌려주면 된다. 기획·API·데이터 모델처럼 선택이 서로 얽힌 작업에서 빠진 결정을 찾기 좋다."
+        },
+        {
+          "t": "p",
+          "text": "질문을 많이 찾는 능력과 질문을 많이 던지는 것은 다르다. 사소한 선택까지 한꺼번에 꺼내면 사용자가 결정 피로를 느낀다. 추천안이 안전한 기본값인지, 지금 결정하지 않아도 되는 항목인지 구분해 주는 규칙이 함께 있어야 장점이 살아난다."
+        },
+        {
+          "t": "h",
+          "text": "Karpathy 방식은 가볍지만 팀 규칙을 대신하지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "Karpathy Guidelines는 여러 스킬을 호출하는 프레임워크보다 하나의 행동 규칙에 가깝다. 가정을 드러내고, 여러 해석이 있으면 질문하고, 요청한 범위만 수술하듯 고치고, 코드를 쓰기 전에 테스트 목표를 정한다. 이번 응답도 취소 문자열과 환불 처리 두 조건만 짧게 확인했다."
+        },
+        {
+          "t": "p",
+          "text": "기존 에이전트 설정을 크게 바꾸지 않고 붙이기 쉽다는 장점이 있다. 대신 설계 문서, 승인 주체, 커밋 단위, 실패 시 되돌림 같은 팀 절차는 자동으로 생기지 않는다. 규칙이 가벼울수록 저장소의 테스트 명령과 변경 금지 영역을 별도 AGENTS.md나 작업 계약에 적어야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "승인 게이트, 질문 묶음, 최소 변경은 모두 성급한 코딩을 막지만 팀이 답하는 방식과 필요한 절차의 무게가 다르다."
+        },
+        {
+          "t": "h",
+          "text": "내 팀에는 질문의 양보다 멈추는 지점이 중요하다"
+        },
+        {
+          "t": "p",
+          "text": "선택은 저장소 규모가 아니라 실패 비용으로 하면 된다. 외부 API와 데이터 계약처럼 잘못 만들면 되돌리기 비싼 작업은 승인 게이트가 유리하다. 이해관계자가 많고 결정이 얽힌 기능은 질문 묶음이 빠진 선택을 줄인다. 테스트가 잘 갖춰진 작은 유지보수 작업은 최소 변경 규칙이 흐름을 덜 방해한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "첫 응답에서 요구사항의 빈칸을 실제 질문으로 바꾸는가?",
+            "답을 받기 전 코드와 파일을 수정하지 않는가?",
+            "추천 기본값과 사용자가 결정해야 할 항목을 구분하는가?",
+            "요청 밖 리팩터링과 새 의존성을 막는가?",
+            "테스트 목표와 실패 시 되돌릴 범위를 남기는가?",
+            "저장소 출처·커밋·라이선스를 재현 기록에 남길 수 있는가?"
+          ]
+        },
+        {
+          "t": "p",
+          "text": "새 스킬을 팀 전체에 설치하기 전에 읽기 전용 첫 응답 시험을 먼저 하면 부작용이 없다. 실제로 자주 실패하는 모호한 과제 세 개를 고르고, 질문 수보다 빠진 가정, 첫 파일 변경 시점, 제안 범위, 검증 계획을 비교한다. 그 뒤 가장 잘 맞는 규칙만 작게 가져오는 편이 수십 개 스킬을 통째로 설치하는 것보다 관리하기 쉽다."
+        },
+        {
+          "t": "h",
+          "text": "실험 범위와 다시 확인할 조건"
+        },
+        {
+          "t": "p",
+          "text": "이번 비교는 한 개의 작은 Python fixture와 첫 응답만 측정했다. 완성 코드의 정확도, 긴 작업의 토큰 비용, 여러 차례 대화 뒤의 일관성, 실제 팀 협업 속도는 비교하지 않았다. 첫 응답에서 멈추는 능력은 중요한 안전 신호지만 전체 개발 품질의 순위는 아니다."
+        },
+        {
+          "t": "p",
+          "text": "재현하려면 과제 파일과 비워 둔 결정 두 개, 모델·권한·스킬 커밋을 함께 고정한다. 이후 스킬이 업데이트되면 같은 읽기 전용 명령으로 첫 응답과 git diff를 다시 확인한다. 질문 없이 코드가 바뀌거나 범위 밖 파일을 건드리면 결과를 채택하지 않고 스킬 규칙 또는 작업 계약을 좁힌다."
+        },
+        {
+          "t": "quote",
+          "text": "에이전트 스킬의 가치는 더 많은 코드를 쓰는 데 있지 않았다. 틀린 가정으로 첫 줄을 쓰기 전에 멈추게 하는 데 있었다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트가 자꾸 엇나갈 때: 코딩 전 남길 3가지 문서",
+      "url": "https://won0322.tistory.com/195",
+      "reason": "스킬의 질문을 작업 계약·계획·검증 문서로 이어서 팀 절차에 고정할 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "스킬 적용 뒤 실제 파일·의존성·배포 권한을 어디서 승인할지 다음 단계로 이어진다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "executed",
+    "started_at": "2026-08-16T16:20:00+09:00",
+    "completed_at": "2026-08-16T16:50:00+09:00",
+    "command_exit_code": 0,
+    "stdout_excerpt": "세 실행 모두 읽기 전용 첫 응답에서 코드를 수정하지 않았다. Superpowers는 취소 문자열 하나를, mattpocock은 취소 문자열과 환불 처리 두 결정을, Karpathy는 같은 두 조건을 짧게 물었다.",
+    "environment": {
+      "os": "macOS",
+      "runtime": "Codex CLI · gpt-5.6-terra medium",
+      "tool_version": "Codex CLI read-only ephemeral session",
+      "source_revision": "superpowers b36e0829; mattpocock/skills 068b6e0c; karpathy-skills 2c606141"
+    },
+    "commands": [
+      "codex exec --sandbox read-only --ephemeral --model gpt-5.6-terra --config model_reasoning_effort=medium < task.txt",
+      "git diff -- orders.py test_orders.py",
+      "find skills -name SKILL.md | wc -l"
+    ],
+    "input_fixture": "orders.py의 total_amount가 취소 주문을 제외해야 한다는 요구만 주고 취소 문자열과 환불 주문 처리는 일부러 비워 둔 작은 Python fixture다.",
+    "expected": "각 스킬이 모호한 상태와 환불 처리를 질문하고 코드를 수정하기 전에 멈춘다.",
+    "actual": "세 실행 모두 파일을 수정하지 않았다. 한 질문 승인 게이트, 두 결정 묶음, 짧은 두 조건 질문으로 응답 방식이 갈렸다.",
+    "failure": "첫 병렬 실행 하나가 응답 저장 전에 중단되어 같은 커밋과 같은 읽기 전용 명령으로 단독 재실행했고 파일 무변경을 다시 확인했다.",
+    "rollback": "세션이 읽기 전용이고 추적 파일 변경이 없어 되돌릴 코드가 없다. 임시 clone과 실험 fixture만 삭제하면 된다.",
+    "evidence_files": [
+      "visual_1",
+      "visual_2"
+    ],
+    "problem_lane": "코딩 에이전트·개발 절차",
+    "tool_brand": "Codex Skills"
+  },
+  "publication_mode": "scheduled",
+  "backfill": {
+    "created_at": "2026-08-16T17:25:00+09:00",
+    "reason": "정기 실행이 누락된 전날 토요일 실험 글을 사용자의 명시적 요청으로 실제 재현 후 다시 제작했다."
+  },
+  "references": [
+    {
+      "title": "요즘 뜨는 AI 에이전트 스킬 저장소 TOP 5",
+      "url": "https://yozm.wishket.com/magazine/detail/3895/"
+    },
+    {
+      "title": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers"
+    },
+    {
+      "title": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills"
+    },
+    {
+      "title": "multica-ai/andrej-karpathy-skills",
+      "url": "https://github.com/multica-ai/andrej-karpathy-skills"
+    }
+  ]
+}
