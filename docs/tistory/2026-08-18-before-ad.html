@@ -1,0 +1,33 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 18 (화) · 약 11분</p>
+    <p class="digest-lead">API 응답에서 상태값 하나를 읽으려는데 JSON 라이브러리부터 골라야 하는 순간이 있다. 작은 진단 도구나 단일 파일 스크립트라면 Jackson의 데이터 바인딩까지 필요하지 않아도 의존성 설정은 피하기 어려웠다. OpenJDK는 8월 17일 JEP 540 ‘Simple JSON API’를 JDK 28 대상으로 지정했다. JDK 안에서 JSON을 바로 파싱하고 생성할 수 있게 하되, 기존 라이브러리를 대체하지 않는 작은 도구로 경계를 분명히 그었다. 이 경계를 알아야 새 API를 편해서 쓰고, 큰 서비스에서 무리하게 끌고 가지 않을 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-18/JDK28-Simple-JSON-API-대표.webp" alt="작은 JSON 문서 앞에서 JDK 28 내장 열쇠와 큰 외부 라이브러리 공구함을 비교하는 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · InfoQ · 2026. 8. 17</p>
+    <h3>JDK 28에 Simple JSON API가 들어간다</h3>
+    <p class="digest-blurb">OpenJDK가 외부 의존성 없이 JSON을 파싱하고 생성하는 JEP 540을 JDK 28 대상으로 지정했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">내장됐지만 기본으로 바로 켜지는 API는 아니다</h4><p>JEP 540은 상태가 ‘Targeted’, 대상 릴리스가 JDK 28로 바뀌었다. 최종 표준 API가 확정됐다는 뜻은 아니다. 이름 그대로 인큐베이터 모듈이며 사용하려면 컴파일과 실행 때 `--add-modules jdk.incubator.json`을 명시해야 한다. 실행 시에도 인큐베이터 모듈을 쓴다는 경고가 나온다. API 모양이 피드백에 따라 달라질 수 있으므로 장기 운영 서비스의 공개 계약에 바로 박아 넣기보다 실험과 작은 내부 도구부터 시작하는 편이 맞다.</p><pre class="digest-code-block language-bash"><code># 단일 소스 파일 실행
+java --add-modules jdk.incubator.json Weather.java
+
+# 컴파일 뒤 실행
+javac --add-modules jdk.incubator.json WeatherCheck.java
+java --add-modules jdk.incubator.json WeatherCheck</code></pre><p>이번 변화가 반가운 곳은 배포 스크립트, 진단 CLI, 테스트 보조 도구처럼 ‘응답에서 값 몇 개만 읽는’ 코드다. 지금은 간단한 작업에도 Maven이나 Gradle에 JSON 의존성을 넣고 버전을 관리해야 한다. JDK 28 환경만 통제할 수 있다면 그 준비가 줄어든다. 반대로 여러 JDK 버전을 지원해야 하는 라이브러리나 안정된 API가 중요한 제품 코드는 인큐베이터가 끝날 때까지 기다릴 이유가 충분하다.</p><h4 class="digest-subheading">Json.parse 뒤에는 여섯 종류의 값만 남는다</h4><p>중심에는 `JsonValue`가 있다. JSON의 문자열·숫자·불리언·null·객체·배열을 각각 대응하는 여섯 하위 인터페이스로 표현한다. `Json.parse`가 문자열이나 `char[]`을 읽으면 이 값들로 이루어진 메모리 트리가 만들어진다. 객체에서 키를 찾을 때 `get(&quot;name&quot;)`, 배열에서 순서를 찾을 때 `get(0)`, Java 값으로 꺼낼 때 `asString()`·`asInt()` 같은 변환 메서드를 사용한다.</p><pre class="digest-code-block language-java"><code>import jdk.incubator.json.Json;
+
+String body = &quot;&quot;&quot;
+    {&quot;user&quot;: {&quot;name&quot;: &quot;Mina&quot;, &quot;level&quot;: 3}}
+    &quot;&quot;&quot;;
+
+var json = Json.parse(body);
+String name = json.get(&quot;user&quot;).get(&quot;name&quot;).asString();
+int level = json.get(&quot;user&quot;).get(&quot;level&quot;).asInt();
+
+System.out.println(name + &quot; / &quot; + level);</code></pre><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-18/JSON-파싱-JsonValue-흐름.webp" alt="JSON 문자열이 Json.parse를 거쳐 JsonValue 트리가 되고 Java 값으로 변환되는 흐름" width="1200" height="630" loading="lazy"><figcaption>JSON 문자열은 `Json.parse`에서 메모리 트리로 바뀌고, 필요한 경로를 따라간 뒤 Java 기본값으로 변환된다. 객체 자동 매핑을 거치지 않는 작은 API다.</figcaption></figure><p>경로가 없거나 예상한 형식과 다르면 조용히 null을 돌려주는 대신 `JsonValueException`이 발생한다. 파싱 자체가 실패하면 `JsonParseException`에 루트에서 문제 값까지의 경로와 문서 안 위치가 담긴다. 작은 스크립트를 빠르게 쓰되 잘못된 구조를 일찍 드러내려는 설계다. 입력 형식이 자주 바뀌는 API라면 예외를 한꺼번에 잡기보다 선택 값 처리와 타입 분기를 코드에 명시해야 한다.</p></div>
+  </div>
+</section>
+</article>
