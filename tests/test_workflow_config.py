@@ -14,6 +14,16 @@ GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
+    def test_editor_contracts_keep_browser_qa_outside_repository(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            SATURDAY_CONTRACT,
+            GUIDE_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            self.assertIn("/tmp/blog-writing-qa/", contract)
+            self.assertIn("저장소 루트가 아니라", contract)
+
     def test_github_only_validates_builds_and_deploys_committed_results(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 

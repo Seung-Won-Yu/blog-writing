@@ -121,6 +121,46 @@ class PublishBundleTests(unittest.TestCase):
         self.assertEqual(ready, [])
         self.assertIn("unexpected_worktree_change:notes.txt", blocked)
 
+    def test_resume_ignores_gitignored_playwright_runtime_artifacts(self):
+        from blog_pipeline.publishing.publish_bundle import (
+            publish_bundle_resume_reasons,
+            required_publish_bundle_paths,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            (root / ".gitignore").write_text(
+                "/.playwright-cli/\n", encoding="utf-8"
+            )
+            subprocess.run(["git", "add", ".gitignore"], cwd=root, check=True)
+            subprocess.run(
+                [
+                    "git",
+                    "-c",
+                    "user.name=Test",
+                    "-c",
+                    "user.email=test@example.com",
+                    "commit",
+                    "-qm",
+                    "fixture ignore",
+                ],
+                cwd=root,
+                check=True,
+            )
+            draft_id = "2026-08-18"
+            for relative in required_publish_bundle_paths(draft_id, root=root):
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(relative, encoding="utf-8")
+            runtime_snapshot = root / ".playwright-cli" / "page.yml"
+            runtime_snapshot.parent.mkdir(parents=True, exist_ok=True)
+            runtime_snapshot.write_text("runtime snapshot", encoding="utf-8")
+
+            reasons = publish_bundle_resume_reasons(draft_id, root=root)
+
+        self.assertEqual(reasons, [])
+
     def test_resume_requires_source_change(self):
         from blog_pipeline.publishing.publish_bundle import (
             publish_bundle_resume_reasons,
