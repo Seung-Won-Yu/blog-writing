@@ -14,6 +14,30 @@ GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
+    def test_editor_contracts_use_one_scheduled_run_without_retry_slots(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            SATURDAY_CONTRACT,
+            GUIDE_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            self.assertIn("예약 실행은 한 번만", contract)
+            self.assertNotIn("RETRY_PENDING", contract)
+            self.assertNotIn("09:25", contract)
+            self.assertNotIn("14:25", contract)
+
+    def test_daily_contract_does_not_backfill_or_block_on_missed_days(self):
+        contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("과거 날짜의 뉴스 글이나 티스토리 발행이 누락됐어도", contract)
+        self.assertIn("누락일을 자동으로 소급 생성하지", contract)
+
+    def test_weekly_contracts_do_not_depend_on_the_daily_draft(self):
+        for contract_path in (SATURDAY_CONTRACT, GUIDE_CONTRACT):
+            contract = contract_path.read_text(encoding="utf-8")
+            self.assertIn("다른 예약 글의 누락과 관계없이", contract)
+            self.assertNotIn("daily_guard --today --require-complete", contract)
+
     def test_editor_contracts_keep_browser_qa_outside_repository(self):
         for contract_path in (
             EDITOR_CONTRACT,
@@ -188,8 +212,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("실제 검토한 후보 제목과 탈락 이유", contract)
         self.assertIn("`temporary_source_unavailable`", contract)
         self.assertIn("한 후보의 원문 접근에 2분 이상 머물지 않습니다", contract)
-        self.assertIn("`RETRY_PENDING`", contract)
-        self.assertIn("09:25 재실행", contract)
+        self.assertNotIn("`RETRY_PENDING`", contract)
+        self.assertNotIn("09:25 재실행", contract)
         self.assertIn("같은 `topic_family`를 한 건만 포함", contract)
         self.assertIn("직전 4일에 제목·핵심 개체로 노출된 제품·회사 브랜드", contract)
         self.assertIn("직전 2일의 핵심 `topic_family`", contract)

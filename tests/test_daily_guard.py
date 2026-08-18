@@ -17,6 +17,19 @@ from blog_pipeline.publishing.daily_guard import (
 
 
 class DailyGuardTests(unittest.TestCase):
+    def test_missing_previous_days_do_not_block_a_new_current_draft(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_json(
+                root / "data" / "days" / "2026-08-14.json",
+                {"news": [{"title_kr": "이전 글", "url": "https://example.com/old"}]},
+            )
+
+            result = inspect_daily_state("2026-08-18", root=root)
+
+        self.assertEqual(result["status"], "NEW")
+        self.assertEqual(result["reasons"], [])
+
     @staticmethod
     def rotation_source(title, url, shape, render_family, logic_types, origins=None):
         origins = origins or ["imagegen"] * len(logic_types)

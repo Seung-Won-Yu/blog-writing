@@ -1,22 +1,21 @@
 # 쑥쑥자라나라 토요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 매일 09:00 실행되는 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 매일 09:00 실행되는 심층뉴스 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
 사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비토요일 실행은 계속 건너뜁니다.
 
 ## 시작 조건과 단일 실행
 
-1. 최신 `main`을 받고 당일 뉴스글이 먼저 완성됐는지 확인합니다.
+1. 최신 `main`을 받고 자동화 글 자체의 당일 상태를 확인합니다. 다른 예약 글의 누락과 관계없이 이 자동화 글을 독립적으로 진행합니다.
 
    ```bash
    git pull --ff-only origin main
-   python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.saturday_guard --today
    ```
 
-   `git pull`은 예약 작업의 네트워크 권한이 적용되도록 Python 래퍼가 아닌 독립 명령으로 실행합니다. 일시적인 DNS·502·503·504라면 같은 직접 명령만 최대 세 번 재시도하고, 계속 실패하면 14:25 재실행에 넘깁니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
+   `git pull`은 예약 작업의 네트워크 권한이 적용되도록 Python 래퍼가 아닌 독립 명령으로 실행합니다. 일시적인 DNS·502·503·504라면 같은 실행 안에서 직접 명령만 최대 세 번 재시도하고, 계속 실패하면 변경 없이 `BLOCKED`로 종료합니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
 
-   14:25 재실행에서 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --resume-check`를 먼저 실행합니다. `READY`면 `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
+   사용자가 수동으로 다시 실행했을 때 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automation --resume-check`를 먼저 실행합니다. `READY`면 `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
 
    브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD-automation/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD-automation/*.webp`만 남깁니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필을 재사용하지 않고 Playwright CLI 또는 제공된 브라우저 도구만 사용합니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
 
@@ -193,9 +192,9 @@ python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-automat
 git diff --cached --check
 ```
 
-데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트의 당일 그룹에 `뉴스 심층글`과 `업무자동화 실험` 두 카드가 함께 있고 각각 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 독립 연결돼야 합니다.
+데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트에서 당일 `업무자동화 실험` 카드의 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 연결돼야 합니다. 같은 날 뉴스 카드의 존재 여부는 완료 조건으로 삼지 않습니다.
 
-스테이징 전에 위 두 해시가 같은지 반드시 확인합니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 14:25 재실행이 위 `--resume-check` 경로로 복구합니다. `publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 두 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+스테이징 전에 위 두 해시가 같은지 반드시 확인합니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 사용자가 수동으로 다시 실행하면 위 `--resume-check` 경로로 복구합니다. `publish_bundle`이 `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 모든 기준을 통과하고 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 자동화 카드 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 
