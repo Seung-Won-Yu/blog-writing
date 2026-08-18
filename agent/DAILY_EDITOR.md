@@ -15,7 +15,7 @@
 
    재실행 시 작업 트리가 더러우면 사용자 변경이라고 단정하지 않습니다. 먼저 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 실행합니다. `READY`면 당일 완성 묶음만 남은 상태입니다. `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인한 뒤, 원고·이미지를 다시 만들지 않고 9단계 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
 
-   브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD/*.webp`만 남깁니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
+   브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD/*.webp`만 남깁니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필을 재사용하지 않고 Playwright CLI 또는 제공된 브라우저 도구만 사용합니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
 
    - `COMPLETE`: 즉시 종료합니다. 원문 확인, 재집필, 이미지 재생성, 테스트, 커밋, 푸시를 반복하지 않습니다.
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.

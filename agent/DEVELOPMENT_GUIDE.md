@@ -16,7 +16,7 @@
 
    14:25 재실행에서 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --resume-check`를 먼저 실행합니다. `READY`면 `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
 
-   브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD-guide/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD-guide/*.webp`만 남깁니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
+   브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD-guide/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD-guide/*.webp`만 남깁니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필을 재사용하지 않고 Playwright CLI 또는 제공된 브라우저 도구만 사용합니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
 
 2. 수요일이 아니면 파일을 만들지 않고 종료합니다. 가드 결과가 `COMPLETE`면 같은 글을 다시 조사·집필·생성하지 않습니다. `PARTIAL`이면 출력된 누락 단계만 복구하고, `NEW`일 때만 전체 흐름을 한 번 수행합니다.
 

@@ -24,6 +24,16 @@ class WorkflowConfigTests(unittest.TestCase):
             self.assertIn("/tmp/blog-writing-qa/", contract)
             self.assertIn("저장소 루트가 아니라", contract)
 
+    def test_editor_contracts_never_launch_the_chrome_app_directly(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            SATURDAY_CONTRACT,
+            GUIDE_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            self.assertIn("Google Chrome 앱 실행 파일을 직접 호출하지 않습니다", contract)
+            self.assertIn("Playwright CLI 또는 제공된 브라우저 도구", contract)
+
     def test_github_only_validates_builds_and_deploys_committed_results(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 
