@@ -18,6 +18,10 @@ concurrency:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      # CI only validates already-rendered WebP assets; production image generation
+      # happens locally with a Korean font. Avoid a slow apt mirror dependency here.
+      BLOG_FONT_PATH: /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -31,10 +35,8 @@ jobs:
       - name: Install Python dependencies
         run: python3 -m pip install --disable-pip-version-check -r requirements-images.txt
 
-      - name: Install Korean fonts
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+      - name: Verify test font
+        run: test -r "$BLOG_FONT_PATH"
 
       - name: Run tests
         run: python3 -m unittest discover -s tests

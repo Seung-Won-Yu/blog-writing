@@ -74,6 +74,16 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("actions/upload-pages-artifact@v3", workflow)
         self.assertIn("actions/deploy-pages@v5", workflow)
 
+    def test_pages_deploy_does_not_depend_on_runtime_apt_packages(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertNotIn("apt-get", workflow)
+        self.assertIn(
+            "BLOG_FONT_PATH: /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            workflow,
+        )
+        self.assertIn('test -r "$BLOG_FONT_PATH"', workflow)
+
     def test_pages_deploy_checks_every_future_publish_ready_draft(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 
