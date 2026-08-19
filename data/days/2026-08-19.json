@@ -1,0 +1,388 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-19",
+  "publish_date": "2026-08-19",
+  "date_label": "2026. 8. 19",
+  "weekday": "수",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "최신 IT·개발 소식",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-19T09:00:00+09:00",
+  "primary_query": "AI 코드 마이그레이션",
+  "tags": [
+    "AI 코드 마이그레이션",
+    "Codex",
+    "테스트 마이그레이션",
+    "Enzyme",
+    "코드 리뷰",
+    "기술 부채",
+    "프런트엔드 테스트"
+  ],
+  "editorial": {
+    "headline": "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+    "opening": "오래된 테스트 도구를 걷어내자는 일은 대개 기능 하나를 추가하는 일보다 무섭다. 화면은 그대로여도 수천 개의 테스트가 서로 다른 방식으로 실패하고, 고친 변경이 다른 팀의 배포를 멈출 수 있기 때문이다. 8월 18일 공개된 Asana 사례는 이 위험한 일을 AI 코딩 에이전트와 사람 리뷰의 조합으로 약 2주 만에 끝냈다고 설명한다. 핵심은 ‘에이전트가 5년치를 대신 코딩했다’는 숫자가 아니라, 어떤 범위로 쪼개고 어떤 지점에서 사람이 멈춰 세웠는지에 있다.",
+    "closing": "대규모 마이그레이션에서 AI가 유용한 순간은 사람이 결정을 포기하는 순간이 아니다. 반복 변환과 탐색을 병렬로 맡기고, 경계·테스트·배포 판단을 더 자주 검토할 수 있게 되는 순간이다. Asana의 비용과 기간은 한 회사의 추정치일 뿐 다른 코드베이스의 약속이 아니다. 그래도 오래된 의존성을 ‘언젠가’로 미루고 있다면, 작고 되돌릴 수 있는 한 묶음을 먼저 측정해 볼 근거는 충분하다.",
+    "action": "이번 스프린트에서 오래된 테스트나 의존성 한 묶음을 고르고, 성공 기준·금지 경로·리뷰 담당자를 먼저 한 장으로 적어 둔다.",
+    "audience_problem": "오래된 테스트 도구나 프레임워크 의존성이 업그레이드를 막지만, 전체 교체의 범위와 회귀 위험이 커서 우선순위를 정하지 못하는 개발팀의 문제다.",
+    "reader_takeaway": "AI 에이전트를 마이그레이션에 쓰려면 작업을 독립된 변경 묶음으로 나누고, 테스트 통과만이 아니라 리뷰·되돌리기·경계 검증을 성공 조건으로 둬야 한다.",
+    "why_now": "Asana가 2026년 8월 18일 Enzyme 제거 사례와 기간·비용·사람 검토 방식을 공개해, AI 코딩을 대규모 정리 작업에 적용할 구체적인 판단 재료가 생겼다.",
+    "topic_key": "AI 에이전트로 기술 부채를 안전하게 줄이는 마이그레이션 운영법",
+    "reader_question": "AI 코딩 에이전트가 오래된 테스트 도구를 바꾸게 해도 되는 범위와, 사람이 끝까지 확인해야 하는 경계는 어디인가?",
+    "entities": [
+      "Asana",
+      "OpenAI Codex",
+      "Enzyme"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "change_impact",
+    "revisit": {
+      "quick_answer": "독립 변경 묶음과 사람 리뷰가 있는 테스트 마이그레이션부터 적용한다.",
+      "reuse_case": "다음 의존성 교체 때 작업 분할과 검토 게이트를 재사용한다.",
+      "failure_case": "테스트만 통과하고 경계 동작이나 배포 영향을 확인하지 못하면 범위를 되돌린다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "테스트 도구 지원 종료",
+        "CI 실패율 변화",
+        "에이전트 권한 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "AI 코드 마이그레이션",
+      "reader_need": "오래된 테스트·의존성을 AI로 바꿀 때 속도와 회귀 위험을 함께 관리하고 싶다.",
+      "answer_format": "작업 흐름 비교와 점검 목록"
+    }
+  },
+  "visual": {
+    "subject": "낡은 테스트 의존성을 AI 에이전트와 사람 검토로 교체하는 작업",
+    "hook": "빽빽한 오래된 테스트 파일 더미에서 한 묶음만 안전하게 통과시키는 순간",
+    "motif": "test migration",
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "label": "낡은 테스트 더미에서 검토된 변경만 통과시키는 장면",
+      "scene_label": [
+        "낡은 테스트 파일 더미",
+        "검토 도장",
+        "분리된 변경 묶음"
+      ],
+      "steps": "이전 의존성 더미 → 검토된 한 묶음",
+      "curiosity_hook": "작업 전체가 아니라 한 묶음만 통과시키는 선택",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "annotated_closeup",
+      "composition_type": "test-suite-gate",
+      "palette_family": "charcoal_lime_coral",
+      "render_family": "flat_illustration",
+      "korean_labels": [
+        "검토 완료"
+      ]
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "label": "AI 마이그레이션의 사람 검토 흐름",
+        "scene_label": [
+          "작업 분할",
+          "격리된 작업 공간",
+          "리뷰 게이트"
+        ],
+        "steps": "범위 지정 → 병렬 변경 → 테스트 → 사람 리뷰",
+        "curiosity_hook": "에이전트가 끝낸 뒤 무엇을 확인하는가",
+        "evidence_type": "diagram",
+        "korean_labels": [
+          "범위 지정",
+          "병렬 변경",
+          "테스트",
+          "사람 리뷰"
+        ],
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean engineering workflow diagram, 1200x630. Show four large stages with exact labels '범위 지정', '병렬 변경', '테스트', '사람 리뷰'. Explain a separated workspace path and a clear review gate. Flat technical illustration, mobile-readable Korean, charcoal, lime, coral palette. Avoid: title, dashboard, people, laptop, robot, tiny text, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "label": "AI에 맡길 변경과 사람이 결정할 변경",
+        "scene_label": [
+          "반복 변환",
+          "경계 동작",
+          "되돌리기"
+        ],
+        "steps": "반복 변환은 자동화, 경계와 배포는 검토",
+        "curiosity_hook": "어느 조건에서 자동화를 멈추는가",
+        "evidence_type": "diagram",
+        "condition": "변경이 공개 API·권한·배포 경로에 닿은 경우",
+        "korean_labels": [
+          "반복 변환",
+          "경계 확인",
+          "되돌리기"
+        ],
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean conditional decision diagram, 1200x630. From '반복 변환' show an automation branch. When the exact condition '공개 API·권한·배포 경로' appears, branch to a human review and rollback gate. Large mobile-readable labels, clear conditional branch, flat technical style. Avoid: title, dashboard, people, laptop, robot, tiny text, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "낡은 테스트 파일 더미에서 사람 검토를 통과한 한 묶음이 분리되는 장면",
+      "path": "docs/tistory/assets/2026-08-19/AI-코드-마이그레이션-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-코드-마이그레이션-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. Asset type: Korean technology article cover, 1200x630 landscape. Scene/backdrop: close editorial view of a dense stack of old test files at a physical review gate. Subject: one clean small bundle with a stamped Korean label exactly '검토 완료' passes through while the remaining stack stays behind. Style: flat editorial illustration with charcoal paper texture, lime and coral accents. Composition: annotated closeup, one focused scene, the bundle occupies 60 percent, readable as thumbnail. Constraints: only exact Korean label, no other text. Avoid: laptop, generic developer, robot, logo, dashboard, cards, flowchart, neon, watermark.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "annotated_closeup",
+      "composition_type": "test-suite-gate",
+      "palette_family": "charcoal_lime_coral",
+      "render_family": "flat_illustration",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 182512,
+      "quality": 82,
+      "sha256": "1f3f6918225532b180c6a79e37c8a5d88f3f15ea2c5e5c5987743f793a805bfd",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "범위 지정부터 사람 리뷰까지 이어지는 AI 테스트 마이그레이션 흐름",
+      "path": "docs/tistory/assets/2026-08-19/AI-마이그레이션-리뷰-흐름.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-마이그레이션-리뷰-흐름.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean engineering workflow diagram, 1200x630. Show four large stages with exact labels '범위 지정', '병렬 변경', '테스트', '사람 리뷰'. Explain a separated workspace path and a clear review gate. Flat technical illustration, mobile-readable Korean, charcoal, lime, coral palette. Avoid: title, dashboard, people, laptop, robot, tiny text, watermark.",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 82580,
+      "quality": 82,
+      "sha256": "5d33acfbd4c7a6fb7e38340b2555017d0e0780bc7bc48d4615b0bc3f77688bb8",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "반복 변환은 자동화하고 공개 API와 배포 경로는 사람이 검토하는 조건 분기",
+      "path": "docs/tistory/assets/2026-08-19/AI-마이그레이션-검토-분기.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-마이그레이션-검토-분기.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean conditional decision diagram, 1200x630. From '반복 변환' show an automation branch. When the exact condition '공개 API·권한·배포 경로' appears, branch to a human review and rollback gate. Large mobile-readable labels, clear conditional branch, flat technical style. Avoid: title, dashboard, people, laptop, robot, tiny text, watermark.",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 31232,
+      "quality": 82,
+      "sha256": "f53892bbd11a23548508ed3e84264b0a75cc9ee95a7faddbcbfb75d0823a433e",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    }
+  },
+  "news": [
+    {
+      "title_kr": "Asana가 Codex로 5년짜리 엔지니어링 작업을 2주 만에 정리한 사례",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/asana/",
+      "published_at": "2026-08-18T00:00:00+00:00",
+      "blurb_kr": "Asana는 유지보수가 멈춘 Enzyme 제거 작업을 최대 4개의 Codex 에이전트와 하루 두 번의 엔지니어 검토로 약 2주에 완료했다고 밝혔다.",
+      "references": [
+        {
+          "title": "Asana cleared 5 years of engineering work in 2 weeks with Codex",
+          "url": "https://openai.com/index/asana/",
+          "kind": "official"
+        },
+        {
+          "title": "Codex Security",
+          "url": "https://help.openai.com/en/articles/20001107-codex-security",
+          "kind": "official"
+        },
+        {
+          "title": "When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding",
+          "url": "https://arxiv.org/abs/2608.16801v1",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "2주라는 숫자보다 먼저 봐야 할 작업 경계"
+        },
+        {
+          "t": "p",
+          "text": "OpenAI가 공개한 사례에서 Asana는 유지보수가 멈춘 Enzyme을 제거했다. Enzyme은 프런트엔드 스택을 현대화하는 데 걸림돌이었고, 기존 계획은 최소 5년과 약 600만 달러를 예상했다. 실제 결과는 약 1.5주의 엔지니어링 노력, 달력 기준 2주, 모델과 인프라 비용 약 1만 2천 달러였다. 이 수치를 다른 팀의 견적으로 옮겨 적을 수는 없다. 코드 규모, 테스트 품질, 배포 규칙, 기존 자동화가 전혀 다르기 때문이다."
+        },
+        {
+          "t": "p",
+          "text": "재현할 만한 부분은 숫자 대신 범위다. 제거 대상은 Enzyme이라는 한 의존성과 그에 묶인 테스트 변경이었다. 제품 기능을 새로 설계하거나 공개 계약을 바꾸는 일을 한 번에 묶지 않았다. 마이그레이션의 첫 질문도 ‘몇 개의 에이전트를 띄울까’가 아니라, 실패해도 어느 경계 안에서 멈추는 변경인지가 되어야 한다."
+        },
+        {
+          "t": "h",
+          "text": "짧은 지시와 분리된 작업 공간이 만나는 지점"
+        },
+        {
+          "t": "p",
+          "text": "Asana는 다섯 문장짜리 지시에서 시작해 최대 네 개의 코딩 에이전트를 병렬로 운영했다고 설명한다. 각 에이전트는 별도 코드베이스 사본에서 일했고, 엔지니어는 하루 두 번 진행 상황을 확인한 뒤 제안된 변경을 모두 리뷰했다. 복잡한 역할극이나 긴 지시보다 단순한 지시가 더 잘 작동했다는 관찰도 함께 공개됐다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "작업을 분리한 뒤에도 마지막 통과점은 테스트와 사람 리뷰다. 병렬 수 자체가 품질 보증은 아니다."
+        },
+        {
+          "t": "p",
+          "text": "별도 사본은 충돌을 없애는 마법이 아니라 검토 비용을 보이는 단위로 바꾼다. 한 에이전트가 테스트 헬퍼를 바꾸고 다른 에이전트가 컴포넌트를 손댄다면, 변경 묶음마다 실패 원인을 좁힐 수 있다. 반대로 공유 브랜치에서 동시에 넓은 리팩터링을 하면, 빨라 보이던 병렬 작업이 병합과 재현 단계에서 한 덩어리의 위험으로 돌아온다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "테스트 통과는 완료 신호가 아니라 첫 번째 필터다"
+        },
+        {
+          "t": "p",
+          "text": "오래된 테스트를 바꿀 때 가장 쉬운 오류는 기존 테스트가 기대한 구현 세부를 새 도구에 맞춰 그대로 흉내 내는 것이다. 이 경우 테스트 수는 유지돼도 실제 사용자 동작을 보장하지 못할 수 있다. 사람 리뷰는 바뀐 셀렉터, 비동기 대기, mock 경계, 접근성 쿼리가 실제 계약을 확인하는지 살펴야 한다. CI의 초록 표시만으로 리뷰를 생략하면 마이그레이션은 기술 부채의 위치만 바꾼다."
+        },
+        {
+          "t": "table",
+          "caption": "반복 변환과 제품 판단을 같은 자동화 수준으로 다루지 않는다.",
+          "headers": [
+            "변경 종류",
+            "에이전트에 적합한 일",
+            "사람이 확인할 일"
+          ],
+          "rows": [
+            [
+              "반복 변환",
+              "API 치환 초안, 사용처 목록화",
+              "변환 누락과 예외 목록"
+            ],
+            [
+              "테스트",
+              "유사 패턴의 초안 변경",
+              "행동·접근성·비동기 경계"
+            ],
+            [
+              "공개 계약",
+              "영향 지점 탐색",
+              "호환성·릴리스 판단"
+            ],
+            [
+              "배포",
+              "검증 명령 제안",
+              "롤백 기준과 승인"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "독립 연구도 병렬 에이전트의 효과를 자동으로 가정하지 말라고 경고한다. 2026년 8월 공개된 다중 에이전트 코딩 연구는 팀 크기에 따라 메시지 비용이 늘고, 조정자 한 명을 둔다고 성공률이 일관되게 좋아지지는 않았다고 보고했다. 따라서 병렬화는 작업들이 독립적이고 결과를 공통 테스트로 비교할 수 있을 때만 이득이 난다."
+        },
+        {
+          "t": "h",
+          "text": "자동화를 멈춰야 하는 경계는 미리 적는다"
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "반복적인 변환은 자동화 후보지만, 공개 API·권한·배포 경로가 걸리면 사람의 승인과 되돌리기 계획이 우선이다."
+        },
+        {
+          "t": "p",
+          "text": "AI가 생성한 변경에 비밀값, 권한, 결제, 데이터 삭제, 공개 API가 얽히면 테스트 통과보다 더 높은 검토 게이트가 필요하다. OpenAI의 Codex Security 안내도 식별·검증·수정 제안을 구분하고, 제안된 패치는 사람이 검토한 뒤 기존 워크플로에서 PR로 만들도록 설명한다. 마이그레이션에서도 같은 원칙이 유효하다. 에이전트는 후보 변경을 만들고, 승인 권한은 사람이 갖는다."
+        },
+        {
+          "t": "h",
+          "text": "작은 실패를 먼저 살피는 5가지 점검"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "한 번에 바꿀 패키지·디렉터리·테스트 범위를 한 문장으로 제한한다.",
+            "변경 전후에 같은 CI 명령과 실패 목록을 보관한다.",
+            "에이전트마다 격리된 작업 공간과 겹치지 않는 파일 범위를 준다.",
+            "리뷰어가 볼 행동 시나리오와 금지 경로를 지시에 함께 넣는다.",
+            "롤백할 커밋 단위와 배포 중단 조건을 작업 시작 전에 정한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "이 목록은 에이전트를 느리게 만들기 위한 절차가 아니다. 실패 비용이 큰 경계를 먼저 드러내고, 자동화가 잘하는 반복 변환을 그 안에서 더 빨리 돌리기 위한 장치다. 첫 시도는 전체 테스트 프레임워크가 아니라 한 패키지의 낡은 matcher, 한 화면의 shallow rendering, 한 종류의 mock처럼 되돌릴 수 있는 단위가 좋다."
+        },
+        {
+          "t": "h",
+          "text": "마이그레이션의 성과는 다음 변경에서도 남아야 한다"
+        },
+        {
+          "t": "p",
+          "text": "Asana 사례가 보여 주는 가장 현실적인 변화는 오래 걸린다는 이유로 보류했던 정리 작업도 다시 계산해 볼 수 있다는 점이다. 다만 5년과 2주라는 비교는 같은 조직의 과거 계획과 실제 프로젝트를 비교한 값이며, 일반적인 생산성 배수가 아니다. 팀은 기간과 비용뿐 아니라 리뷰 대기 시간, CI 재시도, 배포 후 결함, 되돌린 변경 수를 함께 기록해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "한 번의 성공 뒤에는 작업 분할 방식, 테스트 명령, 리뷰 질문, 실패 패턴을 남긴다. 다음 의존성 교체에서 그 문서가 출발점이 되면 에이전트의 성과는 단순한 코드 생성량이 아니라 팀의 반복 가능한 정리 능력으로 남는다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 생산성 지표 측정 기준: 토큰 사용량 대신 볼 5가지",
+      "url": "https://won0322.tistory.com/167",
+      "reason": "에이전트 도입 성과를 코드량 대신 리드타임·리뷰·배포 지표로 평가하는 기준을 이어서 볼 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/162",
+      "reason": "마이그레이션 에이전트의 권한과 배포 경계를 구체적인 점검으로 확장한다.",
+      "role": "next_step"
+    }
+  ]
+}

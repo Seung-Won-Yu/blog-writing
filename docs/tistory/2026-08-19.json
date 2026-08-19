@@ -1,0 +1,83 @@
+{
+  "title": "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+  "title_candidates": [
+    "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+    "Asana가 Codex로 5년짜리 엔지니어링 작업을 2주 만에 정리한 사례",
+    "낡은 테스트 의존성을 AI 에이전트와 사람 검토로 교체하는 작업: 빽빽한 오래된 테스트 파일 더미에서 한 묶음만 안전하게…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-19",
+  "publish_date": "2026-08-19",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-19T09:00:00+09:00",
+  "tags": [
+    "AI 코드 마이그레이션",
+    "Codex",
+    "테스트 마이그레이션",
+    "Enzyme",
+    "코드 리뷰",
+    "기술 부채",
+    "프런트엔드 테스트"
+  ],
+  "meta_description": "오래된 테스트 도구를 걷어내자는 일은 대개 기능 하나를 추가하는 일보다 무섭다. 화면은 그대로여도 수천 개의 테스트가 서로 다른 방식으로 실패하고, 고친 변경이 다른 팀의 배포를 멈출 수 있기 때문이… Asana는 유지보수가 멈춘 Enzyme 제거 작업을 최대 4개의 Codex 에이전…",
+  "key_summary": [
+    "1. Asana가 Codex로 5년짜리 엔지니어링 작업을 2주 만에 정리한 사례",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-19.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-19.html",
+  "before_ad_html": "docs/tistory/2026-08-19-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-19-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-19-adfit.html",
+  "source_sha256": "5339599c960ca5a67c3ab2160fdb49cbe1c31e39d595c0d1080c7f0524b71868",
+  "html_sha256": "adaed0ede1287783a33a7a9d8e892028ffeac97e2c1095e6c9c112b41936dbe7",
+  "adfit_sha256": "a8293e190b3af46391a320932b30a700720183ef1166634133a4bfad52650d08",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-코드-마이그레이션-대표.webp",
+      "path": "docs/tistory/assets/2026-08-19/AI-코드-마이그레이션-대표.webp",
+      "original_url": "",
+      "alt": "낡은 테스트 파일 더미에서 사람 검토를 통과한 한 묶음이 분리되는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-마이그레이션-리뷰-흐름.webp",
+      "path": "docs/tistory/assets/2026-08-19/AI-마이그레이션-리뷰-흐름.webp",
+      "original_url": "",
+      "alt": "범위 지정부터 사람 리뷰까지 이어지는 AI 테스트 마이그레이션 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19/AI-마이그레이션-검토-분기.webp",
+      "path": "docs/tistory/assets/2026-08-19/AI-마이그레이션-검토-분기.webp",
+      "original_url": "",
+      "alt": "반복 변환은 자동화하고 공개 API와 배포 경로는 사람이 검토하는 조건 분기",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
