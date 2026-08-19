@@ -1,0 +1,92 @@
+{
+  "title": "스프링 트랜잭션 전파: REQUIRES_NEW 롤백 규칙 확인",
+  "title_candidates": [
+    "스프링 트랜잭션 전파: REQUIRES_NEW 롤백 규칙 확인",
+    "Spring @Transactional 전파와 롤백 규칙을 서비스 경계에서 점검하는 법"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-08-19-guide",
+  "publish_date": "2026-08-19",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-19T18:00:00+09:00",
+  "tags": [
+    "Spring Transactional",
+    "트랜잭션 전파",
+    "REQUIRES_NEW",
+    "롤백 규칙",
+    "PostgreSQL 트랜잭션",
+    "커넥션 풀",
+    "Spring Boot"
+  ],
+  "meta_description": "주문 저장은 실패했는데 감사 로그만 남았거나, 예외를 잡아 처리했는데 마지막 commit에서 UnexpectedRollbackException을 만난 적이 있다. Spring의 @Transaction… 기본 REQUIRED는 기존 물리 트랜잭션에 참여한다. 독립 기록이 필요할 때만 R…",
+  "key_summary": [
+    "1. Spring @Transactional 전파와 롤백 규칙을 서비스 경계에서 점검하는 법",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 스프링 트랜잭션 전파: REQUIRES_NEW 롤백 규칙 확인"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/guides/2026-08-19.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-19-guide.html",
+  "before_ad_html": "docs/tistory/2026-08-19-guide-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-19-guide-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-19-guide-adfit.html",
+  "source_sha256": "c5ef2daa54f5397d1a6aea9a2a50da2de66a087ed7be2f9ed360686cb61da5d1",
+  "html_sha256": "a158413635ad0a15fbad8afa9646a13657e3569b5861ff74ec429fa963cf5d9b",
+  "adfit_sha256": "6b6d5a2aa5d1eaf4c998c8da598f120b557cf3320e81632e852c1e074cb356de",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/스프링-트랜잭션-전파-대표.webp",
+      "path": "docs/tistory/assets/2026-08-19-guide/스프링-트랜잭션-전파-대표.webp",
+      "original_url": "",
+      "alt": "같은 거래와 새 거래의 경계를 보여 주는 Spring 트랜잭션 전파 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/트랜잭션-전파-구조.webp",
+      "path": "docs/tistory/assets/2026-08-19-guide/트랜잭션-전파-구조.webp",
+      "original_url": "",
+      "alt": "외부 거래에 참여하는 작업과 별도 커밋되는 기록의 경계",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/예외-롤백-규칙.webp",
+      "path": "docs/tistory/assets/2026-08-19-guide/예외-롤백-규칙.webp",
+      "original_url": "",
+      "alt": "검사 예외와 런타임 예외의 Spring 기본 롤백 규칙 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/커넥션풀-새거래.webp",
+      "path": "docs/tistory/assets/2026-08-19-guide/커넥션풀-새거래.webp",
+      "original_url": "",
+      "alt": "REQUIRES_NEW가 외부 거래와 별도 커넥션을 요구하는 구조",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

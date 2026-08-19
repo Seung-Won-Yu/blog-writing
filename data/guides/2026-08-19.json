@@ -1,0 +1,468 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-19-guide",
+  "publish_date": "2026-08-19",
+  "date_label": "2026. 8. 19",
+  "weekday": "수",
+  "content_type": "evergreen_guide",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-19T18:00:00+09:00",
+  "primary_query": "스프링 트랜잭션 전파",
+  "tags": [
+    "Spring Transactional",
+    "트랜잭션 전파",
+    "REQUIRES_NEW",
+    "롤백 규칙",
+    "PostgreSQL 트랜잭션",
+    "커넥션 풀",
+    "Spring Boot"
+  ],
+  "editorial": {
+    "headline": "스프링 트랜잭션 전파: REQUIRES_NEW 롤백 규칙 확인",
+    "opening": "주문 저장은 실패했는데 감사 로그만 남았거나, 예외를 잡아 처리했는데 마지막 commit에서 UnexpectedRollbackException을 만난 적이 있다. Spring의 @Transactional은 메서드 이름표가 아니라 이미 열린 물리 트랜잭션에 참여할지, 새 거래를 열지 정하는 규칙이다. 이 글은 REQUIRED와 REQUIRES_NEW가 데이터베이스 커넥션·롤백 표식·재시도와 어떻게 연결되는지 코드와 점검 순서로 풀어낸다.",
+    "closing": "전파 옵션은 실패를 지우는 스위치가 아니다. 하나의 비즈니스 작업을 함께 취소할지, 정말 독립적으로 남겨야 할 기록인지 먼저 정하고 그 선택에 맞는 커넥션·예외·재시도 규칙을 묶어야 한다.",
+    "action": "다음 장애 수정에서는 서비스 호출 그래프에서 트랜잭션 경계와 REQUIRES_NEW 지점을 표시한 뒤, 각 지점이 실패해도 남아야 하는 데이터인지부터 검토하자.",
+    "audience_problem": "Spring Boot와 PostgreSQL 서비스에서 내부 서비스 호출, 예외 처리, 감사 로그 때문에 커밋과 롤백 결과가 예상과 다르게 보이는 백엔드 개발자.",
+    "reader_takeaway": "REQUIRED·REQUIRES_NEW·NESTED의 물리 경계를 구분하고, 롤백 규칙과 커넥션 풀 크기를 함께 검증하는 배포 전 점검 절차를 적용할 수 있다.",
+    "why_now": "Spring의 기본 전파는 REQUIRED이고 기본 롤백 규칙은 RuntimeException과 Error에 적용된다. 설정 한 줄을 추가하기 전에 현재 트랜잭션 참여와 PostgreSQL의 직렬화 실패 재시도 조건을 확인해야 운영 중 데이터 불일치를 줄일 수 있다.",
+    "topic_key": "spring-transactional-propagation-rollback-requires-new",
+    "reader_question": "Spring @Transactional에서 어떤 호출이 같은 트랜잭션에 참여하고, REQUIRES_NEW와 예외 규칙은 언제 데이터 불일치를 만들까?",
+    "entities": [
+      "Spring @Transactional",
+      "PROPAGATION_REQUIRED",
+      "PROPAGATION_REQUIRES_NEW",
+      "PostgreSQL",
+      "UnexpectedRollbackException"
+    ],
+    "coverage": [
+      "foundation",
+      "request_flow",
+      "stack",
+      "data",
+      "security",
+      "operations",
+      "plan"
+    ],
+    "article_shape": "change_impact",
+    "search_intent": {
+      "query": "스프링 트랜잭션 전파",
+      "reader_need": "내부 호출에서 같은 거래가 롤백되는 이유와 REQUIRES_NEW를 안전하게 쓸 조건을 알고 싶다.",
+      "answer_format": "호출 흐름도, Java 코드, 선택 표와 배포 점검 목록"
+    },
+    "revisit": {
+      "quick_answer": "기본 REQUIRED는 기존 물리 거래에 참여하므로 내부 롤백 표식이 외부 commit도 막는다. 독립 기록만 REQUIRES_NEW로 분리하고 풀 여유를 확인한다.",
+      "reuse_case": "주문·결제·감사 로그처럼 실패 처리 경계가 다른 서비스 메서드를 설계하거나 리뷰할 때 쓴다.",
+      "failure_case": "예외를 잡고 계속 진행하거나 모든 부수 효과에 REQUIRES_NEW를 붙이면 UnexpectedRollbackException, 풀 고갈, 부분 성공을 만들 수 있다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "Spring Framework 업그레이드",
+        "커넥션 풀 크기 변경",
+        "새 비동기·감사 처리 추가"
+      ]
+    }
+  },
+  "visual": {
+    "cover": {
+      "content_role": "hook",
+      "cover_kind": "editorial_scene",
+      "render_family": "ink_drawing",
+      "art_direction": "expressive ink and watercolor editorial",
+      "composition_type": "narrow doorway",
+      "palette_family": "sage-mustard-paper",
+      "label": "같은 거래가 끝나야 새 거래를 열 수 있는 전파 장면",
+      "scene_label": [
+        "같은 거래",
+        "새 거래"
+      ],
+      "steps": "기존 거래와 독립 거래의 경계가 다름을 보여 준다.",
+      "curiosity_hook": "로그가 남았는데 주문은 왜 취소됐을까?",
+      "logic_type": "editorial_scene",
+      "origin": "imagegen",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. A Java service transaction as a glass ledger passes through a narrow doorway while a second small ledger waits outside; Korean labels '같은 거래' and '새 거래'. Expressive ink drawing with subtle watercolor, charcoal, sage and mustard, no UI, terminal, arrows, cards, tables, charts, logos, robots or watermark.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "같은 거래",
+        "새 거래"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "label": "REQUIRED 참여와 독립 기록의 트랜잭션 경계",
+        "scene_label": [
+          "외부 거래",
+          "함께 롤백",
+          "별도 커밋"
+        ],
+        "steps": "기본 참여와 별도 거래의 커밋 범위를 나눈다.",
+        "curiosity_hook": "내부 서비스가 실패하면 외부 작업도 취소될까?",
+        "evidence_type": "diagram",
+        "logic_type": "flow",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Korean educational physical-ledger diagram: one outer transaction boundary encloses two service steps, while a separately bounded audit write is isolated. Labels '외부 거래', '함께 롤백', '별도 커밋'. Clean flat printmaking illustration in indigo clay-red sand; no UI, terminal, dashboard, arrows, cards, logos or watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "외부 거래",
+          "함께 롤백",
+          "별도 커밋"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "검사 예외와 런타임 예외의 기본 롤백 차이",
+        "scene_label": [
+          "검사 예외",
+          "런타임 예외",
+          "롤백 규칙"
+        ],
+        "steps": "Spring의 기본 규칙과 명시 규칙의 차이를 보여 준다.",
+        "curiosity_hook": "catch한 예외가 왜 마지막 commit을 실패하게 할까?",
+        "evidence_type": "diagram",
+        "logic_type": "comparison",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Korean educational comparison of checked exception and runtime exception reaching a transaction ledger, marked commit by default and rollback by default. Labels '검사 예외', '런타임 예외', '롤백 규칙'. Ink drawing with olive terracotta warm paper; no UI, terminal, dashboard, cards, logos or watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "검사 예외",
+          "런타임 예외",
+          "롤백 규칙"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "label": "REQUIRES_NEW가 추가 커넥션을 요구하는 운영 조건",
+        "scene_label": [
+          "커넥션 풀",
+          "외부 거래",
+          "새 거래"
+        ],
+        "steps": "외부 거래가 점유한 상태에서 독립 거래에 추가 커넥션이 필요함을 보여 준다.",
+        "curiosity_hook": "새 거래 하나가 커넥션 풀을 왜 기다리게 할까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "condition": "외부 거래가 커넥션을 보유한 상태에서 REQUIRES_NEW를 호출하면 새 커넥션을 확보할 수 있어야 한다.",
+        "origin": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Korean isometric miniature of a connection-token pool; outer transactions hold tokens while an inner new transaction needs an extra token. Labels '커넥션 풀', '외부 거래', '새 거래'. Tactile clay and paper, forest green cream coral; no UI, terminal, dashboard, chart, cards, logos or watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "커넥션 풀",
+          "외부 거래",
+          "새 거래"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-19-guide/스프링-트랜잭션-전파-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/스프링-트랜잭션-전파-대표.webp",
+      "alt": "같은 거래와 새 거래의 경계를 보여 주는 Spring 트랜잭션 전파 장면",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. A Java service transaction as a glass ledger passes through a narrow doorway while a second small ledger waits outside; Korean labels '같은 거래' and '새 거래'. Expressive ink drawing with subtle watercolor, charcoal, sage and mustard, no UI, terminal, arrows, cards, tables, charts, logos, robots or watermark.",
+      "generation_model": "gpt-image-2",
+      "cover_kind": "editorial_scene",
+      "render_family": "ink_drawing",
+      "art_direction": "expressive ink and watercolor editorial",
+      "composition_type": "narrow doorway",
+      "palette_family": "sage-mustard-paper",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 136466,
+      "quality": 82,
+      "sha256": "09c28378817ba69f18c02182097ec1e8aad02ce4a3ea2de21d7f62d03c242297"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-19-guide/트랜잭션-전파-구조.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/트랜잭션-전파-구조.webp",
+      "alt": "외부 거래에 참여하는 작업과 별도 커밋되는 기록의 경계",
+      "generation_prompt": "Use case: scientific-educational. Korean educational physical-ledger diagram: one outer transaction boundary encloses two service steps, while a separately bounded audit write is isolated. Labels '외부 거래', '함께 롤백', '별도 커밋'. Clean flat printmaking illustration in indigo clay-red sand; no UI, terminal, dashboard, arrows, cards, logos or watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 123758,
+      "quality": 82,
+      "sha256": "060d791c1ca86d8d8070334ce5cdd75a1689702fcdd3e8386e22d99ad9bc3c0f"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-19-guide/예외-롤백-규칙.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/예외-롤백-규칙.webp",
+      "alt": "검사 예외와 런타임 예외의 Spring 기본 롤백 규칙 비교",
+      "generation_prompt": "Use case: scientific-educational. Korean educational comparison of checked exception and runtime exception reaching a transaction ledger, marked commit by default and rollback by default. Labels '검사 예외', '런타임 예외', '롤백 규칙'. Ink drawing with olive terracotta warm paper; no UI, terminal, dashboard, cards, logos or watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 102736,
+      "quality": 82,
+      "sha256": "fae24825833e6f6862cc3a34293979b194571ac22b35be75a3efb614d43d11c3"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "path": "docs/tistory/assets/2026-08-19-guide/커넥션풀-새거래.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-19-guide/커넥션풀-새거래.webp",
+      "alt": "REQUIRES_NEW가 외부 거래와 별도 커넥션을 요구하는 구조",
+      "generation_prompt": "Use case: scientific-educational. Korean isometric miniature of a connection-token pool; outer transactions hold tokens while an inner new transaction needs an extra token. Labels '커넥션 풀', '외부 거래', '새 거래'. Tactile clay and paper, forest green cream coral; no UI, terminal, dashboard, chart, cards, logos or watermark.",
+      "generation_model": "gpt-image-2",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 63610,
+      "quality": 82,
+      "sha256": "bcfa2fad5d09014b2e4182d57700362864b78f16821c25cea85547e550b121fa"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "Spring @Transactional 전파와 롤백 규칙을 서비스 경계에서 점검하는 법",
+      "source": "Spring Framework·PostgreSQL 공식 문서와 트랜잭션 격리 연구를 교차 확인",
+      "url": "https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html",
+      "published_at": "2026-08-19T14:00:00+09:00",
+      "blurb_kr": "기본 REQUIRED는 기존 물리 트랜잭션에 참여한다. 독립 기록이 필요할 때만 REQUIRES_NEW를 쓰고 커넥션 풀과 재시도 규칙을 함께 점검한다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "Spring Framework Transaction Propagation",
+          "url": "https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html"
+        },
+        {
+          "kind": "official",
+          "title": "Spring @Transactional Settings",
+          "url": "https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html"
+        },
+        {
+          "kind": "official",
+          "title": "PostgreSQL Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        },
+        {
+          "kind": "independent",
+          "title": "A Critique of ANSI SQL Isolation Levels",
+          "url": "https://sigmodrecord.org/?smd_process_download=1&download_id=5050"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "예외를 잡았는데 왜 마지막 commit에서 실패할까"
+        },
+        {
+          "t": "p",
+          "text": "주문 처리 중 재고 부족 예외를 내부 서비스가 잡고 감사 로그만 남긴 뒤 정상 반환했다. 그런데 외부 메서드가 commit할 때 UnexpectedRollbackException이 터지면, 원인은 마지막 줄이 아니라 이미 같은 물리 트랜잭션에 찍힌 rollback-only 표식일 수 있다. Spring 기본 전파 REQUIRED는 현재 거래가 있으면 새 거래를 만들지 않고 그 거래에 참여한다."
+        },
+        {
+          "t": "p",
+          "text": "트랜잭션은 데이터베이스에 보낼 SQL 묶음이며, Spring의 프록시는 메서드 경계에서 시작·참여·종료를 정한다. PostgreSQL은 명시적 BEGIN 없이도 문장 하나를 거래로 처리하지만, 서비스 작업이 여러 변경을 묶어야 한다면 어느 호출이 같은 커넥션과 commit 결과를 공유하는지 먼저 그려야 한다."
+        },
+        {
+          "t": "h",
+          "text": "REQUIRED는 논리적 경계가 여러 개여도 같은 물리 거래를 쓴다"
+        },
+        {
+          "t": "p",
+          "text": "외부 주문 서비스와 내부 재고 서비스가 모두 REQUIRED라면 둘은 하나의 데이터베이스 거래에 참여한다. 내부에서 RuntimeException이 밖으로 전파되면 기본 롤백 규칙이 적용된다. 내부가 예외를 잡더라도 명시적으로 rollback-only가 되었다면 외부 호출자가 성공을 가정한 commit은 허용되지 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "기본 REQUIRED는 호출마다 별도 메서드 경계가 있어도 이미 열린 물리 거래에 참여한다. 감사 기록처럼 독립성이 필요한 데이터만 별도 경계로 분리한다."
+        },
+        {
+          "t": "code",
+          "language": "java",
+          "reusable": true,
+          "reuse_label": "같은 거래와 독립 감사 기록을 나누는 Spring 코드",
+          "text": "@Transactional\npublic void place(OrderCommand command) {\n  inventory.reserve(command.sku());   // REQUIRED: 외부 거래 참여\n  audit.writeAccepted(command.id());  // REQUIRES_NEW: 독립 기록\n}\n\n@Transactional(propagation = Propagation.REQUIRES_NEW)\npublic void writeAccepted(UUID orderId) {\n  auditRepository.save(new AuditLog(orderId));\n}"
+        },
+        {
+          "t": "p",
+          "text": "이 코드에서 감사 로그를 독립시키는 이유는 주문 성공 여부와 다른 보존 정책이 있기 때문이어야 한다. 단지 예외가 보기 싫다는 이유로 분리하면 호출자는 어느 데이터가 실제로 commit됐는지 알기 어려워진다."
+        },
+        {
+          "t": "table",
+          "caption": "전파 선택이 바꾸는 물리 경계",
+          "headers": [
+            "설정",
+            "기존 거래가 있을 때",
+            "독립 commit",
+            "주요 주의"
+          ],
+          "rows": [
+            [
+              "REQUIRED",
+              "기존 거래에 참여",
+              "아니오",
+              "내부 rollback-only가 외부에도 영향"
+            ],
+            [
+              "REQUIRES_NEW",
+              "기존 거래를 잠시 중단",
+              "예",
+              "추가 커넥션과 부분 성공"
+            ],
+            [
+              "NESTED",
+              "savepoint 사용 가능 시 부분 되돌림",
+              "아니오",
+              "JDBC·매니저 지원 확인"
+            ]
+          ]
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "REQUIRES_NEW는 실패를 격리하지만 결과까지 자동으로 일관되게 만들지는 않는다"
+        },
+        {
+          "t": "p",
+          "text": "REQUIRES_NEW는 외부 거래를 중단하고 독립 물리 거래를 연다. 따라서 감사 로그·실패 알림처럼 주문 본문이 취소되어도 남아야 하는 기록에는 맞을 수 있다. 반대로 주문 상태와 결제 상태처럼 함께 성공하거나 함께 취소되어야 하는 데이터를 분리하면, 외부 실패 뒤 내부 기록만 남는 부분 성공을 설계로 받아들여야 한다."
+        },
+        {
+          "t": "p",
+          "text": "독립 기록을 선택했다면 그 기록도 실패할 수 있음을 호출자에게 숨기지 않는다. 주문 성공 이벤트를 감사 테이블에 먼저 독립 저장하고 메시지 발행을 뒤에 붙이면 발행 실패, 재시도, 중복 기록의 기준이 필요하다. 외부 거래의 성공 여부를 사실로 기록해야 한다면 아직 commit되지 않은 상태를 성공으로 남기지 않도록 after-commit 이벤트나 outbox 패턴처럼 전달 시점을 분리해 비교한다."
+        },
+        {
+          "t": "p",
+          "text": "독립 거래는 추가 데이터베이스 커넥션을 얻는다. 여러 요청이 외부 거래를 잡은 채 내부 REQUIRES_NEW를 기다리면 풀 크기가 동시 작업 수보다 충분하지 않을 때 대기와 교착 상태가 생길 수 있다. Spring 문서는 이러한 경우 풀에 동시 스레드 수보다 최소 하나 더 여유가 필요하다고 설명한다. 실제 값은 외부 거래 시간·동시성·다른 소비자까지 포함해 부하 시험으로 정한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "외부 거래가 커넥션을 점유한 채 새 거래를 열면 추가 커넥션이 필요하다. REQUIRES_NEW를 늘리기 전에 풀 대기 시간과 최대 동시성을 관측한다."
+        },
+        {
+          "t": "h",
+          "text": "검사 예외는 기본으로 rollback되지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "@Transactional의 기본 규칙은 RuntimeException과 Error에서 rollback하고, checked exception에서는 commit한다. 비즈니스 예외를 검사 예외로 표현했다면 의도를 코드에 남겨야 한다. catch한 뒤 예외를 다른 타입으로 바꾸는 경로도 같은 기준으로 리뷰한다. 패턴 문자열보다 클래스 기반 rollbackFor가 의도하지 않은 매칭을 피하기 쉽다."
+        },
+        {
+          "t": "p",
+          "text": "프록시 방식이라는 점도 함께 확인한다. 같은 클래스의 메서드가 this로 서로를 호출하면 일반적인 프록시 경계를 통과하지 않아 annotation의 전파 설정이 적용되지 않을 수 있다. 전파가 필요한 작업은 별도 Spring 빈으로 분리하거나 설계를 바꿔 실제 호출 경계를 테스트한다. 테스트에서는 최종 데이터만 보지 말고 예외 뒤 어떤 SQL이 commit됐는지와 활성 커넥션 수를 함께 남긴다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "예외 이름만 보고 commit·rollback을 추측하지 말고, 기본 규칙과 rollbackFor·noRollbackFor를 함께 대조한다."
+        },
+        {
+          "t": "code",
+          "language": "java",
+          "text": "@Transactional(rollbackFor = StockUnavailableException.class)\npublic void reserve(String sku) throws StockUnavailableException {\n  if (!stock.hasEnough(sku)) {\n    throw new StockUnavailableException(sku);\n  }\n  stock.decrease(sku);\n}"
+        },
+        {
+          "t": "h",
+          "text": "PostgreSQL의 직렬화 실패는 애플리케이션 재시도가 필요하다"
+        },
+        {
+          "t": "p",
+          "text": "격리 수준은 전파와 다른 축이다. Spring에서 isolation은 새 거래를 시작하는 REQUIRED 또는 REQUIRES_NEW에만 적용된다. PostgreSQL Serializable은 직렬화할 수 없는 동시 실행을 감지하면 SQLSTATE 40001로 실패시킬 수 있으므로, 사용자는 실패한 거래 전체를 안전하게 재시도할 수 있게 만들어야 한다. 내부 일부 SQL만 다시 실행하면 읽기·쓰기 전제가 달라질 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "배포 전에는 경계·예외·풀을 한 번에 확인한다"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "서비스 호출 그래프에서 REQUIRED, REQUIRES_NEW, 비동기 경계를 표시하고 각 데이터가 외부 실패 뒤 남아도 되는지 합의한다.",
+            "각 예외 타입의 rollback 규칙과 catch 후 변환 경로를 통합 테스트로 확인한다.",
+            "REQUIRES_NEW 경로가 있다면 HikariCP 대기 시간·활성 커넥션·타임아웃을 부하 조건에서 관측한다.",
+            "Serializable 또는 명시 잠금을 쓴다면 SQLSTATE 40001 재시도 범위와 멱등성 키를 거래 전체 기준으로 검증한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "같은 작업은 함께 취소하고, 독립 기록은 의도적으로 따로 commit한다는 기준이 먼저다. 그 다음에 전파 옵션, 예외 규칙, PostgreSQL 재시도, 커넥션 풀 용량을 한 흐름으로 테스트하면 annotation 한 줄로 생기는 뜻밖의 부분 성공을 줄일 수 있다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "2026 백엔드 개발자 로드맵: Java·Spring·DB·Docker 공부 순서",
+      "url": "https://won0322.tistory.com/135",
+      "reason": "Spring 서비스 계층과 데이터베이스 요청이 이어지는 기본 구조를 먼저 복습하는 글이다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Redis 토큰 버킷으로 API 레이트 리밋 설계하기",
+      "url": "https://won0322.tistory.com/140",
+      "reason": "트랜잭션 처리량과 커넥션 풀을 운영할 때 요청 제한을 함께 설계하는 다음 단계다.",
+      "role": "next_step"
+    }
+  ]
+}
