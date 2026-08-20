@@ -1,0 +1,63 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 20 (목) · 약 12분</p>
+    <p class="digest-lead">오래 쓰던 배치 파일을 실행했는데 &#x27;wmic은 내부 또는 외부 명령이 아닙니다&#x27;라는 문장이 뜨면, 윈도우 관리 기능 전체가 사라진 것처럼 보일 수 있다. 하지만 Windows 11 25H2에서 제거되는 것은 WMIC 명령줄 도구이고, 배경 관리 기술인 WMI는 그대로 남는다. 대체 작업의 핵심은 기존 문자열 출력을 똑같이 흉내 내는 것이 아니라, PowerShell의 Get-CimInstance가 돌려주는 객체를 스크립트에 맞게 고르는 일이다. 자주 쓰는 조회 명령 6개를 옮기고, 기존 자동화가 깨지지 않게 확인할 순서까지 한 번에 이어 본다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp" alt="WMIC 열쇠가 빠진 Windows 관리 공구함 옆에 CIM 대체 열쇠가 놓인 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · ITWorld Korea · 2026. 8. 19</p>
+    <h3>Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다</h3>
+    <p class="digest-blurb">Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는 PowerShell Get-CimInstance로 이전해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">명령은 사라져도 WMI 데이터는 남는다</h4><p>Microsoft의 Windows 11 25H2 문서는 기능 업데이트를 설치할 때 WMIC 유틸리티가 제거된다고 적고 있다. 선택 기능이나 DISM으로 다시 설치할 수는 있지만, 향후 완전히 제거될 예정이므로 재설치를 권하지 않는다. 당장 스크립트를 살리려고 다시 기능을 켜는 것은 응급 조치일 뿐, 이전을 대신하지 못한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp" alt="Microsoft Learn Windows 11 25H2 문서의 WMIC 제거 및 재설치 비권장 안내" width="1200" height="630" loading="lazy"><figcaption>Microsoft는 Windows 11 25H2 설치 시 WMIC가 제거되며, 선택 기능 재설치보다 대체 도구로의 이전을 권한다. 출처: Microsoft Learn.</figcaption></figure><p>여기서 구분할 것이 있다. WMIC는 WMI 정보를 명령 프롬프트에서 조회하는 옛 명령줄 도구다. 제거 범위는 WMIC 실행 파일이며, 윈도우의 시스템 관리 정보를 노출하는 WMI 자체는 영향을 받지 않는다. PowerShell의 CIM cmdlet은 같은 Win32_OperatingSystem, Win32_Process 같은 클래스를 조회하되, 결과를 가공할 수 있는 객체로 돌려준다.</p><h4 class="digest-subheading">먼저 어디서 WMIC를 쓰는지 찾는다</h4><p>새 명령으로 옮기 전에 범위를 정해야 한다. 저장소의 .bat, .cmd, .ps1 파일뿐 아니라 예약 작업, 로그온 스크립트, 배포 스크립트, 설치 패키지의 사용자 지정 작업에도 WMIC가 숨어 있을 수 있다. 특히 WMIC 결과를 for /f로 나누거나 findstr로 걸러 다음 명령에 넘긴다면, 명령 한 줄만 바꾸어서는 호환성을 유지하기 어렵다.</p><pre class="digest-code-block language-powershell"><code># 현재 폴더의 스크립트에서 WMIC 사용처 찾기
+Get-ChildItem -Recurse -File -Include *.bat,*.cmd,*.ps1 |
+  Select-String -Pattern &#x27;\bwmic(?:\.exe)?\b&#x27; |
+  Select-Object Path, LineNumber, Line</code></pre><p>검색 결과를 클래스, 필요한 속성, 필터, 로컬·원격 여부, 출력의 다음 사용처로 나누면 교체 순서가 보인다. 하나의 배치 파일에서 WMIC를 세 번 부르더라도 같은 클래스의 결과를 재사용할 수 있다면 PowerShell에서는 한 번 읽어 변수에 담는 편이 더 낫다.</p><h4 class="digest-subheading">자주 쓰는 조회 6개를 Get-CimInstance로 옮긴다</h4><p>대부분의 조회는 WMIC 별칭이 가리키던 WMI 클래스를 확인한 뒤 Get-CimInstance로 읽으면 된다. 결과 표시에 필요한 속성만 Select-Object로 고르면 로그와 파이프라인에서 쓰기 쉽다. 아래 예제는 Windows PowerShell 또는 Windows의 PowerShell 7에서 실행할 수 있으며, Get-CimInstance는 Windows 플랫폼에서만 제공된다.</p><pre class="digest-code-block language-powershell"><code># 1) 운영체제 버전과 빌드
+Get-CimInstance Win32_OperatingSystem |
+  Select-Object Caption, Version, BuildNumber
+
+# 2) CPU 이름과 코어
+Get-CimInstance Win32_Processor |
+  Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
+
+# 3) BIOS 일련번호
+Get-CimInstance Win32_BIOS |
+  Select-Object SerialNumber
+
+# 4) 고정 디스크 용량과 남은 공간
+Get-CimInstance Win32_LogicalDisk -Filter &quot;DriveType=3&quot; |
+  Select-Object DeviceID, Size, FreeSpace
+
+# 5) 특정 프로세스
+Get-CimInstance Win32_Process -Filter &quot;Name=&#x27;notepad.exe&#x27;&quot; |
+  Select-Object ProcessId, Name
+
+# 6) 원격 PC의 운영체제 정보
+Get-CimInstance Win32_OperatingSystem -ComputerName PC01 |
+  Select-Object Caption, Version, BuildNumber</code></pre><div class="digest-table-wrap" role="region" aria-label="WMIC의 조회 대상은 유지하되, 출력을 속성으로 고르는 방식으로 바꾼다." tabindex="0"><table class="digest-data-table"><caption>WMIC의 조회 대상은 유지하되, 출력을 속성으로 고르는 방식으로 바꾼다.</caption><thead><tr><th scope="col">필요한 정보</th><th scope="col">WMIC 방식</th><th scope="col">PowerShell 핵심</th></tr></thead><tbody><tr><td>운영체제</td><td>wmic os get ...</td><td>Win32_OperatingSystem</td></tr><tr><td>CPU</td><td>wmic cpu get ...</td><td>Win32_Processor</td></tr><tr><td>BIOS</td><td>wmic bios get ...</td><td>Win32_BIOS</td></tr><tr><td>디스크</td><td>wmic logicaldisk get ...</td><td>Win32_LogicalDisk</td></tr><tr><td>프로세스</td><td>wmic process where ...</td><td>Win32_Process -Filter</td></tr><tr><td>원격 PC</td><td>wmic /node:PC01 ...</td><td>-ComputerName PC01</td></tr></tbody></table></div></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">결과를 문자열로 다시 부수지 않는다</h4><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-CIM-출력-비교.webp" alt="WMIC 문자열 파싱과 Get-CimInstance 객체 속성 선택 방식 비교" width="1200" height="630" loading="lazy"><figcaption>WMIC의 고정폭 표를 다시 잘라 쓰는 대신, CIM 객체의 이름 있는 속성을 선택하면 다음 처리가 더 안정적이다.</figcaption></figure><p>WMIC에서는 /format:list, /value, CSV 출력으로 형식을 맞춘 뒤 문자열을 다시 파싱하는 스크립트가 많았다. Get-CimInstance의 결과는 출력 표시와 데이터가 분리된 객체다. 화면에 보여 줄 때만 Format-Table을 쓰고, 파일이나 다음 자동화로 넘길 때는 Select-Object 뒤 Export-Csv, ConvertTo-Json 같은 명령을 사용하는 편이 좋다. Format-Table 결과를 파이프라인 중간에 넣으면 원래 객체 대신 표시용 객체가 넘어가므로, 변환·저장 명령은 그 앞에 둔다.</p><pre class="digest-code-block language-powershell"><code>$os = Get-CimInstance Win32_OperatingSystem |
+  Select-Object Caption, Version, BuildNumber
+
+# 사람이 화면에서 확인
+$os | Format-Table -AutoSize
+
+# 다른 자동화가 읽는 파일로 저장
+$os | ConvertTo-Json | Set-Content .\os-info.json -Encoding utf8</code></pre><h4 class="digest-subheading">원격 조회는 명령보다 권한에서 먼저 막힌다</h4><p>로컬 PC에서 Get-CimInstance를 실행하면 기본 WMI와 COM 세션을 사용한다. -ComputerName이나 -CimSession을 지정하면 원격 CIM 서버로 접속한다. Microsoft 예제는 원격 컴퓨터에서 WMI가 실행 중이어야 하고, 사용 계정이 해당 컴퓨터의 로컬 Administrators 그룹에 속해야 한다고 안내한다. 실제 환경에서는 방화벽, WinRM·DCOM 정책, 도메인 인증, 최소 권한 정책까지 같이 보아야 한다.</p><p>그래서 로컬 테스트가 성공했다고 기존 /node: 스크립트를 바로 지우면 안 된다. 원격 경로는 New-CimSession으로 세션을 만들고 실제 운영 계정과 같은 권한 조건에서 확인한다. 연결 실패와 클래스 조회 실패를 로그에서 구분해야, 문제가 네트워크인지 쿼리인지 좁힐 수 있다.</p><h4 class="digest-subheading">교체는 작은 스크립트 하나씩 검증한다</h4><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-이전-검증-경로.webp" alt="WMIC 사용처를 찾고 결과를 비교한 뒤 권한과 원격 조건을 따로 확인하는 이전 경로" width="1200" height="630" loading="lazy"><figcaption>사용처를 찾은 뒤 작은 명령에서 결과를 비교하고, 원격·권한·문자열 파싱에 의존하는 스크립트는 별도 검증 경로로 보낸다.</figcaption></figure><ul class="digest-bullet-list"><li>.bat·.cmd·.ps1·예약 작업·배포 파일에서 WMIC 사용처를 모두 찾는다.</li><li>운영체제 정보 처럼 읽기 전용이고 로컬에서 실행할 수 있는 하나를 먼저 교체한다.</li><li>구 명령과 신 명령의 속성 값, null, 단위, 문자 인코딩을 나란히 비교한다.</li><li>for /f·findstr·위치 기반 파싱을 이름 있는 객체 속성 처리로 바꾸는다.</li><li>예약 작업과 원격 PC는 실제 서비스 계정·권한·네트워크 정책에서 다시 실행한다.</li><li>로그와 출력 파일을 비교한 뒤에만 WMIC 경로를 제거하고, 되돌릴 커밋을 남긴다.</li></ul><p>한 번에 전체 스크립트를 바꾸면 어느 클래스와 속성에서 차이가 난 건지 찾기 어렵다. 동일한 테스트 PC에서 구·신 결과를 파일로 남기고, 비교가 끝난 작은 단위만 별도 커밋으로 나눈다. WMIC 재설치는 비교 기간을 벌기 위한 임시 수단으로만 두고, 완료 기준은 WMIC가 없는 PC에서도 같은 자동화 결과가 나오는지로 잡는다.</p><h4 class="digest-subheading">WMIC를 다시 켜는 것은 종료 조건이 아니다</h4><p>25H2에서 WMIC를 다시 설치하면 기존 배치가 즉시 살아날 수는 있다. 그러나 Microsoft가 완전 제거 예정을 밝히고 재설치를 권하지 않는 이상, 이 선택은 장애 복구 시간을 벌어 주는 한시적 조치로 보는 편이 안전하다. 새 PowerShell 스크립트가 같은 정보를 읽고, 다음 자동화가 그 객체를 정상적으로 소비하고, 예약·원격 환경에서도 동작해야 교체가 끝난다.</p><p>나중에 다시 이 글을 찾을 지점은 새 Windows 버전이 나올 때, 원격 CIM 정책이 바뀔 때, 또는 오래된 배치 파일을 새 PC로 옮길 때다. 그때는 재설치 가능 여부보다 검색하지 못한 WMIC 사용처와 문자열 파싱 의존성이 남았는지를 먼저 보면 된다.</p><p>팀 단위라면 교체한 클래스·속성·필터와 검증한 Windows 버전을 짧게 기록해 둔다. 같은 Win32 클래스라도 설치된 공급자와 운영체제에 따라 노출되는 속성이 다를 수 있으므로, 새 장비를 배포할 때 이 기록을 회귀 검사 입력으로 쓰면 된다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://learn.microsoft.com/en-us/windows/whats-new/whats-new-windows-11-version-25h2" target="_blank" rel="noopener">What&#x27;s new in Windows 11, version 25H2 for IT pros</a><span>공식</span></li><li><a href="https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmic" target="_blank" rel="noopener">WMI command-line (WMIC) utility</a><span>공식</span></li><li><a href="https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-7.6" target="_blank" rel="noopener">Get-CimInstance</a><span>공식</span></li><li><a href="https://learn.microsoft.com/en-us/powershell/scripting/samples/collecting-information-about-computers?view=powershell-7.6" target="_blank" rel="noopener">Collecting information about computers</a><span>공식</span></li><li><a href="https://www.itworld.co.kr/article/4211245/%EC%9C%88%EB%8F%84%EC%9A%B0-xp-%EC%8B%9C%EB%8C%80%EC%9D%98-%EC%9C%A0%EC%82%B0-wmic%EB%8A%94-%ED%87%B4%EC%9E%A5-%ED%8C%8C%EC%9B%8C%EC%85%B8%EC%9D%80-%EB%B6%80%EC%83%81.html" target="_blank" rel="noopener">윈도우 XP 시대의 유산 WMIC는 퇴장, 파워쉘은 부상</a><span>독립 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/125"><b>250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법</b><span>교체한 자동화가 보여 주는 결과를 원본·실행 조건·로그와 함께 검증하는 기준을 이어서 볼 수 있다.</span></a></li><li><a href="https://won0322.tistory.com/208"><b>AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건</b><span>WMIC 교체처럼 범위가 분명한 오래된 의존성을 작게 나누고 테스트·사람 리뷰로 통과시키는 방법으로 연결된다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">WMIC 종료는 WMI 자체의 종료가 아니라, 시스템 정보를 문자열로 꺼내던 오래된 입구가 닫히는 변화에 가깝다. 대체 명령어만 나란히 적어 두면 실제 이전에서는 쉽게 막힌다. 어떤 클래스와 속성을 쓰는지, 출력을 표시용으로 쓰는지 다음 명령의 입력으로 쓰는지, 원격 권한이 필요한지까지 같이 보아야 한다. 작은 배치 파일 하나부터 기존·신규 결과를 나란히 비교하면 25H2 업데이트가 닥친 뒤에 찾는 장애를 미리 줄일 수 있다. 먼저 저장소의 .bat·.cmd·PowerShell·배포 스크립트에서 &#x27;wmic&#x27; 사용처를 찾고, 가장 작은 하나를 Get-CimInstance로 교체해 출력 객체와 다음 단계 입력을 비교해 보자.</p>
+</section>
+</article>

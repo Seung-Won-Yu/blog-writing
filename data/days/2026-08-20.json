@@ -1,0 +1,497 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-20",
+  "publish_date": "2026-08-20",
+  "date_label": "2026. 8. 20",
+  "weekday": "목",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "category": "최신 IT·개발 소식",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-20T09:00:00+09:00",
+  "primary_query": "WMIC PowerShell 대체",
+  "tags": [
+    "WMIC PowerShell 대체",
+    "Get-CimInstance",
+    "Windows 11 25H2",
+    "PowerShell 명령어",
+    "WMI",
+    "윈도우 자동화",
+    "시스템 관리"
+  ],
+  "editorial": {
+    "headline": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
+    "opening": "오래 쓰던 배치 파일을 실행했는데 'wmic은 내부 또는 외부 명령이 아닙니다'라는 문장이 뜨면, 윈도우 관리 기능 전체가 사라진 것처럼 보일 수 있다. 하지만 Windows 11 25H2에서 제거되는 것은 WMIC 명령줄 도구이고, 배경 관리 기술인 WMI는 그대로 남는다. 대체 작업의 핵심은 기존 문자열 출력을 똑같이 흉내 내는 것이 아니라, PowerShell의 Get-CimInstance가 돌려주는 객체를 스크립트에 맞게 고르는 일이다. 자주 쓰는 조회 명령 6개를 옮기고, 기존 자동화가 깨지지 않게 확인할 순서까지 한 번에 이어 본다.",
+    "closing": "WMIC 종료는 WMI 자체의 종료가 아니라, 시스템 정보를 문자열로 꺼내던 오래된 입구가 닫히는 변화에 가깝다. 대체 명령어만 나란히 적어 두면 실제 이전에서는 쉽게 막힌다. 어떤 클래스와 속성을 쓰는지, 출력을 표시용으로 쓰는지 다음 명령의 입력으로 쓰는지, 원격 권한이 필요한지까지 같이 보아야 한다. 작은 배치 파일 하나부터 기존·신규 결과를 나란히 비교하면 25H2 업데이트가 닥친 뒤에 찾는 장애를 미리 줄일 수 있다.",
+    "action": "먼저 저장소의 .bat·.cmd·PowerShell·배포 스크립트에서 'wmic' 사용처를 찾고, 가장 작은 하나를 Get-CimInstance로 교체해 출력 객체와 다음 단계 입력을 비교해 보자.",
+    "audience_problem": "Windows 11 업그레이드 뒤 WMIC 명령이 실패하거나, 제거 예정인 WMIC를 쓰는 배치·자동화 스크립트를 PowerShell로 안전하게 옮겨야 한다.",
+    "reader_takeaway": "WMIC와 WMI의 차이를 구분하고, 운영체제·CPU·BIOS·디스크·프로세스·원격 조회를 Get-CimInstance 기반으로 교체하며, 문자열 파싱 의존성까지 확인할 수 있다.",
+    "why_now": "Microsoft는 Windows 11 25H2 기능 업데이트를 설치할 때 WMIC가 제거된다고 안내하고 있어, 스크립트 호환성을 업그레이드 전에 확인할 필요가 커졌다.",
+    "topic_key": "wmic-powershell-cim-migration",
+    "reader_question": "WMIC가 사라진 Windows 11에서 기존 시스템 조회 명령을 PowerShell Get-CimInstance로 어떻게 옮겨야 할까?",
+    "entities": [
+      "WMIC",
+      "Windows 11 25H2",
+      "PowerShell",
+      "Get-CimInstance",
+      "WMI",
+      "CIM"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "troubleshooting",
+    "revisit": {
+      "quick_answer": "WMIC 실행 파일만 제거되며 WMI는 남는다. 대부분의 조회는 같은 Win32_* 클래스를 Get-CimInstance로 읽고 Select-Object로 필요한 속성을 고르면 된다.",
+      "reuse_case": "Windows 11 업그레이드 전 WMIC 사용처를 검색하거나 기존 배치 스크립트를 PowerShell로 이전할 때 명령 대응표와 검증 순서를 재사용한다.",
+      "failure_case": "Get-CimInstance 결과는 객체이므로 기존 WMIC의 고정폭 문자열을 findstr·for /f로 파싱하던 다음 단계를 그대로 두면 실패할 수 있다.",
+      "artifact_type": "command_recipe",
+      "update_triggers": [
+        "Microsoft가 WMIC 선택 기능 재설치까지 완전히 제거하는 버전 공지",
+        "Get-CimInstance의 Windows 플랫폼 지원 범위 변경",
+        "Windows 원격 CIM 세션의 인증·권한 요구사항 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "WMIC PowerShell 대체",
+      "reader_need": "WMIC 명령 실패를 해결하고 기존 조회 스크립트를 깨지지 않게 PowerShell로 옮기고 싶다.",
+      "answer_format": "WMIC과 WMI의 차이, 6개 명령 대응 코드, 출력 방식 차이, 이전 검증 순서"
+    }
+  },
+  "visual": {
+    "subject": "Windows 11에서 사라지는 WMIC 입구와 PowerShell CIM 대체 경로",
+    "hook": "오래된 WMIC 열쇠가 빠진 공구함에 Get-CimInstance 열쇠를 맞춰 보는 순간",
+    "motif": "legacy command replacement",
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "label": "WMIC 열쇠가 빠진 윈도우 공구함에 CIM 열쇠를 고르는 장면",
+      "scene_label": [
+        "빈 WMIC 자리",
+        "Get-CimInstance 열쇠",
+        "Windows 관리 공구함"
+      ],
+      "steps": "사라진 WMIC 입구 앞에서 CIM 대체 도구를 선택하는 한 장면",
+      "curiosity_hook": "명령은 사라졌는데 같은 시스템 정보에 도달할 수 있을까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "toolbox-missing-key",
+      "palette_family": "slate_blue_brass",
+      "render_family": "isometric_model",
+      "korean_labels": [
+        "기존 WMIC",
+        "대체 CIM"
+      ],
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: technology article cover, 1200x630 landscape. Create a tactile isometric miniature scene on a plain slate workbench. A label-free dark blue metal toolbox has one clearly empty key-shaped slot. On the table lies one old brass key with the only engraved text 'WMIC'. A clean blue replacement key with the only engraved text 'CIM' is positioned beside the empty slot. The contrast must clearly mean an old command entry is removed while a compatible management path remains. Toolbox and two keys fill about 60 percent of frame, soft natural daylight, realistic materials, refined magazine miniature photography, slate blue and brass. Strict text rule: the entire image may contain only these two readable strings: WMIC and CIM. No toolbox title, no drawer labels, no other letters or numbers. Avoid: laptop, developer, robot, AI brain, dashboard, cards, arrows, flowchart, split panel, title slide, neon, watermark, extra objects, malformed hands."
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "capture",
+        "logic_type": "evidence",
+        "label": "Windows 11 25H2에서 WMIC가 제거된다는 Microsoft 공식 안내",
+        "scene_label": [
+          "Windows 11 25H2",
+          "WMIC 제거",
+          "재설치 비권장"
+        ],
+        "steps": "25H2 기능 업데이트 설치 → WMIC 제거 → PowerShell 이전 필요",
+        "curiosity_hook": "일시적 재설치보다 이전을 권하는 이유는 무엇일까?",
+        "evidence_type": "screenshot",
+        "capture_tool": "playwright",
+        "capture_target": "https://learn.microsoft.com/en-us/windows/whats-new/whats-new-windows-11-version-25h2#features-removed-in-windows-11-version-25h2",
+        "captured_at": "2026-08-20T10:02:24+09:00",
+        "capture_note": "Microsoft Learn의 Windows 11 25H2 제거 기능 섹션에서 WMIC 제거와 재설치 비권장 문단만 읽히는 범위로 캡처한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "label": "WMIC 문자열 출력과 Get-CimInstance 객체 출력의 차이",
+        "scene_label": [
+          "WMIC 문자열",
+          "CIM 객체",
+          "Select-Object 속성 선택"
+        ],
+        "steps": "고정된 표 문자열 파싱과 속성 선택 방식을 대조",
+        "curiosity_hook": "보이는 결과가 비슷해도 다음 명령에서 차이가 나는 지점",
+        "evidence_type": "diagram",
+        "korean_labels": [
+          "문자열 파싱",
+          "객체 속성",
+          "Select-Object 속성 선택"
+        ],
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical comparison diagram, 1200x630 landscape. Compare two distinct data handling paths without a dashboard. Left: an old WMIC paper printout made of fixed-width rows that must be cut apart, label exactly '문자열 파싱'. Right: clean CIM object blocks with named properties selected by a tool, labels exactly '객체 속성' and 'Select-Object'. Make the structural difference obvious with large mobile-readable labels and concrete paper-versus-object metaphors. Palette: warm gray, cobalt, muted green. Avoid: title, people, laptop, robot, generic code screen, tiny text, many cards, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "label": "WMIC 이전 후 자동화를 멈추고 다시 확인할 조건",
+        "scene_label": [
+          "사용처 검색",
+          "구·신 결과 비교",
+          "권한·원격 분기"
+        ],
+        "steps": "WMIC 사용처 찾기 → 작은 명령 교체 → 결과 비교 → 권한·원격이면 별도 검증",
+        "curiosity_hook": "로컬 조회는 되는데 예약 작업과 원격 PC에서만 깨지는 이유",
+        "evidence_type": "diagram",
+        "condition": "스크립트가 원격 PC·관리자 권한·문자열 파싱에 의존하는 경우",
+        "korean_labels": [
+          "사용처 찾기",
+          "결과 비교",
+          "권한·원격 확인",
+          "교체 완료"
+        ],
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean migration validation path, 1200x630 landscape. Show a clear primary path with large exact labels '사용처 찾기' then '결과 비교' then '교체 완료'. From the comparison point, add a separate conditional branch for remote or elevated scripts labeled exactly '권한·원격 확인'. Use a workshop inspection metaphor with folders, a comparison scale, and one guarded side path. Mobile-readable Korean, restrained vermilion and navy accents. Avoid: title, dashboard, laptop, people, robot, fake terminal, tiny text, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "WMIC 열쇠가 빠진 Windows 관리 공구함 옆에 CIM 대체 열쇠가 놓인 장면",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: technology article cover, 1200x630 landscape. Create a tactile isometric miniature scene on a plain slate workbench. A label-free dark blue metal toolbox has one clearly empty key-shaped slot. On the table lies one old brass key with the only engraved text 'WMIC'. A clean blue replacement key with the only engraved text 'CIM' is positioned beside the empty slot. The contrast must clearly mean an old command entry is removed while a compatible management path remains. Toolbox and two keys fill about 60 percent of frame, soft natural daylight, realistic materials, refined magazine miniature photography, slate blue and brass. Strict text rule: the entire image may contain only these two readable strings: WMIC and CIM. No toolbox title, no drawer labels, no other letters or numbers. Avoid: laptop, developer, robot, AI brain, dashboard, cards, arrows, flowchart, split panel, title slide, neon, watermark, extra objects, malformed hands.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "toolbox-missing-key",
+      "palette_family": "slate_blue_brass",
+      "render_family": "isometric_model",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 78908,
+      "quality": 82,
+      "sha256": "aa476ef75b5f5d6fdd843ed122231b28e6d2c3fbffd8faa5319126940f955e96"
+    },
+    "visual_1": {
+      "origin": "capture",
+      "alt": "Microsoft Learn Windows 11 25H2 문서의 WMIC 제거 및 재설치 비권장 안내",
+      "path": "docs/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp",
+      "capture_tool": "playwright",
+      "capture_target": "https://learn.microsoft.com/en-us/windows/whats-new/whats-new-windows-11-version-25h2#features-removed-in-windows-11-version-25h2",
+      "captured_at": "2026-08-20T10:02:24+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 55450,
+      "quality": 82,
+      "sha256": "b80b2aea311222243f08800783fd3e482d30bd3b383525b924f3153118eadcc1",
+      "capture_sha256": "b80b2aea311222243f08800783fd3e482d30bd3b383525b924f3153118eadcc1"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "WMIC 문자열 파싱과 Get-CimInstance 객체 속성 선택 방식 비교",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-CIM-출력-비교.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-CIM-출력-비교.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical comparison diagram, 1200x630 landscape. Compare two distinct data handling paths without a dashboard. Left: an old WMIC paper printout made of fixed-width rows that must be cut apart, label exactly '문자열 파싱'. Right: clean CIM object blocks with named properties selected by a tool, labels exactly '객체 속성' and 'Select-Object'. Make the structural difference obvious with large mobile-readable labels and concrete paper-versus-object metaphors. Palette: warm gray, cobalt, muted green. Avoid: title, people, laptop, robot, generic code screen, tiny text, many cards, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 72232,
+      "quality": 82,
+      "sha256": "d475034e70ff40b15a856767a0e721015ab810ff80012a6a21e9fca2059be4bb"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "WMIC 사용처를 찾고 결과를 비교한 뒤 권한과 원격 조건을 따로 확인하는 이전 경로",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-이전-검증-경로.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-이전-검증-경로.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean migration validation path, 1200x630 landscape. Show a clear primary path with large exact labels '사용처 찾기' then '결과 비교' then '교체 완료'. From the comparison point, add a separate conditional branch for remote or elevated scripts labeled exactly '권한·원격 확인'. Use a workshop inspection metaphor with folders, a comparison scale, and one guarded side path. Mobile-readable Korean, restrained vermilion and navy accents. Avoid: title, dashboard, laptop, people, robot, fake terminal, tiny text, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 66548,
+      "quality": 82,
+      "sha256": "a9c9ead1ddaf9f941e9d84968636c79995c412d85e6e16167f4c1fc096445032"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다",
+      "source": "ITWorld Korea",
+      "url": "https://www.itworld.co.kr/article/4211245/%EC%9C%88%EB%8F%84%EC%9A%B0-xp-%EC%8B%9C%EB%8C%80%EC%9D%98-%EC%9C%A0%EC%82%B0-wmic%EB%8A%94-%ED%87%B4%EC%9E%A5-%ED%8C%8C%EC%9B%8C%EC%85%B8%EC%9D%80-%EB%B6%80%EC%83%81.html",
+      "published_at": "2026-08-18T23:53:54+00:00",
+      "blurb_kr": "Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는 PowerShell Get-CimInstance로 이전해야 한다.",
+      "references": [
+        {
+          "title": "What's new in Windows 11, version 25H2 for IT pros",
+          "url": "https://learn.microsoft.com/en-us/windows/whats-new/whats-new-windows-11-version-25h2",
+          "kind": "official"
+        },
+        {
+          "title": "WMI command-line (WMIC) utility",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmic",
+          "kind": "official"
+        },
+        {
+          "title": "Get-CimInstance",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-7.6",
+          "kind": "official"
+        },
+        {
+          "title": "Collecting information about computers",
+          "url": "https://learn.microsoft.com/en-us/powershell/scripting/samples/collecting-information-about-computers?view=powershell-7.6",
+          "kind": "official"
+        },
+        {
+          "title": "윈도우 XP 시대의 유산 WMIC는 퇴장, 파워쉘은 부상",
+          "url": "https://www.itworld.co.kr/article/4211245/%EC%9C%88%EB%8F%84%EC%9A%B0-xp-%EC%8B%9C%EB%8C%80%EC%9D%98-%EC%9C%A0%EC%82%B0-wmic%EB%8A%94-%ED%87%B4%EC%9E%A5-%ED%8C%8C%EC%9B%8C%EC%85%B8%EC%9D%80-%EB%B6%80%EC%83%81.html",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "명령은 사라져도 WMI 데이터는 남는다"
+        },
+        {
+          "t": "p",
+          "text": "Microsoft의 Windows 11 25H2 문서는 기능 업데이트를 설치할 때 WMIC 유틸리티가 제거된다고 적고 있다. 선택 기능이나 DISM으로 다시 설치할 수는 있지만, 향후 완전히 제거될 예정이므로 재설치를 권하지 않는다. 당장 스크립트를 살리려고 다시 기능을 켜는 것은 응급 조치일 뿐, 이전을 대신하지 못한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Microsoft는 Windows 11 25H2 설치 시 WMIC가 제거되며, 선택 기능 재설치보다 대체 도구로의 이전을 권한다. 출처: Microsoft Learn."
+        },
+        {
+          "t": "p",
+          "text": "여기서 구분할 것이 있다. WMIC는 WMI 정보를 명령 프롬프트에서 조회하는 옛 명령줄 도구다. 제거 범위는 WMIC 실행 파일이며, 윈도우의 시스템 관리 정보를 노출하는 WMI 자체는 영향을 받지 않는다. PowerShell의 CIM cmdlet은 같은 Win32_OperatingSystem, Win32_Process 같은 클래스를 조회하되, 결과를 가공할 수 있는 객체로 돌려준다."
+        },
+        {
+          "t": "h",
+          "text": "먼저 어디서 WMIC를 쓰는지 찾는다"
+        },
+        {
+          "t": "p",
+          "text": "새 명령으로 옮기 전에 범위를 정해야 한다. 저장소의 .bat, .cmd, .ps1 파일뿐 아니라 예약 작업, 로그온 스크립트, 배포 스크립트, 설치 패키지의 사용자 지정 작업에도 WMIC가 숨어 있을 수 있다. 특히 WMIC 결과를 for /f로 나누거나 findstr로 걸러 다음 명령에 넘긴다면, 명령 한 줄만 바꾸어서는 호환성을 유지하기 어렵다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "# 현재 폴더의 스크립트에서 WMIC 사용처 찾기\nGet-ChildItem -Recurse -File -Include *.bat,*.cmd,*.ps1 |\n  Select-String -Pattern '\\bwmic(?:\\.exe)?\\b' |\n  Select-Object Path, LineNumber, Line",
+          "reusable": true,
+          "reuse_label": "WMIC 사용 스크립트 검색 명령"
+        },
+        {
+          "t": "p",
+          "text": "검색 결과를 클래스, 필요한 속성, 필터, 로컬·원격 여부, 출력의 다음 사용처로 나누면 교체 순서가 보인다. 하나의 배치 파일에서 WMIC를 세 번 부르더라도 같은 클래스의 결과를 재사용할 수 있다면 PowerShell에서는 한 번 읽어 변수에 담는 편이 더 낫다."
+        },
+        {
+          "t": "h",
+          "text": "자주 쓰는 조회 6개를 Get-CimInstance로 옮긴다"
+        },
+        {
+          "t": "p",
+          "text": "대부분의 조회는 WMIC 별칭이 가리키던 WMI 클래스를 확인한 뒤 Get-CimInstance로 읽으면 된다. 결과 표시에 필요한 속성만 Select-Object로 고르면 로그와 파이프라인에서 쓰기 쉽다. 아래 예제는 Windows PowerShell 또는 Windows의 PowerShell 7에서 실행할 수 있으며, Get-CimInstance는 Windows 플랫폼에서만 제공된다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "# 1) 운영체제 버전과 빌드\nGet-CimInstance Win32_OperatingSystem |\n  Select-Object Caption, Version, BuildNumber\n\n# 2) CPU 이름과 코어\nGet-CimInstance Win32_Processor |\n  Select-Object Name, NumberOfCores, NumberOfLogicalProcessors\n\n# 3) BIOS 일련번호\nGet-CimInstance Win32_BIOS |\n  Select-Object SerialNumber\n\n# 4) 고정 디스크 용량과 남은 공간\nGet-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" |\n  Select-Object DeviceID, Size, FreeSpace\n\n# 5) 특정 프로세스\nGet-CimInstance Win32_Process -Filter \"Name='notepad.exe'\" |\n  Select-Object ProcessId, Name\n\n# 6) 원격 PC의 운영체제 정보\nGet-CimInstance Win32_OperatingSystem -ComputerName PC01 |\n  Select-Object Caption, Version, BuildNumber"
+        },
+        {
+          "t": "table",
+          "caption": "WMIC의 조회 대상은 유지하되, 출력을 속성으로 고르는 방식으로 바꾼다.",
+          "headers": [
+            "필요한 정보",
+            "WMIC 방식",
+            "PowerShell 핵심"
+          ],
+          "rows": [
+            [
+              "운영체제",
+              "wmic os get ...",
+              "Win32_OperatingSystem"
+            ],
+            [
+              "CPU",
+              "wmic cpu get ...",
+              "Win32_Processor"
+            ],
+            [
+              "BIOS",
+              "wmic bios get ...",
+              "Win32_BIOS"
+            ],
+            [
+              "디스크",
+              "wmic logicaldisk get ...",
+              "Win32_LogicalDisk"
+            ],
+            [
+              "프로세스",
+              "wmic process where ...",
+              "Win32_Process -Filter"
+            ],
+            [
+              "원격 PC",
+              "wmic /node:PC01 ...",
+              "-ComputerName PC01"
+            ]
+          ]
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "결과를 문자열로 다시 부수지 않는다"
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "WMIC의 고정폭 표를 다시 잘라 쓰는 대신, CIM 객체의 이름 있는 속성을 선택하면 다음 처리가 더 안정적이다."
+        },
+        {
+          "t": "p",
+          "text": "WMIC에서는 /format:list, /value, CSV 출력으로 형식을 맞춘 뒤 문자열을 다시 파싱하는 스크립트가 많았다. Get-CimInstance의 결과는 출력 표시와 데이터가 분리된 객체다. 화면에 보여 줄 때만 Format-Table을 쓰고, 파일이나 다음 자동화로 넘길 때는 Select-Object 뒤 Export-Csv, ConvertTo-Json 같은 명령을 사용하는 편이 좋다. Format-Table 결과를 파이프라인 중간에 넣으면 원래 객체 대신 표시용 객체가 넘어가므로, 변환·저장 명령은 그 앞에 둔다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "$os = Get-CimInstance Win32_OperatingSystem |\n  Select-Object Caption, Version, BuildNumber\n\n# 사람이 화면에서 확인\n$os | Format-Table -AutoSize\n\n# 다른 자동화가 읽는 파일로 저장\n$os | ConvertTo-Json | Set-Content .\\os-info.json -Encoding utf8"
+        },
+        {
+          "t": "h",
+          "text": "원격 조회는 명령보다 권한에서 먼저 막힌다"
+        },
+        {
+          "t": "p",
+          "text": "로컬 PC에서 Get-CimInstance를 실행하면 기본 WMI와 COM 세션을 사용한다. -ComputerName이나 -CimSession을 지정하면 원격 CIM 서버로 접속한다. Microsoft 예제는 원격 컴퓨터에서 WMI가 실행 중이어야 하고, 사용 계정이 해당 컴퓨터의 로컬 Administrators 그룹에 속해야 한다고 안내한다. 실제 환경에서는 방화벽, WinRM·DCOM 정책, 도메인 인증, 최소 권한 정책까지 같이 보아야 한다."
+        },
+        {
+          "t": "p",
+          "text": "그래서 로컬 테스트가 성공했다고 기존 /node: 스크립트를 바로 지우면 안 된다. 원격 경로는 New-CimSession으로 세션을 만들고 실제 운영 계정과 같은 권한 조건에서 확인한다. 연결 실패와 클래스 조회 실패를 로그에서 구분해야, 문제가 네트워크인지 쿼리인지 좁힐 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "교체는 작은 스크립트 하나씩 검증한다"
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "사용처를 찾은 뒤 작은 명령에서 결과를 비교하고, 원격·권한·문자열 파싱에 의존하는 스크립트는 별도 검증 경로로 보낸다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            ".bat·.cmd·.ps1·예약 작업·배포 파일에서 WMIC 사용처를 모두 찾는다.",
+            "운영체제 정보 처럼 읽기 전용이고 로컬에서 실행할 수 있는 하나를 먼저 교체한다.",
+            "구 명령과 신 명령의 속성 값, null, 단위, 문자 인코딩을 나란히 비교한다.",
+            "for /f·findstr·위치 기반 파싱을 이름 있는 객체 속성 처리로 바꾸는다.",
+            "예약 작업과 원격 PC는 실제 서비스 계정·권한·네트워크 정책에서 다시 실행한다.",
+            "로그와 출력 파일을 비교한 뒤에만 WMIC 경로를 제거하고, 되돌릴 커밋을 남긴다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "한 번에 전체 스크립트를 바꾸면 어느 클래스와 속성에서 차이가 난 건지 찾기 어렵다. 동일한 테스트 PC에서 구·신 결과를 파일로 남기고, 비교가 끝난 작은 단위만 별도 커밋으로 나눈다. WMIC 재설치는 비교 기간을 벌기 위한 임시 수단으로만 두고, 완료 기준은 WMIC가 없는 PC에서도 같은 자동화 결과가 나오는지로 잡는다."
+        },
+        {
+          "t": "h",
+          "text": "WMIC를 다시 켜는 것은 종료 조건이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "25H2에서 WMIC를 다시 설치하면 기존 배치가 즉시 살아날 수는 있다. 그러나 Microsoft가 완전 제거 예정을 밝히고 재설치를 권하지 않는 이상, 이 선택은 장애 복구 시간을 벌어 주는 한시적 조치로 보는 편이 안전하다. 새 PowerShell 스크립트가 같은 정보를 읽고, 다음 자동화가 그 객체를 정상적으로 소비하고, 예약·원격 환경에서도 동작해야 교체가 끝난다."
+        },
+        {
+          "t": "p",
+          "text": "나중에 다시 이 글을 찾을 지점은 새 Windows 버전이 나올 때, 원격 CIM 정책이 바뀔 때, 또는 오래된 배치 파일을 새 PC로 옮길 때다. 그때는 재설치 가능 여부보다 검색하지 못한 WMIC 사용처와 문자열 파싱 의존성이 남았는지를 먼저 보면 된다."
+        },
+        {
+          "t": "p",
+          "text": "팀 단위라면 교체한 클래스·속성·필터와 검증한 Windows 버전을 짧게 기록해 둔다. 같은 Win32 클래스라도 설치된 공급자와 운영체제에 따라 노출되는 속성이 다를 수 있으므로, 새 장비를 배포할 때 이 기록을 회귀 검사 입력으로 쓰면 된다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법",
+      "url": "https://won0322.tistory.com/125",
+      "reason": "교체한 자동화가 보여 주는 결과를 원본·실행 조건·로그와 함께 검증하는 기준을 이어서 볼 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+      "url": "https://won0322.tistory.com/208",
+      "reason": "WMIC 교체처럼 범위가 분명한 오래된 의존성을 작게 나누고 테스트·사람 리뷰로 통과시키는 방법으로 연결된다.",
+      "role": "next_step"
+    }
+  ]
+}

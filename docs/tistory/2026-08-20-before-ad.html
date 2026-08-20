@@ -1,0 +1,43 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 20 (목) · 약 12분</p>
+    <p class="digest-lead">오래 쓰던 배치 파일을 실행했는데 &#x27;wmic은 내부 또는 외부 명령이 아닙니다&#x27;라는 문장이 뜨면, 윈도우 관리 기능 전체가 사라진 것처럼 보일 수 있다. 하지만 Windows 11 25H2에서 제거되는 것은 WMIC 명령줄 도구이고, 배경 관리 기술인 WMI는 그대로 남는다. 대체 작업의 핵심은 기존 문자열 출력을 똑같이 흉내 내는 것이 아니라, PowerShell의 Get-CimInstance가 돌려주는 객체를 스크립트에 맞게 고르는 일이다. 자주 쓰는 조회 명령 6개를 옮기고, 기존 자동화가 깨지지 않게 확인할 순서까지 한 번에 이어 본다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp" alt="WMIC 열쇠가 빠진 Windows 관리 공구함 옆에 CIM 대체 열쇠가 놓인 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · ITWorld Korea · 2026. 8. 19</p>
+    <h3>Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다</h3>
+    <p class="digest-blurb">Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는 PowerShell Get-CimInstance로 이전해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">명령은 사라져도 WMI 데이터는 남는다</h4><p>Microsoft의 Windows 11 25H2 문서는 기능 업데이트를 설치할 때 WMIC 유틸리티가 제거된다고 적고 있다. 선택 기능이나 DISM으로 다시 설치할 수는 있지만, 향후 완전히 제거될 예정이므로 재설치를 권하지 않는다. 당장 스크립트를 살리려고 다시 기능을 켜는 것은 응급 조치일 뿐, 이전을 대신하지 못한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp" alt="Microsoft Learn Windows 11 25H2 문서의 WMIC 제거 및 재설치 비권장 안내" width="1200" height="630" loading="lazy"><figcaption>Microsoft는 Windows 11 25H2 설치 시 WMIC가 제거되며, 선택 기능 재설치보다 대체 도구로의 이전을 권한다. 출처: Microsoft Learn.</figcaption></figure><p>여기서 구분할 것이 있다. WMIC는 WMI 정보를 명령 프롬프트에서 조회하는 옛 명령줄 도구다. 제거 범위는 WMIC 실행 파일이며, 윈도우의 시스템 관리 정보를 노출하는 WMI 자체는 영향을 받지 않는다. PowerShell의 CIM cmdlet은 같은 Win32_OperatingSystem, Win32_Process 같은 클래스를 조회하되, 결과를 가공할 수 있는 객체로 돌려준다.</p><h4 class="digest-subheading">먼저 어디서 WMIC를 쓰는지 찾는다</h4><p>새 명령으로 옮기 전에 범위를 정해야 한다. 저장소의 .bat, .cmd, .ps1 파일뿐 아니라 예약 작업, 로그온 스크립트, 배포 스크립트, 설치 패키지의 사용자 지정 작업에도 WMIC가 숨어 있을 수 있다. 특히 WMIC 결과를 for /f로 나누거나 findstr로 걸러 다음 명령에 넘긴다면, 명령 한 줄만 바꾸어서는 호환성을 유지하기 어렵다.</p><pre class="digest-code-block language-powershell"><code># 현재 폴더의 스크립트에서 WMIC 사용처 찾기
+Get-ChildItem -Recurse -File -Include *.bat,*.cmd,*.ps1 |
+  Select-String -Pattern &#x27;\bwmic(?:\.exe)?\b&#x27; |
+  Select-Object Path, LineNumber, Line</code></pre><p>검색 결과를 클래스, 필요한 속성, 필터, 로컬·원격 여부, 출력의 다음 사용처로 나누면 교체 순서가 보인다. 하나의 배치 파일에서 WMIC를 세 번 부르더라도 같은 클래스의 결과를 재사용할 수 있다면 PowerShell에서는 한 번 읽어 변수에 담는 편이 더 낫다.</p><h4 class="digest-subheading">자주 쓰는 조회 6개를 Get-CimInstance로 옮긴다</h4><p>대부분의 조회는 WMIC 별칭이 가리키던 WMI 클래스를 확인한 뒤 Get-CimInstance로 읽으면 된다. 결과 표시에 필요한 속성만 Select-Object로 고르면 로그와 파이프라인에서 쓰기 쉽다. 아래 예제는 Windows PowerShell 또는 Windows의 PowerShell 7에서 실행할 수 있으며, Get-CimInstance는 Windows 플랫폼에서만 제공된다.</p><pre class="digest-code-block language-powershell"><code># 1) 운영체제 버전과 빌드
+Get-CimInstance Win32_OperatingSystem |
+  Select-Object Caption, Version, BuildNumber
+
+# 2) CPU 이름과 코어
+Get-CimInstance Win32_Processor |
+  Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
+
+# 3) BIOS 일련번호
+Get-CimInstance Win32_BIOS |
+  Select-Object SerialNumber
+
+# 4) 고정 디스크 용량과 남은 공간
+Get-CimInstance Win32_LogicalDisk -Filter &quot;DriveType=3&quot; |
+  Select-Object DeviceID, Size, FreeSpace
+
+# 5) 특정 프로세스
+Get-CimInstance Win32_Process -Filter &quot;Name=&#x27;notepad.exe&#x27;&quot; |
+  Select-Object ProcessId, Name
+
+# 6) 원격 PC의 운영체제 정보
+Get-CimInstance Win32_OperatingSystem -ComputerName PC01 |
+  Select-Object Caption, Version, BuildNumber</code></pre><div class="digest-table-wrap" role="region" aria-label="WMIC의 조회 대상은 유지하되, 출력을 속성으로 고르는 방식으로 바꾼다." tabindex="0"><table class="digest-data-table"><caption>WMIC의 조회 대상은 유지하되, 출력을 속성으로 고르는 방식으로 바꾼다.</caption><thead><tr><th scope="col">필요한 정보</th><th scope="col">WMIC 방식</th><th scope="col">PowerShell 핵심</th></tr></thead><tbody><tr><td>운영체제</td><td>wmic os get ...</td><td>Win32_OperatingSystem</td></tr><tr><td>CPU</td><td>wmic cpu get ...</td><td>Win32_Processor</td></tr><tr><td>BIOS</td><td>wmic bios get ...</td><td>Win32_BIOS</td></tr><tr><td>디스크</td><td>wmic logicaldisk get ...</td><td>Win32_LogicalDisk</td></tr><tr><td>프로세스</td><td>wmic process where ...</td><td>Win32_Process -Filter</td></tr><tr><td>원격 PC</td><td>wmic /node:PC01 ...</td><td>-ComputerName PC01</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>

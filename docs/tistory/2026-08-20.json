@@ -1,0 +1,93 @@
+{
+  "title": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
+  "title_candidates": [
+    "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
+    "Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다",
+    "Windows 11에서 사라지는 WMIC 입구와 PowerShell CIM 대체 경로: 오래된 WMIC 열쇠가 빠진 공구…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-20",
+  "publish_date": "2026-08-20",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-20T09:00:00+09:00",
+  "tags": [
+    "WMIC PowerShell 대체",
+    "Get-CimInstance",
+    "Windows 11 25H2",
+    "PowerShell 명령어",
+    "WMI",
+    "윈도우 자동화",
+    "시스템 관리"
+  ],
+  "meta_description": "오래 쓰던 배치 파일을 실행했는데 'wmic은 내부 또는 외부 명령이 아닙니다'라는 문장이 뜨면, 윈도우 관리 기능 전체가 사라진 것처럼 보일 수 있다. 하지만 Windows 11 25H2에서 제거되… Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는…",
+  "key_summary": [
+    "1. Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-20.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-20.html",
+  "before_ad_html": "docs/tistory/2026-08-20-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-20-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-20-adfit.html",
+  "source_sha256": "ca2df0c04b86425a6662ab8205d2dc7b792eca2ed05c3e59150db091b3e0f3c4",
+  "html_sha256": "0bdf1e3a770f09be1ffe7b0493f3b69e58b5a93f416723dc645d4ca9477f57d4",
+  "adfit_sha256": "5d881ed6d8701178b1fc1d3e8494bb3cb905cc6b9b4d95735a58e3978f7099a9",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-PowerShell-대체-대표.webp",
+      "original_url": "",
+      "alt": "WMIC 열쇠가 빠진 Windows 관리 공구함 옆에 CIM 대체 열쇠가 놓인 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp",
+      "path": "docs/tistory/assets/2026-08-20/Windows11-25H2-WMIC-제거-공식문서.webp",
+      "original_url": "",
+      "alt": "Microsoft Learn Windows 11 25H2 문서의 WMIC 제거 및 재설치 비권장 안내",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-CIM-출력-비교.webp",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-CIM-출력-비교.webp",
+      "original_url": "",
+      "alt": "WMIC 문자열 파싱과 Get-CimInstance 객체 속성 선택 방식 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-20/WMIC-이전-검증-경로.webp",
+      "path": "docs/tistory/assets/2026-08-20/WMIC-이전-검증-경로.webp",
+      "original_url": "",
+      "alt": "WMIC 사용처를 찾고 결과를 비교한 뒤 권한과 원격 조건을 따로 확인하는 이전 경로",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
