@@ -4,16 +4,18 @@
 
 ## 시작 조건과 단일 실행
 
-1. 최신 `main`을 받고 가이드 자체의 당일 상태를 확인합니다. 다른 예약 글의 누락과 관계없이 이 가이드를 독립적으로 진행합니다.
+1. `agent/REPOSITORY_SYNC.md`를 먼저 읽고 공통 동기화 계약을 적용한 뒤 가이드 자체의 당일 상태를 확인합니다. 다른 예약 글의 누락과 관계없이 이 가이드를 독립적으로 진행합니다.
 
    ```bash
-   git pull --ff-only origin main
+   git fetch origin main
+   git show-ref --verify --quiet refs/remotes/origin/main
+   git rev-list --left-right --count HEAD...refs/remotes/origin/main
    python3 -m blog_pipeline.publishing.daily_guard --draft-id YYYY-MM-DD-guide
    ```
 
-   `git pull`은 예약 작업의 네트워크 권한이 적용되도록 Python 래퍼가 아닌 독립 명령으로 실행합니다. 일시적인 DNS·502·503·504라면 같은 실행 안에서 직접 명령만 최대 세 번 재시도하고, 계속 실패하면 변경 없이 `BLOCKED`로 종료합니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
+   `git fetch`는 독립 명령으로 한 번만 실행합니다. DNS·5xx·timeout이어도 캐시된 `origin/main`보다 로컬이 뒤처지지 않았으면 `OFFLINE_SAFE`로 계속합니다. 실제 분기, 인증·권한 실패, 원격 캐시 없음만 `BLOCKED`입니다.
 
-   사용자가 수동으로 다시 실행했을 때 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --resume-check`를 먼저 실행합니다. `READY`면 `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인하고, 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
+   사용자가 수동으로 다시 실행했을 때 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --resume-check`를 먼저 실행합니다. `READY`면 원고·이미지를 다시 만들지 않은 채 최종 가드·스테이징부터 복구합니다. `PARTIAL`이면 변경을 보존하고 중단합니다.
 
    브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD-guide/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD-guide/*.webp`만 남깁니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필을 재사용하지 않고 Playwright CLI 또는 제공된 브라우저 도구만 사용합니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
 
@@ -155,15 +157,13 @@ python3 -m blog_pipeline.publishing.export_tistory --draft-id YYYY-MM-DD-guide
 python3 -m blog_pipeline.publishing.build_copy_page
 python3 -m blog_pipeline.publishing.build_integration_page
 python3 -m unittest discover -s tests
-git ls-remote origin refs/heads/main
-git rev-parse HEAD
 python3 -m blog_pipeline.publishing.daily_guard --draft-id YYYY-MM-DD-guide --require-complete --window-days 365
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --stage
 python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide --check
 git diff --cached --check
 ```
 
-데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 스테이징 전에 위 두 해시가 같은지 반드시 확인합니다. 실패하면 로컬 산출물을 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 사용자가 수동으로 다시 실행하면 위 `--resume-check` 경로로 복구합니다. `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이고 실제 staged diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 GitHub Pages 루트에서 가이드 카드·미리보기·최종 HTML 연결을 확인한 뒤에만 완료로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 실제 분기가 없고 `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이며 staged diff가 있을 때 하나의 로컬 커밋으로 확정합니다. `git push origin main`이 DNS·5xx·timeout으로 실패하면 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. `Publish reviewed drafts`와 공개 GitHub Pages 연결까지 확인된 경우만 `COMPLETE`입니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 

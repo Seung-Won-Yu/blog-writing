@@ -154,6 +154,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "agent" / "DAILY_EDITOR.md",
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "agent" / "DEVELOPMENT_GUIDE.md",
+            ROOT / "agent" / "REPOSITORY_SYNC.md",
             ROOT / "config" / "tistory_public_posts.json",
             ROOT / "config" / "search_opportunities.json",
             ROOT / "blog_pipeline" / "collection" / "sync_tistory_posts.py",
@@ -175,9 +176,12 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_editor_contract_enforces_one_deep_story_single_run_and_deduplication(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("git pull --ff-only origin main", contract)
-        self.assertIn("git ls-remote origin refs/heads/main", contract)
-        self.assertIn("git rev-parse HEAD", contract)
+        self.assertIn("agent/REPOSITORY_SYNC.md", contract)
+        self.assertIn("git fetch origin main", contract)
+        self.assertIn("git rev-list --left-right --count", contract)
+        self.assertNotIn("git pull --ff-only origin main", contract)
+        self.assertNotIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("LOCAL_COMPLETE", contract)
         self.assertNotIn("sync_main", contract)
         self.assertIn("daily_guard --today", contract)
         self.assertIn("daily_guard --today --source-only", contract)
@@ -198,7 +202,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("후보 5건", contract)
         self.assertIn("관련 글 2개", contract)
         self.assertIn("35~45%", contract)
-        self.assertIn("하나의 커밋", contract)
+        self.assertIn("하나의 로컬 커밋", contract)
         self.assertIn("digest-news-copy", contract)
         self.assertIn("사용자 인계 지점", contract)
         self.assertIn("오늘 글 발행 준비", contract)
@@ -232,10 +236,13 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("git pull --ff-only origin main", contract)
-        self.assertIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("agent/REPOSITORY_SYNC.md", contract)
+        self.assertIn("git fetch origin main", contract)
+        self.assertIn("git rev-list --left-right --count", contract)
+        self.assertNotIn("git pull --ff-only origin main", contract)
+        self.assertNotIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("LOCAL_COMPLETE", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-automation --resume-check", contract)
-        self.assertIn("git rev-parse HEAD", contract)
         self.assertIn(
             "publish_bundle --draft-id YYYY-MM-DD-automation --stage",
             contract,
@@ -248,10 +255,13 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
         contract = GUIDE_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("git pull --ff-only origin main", contract)
-        self.assertIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("agent/REPOSITORY_SYNC.md", contract)
+        self.assertIn("git fetch origin main", contract)
+        self.assertIn("git rev-list --left-right --count", contract)
+        self.assertNotIn("git pull --ff-only origin main", contract)
+        self.assertNotIn("git ls-remote origin refs/heads/main", contract)
+        self.assertIn("LOCAL_COMPLETE", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --resume-check", contract)
-        self.assertIn("git rev-parse HEAD", contract)
         self.assertIn("현업 도구·공개 지식 비교", contract)
         self.assertIn("인기도와 품질을 같은 것처럼", contract)
         self.assertIn("같은 입력으로 실행할 수 있는 비교", contract)
@@ -261,6 +271,18 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("config/tistory_public_posts.json", contract)
         self.assertIn("content_role: hook", contract)
         self.assertIn("content_role: explanation", contract)
+
+    def test_repository_sync_contract_allows_safe_offline_generation(self):
+        contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")
+
+        self.assertIn("git fetch origin main", contract)
+        self.assertIn("git rev-list --left-right --count HEAD...refs/remotes/origin/main", contract)
+        self.assertIn("OFFLINE_SAFE", contract)
+        self.assertIn("LOCAL_COMPLETE", contract)
+        self.assertIn("REMOTE_PUSHED_VERIFY_PENDING", contract)
+        self.assertIn("실제 분기", contract)
+        self.assertNotIn("git pull --ff-only origin main", contract)
+        self.assertNotIn("최대 세 번", contract)
 
     def test_all_editorial_contracts_require_varied_cover_art_direction(self):
         for contract_path in (

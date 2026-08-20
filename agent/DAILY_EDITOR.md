@@ -4,16 +4,18 @@
 
 ## 운영 흐름
 
-1. 최신 상태를 받고 당일 가드를 먼저 실행합니다.
+1. `agent/REPOSITORY_SYNC.md`를 먼저 읽고 공통 동기화 계약을 적용한 뒤 당일 가드를 실행합니다.
 
    ```bash
-   git pull --ff-only origin main
+   git fetch origin main
+   git show-ref --verify --quiet refs/remotes/origin/main
+   git rev-list --left-right --count HEAD...refs/remotes/origin/main
    python3 -m blog_pipeline.publishing.daily_guard --today
    ```
 
-   `git pull`은 Python 래퍼 안에서 호출하지 않고 독립 명령으로 실행합니다. 예약 작업의 네트워크 권한이 실제 Git 명령에 적용되게 하기 위함입니다. 일시적인 DNS·502·503·504라면 같은 실행 안에서 직접 명령만 최대 세 번 재시도합니다. 계속 실패하면 변경 없이 `BLOCKED`로 종료하고 사용자의 수동 재실행을 기다립니다. fast-forward 불가 같은 비네트워크 오류도 우회하지 않습니다.
+   `git fetch`는 독립 명령으로 한 번만 실행합니다. DNS·5xx·timeout이어도 캐시된 `origin/main`보다 로컬이 뒤처지지 않았으면 `OFFLINE_SAFE`로 계속합니다. 실제 분기, 인증·권한 실패, 원격 캐시 없음만 `BLOCKED`입니다.
 
-   사용자가 수동으로 다시 실행했을 때 작업 트리가 더러우면 사용자 변경이라고 단정하지 않습니다. 먼저 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 실행합니다. `READY`면 당일 완성 묶음만 남은 상태입니다. `git ls-remote origin refs/heads/main`과 `git rev-parse HEAD`를 각각 독립 명령으로 실행해 해시가 같은지 확인한 뒤, 원고·이미지를 다시 만들지 않고 9단계 최종 가드·스테이징부터 복구합니다. 원격 확인 실패, `PARTIAL`, 해시 불일치 중 하나면 변경을 보존하고 중단합니다.
+   사용자가 수동으로 다시 실행했을 때 작업 트리가 더러우면 사용자 변경이라고 단정하지 않습니다. 먼저 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 실행합니다. `READY`면 당일 완성 묶음만 남은 상태입니다. 원고·이미지를 다시 만들지 않고 9단계 최종 가드·스테이징부터 복구합니다. `PARTIAL`이면 변경을 보존하고 중단합니다.
 
    과거 날짜의 뉴스 글이나 티스토리 발행이 누락됐어도 오늘 실행의 오류로 취급하지 않습니다. 누락일을 자동으로 소급 생성하지 않고, `--today`가 가리키는 오늘 초안만 `NEW`·`PARTIAL`·`COMPLETE`로 판단해 정상 진행합니다. 과거 글 복구는 사용자가 날짜를 지정해 별도로 요청할 때만 수행합니다.
 
@@ -137,11 +139,9 @@
    python3 -m unittest discover -s tests
    ```
 
-9. 최종 가드 전에 원격 main과 로컬 HEAD가 같은지 엄격하게 확인합니다. 네트워크 명령은 Python 래퍼로 감싸지 않습니다. 원격 확인이 실패하거나 해시가 다르면 완성된 로컬 산출물은 보존하되 스테이징·커밋·푸시하지 않고 `PARTIAL`로 보고하며, 사용자가 수동으로 다시 실행하면 위 `--resume-check` 경로로 복구합니다. 해시가 같을 때만 최종 가드와 당일 발행 묶음 검사를 진행합니다.
+9. 공통 동기화 계약에서 실제 분기가 없음을 확인한 상태로 최종 가드와 당일 발행 묶음 검사를 진행합니다. 네트워크 오류만으로 검증·스테이징·로컬 커밋을 막지 않습니다.
 
    ```bash
-   git ls-remote origin refs/heads/main
-   git rev-parse HEAD
    python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
    python3 -m blog_pipeline.publishing.publish_bundle --today --stage
    python3 -m blog_pipeline.publishing.publish_bundle --today --check
@@ -150,7 +150,7 @@
 
    `publish_bundle`은 원고 JSON, 메타, 본문·광고 분할본, AdFit 결합본, 미리보기, 이미지, 루트 발행 도우미를 한 묶음으로 취급합니다. `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 로컬에만 남은 파일을 저장소 정책상 제외 파일이라고 추측하지 않습니다.
 
-10. 모든 기준을 통과하고 실제 diff가 있을 때만 하나의 커밋으로 `main`에 한 번 푸시합니다. 푸시 직후 해당 커밋의 `Publish reviewed drafts` 실행이 성공할 때까지 확인합니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. GitHub Pages 배포 작업이 성공하고 공개 루트에서 실제 조립·복사 흐름까지 확인한 뒤에만 `COMPLETE`로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+10. 모든 기준을 통과하고 실제 diff가 있을 때 하나의 로컬 커밋으로 확정한 뒤 `git push origin main`을 한 번 실행합니다. DNS·5xx·timeout이면 커밋을 보존하고 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 푸시와 `Publish reviewed drafts`, 공개 Pages의 실제 조립·복사 흐름이 모두 확인된 경우만 `COMPLETE`입니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 단일 실행과 토큰 원칙
 
