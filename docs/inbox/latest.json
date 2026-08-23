@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "day": "2026-08-23",
-  "generated_at": "2026-08-22T20:42:59.346475+00:00",
+  "day": "2026-08-24",
+  "generated_at": "2026-08-23T20:42:19.718992+00:00",
   "review_required": true,
   "selection": {
     "mode": "lead_shortlist",
@@ -17,10 +17,10 @@
     "brand_cooldown_days": 4,
     "topic_cooldown_days": 2,
     "research_selection_penalty": 2,
-    "recently_selected_excluded": 24,
+    "recently_selected_excluded": 11,
     "recent_url_excluded": 3,
     "recent_publisher_excluded": 0,
-    "recent_brand_excluded": 21,
+    "recent_brand_excluded": 8,
     "recent_topic_excluded": 0,
     "reader_relevance_fallback_applied": false,
     "effective_min_reader_relevance": 2
@@ -93,283 +93,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "6ef374b8331e",
-      "title": "Shared agentic work with GitHub Copilot in Microsoft Teams",
-      "normalized_title": "shared agentic work with github copilot in microsoft teams",
-      "url": "https://github.blog/changelog/2026-08-21-shared-agentic-work-with-github-copilot-in-microsoft-teams",
-      "published_at": "2026-08-21T16:03:36+00:00",
-      "summary": "Turn a Microsoft Teams discussion into a collaborative agent session everyone can see and help direct. Mention @GitHub in a channel, thread, or direct message to start a GitHub Copilot... The post Shared agentic work with GitHub Copilot in Microsoft Teams appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 11,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [
-        "github",
-        "copilot",
-        "microsoft"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 5,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 17,
-      "recent_publisher": false,
-      "recent_brands": [
-        "microsoft"
-      ],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "e428b10ed815",
-      "title": "Better tools for managing blocked users",
-      "normalized_title": "better tools for managing blocked users",
-      "url": "https://github.blog/changelog/2026-08-21-better-tools-for-managing-blocked-users",
-      "published_at": "2026-08-21T17:28:36+00:00",
-      "summary": "Managing blocked users is now faster and clearer for personal accounts and organizations. With this update, you can: Search by username, full name, or email. Sort and paginate long lists.... The post Better tools for managing blocked users appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 4,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools",
-        "automation"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [
-          "blocked"
-        ],
-        "practical": [
-          "GitHub"
-        ],
-        "deep": []
-      },
-      "topic_family": "automation",
-      "brand_tags": [
-        "github"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 4,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "eb80560ee1a0",
-      "title": "The new GitHub Copilot experience in Slack",
-      "normalized_title": "the new github copilot experience in slack",
-      "url": "https://github.blog/changelog/2026-08-21-the-new-github-copilot-experience-in-slack",
-      "published_at": "2026-08-21T16:07:15+00:00",
-      "summary": "The GitHub integration in Slack now brings the agentic capabilities of GitHub Copilot CLI and the GitHub Copilot app into Slack in public preview. You can work with @GitHub to... The post The new GitHub Copilot experience in Slack appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub",
-          "Copilot"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [
-        "github",
-        "copilot"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 5,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 17,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 17"
-    },
-    {
-      "id": "80e74fa24d45",
-      "title": "Pinning saved views to the repository issues sidebar is generally available and more",
-      "normalized_title": "pinning saved views to the repository issues sidebar is generally available and more",
-      "url": "https://github.blog/changelog/2026-08-20-pin-projects-views-and-milestones-to-the-repository-sidebar",
-      "published_at": "2026-08-20T23:29:34+00:00",
-      "summary": "Pinning saved views to the repository issues sidebar You can now pin saved views to the repository issues sidebar, making the views you use most just one click away, even... The post Pinning saved views to the repository issues sidebar is generally available and more appeared first on The GitHub Blog .",
-      "source_id": "github-changelog",
-      "source_family": "github",
-      "source_name": "GitHub Changelog",
-      "group": "official",
-      "source_weight": 5,
-      "lane_bias": {
-        "practical": 3
-      },
-      "requires_manual_review": false,
-      "score": 10,
-      "score_reasons": [
-        "출처 가중치 5",
-        "공식 출처",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "GitHub"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [
-        "github"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 4,
-        "explanatory_depth": 0,
-        "evidence": 5,
-        "freshness": 5
-      },
-      "lead_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "fc1a9abd82b3",
       "title": "Introducing AI Futures",
       "normalized_title": "introducing ai futures",
@@ -432,9 +155,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -502,7 +223,9 @@
       "lead_score": 15,
       "recent_publisher": false,
       "recent_brands": [],
-      "recent_topic_family": ""
+      "recent_topic_family": "",
+      "lead_rank": 2,
+      "selection_reason": "핵심뉴스 후보 2 · 점수 15"
     },
     {
       "id": "df8f12302a5b",
@@ -571,9 +294,7 @@
       },
       "lead_score": 13,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -642,9 +363,7 @@
       },
       "lead_score": 10,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -710,9 +429,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -777,9 +494,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -844,9 +559,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -910,8 +623,79 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "6ef374b8331e",
+      "title": "Shared agentic work with GitHub Copilot in Microsoft Teams",
+      "normalized_title": "shared agentic work with github copilot in microsoft teams",
+      "url": "https://github.blog/changelog/2026-08-21-shared-agentic-work-with-github-copilot-in-microsoft-teams",
+      "published_at": "2026-08-21T16:03:36+00:00",
+      "summary": "Turn a Microsoft Teams discussion into a collaborative agent session everyone can see and help direct. Mention @GitHub in a channel, thread, or direct message to start a GitHub Copilot... The post Shared agentic work with GitHub Copilot in Microsoft Teams appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 0
+      },
+      "topic_tags": [
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "Copilot"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub",
+          "Copilot"
+        ],
+        "deep": []
+      },
+      "topic_family": "developer_tools",
+      "brand_tags": [
+        "github",
+        "copilot",
+        "microsoft"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 15,
+      "recent_publisher": false,
       "recent_brands": [
-        "openai"
+        "microsoft"
       ],
       "recent_topic_family": ""
     },
@@ -1252,9 +1036,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -1318,9 +1100,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -1522,9 +1302,334 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "6d790bc7fc1d",
+      "title": "구글, '안티그래비티' 원격 제어 출시...\"이동 중에도 AI 개발 계속\"",
+      "normalized_title": "구글 안티그래비티 원격 제어 출시 이동 중에도 ai 개발 계속",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214259",
+      "published_at": "2026-08-23T03:06:47+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
       ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "출시"
+        ],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 9,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "2267d0abaadd",
+      "title": "리퀴드 AI ‘디스파크’, 메모리 병목 뚫었다...소형 모델이 미리 쓰고 대형 모델이 검증",
+      "normalized_title": "리퀴드 ai 디스파크 메모리 병목 뚫었다 소형 모델이 미리 쓰고 대형 모델이 검증",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214258",
+      "published_at": "2026-08-23T02:48:18+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 9,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "a6fd72be3601",
+      "title": "\"LLM보다 하네스가 핵심\"...엔비디아 AVO, 장기 에이전트 가능성 입증",
+      "normalized_title": "llm보다 하네스가 핵심 엔비디아 avo 장기 에이전트 가능성 입증",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214256",
+      "published_at": "2026-08-23T01:55:48+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 7,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "19e77d5fa8d7",
+      "title": "\"중소형 모델로 빅테크 압도\"...인히어런트, '연구 감각' 갖춘 AI 과학자 선보여",
+      "normalized_title": "중소형 모델로 빅테크 압도 인히어런트 연구 감각 갖춘 ai 과학자 선보여",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214255",
+      "published_at": "2026-08-23T01:41:45+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 5,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "연구",
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 0,
+        "explanatory_depth": 2,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 11,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "f1e673f06967",
+      "title": "\"AI 모델 해킹 사고 때문?\"...오픈AI, 캘리포니아 AI 규제법 지지로 급선회",
+      "normalized_title": "ai 모델 해킹 사고 때문 오픈ai 캘리포니아 ai 규제법 지지로 급선회",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214257",
+      "published_at": "2026-08-23T00:45:49+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 6,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 2,
+        "reader_impact": 1,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "규제",
+          "AI"
+        ],
+        "reader_impact": [
+          "규제"
+        ],
+        "reader_consequence": [
+          "사고"
+        ],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 3,
+        "actionability": 0,
+        "explanatory_depth": 1,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 11,
+      "recent_publisher": false,
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -1662,264 +1767,9 @@
       "lead_score": 18,
       "recent_publisher": false,
       "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "979a1df7056f",
-      "title": "플로리다, 챗GPT ‘공공 위해 요소’ 지정 요구...알트먼·오픈AI 전방위 압박",
-      "normalized_title": "플로리다 챗gpt 공공 위해 요소 지정 요구 알트먼 오픈ai 전방위 압박",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214246",
-      "published_at": "2026-08-22T04:33:39+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "12bf87464e4c",
-      "title": "앤트로픽, 구글 TPU 주역 영입...자체 AI 칩 개발 가속",
-      "normalized_title": "앤트로픽 구글 tpu 주역 영입 자체 ai 칩 개발 가속",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214247",
-      "published_at": "2026-08-22T03:24:15+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "f7577d01223f",
-      "title": "오픈AI, 'GPT-5.6 솔'까지 가격 일시 인하...코덱스 사용자 2천만 돌파",
-      "normalized_title": "오픈ai gpt 5 6 솔 까지 가격 일시 인하 코덱스 사용자 2천만 돌파",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214240",
-      "published_at": "2026-08-22T01:57:56+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 6,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 2,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "가격",
-          "AI"
-        ],
-        "reader_impact": [
-          "가격"
-        ],
-        "reader_consequence": [
-          "인하"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "e9e7a2af021b",
-      "title": "'비전 프로' 대신 AI·스마트 안경에 올인...애플, 200명 구조조정",
-      "normalized_title": "비전 프로 대신 ai 스마트 안경에 올인 애플 200명 구조조정",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214243",
-      "published_at": "2026-08-22T01:34:58+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 5,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
+      "recent_topic_family": "",
+      "lead_rank": 1,
+      "selection_reason": "핵심뉴스 후보 1 · 점수 18"
     },
     {
       "id": "924e05a3179e",
@@ -1985,151 +1835,203 @@
       "recent_topic_family": ""
     },
     {
-      "id": "6d68a2521c31",
-      "title": "Cloudflare Cuts Astro GitHub Issues by 85% with AI Agents",
-      "normalized_title": "cloudflare cuts astro github issues by 85 with ai agents",
-      "url": "https://www.infoq.com/news/2026/08/cloudflare-astro-ai-agents",
-      "published_at": "2026-08-21T14:09:00+00:00",
-      "summary": "Cloudflare, Astro, AI agents, GitHub Actions, issue triage, agentic AI, software architecture, open source, developer tools, AI automation, automated testing, human in the loop, agent workflows, GitHub, software engineering, AI software development, bug triage, continuous integration, developer productivity, autonomous agents, AI coding, Cloudflare Workers, Flue, triagebot By Leela Kumili",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
+      "id": "e428b10ed815",
+      "title": "Better tools for managing blocked users",
+      "normalized_title": "better tools for managing blocked users",
+      "url": "https://github.blog/changelog/2026-08-21-better-tools-for-managing-blocked-users",
+      "published_at": "2026-08-21T17:28:36+00:00",
+      "summary": "Managing blocked users is now faster and clearer for personal accounts and organizations. With this update, you can: Search by username, full name, or email. Sort and paginate long lists.... The post Better tools for managing blocked users appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
       "lane_bias": {
-        "practical": 2,
-        "deep": 3
+        "practical": 3
       },
-      "requires_manual_review": true,
+      "requires_manual_review": false,
       "score": 8,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 4
+        "reader_consequence": 1,
+        "practical": 4,
+        "deep": 0
       },
       "topic_tags": [
-        "ai",
-        "cloud",
         "developer_tools",
         "automation"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
-        "reader_consequence": 0,
+        "reader_consequence": 1,
         "practical": 1,
-        "deep": 1
+        "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
+        "broad": [],
         "reader_impact": [],
-        "reader_consequence": [],
+        "reader_consequence": [
+          "blocked"
+        ],
         "practical": [
           "GitHub"
         ],
-        "deep": [
-          "architecture"
-        ]
+        "deep": []
       },
-      "topic_family": "ai",
+      "topic_family": "automation",
       "brand_tags": [
-        "github",
-        "cloudflare"
+        "github"
       ],
       "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 3,
-        "explanatory_depth": 4,
-        "evidence": 4,
-        "freshness": 5
+        "reader_relevance": 1,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
       },
-      "lead_score": 18,
+      "lead_score": 13,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
     },
     {
-      "id": "402ea7eb344a",
-      "title": "더 많은 자율성, 더 촘촘한 제약...기업 에이전틱 AI의 외줄타기",
-      "normalized_title": "더 많은 자율성 더 촘촘한 제약 기업 에이전틱 ai의 외줄타기",
-      "url": "https://www.itworld.co.kr/article/4212226/%eb%8d%94-%eb%a7%8e%ec%9d%80-%ec%9e%90%ec%9c%a8%ec%84%b1-%eb%8d%94-%ec%b4%98%ec%b4%98%ed%95%9c-%ec%a0%9c%ec%95%bd%ea%b8%b0%ec%97%85-%ec%97%90%ec%9d%b4%ec%a0%84%ed%8b%b1-ai%ec%9d%98-%ec%99%b8.html",
-      "published_at": "2026-08-21T01:28:45+00:00",
-      "summary": "기업은 채팅 기반 어시스턴트에서 이제는 실제 작업을 수행할 수 있는 시스템으로 옮겨가고 있다. 이 변화는 사람들이 AI에 작업을 요청하는 방식에서 볼 수 있다. 이들은 코드를 작성하고 티켓을 제출하고 CRM 레코드를 업데이트하고 규정 준수 체크리스트를 실행하고 풀 요청을 생성하고 다음 단계의 작업까지 이어서 처리할 수 있는 어시스턴트를 요구한다. 이러한 형태의 작업에는 에이전틱 시스템이 필요하다. 필자가 정의하는 에이전틱 시스템은 ‘사용자의 목표를 일련의 단계로 전환하고 툴을 통해 각 단계를 실행하고 어떤 일이 일어났는지 추적하고 감사 가능한 결과를 생산하는 소프트웨어’다. 모델은 계획과 언어를 담당하고 그 주변 시스템은 권한, 상태, 검증, 통제를 맡는다. 엔지니어링 측면의 질문은 분야에 관계없이 동일하다. 유용할 만큼 충분한 자율성을 부여하면서도 결과의 예측 가능성을 유지하려면 어떻게 해야 하는가? 이 질문에 대한 프로덕션의 답은 ‘명시적이고 강제되는 제약’이다. Adnan Masood 에이전트 루프 정의 에이전트 루프는 시스템이 작업을 완료하기 위해 따르는 반복되는 사이클이다. 필자는 다음과 같은 간단한 루프를 사용하며, 각 단계를 관찰할 수 있도록 한다. 계획: 에이전트가 목표와 현재 상태, 정책을 기반으로 다음 행동을 선택한다. 실행: 에이전트가 구조화된 인수를 사용해 툴을 호출한 다음 결과를 기록한다. 검증: 정책과 작업에 대한 기대치를 기준으로 시스템이 결과를 검사한다. 커밋: 시스템이 상태 변경 사항을 지속성 저장소에 기록하고 감사 이벤트를 생성한다. 구현에서의 구체적인 의미는 다음과 같다. 계획은 구조화된 의도를 생성하고, 실행은 정의된 스키마가 있는 제한적인 인터페이스를 사용하고, 검증은 결정론적 검사를 수행하고, 커밋은 버전 관리되는 상태와 추적 컨텍스트를 기록한다. 툴과 툴 계약의 정의 모델 외부의 호출 가능한 모든 기능을 툴이라고 한다. API, 데이터베이스 쿼리, 워크플로우 엔진, 코드 리포지토리 작업, 브라우저 자동화 단계 등이 툴에 해당한다. 툴은 기록 시스템(systems of record)을 변경할 수 있어 운영 리스크의 핵심 요인으로 꼽힌다. 툴 계약이란 툴을 안전하게 사용할 수 있게 해주는 경계다. 필자는 툴 계약을 설계 검토의 일부로 문서화한다. 계약에 포함되는 항목은 다음과 같다. 입력: 자유 양식의 매개변수를 거부하고 유형을 강제하는 스키마. 권한: ID 컨텍스트, 범위, 데이터 경계. 멱등성: 재시도가 중복된 변경을 생성하지 않도록 하는 요청 키와 재생 규칙. 속도 제한: 공유 시스템을 보호하기 위한 사용자별, 에이전트별, 툴별 제한. 오류 시맨틱: 안정적인 오류 코드와 재시도 지침. 감사 필드: 요청 ID, 행위자, 시간, 대상 레코드, 전/후 참조. 이 계약을 통해 에이전트는 일반적인 분산 시스템 클라이언트가 되며 테스트와 디버깅이 가능해지고 운영 팀이 소유할 수 있는 대상이 된다. 정책을 실행 가능한 규칙으로 정의 에이전틱 시스템에서 정책은 런타임이 매 단계에 강제하는 규칙을 의미한다. 필자는 정책을 실행 가능한 모듈로 취급한다. 정책은 요청 경로에 위치하며 버전이 관리된다. 또한 의사결정 시 감사 이벤트를 생성한다. 일반적인 정책 영역에는 데이터 액세스, 툴 허용 목록, 쓰기 작업이 승인된 대상, 검색된 자료에 필요한 인용, 제한된 요청에 대한 거부 규칙 등이 포함된다. 정책은 단순하게 시작해서 인시던트 사례를 바탕으로 발전한다. 상태를 일급 구성요소로 취급 상태는 에이전트가 알고 있는 것과 수행한 작업에 대한 지속되는 기록이다. 필자는 상태를 모델 외부에 두고 명확한 스키마로 지속성을 부여하며 단계별로 버전을 관리한다. 필자는 최소한 목표, 계획 단계, 툴 입력과 출력, 검증 결과, 최종 결정을 저장한다. 검색이 루프에 포함된 경우에는 검색된 소스도 저장한다. 저장된 상태 정보는 사고 발생 상황에서의 재생과 이후의 평가를 뒷받침한다. 상태를 대화 버퍼에만 보관할 경우 규모가 커질 때 행동 추론 능력을 잃게 된다. 지속되는 상태 저장소는 재시도, 핸드오프, 거버넌스 보고를 뒷받침한다. 검증을 행동의 관문으로 사용 검증은 일련의 검사로, 쓰기 전과 툴 호출 후에 실행된다. 필자는 가능한 모든 경우 결정론적 검사를 사용하며 모델 출력을 검증될 입력으로 취급한다. 예를 들어 스키마 검증, 권한 검사, 참조 무결성 검사, 대상 시스템에 대한 제약 조건 등이 있다. 콘텐츠 워크플로우의 경우 인용 커버리지와 제한된 데이터에 대한 검사가 검증에 포함된다. 또한 영향이 큰 행동에 대해서는 신뢰도 정책을 사용한다. 시스템은 특정 툴이나 대상에 대해 인간의 승인 단계를 요구할 수 있다. 승인은 컨텍스트와 증거로 뒷받침되는 명확한 행동으로 범위를 좁힐 때 가장 잘 작동한다. Adnan Masood 루프를 둘러싼 평가 틀 구축 에이전트에 대한 평가는 종단 간 작업 완료와 안전 속성에 초점을 둔다. 필자는 작업 성공 기준을 관찰 가능한 사실로 정의한다(예를 들어 티켓이 존재함, 레코드가 올바른 필드로 업데이트됨, 풀 요청이 검사를 통과함, 변경 요청이 적절한 승인을 받음 등). 필자는 일상적인 작업과 예외적인 사례를 아우르는 시나리오 모음을 만들어서, 가능한 경우 고정된 시드와 안정적인 툴 목(mock)으로 시나리오 모음을 실행한다. 또한 현실적인 데이터를 갖춘 스테이징 환경을 대상으로 소규모의 라이브 테스트도 실행한다. 필자는 운영과 연결된 지표를 추적한다(예를 들어 시나리오별 작업 완료율, 작업당 평균 단계 수, 툴 오류율, 검증 실패율, 인간 승인율, 툴이 부분적인 결과를 반환하는 경우의 평균 복구 시간 등). 실용적인 참조 패턴 필자는 감독자 패턴을 사용해 프로덕션 에이전트를 구축한다. 감독자는 정책, 라우팅, 상태를 소유한다. 검색, 티켓 요약, 리포지토리 작업과 같은 좁은 범위의 작업은 특화된 작업자가 처리한다. 작업자는 각자의 계약에 필요한 최소 권한으로 실행된다. 간단히 스케치하면 다음과 같다. def run_task(goal, user): ctx = start_context(goal, user) while ctx.open_steps: intent = planner.propose_next(ctx) intent = policy.enforce_intent(intent, ctx) call = tool_router.bind(intent, ctx) result = call.execute(idempotency_key=ctx.step_key) checks = verifier.run(intent, result, ctx) ctx = commit_step(ctx, intent, result, checks) if checks.requires_approval: ctx = wait_for_approval(ctx) return ctx.outcome 이 구조는 권한을 감독자에게 둔다. 또한 툴 권한을 좁게 유지한다. 운영 팀은 정책을 강제하고 행동을 관찰할 수 있는 단일 지점을 갖게 된다. 에이전트의 안정성을 유지하는 운영 관행 프로덕션 환경에서 안전하게 에이전트를 실행하고자 하는 팀을 위해 필자는 다음과 같은 간략한 관행을 사용한다. 영향 반경이 작은 워크플로우부터 시작한다. 읽기 중심의 작업과 초안 생성은 자신감과 계측 체계를 구축하는 데 도움이 된다. 제한적인 툴 허용 목록을 기본으로 적용한다. 측정된 결과와 인시던트 사례를 바탕으로 확장해 나간다. 단계적 롤아웃을 사용한다. 내부 사용자로 시작한 다음 소규모 집단으로, 그 다음 더 넓은 범위로 노출을 확대한다. 툴 스키마를 엄격하게 유지한다. 자유 양식의 툴 매개변수는 예측 불가능한 쓰기를 유발한다. 예산을 설정한다. 작업당 최대 단계 수, 최대 툴 호출 횟수, 비용 상한을 강제한다. 런북을 유지한다. 런북에는 롤백 절차, 툴별 비활성화 스위치, 인간 에스컬레이션 경로가 포함되어야 한다. 최소 실행 가능 체크리스트 필자는 팀이 대규모 환경에서 에이전트 워크플로우를 실행하기 전에 다음과 같은 요소를 확인한다. 에이전트 루프에 대한 문서화된 정의(각 단계의 트레이스 포함) 스키마, 권한, 멱등성, 속도 제한, 감사 필드가 포함된 툴 계약 정책 모듈(요청 경로에서 버전 관리 및 시행) 재생과 거버넌스 보고를 위한 단계별 레코드를 갖춘 지속성 상태 저장소 쓰기 작업과 영향 반경이 큰 행동에 대한 검증 관문 작업 완료와 안전성 속성을 측정하는 평가 모음 예산, 단계적 롤아웃, 툴별 비활성화 스위치가 포함된 운영 컨트롤 제약이 핵심 에이전틱 시스템은 언어 인터페이스를 비즈니스 시스템에 연결해주므로 기업 작업에 잘 맞는다. 자율성이 명시적인 제약 내에 위치해야 시스템이 잘 작동한다. 에이전트의 행동을 측정, 개선하고 신뢰할 수 있는 대상으로 만들어주는 것이 바로 제약이다. dl-itworldkorea@foundryco.com",
-      "source_id": "itworld-korea",
-      "source_family": "itworld",
-      "source_name": "ITWorld Korea",
-      "group": "korean_editorial",
-      "source_weight": 3,
+      "id": "eb80560ee1a0",
+      "title": "The new GitHub Copilot experience in Slack",
+      "normalized_title": "the new github copilot experience in slack",
+      "url": "https://github.blog/changelog/2026-08-21-the-new-github-copilot-experience-in-slack",
+      "published_at": "2026-08-21T16:07:15+00:00",
+      "summary": "The GitHub integration in Slack now brings the agentic capabilities of GitHub Copilot CLI and the GitHub Copilot app into Slack in public preview. You can work with @GitHub to... The post The new GitHub Copilot experience in Slack appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
       "lane_bias": {
-        "broad": 2,
-        "practical": 1
+        "practical": 3
       },
-      "requires_manual_review": true,
+      "requires_manual_review": false,
       "score": 8,
       "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
       ],
       "lane_scores": {
-        "broad": 3,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 4,
-        "deep": 4
+        "practical": 5,
+        "deep": 0
       },
       "topic_tags": [
-        "ai",
-        "privacy",
-        "developer_tools",
-        "automation"
+        "developer_tools"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 3,
-        "deep": 4
+        "practical": 2,
+        "deep": 0
       },
       "raw_lane_matches": {
         "broad": [
-          "AI"
+          "Copilot"
         ],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [
-          "업데이트",
-          "API",
-          "자동화"
+          "GitHub",
+          "Copilot"
         ],
-        "deep": [
-          "API",
-          "데이터베이스",
-          "모델",
-          "쿼리"
-        ]
+        "deep": []
       },
-      "topic_family": "ai",
-      "brand_tags": [],
+      "topic_family": "developer_tools",
+      "brand_tags": [
+        "github",
+        "copilot"
+      ],
       "lead_score_breakdown": {
         "reader_relevance": 2,
-        "actionability": 4,
-        "explanatory_depth": 4,
-        "evidence": 3,
-        "freshness": 5
+        "actionability": 5,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
       },
-      "lead_score": 18,
+      "lead_score": 15,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "80e74fa24d45",
+      "title": "Pinning saved views to the repository issues sidebar is generally available and more",
+      "normalized_title": "pinning saved views to the repository issues sidebar is generally available and more",
+      "url": "https://github.blog/changelog/2026-08-20-pin-projects-views-and-milestones-to-the-repository-sidebar",
+      "published_at": "2026-08-20T23:29:34+00:00",
+      "summary": "Pinning saved views to the repository issues sidebar You can now pin saved views to the repository issues sidebar, making the views you use most just one click away, even... The post Pinning saved views to the repository issues sidebar is generally available and more appeared first on The GitHub Blog .",
+      "source_id": "github-changelog",
+      "source_family": "github",
+      "source_name": "GitHub Changelog",
+      "group": "official",
+      "source_weight": 5,
+      "lane_bias": {
+        "practical": 3
+      },
+      "requires_manual_review": false,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 5",
+        "공식 출처",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 4,
+        "deep": 0
+      },
+      "topic_tags": [
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "GitHub"
+        ],
+        "deep": []
+      },
+      "topic_family": "developer_tools",
+      "brand_tags": [
+        "github"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 4,
+        "explanatory_depth": 0,
+        "evidence": 5,
+        "freshness": 3
+      },
+      "lead_score": 13,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -2460,9 +2362,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -2851,9 +2751,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -3183,9 +3081,7 @@
       },
       "lead_score": 9,
       "recent_publisher": false,
-      "recent_brands": [
-        "openai"
-      ],
+      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -3452,11 +3348,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "152e369c5cff",
-      "title": "Claudette - Claude의 BuzzFeed식 말투를 평범한 영어로 바꾸는 도구",
-      "normalized_title": "claudette claude의 buzzfeed식 말투를 평범한 영어로 바꾸는 도구",
-      "url": "https://news.hada.io/topic?id=32767",
-      "published_at": "2026-08-22T12:36:39+00:00",
+      "id": "a94f2c80424b",
+      "title": "GLM-5.3 오픈 웨이트, Anthropic·OpenAI 모델을 5분의 1 비용으로 제침",
+      "normalized_title": "glm 5 3 오픈 웨이트 anthropic openai 모델을 5분의 1 비용으로 제침",
+      "url": "https://news.hada.io/topic?id=32811",
+      "published_at": "2026-08-23T19:35:19+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -3478,7 +3374,271 @@
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [
+        "openai",
+        "anthropic"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "830711aca517",
+      "title": "Google's HEIR Aims to Make Homomorphic-Encrypted Inference a One-Click Capability",
+      "normalized_title": "google s heir aims to make homomorphic encrypted inference a one click capability",
+      "url": "https://www.infoq.com/news/2026/08/google-heir-homomorphic-llm",
+      "published_at": "2026-08-23T18:00:00+00:00",
+      "summary": "Google is introducing HEIR (Homomorphic Encryption Intermediate Representation), an open-source compiler and development toolchain designed to make encrypted computation easier to deploy. In particular, HEIR can compile pre-trained AI models built for conventional, unencrypted inputs so they can instead operate on encrypted data. By Sergio De Simone",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
+      "source_weight": 3,
+      "lane_bias": {
         "practical": 2,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 3
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [
+        "google"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 2,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 14,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "5db6b3c62296",
+      "title": "태블릿 소유권을 되찾는 데 266달러와 AI 모델 4개를 썼고, GLM-5.3이 하루 만에 끝냈다",
+      "normalized_title": "태블릿 소유권을 되찾는 데 266달러와 ai 모델 4개를 썼고 glm 5 3이 하루 만에 끝냈다",
+      "url": "https://news.hada.io/topic?id=32809",
+      "published_at": "2026-08-23T17:33:05+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "dcbbf97492ea",
+      "title": "Linus Torvalds가 AI로 Intel GPU 드라이버 버그를 추적한 과정",
+      "normalized_title": "linus torvalds가 ai로 intel gpu 드라이버 버그를 추적한 과정",
+      "url": "https://news.hada.io/topic?id=32807",
+      "published_at": "2026-08-23T16:01:31+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [
+        "ai",
+        "privacy"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 1,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [
+          "추적"
+        ],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "d96e3b452f54",
+      "title": "Claude보다 Codex를 더 많이 써본 일주일",
+      "normalized_title": "claude보다 codex를 더 많이 써본 일주일",
+      "url": "https://news.hada.io/topic?id=32801",
+      "published_at": "2026-08-23T14:36:10+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
         "deep": 1
       },
       "topic_tags": [
@@ -3489,22 +3649,84 @@
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 1,
+        "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
         "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [
-          "도구"
-        ],
+        "practical": [],
         "deep": []
       },
       "topic_family": "ai",
       "brand_tags": [
         "anthropic"
       ],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "eab94cbb868c",
+      "title": "Python으로 사고하기",
+      "normalized_title": "python으로 사고하기",
+      "url": "https://news.hada.io/topic?id=32800",
+      "published_at": "2026-08-23T13:31:29+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 2,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 1,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [
+          "사고"
+        ],
+        "practical": [
+          "Python"
+        ],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
       "lead_score_breakdown": {
         "reader_relevance": 1,
         "actionability": 2,
@@ -3518,20 +3740,20 @@
       "recent_topic_family": ""
     },
     {
-      "id": "2c3a650c0ed3",
-      "title": "Vomit - Claude의 장황한 출력을 로컬 LLM으로 짧게 정리해주는 도구",
-      "normalized_title": "vomit claude의 장황한 출력을 로컬 llm으로 짧게 정리해주는 도구",
-      "url": "https://news.hada.io/topic?id=32764",
-      "published_at": "2026-08-22T11:34:13+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
+      "id": "416c0c38cbc7",
+      "title": "OVHcloud Raises Prices as AI Memory Demand Reprices Non-AI Infrastructure",
+      "normalized_title": "ovhcloud raises prices as ai memory demand reprices non ai infrastructure",
+      "url": "https://www.infoq.com/news/2026/08/ovhcloud-memory-price-rise",
+      "published_at": "2026-08-23T08:43:00+00:00",
+      "summary": "OVHcloud will raise prices from September, with 2026-edition gaming servers up 87 percent and other recent servers 40 to 59 percent. Founder Octave Klaba says memory cost six times more in June than a year earlier, as RAM suppliers shifted capacity toward high-bandwidth memory for AI. AWS, buying years ahead, has repriced one reserved GPU product. By Steef-Jan Wiggers",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
       "source_weight": 3,
       "lane_bias": {
-        "practical": 1,
-        "deep": 1
+        "practical": 2,
+        "deep": 3
       },
       "requires_manual_review": true,
       "score": 7,
@@ -3541,44 +3763,279 @@
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 2,
-        "deep": 1
+        "deep": 3
       },
       "topic_tags": [
-        "ai"
+        "ai",
+        "cloud"
       ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [
+        "amazon"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 2,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 14,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "84fa0c101ae4",
+      "title": "메타, '뮤즈 스파크 1.2' 오픈라우터에 현존 최저가로 할인",
+      "normalized_title": "메타 뮤즈 스파크 1 2 오픈라우터에 현존 최저가로 할인",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214263",
+      "published_at": "2026-08-23T07:23:09+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 1,
+        "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
         "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [
-          "도구"
-        ],
+        "practical": [],
         "deep": []
       },
-      "topic_family": "ai",
-      "brand_tags": [
-        "anthropic"
-      ],
+      "topic_family": "other",
+      "brand_tags": [],
       "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 2,
-        "explanatory_depth": 1,
-        "evidence": 3,
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
         "freshness": 5
       },
-      "lead_score": 12,
+      "lead_score": 7,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "474414eeb19d",
+      "title": "앤트로픽서 유행하는 클로드 코드 ‘/eli5’ 스킬...\"코드를 그림으로 설명\"",
+      "normalized_title": "앤트로픽서 유행하는 클로드 코드 eli5 스킬 코드를 그림으로 설명",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214260",
+      "published_at": "2026-08-23T03:19:35+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 7,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "43b2035247d6",
+      "title": "앤트로픽, IPO서 138조 조달 목표...역대 최대 상장 기록 경신 전망",
+      "normalized_title": "앤트로픽 ipo서 138조 조달 목표 역대 최대 상장 기록 경신 전망",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214254",
+      "published_at": "2026-08-23T00:17:39+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 7,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "f209422a532b",
+      "title": "메모리 폭등에 엔비디아 서버 최대 15% 인상...빅테크 부담 가중",
+      "normalized_title": "메모리 폭등에 엔비디아 서버 최대 15 인상 빅테크 부담 가중",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=214253",
+      "published_at": "2026-08-22T23:36:05+00:00",
+      "summary": "",
+      "source_id": "aitimes",
+      "source_family": "aitimes",
+      "source_name": "AI타임스",
+      "group": "korean_general",
+      "source_weight": 4,
+      "lane_bias": {
+        "broad": 4
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 4",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 4,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 1,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [
+          "인상"
+        ],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 0,
+        "explanatory_depth": 0,
+        "evidence": 2,
+        "freshness": 5
+      },
+      "lead_score": 7,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -3643,531 +4100,6 @@
         "freshness": 5
       },
       "lead_score": 14,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "f7f23daf2f59",
-      "title": "나는 AI가 쓴 글을 자동으로 무시하기 시작했다",
-      "normalized_title": "나는 ai가 쓴 글을 자동으로 무시하기 시작했다",
-      "url": "https://news.hada.io/topic?id=32760",
-      "published_at": "2026-08-22T07:32:05+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "cbc3d52f59e1",
-      "title": "앤트로픽, '미소스 5' 적용 범위 확대...악용 차단하고 사이버 방어 지원",
-      "normalized_title": "앤트로픽 미소스 5 적용 범위 확대 악용 차단하고 사이버 방어 지원",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214242",
-      "published_at": "2026-08-22T02:15:37+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 4,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [
-          "차단"
-        ],
-        "reader_consequence": [
-          "지원",
-          "차단",
-          "확대"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
-    },
-    {
-      "id": "7c26e2bb76dc",
-      "title": "엔비디아, 국내 NPU 스타트업 리벨리온과 인수 협상 중",
-      "normalized_title": "엔비디아 국내 npu 스타트업 리벨리온과 인수 협상 중",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214241",
-      "published_at": "2026-08-22T01:56:13+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 4,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 7,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "7c3227e89061",
-      "title": "Over 1 million people have clicked LinkedIn’s AI slop button",
-      "normalized_title": "over 1 million people have clicked linkedin s ai slop button",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/983502/linkedin-ai-slop-button-one-million-people-message",
-      "published_at": "2026-08-21T21:54:07+00:00",
-      "summary": "LinkedIn actually announced a \"Seems like AI slop\" button on July 30th, and the company says that a lot of people have already used it. According to a Thursday post from chief product officer Hari Srinivasan, \"over a million people\" have clicked on the button, which is accessible from the three dots menu on a [...]",
-      "source_id": "the-verge",
-      "source_family": "verge",
-      "source_name": "The Verge",
-      "group": "general_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 9,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "f04108c7ad55",
-      "title": "Cloudflare Turns Engineering Standards Into an AI-Enforced Control System",
-      "normalized_title": "cloudflare turns engineering standards into an ai enforced control system",
-      "url": "https://www.infoq.com/news/2026/08/cloudflare-ai-enforcement",
-      "published_at": "2026-08-21T12:00:00+00:00",
-      "summary": "Cloudflare has recently detailed how it is using AI to transform internal engineering standards from passive documentation into an actively enforced control system across the software development lifecycle. By Craig Risi",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 3
-      },
-      "topic_tags": [
-        "ai",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [
-        "cloudflare"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 3,
-        "evidence": 4,
-        "freshness": 5
-      },
-      "lead_score": 14,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "c24bd9c368a1",
-      "title": "Presentation: Enchant Your AI and APIs with eBPF Magic 🪄",
-      "normalized_title": "presentation enchant your ai and apis with ebpf magic",
-      "url": "https://www.infoq.com/presentations/ebpf-ai-gateway-kubernetes-security",
-      "published_at": "2026-08-21T11:00:00+00:00",
-      "summary": "Dan Finneran discusses the risks of unowned AI-generated code in production and demonstrates how eBPF can intercept and control AI API traffic in Kubernetes. He explains how kernel-level socket hooks enable transparent prompt filtering, model swapping, token limits, and syscall restrictions to secure AI agents without modifying application source code or restarting containers. By Dan Finneran",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 4
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "API",
-          "Kubernetes"
-        ],
-        "deep": [
-          "API"
-        ]
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 4,
-        "explanatory_depth": 4,
-        "evidence": 4,
-        "freshness": 5
-      },
-      "lead_score": 19,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "lead_rank": 1,
-      "selection_reason": "핵심뉴스 후보 1 · 점수 19"
-    },
-    {
-      "id": "5b9d520802ee",
-      "title": "Azure DevOps Remote MCP Server Reaches GA, Without Support for Claude, ChatGPT, or Cursor",
-      "normalized_title": "azure devops remote mcp server reaches ga without support for claude chatgpt or cursor",
-      "url": "https://www.infoq.com/news/2026/08/azure-devops-remote-mcp-ga",
-      "published_at": "2026-08-21T09:55:00+00:00",
-      "summary": "Microsoft has made the Azure DevOps Remote MCP Server generally available, offering a hosted endpoint into work items, repos, and pipelines with nothing to install. Claude Desktop, Claude Code, ChatGPT, and Cursor cannot connect yet because Entra lacks support for dynamic client registration and Client ID Metadata Documents. By Steef-Jan Wiggers",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 3
-      },
-      "topic_tags": [
-        "ai",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "DevOps"
-        ],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [
-        "openai",
-        "microsoft",
-        "anthropic"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 3,
-        "explanatory_depth": 3,
-        "evidence": 4,
-        "freshness": 5
-      },
-      "lead_score": 16,
-      "recent_publisher": false,
-      "recent_brands": [
-        "microsoft",
-        "openai"
-      ],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "9bb8e6b96e74",
-      "title": "LLM 서빙, 띄우는 것과 잘 띄우는 것 사이",
-      "normalized_title": "llm 서빙 띄우는 것과 잘 띄우는 것 사이",
-      "url": "https://toss.tech/article/tech_talk_talk_2",
-      "published_at": "2026-08-21T01:00:00+00:00",
-      "summary": "비어 있는 캐시, 완벽한 알리바이, 사라진 처리량",
-      "source_id": "toss-tech",
-      "source_family": "toss",
-      "source_name": "토스 테크",
-      "group": "korean_editorial",
-      "source_weight": 4,
-      "lane_bias": {
-        "practical": 3,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 2
-      },
-      "topic_tags": [
-        "ai",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 3,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 13,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -5199,11 +5131,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "03382cb4b1a3",
-      "title": "역대 최대 2D 우주 지도 공개",
-      "normalized_title": "역대 최대 2d 우주 지도 공개",
-      "url": "https://news.hada.io/topic?id=32775",
-      "published_at": "2026-08-22T20:42:28+00:00",
+      "id": "5b3469041bc5",
+      "title": "Wi-Fi 8, 수년 만에 속도 경쟁에서 벗어난 무선 업그레이드",
+      "normalized_title": "wi fi 8 수년 만에 속도 경쟁에서 벗어난 무선 업그레이드",
+      "url": "https://news.hada.io/topic?id=32812",
+      "published_at": "2026-08-23T19:38:19+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5258,11 +5190,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "da8aade06fb4",
-      "title": "무역 협상 결렬로 캐나다가 미국 관세에 ‘달러 대 달러’로 맞대응",
-      "normalized_title": "무역 협상 결렬로 캐나다가 미국 관세에 달러 대 달러 로 맞대응",
-      "url": "https://news.hada.io/topic?id=32774",
-      "published_at": "2026-08-22T20:39:28+00:00",
+      "id": "877632055770",
+      "title": "슬로바키아, 과속 단속 카메라에서 러시아 백도어 발견",
+      "normalized_title": "슬로바키아 과속 단속 카메라에서 러시아 백도어 발견",
+      "url": "https://news.hada.io/topic?id=32810",
+      "published_at": "2026-08-23T18:31:38+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5317,11 +5249,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "33a3b9770662",
-      "title": "Sid Meier's Pirates!가 남긴 잊힌 유산",
-      "normalized_title": "sid meier s pirates 가 남긴 잊힌 유산",
-      "url": "https://news.hada.io/topic?id=32773",
-      "published_at": "2026-08-22T20:36:28+00:00",
+      "id": "965e8786400e",
+      "title": "Qwen 3.8 27B, 리버스 엔지니어링 작업을 30분 만에 완료",
+      "normalized_title": "qwen 3 8 27b 리버스 엔지니어링 작업을 30분 만에 완료",
+      "url": "https://news.hada.io/topic?id=32808",
+      "published_at": "2026-08-23T16:32:39+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5376,11 +5308,72 @@
       "recent_topic_family": ""
     },
     {
-      "id": "d0ebaa1abac8",
-      "title": "새로운 세계: 우리는 J.G. Ballard와 William Gibson의 미래에 살고 있다",
-      "normalized_title": "새로운 세계 우리는 j g ballard와 william gibson의 미래에 살고 있다",
-      "url": "https://news.hada.io/topic?id=32772",
-      "published_at": "2026-08-22T19:32:45+00:00",
+      "id": "da3c87733318",
+      "title": "끌어들이고, 붙잡고, 수집하고, 숨긴다: 중대 재판 첫 주에 공개된 Meta의 혐의 전략",
+      "normalized_title": "끌어들이고 붙잡고 수집하고 숨긴다 중대 재판 첫 주에 공개된 meta의 혐의 전략",
+      "url": "https://news.hada.io/topic?id=32805",
+      "published_at": "2026-08-23T15:32:20+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [
+        "meta"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "37f2123fff79",
+      "title": "성숙 과정에서 얻은 세 가지 중요한 깨달음",
+      "normalized_title": "성숙 과정에서 얻은 세 가지 중요한 깨달음",
+      "url": "https://news.hada.io/topic?id=32804",
+      "published_at": "2026-08-23T14:42:10+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5435,11 +5428,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "575ccb7be87c",
-      "title": "TUI를 그만 만드세요",
-      "normalized_title": "tui를 그만 만드세요",
-      "url": "https://news.hada.io/topic?id=32771",
-      "published_at": "2026-08-22T16:33:47+00:00",
+      "id": "79f6c00fd838",
+      "title": "칸트 관점에서 본 Justin Bieber의 「Sorry」",
+      "normalized_title": "칸트 관점에서 본 justin bieber의 sorry",
+      "url": "https://news.hada.io/topic?id=32802",
+      "published_at": "2026-08-23T14:39:10+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5489,6 +5482,306 @@
         "freshness": 5
       },
       "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "dec3587bd561",
+      "title": "2026년 Rust GUI 라이브러리 조사",
+      "normalized_title": "2026년 rust gui 라이브러리 조사",
+      "url": "https://news.hada.io/topic?id=32799",
+      "published_at": "2026-08-23T13:10:46+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "d11d2265eae6",
+      "title": "소프트웨어가 계속 느린 데는 이유가 있다",
+      "normalized_title": "소프트웨어가 계속 느린 데는 이유가 있다",
+      "url": "https://news.hada.io/topic?id=32798",
+      "published_at": "2026-08-23T13:07:45+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "0b584ccc86e2",
+      "title": "더 나은 작가가 되려면 가능한 한 많이 읽어라",
+      "normalized_title": "더 나은 작가가 되려면 가능한 한 많이 읽어라",
+      "url": "https://news.hada.io/topic?id=32797",
+      "published_at": "2026-08-23T12:32:33+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "52f550497cd0",
+      "title": "NetBSD와 내 삶(2005)",
+      "normalized_title": "netbsd와 내 삶 2005",
+      "url": "https://news.hada.io/topic?id=32796",
+      "published_at": "2026-08-23T12:01:36+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 1
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 1,
+        "evidence": 3,
+        "freshness": 5
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "1c6c4214e92a",
+      "title": "DRAM Controller Register Manipulation Breaks CPU Memory Isolation",
+      "normalized_title": "dram controller register manipulation breaks cpu memory isolation",
+      "url": "https://www.infoq.com/news/2026/08/amd-memory-exploit",
+      "published_at": "2026-08-23T04:04:00+00:00",
+      "summary": "Security researcher Christopher Domas developed skitter-creek-bath-salts, an open-source hardware security tool that disrupts CPU privilege boundaries by manipulating memory controller translation registers. This allows unprivileged software to access protected memory regions, revealing a vulnerability in modern processor architectures that could affect cloud and confidential computing security. By Olimpiu Pop",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 4
+      },
+      "topic_tags": [
+        "security",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "cloud"
+        ]
+      },
+      "topic_family": "security",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 2,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 5
+      },
+      "lead_score": 16,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -5560,368 +5853,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "cbc0ede4f64b",
-      "title": "Labor0를 만든 이유",
-      "normalized_title": "labor0를 만든 이유",
-      "url": "https://news.hada.io/topic?id=32769",
-      "published_at": "2026-08-22T14:28:07+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "b96eb9c08fe2",
-      "title": "Rust Glancer - 메모리를 100배 적게 쓰는 Rust LSP",
-      "normalized_title": "rust glancer 메모리를 100배 적게 쓰는 rust lsp",
-      "url": "https://news.hada.io/topic?id=32768",
-      "published_at": "2026-08-22T13:32:57+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "abdd3a4d71ac",
-      "title": "캐나다, 대미 무역 협상 중단...미국 관세에 동일 액수로 맞대응",
-      "normalized_title": "캐나다 대미 무역 협상 중단 미국 관세에 동일 액수로 맞대응",
-      "url": "https://news.hada.io/topic?id=32766",
-      "published_at": "2026-08-22T12:33:39+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "중단"
-        ],
-        "reader_impact": [
-          "중단"
-        ],
-        "reader_consequence": [
-          "중단"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 11,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "2f4a60b08dfc",
-      "title": "소비자 권리 위키 — 반소비자 관행 데이터베이스",
-      "normalized_title": "소비자 권리 위키 반소비자 관행 데이터베이스",
-      "url": "https://news.hada.io/topic?id=32765",
-      "published_at": "2026-08-22T11:37:13+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": [
-          "데이터베이스"
-        ]
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 12,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "dad04463a5f1",
-      "title": "Show GN: Three.js로 만든 일본 오늘의 운세 체험",
-      "normalized_title": "show gn three js로 만든 일본 오늘의 운세 체험",
-      "url": "https://news.hada.io/topic?id=32762",
-      "published_at": "2026-08-22T09:16:30+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "e7a4cc1aec74",
-      "title": "소프트웨어가 더 이상 느릴 이유는 없다",
-      "normalized_title": "소프트웨어가 더 이상 느릴 이유는 없다",
-      "url": "https://news.hada.io/topic?id=32761",
-      "published_at": "2026-08-22T08:35:28+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "b2d5347dc72c",
       "title": "VoidZero Releases Vite+ Beta: A Unified Web Toolchain Behind a Single Command",
       "normalized_title": "voidzero releases vite beta a unified web toolchain behind a single command",
@@ -5980,67 +5911,6 @@
         "freshness": 5
       },
       "lead_score": 16,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "ed5639998786",
-      "title": "SSL에 대해 배운 모든 것이 더는 유효하지 않음 [유튜브]",
-      "normalized_title": "ssl에 대해 배운 모든 것이 더는 유효하지 않음 유튜브",
-      "url": "https://news.hada.io/topic?id=32756",
-      "published_at": "2026-08-22T01:15:01+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "유튜브"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -6111,203 +5981,12 @@
       "recent_topic_family": ""
     },
     {
-      "id": "82ba5527f18e",
-      "title": "TikTok reaches $400M settlement over children’s privacy lawsuit",
-      "normalized_title": "tiktok reaches 400m settlement over children s privacy lawsuit",
-      "url": "https://techcrunch.com/2026/08/21/tiktok-reaches-400m-settlement-over-childrens-privacy-lawsuit",
-      "published_at": "2026-08-21T20:25:21+00:00",
-      "summary": "Two years after the U.S. Department of Justice alleged that TikTok violated the Children’s Online Privacy Protection Act, it has reached a $400 million settlement.",
-      "source_id": "techcrunch",
-      "source_family": "techcrunch",
-      "source_name": "TechCrunch",
-      "group": "general_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [
-        "privacy"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "privacy"
-        ],
-        "reader_impact": [
-          "privacy"
-        ],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "privacy",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "54c67d08d3f0",
-      "title": "Doodle generative compositions in your browser with Musical Spirograph",
-      "normalized_title": "doodle generative compositions in your browser with musical spirograph",
-      "url": "https://www.theverge.com/entertainment/983322/musical-spirograph-generative-composition",
-      "published_at": "2026-08-21T18:53:59+00:00",
-      "summary": "I remember having a Spirograph as a kid and being obsessed with it. Its geometric patterns are hypnotic and gorgeous. I also love generative music composition. So bringing those two things together in a browser tab, I'm hooked. Musical Spirograph is a relatively simple concept. A set of points dash around the screen according to [...]",
-      "source_id": "the-verge",
-      "source_family": "verge",
-      "source_name": "The Verge",
-      "group": "general_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "browser"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 9,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "dd2cb38f9a5c",
-      "title": "US government lab is probing Chinese lidar for security vulnerabilities",
-      "normalized_title": "us government lab is probing chinese lidar for security vulnerabilities",
-      "url": "https://techcrunch.com/2026/08/21/us-government-lab-is-probing-chinese-lidar-for-security-vulnerabilities",
-      "published_at": "2026-08-21T16:01:54+00:00",
-      "summary": "The security review is being performed by the Idaho National Laboratory, and the research is being funded by a company -- or a group of companies -- in the electric and autonomous vehicle industries.",
-      "source_id": "techcrunch",
-      "source_family": "techcrunch",
-      "source_name": "TechCrunch",
-      "group": "general_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "topic_tags": [
-        "security"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "security"
-        ],
-        "reader_impact": [
-          "security"
-        ],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "security",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "fb1e61e522e5",
-      "title": "Mini book: Architecture as a Socio-Technical Craft",
-      "normalized_title": "mini book architecture as a socio technical craft",
-      "url": "https://www.infoq.com/minibooks/architect-sociotechnical-craft",
-      "published_at": "2026-08-21T11:30:00+00:00",
-      "summary": "Architecture is not a fixed choice made once; fitness is a moving target driven by changing regulations, tech, and markets. Even a sound design can silently stop fitting over time without bad calls. Spanning seven articles on context stores, gateways, and topologies, this collection treats architecture as an evolving sociotechnical craft where teams deliberately shape friction, fitness, and flow. By InfoQ",
+      "id": "6d68a2521c31",
+      "title": "Cloudflare Cuts Astro GitHub Issues by 85% with AI Agents",
+      "normalized_title": "cloudflare cuts astro github issues by 85 with ai agents",
+      "url": "https://www.infoq.com/news/2026/08/cloudflare-astro-ai-agents",
+      "published_at": "2026-08-21T14:09:00+00:00",
+      "summary": "Cloudflare, Astro, AI agents, GitHub Actions, issue triage, agentic AI, software architecture, open source, developer tools, AI automation, automated testing, human in the loop, agent workflows, GitHub, software engineering, AI software development, bug triage, continuous integration, developer productivity, autonomous agents, AI coding, Cloudflare Workers, Flue, triagebot By Leela Kumili",
       "source_id": "infoq",
       "source_family": "infoq",
       "source_name": "InfoQ",
@@ -6321,41 +6000,54 @@
       "score": 6,
       "score_reasons": [
         "출처 가중치 3",
-        "48시간 이내"
+        "7일 이내",
+        "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 2,
+        "practical": 3,
         "deep": 4
       },
-      "topic_tags": [],
+      "topic_tags": [
+        "ai",
+        "cloud",
+        "developer_tools",
+        "automation"
+      ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 0,
+        "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 0,
+        "practical": 1,
         "deep": 1
       },
       "raw_lane_matches": {
-        "broad": [],
+        "broad": [
+          "AI"
+        ],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [],
+        "practical": [
+          "GitHub"
+        ],
         "deep": [
           "architecture"
         ]
       },
-      "topic_family": "other",
-      "brand_tags": [],
+      "topic_family": "ai",
+      "brand_tags": [
+        "github",
+        "cloudflare"
+      ],
       "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 2,
+        "reader_relevance": 2,
+        "actionability": 3,
         "explanatory_depth": 4,
         "evidence": 4,
-        "freshness": 5
+        "freshness": 3
       },
       "lead_score": 16,
       "recent_publisher": false,
@@ -6363,191 +6055,77 @@
       "recent_topic_family": ""
     },
     {
-      "id": "a5a3acf56b64",
-      "title": "S3 Compatibility Doesn't Guarantee S3-Level Security",
-      "normalized_title": "s3 compatibility doesn t guarantee s3 level security",
-      "url": "https://www.infoq.com/news/2026/08/s3-clone-security",
-      "published_at": "2026-08-21T08:41:00+00:00",
-      "summary": "Security researchers at Wiz recently examined S3-compatible object storage services across six popular neoclouds, revealing significant security gaps compared to Amazon S3. While S3 has become the de facto standard for object storage, most services lack several of AWS's security protections. By Renato Losio",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 3
-      },
-      "topic_tags": [
-        "security",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 1,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "security"
-        ],
-        "reader_impact": [
-          "security"
-        ],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "security",
-      "brand_tags": [
-        "amazon"
-      ],
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 2,
-        "explanatory_depth": 3,
-        "evidence": 4,
-        "freshness": 5
-      },
-      "lead_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "ab1ab82ed8a7",
-      "title": "일본어 상품 검색 정확도 높이기: Elasticsearch + Kuromoji에서 OpenSearch + Sudachi로",
-      "normalized_title": "일본어 상품 검색 정확도 높이기 elasticsearch kuromoji에서 opensearch sudachi로",
-      "url": "https://techblog.lycorp.co.jp/ko/japanese-search-kuromoji-to-sudachi",
-      "published_at": "2026-08-21T02:00:00+00:00",
-      "summary": "들어가며안녕하세요. LINE Plus에서 통합 커머스 개발을 맡고 있는 김진성입니다.2025년 초, 통합 커머스 프로젝트가 시작되었습니다.서비스가 안정되어 가던 중, 일본 담당자로...",
-      "source_id": "lycorp-tech",
-      "source_family": "lycorp",
-      "source_name": "LY Corporation Tech Blog",
+      "id": "402ea7eb344a",
+      "title": "더 많은 자율성, 더 촘촘한 제약...기업 에이전틱 AI의 외줄타기",
+      "normalized_title": "더 많은 자율성 더 촘촘한 제약 기업 에이전틱 ai의 외줄타기",
+      "url": "https://www.itworld.co.kr/article/4212226/%eb%8d%94-%eb%a7%8e%ec%9d%80-%ec%9e%90%ec%9c%a8%ec%84%b1-%eb%8d%94-%ec%b4%98%ec%b4%98%ed%95%9c-%ec%a0%9c%ec%95%bd%ea%b8%b0%ec%97%85-%ec%97%90%ec%9d%b4%ec%a0%84%ed%8b%b1-ai%ec%9d%98-%ec%99%b8.html",
+      "published_at": "2026-08-21T01:28:45+00:00",
+      "summary": "기업은 채팅 기반 어시스턴트에서 이제는 실제 작업을 수행할 수 있는 시스템으로 옮겨가고 있다. 이 변화는 사람들이 AI에 작업을 요청하는 방식에서 볼 수 있다. 이들은 코드를 작성하고 티켓을 제출하고 CRM 레코드를 업데이트하고 규정 준수 체크리스트를 실행하고 풀 요청을 생성하고 다음 단계의 작업까지 이어서 처리할 수 있는 어시스턴트를 요구한다. 이러한 형태의 작업에는 에이전틱 시스템이 필요하다. 필자가 정의하는 에이전틱 시스템은 ‘사용자의 목표를 일련의 단계로 전환하고 툴을 통해 각 단계를 실행하고 어떤 일이 일어났는지 추적하고 감사 가능한 결과를 생산하는 소프트웨어’다. 모델은 계획과 언어를 담당하고 그 주변 시스템은 권한, 상태, 검증, 통제를 맡는다. 엔지니어링 측면의 질문은 분야에 관계없이 동일하다. 유용할 만큼 충분한 자율성을 부여하면서도 결과의 예측 가능성을 유지하려면 어떻게 해야 하는가? 이 질문에 대한 프로덕션의 답은 ‘명시적이고 강제되는 제약’이다. Adnan Masood 에이전트 루프 정의 에이전트 루프는 시스템이 작업을 완료하기 위해 따르는 반복되는 사이클이다. 필자는 다음과 같은 간단한 루프를 사용하며, 각 단계를 관찰할 수 있도록 한다. 계획: 에이전트가 목표와 현재 상태, 정책을 기반으로 다음 행동을 선택한다. 실행: 에이전트가 구조화된 인수를 사용해 툴을 호출한 다음 결과를 기록한다. 검증: 정책과 작업에 대한 기대치를 기준으로 시스템이 결과를 검사한다. 커밋: 시스템이 상태 변경 사항을 지속성 저장소에 기록하고 감사 이벤트를 생성한다. 구현에서의 구체적인 의미는 다음과 같다. 계획은 구조화된 의도를 생성하고, 실행은 정의된 스키마가 있는 제한적인 인터페이스를 사용하고, 검증은 결정론적 검사를 수행하고, 커밋은 버전 관리되는 상태와 추적 컨텍스트를 기록한다. 툴과 툴 계약의 정의 모델 외부의 호출 가능한 모든 기능을 툴이라고 한다. API, 데이터베이스 쿼리, 워크플로우 엔진, 코드 리포지토리 작업, 브라우저 자동화 단계 등이 툴에 해당한다. 툴은 기록 시스템(systems of record)을 변경할 수 있어 운영 리스크의 핵심 요인으로 꼽힌다. 툴 계약이란 툴을 안전하게 사용할 수 있게 해주는 경계다. 필자는 툴 계약을 설계 검토의 일부로 문서화한다. 계약에 포함되는 항목은 다음과 같다. 입력: 자유 양식의 매개변수를 거부하고 유형을 강제하는 스키마. 권한: ID 컨텍스트, 범위, 데이터 경계. 멱등성: 재시도가 중복된 변경을 생성하지 않도록 하는 요청 키와 재생 규칙. 속도 제한: 공유 시스템을 보호하기 위한 사용자별, 에이전트별, 툴별 제한. 오류 시맨틱: 안정적인 오류 코드와 재시도 지침. 감사 필드: 요청 ID, 행위자, 시간, 대상 레코드, 전/후 참조. 이 계약을 통해 에이전트는 일반적인 분산 시스템 클라이언트가 되며 테스트와 디버깅이 가능해지고 운영 팀이 소유할 수 있는 대상이 된다. 정책을 실행 가능한 규칙으로 정의 에이전틱 시스템에서 정책은 런타임이 매 단계에 강제하는 규칙을 의미한다. 필자는 정책을 실행 가능한 모듈로 취급한다. 정책은 요청 경로에 위치하며 버전이 관리된다. 또한 의사결정 시 감사 이벤트를 생성한다. 일반적인 정책 영역에는 데이터 액세스, 툴 허용 목록, 쓰기 작업이 승인된 대상, 검색된 자료에 필요한 인용, 제한된 요청에 대한 거부 규칙 등이 포함된다. 정책은 단순하게 시작해서 인시던트 사례를 바탕으로 발전한다. 상태를 일급 구성요소로 취급 상태는 에이전트가 알고 있는 것과 수행한 작업에 대한 지속되는 기록이다. 필자는 상태를 모델 외부에 두고 명확한 스키마로 지속성을 부여하며 단계별로 버전을 관리한다. 필자는 최소한 목표, 계획 단계, 툴 입력과 출력, 검증 결과, 최종 결정을 저장한다. 검색이 루프에 포함된 경우에는 검색된 소스도 저장한다. 저장된 상태 정보는 사고 발생 상황에서의 재생과 이후의 평가를 뒷받침한다. 상태를 대화 버퍼에만 보관할 경우 규모가 커질 때 행동 추론 능력을 잃게 된다. 지속되는 상태 저장소는 재시도, 핸드오프, 거버넌스 보고를 뒷받침한다. 검증을 행동의 관문으로 사용 검증은 일련의 검사로, 쓰기 전과 툴 호출 후에 실행된다. 필자는 가능한 모든 경우 결정론적 검사를 사용하며 모델 출력을 검증될 입력으로 취급한다. 예를 들어 스키마 검증, 권한 검사, 참조 무결성 검사, 대상 시스템에 대한 제약 조건 등이 있다. 콘텐츠 워크플로우의 경우 인용 커버리지와 제한된 데이터에 대한 검사가 검증에 포함된다. 또한 영향이 큰 행동에 대해서는 신뢰도 정책을 사용한다. 시스템은 특정 툴이나 대상에 대해 인간의 승인 단계를 요구할 수 있다. 승인은 컨텍스트와 증거로 뒷받침되는 명확한 행동으로 범위를 좁힐 때 가장 잘 작동한다. Adnan Masood 루프를 둘러싼 평가 틀 구축 에이전트에 대한 평가는 종단 간 작업 완료와 안전 속성에 초점을 둔다. 필자는 작업 성공 기준을 관찰 가능한 사실로 정의한다(예를 들어 티켓이 존재함, 레코드가 올바른 필드로 업데이트됨, 풀 요청이 검사를 통과함, 변경 요청이 적절한 승인을 받음 등). 필자는 일상적인 작업과 예외적인 사례를 아우르는 시나리오 모음을 만들어서, 가능한 경우 고정된 시드와 안정적인 툴 목(mock)으로 시나리오 모음을 실행한다. 또한 현실적인 데이터를 갖춘 스테이징 환경을 대상으로 소규모의 라이브 테스트도 실행한다. 필자는 운영과 연결된 지표를 추적한다(예를 들어 시나리오별 작업 완료율, 작업당 평균 단계 수, 툴 오류율, 검증 실패율, 인간 승인율, 툴이 부분적인 결과를 반환하는 경우의 평균 복구 시간 등). 실용적인 참조 패턴 필자는 감독자 패턴을 사용해 프로덕션 에이전트를 구축한다. 감독자는 정책, 라우팅, 상태를 소유한다. 검색, 티켓 요약, 리포지토리 작업과 같은 좁은 범위의 작업은 특화된 작업자가 처리한다. 작업자는 각자의 계약에 필요한 최소 권한으로 실행된다. 간단히 스케치하면 다음과 같다. def run_task(goal, user): ctx = start_context(goal, user) while ctx.open_steps: intent = planner.propose_next(ctx) intent = policy.enforce_intent(intent, ctx) call = tool_router.bind(intent, ctx) result = call.execute(idempotency_key=ctx.step_key) checks = verifier.run(intent, result, ctx) ctx = commit_step(ctx, intent, result, checks) if checks.requires_approval: ctx = wait_for_approval(ctx) return ctx.outcome 이 구조는 권한을 감독자에게 둔다. 또한 툴 권한을 좁게 유지한다. 운영 팀은 정책을 강제하고 행동을 관찰할 수 있는 단일 지점을 갖게 된다. 에이전트의 안정성을 유지하는 운영 관행 프로덕션 환경에서 안전하게 에이전트를 실행하고자 하는 팀을 위해 필자는 다음과 같은 간략한 관행을 사용한다. 영향 반경이 작은 워크플로우부터 시작한다. 읽기 중심의 작업과 초안 생성은 자신감과 계측 체계를 구축하는 데 도움이 된다. 제한적인 툴 허용 목록을 기본으로 적용한다. 측정된 결과와 인시던트 사례를 바탕으로 확장해 나간다. 단계적 롤아웃을 사용한다. 내부 사용자로 시작한 다음 소규모 집단으로, 그 다음 더 넓은 범위로 노출을 확대한다. 툴 스키마를 엄격하게 유지한다. 자유 양식의 툴 매개변수는 예측 불가능한 쓰기를 유발한다. 예산을 설정한다. 작업당 최대 단계 수, 최대 툴 호출 횟수, 비용 상한을 강제한다. 런북을 유지한다. 런북에는 롤백 절차, 툴별 비활성화 스위치, 인간 에스컬레이션 경로가 포함되어야 한다. 최소 실행 가능 체크리스트 필자는 팀이 대규모 환경에서 에이전트 워크플로우를 실행하기 전에 다음과 같은 요소를 확인한다. 에이전트 루프에 대한 문서화된 정의(각 단계의 트레이스 포함) 스키마, 권한, 멱등성, 속도 제한, 감사 필드가 포함된 툴 계약 정책 모듈(요청 경로에서 버전 관리 및 시행) 재생과 거버넌스 보고를 위한 단계별 레코드를 갖춘 지속성 상태 저장소 쓰기 작업과 영향 반경이 큰 행동에 대한 검증 관문 작업 완료와 안전성 속성을 측정하는 평가 모음 예산, 단계적 롤아웃, 툴별 비활성화 스위치가 포함된 운영 컨트롤 제약이 핵심 에이전틱 시스템은 언어 인터페이스를 비즈니스 시스템에 연결해주므로 기업 작업에 잘 맞는다. 자율성이 명시적인 제약 내에 위치해야 시스템이 잘 작동한다. 에이전트의 행동을 측정, 개선하고 신뢰할 수 있는 대상으로 만들어주는 것이 바로 제약이다. dl-itworldkorea@foundryco.com",
+      "source_id": "itworld-korea",
+      "source_family": "itworld",
+      "source_name": "ITWorld Korea",
       "group": "korean_editorial",
       "source_weight": 3,
       "lane_bias": {
-        "practical": 2,
-        "deep": 2
+        "broad": 2,
+        "practical": 1
       },
       "requires_manual_review": true,
       "score": 6,
       "score_reasons": [
         "출처 가중치 3",
-        "48시간 이내"
+        "7일 이내",
+        "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 3,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 2,
-        "deep": 2
+        "practical": 4,
+        "deep": 4
       },
-      "topic_tags": [],
+      "topic_tags": [
+        "ai",
+        "privacy",
+        "developer_tools",
+        "automation"
+      ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 1,
         "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
+        "practical": 3,
+        "deep": 4
       },
       "raw_lane_matches": {
         "broad": [
-          "검색"
+          "AI"
         ],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "freshness": 5
-      },
-      "lead_score": 12,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "e3ddd7a65cd3",
-      "title": "Measuring benchmark optimization in speech recognition",
-      "normalized_title": "measuring benchmark optimization in speech recognition",
-      "url": "https://huggingface.co/blog/asr-benchmark-optimization",
-      "published_at": "2026-08-21T00:00:00+00:00",
-      "summary": "",
-      "source_id": "huggingface-blog",
-      "source_family": "huggingface-blog",
-      "source_name": "Hugging Face Blog",
-      "group": "community",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 3
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 1
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
+        "practical": [
+          "업데이트",
+          "API",
+          "자동화"
+        ],
         "deep": [
-          "benchmark"
+          "API",
+          "데이터베이스",
+          "모델",
+          "쿼리"
         ]
       },
-      "topic_family": "other",
+      "topic_family": "ai",
       "brand_tags": [],
       "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 3,
+        "reader_relevance": 2,
+        "actionability": 4,
+        "explanatory_depth": 4,
         "evidence": 3,
-        "freshness": 5
+        "freshness": 3
       },
-      "lead_score": 13,
+      "lead_score": 16,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -8632,6 +8210,205 @@
       "recent_topic_family": ""
     },
     {
+      "id": "f04108c7ad55",
+      "title": "Cloudflare Turns Engineering Standards Into an AI-Enforced Control System",
+      "normalized_title": "cloudflare turns engineering standards into an ai enforced control system",
+      "url": "https://www.infoq.com/news/2026/08/cloudflare-ai-enforcement",
+      "published_at": "2026-08-21T12:00:00+00:00",
+      "summary": "Cloudflare has recently detailed how it is using AI to transform internal engineering standards from passive documentation into an actively enforced control system across the software development lifecycle. By Craig Risi",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 3
+      },
+      "topic_tags": [
+        "ai",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [
+        "cloudflare"
+      ],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 2,
+        "explanatory_depth": 3,
+        "evidence": 4,
+        "freshness": 3
+      },
+      "lead_score": 12,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "c24bd9c368a1",
+      "title": "Presentation: Enchant Your AI and APIs with eBPF Magic 🪄",
+      "normalized_title": "presentation enchant your ai and apis with ebpf magic",
+      "url": "https://www.infoq.com/presentations/ebpf-ai-gateway-kubernetes-security",
+      "published_at": "2026-08-21T11:00:00+00:00",
+      "summary": "Dan Finneran discusses the risks of unowned AI-generated code in production and demonstrates how eBPF can intercept and control AI API traffic in Kubernetes. He explains how kernel-level socket hooks enable transparent prompt filtering, model swapping, token limits, and syscall restrictions to secure AI agents without modifying application source code or restarting containers. By Dan Finneran",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 4,
+        "deep": 4
+      },
+      "topic_tags": [
+        "ai",
+        "developer_tools"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "API",
+          "Kubernetes"
+        ],
+        "deep": [
+          "API"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 4,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 3
+      },
+      "lead_score": 17,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "9bb8e6b96e74",
+      "title": "LLM 서빙, 띄우는 것과 잘 띄우는 것 사이",
+      "normalized_title": "llm 서빙 띄우는 것과 잘 띄우는 것 사이",
+      "url": "https://toss.tech/article/tech_talk_talk_2",
+      "published_at": "2026-08-21T01:00:00+00:00",
+      "summary": "비어 있는 캐시, 완벽한 알리바이, 사라진 처리량",
+      "source_id": "toss-tech",
+      "source_family": "toss",
+      "source_name": "토스 테크",
+      "group": "korean_editorial",
+      "source_weight": 4,
+      "lane_bias": {
+        "practical": 3,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 5,
+      "score_reasons": [
+        "출처 가중치 4",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 3,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 3,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 11,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
       "id": "812ec8ea7bcf",
       "title": "AI Won't Replace Project Managers, But It is Reshaping How Work Gets Done",
       "normalized_title": "ai won t replace project managers but it is reshaping how work gets done",
@@ -9171,6 +8948,250 @@
       "recent_topic_family": ""
     },
     {
+      "id": "54c67d08d3f0",
+      "title": "Doodle generative compositions in your browser with Musical Spirograph",
+      "normalized_title": "doodle generative compositions in your browser with musical spirograph",
+      "url": "https://www.theverge.com/entertainment/983322/musical-spirograph-generative-composition",
+      "published_at": "2026-08-21T18:53:59+00:00",
+      "summary": "I remember having a Spirograph as a kid and being obsessed with it. Its geometric patterns are hypnotic and gorgeous. I also love generative music composition. So bringing those two things together in a browser tab, I'm hooked. Musical Spirograph is a relatively simple concept. A set of points dash around the screen according to [...]",
+      "source_id": "the-verge",
+      "source_family": "verge",
+      "source_name": "The Verge",
+      "group": "general_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "broad": 2,
+        "practical": 1
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 3,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 0
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "browser"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 0,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 7,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "fb1e61e522e5",
+      "title": "Mini book: Architecture as a Socio-Technical Craft",
+      "normalized_title": "mini book architecture as a socio technical craft",
+      "url": "https://www.infoq.com/minibooks/architect-sociotechnical-craft",
+      "published_at": "2026-08-21T11:30:00+00:00",
+      "summary": "Architecture is not a fixed choice made once; fitness is a moving target driven by changing regulations, tech, and markets. Even a sound design can silently stop fitting over time without bad calls. Spanning seven articles on context stores, gateways, and topologies, this collection treats architecture as an evolving sociotechnical craft where teams deliberately shape friction, fitness, and flow. By InfoQ",
+      "source_id": "infoq",
+      "source_family": "infoq",
+      "source_name": "InfoQ",
+      "group": "independent_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 3
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 4
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "architecture"
+        ]
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 2,
+        "explanatory_depth": 4,
+        "evidence": 4,
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "ab1ab82ed8a7",
+      "title": "일본어 상품 검색 정확도 높이기: Elasticsearch + Kuromoji에서 OpenSearch + Sudachi로",
+      "normalized_title": "일본어 상품 검색 정확도 높이기 elasticsearch kuromoji에서 opensearch sudachi로",
+      "url": "https://techblog.lycorp.co.jp/ko/japanese-search-kuromoji-to-sudachi",
+      "published_at": "2026-08-21T02:00:00+00:00",
+      "summary": "들어가며안녕하세요. LINE Plus에서 통합 커머스 개발을 맡고 있는 김진성입니다.2025년 초, 통합 커머스 프로젝트가 시작되었습니다.서비스가 안정되어 가던 중, 일본 담당자로...",
+      "source_id": "lycorp-tech",
+      "source_family": "lycorp",
+      "source_name": "LY Corporation Tech Blog",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 2,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 2,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "검색"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 2,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 10,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "e3ddd7a65cd3",
+      "title": "Measuring benchmark optimization in speech recognition",
+      "normalized_title": "measuring benchmark optimization in speech recognition",
+      "url": "https://huggingface.co/blog/asr-benchmark-optimization",
+      "published_at": "2026-08-21T00:00:00+00:00",
+      "summary": "",
+      "source_id": "huggingface-blog",
+      "source_family": "huggingface-blog",
+      "source_name": "Hugging Face Blog",
+      "group": "community",
+      "source_weight": 3,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 4,
+      "score_reasons": [
+        "출처 가중치 3",
+        "7일 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 3
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "benchmark"
+        ]
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 3,
+        "evidence": 3,
+        "freshness": 3
+      },
+      "lead_score": 11,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
       "id": "eab5285cfdeb",
       "title": "Up to 3.2x Faster Inference with LFM2.5-DSpark",
       "normalized_title": "up to 3 2x faster inference with lfm2 5 dspark",
@@ -9225,70 +9246,6 @@
         "freshness": 3
       },
       "lead_score": 9,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "a45d568229b8",
-      "title": "Presentation: Why Fetch When You Can Sync? Building Local-First Apps on a Sync Engine Architecture",
-      "normalized_title": "presentation why fetch when you can sync building local first apps on a sync engine architecture",
-      "url": "https://www.infoq.com/presentations/local-first-sync-engine",
-      "published_at": "2026-08-20T13:19:00+00:00",
-      "summary": "James Arthur shares why sync is the next frontier in frontend architecture. He explains how extending reactivity to the server with Electric and TanStack DB replaces imperative fetching with declarative data bindings. Learn how query-driven sync and local optimistic updates enable engineering leaders to build insanely fast, collaborative, and agentic applications using their existing stack. By James Arthur",
-      "source_id": "infoq",
-      "source_family": "infoq",
-      "source_name": "InfoQ",
-      "group": "independent_editorial",
-      "source_weight": 3,
-      "lane_bias": {
-        "practical": 2,
-        "deep": 3
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "7일 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 5
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "frontend"
-        ],
-        "deep": [
-          "DB",
-          "architecture"
-        ]
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 3,
-        "explanatory_depth": 5,
-        "evidence": 4,
-        "freshness": 3
-      },
-      "lead_score": 17,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": ""
@@ -10124,12 +10081,12 @@
   ],
   "selected": [
     {
-      "id": "c24bd9c368a1",
-      "title": "Presentation: Enchant Your AI and APIs with eBPF Magic 🪄",
-      "normalized_title": "presentation enchant your ai and apis with ebpf magic",
-      "url": "https://www.infoq.com/presentations/ebpf-ai-gateway-kubernetes-security",
-      "published_at": "2026-08-21T11:00:00+00:00",
-      "summary": "Dan Finneran discusses the risks of unowned AI-generated code in production and demonstrates how eBPF can intercept and control AI API traffic in Kubernetes. He explains how kernel-level socket hooks enable transparent prompt filtering, model swapping, token limits, and syscall restrictions to secure AI agents without modifying application source code or restarting containers. By Dan Finneran",
+      "id": "b1c31da1d25d",
+      "title": "AWS Releases Aws-Bench to Evaluate Agents on Cloud Tasks",
+      "normalized_title": "aws releases aws bench to evaluate agents on cloud tasks",
+      "url": "https://www.infoq.com/news/2026/08/aws-bench-agent-evaluation",
+      "published_at": "2026-08-22T08:00:00+00:00",
+      "summary": "AWS has released aws-bench, an open-source benchmark for evaluating AI agents on real AWS tasks such as misconfigurations and infrastructure provisioning. Unlike traditional benchmarks, it uses real resources in disposable AWS accounts, scoring agent performance through automated verifiers. By Gianmarco Nalin",
       "source_id": "infoq",
       "source_family": "infoq",
       "source_name": "InfoQ",
@@ -10140,68 +10097,66 @@
         "deep": 3
       },
       "requires_manual_review": true,
-      "score": 7,
+      "score": 8,
       "score_reasons": [
         "출처 가중치 3",
         "48시간 이내",
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 4
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 2,
-        "deep": 1
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
       },
       "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [
-          "API",
-          "Kubernetes"
-        ],
+        "practical": [],
         "deep": [
-          "API"
+          "benchmark",
+          "cloud"
         ]
       },
       "topic_family": "ai",
-      "brand_tags": [],
+      "brand_tags": [
+        "amazon"
+      ],
       "lead_score_breakdown": {
         "reader_relevance": 2,
-        "actionability": 4,
-        "explanatory_depth": 4,
+        "actionability": 2,
+        "explanatory_depth": 5,
         "evidence": 4,
         "freshness": 5
       },
-      "lead_score": 19,
+      "lead_score": 18,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": "",
       "lead_rank": 1,
-      "selection_reason": "핵심뉴스 후보 1 · 점수 19"
+      "selection_reason": "핵심뉴스 후보 1 · 점수 18"
     },
     {
-      "id": "eb80560ee1a0",
-      "title": "The new GitHub Copilot experience in Slack",
-      "normalized_title": "the new github copilot experience in slack",
-      "url": "https://github.blog/changelog/2026-08-21-the-new-github-copilot-experience-in-slack",
-      "published_at": "2026-08-21T16:07:15+00:00",
-      "summary": "The GitHub integration in Slack now brings the agentic capabilities of GitHub Copilot CLI and the GitHub Copilot app into Slack in public preview. You can work with @GitHub to... The post The new GitHub Copilot experience in Slack appeared first on The GitHub Blog .",
+      "id": "9525995c428b",
+      "title": "CodeQL 2.26.3 improves GitHub Actions queries and JavaScript modeling",
+      "normalized_title": "codeql 2 26 3 improves github actions queries and javascript modeling",
+      "url": "https://github.blog/changelog/2026-08-19-codeql-2-26-3-improves-github-actions-queries-and-javascript-modeling",
+      "published_at": "2026-08-19T21:09:30+00:00",
+      "summary": "CodeQL 2.26.3 adds JavaScript, TypeScript, and Vue source modeling and improves the accuracy of several GitHub Actions queries. CodeQL is the static analysis engine behind GitHub code scanning, which helps... The post CodeQL 2.26.3 improves GitHub Actions queries and JavaScript modeling appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
       "source_family": "github",
       "source_name": "GitHub Changelog",
@@ -10215,10 +10170,11 @@
       "score_reasons": [
         "출처 가중치 5",
         "공식 출처",
-        "48시간 이내"
+        "7일 이내",
+        "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 5,
@@ -10229,118 +10185,49 @@
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 2,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [
           "GitHub",
-          "Copilot"
+          "TypeScript"
         ],
         "deep": []
       },
       "topic_family": "developer_tools",
       "brand_tags": [
-        "github",
-        "copilot"
+        "github"
       ],
       "lead_score_breakdown": {
         "reader_relevance": 2,
         "actionability": 5,
         "explanatory_depth": 0,
         "evidence": 5,
-        "freshness": 5
+        "freshness": 3
       },
-      "lead_score": 17,
+      "lead_score": 15,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": "",
       "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 17"
-    },
-    {
-      "id": "cbc3d52f59e1",
-      "title": "앤트로픽, '미소스 5' 적용 범위 확대...악용 차단하고 사이버 방어 지원",
-      "normalized_title": "앤트로픽 미소스 5 적용 범위 확대 악용 차단하고 사이버 방어 지원",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214242",
-      "published_at": "2026-08-22T02:15:37+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 4,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [
-          "차단"
-        ],
-        "reader_consequence": [
-          "지원",
-          "차단",
-          "확대"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
+      "selection_reason": "핵심뉴스 후보 2 · 점수 15"
     }
   ],
   "lead_shortlist": [
     {
-      "id": "c24bd9c368a1",
-      "title": "Presentation: Enchant Your AI and APIs with eBPF Magic 🪄",
-      "normalized_title": "presentation enchant your ai and apis with ebpf magic",
-      "url": "https://www.infoq.com/presentations/ebpf-ai-gateway-kubernetes-security",
-      "published_at": "2026-08-21T11:00:00+00:00",
-      "summary": "Dan Finneran discusses the risks of unowned AI-generated code in production and demonstrates how eBPF can intercept and control AI API traffic in Kubernetes. He explains how kernel-level socket hooks enable transparent prompt filtering, model swapping, token limits, and syscall restrictions to secure AI agents without modifying application source code or restarting containers. By Dan Finneran",
+      "id": "b1c31da1d25d",
+      "title": "AWS Releases Aws-Bench to Evaluate Agents on Cloud Tasks",
+      "normalized_title": "aws releases aws bench to evaluate agents on cloud tasks",
+      "url": "https://www.infoq.com/news/2026/08/aws-bench-agent-evaluation",
+      "published_at": "2026-08-22T08:00:00+00:00",
+      "summary": "AWS has released aws-bench, an open-source benchmark for evaluating AI agents on real AWS tasks such as misconfigurations and infrastructure provisioning. Unlike traditional benchmarks, it uses real resources in disposable AWS accounts, scoring agent performance through automated verifiers. By Gianmarco Nalin",
       "source_id": "infoq",
       "source_family": "infoq",
       "source_name": "InfoQ",
@@ -10351,68 +10238,66 @@
         "deep": 3
       },
       "requires_manual_review": true,
-      "score": 7,
+      "score": 8,
       "score_reasons": [
         "출처 가중치 3",
         "48시간 이내",
         "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 4
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 2,
-        "deep": 1
+        "deep": 5
+      },
+      "topic_tags": [
+        "ai",
+        "cloud"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 2
       },
       "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
-        "practical": [
-          "API",
-          "Kubernetes"
-        ],
+        "practical": [],
         "deep": [
-          "API"
+          "benchmark",
+          "cloud"
         ]
       },
       "topic_family": "ai",
-      "brand_tags": [],
+      "brand_tags": [
+        "amazon"
+      ],
       "lead_score_breakdown": {
         "reader_relevance": 2,
-        "actionability": 4,
-        "explanatory_depth": 4,
+        "actionability": 2,
+        "explanatory_depth": 5,
         "evidence": 4,
         "freshness": 5
       },
-      "lead_score": 19,
+      "lead_score": 18,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": "",
       "lead_rank": 1,
-      "selection_reason": "핵심뉴스 후보 1 · 점수 19"
+      "selection_reason": "핵심뉴스 후보 1 · 점수 18"
     },
     {
-      "id": "eb80560ee1a0",
-      "title": "The new GitHub Copilot experience in Slack",
-      "normalized_title": "the new github copilot experience in slack",
-      "url": "https://github.blog/changelog/2026-08-21-the-new-github-copilot-experience-in-slack",
-      "published_at": "2026-08-21T16:07:15+00:00",
-      "summary": "The GitHub integration in Slack now brings the agentic capabilities of GitHub Copilot CLI and the GitHub Copilot app into Slack in public preview. You can work with @GitHub to... The post The new GitHub Copilot experience in Slack appeared first on The GitHub Blog .",
+      "id": "9525995c428b",
+      "title": "CodeQL 2.26.3 improves GitHub Actions queries and JavaScript modeling",
+      "normalized_title": "codeql 2 26 3 improves github actions queries and javascript modeling",
+      "url": "https://github.blog/changelog/2026-08-19-codeql-2-26-3-improves-github-actions-queries-and-javascript-modeling",
+      "published_at": "2026-08-19T21:09:30+00:00",
+      "summary": "CodeQL 2.26.3 adds JavaScript, TypeScript, and Vue source modeling and improves the accuracy of several GitHub Actions queries. CodeQL is the static analysis engine behind GitHub code scanning, which helps... The post CodeQL 2.26.3 improves GitHub Actions queries and JavaScript modeling appeared first on The GitHub Blog .",
       "source_id": "github-changelog",
       "source_family": "github",
       "source_name": "GitHub Changelog",
@@ -10426,10 +10311,11 @@
       "score_reasons": [
         "출처 가중치 5",
         "공식 출처",
-        "48시간 이내"
+        "7일 이내",
+        "관심 키워드"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 5,
@@ -10440,108 +10326,39 @@
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 2,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "Copilot"
-        ],
+        "broad": [],
         "reader_impact": [],
         "reader_consequence": [],
         "practical": [
           "GitHub",
-          "Copilot"
+          "TypeScript"
         ],
         "deep": []
       },
       "topic_family": "developer_tools",
       "brand_tags": [
-        "github",
-        "copilot"
+        "github"
       ],
       "lead_score_breakdown": {
         "reader_relevance": 2,
         "actionability": 5,
         "explanatory_depth": 0,
         "evidence": 5,
-        "freshness": 5
+        "freshness": 3
       },
-      "lead_score": 17,
+      "lead_score": 15,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": "",
       "lead_rank": 2,
-      "selection_reason": "핵심뉴스 후보 2 · 점수 17"
-    },
-    {
-      "id": "cbc3d52f59e1",
-      "title": "앤트로픽, '미소스 5' 적용 범위 확대...악용 차단하고 사이버 방어 지원",
-      "normalized_title": "앤트로픽 미소스 5 적용 범위 확대 악용 차단하고 사이버 방어 지원",
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=214242",
-      "published_at": "2026-08-22T02:15:37+00:00",
-      "summary": "",
-      "source_id": "aitimes",
-      "source_family": "aitimes",
-      "source_name": "AI타임스",
-      "group": "korean_general",
-      "source_weight": 4,
-      "lane_bias": {
-        "broad": 4
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 4",
-        "48시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 4,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 1,
-        "reader_consequence": 3,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [
-          "차단"
-        ],
-        "reader_consequence": [
-          "지원",
-          "차단",
-          "확대"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lead_score_breakdown": {
-        "reader_relevance": 3,
-        "actionability": 0,
-        "explanatory_depth": 0,
-        "evidence": 2,
-        "freshness": 5
-      },
-      "lead_score": 10,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "lead_rank": 3,
-      "selection_reason": "핵심뉴스 후보 3 · 점수 10"
+      "selection_reason": "핵심뉴스 후보 2 · 점수 15"
     }
   ],
   "errors": [
