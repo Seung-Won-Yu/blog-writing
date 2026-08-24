@@ -1,0 +1,94 @@
+{
+  "title": "다운로드 폴더 자동 정리: 미리보기·중복 방지·원상복구까지",
+  "title_candidates": [
+    "다운로드 폴더 자동 정리: 미리보기·중복 방지·원상복구까지",
+    "다운로드 폴더를 안전하게 자동 정리하는 Python 실험",
+    "뒤섞인 다운로드 파일이 미리보기와 이동 기록을 거쳐 안전하게 서랍으로 정리되는 과정: 정리는 자동으로 하되, 덮어쓰기와…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-08-22-automation",
+  "publish_date": "2026-08-22",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-22T18:00:00+09:00",
+  "tags": [
+    "다운로드 폴더 정리",
+    "파이썬 파일 정리",
+    "업무 자동화",
+    "pathlib",
+    "shutil",
+    "파일명 중복",
+    "자동화 복구",
+    "Python"
+  ],
+  "meta_description": "다운로드 폴더는 잠깐 방심하면 PDF, 이미지, 압축 파일이 한 화면에 뒤섞인다. 확장자별로 옮기는 스크립트는 금방 만들 수 있지만, 같은 이름의 파일을 덮어쓰거나 잘못 분류한 뒤 되돌릴 수 없다면… pathlib로 확장자와 경로를 다루고 shutil.move로 파일을 옮기되, 미리보…",
+  "key_summary": [
+    "1. 다운로드 폴더를 안전하게 자동 정리하는 Python 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 다운로드 폴더 자동 정리: 미리보기·중복 방지·원상복구까지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-08-22.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-22-automation.html",
+  "before_ad_html": "docs/tistory/2026-08-22-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-22-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-22-automation-adfit.html",
+  "source_sha256": "d60314d1dca06477763a2f4878030ff417153a0161d2bb4352e649ffd57d9409",
+  "html_sha256": "4145a1d21c268c099ee5600e2e431777da8a2f08d61960273945b2d3268c1dec",
+  "adfit_sha256": "7a4ee89774a97ed1c72770272813dcf11574439cb1bd98359f93b51f4d2582d7",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-22-automation/다운로드폴더-자동정리-대표.webp",
+      "path": "docs/tistory/assets/2026-08-22-automation/다운로드폴더-자동정리-대표.webp",
+      "original_url": "",
+      "alt": "뒤섞인 다운로드 파일과 분류 서랍 사이에 이동 전 미리보기 목록이 놓인 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-22-automation/파일정리-실행복구-증거.webp",
+      "path": "docs/tistory/assets/2026-08-22-automation/파일정리-실행복구-증거.webp",
+      "original_url": "",
+      "alt": "여섯 개 가짜 파일의 미리보기 이동 이름 충돌 처리 원상복구 결과",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-22-automation/파일정리-안전절차.webp",
+      "path": "docs/tistory/assets/2026-08-22-automation/파일정리-안전절차.webp",
+      "original_url": "",
+      "alt": "미리보기 규칙 확인 파일 이동 기록 저장으로 이어지는 안전한 파일 정리 절차",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-22-automation/파일정리-복구판단.webp",
+      "path": "docs/tistory/assets/2026-08-22-automation/파일정리-복구판단.webp",
+      "original_url": "",
+      "alt": "파일 이동표를 확인해 결과를 채택하거나 원래 위치로 복구하는 판단 경로",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

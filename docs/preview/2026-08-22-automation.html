@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>다운로드 폴더 자동 정리: 미리보기·중복 방지·원상복구까지 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">자동화·실험</span>
+              <h1>다운로드 폴더 자동 정리: 미리보기·중복 방지·원상복구까지</h1>
+              <span class="meta"><span class="date">2026-08-22 · 업무자동화 실험</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 22 (토) · 약 10분</p>
+    <p class="digest-lead">다운로드 폴더는 잠깐 방심하면 PDF, 이미지, 압축 파일이 한 화면에 뒤섞인다. 확장자별로 옮기는 스크립트는 금방 만들 수 있지만, 같은 이름의 파일을 덮어쓰거나 잘못 분류한 뒤 되돌릴 수 없다면 수동 정리보다 위험하다. 그래서 실제 문서 대신 임시 폴더에 여섯 개의 가짜 파일을 만들고, 이동 전 미리보기부터 이름 충돌 처리, 이동 기록, 원상복구까지 한 번에 시험했다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-08-22-automation/다운로드폴더-자동정리-대표.webp" alt="뒤섞인 다운로드 파일과 분류 서랍 사이에 이동 전 미리보기 목록이 놓인 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">업무자동화 실험</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실행 기록 · Python 공식 문서 · 2026. 8. 22</p>
+    <h3>다운로드 폴더를 안전하게 자동 정리하는 Python 실험</h3>
+    <p class="digest-blurb">pathlib로 확장자와 경로를 다루고 shutil.move로 파일을 옮기되, 미리보기·이름 충돌 방지·manifest 원상복구를 더해 실제 임시 폴더에서 검증했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">정리보다 먼저 되돌릴 방법을 정했다</h4><p>다운로드 폴더 정리는 자동화 예제로 자주 등장한다. 확장자를 읽어 PDF는 문서 폴더, PNG는 이미지 폴더로 옮기면 끝처럼 보인다. 하지만 실제 파일에서는 같은 이름이 이미 있거나, 수정 월이 예상과 다르거나, 실행 도중 일부만 옮겨질 수 있다. 그래서 이번 실험의 완료 기준은 ‘분류 성공’이 아니라 ‘이동 전 결과를 볼 수 있고, 덮어쓰지 않으며, 같은 기록으로 원상복구되는가’로 잡았다.</p><p>실제 다운로드 폴더는 건드리지 않았다. 임시 폴더에 보고서.pdf, 교육자료.pdf 두 개, 사진.png, 압축.zip, 메모.txt처럼 성격이 다른 여섯 개 파일을 만들고 수정 시각도 서로 다른 월로 설정했다. 목적지는 문서·이미지·압축·기타 아래의 YYYY-MM 폴더다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-22-automation/파일정리-안전절차.webp" alt="미리보기 규칙 확인 파일 이동 기록 저장으로 이어지는 안전한 파일 정리 절차" width="1200" height="630" loading="lazy"><figcaption>실제 이동은 네 번째다. 먼저 목적지를 미리 보고 규칙과 이름 충돌을 확인한 뒤, 완료된 이동만 기록으로 남긴다.</figcaption></figure><h4 class="digest-subheading">pathlib로 이름과 목적지를 먼저 계산한다</h4><p>pathlib.Path는 파일명, 확장자, 상위 경로를 문자열을 직접 자르지 않고 다룰 수 있게 해 준다. suffix는 마지막 확장자를 돌려주므로 .tar.gz처럼 여러 접미사를 한 묶음으로 보고 싶다면 suffixes도 함께 고려해야 한다. 여기서는 PDF·문서, PNG·JPG·이미지, ZIP·압축처럼 작은 규칙표를 두고 나머지는 기타로 보냈다.</p><pre class="digest-code-block language-python"><code>CATEGORY = {
+    &#x27;.pdf&#x27;: &#x27;문서&#x27;, &#x27;.docx&#x27;: &#x27;문서&#x27;, &#x27;.xlsx&#x27;: &#x27;문서&#x27;,
+    &#x27;.png&#x27;: &#x27;이미지&#x27;, &#x27;.jpg&#x27;: &#x27;이미지&#x27;, &#x27;.jpeg&#x27;: &#x27;이미지&#x27;,
+    &#x27;.zip&#x27;: &#x27;압축&#x27;
+}
+
+def destination_for(path, root):
+    category = CATEGORY.get(path.suffix.lower(), &#x27;기타&#x27;)
+    month = datetime.fromtimestamp(path.stat().st_mtime).strftime(&#x27;%Y-%m&#x27;)
+    return root / category / month / path.name</code></pre><p>중요한 점은 이 함수가 파일을 옮기지 않는다는 것이다. 전체 파일의 원본과 예상 목적지를 먼저 계산해 화면에 보여 주면, 잘못된 분류 규칙을 실제 이동 전에 찾을 수 있다. 미리보기와 실행이 같은 destination_for 함수를 사용해야 확인한 결과와 실제 동작도 어긋나지 않는다.</p><h4 class="digest-subheading">같은 이름은 덮어쓰지 않고 번호를 붙였다</h4><p>shutil.move는 대상이 디렉터리인지, 같은 파일 시스템인지에 따라 rename 또는 복사 후 삭제를 사용한다. 이미 존재하는 목적지의 처리도 운영체제와 파일 형태에 따라 기대와 달라질 수 있다. 자동 정리에서는 라이브러리의 암묵적 동작에 맡기지 않고 이동 전에 직접 충돌을 검사하는 편이 안전하다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">충돌 이름을 확정하고 이동표에 남긴다</h4><pre class="digest-code-block language-python"><code>def unique_destination(target):
+    if not target.exists():
+        return target
+    n = 2
+    while True:
+        candidate = target.with_name(f&#x27;{target.stem}-{n}{target.suffix}&#x27;)
+        if not candidate.exists():
+            return candidate
+        n += 1</code></pre><p>실험 폴더에는 문서/2026-08/교육자료.pdf를 미리 만들어 충돌을 일부러 만들었다. 새 교육자료.pdf는 원본을 덮어쓰지 않고 교육자료-2.pdf로 이동했다. 파일명이 바뀌었다는 사실도 원본 경로와 최종 경로 쌍으로 manifest에 기록했다.</p><h4 class="digest-subheading">여섯 개 파일을 실제로 옮겼다가 모두 되돌렸다</h4><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-22-automation/파일정리-실행복구-증거.webp" alt="여섯 개 가짜 파일의 미리보기 이동 이름 충돌 처리 원상복구 결과" width="1200" height="630" loading="lazy"><figcaption>임시 폴더 실험 결과. 여섯 개 파일이 모두 이동했고, 충돌한 교육자료.pdf는 교육자료-2.pdf가 됐으며, 같은 manifest로 여섯 개 모두 원래 위치로 돌아왔다.</figcaption></figure><p>실행은 seed, preview, apply, rollback 네 단계로 나눴다. preview에서는 여섯 개 목적지와 한 건의 이름 충돌을 확인했다. apply는 여섯 개를 이동하고 manifest.json을 썼다. rollback은 manifest를 역순으로 읽어 여섯 개를 모두 원래 위치로 되돌렸다. 마지막 preview에서 처음과 같은 여섯 개가 다시 보이는 것까지 확인했다.</p><div class="digest-table-wrap" role="region" aria-label="임시 폴더에서 확인한 실행 결과" tabindex="0"><table class="digest-data-table"><caption>임시 폴더에서 확인한 실행 결과</caption><thead><tr><th scope="col">검증 항목</th><th scope="col">예상</th><th scope="col">실제</th></tr></thead><tbody><tr><td>대상 파일</td><td>6개</td><td>6개</td></tr><tr><td>이름 충돌</td><td>기존 파일 보존</td><td>교육자료-2.pdf로 이동</td></tr><tr><td>이동 기록</td><td>원본·목적지 6쌍</td><td>manifest.json에 6쌍</td></tr><tr><td>원상복구</td><td>6개 모두 복구</td><td>6개 모두 원래 위치 확인</td></tr></tbody></table></div><h4 class="digest-subheading">manifest는 성공한 이동만 즉시 기록한다</h4><p>모든 이동이 끝난 뒤 한 번에 기록하면 네 번째 파일에서 실패했을 때 앞의 세 파일을 찾기 어렵다. 실제 적용에서는 파일 하나를 옮긴 직후 원본과 목적지를 기록하고 안전하게 저장해야 한다. 복구는 마지막 이동부터 역순으로 수행해야, 서로 이름이 바뀐 경우에도 충돌 가능성을 줄일 수 있다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-08-22-automation/파일정리-복구판단.webp" alt="파일 이동표를 확인해 결과를 채택하거나 원래 위치로 복구하는 판단 경로" width="1200" height="630" loading="lazy"><figcaption>이동표가 예상과 같으면 결과를 유지한다. 이름 충돌이나 잘못된 분류를 발견하면 manifest의 목적지부터 원본으로 역순 복구한다.</figcaption></figure><pre class="digest-code-block language-json"><code>{
+  &quot;moves&quot;: [
+    {&quot;from&quot;: &quot;다운로드/교육자료.pdf&quot;,
+     &quot;to&quot;: &quot;정리됨/문서/2026-08/교육자료-2.pdf&quot;}
+  ]
+}</code></pre><h4 class="digest-subheading">실제 폴더에서는 범위를 더 작게 시작한다</h4><p>이번 fixture는 일반 파일만 다뤘다. 심볼릭 링크, 패키지 파일, 숨김 파일, 다운로드 중인 .crdownload, 접근권한이 다른 파일, 외장·네트워크 디스크는 별도 규칙이 필요하다. 다른 디스크로 옮길 때는 단순 rename이 아니라 복사 후 원본 삭제가 될 수 있으므로 용량과 중단 복구를 함께 확인해야 한다.</p><ul class="digest-bullet-list"><li>처음에는 최근 7일·PDF만처럼 범위를 좁혀 미리보기한다.</li><li>숨김 파일과 다운로드 중인 임시 파일은 기본 제외한다.</li><li>이름 충돌은 덮어쓰기 대신 번호 붙이기를 기본값으로 둔다.</li><li>이동 직후 원본·목적지·시각을 manifest에 기록한다.</li><li>외장·네트워크 경로는 복사 완료와 해시 확인 뒤 원본을 지운다.</li><li>일주일 동안은 자동 삭제 규칙을 넣지 않고 이동만 관찰한다.</li></ul><p>실제 적용에서 한 가지 규칙을 더 둔다면 정리 대상 파일의 안정 시간을 확인하는 편이 좋다. 브라우저가 내려받는 중인 파일은 이름뿐 아니라 크기도 계속 바뀐다. 마지막 수정 후 10분이 지나지 않은 파일을 건너뛰면 완료되지 않은 다운로드를 옮기는 일을 줄일 수 있다. 클라우드 동기화 폴더라면 동기화 상태 파일도 제외해야 한다. 그리고 manifest 자체가 정리 대상에 다시 들어가지 않도록 기록 폴더는 입력 폴더 밖에 둔다. 이 작은 예외들이 있어야 매일 반복 실행해도 새 파일만 처리하고, 이미 정리한 결과를 다시 움직이지 않는다.</p><p>분류가 애매한 파일은 억지로 추측하지 않고 기타 폴더에 남기는 편이 낫다. 파일명 키워드나 문서 내용까지 읽어 세밀하게 분류할 수도 있지만, 규칙이 복잡해질수록 오분류 이유를 설명하고 되돌리기 어렵다. 먼저 확장자와 월처럼 사람이 눈으로 검증할 수 있는 기준으로 시작하고, 기타 폴더에서 반복적으로 나타나는 유형만 새 규칙으로 승격하면 자동화가 실제 사용 습관을 따라 천천히 자란다.</p><p>주기 실행을 붙이고 싶다면 macOS launchd나 Windows 작업 스케줄러보다 먼저 스크립트 자체를 여러 번 실행해도 같은 파일을 다시 옮기지 않는지 확인한다. 자동화 빈도는 편의보다 관찰 가능성이 우선이다. 하루 한 번 실행해 manifest와 실패 로그를 보는 것부터 시작하면 문제가 생긴 범위를 좁히기 쉽다.</p><blockquote class="digest-evidence-quote">파일 정리 자동화의 안전장치는 분류 규칙이 아니라, 실행 전에 볼 수 있고 실행 뒤에 되돌릴 수 있다는 사실이다.</blockquote></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://docs.python.org/3/library/pathlib.html" target="_blank" rel="noopener">pathlib — Object-oriented filesystem paths</a><span>공식</span></li><li><a href="https://docs.python.org/3/library/shutil.html" target="_blank" rel="noopener">shutil — High-level file operations</a><span>공식</span></li><li><a href="https://docs.python.org/3/library/hashlib.html" target="_blank" rel="noopener">hashlib — Secure hashes and message digests</a><span>공식</span></li><li><a href="https://www.gnu.org/software/coreutils/manual/html_node/mv-invocation.html" target="_blank" rel="noopener">GNU Coreutils: mv invocation</a><span>참고 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/125"><b>250억 원 청구서부터 AI 보안 경고까지, 자동화 결과를 다시 보는 법</b><span>자동화가 만든 결과를 그대로 믿지 않고 실행 전후 기록으로 검증하는 기준을 이어서 적용할 수 있다.</span></a></li><li><a href="https://won0322.tistory.com/208"><b>AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건</b><span>작은 범위부터 교체하고 결과 비교와 되돌릴 커밋을 남기는 방법이 파일 자동화의 단계적 적용과 연결된다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">파일 정리 자동화에서 중요한 것은 얼마나 많이 옮겼는지가 아니라 잘못 옮겼을 때 원래 자리로 돌아올 수 있는지다. 이번 실험은 이동 전 목록을 보여 주고, 같은 이름에는 번호를 붙이며, 실제 이동 경로를 manifest.json에 남겼다. 여섯 개 파일은 모두 예상 위치로 이동했고 같은 기록으로 다시 원상복구됐다. 실제 다운로드 폴더에 적용한다면 먼저 미리보기 결과를 확인하고, 작은 범위부터 실행하는 순서를 지키는 편이 안전하다. 스크립트의 대상 경로를 임시 폴더로 둔 채 --preview 결과부터 확인하고, 예상 분류와 이름 충돌 처리가 맞을 때만 --apply를 실행한다.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>
