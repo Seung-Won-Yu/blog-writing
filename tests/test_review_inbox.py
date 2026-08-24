@@ -32,6 +32,7 @@ class ReviewInboxTests(unittest.TestCase):
     def test_renders_review_page_and_escapes_external_content(self):
         html = render_inbox_html(self.inbox)
 
+        self.assertIn("실전 IT 아티클 후보함", html)
         self.assertIn("오늘의 추천 1건", html)
         self.assertIn("AI &lt;Agent&gt; 업데이트", html)
         self.assertIn("a=1&amp;b=2", html)
@@ -91,17 +92,19 @@ class SourceConfigTests(unittest.TestCase):
         self.assertNotIn("max_research_items", config["selection"])
         self.assertEqual(config["selection"]["exclude_recent_days"], 60)
         self.assertEqual(config["selection"]["publisher_cooldown_days"], 2)
-        self.assertEqual(config["selection"]["brand_cooldown_days"], 4)
-        self.assertEqual(config["selection"]["topic_cooldown_days"], 2)
+        self.assertEqual(config["selection"]["brand_cooldown_days"], 7)
+        self.assertEqual(config["selection"]["topic_cooldown_days"], 7)
         self.assertEqual(config["selection"]["research_selection_penalty"], 2)
         self.assertEqual(config["selection"]["max_per_topic_family"], 1)
         self.assertEqual(
             config["selection"]["fallback_min_reader_relevance"],
             config["selection"]["min_reader_relevance"],
         )
-        self.assertEqual(config["max_age_days"], 7)
+        self.assertEqual(config["max_age_days"], 30)
         self.assertEqual(config["selection"]["max_per_family"], 1)
         self.assertEqual(config["selection"]["min_lead_score"], 8)
+        self.assertEqual(config["selection"]["min_evergreen_fit"], 4)
+        self.assertEqual(config["selection"]["fallback_min_evergreen_fit"], 2)
         self.assertNotIn("inbox_retention_days", config["selection"])
         self.assertTrue(
             {
@@ -109,8 +112,28 @@ class SourceConfigTests(unittest.TestCase):
                 "github-engineering",
                 "huggingface-blog",
                 "google-security",
+                "kakao-tech",
+                "webdev",
+                "aws-architecture",
+                "slack-engineering",
+                "spotify-engineering",
+                "hacker-news",
+                "lobsters",
             }.issubset({source["id"] for source in enabled})
         )
+        for source_id in (
+            "kakao-tech",
+            "webdev",
+            "aws-architecture",
+            "slack-engineering",
+            "spotify-engineering",
+        ):
+            source = next(item for item in enabled if item["id"] == source_id)
+            self.assertGreaterEqual(source.get("evergreen_bias", 0), 4)
+        for source_id in ("geeknews", "hacker-news", "lobsters"):
+            source = next(item for item in enabled if item["id"] == source_id)
+            self.assertEqual(source["group"], "community")
+            self.assertGreaterEqual(source.get("evergreen_bias", 0), 2)
         github_sources = [
             source for source in enabled if source["id"].startswith("github-")
         ]

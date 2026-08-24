@@ -614,11 +614,13 @@ def build_inbox(
             topic_priority=config.get("topic_priority", []),
             brand_keywords=config.get("brand_keywords", {}),
             lasting_value_keywords=config.get("lasting_value_keywords", []),
+            content_signals=config.get("content_signals", {}),
         )
         score_lead_candidate(candidate)
     candidates.sort(
         key=lambda item: (
             item.get("lead_score", 0),
+            item.get("lead_score_breakdown", {}).get("evergreen_fit", 0),
             item.get("lead_score_breakdown", {}).get("lasting_value", 0),
             item.get("lead_score_breakdown", {}).get("freshness", 0),
             item.get("published_at", ""),
@@ -691,8 +693,12 @@ def build_inbox(
                 minimum_reader_relevance,
             )
         )
+        minimum_evergreen_fit = int(selection.get("min_evergreen_fit", 0))
+        fallback_evergreen_fit = int(
+            selection.get("fallback_min_evergreen_fit", minimum_evergreen_fit)
+        )
 
-        def select_with_relevance(relevance):
+        def select_with_thresholds(relevance, evergreen_fit):
             lead_pool = [
                 candidate
                 for candidate in eligible_candidates
@@ -704,6 +710,12 @@ def build_inbox(
                     )
                 )
                 >= relevance
+                and int(
+                    candidate.get("lead_score_breakdown", {}).get(
+                        "evergreen_fit", 0
+                    )
+                )
+                >= evergreen_fit
             ]
             return select_lead_shortlist(
                 lead_pool,
@@ -716,7 +728,9 @@ def build_inbox(
                 ),
             )
 
-        selected = select_with_relevance(minimum_reader_relevance)
+        selected = select_with_thresholds(
+            minimum_reader_relevance, minimum_evergreen_fit
+        )
         required_selected = int(
             config.get("collection_quality", {}).get("min_selected", 1)
         )
@@ -725,12 +739,31 @@ def build_inbox(
             and fallback_reader_relevance < minimum_reader_relevance
         )
         if fallback_applied:
-            selected = select_with_relevance(fallback_reader_relevance)
+            selected = select_with_thresholds(
+                fallback_reader_relevance, minimum_evergreen_fit
+            )
+        evergreen_fallback_applied = (
+            len(selected) < required_selected
+            and fallback_evergreen_fit < minimum_evergreen_fit
+        )
+        if evergreen_fallback_applied:
+            selected = select_with_thresholds(
+                fallback_reader_relevance
+                if fallback_applied
+                else minimum_reader_relevance,
+                fallback_evergreen_fit,
+            )
         selection["reader_relevance_fallback_applied"] = fallback_applied
         selection["effective_min_reader_relevance"] = (
             fallback_reader_relevance
             if fallback_applied
             else minimum_reader_relevance
+        )
+        selection["evergreen_fallback_applied"] = evergreen_fallback_applied
+        selection["effective_min_evergreen_fit"] = (
+            fallback_evergreen_fit
+            if evergreen_fallback_applied
+            else minimum_evergreen_fit
         )
     else:
         selected = select_candidates(
@@ -826,7 +859,7 @@ def render_inbox_html(inbox):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>{day} 뉴스 후보함</title>
+  <title>{day} 실전 IT 아티클 후보함</title>
   <style>
     :root {{ color-scheme: light; --ink:#1f2933; --muted:#65717d; --line:#dfe4e8; --paper:#fff; --wash:#f5f6f4; --accent:#28684a; }}
     * {{ box-sizing:border-box; }}
@@ -855,8 +888,8 @@ def render_inbox_html(inbox):
 <main>
   <header>
     <p class="generated">{day} · 생성 {generated_at}</p>
-    <h1>뉴스 후보함</h1>
-    <p class="intro">자동 수집과 점수 계산까지만 했습니다. 원문을 읽고 내 관점 한두 문장을 더한 뒤 글감으로 사용하세요.</p>
+    <h1>실전 IT 아티클 후보함</h1>
+    <p class="intro">새 소식보다 오래 남는 문제·사례·선택 기준을 우선했습니다. 원문과 추가 근거를 확인한 뒤 내 경험과 판단을 더해 글감으로 사용하세요.</p>
   </header>
   <section>
     <h2>오늘의 추천 {selected_count}건</h2>

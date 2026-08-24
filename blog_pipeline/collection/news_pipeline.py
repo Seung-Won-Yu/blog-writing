@@ -149,6 +149,7 @@ def make_candidate(raw, source):
         "source_name": source.get("name") or source.get("id", ""),
         "group": source.get("group", "other"),
         "source_weight": int(source.get("weight", 0)),
+        "evergreen_bias": int(source.get("evergreen_bias", 0)),
         "lane_bias": dict(source.get("lane_bias") or {}),
         "requires_manual_review": bool(source.get("manual_review", False)),
         "score": 0,
@@ -216,6 +217,7 @@ def score_candidate(
     topic_priority=None,
     brand_keywords=None,
     lasting_value_keywords=None,
+    content_signals=None,
 ):
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -295,6 +297,24 @@ def score_candidate(
         for keyword in lasting_value_keywords or []
         if _keyword_matches(haystack, keyword)
     ]
+    content_signals = content_signals or {}
+    article_type_matches = {}
+    for article_type, keywords in (content_signals.get("article_types") or {}).items():
+        type_matches = [
+            keyword for keyword in keywords if _keyword_matches(haystack, keyword)
+        ]
+        if type_matches:
+            article_type_matches[article_type] = list(dict.fromkeys(type_matches))
+    evidence_matches = [
+        keyword
+        for keyword in content_signals.get("evidence_keywords", [])
+        if _keyword_matches(haystack, keyword)
+    ]
+    announcement_matches = [
+        keyword
+        for keyword in content_signals.get("announcement_keywords", [])
+        if _keyword_matches(title_haystack, keyword)
+    ]
 
     candidate["score"] = score
     candidate["score_reasons"] = reasons
@@ -305,6 +325,13 @@ def score_candidate(
     candidate["topic_family"] = topic_family
     candidate["brand_tags"] = brand_tags
     candidate["lasting_value_matches"] = list(dict.fromkeys(lasting_value_matches))
+    candidate["article_type_matches"] = article_type_matches
+    candidate["article_types"] = list(article_type_matches)
+    candidate["evidence_matches"] = list(dict.fromkeys(evidence_matches))
+    candidate["announcement_matches"] = list(dict.fromkeys(announcement_matches))
+    candidate["announcement_only"] = bool(announcement_matches) and not bool(
+        article_type_matches
+    )
     return candidate
 
 
@@ -342,6 +369,24 @@ def score_lead_candidate(candidate):
         2,
         int(raw_lanes.get("practical", 0)) + int(raw_lanes.get("deep", 0)),
     )
+    article_types = candidate.get("article_types") or []
+    evidence_matches = candidate.get("evidence_matches") or []
+    evergreen_fit = max(
+        0,
+        min(
+            10,
+            int(candidate.get("evergreen_bias", 0))
+            + min(6, len(article_types) * 2)
+            + min(2, len(evidence_matches)),
+        ),
+    )
+    announcement_penalty = (
+        -4
+        if candidate.get("announcement_only")
+        else -1
+        if candidate.get("announcement_matches")
+        else 0
+    )
     breakdown = {
         "reader_relevance": max(broad_relevance, technical_relevance),
         "actionability": min(5, int(lanes.get("practical", 0))),
@@ -368,6 +413,8 @@ def score_lead_candidate(candidate):
             }.get(group, 2)
             + min(4, len(candidate.get("lasting_value_matches") or [])),
         ),
+        "evergreen_fit": evergreen_fit,
+        "announcement_penalty": announcement_penalty,
         "freshness": (
             3
             if "24시간 이내" in reasons
@@ -431,7 +478,7 @@ def select_lead_shortlist(
             break
     for rank, item in enumerate(selected, 1):
         item["lead_rank"] = rank
-        item["selection_reason"] = "핵심뉴스 후보 {} · 점수 {}".format(
+        item["selection_reason"] = "실전 아티클 후보 {} · 점수 {}".format(
             rank, item.get("lead_score", 0)
         )
     return selected

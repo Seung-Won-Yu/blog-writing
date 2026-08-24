@@ -329,10 +329,50 @@ class RankingTests(unittest.TestCase):
                 "explanatory_depth",
                 "evidence",
                 "lasting_value",
+                "evergreen_fit",
+                "announcement_penalty",
                 "freshness",
             },
         )
         self.assertEqual(item["lead_score"], sum(item["lead_score_breakdown"].values()))
+
+    def test_case_with_evidence_outscores_announcement_only_story(self):
+        signals = {
+            "article_types": {
+                "case_study": ["case study", "사례"],
+                "problem_solving": ["장애", "원인", "복구"],
+                "measurement": ["처리량", "performance"],
+            },
+            "evidence_keywords": ["프로덕션", "40%", "처리량"],
+            "announcement_keywords": ["출시", "new feature"],
+        }
+        announcement = make_candidate(
+            raw("Copilot 새 배지 기능 출시", "https://official.example/new"),
+            {**source("official", "official", weight=5), "evergreen_bias": 1},
+        )
+        case_study = make_candidate(
+            raw(
+                "PostgreSQL 장애 원인과 복구 사례",
+                "https://engineering.example/postgres",
+                summary="프로덕션 처리량을 40% 개선한 운영 결과",
+            ),
+            {**source("engineering", "korean_editorial", weight=4), "evergreen_bias": 4},
+        )
+
+        for item in (announcement, case_study):
+            score_candidate(item, [], now=NOW, content_signals=signals)
+            score_lead_candidate(item)
+
+        self.assertTrue(announcement["announcement_only"])
+        self.assertEqual(
+            announcement["lead_score_breakdown"]["announcement_penalty"], -4
+        )
+        self.assertFalse(case_study["announcement_only"])
+        self.assertGreater(
+            case_study["lead_score_breakdown"]["evergreen_fit"],
+            announcement["lead_score_breakdown"]["evergreen_fit"],
+        )
+        self.assertGreater(case_study["lead_score"], announcement["lead_score"])
 
     def test_official_recent_keyword_item_scores_higher(self):
         official = make_candidate(

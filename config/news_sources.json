@@ -1,7 +1,7 @@
 {
   "max_items_per_source": 6,
-  "max_workers": 8,
-  "max_age_days": 7,
+  "max_workers": 10,
+  "max_age_days": 30,
   "collection_quality": {
     "min_successful_sources": 3,
     "min_candidate_sources": 3,
@@ -31,6 +31,39 @@
     "performance", "testing", "migration", "design", "case study", "troubleshooting",
     "best practices", "benchmark"
   ],
+  "content_signals": {
+    "article_types": {
+      "case_study": [
+        "사례", "회고", "운영 경험", "적용기", "전환기", "구축기", "실전",
+        "case study", "postmortem", "incident report", "how we", "lessons learned", "journey"
+      ],
+      "problem_solving": [
+        "장애", "원인", "해결", "복구", "실패", "디버깅", "병목", "느린",
+        "troubleshooting", "incident", "outage", "debugging", "failure", "bottleneck"
+      ],
+      "decision_guide": [
+        "선택 기준", "비교", "트레이드오프", "판단", "언제", "왜",
+        "trade-off", "tradeoff", "versus", "why we", "decision", "choose", "choosing"
+      ],
+      "implementation_guide": [
+        "구현", "구축", "설계", "방법", "가이드", "만들기", "도입",
+        "how to", "implementation", "guide", "building", "architecting", "migration"
+      ],
+      "measurement": [
+        "성능", "비용", "지연", "처리량", "측정", "실험", "벤치마크", "확장",
+        "performance", "cost", "latency", "throughput", "benchmark", "experiment", "scaling"
+      ]
+    },
+    "evidence_keywords": [
+      "측정", "실험", "테스트", "벤치마크", "수치", "결과", "운영", "프로덕션",
+      "measured", "experiment", "benchmark", "results", "production", "latency", "throughput", "%"
+    ],
+    "announcement_keywords": [
+      "출시", "발표", "공개", "업데이트", "지원", "제공", "가격", "요금", "버전", "릴리스",
+      "now available", "announce", "announces", "launched", "launch", "release", "update",
+      "pricing", "availability", "introduces", "new feature"
+    ]
+  },
   "audience_lanes": {
     "broad": {
       "label": "일상에 닿는 큰 변화",
@@ -97,12 +130,16 @@
     "ai": ["AI", "인공지능", "LLM", "vLLM", "VLM", "GPT", "OpenAI", "Claude", "Anthropic", "Gemini", "에이전트", "모델", "machine learning"],
     "security": ["보안", "취약점", "security", "vulnerability", "패치", "malware", "phishing", "breach", "data breach", "data leak", "ransomware"],
     "privacy": ["개인정보", "privacy", "tracking", "추적", "저작권", "copyright"],
-    "cloud": ["Cloudflare", "AWS", "Azure", "GCP", "cloud", "클라우드", "CDN", "cache", "캐시"],
-    "developer_tools": ["GitHub", "VS Code", "API", "SDK", "framework", "developer", "개발자"],
-    "automation": ["자동화", "automation", "workflow", "email", "calendar", "spreadsheet", "문서", "파일"]
+    "backend_data": ["Java", "Spring", "PostgreSQL", "database", "DB", "데이터베이스", "API", "query", "쿼리", "Kafka"],
+    "web_frontend": ["web", "웹", "frontend", "프론트엔드", "browser", "브라우저", "React", "JavaScript", "CSS", "Core Web Vitals"],
+    "reliability": ["장애", "복구", "관측", "모니터링", "SRE", "reliability", "incident", "outage", "observability", "resilience"],
+    "cloud": ["Cloudflare", "AWS", "Azure", "GCP", "cloud", "클라우드", "CDN", "cache", "캐시", "Kubernetes"],
+    "developer_tools": ["GitHub", "VS Code", "API", "SDK", "framework", "developer", "개발자", "DevOps", "CI/CD"],
+    "automation": ["자동화", "automation", "workflow", "email", "calendar", "spreadsheet", "문서", "파일"],
+    "career": ["취업", "이력서", "포트폴리오", "면접", "커리어", "career", "resume", "interview"]
   },
   "topic_priority": [
-    "ai", "security", "privacy", "automation", "cloud", "developer_tools"
+    "security", "privacy", "backend_data", "web_frontend", "reliability", "automation", "cloud", "developer_tools", "career", "ai"
   ],
   "brand_keywords": {
     "github": ["GitHub"],
@@ -126,10 +163,12 @@
     "min_lead_score": 8,
     "min_reader_relevance": 2,
     "fallback_min_reader_relevance": 2,
+    "min_evergreen_fit": 4,
+    "fallback_min_evergreen_fit": 2,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 2,
-    "brand_cooldown_days": 4,
-    "topic_cooldown_days": 2,
+    "brand_cooldown_days": 7,
+    "topic_cooldown_days": 7,
     "research_selection_penalty": 2
   },
   "sources": [
@@ -159,8 +198,39 @@
       "type": "rss",
       "url": "https://news.hada.io/rss/news",
       "weight": 3,
+      "evergreen_bias": 2,
       "lane_bias": {"practical": 1, "deep": 1},
       "include_summary": false,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "hacker-news",
+      "name": "Hacker News",
+      "source_family": "hacker-news",
+      "group": "community",
+      "type": "rss",
+      "url": "https://news.ycombinator.com/rss",
+      "weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {"practical": 1, "deep": 2},
+      "include_summary": false,
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "lobsters",
+      "name": "Lobsters",
+      "source_family": "lobsters",
+      "group": "community",
+      "type": "rss",
+      "url": "https://lobste.rs/rss",
+      "weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {"practical": 1, "deep": 2},
+      "include_summary": false,
+      "max_items": 12,
       "manual_review": true,
       "enabled": true
     },
@@ -172,6 +242,7 @@
       "type": "rss",
       "url": "https://toss.tech/rss.xml",
       "weight": 4,
+      "evergreen_bias": 3,
       "lane_bias": {"practical": 3, "deep": 2},
       "max_items": 10,
       "manual_review": true,
@@ -185,6 +256,7 @@
       "type": "rss",
       "url": "https://techblog.lycorp.co.jp/ko/feed/index.xml",
       "weight": 3,
+      "evergreen_bias": 3,
       "lane_bias": {"practical": 2, "deep": 2},
       "max_items": 10,
       "manual_review": true,
@@ -198,6 +270,7 @@
       "type": "atom",
       "url": "https://d2.naver.com/d2.atom",
       "weight": 4,
+      "evergreen_bias": 3,
       "lane_bias": {"practical": 2, "deep": 3},
       "max_items": 10,
       "manual_review": true,
@@ -211,6 +284,7 @@
       "type": "rss",
       "url": "https://feed.infoq.com/",
       "weight": 3,
+      "evergreen_bias": 3,
       "lane_bias": {"practical": 2, "deep": 3},
       "max_items": 12,
       "manual_review": true,
@@ -224,6 +298,7 @@
       "type": "rss",
       "url": "https://stackoverflow.blog/feed/",
       "weight": 3,
+      "evergreen_bias": 3,
       "lane_bias": {"broad": 1, "practical": 2, "deep": 1},
       "include_title_keywords": [
         "developer", "engineering", "programming", "database", "API", "security",
@@ -240,6 +315,7 @@
       "type": "rss",
       "url": "https://yozm.wishket.com/magazine/feed/",
       "weight": 3,
+      "evergreen_bias": 4,
       "lane_bias": {"practical": 2},
       "include_summary": false,
       "fallbacks": [
@@ -251,6 +327,76 @@
           "allow_unknown_date": true
         }
       ],
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "kakao-tech",
+      "name": "카카오테크",
+      "source_family": "kakao",
+      "group": "korean_editorial",
+      "type": "rss",
+      "url": "https://tech.kakao.com/feed",
+      "weight": 4,
+      "evergreen_bias": 4,
+      "lane_bias": {"practical": 3, "deep": 3},
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "webdev",
+      "name": "web.dev",
+      "source_family": "google-web",
+      "group": "official",
+      "type": "rss",
+      "url": "https://web.dev/static/blog/feed.xml",
+      "weight": 4,
+      "evergreen_bias": 4,
+      "lane_bias": {"practical": 3, "deep": 3},
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "aws-architecture",
+      "name": "AWS Architecture Blog",
+      "source_family": "aws",
+      "group": "official",
+      "type": "rss",
+      "url": "https://aws.amazon.com/blogs/architecture/feed/",
+      "weight": 4,
+      "evergreen_bias": 4,
+      "lane_bias": {"practical": 2, "deep": 4},
+      "max_items": 12,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "slack-engineering",
+      "name": "Engineering at Slack",
+      "source_family": "slack",
+      "group": "official",
+      "type": "rss",
+      "url": "https://slack.engineering/feed/",
+      "weight": 4,
+      "evergreen_bias": 4,
+      "lane_bias": {"practical": 2, "deep": 4},
+      "max_items": 10,
+      "manual_review": true,
+      "enabled": true
+    },
+    {
+      "id": "spotify-engineering",
+      "name": "Spotify Engineering",
+      "source_family": "spotify",
+      "group": "official",
+      "type": "rss",
+      "url": "https://engineering.atspotify.com/feed",
+      "weight": 4,
+      "evergreen_bias": 4,
+      "lane_bias": {"practical": 2, "deep": 4},
+      "max_items": 10,
       "manual_review": true,
       "enabled": true
     },
@@ -282,6 +428,7 @@
       "type": "rss",
       "url": "https://blog.cloudflare.com/rss/",
       "weight": 4,
+      "evergreen_bias": 2,
       "lane_bias": {"practical": 1, "deep": 3},
       "manual_review": true,
       "enabled": true
@@ -294,6 +441,7 @@
       "type": "rss",
       "url": "https://github.blog/engineering/feed/",
       "weight": 4,
+      "evergreen_bias": 3,
       "lane_bias": {"practical": 2, "deep": 2},
       "manual_review": true,
       "enabled": true
@@ -305,6 +453,7 @@
       "type": "rss",
       "url": "https://huggingface.co/blog/feed.xml",
       "weight": 3,
+      "evergreen_bias": 2,
       "lane_bias": {"practical": 1, "deep": 2},
       "manual_review": true,
       "enabled": true
@@ -431,6 +580,7 @@
       "type": "rss",
       "url": "https://feeds.arstechnica.com/arstechnica/index",
       "weight": 3,
+      "evergreen_bias": 2,
       "lane_bias": {"broad": 1, "practical": 2, "deep": 2},
       "include_title_keywords": [
         "security", "privacy", "browser", "database", "cloud", "open source",
@@ -483,6 +633,7 @@
       "type": "atom",
       "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=20",
       "weight": 4,
+      "evergreen_bias": 2,
       "lane_bias": {"deep": 3},
       "manual_review": true,
       "enabled": true
