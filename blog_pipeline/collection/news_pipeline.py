@@ -235,7 +235,10 @@ def score_candidate(
     published = _parse_datetime(candidate.get("published_at"))
     if published:
         age_hours = max(0.0, (now - published).total_seconds() / 3600)
-        if age_hours <= 48:
+        if age_hours <= 24:
+            score += 4
+            reasons.append("24시간 이내")
+        elif age_hours <= 48:
             score += 3
             reasons.append("48시간 이내")
         elif age_hours <= 168:
@@ -345,7 +348,15 @@ def score_lead_candidate(candidate):
             "community": 3,
             "korean_general": 2,
         }.get(group, 2),
-        "freshness": 5 if "48시간 이내" in reasons else 3 if "7일 이내" in reasons else 1,
+        "freshness": (
+            8
+            if "24시간 이내" in reasons
+            else 5
+            if "48시간 이내" in reasons
+            else 2
+            if "7일 이내" in reasons
+            else 0
+        ),
     }
     candidate["lead_score_breakdown"] = breakdown
     candidate["lead_score"] = sum(breakdown.values())

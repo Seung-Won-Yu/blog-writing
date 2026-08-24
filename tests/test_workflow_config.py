@@ -112,7 +112,7 @@ class WorkflowConfigTests(unittest.TestCase):
         workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("name: Collect daily news", workflow)
-        self.assertIn("cron: '17 20 * * *'", workflow)
+        self.assertIn("cron: '20 23 * * *'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news --today", workflow
@@ -220,12 +220,12 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("최근 3일 데일리 글", contract)
         self.assertIn("본문의 점검표나 메모 상자로 출력하지 않습니다", contract)
         self.assertIn("후보 하나의 공식 근거가 부족하거나 중복이라고 해서", contract)
-        self.assertIn("상위 후보를 최대 20건까지 검토", contract)
+        self.assertIn("상위 후보를 최대 10건까지 검토", contract)
         self.assertIn("공식 제품 블로그·변경 기록·문서 최소 3곳", contract)
         self.assertIn("`selected` 일부만 확인했거나", contract)
         self.assertIn("실제 검토한 후보 제목과 탈락 이유", contract)
         self.assertIn("`temporary_source_unavailable`", contract)
-        self.assertIn("한 후보의 원문 접근에 2분 이상 머물지 않습니다", contract)
+        self.assertIn("한 후보의 원문 접근에 30초 이상 머물지 않습니다", contract)
         self.assertNotIn("`RETRY_PENDING`", contract)
         self.assertNotIn("09:25 재실행", contract)
         self.assertIn("같은 `topic_family`를 한 건만 포함", contract)
@@ -333,7 +333,7 @@ class WorkflowConfigTests(unittest.TestCase):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
         self.assertIn("대표 이미지 1장", contract)
-        self.assertIn("설명 이미지 2~6장", contract)
+        self.assertIn("설명 이미지 2~4장", contract)
         self.assertIn("기사 고유 시각 단서", contract)
         self.assertIn("원인 → 결과", contract)
         self.assertIn("노트북 앞 사람", contract)

@@ -568,8 +568,14 @@ def build_inbox(
             errors.append({"source_id": source.get("id", ""), "message": str(error)})
             continue
 
-        limit = int(source.get("max_items", default_limit))
-        max_age_days = source.get("max_age_days", config.get("max_age_days"))
+        limit = min(int(source.get("max_items", default_limit)), default_limit)
+        configured_max_age = config.get("max_age_days")
+        source_max_age = source.get("max_age_days", configured_max_age)
+        max_age_days = (
+            min(int(source_max_age), int(configured_max_age))
+            if source_max_age is not None and configured_max_age is not None
+            else source_max_age
+        )
         filtered_items = [
             raw
             for raw in raw_items
@@ -610,7 +616,12 @@ def build_inbox(
         )
         score_lead_candidate(candidate)
     candidates.sort(
-        key=lambda item: (item.get("score", 0), item.get("published_at", "")),
+        key=lambda item: (
+            item.get("lead_score_breakdown", {}).get("freshness", 0),
+            item.get("published_at", ""),
+            item.get("lead_score", 0),
+            item.get("score", 0),
+        ),
         reverse=True,
     )
 
@@ -914,7 +925,7 @@ def write_inbox(inbox, output_dir):
     }
 
 
-def fetch_url(url, timeout=20, retry_delay=0.5, max_attempts=4):
+def fetch_url(url, timeout=8, retry_delay=0.25, max_attempts=2):
     transient_statuses = {405, 408, 425, 429, 500, 502, 503, 504}
     for attempt in range(max(1, int(max_attempts))):
         request = Request(

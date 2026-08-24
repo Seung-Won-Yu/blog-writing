@@ -346,7 +346,7 @@ class RankingTests(unittest.TestCase):
 
         self.assertGreater(official["score"], old_community["score"])
         self.assertIn("관심 키워드", official["score_reasons"])
-        self.assertIn("48시간 이내", official["score_reasons"])
+        self.assertIn("24시간 이내", official["score_reasons"])
 
     def test_manual_review_flag_is_preserved(self):
         item = make_candidate(
@@ -418,6 +418,40 @@ class RankingTests(unittest.TestCase):
 
 
 class SelectionTests(unittest.TestCase):
+    def test_current_day_story_beats_an_otherwise_equal_two_day_story(self):
+        current = make_candidate(
+            raw(
+                "계정 보안 변경과 복구 방법",
+                "https://today.example/security",
+                published_at="2026-07-12T07:00:00+00:00",
+            ),
+            source("today", "independent_editorial", weight=3),
+        )
+        older = make_candidate(
+            raw(
+                "계정 보안 변경과 복구 방법 후속",
+                "https://older.example/security",
+                published_at="2026-07-10T17:00:00+00:00",
+            ),
+            source("older", "independent_editorial", weight=3),
+        )
+        lanes = {
+            "broad": {"match_scope": "title", "keywords": ["계정", "보안", "복구"]},
+            "reader_impact": {"match_scope": "title", "keywords": ["보안"]},
+            "practical": {"keywords": ["복구"]},
+        }
+        for item in (current, older):
+            score_candidate(item, [], now=NOW, audience_lanes=lanes)
+            score_lead_candidate(item)
+
+        selected = select_lead_shortlist([older, current], max_items=1)
+
+        self.assertEqual(selected[0]["source_id"], "today")
+        self.assertGreater(
+            current["lead_score_breakdown"]["freshness"],
+            older["lead_score_breakdown"]["freshness"],
+        )
+
     def test_editorial_story_beats_slightly_higher_scored_research(self):
         research = make_candidate(
             raw("Strategy-first synthesis paper", "https://arxiv.example/paper"),

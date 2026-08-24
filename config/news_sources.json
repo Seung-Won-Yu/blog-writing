@@ -1,7 +1,7 @@
 {
-  "max_items_per_source": 15,
+  "max_items_per_source": 6,
   "max_workers": 8,
-  "max_age_days": 14,
+  "max_age_days": 7,
   "collection_quality": {
     "min_successful_sources": 3,
     "min_candidate_sources": 3,

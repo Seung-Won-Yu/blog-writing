@@ -99,7 +99,7 @@ class SourceConfigTests(unittest.TestCase):
             config["selection"]["fallback_min_reader_relevance"],
             config["selection"]["min_reader_relevance"],
         )
-        self.assertEqual(config["max_age_days"], 14)
+        self.assertEqual(config["max_age_days"], 7)
         self.assertEqual(config["selection"]["max_per_family"], 1)
         self.assertEqual(config["selection"]["min_lead_score"], 8)
         self.assertNotIn("inbox_retention_days", config["selection"])

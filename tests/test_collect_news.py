@@ -140,21 +140,21 @@ class FeedParserTests(unittest.TestCase):
         self.assertIn("ko-KR", request.headers["Accept-language"])
         self.assertEqual(mocked_urlopen.call_count, 2)
 
-    def test_fetch_survives_three_transient_failures_before_success(self):
+    def test_fetch_retries_one_transient_network_failure_before_success(self):
         transient = HTTPError(
             "https://example.com/feed", 405, "method not allowed", {}, None
         )
         with patch(
             "blog_pipeline.collection.collect_news.urlopen",
-            side_effect=[transient, URLError("dns"), transient, _FetchResponse()],
+            side_effect=[URLError("dns"), _FetchResponse()],
         ) as mocked_urlopen, patch(
             "blog_pipeline.collection.collect_news.time.sleep"
         ) as mocked_sleep:
             body = fetch_url("https://example.com/feed", retry_delay=0)
 
         self.assertEqual(body, "정상 응답")
-        self.assertEqual(mocked_urlopen.call_count, 4)
-        self.assertEqual(mocked_sleep.call_count, 3)
+        self.assertEqual(mocked_urlopen.call_count, 2)
+        self.assertEqual(mocked_sleep.call_count, 1)
 
     def test_parses_rss_item_and_strips_html_summary(self):
         items = parse_feed(RSS_XML, "https://example.com/feed")
@@ -438,6 +438,43 @@ class InboxTests(unittest.TestCase):
         self.assertEqual(
             [item["url"] for item in result["candidates"]],
             ["https://official.example/current"],
+        )
+
+    def test_global_limits_cap_source_overrides_and_old_candidates(self):
+        config = {
+            "max_items_per_source": 2,
+            "max_age_days": 7,
+            "selection": {"max_items": 3, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "official",
+                    "name": "Official",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://official.example/feed",
+                    "max_items": 20,
+                    "max_age_days": 30,
+                    "enabled": True,
+                }
+            ],
+        }
+        feed = """<rss><channel>
+          <item><title>오늘 첫 번째 보안 소식</title><link>https://official.example/1</link><pubDate>Sun, 12 Jul 2026 08:00:00 GMT</pubDate></item>
+          <item><title>오늘 두 번째 보안 소식</title><link>https://official.example/2</link><pubDate>Sun, 12 Jul 2026 07:00:00 GMT</pubDate></item>
+          <item><title>오늘 세 번째 보안 소식</title><link>https://official.example/3</link><pubDate>Sun, 12 Jul 2026 06:00:00 GMT</pubDate></item>
+          <item><title>열흘 전 보안 소식</title><link>https://official.example/old</link><pubDate>Thu, 02 Jul 2026 07:00:00 GMT</pubDate></item>
+        </channel></rss>"""
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda _url: feed,
+            now=NOW,
+            day_id="2026-07-12",
+        )
+
+        self.assertEqual(
+            [item["url"] for item in result["candidates"]],
+            ["https://official.example/1", "https://official.example/2"],
         )
 
     def test_all_source_failures_do_not_silently_replace_the_latest_good_inbox(self):
