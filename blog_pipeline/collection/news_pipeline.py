@@ -215,6 +215,7 @@ def score_candidate(
     topic_keywords=None,
     topic_priority=None,
     brand_keywords=None,
+    lasting_value_keywords=None,
 ):
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -289,6 +290,11 @@ def score_candidate(
     priority = list(topic_priority or (topic_keywords or {}).keys())
     topic_family = next((topic for topic in priority if topic in topic_tags), "other")
     brand_tags = match_keyword_groups(haystack, brand_keywords)
+    lasting_value_matches = [
+        keyword
+        for keyword in lasting_value_keywords or []
+        if _keyword_matches(haystack, keyword)
+    ]
 
     candidate["score"] = score
     candidate["score_reasons"] = reasons
@@ -298,6 +304,7 @@ def score_candidate(
     candidate["topic_tags"] = topic_tags
     candidate["topic_family"] = topic_family
     candidate["brand_tags"] = brand_tags
+    candidate["lasting_value_matches"] = list(dict.fromkeys(lasting_value_matches))
     return candidate
 
 
@@ -348,12 +355,25 @@ def score_lead_candidate(candidate):
             "community": 3,
             "korean_general": 2,
         }.get(group, 2),
+        "lasting_value": min(
+            8,
+            {
+                "official": 3,
+                "research": 3,
+                "independent_editorial": 4,
+                "korean_editorial": 4,
+                "general_editorial": 3,
+                "community": 2,
+                "korean_general": 1,
+            }.get(group, 2)
+            + min(4, len(candidate.get("lasting_value_matches") or [])),
+        ),
         "freshness": (
-            8
+            3
             if "24시간 이내" in reasons
-            else 5
-            if "48시간 이내" in reasons
             else 2
+            if "48시간 이내" in reasons
+            else 1
             if "7일 이내" in reasons
             else 0
         ),

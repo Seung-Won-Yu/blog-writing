@@ -127,7 +127,7 @@ python3 -m unittest \
 ```text
 .github/workflows/collect-news.yml   정기 뉴스 수집
 .github/workflows/collect-automation.yml 토요일 개발·자동화 후보 수집
-agent/DAILY_EDITOR.md                매일 09:00 뉴스 편집·발행 준비 계약
+agent/DAILY_EDITOR.md                월·목 09:00 실전 IT 아티클 편집·발행 준비 계약
 agent/SATURDAY_AUTOMATION.md         토요일 14:00 실전 개발·자동화 계약
 agent/DEVELOPMENT_GUIDE.md           수요일 14:00 개발 가이드 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정

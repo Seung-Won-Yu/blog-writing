@@ -613,13 +613,15 @@ def build_inbox(
             topic_keywords=config.get("topic_keywords", {}),
             topic_priority=config.get("topic_priority", []),
             brand_keywords=config.get("brand_keywords", {}),
+            lasting_value_keywords=config.get("lasting_value_keywords", []),
         )
         score_lead_candidate(candidate)
     candidates.sort(
         key=lambda item: (
+            item.get("lead_score", 0),
+            item.get("lead_score_breakdown", {}).get("lasting_value", 0),
             item.get("lead_score_breakdown", {}).get("freshness", 0),
             item.get("published_at", ""),
-            item.get("lead_score", 0),
             item.get("score", 0),
         ),
         reverse=True,

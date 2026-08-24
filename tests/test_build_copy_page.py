@@ -320,8 +320,8 @@ class CopyPageTests(unittest.TestCase):
 
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
         self.assertIn("오늘 글 발행 준비", html)
-        self.assertIn("09:00 Codex Terra / Medium", html)
-        self.assertIn("만드는 뉴스 심층글", html)
+        self.assertIn("월·목 09:00 실전 IT 아티클", html)
+        self.assertIn("수요일 개발 가이드", html)
         self.assertIn("HTML 모드에 한 번 붙여넣고", html)
         self.assertNotIn("Run workflow", html)
         self.assertNotIn("tistory-draft.yml", html)

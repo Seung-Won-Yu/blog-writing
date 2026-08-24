@@ -323,7 +323,14 @@ class RankingTests(unittest.TestCase):
 
         self.assertEqual(
             set(item["lead_score_breakdown"]),
-            {"reader_relevance", "actionability", "explanatory_depth", "evidence", "freshness"},
+            {
+                "reader_relevance",
+                "actionability",
+                "explanatory_depth",
+                "evidence",
+                "lasting_value",
+                "freshness",
+            },
         )
         self.assertEqual(item["lead_score"], sum(item["lead_score_breakdown"].values()))
 
@@ -418,6 +425,47 @@ class RankingTests(unittest.TestCase):
 
 
 class SelectionTests(unittest.TestCase):
+    def test_practical_evergreen_story_beats_newer_generic_announcement(self):
+        generic = make_candidate(
+            raw(
+                "GitHub Copilot 새 배지 색상 출시",
+                "https://today.example/copilot-badge",
+                published_at="2026-07-12T07:00:00+00:00",
+            ),
+            source("today", "official", weight=5),
+        )
+        evergreen = make_candidate(
+            raw(
+                "PostgreSQL 느린 쿼리 원인과 EXPLAIN 성능 개선 방법",
+                "https://editorial.example/postgres-explain",
+                published_at="2026-07-10T17:00:00+00:00",
+            ),
+            source("editorial", "korean_editorial", weight=3),
+        )
+        lanes = {
+            "broad": {"match_scope": "title", "keywords": []},
+            "practical": {"keywords": ["PostgreSQL", "EXPLAIN", "성능"]},
+            "deep": {"keywords": ["PostgreSQL", "쿼리", "성능"]},
+        }
+        lasting = ["원인", "성능", "개선", "방법"]
+        for item in (generic, evergreen):
+            score_candidate(
+                item,
+                [],
+                now=NOW,
+                audience_lanes=lanes,
+                lasting_value_keywords=lasting,
+            )
+            score_lead_candidate(item)
+
+        selected = select_lead_shortlist([generic, evergreen], max_items=1)
+
+        self.assertEqual(selected[0]["source_id"], "editorial")
+        self.assertGreater(
+            evergreen["lead_score_breakdown"]["lasting_value"],
+            generic["lead_score_breakdown"]["lasting_value"],
+        )
+
     def test_current_day_story_beats_an_otherwise_equal_two_day_story(self):
         current = make_candidate(
             raw(

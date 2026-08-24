@@ -103,6 +103,21 @@ class DraftIdentityTests(unittest.TestCase):
             "개발 가이드",
         )
 
+    def test_daily_lane_becomes_an_evergreen_article_without_rewriting_history(self):
+        previous = resolve_draft_identity("2026-08-24")
+        current = resolve_draft_identity("2026-08-25")
+
+        self.assertEqual(previous.content_label, "뉴스 심층글")
+        self.assertEqual(current.content_label, "실전 IT 아티클")
+        self.assertEqual(
+            category_for_content_type("daily_news", "2026-08-24"),
+            "최신 IT·개발 소식",
+        )
+        self.assertEqual(
+            category_for_content_type("daily_news", "2026-08-25"),
+            "실전 개발 노트",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

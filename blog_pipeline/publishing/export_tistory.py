@@ -746,6 +746,7 @@ def build_closing_section(editorial):
 
 
 def render_post(day_id, day):
+    identity = resolve_draft_identity(day_id)
     label = plain(day.get("date_label"))
     weekday = plain(day.get("weekday"))
     date_text = f"{label} ({weekday})" if weekday else label
@@ -764,8 +765,16 @@ def render_post(day_id, day):
             section_heading = "개발 가이드"
             analysis_label = "최신 기준"
         else:
-            section_heading = "오늘의 핵심뉴스"
-            analysis_label = "심층 분석"
+            section_heading = (
+                "실전 IT 아티클"
+                if identity.content_label == "실전 IT 아티클"
+                else "오늘의 핵심뉴스"
+            )
+            analysis_label = (
+                "실전 해설"
+                if identity.content_label == "실전 IT 아티클"
+                else "심층 분석"
+            )
         return f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>

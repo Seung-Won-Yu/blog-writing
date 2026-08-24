@@ -130,7 +130,11 @@ def valid_daily_source(day="2026-07-19"):
         "date_label": f"{publish_day.year}. {publish_day.month}. {publish_day.day}",
         "weekday": weekdays[publish_day.weekday()],
         "content_type": "daily_news",
-        "content_label": "뉴스 심층글",
+        "content_label": (
+            "실전 IT 아티클"
+            if publish_day >= date(2026, 8, 25)
+            else "뉴스 심층글"
+        ),
         "category": category_for_content_type("daily_news", day),
         "scheduled_at": f"{day}T09:00:00+09:00",
         "primary_query": "일반 사용자가 확인할 최신 기능 변경과 적용 조건",
@@ -965,6 +969,16 @@ class EditorialQualityTests(unittest.TestCase):
         )
 
         self.assertIn("quality_source_freshness", reasons)
+
+    def test_evergreen_daily_accepts_five_day_source_without_exception(self):
+        source = valid_daily_source("2026-08-25")
+        source["news"][0]["published_at"] = "2026-08-20T09:00:00+09:00"
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-25")
+        )
+
+        self.assertNotIn("quality_source_freshness", reasons)
 
     def test_future_posts_require_korean_editorial_and_prose(self):
         source = valid_daily_source()

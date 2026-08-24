@@ -483,6 +483,18 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("오늘의 정처기 문제", html)
         self.assertNotIn("오늘의 IT · 개발 · 기획 용어", html)
 
+    def test_future_daily_lane_renders_as_a_practical_it_article(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["draft_id"] = "2026-08-25"
+        day["publish_date"] = "2026-08-25"
+        day["content_label"] = "실전 IT 아티클"
+
+        html = render_post("2026-08-25", day)
+
+        self.assertIn("실전 IT 아티클", html)
+        self.assertIn("실전 해설", html)
+        self.assertNotIn("오늘의 핵심뉴스", html)
+
     def test_deep_links_ignore_non_http_reference_and_related_urls(self):
         day = copy.deepcopy(LEAD_DAY)
         day["news"][0]["references"].append(

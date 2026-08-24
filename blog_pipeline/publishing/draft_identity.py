@@ -12,6 +12,7 @@ _AUTOMATION_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-automation$")
 _GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
 
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
+EVERGREEN_DAILY_START = date(2026, 8, 25)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
@@ -45,9 +46,17 @@ def category_for_content_type(content_type, publish_date=None):
             published = date.fromisoformat(str(publish_date).strip())
         except ValueError:
             published = CATEGORY_TAXONOMY_V2_START
+        if key == "daily_news" and published >= EVERGREEN_DAILY_START:
+            return "실전 개발 노트"
         if published < CATEGORY_TAXONOMY_V2_START:
             category_map = LEGACY_CATEGORIES
     return category_map[key]
+
+
+def content_label_for_daily(publish_date):
+    """Keep historical labels stable while switching the recurring lane."""
+    published = date.fromisoformat(str(publish_date).strip())
+    return "실전 IT 아티클" if published >= EVERGREEN_DAILY_START else "뉴스 심층글"
 
 
 def category_for_identity(identity):
@@ -88,7 +97,7 @@ def resolve_draft_identity(draft_id, payload=None):
             draft_id=value,
             publish_date=publish_date,
             content_type="daily_news",
-            content_label="뉴스 심층글",
+            content_label=content_label_for_daily(publish_date),
             source=f"data/days/{publish_date}.json",
         )
     else:

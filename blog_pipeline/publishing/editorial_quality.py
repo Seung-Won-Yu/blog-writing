@@ -10,7 +10,11 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from .draft_identity import category_for_identity, regular_schedule_for_identity
+from .draft_identity import (
+    EVERGREEN_DAILY_START,
+    category_for_identity,
+    regular_schedule_for_identity,
+)
 
 
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
@@ -1028,7 +1032,10 @@ def _source_freshness_reasons(source, identity):
         source_age = scheduled - published
         if source_age > timedelta(days=7):
             return ["quality_source_freshness"]
-        if source_age > timedelta(hours=72):
+        if (
+            date.fromisoformat(identity.publish_date) < EVERGREEN_DAILY_START
+            and source_age > timedelta(hours=72)
+        ):
             editorial = (
                 source.get("editorial")
                 if isinstance(source.get("editorial"), dict)

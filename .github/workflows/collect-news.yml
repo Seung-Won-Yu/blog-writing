@@ -2,8 +2,8 @@ name: Collect daily news
 
 on:
   schedule:
-    # 08:20 KST. Keep a 40-minute buffer while still collecting morning news
-    # before the 09:00 Codex editor starts.
+    # 08:20 KST. Daily topic radar; the Monday/Thursday 09:00 editor uses the
+    # latest verified candidates instead of forcing a daily article.
     - cron: '20 23 * * *'
   workflow_dispatch:
 
