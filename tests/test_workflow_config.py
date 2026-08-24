@@ -213,7 +213,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("긴급 보안 취약점이나 대규모 서비스 장애", contract)
         self.assertIn("반복 브랜드를 제목에서 제외", contract)
         self.assertIn("대표 이미지는 새 핵심 대상", contract)
-        self.assertIn("매주 월·목 09:00 KST", contract)
+        self.assertIn("매주 월·수 09:00 KST", contract)
         self.assertIn("소식은 글을 여는 단서로만", contract)
         self.assertIn("발표 후 30일 이내", contract)
         self.assertIn("요즘IT·GeekNews", contract)
