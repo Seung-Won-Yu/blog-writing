@@ -13,6 +13,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from .draft_identity import (
     EVERGREEN_DAILY_START,
     category_for_identity,
+    is_regular_automation_day,
     regular_schedule_for_identity,
 )
 
@@ -762,7 +763,7 @@ def _identity_reasons(source, identity):
             )
         else:
             invalid = invalid or publication_mode != "scheduled"
-            invalid = invalid or publish_day.weekday() != 5
+            invalid = invalid or not is_regular_automation_day(publish_day)
             invalid = invalid or source.get("scheduled_at") != (
                 f"{identity.publish_date}T18:00:00+09:00"
             )

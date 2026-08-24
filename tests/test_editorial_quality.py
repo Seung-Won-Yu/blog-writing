@@ -817,6 +817,20 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn("quality_identity", daily_reasons)
         self.assertIn("quality_identity", automation_reasons)
 
+    def test_identity_accepts_friday_and_rejects_saturday_after_transition(self):
+        friday = valid_automation_source("2026-08-28")
+        saturday = valid_automation_source("2026-08-29")
+
+        friday_reasons = source_quality_reasons(
+            friday, resolve_draft_identity("2026-08-28-automation")
+        )
+        saturday_reasons = source_quality_reasons(
+            saturday, resolve_draft_identity("2026-08-29-automation")
+        )
+
+        self.assertNotIn("quality_identity", friday_reasons)
+        self.assertIn("quality_identity", saturday_reasons)
+
     def test_manual_extra_allows_explicit_same_day_non_saturday_publish(self):
         source = valid_automation_source("2026-07-26")
         source.update(

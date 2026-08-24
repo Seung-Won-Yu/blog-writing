@@ -169,7 +169,7 @@ def save_bounded_webp(
 
 
 def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
-    """Convert one daily or Saturday draft image set to bounded WebP files."""
+    """Convert one daily or weekly automation image set to bounded WebP files."""
     identity = resolve_draft_identity(draft_id)
     root = Path(root).resolve()
     day_path = root / identity.source

@@ -1,8 +1,8 @@
-# 쑥쑥자라나라 토요일 실전 개발·자동화 편집 계약
+# 쑥쑥자라나라 금요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 토요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·목 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 금요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·목 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
-사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비토요일 실행은 계속 건너뜁니다.
+사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비금요일 실행은 계속 건너뜁니다.
 
 ## 시작 조건과 단일 실행
 
@@ -23,7 +23,7 @@
 
 2. `saturday_guard` 결과를 따릅니다.
 
-   - `SKIP`: 토요일이 아니므로 즉시 종료합니다.
+   - `SKIP`: 금요일이 아니므로 즉시 종료합니다.
    - `COMPLETE`: 같은 날짜 자동화글을 다시 조사·집필·생성하지 않고 종료합니다.
    - `PARTIAL`: 출력된 `reasons`에 해당하는 단계만 복구합니다.
    - `NEW`: 아래 흐름을 정확히 한 번 수행합니다.
@@ -139,7 +139,7 @@
 
 `capture`와 `annotated_capture`에는 브리프와 이미지 양쪽에 같은 `capture_tool`, `capture_target`, `captured_at`을 기록합니다. `capture_tool`은 `browser`, `computer-use`, `playwright`, `system-screenshot`, `terminal` 중 실제 사용한 도구만 쓰고, `captured_at`은 타임존이 있는 ISO 시각으로 예약 시각 14일 이내에서 기록합니다. 최적화기가 실제 WebP 파일과 같은 `capture_sha256`을 이미지에 기록하며, 이 해시는 기록과 파일의 일치를 검증할 뿐 캡처 사실 자체를 대신하지 않습니다. 실제 화면인지는 실행 과정·출력·전후 상태와 함께 교차 확인합니다.
 
-`measured_chart`는 브리프에 `measurement_source`, `unit`, `sample_count`, `measurement_environment`, 2~20개의 `data_points`(`label`, 유한한 숫자 `value`)를 넣습니다. `measurement_sha256`은 최적화기가 이 다섯 필드 전체를 UTF-8 compact JSON(키만 정렬, 배열 순서 유지)으로 직렬화해 자동 기록합니다. NaN·무한대·중복 라벨은 허용하지 않습니다. 토요일 실험에서 사용한 실측 차트는 `verification`의 `measurement_files`에 이미지 키를 넣고 `measurement_note`에 측정 방법·횟수·제외 조건을 적습니다. 이 필드가 없으면 차트로 발행하지 않습니다.
+`measured_chart`는 브리프에 `measurement_source`, `unit`, `sample_count`, `measurement_environment`, 2~20개의 `data_points`(`label`, 유한한 숫자 `value`)를 넣습니다. `measurement_sha256`은 최적화기가 이 다섯 필드 전체를 UTF-8 compact JSON(키만 정렬, 배열 순서 유지)으로 직렬화해 자동 기록합니다. NaN·무한대·중복 라벨은 허용하지 않습니다. 금요일 실험에서 사용한 실측 차트는 `verification`의 `measurement_files`에 이미지 키를 넣고 `measurement_note`에 측정 방법·횟수·제외 조건을 적습니다. 이 필드가 없으면 차트로 발행하지 않습니다.
 
 각 브리프와 대응 이미지의 `qa`에 `topic_match`, `caption_match`, `mobile_readable`, `text_reviewed`, `not_generic`을 모두 `true`로 기록합니다. 최적화 후에는 실제 WebP 디코딩 결과와 메타데이터의 크기·용량·`sha256`을 비교합니다. 직접 캡처를 지정하고 실제 캡처 파일이 없거나, 생성 이미지를 캡처로 표시하면 발행을 막습니다.
 
@@ -164,7 +164,7 @@
 
 그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 
-`publish_date`는 토요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
+`publish_date`는 2026-08-28부터 금요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. 이전 토요일 발행본은 역사 자료로 계속 유효합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
 
 `verification`은 문장 요약이 아닌 실행 증거 계약입니다. `mode`는 실제 실행한 경우에만 `executed`, `environment`에는 OS·런타임·도구 버전·소스 리비전을 넣습니다. 복제 가능한 `commands`, 테스트 입력 `input_fixture`, 예상 `expected`, 관찰 `actual`, 실패 `failure`, 복구 `rollback`, 캡처로 증명할 이미지 키 `evidence_files`를 모두 기록합니다. 주제 회전을 위해 `problem_lane`과 `tool_brand`도 필수입니다. `evidence_files`는 `capture` 또는 `annotated_capture` 출처인 본문 이미지만 가리켜야 합니다. 실행 직전·직후의 타임존 포함 ISO 시각 `started_at`, `completed_at`, 실제 종료 코드 `command_exit_code`(0), 개인정보를 제거한 실제 출력 `stdout_excerpt`도 필수입니다. 시작·종료 시각은 예약 시각 14일 이내에서 시간순으로 일치해야 합니다.
 

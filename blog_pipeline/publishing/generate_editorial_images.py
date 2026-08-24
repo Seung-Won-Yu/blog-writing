@@ -1460,7 +1460,7 @@ def generate_for_draft(
     output_dir=DEFAULT_OUTPUT_DIR,
     public_base_url=DEFAULT_PUBLIC_BASE_URL,
 ):
-    """Generate fallback assets for a daily or Saturday stored draft."""
+    """Generate fallback assets for a daily or weekly automation draft."""
     identity = resolve_draft_identity(draft_id)
     return _generate_stored_draft(
         identity.draft_id,

@@ -1,4 +1,4 @@
-"""Collect and rank public sources for Saturday development and automation experiments."""
+"""Collect and rank public sources for Friday development and automation experiments."""
 
 import argparse
 import datetime as dt
@@ -64,7 +64,7 @@ def _criterion_score(text, spec, bias=0):
 
 
 def score_automation_candidate(candidate, criteria, source=None):
-    """Attach the five Saturday editorial criterion scores to a candidate."""
+    """Attach the five weekly editorial criterion scores to a candidate."""
     source = source or {}
     text = "{} {}".format(candidate.get("title", ""), candidate.get("summary", ""))
     biases = source.get("criteria_bias") or {}
@@ -485,7 +485,7 @@ def load_recent_automation_history(
     lookback_days=90,
     publish_meta_dir=None,
 ):
-    """Load dedupe fingerprints from publish-ready Saturday automation cases."""
+    """Load dedupe fingerprints from publish-ready automation cases."""
     target_day = dt.date.fromisoformat(validate_day_id(day_id))
     cases = Path(cases_dir)
     metadata = (
@@ -649,7 +649,7 @@ def render_automation_inbox_html(inbox):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-  <title>{day} 토요일 개발·자동화 후보함</title>
+  <title>{day} 금요일 개발·자동화 후보함</title>
   <style>
     :root {{ --ink:#17211c; --muted:#647069; --line:#dce4df; --paper:#fff; --wash:#f3f6f4; --accent:#176848; --amber:#a76512; }}
     * {{ box-sizing:border-box; }}
@@ -682,9 +682,9 @@ def render_automation_inbox_html(inbox):
 <body>
 <main>
   <header>
-    <p class="eyebrow">SATURDAY PRACTICAL RADAR</p>
+    <p class="eyebrow">FRIDAY PRACTICAL RADAR</p>
     <p class="generated">{day} · 생성 {generated_at}</p>
-    <h1>토요일 개발·자동화 후보함</h1>
+    <h1>금요일 개발·자동화 후보함</h1>
     <p class="intro">GitHub Trending, 공식 자료와 요즘IT에서 직접 검증해 볼 만한 개발·AI·자동화 주제를 모았습니다. 점수는 메타데이터 기반 임시 점수이며 실제 실행 결과가 아닙니다.</p>
   </header>
   <section><h2>우선 검토할 후보 {selected_count}건</h2><div class="grid">{selected_html}</div></section>
@@ -771,7 +771,7 @@ def automation_collection_quality_result(inbox, config):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="토요일 개발·자동화 실험 후보함을 생성합니다.")
+    parser = argparse.ArgumentParser(description="금요일 개발·자동화 실험 후보함을 생성합니다.")
     day_group = parser.add_mutually_exclusive_group()
     day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘")
     day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")

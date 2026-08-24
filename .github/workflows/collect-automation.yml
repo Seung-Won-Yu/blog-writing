@@ -1,16 +1,16 @@
-name: Collect Saturday automation candidates
+name: Collect Friday automation candidates
 
 on:
   schedule:
-    # 07:17 KST Saturday. Leaves a wide delay buffer before the 14:00 task.
-    - cron: '17 22 * * 5'
+    # 07:17 KST Friday. Leaves a wide delay buffer before the 14:00 task.
+    - cron: '17 22 * * 4'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: saturday-automation-collection
+  group: friday-automation-collection
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - name: Verify automation collection
         run: python3 -m unittest tests.test_collect_automation tests.test_collect_news tests.test_news_pipeline
 
-      - name: Commit Saturday automation inbox
+      - name: Commit Friday automation inbox
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -40,6 +40,6 @@ jobs:
             echo "No automation inbox changes"
             exit 0
           fi
-          git commit -m "chore: collect Saturday automation candidates"
+          git commit -m "chore: collect Friday automation candidates"
           git pull --rebase origin main
           git push origin HEAD:main

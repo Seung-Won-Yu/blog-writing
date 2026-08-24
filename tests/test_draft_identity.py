@@ -78,6 +78,17 @@ class DraftIdentityTests(unittest.TestCase):
             "2026-07-25T18:00:00+09:00",
         )
         self.assertEqual(
+            regular_schedule_for_identity(
+                resolve_draft_identity("2026-08-28-automation")
+            ),
+            "2026-08-28T18:00:00+09:00",
+        )
+        self.assertIsNone(
+            regular_schedule_for_identity(
+                resolve_draft_identity("2026-08-29-automation")
+            )
+        )
+        self.assertEqual(
             regular_schedule_for_identity(resolve_draft_identity("2026-07-22-guide")),
             "2026-07-22T18:00:00+09:00",
         )

@@ -1,4 +1,7 @@
-"""Guard the separate Saturday hands-on automation draft."""
+"""Guard the separate weekly hands-on automation draft.
+
+The module path is retained for compatibility with existing jobs and history.
+"""
 
 from __future__ import annotations
 
@@ -9,21 +12,21 @@ from zoneinfo import ZoneInfo
 
 from blog_pipeline.collection.news_pipeline import validate_day_id
 from .daily_guard import ROOT, inspect_draft_state
-from .draft_identity import automation_draft_id
+from .draft_identity import automation_draft_id, is_regular_automation_day
 
 
 def inspect_saturday_state(day_id, *, root=ROOT, window_days=90):
-    """Return SKIP off Saturday; otherwise inspect that day's automation draft."""
+    """Return SKIP off the configured weekly day; otherwise inspect the draft."""
     day_id = validate_day_id(day_id)
     publish_date = date.fromisoformat(day_id)
     draft_id = automation_draft_id(day_id)
-    if publish_date.weekday() != 5:
+    if not is_regular_automation_day(publish_date):
         return {
             "day": day_id,
             "draft_id": draft_id,
             "content_type": "automation_case",
             "status": "SKIP",
-            "reason": "not_saturday",
+            "reason": "not_regular_automation_day",
             "reasons": [],
             "duplicates": [],
         }
@@ -34,7 +37,7 @@ def inspect_saturday_state(day_id, *, root=ROOT, window_days=90):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(
-        description="토요일 업무자동화 실험 초안의 중복 실행을 막습니다."
+        description="금요일 업무자동화 실험 초안의 중복 실행을 막습니다."
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--today", action="store_true")

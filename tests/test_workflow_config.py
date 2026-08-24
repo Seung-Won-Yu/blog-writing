@@ -132,8 +132,8 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_saturday_collection_workflow_only_collects_ranked_candidates(self):
         workflow = AUTOMATION_COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
-        self.assertIn("name: Collect Saturday automation candidates", workflow)
-        self.assertIn("cron: '17 22 * * 5'", workflow)
+        self.assertIn("name: Collect Friday automation candidates", workflow)
+        self.assertIn("cron: '17 22 * * 4'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_automation --today",
@@ -410,7 +410,8 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("SATURDAY_AUTOMATION.md", daily)
         self.assertNotIn("### GitHub 적용 사례형", daily)
-        self.assertIn("토요일 14:00 KST", contract)
+        self.assertIn("금요일 14:00 KST", contract)
+        self.assertIn("2026-08-28부터 금요일", contract)
         self.assertIn("18:00 예약 발행", contract)
         self.assertIn("직접 실행 실험기", contract)
         self.assertIn("따라하기", contract)

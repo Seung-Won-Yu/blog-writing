@@ -14,6 +14,7 @@ _GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
 EVERGREEN_DAILY_START = date(2026, 8, 25)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
+FRIDAY_AUTOMATION_SCHEDULE_START = date(2026, 8, 28)
 LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
     "automation_case": "업무자동화",
@@ -66,13 +67,20 @@ def category_for_identity(identity):
     )
 
 
+def is_regular_automation_day(publish_day):
+    """Keep historical Saturday cases valid; use Friday from the new schedule."""
+    if publish_day >= FRIDAY_AUTOMATION_SCHEDULE_START:
+        return publish_day.weekday() == 4
+    return publish_day.weekday() == 5
+
+
 def regular_schedule_for_identity(identity):
     """Return the canonical KST schedule for a recurring draft, if eligible."""
     publish_day = date.fromisoformat(identity.publish_date)
     if identity.content_type == "daily_news":
         hour = "09:00:00"
     elif identity.content_type == "automation_case":
-        if publish_day.weekday() != 5:
+        if not is_regular_automation_day(publish_day):
             return None
         hour = "18:00:00"
     elif identity.content_type == "evergreen_guide":
