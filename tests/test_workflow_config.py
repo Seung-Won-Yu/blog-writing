@@ -112,7 +112,7 @@ class WorkflowConfigTests(unittest.TestCase):
         workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("name: Collect daily news", workflow)
-        self.assertIn("cron: '20 23 * * *'", workflow)
+        self.assertIn("cron: '17 22 * * *'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news --today", workflow
@@ -157,6 +157,11 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "agent" / "REPOSITORY_SYNC.md",
             ROOT / "config" / "tistory_public_posts.json",
             ROOT / "config" / "search_opportunities.json",
+            ROOT / "config" / "search_performance.example.csv",
+            ROOT
+            / "blog_pipeline"
+            / "collection"
+            / "analyze_search_performance.py",
             ROOT / "blog_pipeline" / "collection" / "sync_tistory_posts.py",
             ROOT / "blog_pipeline" / "collection" / "collect_news.py",
             ROOT / "blog_pipeline" / "collection" / "collect_automation.py",
@@ -184,18 +189,25 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("LOCAL_COMPLETE", contract)
         self.assertNotIn("sync_main", contract)
         self.assertIn("daily_guard --today", contract)
-        self.assertIn("daily_guard --today --source-only", contract)
+        self.assertIn(
+            "daily_guard --today --source-only --window-days 365", contract
+        )
         self.assertIn("원고 사전검사", contract)
-        self.assertIn("daily_guard --today --require-complete", contract)
+        self.assertIn(
+            "daily_guard --today --require-complete --window-days 365", contract
+        )
         self.assertIn("publish_bundle --today --stage", contract)
         self.assertIn("publish_bundle --today --check", contract)
         self.assertIn("optimize_images --today", contract)
         self.assertIn("webp-v1", contract)
         self.assertIn("`COMPLETE`: 즉시 종료", contract)
         self.assertIn("`docs/inbox/latest.json`", contract)
+        self.assertIn("`problem_signals`", contract)
+        self.assertIn("`unknown_publication_date: true`", contract)
         self.assertIn("당일 날짜와 다르면", contract)
         self.assertNotIn("`docs/inbox/YYYY-MM-DD.json`", contract)
         self.assertIn("최근 60일", contract)
+        self.assertIn("최근 365일", contract)
         self.assertIn("`lead-story-v1`", contract)
         self.assertIn("실전 IT 아티클 1건", contract)
         self.assertIn("`primary_query`", contract)
@@ -235,6 +247,9 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("직전 4일에 제목·핵심 개체로 노출된 제품·회사 브랜드", contract)
         self.assertIn("직전 2일의 핵심 `topic_family`", contract)
         self.assertIn("단순 기능 추가·가격·사용법·일반 연구에는 `rotation_exception`을 쓰지 않습니다", contract)
+        self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("75점", contract)
+        self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
 
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
@@ -254,6 +269,9 @@ class WorkflowConfigTests(unittest.TestCase):
             "publish_bundle --draft-id YYYY-MM-DD-automation --check",
             contract,
         )
+        self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("75점", contract)
+        self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
 
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
         contract = GUIDE_CONTRACT.read_text(encoding="utf-8")
@@ -331,6 +349,32 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("editorial.search_intent", contract)
                 self.assertIn("foundation", contract)
                 self.assertIn("next_step", contract)
+
+    def test_all_editorial_contracts_require_original_value_and_specific_covers(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            GUIDE_CONTRACT,
+            SATURDAY_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("editorial.original_value", contract)
+                for field in (
+                    "durable_question",
+                    "source_gap",
+                    "contribution",
+                    "proof_method",
+                    "reader_outcome",
+                    "limits",
+                    "editorial_treatment",
+                    "focal_subject",
+                    "texture_cue",
+                    "authenticity_cue",
+                ):
+                    self.assertIn(f"`{field}`", contract)
+                self.assertIn("`images.cover.alt`", contract)
+                self.assertIn("15~160자", contract)
 
     def test_editor_contract_requires_article_specific_image_briefs_and_review(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")

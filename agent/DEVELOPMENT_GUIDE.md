@@ -131,7 +131,11 @@
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 독자가 겪는 실패·선택·결과를 보여 주는 한 장면을 우선하고, 본문 도식은 원리와 절차의 정확성을 우선합니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 고정된 아이보리 배경·네이비/청록/주황·3단 카드 조합을 기본 템플릿으로 사용하지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 구성에서 제외합니다.
 
+2026-08-26 이후 `visual.cover`와 `images.cover`에 같은 `editorial_treatment`, `focal_subject`, `texture_cue`, `authenticity_cue`를 기록합니다. `editorial_treatment`는 `tactile_realism`, `documentary_closeup`, `quiet_minimalism`, `playful_surrealism`, `local_workplace` 중 주제에 맞는 하나입니다. 기술을 설명하는 실제 대상·질감·사용 흔적을 중심에 두고, 스톡 사진처럼 매끄러운 노트북 장면을 만들지 않습니다. `images.cover.alt`는 15~160자로 `primary_query`나 `focal_subject`의 구체적 대상을 포함하고, 파일명도 기술·문제·결과를 알 수 있게 짓습니다.
+
 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나이며 직전 같은 유형 글과 반복하지 않습니다. 사고·유출·장애의 원인과 파급 경로를 설명하는 가이드라면 `incident_trace`를 사용합니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이는 편집용 내부 메타데이터일 뿐 본문에 그대로 옮기거나 `다시 찾을 때` 같은 상자로 출력하지 않습니다. 핵심 답·실패 조건·재확인 변화는 필요한 문단에 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 본문의 `code`, `table`, `ul` 중 실제로 바로 적용할 수 있는 블록 하나에 `reusable: true`와 `reuse_label`을 내부 메타데이터로 넣되, 별도 제목·상자·배지 없이 일반 본문 요소로 출력합니다.
+
+`editorial.original_value`에 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `proof_method`는 최신 공식 문서를 서로 비교하면 `document_comparison`, 설정과 동작 순서를 검증하면 `configuration_walkthrough`, 여러 1차 자료의 범위를 교차 확인하면 `source_triangulation`을 쓸 수 있습니다. `contribution`에는 문서 재배열이 아닌 새 비교·실패 조건·판단 기준·재사용 산출물을 적습니다.
 
 `editorial.action`은 `closing` 뒤에 이어지는 자연스러운 마지막 문장으로 작성합니다. `직접 확인해보려면` 같은 고정 제목이나 별도 행동 유도 상자는 사용하지 않습니다.
 
@@ -176,5 +180,6 @@ git diff --cached --check
 - `editorial.search_intent`와 `related_posts`의 `foundation`·`next_step` 역할이 실제 독자 흐름과 맞는가
 - 광고가 정확히 1개이며 전체 35~45% 위치에서 `완결 블록 → 광고 → 다음 소제목` 순서인가
 - `editorial.revisit`가 별도 내부 메모 상자로 노출되지 않고 본문에 자연스럽게 반영됐는가
+- `editorial.original_value`의 새 비교·실패 조건·판단 기준이 본문에 실제로 남았는가
 - 수요일 18:00 예약값과 `개발 가이드` 카테고리가 정확한가
 - 최종 가드·묶음·테스트·Pages 배포가 모두 성공했는가

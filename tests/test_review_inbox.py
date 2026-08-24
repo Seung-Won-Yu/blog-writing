@@ -22,7 +22,32 @@ class ReviewInboxTests(unittest.TestCase):
                     "group": "official",
                     "score": 10,
                     "score_reasons": ["공식 출처", "48시간 이내"],
+                    "durable_problem_score": 7,
+                    "editorial_angle": {
+                        "intent": "troubleshooting",
+                        "recommended_shape": "troubleshooting",
+                        "recommended_artifact": "troubleshooting_tree",
+                    },
                     "requires_manual_review": False,
+                }
+            ],
+            "problem_signals": [
+                {
+                    "id": "problem-id",
+                    "title": "요즘 개발자가 반복해 묻는 배포 문제",
+                    "url": "https://yozm.example/problem",
+                    "source_name": "요즘IT",
+                    "group": "korean_editorial",
+                    "score": 7,
+                    "score_reasons": ["문제 발견 단서"],
+                    "durable_problem_score": 5,
+                    "unknown_publication_date": True,
+                    "editorial_angle": {
+                        "intent": "troubleshooting",
+                        "recommended_shape": "troubleshooting",
+                        "recommended_artifact": "checklist",
+                    },
+                    "requires_manual_review": True,
                 }
             ],
             "candidates": [],
@@ -39,6 +64,11 @@ class ReviewInboxTests(unittest.TestCase):
         self.assertNotIn("AI <Agent>", html)
         self.assertIn("broken", html)
         self.assertIn("timeout &lt;60s&gt;", html)
+        self.assertIn("오래가는 문제 7점", html)
+        self.assertIn("troubleshooting_tree", html)
+        self.assertIn("문제 발굴 신호 1건", html)
+        self.assertIn("요즘IT", html)
+        self.assertIn("발행일 확인 필요", html)
 
     def test_writes_only_latest_files_and_removes_legacy_dated_files(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -105,6 +135,10 @@ class SourceConfigTests(unittest.TestCase):
         self.assertEqual(config["selection"]["min_lead_score"], 8)
         self.assertEqual(config["selection"]["min_evergreen_fit"], 4)
         self.assertEqual(config["selection"]["fallback_min_evergreen_fit"], 2)
+        self.assertEqual(config["selection"]["min_durable_problem_score"], 3)
+        self.assertEqual(
+            config["selection"]["fallback_min_durable_problem_score"], 1
+        )
         self.assertNotIn("inbox_retention_days", config["selection"])
         self.assertTrue(
             {
@@ -141,6 +175,7 @@ class SourceConfigTests(unittest.TestCase):
             all(source.get("source_family") == "github" for source in github_sources)
         )
         yozmit = next(source for source in enabled if source["id"] == "yozmit")
+        self.assertTrue(yozmit["allow_unknown_date"])
         self.assertTrue(yozmit.get("fallbacks"))
         for source_id in ("aitimes", "geeknews", "yozmit"):
             source = next(item for item in enabled if item["id"] == source_id)

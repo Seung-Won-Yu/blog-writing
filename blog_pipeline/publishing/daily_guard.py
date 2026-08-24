@@ -49,6 +49,26 @@ PRODUCT_UI_PATTERN = re.compile(
     re.IGNORECASE,
 )
 AUTOMATION_VISUAL_POLICY_START = date(2026, 7, 25)
+SEARCH_QUERY_COLLISION_POLICY_START = date(2026, 8, 26)
+SEARCH_QUERY_STOP_TOKENS = {
+    "ai",
+    "it",
+    "개발",
+    "가이드",
+    "검색",
+    "기술",
+    "방법",
+    "분석",
+    "블로그",
+    "설정",
+    "사용",
+    "정리",
+    "정보",
+    "추천",
+    "최신",
+    "how",
+    "to",
+}
 AUTOMATION_PUBLISHABLE_ORIGINS = {
     "capture",
     "annotated_capture",
@@ -140,6 +160,23 @@ def canonical_url(value):
 
 def normalized_title(value):
     return re.sub(r"[^0-9a-z가-힣]+", "", str(value or "").lower())
+
+
+def _primary_query_tokens(value):
+    return {
+        token
+        for token in re.findall(r"[0-9a-z가-힣]+", str(value or "").casefold())
+        if len(token) >= 2 and token not in SEARCH_QUERY_STOP_TOKENS
+    }
+
+
+def _primary_queries_overlap(current, previous):
+    """Return whether two queries target substantially the same search need."""
+    current_tokens = _primary_query_tokens(current)
+    previous_tokens = _primary_query_tokens(previous)
+    shared = current_tokens.intersection(previous_tokens)
+    smaller = min(len(current_tokens), len(previous_tokens))
+    return len(shared) >= 2 and smaller >= 2 and len(shared) / smaller >= 0.67
 
 
 def has_inline_post_style(body_html):
@@ -475,6 +512,7 @@ def find_recent_draft_duplicates(
         else {}
     )
     current_topic_key = str(current_editorial.get("topic_key") or "").strip().casefold()
+    current_primary_query = str(current_day.get("primary_query") or "").strip()
     current_entities = {
         str(value or "").strip().casefold()
         for value in current_editorial.get("entities", [])
@@ -507,9 +545,6 @@ def find_recent_draft_duplicates(
             if isinstance(item, dict)
         }
         current_fingerprints.discard("")
-        current_primary_query = str(
-            current_day.get("primary_query") or ""
-        ).strip()
     duplicates = []
     automation_rotation_checked = False
     previous_sources_seen = 0
@@ -563,6 +598,7 @@ def find_recent_draft_duplicates(
         previous_item = next(
             (item for item in previous_news if isinstance(item, dict)), {}
         )
+        previous_primary_query = str(previous.get("primary_query") or "").strip()
 
         if current_date >= REVISIT_VALUE_POLICY_START:
             previous_shape = str(
@@ -682,9 +718,6 @@ def find_recent_draft_duplicates(
             }
             previous_fingerprints.discard("")
             shared_fingerprints = current_fingerprints & previous_fingerprints
-            previous_primary_query = str(
-                previous.get("primary_query") or ""
-            ).strip()
             automation_reason = ""
             automation_match = ""
             if shared_fingerprints:
@@ -733,6 +766,15 @@ def find_recent_draft_duplicates(
         if current_topic_key and current_topic_key == previous_topic_key:
             semantic_reason = "same_topic_key"
             semantic_match = current_topic_key
+        elif (
+            identity.content_type != "automation_case"
+            and current_date >= SEARCH_QUERY_COLLISION_POLICY_START
+            and current_primary_query
+            and previous_primary_query
+            and _primary_queries_overlap(current_primary_query, previous_primary_query)
+        ):
+            semantic_reason = "similar_primary_query"
+            semantic_match = previous_primary_query
         elif (
             identity.content_type == "daily_news"
             and offset <= 3
@@ -907,11 +949,18 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         else:
             reasons.extend(image_result["reasons"])
 
+    publish_date = date.fromisoformat(identity.publish_date)
+    duplicate_window = max(window_days, 60) if lead_story else window_days
+    if (
+        identity.content_type == "daily_news"
+        and publish_date >= SEARCH_QUERY_COLLISION_POLICY_START
+    ):
+        duplicate_window = max(duplicate_window, 365)
     duplicates = find_recent_draft_duplicates(
         identity.draft_id,
         source,
         root=root,
-        window_days=max(window_days, 60) if lead_story else window_days,
+        window_days=duplicate_window,
     )
     if duplicates:
         reasons.append("recent_duplicate")
@@ -1205,11 +1254,18 @@ def inspect_source_state(draft_id, *, root=ROOT, window_days=14):
             reason for reason in lead_reasons if reason != "lead_explanatory_visuals"
         )
     reasons.extend(source_authoring_reasons(source, identity))
+    duplicate_window = window_days
+    if (
+        identity.content_type == "daily_news"
+        and date.fromisoformat(identity.publish_date)
+        >= SEARCH_QUERY_COLLISION_POLICY_START
+    ):
+        duplicate_window = max(duplicate_window, 365)
     duplicates = find_recent_draft_duplicates(
         identity.draft_id,
         source,
         root=root,
-        window_days=window_days,
+        window_days=duplicate_window,
     )
     if duplicates:
         reasons.append("duplicate_topic")
@@ -1273,7 +1329,13 @@ def inspect_publish_ready_drafts(*, root=ROOT):
             window_days={
                 "automation_case": 90,
                 "evergreen_guide": 365,
-            }.get(identity.content_type, 60),
+            }.get(
+                identity.content_type,
+                365
+                if date.fromisoformat(identity.publish_date)
+                >= SEARCH_QUERY_COLLISION_POLICY_START
+                else 60,
+            ),
         )
         if result.get("status") != "COMPLETE":
             failures.append(result)

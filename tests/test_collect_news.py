@@ -15,6 +15,7 @@ from blog_pipeline.collection.collect_news import (
     load_recent_publisher_hosts,
     load_recent_processed_urls,
     load_recent_topic_families,
+    load_search_opportunities,
     parse_feed,
     parse_github_trending,
     parse_html_links,
@@ -192,6 +193,68 @@ class FeedParserTests(unittest.TestCase):
         self.assertEqual(items[0]["url"], "https://example.com/agent-evaluation")
 
 
+class SearchOpportunityLoadingTests(unittest.TestCase):
+    def test_loads_recent_search_console_feedback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "search-opportunities.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "updated_at": "2026-08-10T16:40:00+09:00",
+                        "opportunities": [
+                            {
+                                "query": "코파일럿 한도",
+                                "action": "retitle_existing",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = load_search_opportunities(
+                path,
+                now=dt.datetime(
+                    2026, 8, 24, 9, 0, tzinfo=dt.timezone(dt.timedelta(hours=9))
+                ),
+            )
+
+        self.assertEqual(result[0]["query"], "코파일럿 한도")
+
+    def test_ignores_missing_invalid_or_stale_feedback(self):
+        now = dt.datetime(
+            2026, 9, 20, 9, 0, tzinfo=dt.timezone(dt.timedelta(hours=9))
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            stale = directory / "stale.json"
+            invalid = directory / "invalid.json"
+            stale.write_text(
+                json.dumps(
+                    {
+                        "updated_at": "2026-08-10T16:40:00+09:00",
+                        "opportunities": [{"query": "오래된 검색어"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            invalid.write_text(
+                json.dumps(
+                    {
+                        "updated_at": "unknown",
+                        "opportunities": [{"query": "날짜 없는 검색어"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            self.assertEqual(load_search_opportunities(stale, now=now), [])
+            self.assertEqual(load_search_opportunities(invalid, now=now), [])
+            self.assertEqual(
+                load_search_opportunities(directory / "missing.json", now=now), []
+            )
+
+
 class HtmlParserTests(unittest.TestCase):
     def test_keeps_matching_article_links_and_removes_duplicates(self):
         source = {
@@ -286,6 +349,8 @@ class InboxTests(unittest.TestCase):
         self.assertEqual(len(result["candidates"]), 1)
         self.assertTrue(result["candidates"][0]["unknown_publication_date"])
         self.assertEqual(result["selected"], [])
+        self.assertEqual(len(result["problem_signals"]), 1)
+        self.assertTrue(result["problem_signals"][0]["unknown_publication_date"])
 
     def test_daily_candidates_require_a_parseable_recent_publication_time(self):
         now = dt.datetime(2026, 7, 18, 0, 0, tzinfo=dt.timezone.utc)
@@ -301,6 +366,67 @@ class InboxTests(unittest.TestCase):
             )
         )
 
+    def test_search_feedback_keeps_existing_page_queries_out_of_selection(self):
+        conflict_feed = RSS_XML.replace(
+            "GitHub Actions 보안 업데이트",
+            "GitHub Copilot 한도 설정 방법",
+        ).replace(
+            "https://example.com/actions?utm_source=rss",
+            "https://conflict.example/copilot-limit",
+        )
+        new_feed = RSS_XML.replace(
+            "GitHub Actions 보안 업데이트",
+            "PostgreSQL 백업 복구 절차",
+        ).replace(
+            "https://example.com/actions?utm_source=rss",
+            "https://new.example/postgres-restore",
+        )
+        config = {
+            "interest_keywords": [],
+            "selection": {"max_items": 1, "max_per_source": 1},
+            "sources": [
+                {
+                    "id": "conflict",
+                    "name": "Conflict",
+                    "group": "korean_editorial",
+                    "type": "rss",
+                    "url": "https://conflict.example/feed",
+                    "weight": 4,
+                },
+                {
+                    "id": "new",
+                    "name": "New",
+                    "group": "korean_editorial",
+                    "type": "rss",
+                    "url": "https://new.example/feed",
+                    "weight": 3,
+                },
+            ],
+        }
+        feeds = {
+            "https://conflict.example/feed": conflict_feed,
+            "https://new.example/feed": new_feed,
+        }
+
+        result = build_inbox(
+            config,
+            fetch_text=lambda url: feeds[url],
+            now=NOW,
+            day_id="2026-07-12",
+            search_opportunities=[
+                {
+                    "query": "코파일럿 한도",
+                    "action": "retitle_existing",
+                    "impressions": 12,
+                }
+            ],
+        )
+
+        self.assertEqual(result["selected"][0]["source_id"], "new")
+        self.assertEqual(result["selection"]["search_cannibalization_excluded"], 1)
+        self.assertEqual(result["selection"]["search_feedback_matches"], 1)
+        self.assertEqual(result["selection"]["known_search_demand_matches"], 0)
+
     def test_default_config_includes_general_reader_and_independent_sources(self):
         config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
         source_ids = {source["id"] for source in config["sources"]}
@@ -309,6 +435,22 @@ class InboxTests(unittest.TestCase):
         self.assertGreaterEqual(len(source_ids), 24)
         self.assertGreaterEqual(
             config["selection"]["min_reader_relevance"], 2
+        )
+        self.assertEqual(config["selection"]["max_problem_signals"], 5)
+        self.assertGreaterEqual(
+            config["selection"]["min_durable_problem_score"], 3
+        )
+        self.assertLess(
+            config["selection"]["fallback_min_durable_problem_score"],
+            config["selection"]["min_durable_problem_score"],
+        )
+        self.assertTrue(
+            {
+                "reader_problem_keywords",
+                "search_intent_keywords",
+                "artifact_keywords",
+                "shallow_keywords",
+            }.issubset(config["content_signals"])
         )
         self.assertTrue(
             {

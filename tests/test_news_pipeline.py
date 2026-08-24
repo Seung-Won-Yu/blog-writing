@@ -330,6 +330,10 @@ class RankingTests(unittest.TestCase):
                 "evidence",
                 "lasting_value",
                 "evergreen_fit",
+                "durable_problem",
+                "known_search_demand",
+                "cannibalization_penalty",
+                "shallow_penalty",
                 "announcement_penalty",
                 "freshness",
             },
@@ -373,6 +377,95 @@ class RankingTests(unittest.TestCase):
             announcement["lead_score_breakdown"]["evergreen_fit"],
         )
         self.assertGreater(case_study["lead_score"], announcement["lead_score"])
+
+    def test_durable_problem_signals_outscore_a_shallow_trend_roundup(self):
+        signals = {
+            "article_types": {
+                "problem_solving": ["오류", "원인", "해결"],
+                "implementation_guide": ["설정", "구현"],
+            },
+            "evidence_keywords": ["실험", "로그"],
+            "reader_problem_keywords": ["오류", "실패", "병목"],
+            "search_intent_keywords": ["원인", "해결", "방법"],
+            "artifact_keywords": ["로그", "명령어", "체크리스트"],
+            "shallow_keywords": ["트렌드", "총정리"],
+        }
+        durable = make_candidate(
+            raw(
+                "PostgreSQL 지연 오류 원인과 해결 방법",
+                "https://engineering.example/postgres-latency",
+                summary="운영 로그와 재현 명령어로 병목을 확인한 실험",
+            ),
+            source("engineering", "korean_editorial", weight=4),
+        )
+        shallow = make_candidate(
+            raw(
+                "2026 AI 트렌드 총정리",
+                "https://media.example/ai-trends",
+            ),
+            source("media", "general_editorial", weight=4),
+        )
+
+        for item in (durable, shallow):
+            score_candidate(item, [], now=NOW, content_signals=signals)
+            score_lead_candidate(item)
+
+        self.assertGreater(
+            durable["durable_problem_score"], shallow["durable_problem_score"]
+        )
+        self.assertLess(shallow["shallow_penalty"], 0)
+        self.assertEqual(
+            durable["editorial_angle"]["recommended_shape"],
+            "troubleshooting",
+        )
+        self.assertGreater(durable["lead_score"], shallow["lead_score"])
+
+    def test_search_feedback_blocks_a_competing_article_and_rewards_new_demand(self):
+        conflict = make_candidate(
+            raw(
+                "GitHub Copilot 한도 설정 방법",
+                "https://example.com/copilot-limit",
+            ),
+            source("engineering", "korean_editorial"),
+        )
+        demand = make_candidate(
+            raw(
+                "Spring 트랜잭션 롤백 규칙",
+                "https://example.com/spring-rollback",
+            ),
+            source("engineering-2", "korean_editorial"),
+        )
+        opportunities = [
+            {
+                "query": "코파일럿 한도",
+                "action": "retitle_existing",
+                "page_url": "https://won0322.tistory.com/145",
+                "impressions": 30,
+            },
+            {
+                "query": "Spring 트랜잭션 롤백",
+                "action": "new_article",
+                "impressions": 120,
+            },
+        ]
+
+        for item in (conflict, demand):
+            score_candidate(
+                item,
+                [],
+                now=NOW,
+                search_opportunities=opportunities,
+            )
+            score_lead_candidate(item)
+
+        self.assertTrue(conflict["search_feedback"]["existing_page_conflict"])
+        self.assertEqual(
+            conflict["lead_score_breakdown"]["cannibalization_penalty"], -8
+        )
+        self.assertEqual(demand["search_feedback"]["demand_score"], 3)
+        self.assertEqual(
+            demand["lead_score_breakdown"]["known_search_demand"], 3
+        )
 
     def test_official_recent_keyword_item_scores_higher(self):
         official = make_candidate(

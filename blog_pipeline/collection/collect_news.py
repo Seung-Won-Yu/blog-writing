@@ -523,6 +523,38 @@ def load_recent_topic_families(
     )
 
 
+def load_search_opportunities(path, *, now=None, max_age_days=30):
+    """Load only recent Search Console feedback with a trustworthy timestamp."""
+    try:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, TypeError, ValueError):
+        return []
+    if not isinstance(payload, dict):
+        return []
+
+    timestamp = str(payload.get("updated_at") or "").strip()
+    if timestamp.endswith("Z"):
+        timestamp = timestamp[:-1] + "+00:00"
+    try:
+        updated_at = dt.datetime.fromisoformat(timestamp)
+    except ValueError:
+        return []
+    if updated_at.tzinfo is None:
+        updated_at = updated_at.replace(tzinfo=ZoneInfo("Asia/Seoul"))
+
+    current = now or dt.datetime.now(ZoneInfo("Asia/Seoul"))
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=ZoneInfo("Asia/Seoul"))
+    age = current.astimezone(dt.timezone.utc) - updated_at.astimezone(dt.timezone.utc)
+    if age < dt.timedelta(days=-1) or age > dt.timedelta(days=max_age_days):
+        return []
+
+    opportunities = payload.get("opportunities")
+    if not isinstance(opportunities, list):
+        return []
+    return [item for item in opportunities if isinstance(item, dict)]
+
+
 def build_inbox(
     config,
     fetch_text,
@@ -532,6 +564,7 @@ def build_inbox(
     excluded_publisher_hosts=None,
     excluded_brands=None,
     excluded_topic_families=None,
+    search_opportunities=None,
 ):
     """Collect, rank, and select candidates without publishing anything."""
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -615,6 +648,7 @@ def build_inbox(
             brand_keywords=config.get("brand_keywords", {}),
             lasting_value_keywords=config.get("lasting_value_keywords", []),
             content_signals=config.get("content_signals", {}),
+            search_opportunities=search_opportunities,
         )
         score_lead_candidate(candidate)
     candidates.sort(
@@ -644,6 +678,7 @@ def build_inbox(
     recent_publisher_excluded = 0
     recent_brand_excluded = 0
     recent_topic_excluded = 0
+    search_cannibalization_excluded = 0
     blocked_brands = {str(value).strip() for value in excluded_brands or set() if str(value).strip()}
     blocked_topics = {
         str(value).strip()
@@ -674,6 +709,10 @@ def build_inbox(
             recent_brand_excluded += 1
         elif candidate["recent_topic_family"]:
             recent_topic_excluded += 1
+        elif (candidate.get("search_feedback") or {}).get(
+            "existing_page_conflict"
+        ):
+            search_cannibalization_excluded += 1
         else:
             eligible_candidates.append(candidate)
     selection = dict(config.get("selection", {}))
@@ -682,6 +721,17 @@ def build_inbox(
     selection["recent_publisher_excluded"] = recent_publisher_excluded
     selection["recent_brand_excluded"] = recent_brand_excluded
     selection["recent_topic_excluded"] = recent_topic_excluded
+    selection["search_cannibalization_excluded"] = (
+        search_cannibalization_excluded
+    )
+    selection["search_feedback_matches"] = sum(
+        bool((candidate.get("search_feedback") or {}).get("matched_queries"))
+        for candidate in candidates
+    )
+    selection["known_search_demand_matches"] = sum(
+        int((candidate.get("search_feedback") or {}).get("demand_score", 0)) > 0
+        for candidate in candidates
+    )
     if selection.get("mode") == "lead_shortlist":
         minimum = int(selection.get("min_lead_score", 0))
         minimum_reader_relevance = int(
@@ -697,8 +747,16 @@ def build_inbox(
         fallback_evergreen_fit = int(
             selection.get("fallback_min_evergreen_fit", minimum_evergreen_fit)
         )
+        minimum_durable_problem = int(
+            selection.get("min_durable_problem_score", 0)
+        )
+        fallback_durable_problem = int(
+            selection.get(
+                "fallback_min_durable_problem_score", minimum_durable_problem
+            )
+        )
 
-        def select_with_thresholds(relevance, evergreen_fit):
+        def select_with_thresholds(relevance, evergreen_fit, durable_problem):
             lead_pool = [
                 candidate
                 for candidate in eligible_candidates
@@ -716,6 +774,8 @@ def build_inbox(
                     )
                 )
                 >= evergreen_fit
+                and int(candidate.get("durable_problem_score", 0))
+                >= durable_problem
             ]
             return select_lead_shortlist(
                 lead_pool,
@@ -729,7 +789,9 @@ def build_inbox(
             )
 
         selected = select_with_thresholds(
-            minimum_reader_relevance, minimum_evergreen_fit
+            minimum_reader_relevance,
+            minimum_evergreen_fit,
+            minimum_durable_problem,
         )
         required_selected = int(
             config.get("collection_quality", {}).get("min_selected", 1)
@@ -740,7 +802,9 @@ def build_inbox(
         )
         if fallback_applied:
             selected = select_with_thresholds(
-                fallback_reader_relevance, minimum_evergreen_fit
+                fallback_reader_relevance,
+                minimum_evergreen_fit,
+                minimum_durable_problem,
             )
         evergreen_fallback_applied = (
             len(selected) < required_selected
@@ -752,6 +816,21 @@ def build_inbox(
                 if fallback_applied
                 else minimum_reader_relevance,
                 fallback_evergreen_fit,
+                minimum_durable_problem,
+            )
+        durable_fallback_applied = (
+            len(selected) < required_selected
+            and fallback_durable_problem < minimum_durable_problem
+        )
+        if durable_fallback_applied:
+            selected = select_with_thresholds(
+                fallback_reader_relevance
+                if fallback_applied
+                else minimum_reader_relevance,
+                fallback_evergreen_fit
+                if evergreen_fallback_applied
+                else minimum_evergreen_fit,
+                fallback_durable_problem,
             )
         selection["reader_relevance_fallback_applied"] = fallback_applied
         selection["effective_min_reader_relevance"] = (
@@ -764,6 +843,14 @@ def build_inbox(
             fallback_evergreen_fit
             if evergreen_fallback_applied
             else minimum_evergreen_fit
+        )
+        selection["durable_problem_fallback_applied"] = (
+            durable_fallback_applied
+        )
+        selection["effective_min_durable_problem_score"] = (
+            fallback_durable_problem
+            if durable_fallback_applied
+            else minimum_durable_problem
         )
     else:
         selected = select_candidates(
@@ -778,6 +865,41 @@ def build_inbox(
             require_topic_coherence=bool(selection.get("require_topic_coherence", False)),
         )
 
+    selected_ids = {item.get("id") for item in selected}
+    problem_signal_pool = sorted(
+        (
+            candidate
+            for candidate in eligible_candidates
+            if candidate.get("id") not in selected_ids
+            and (candidate.get("editorial_angle") or {}).get("source_role")
+            == "problem_signal"
+        ),
+        key=lambda item: (
+            bool(item.get("requires_manual_review")),
+            item.get("group") == "korean_editorial",
+            int(item.get("durable_problem_score", 0)),
+            int(item.get("lead_score", 0)),
+        ),
+        reverse=True,
+    )
+    problem_signals = []
+    problem_sources = set()
+    problem_topics = set()
+    for candidate in problem_signal_pool:
+        source_id = candidate.get("source_id") or ""
+        topic_family = candidate.get("topic_family") or "other"
+        if source_id in problem_sources or topic_family in problem_topics:
+            continue
+        signal = dict(candidate)
+        signal["problem_signal_rank"] = len(problem_signals) + 1
+        signal["selection_reason"] = "원문 날짜·문제 맥락 수동 확인"
+        problem_signals.append(signal)
+        problem_sources.add(source_id)
+        problem_topics.add(topic_family)
+        if len(problem_signals) >= int(selection.get("max_problem_signals", 5)):
+            break
+    selection["problem_signal_count"] = len(problem_signals)
+
     return {
         "schema_version": 1,
         "day": day_id,
@@ -787,6 +909,7 @@ def build_inbox(
         "candidates": candidates,
         "selected": selected,
         "lead_shortlist": selected if selection.get("mode") == "lead_shortlist" else [],
+        "problem_signals": problem_signals,
         "errors": errors,
     }
 
@@ -798,7 +921,50 @@ def _candidate_card(item, featured=False):
     source = escape(str(item.get("source_name", "")))
     group = escape(str(item.get("group", "other")))
     score = escape(str(item.get("score", 0)))
+    published_at = str(item.get("published_at") or "").strip()
+    if item.get("unknown_publication_date"):
+        published_html = '<span class="badge badge-review">발행일 확인 필요</span>'
+    elif published_at:
+        published_html = "<span>{}</span>".format(escape(published_at[:10]))
+    else:
+        published_html = ""
     reasons = " · ".join(escape(str(reason)) for reason in item.get("score_reasons", []))
+    angle = (
+        item.get("editorial_angle")
+        if isinstance(item.get("editorial_angle"), dict)
+        else {}
+    )
+    durable_score = escape(str(item.get("durable_problem_score", 0)))
+    angle_text = " · ".join(
+        escape(str(value))
+        for value in (
+            angle.get("intent"),
+            angle.get("recommended_shape"),
+            angle.get("recommended_artifact"),
+        )
+        if value
+    )
+    search_feedback = (
+        item.get("search_feedback")
+        if isinstance(item.get("search_feedback"), dict)
+        else {}
+    )
+    search_note = (
+        "기존 글 개선 우선"
+        if search_feedback.get("existing_page_conflict")
+        else "검색 수요 신호 {}".format(search_feedback.get("demand_score"))
+        if search_feedback.get("demand_score")
+        else ""
+    )
+    angle_html = (
+        '<p class="angle">오래가는 문제 {durable_score}점 · {angle_text}{search_note}</p>'.format(
+            durable_score=durable_score,
+            angle_text=angle_text,
+            search_note=(" · " + escape(search_note)) if search_note else "",
+        )
+        if angle_text
+        else ""
+    )
     review_badge = (
         '<span class="badge badge-review">맥락 확인 필요</span>'
         if item.get("requires_manual_review")
@@ -810,18 +976,20 @@ def _candidate_card(item, featured=False):
     card_class = "card featured" if featured else "card"
     return """
       <article class="{card_class}">
-        <div class="meta"><span class="badge">{source}</span><span>{group}</span><span>점수 {score}</span>{review_badge}</div>
-        <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>{summary_html}
+        <div class="meta"><span class="badge">{source}</span><span>{group}</span><span>점수 {score}</span>{published_html}{review_badge}</div>
+        <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>{summary_html}{angle_html}
         <p class="reasons">{reasons}</p>
       </article>""".format(
         card_class=card_class,
         source=source,
         group=group,
         score=score,
+        published_html=published_html,
         review_badge=review_badge,
         url=url,
         title=title,
         summary_html=summary_html,
+        angle_html=angle_html,
         reasons=reasons,
     )
 
@@ -829,13 +997,21 @@ def _candidate_card(item, featured=False):
 def render_inbox_html(inbox):
     """Render a small editorial review page. External text is always escaped."""
     selected = inbox.get("selected", [])
-    selected_ids = {item.get("id") for item in selected}
+    problem_signals = inbox.get("problem_signals", [])
+    selected_ids = {
+        item.get("id") for item in [*selected, *problem_signals]
+    }
     remaining = [
         item for item in inbox.get("candidates", []) if item.get("id") not in selected_ids
     ]
     selected_html = "".join(_candidate_card(item, featured=True) for item in selected)
     if not selected_html:
         selected_html = '<p class="empty">추천 후보가 없습니다. 수집 오류를 확인해 주세요.</p>'
+    problem_signal_html = "".join(
+        _candidate_card(item) for item in problem_signals
+    )
+    if not problem_signal_html:
+        problem_signal_html = '<p class="empty">추가로 확인할 문제 발굴 신호가 없습니다.</p>'
     remaining_html = "".join(_candidate_card(item) for item in remaining)
     if not remaining_html:
         remaining_html = '<p class="empty">추가 후보가 없습니다.</p>'
@@ -870,7 +1046,7 @@ def render_inbox_html(inbox):
     h2 {{ margin:44px 0 14px; font-size:20px; letter-spacing:-.025em; }}
     h3 {{ margin:10px 0 6px; font-size:19px; line-height:1.45; letter-spacing:-.02em; }}
     a {{ color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }}
-    .intro,.generated,.summary,.reasons,.empty {{ color:var(--muted); }}
+    .intro,.generated,.summary,.angle,.reasons,.empty {{ color:var(--muted); }}
     .generated {{ font-size:12px; }}
     .grid {{ display:grid; gap:12px; }}
     .card {{ padding:20px 22px; background:var(--paper); border:1px solid var(--line); border-radius:12px; }}
@@ -879,6 +1055,7 @@ def render_inbox_html(inbox):
     .badge {{ color:var(--accent); font-weight:700; }}
     .badge-review {{ padding:1px 7px; border:1px solid #d7a64a; border-radius:999px; color:#835a0a; }}
     .summary,.reasons {{ margin:6px 0 0; }}
+    .angle {{ margin:10px 0 0; font-size:12px; font-weight:650; color:var(--accent); }}
     .reasons {{ font-size:12px; }}
     .errors {{ padding:16px 20px 16px 38px; background:#fff; border:1px solid var(--line); border-radius:12px; color:var(--muted); }}
     footer {{ margin-top:40px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }}
@@ -894,6 +1071,11 @@ def render_inbox_html(inbox):
   <section>
     <h2>오늘의 추천 {selected_count}건</h2>
     <div class="grid">{selected_html}</div>
+  </section>
+  <section>
+    <h2>문제 발굴 신호 {problem_signal_count}건</h2>
+    <p class="intro">요즘IT·커뮤니티·편집 글에서 반복되는 막힘을 찾는 단서입니다. 발행일과 1차 근거를 직접 확인한 뒤에만 주제로 선택하세요.</p>
+    <div class="grid">{problem_signal_html}</div>
   </section>
   <section>
     <h2>추가 후보 {remaining_count}건</h2>
@@ -912,6 +1094,8 @@ def render_inbox_html(inbox):
         generated_at=generated_at,
         selected_count=len(selected),
         selected_html=selected_html,
+        problem_signal_count=len(problem_signals),
+        problem_signal_html=problem_signal_html,
         remaining_count=len(remaining),
         remaining_html=remaining_html,
         error_html=error_html,
@@ -1046,6 +1230,10 @@ def main(argv=None):
     parser.add_argument("--output-dir", default="docs/inbox")
     parser.add_argument("--published-days-dir", default="data/days")
     parser.add_argument("--publish-meta-dir", default="docs/tistory")
+    parser.add_argument(
+        "--search-opportunities",
+        default="config/search_opportunities.json",
+    )
     args = parser.parse_args(argv)
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
@@ -1091,6 +1279,10 @@ def main(argv=None):
         publish_meta_dir=args.publish_meta_dir,
         topic_priority=config.get("topic_priority", []),
     )
+    search_opportunities = load_search_opportunities(
+        args.search_opportunities,
+        now=now,
+    )
     inbox = build_inbox(
         config,
         fetch_text=fetch_url,
@@ -1100,6 +1292,7 @@ def main(argv=None):
         excluded_publisher_hosts=excluded_publisher_hosts,
         excluded_brands=excluded_brands,
         excluded_topic_families=excluded_topic_families,
+        search_opportunities=search_opportunities,
     )
     quality = collection_quality_result(inbox, config)
     hard_reasons = [

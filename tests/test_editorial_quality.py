@@ -241,6 +241,23 @@ def valid_daily_source(day="2026-07-19"):
         }
         source["related_posts"][0]["role"] = "foundation"
         source["related_posts"][1]["role"] = "next_step"
+    if publish_day >= date(2026, 8, 26):
+        source["editorial"]["original_value"] = {
+            "durable_question": "공식 발표가 지난 뒤에도 내 환경에 적용할 조건을 어떻게 판단할까?",
+            "source_gap": "원문은 기능을 소개하지만 기존 설정과 충돌하는 순서와 실패 조건을 함께 설명하지 않는다.",
+            "contribution": "공식 문서를 서로 비교해 적용 조건과 우선순위, 확인 신호, 돌아갈 기준을 하나의 판단표로 재구성한다.",
+            "proof_method": "document_comparison",
+            "reader_outcome": "독자는 자신의 설정값을 표에 대입해 적용 여부와 다음 행동을 결정할 수 있다.",
+            "limits": "문서에서 확인할 수 없는 계정별 배포 시점과 비공개 내부 조건은 추측하지 않는다.",
+        }
+        trend = {
+            "editorial_treatment": "tactile_realism",
+            "focal_subject": "새 기능 적용 전후를 확인하는 사용자의 손과 설정 표시",
+            "texture_cue": "살짝 구겨진 설정 메모지와 무광 화면 질감",
+            "authenticity_cue": "실제로 사용한 흔적이 남은 메모와 자연스러운 손 동작",
+        }
+        source["visual"]["cover"].update(trend)
+        source["images"]["cover"].update(trend)
     return source
 
 
@@ -410,6 +427,40 @@ class EditorialQualityTests(unittest.TestCase):
             "quality_visual_variety",
             source_quality_reasons(
                 source, resolve_draft_identity("2026-08-04")
+            ),
+        )
+
+    def test_durable_article_requires_original_value_beyond_source_rewriting(self):
+        source = valid_daily_source("2026-08-26")
+        source["editorial"]["original_value"].pop("contribution")
+
+        self.assertIn(
+            "quality_original_value",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-26")
+            ),
+        )
+
+    def test_trend_cover_requires_specific_treatment_and_matching_image_metadata(self):
+        source = valid_daily_source("2026-08-26")
+        source["visual"]["cover"]["editorial_treatment"] = "generic_ai_card"
+        source["images"]["cover"]["focal_subject"] = "다른 장면"
+
+        self.assertIn(
+            "quality_visual_trend",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-26")
+            ),
+        )
+
+    def test_trend_cover_requires_descriptive_search_relevant_alt_text(self):
+        source = valid_daily_source("2026-08-26")
+        source["images"]["cover"]["alt"] = "대표 이미지"
+
+        self.assertIn(
+            "quality_visual_trend",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-26")
             ),
         )
 

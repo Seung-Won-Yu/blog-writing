@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 금요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 금요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·수 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성합니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 금요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·수 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 품질 기준을 통과할 때만 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성하며 발행 횟수를 채우기 위한 실험은 하지 않습니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
 사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비금요일 실행은 계속 건너뜁니다.
 
@@ -55,7 +55,7 @@
 - 개발·AI 실전 검증: 흥미로운 개념 글을 작은 오류·복구·전후 비교 실험으로 바꾸고 공식 문서와 실제 결과로 검증
 - 도구·워크플로 비교 실험: 성격이 다른 2~3개 도구나 에이전트 스킬에 같은 작은 과제를 주고 중간 행동·결과·실패·사람 승인 지점을 같은 기준으로 비교
 
-글감은 `검색 지속성 20 · 실제 문제 해결성 25 · 재현 가능성 20 · 시각 설명 가능성 15 · 대중 공감도 20`으로 비교합니다. 대중 공감도가 최소 기준에 못 미치면 총점이 높아도 추천하지 않습니다. 최근 90일 중 발행 준비까지 완료된 자동화글의 URL·저장소·`primary_query` 지문과 겹치면 다른 주제를 고릅니다. 미완성 초안은 중복 이력으로 세지 않습니다. 뉴스 요약을 두 번째로 만들지 않습니다.
+글감은 `검색 지속성 20 · 실제 문제 해결성 25 · 재현 가능성 20 · 시각 설명 가능성 15 · 대중 공감도 20`으로 비교합니다. 총점 75점 이상이면서 `직접 실행 가능한 작은 실험`, `재현 가능한 증거`, `독자가 가져갈 산출물`, `최근 90일 비중복`을 모두 충족한 주제만 진행합니다. 대중 공감도가 최소 기준에 못 미치면 총점이 높아도 추천하지 않습니다. 기준을 통과한 주제가 없으면 오류가 아니라 `NO_PUBLISH_QUALITY`로 종료하고, 검토한 후보·점수·탈락 이유만 보고하며 원고·이미지·커밋·푸시를 만들지 않습니다. 최근 90일 중 발행 준비까지 완료된 자동화글의 URL·저장소·`primary_query` 지문과 겹치면 다른 주제를 고릅니다. 미완성 초안은 중복 이력으로 세지 않습니다. 뉴스 요약을 두 번째로 만들지 않습니다.
 
 도구명을 지워도 비개발자가 자신의 문제를 떠올릴 수 있는 주제만 선택합니다. 우선 분야는 `이메일·문서·PDF·표·일정·파일` 정리, 반복 입력, 웹페이지 변경 알림, 보고서 생성, 사진·다운로드 폴더 정리와 `바이브 코딩·AI 글쓰기·Git·오픈소스 도구`의 실제 활용입니다. 프레임워크 버전, locator, 패키지 설치, 릴리스 자체는 주제가 될 수 없습니다. 익숙한 문제를 해결하는 과정에서 필요한 도구로만 설명합니다. 파일·문서 → 웹 변경 감지 → 보고서·표 → 생활·사무 노코드 자동화 → 개발·AI 실전 순으로 주제를 바꾸며 같은 도구·브랜드를 연속 사용하지 않습니다.
 
@@ -131,7 +131,11 @@
 
 2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후 두 곳에 `render_family`도 기록하며 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 최근 3개 글에서 쓰지 않은 표현 방식을 고릅니다. 대표 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 최근 7개 대표와 세 값이 모두 같은 조합을 반복하지 않습니다. 대표는 실험의 문제·버튼·실패·복구 결과 중 하나를 실제 행동이 보이는 한 장면의 초점으로 삼습니다. 대표 이미지에는 단계 화살표·여러 카드·표·차트·로드맵·흐름도를 넣지 않습니다. 본문 도식은 원리와 실행 순서를 맡습니다. 고정 아이보리 배경·네이비/청록/주황·3단 카드 구성을 기본값으로 쓰지 않으며 `three_column_cards`, `four_step_cards`, `centered_dashboard_grid`, `title_slide`, `linear_flow`, `process_diagram`, `roadmap`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`는 대표 이미지에서 금지합니다.
 
+2026-08-26 이후 `visual.cover`와 `images.cover`에 같은 `editorial_treatment`, `focal_subject`, `texture_cue`, `authenticity_cue`를 기록합니다. `editorial_treatment`는 `tactile_realism`, `documentary_closeup`, `quiet_minimalism`, `playful_surrealism`, `local_workplace` 중 실험의 실제 물건·작업 흔적·환경을 가장 잘 보여 주는 하나를 선택합니다. `images.cover.alt`는 15~160자로 `primary_query`나 `focal_subject`의 구체적 대상과 결과를 설명하고, `cover.webp`·`image-1.webp`처럼 의미 없는 파일명은 쓰지 않습니다. 유행하는 질감과 콜라주는 실제 내용을 선명하게 할 때만 사용하고, 실행 증거를 대체하지 않습니다.
+
 2026-08-04 이후 `editorial.article_shape`은 `hands_on_test` 또는 `troubleshooting`을 우선하되 주제에 따라 `decision_guide`, `incident_trace`, `research_interpretation`, `change_impact`를 쓸 수 있습니다. 실제 장애나 실패가 여러 단계로 번진 실험은 `incident_trace`로 원인과 파급 경로를 추적합니다. 직전 글과 같은 전개는 금지합니다. `editorial.revisit`에 `quick_answer`, `reuse_case`, `failure_case`, `artifact_type`, `update_triggers` 2~4개를 기록하되, 이는 편집용 내부 메타데이터일 뿐 본문에 그대로 옮기거나 `다시 찾을 때` 같은 상자로 출력하지 않습니다. 핵심 답·실패 조건·재확인 변화는 필요한 문단에 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다. 실제로 다시 실행할 `code`, `table`, `ul` 블록 하나에 `reusable: true`와 `reuse_label`을 내부 메타데이터로 넣되, 별도 제목·상자·배지 없이 일반 본문 요소로 출력합니다. 실험 fixture·완전한 명령·실패 복구 순서 중 하나는 독자가 그대로 재현할 수 있어야 합니다.
+
+`editorial.original_value`에 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. 이 레인은 실제 실험이므로 `proof_method: executed_test`를 기본으로 하고, 직접 측정 비교가 핵심이면 `measured_comparison`, 장애 파급 경로를 재현했으면 `incident_trace`를 쓸 수 있습니다. `contribution`에는 실제 입력·실패·복구·결과 중 원문에 없던 새 가치를 적습니다.
 
 `editorial.action`은 `closing` 뒤에 이어지는 자연스러운 마지막 문장으로 작성합니다. `직접 확인해보려면` 같은 고정 제목이나 별도 행동 유도 상자는 사용하지 않습니다.
 
@@ -162,7 +166,7 @@
 
 티스토리에서는 `실전 개발 노트 > 자동화·실험`을 선택합니다.
 
-그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을, `editorial.original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 
 `publish_date`는 2026-08-28부터 금요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. 이전 토요일 발행본은 역사 자료로 계속 유효합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
 
@@ -209,6 +213,7 @@ git diff --cached --check
 - 이미지의 한국어 글자와 HTML 캡션이 모바일에서 읽히는가
 - 광고가 정확히 1개이고 전체 35~45% 위치에서 `완결 블록 → 광고 → 다음 소제목` 순서인가
 - `editorial.revisit`가 별도 내부 메모 상자로 노출되지 않고 본문에 자연스럽게 반영됐는가
+- `editorial.original_value`의 새 기여가 실제 실행·측정 증거와 일치하는가
 - 뉴스글 원본·이미지·HTML을 덮어쓰지 않았는가
 - 최종 `saturday_guard`가 `COMPLETE`인가
 - 최종 `publish_bundle`이 `READY`이고 Pages 배포가 성공했는가

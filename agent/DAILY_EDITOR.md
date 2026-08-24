@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 실전 IT 아티클 편집 계약
 
-이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 일일 수집 결과는 주제를 찾는 레이더로만 사용합니다. 최종 결과는 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건입니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
+이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 일일 수집 결과는 주제를 찾는 레이더로만 사용합니다. 기준을 통과하면 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건을 만들고, 통과하지 못하면 발행 횟수를 채우기 위해 글을 만들지 않습니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
 
 ## 운영 흐름
 
@@ -25,18 +25,18 @@
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
    - `NEW`: 아래 전체 흐름을 한 번만 수행합니다.
 
-2. `docs/inbox/latest.json`의 `day`, `selected`, `candidates` 상위 10건에 필요한 제목·날짜·출처·URL만 읽습니다. 파일의 `day`가 당일 날짜와 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 `day`가 당일과 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `candidates`에서 서로 다른 발행처의 상위 후보를 최대 10건까지 검토합니다. 추천 수가 적다는 이유만으로 로컬 수집을 반복하거나 전체 편집을 중단하지 않습니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
+2. `docs/inbox/latest.json`의 `day`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `editorial_angle`, `search_feedback`만 읽습니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 `day`가 당일과 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 추천 수가 적다는 이유만으로 로컬 수집을 반복하거나 전체 편집을 중단하지 않습니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
 
    후보 하나의 공식 근거가 부족하거나 중복이라고 해서 전체 편집을 중단하지 않습니다. 검증 가능한 주제를 찾을 때까지 다음 대체 순서를 반드시 지킵니다.
 
    1. `selected`를 날짜·중복·독자 문제 기준으로 모두 검토합니다.
-   2. 모두 탈락하면 `candidates`에서 발표 후 30일 이내, 서로 다른 발행처의 상위 후보를 최대 10건까지 검토합니다. 요즘IT·GeekNews·Hacker News·Lobsters 같은 편집·커뮤니티 글은 문제 발견 단서로, 기업 기술블로그와 공식 문서는 구현·운영 근거로 구분합니다. 제목·날짜·출처·최근 글 중복으로 먼저 좁히고, 독자의 문제·원리·판단 기준으로 풀어낼 후보만 원문을 엽니다.
+   2. 모두 탈락하면 `problem_signals`와 `candidates`에서 발표 후 30일 이내, 서로 다른 발행처의 상위 후보를 최대 10건까지 검토합니다. 요즘IT·GeekNews·Hacker News·Lobsters 같은 편집·커뮤니티 글은 문제 발견 단서로, 기업 기술블로그와 공식 문서는 구현·운영 근거로 구분합니다. 제목·날짜·출처·최근 글 중복으로 먼저 좁히고, 독자의 문제·원리·판단 기준으로 풀어낼 후보만 원문을 엽니다.
    3. 그래도 없으면 공식 제품 블로그·변경 기록·문서 최소 3곳을 직접 검색합니다.
    4. 첫 원문이 부정확하면 같은 사건을 억지로 보강하지 말고 다음 후보로 이동합니다. 공식 근거가 충분한 후보를 찾는 즉시 아래 집필 단계로 진행합니다.
 
    후보 원문이 `Could not resolve host`, DNS 오류, 502, 503, 504로 열리지 않으면 5초 뒤 한 번만 다시 확인합니다. 두 번 실패하면 해당 후보를 `temporary_source_unavailable`로 기록하고 즉시 다음 후보로 이동합니다. 일시적 네트워크 오류가 한 후보의 탈락 이유가 될 수는 있어도 전체 후보 검토를 멈추는 이유가 되어서는 안 됩니다. 한 후보의 원문 접근에 30초 이상 머물지 않습니다.
 
-   `BLOCKED`는 위 세 단계를 모두 수행해도 검증 가능한 후보가 없을 때만 허용합니다. 이때 보고에는 실제 검토한 후보 제목과 탈락 이유를 단계별로 남깁니다. `selected` 일부만 확인했거나 `candidates`에 미검토 최신 공식 후보가 남아 있으면 중단하지 않습니다. 모든 유효 후보가 일시적 원문 접근 오류로만 남았더라도 같은 실행에서 대체 후보 검토를 끝낸 뒤 `BLOCKED`로 종료하며, 별도 예약 재실행 상태를 만들지 않습니다.
+   검증 가능한 후보는 있지만 아래 75점 기준이나 필수 품질 조건을 통과한 후보가 없으면 오류가 아니라 `NO_PUBLISH_QUALITY`로 종료합니다. 실제 검토한 후보 제목과 탈락 이유, 편집 점수만 보고하고 원고·이미지·커밋·푸시를 만들지 않습니다. `BLOCKED`는 저장소 충돌·권한 문제 또는 모든 유효 후보의 원문이 일시적으로 열리지 않아 품질 판단 자체가 불가능할 때만 사용합니다. `selected` 일부만 확인했거나 `candidates`에 미검토 최신 공식 후보가 남아 있으면 중단하지 않습니다. 모든 유효 후보가 일시적 원문 접근 오류로만 남았더라도 같은 실행에서 대체 후보 검토를 끝낸 뒤 `BLOCKED`로 종료하며, 별도 예약 재실행 상태를 만들지 않습니다.
 
 3. 다음 기준으로 오래 갈 실전 아티클 주제 1건을 고릅니다.
 
@@ -44,13 +44,13 @@
    - 공식 발표·문서·데이터로 핵심 사실을 교차 확인할 수 있는가
    - 원리, 비교, 설정법, 영향, 한계를 한 흐름으로 깊게 설명할 수 있는가
    - 표·차트·타임라인·비교·동작 흐름 중 주제에 맞는 설명 시각물이 가능한가
-   - 최근 60일 글과 URL이나 핵심 질문이 겹치지 않는가
+   - 같은 URL은 최근 60일, `primary_query`·핵심 질문·주제는 최근 365일과 겹치지 않는가
 
    원문은 예약 시각 기준 30일 이내에서 선택합니다. 최신성은 동점자를 가르는 조건일 뿐입니다. 순수 릴리스 노트·가격·기능 발표는 시간이 지나도 남을 문제·원리·비교·사례와 연결되지 않으면 탈락시킵니다. 소식은 글을 여는 단서로만 쓰고, 본문의 80% 이상은 나중에도 쓸 설명·예시·트레이드오프로 구성합니다. 후보 하나를 요약해 재작성하지 말고, 검색자가 반복해서 묻는 질문 하나를 정한 뒤 공식·1차 자료와 독립 자료를 더 찾아 답합니다. 30일을 넘긴 자료는 배경 근거로만 사용할 수 있고 주제 선정의 최신 단서로 계산하지 않습니다.
 
    최종 주제는 `실전 개발 문제 해결`, `AI·업무자동화 활용`, `실제 프로젝트에서 다시 쓰일 기술` 중 하나와 연결돼야 합니다. 블로그의 기존 축과 이어지지 않는 화제성 기사, 원문을 요약하는 것 외에 새 가치가 없는 기사는 점수가 높아도 선택하지 않습니다. 관련 글은 같은 축의 오래가는 기준 글 1개와 직접 실행한 실험·프로젝트 글 1개를 우선합니다. 둘 중 어느 한 쪽도 자연스럽게 이어지지 않으면 역할을 억지로 채우지 말고 주제상 가장 가까운 공개 글만 선택합니다.
 
-   후보끼리 비교할 때는 `검색 지속성 35 · 실제 문제 해결성 30 · 근거의 신뢰성 20 · 현재 관심도 10 · 기존 글 연결성 5`의 100점 편집 점수를 사용합니다. 이 점수는 수집기의 `lead_score`를 보완하며, 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 최종 기준입니다. 수집기는 독자 관련성 기준을 낮춰 추천 수를 채우지 않으며, 추천 5건도 같은 `topic_family`를 한 건만 포함합니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 새 문제를 찾고, 찾지 못하면 억지로 글을 만들지 않습니다.
+   후보끼리 비교할 때는 `검색 지속성 35 · 실제 문제 해결성 30 · 근거의 신뢰성 20 · 현재 관심도 10 · 기존 글 연결성 5`의 100점 편집 점수를 사용합니다. 총점 75점 이상이면서 `반복 검색 질문`, `공식 근거`, `원문에 없던 기여`, `기존 글 비중복`을 모두 충족한 후보만 집필합니다. 점수가 높아도 필수 조건 하나가 빠지면 탈락입니다. 이 점수는 수집기의 `lead_score`를 보완하며, 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 최종 기준입니다. 수집기는 독자 관련성 기준을 낮춰 추천 수를 채우지 않으며, 추천 5건도 같은 `topic_family`를 한 건만 포함합니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 새 문제를 찾고, 찾지 못하면 `NO_PUBLISH_QUALITY`로 종료합니다.
 
    같은 canonical URL은 제외합니다. 제목이 거의 같거나 결론이 같은 사건도 제외합니다. 후속 보도는 이전 글 이후 달라진 사실이 제목과 본문에 분명할 때만 선택합니다.
 
@@ -72,7 +72,7 @@
 5. `data/days/YYYY-MM-DD.json`을 `lead-story-v1` 형식으로 한 번에 작성합니다. 이미지 생성 전에 원고 사전검사를 실행합니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.daily_guard --today --source-only
+   python3 -m blog_pipeline.publishing.daily_guard --today --source-only --window-days 365
    ```
 
    `READY`일 때만 다음 단계로 갑니다. `PARTIAL`이면 출력된 `expected_identity`, `editorial_lengths`, `invalid_scene_labels`, `depth`, `duplicates`에서 실패한 JSON 필드만 고쳐 같은 명령을 다시 실행합니다. 원고 사전검사가 실패한 상태에서는 이미지와 HTML을 만들지 않습니다.
@@ -87,6 +87,8 @@
    - `origin`: 실제 캡처 `capture`, 주석 캡처 `annotated_capture`, 실측 차트 `measured_chart`, Codex 생성 도식 `imagegen` 중 하나
    - `logic_type`: `flow`, `before_after`, `comparison`, `conditional`, `timeline`, `architecture`, `evidence` 중 하나
    - `condition`: `logic_type`이 `conditional`일 때만 쓰며 `DNS·IP를 변경한 경우`처럼 분기 조건을 정확히 기록
+
+   2026-08-26 이후 `visual.cover`와 `images.cover`에는 서로 같은 `editorial_treatment`, `focal_subject`, `texture_cue`, `authenticity_cue`를 기록합니다. `editorial_treatment`는 `tactile_realism`, `documentary_closeup`, `quiet_minimalism`, `playful_surrealism`, `local_workplace` 중 주제에 맞는 하나를 선택합니다. 유행 스타일을 복제하지 말고 실제 물건·질감·불완전한 사용 흔적·국내 작업 환경 중 주제를 설명하는 단서만 사용합니다. `images.cover.alt`는 15~160자로 `primary_query`나 `focal_subject`의 실제 대상을 설명하고, 파일명도 `cover.webp`처럼 포괄적으로 짓지 않습니다.
 
    2026-07-29 이후 대표 브리프와 `images.cover`에는 `cover_kind: editorial_scene`과 서로 같은 `art_direction`, `composition_type`, `palette_family`을 기록합니다. 2026-08-04 이후에는 두 곳에 같은 `render_family`도 기록하며 값은 `photorealistic_natural`, `editorial_collage`, `flat_illustration`, `ink_drawing`, `isometric_model`, `tactile_paper`, `macro_object` 중 하나입니다. 최근 3개 글과 같은 `render_family`은 쓰지 않습니다. 대표 이미지 생성 프롬프트는 장면 성격에 맞게 `Use case: illustration-story`, `Use case: photorealistic-natural`, `Use case: stylized-concept` 중 하나로 시작하고 `Asset intent: editorial-scene`을 포함하며 `infographic-diagram`으로 시작하지 않습니다. 최근 7개 대표 이미지와 세 값이 모두 같은 조합은 재사용하지 않습니다. 브랜드 일관성은 고정된 카드 틀이나 고정 팔레트가 아니라 여백, 정보 정확도, 짧은 한국어, 선명한 초점으로 유지합니다.
 
@@ -138,7 +140,7 @@
 9. 공통 동기화 계약에서 실제 분기가 없음을 확인한 상태로 최종 가드와 당일 발행 묶음 검사를 진행합니다. 네트워크 오류만으로 검증·스테이징·로컬 커밋을 막지 않습니다.
 
    ```bash
-   python3 -m blog_pipeline.publishing.daily_guard --today --require-complete
+   python3 -m blog_pipeline.publishing.daily_guard --today --require-complete --window-days 365
    python3 -m blog_pipeline.publishing.publish_bundle --today --stage
    python3 -m blog_pipeline.publishing.publish_bundle --today --check
    git diff --cached --check
@@ -154,7 +156,7 @@
 - `COMPLETE` 날짜는 사용자가 명시적으로 재작성을 요청하지 않는 한 읽기 전용입니다.
 - 한 실행에서 같은 JSON·이미지를 처음부터 두 번 만들지 않습니다.
 - 한 실행에서 커밋 1회, 푸시 1회를 넘기지 않습니다.
-- 기본 문맥은 당일 후보 5건, 선택 원문 1개, 보조 자료, 최근 60일 제목·URL뿐입니다.
+- 기본 문맥은 당일 후보 5건, 선택 원문 1개, 보조 자료, 최근 60일 URL과 최근 365일 `primary_query`·제목뿐입니다.
 - 저장소 전체, 과거 본문 전체, 이미지 바이너리를 불필요하게 문맥으로 읽지 않습니다.
 - 결정적 Python 도구가 HTML·AdFit 삽입·미리보기·검사를 맡고, Codex는 선정·조사·집필·이미지 판단에 집중합니다.
 
@@ -168,6 +170,7 @@
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 사고·유출·장애처럼 한 지점의 문제가 여러 서비스나 사용자에게 번지는 주제는 `incident_trace`를 사용해 `발생 지점 → 데이터·서비스 이동 경로 → 확인된 영향과 미확인 범위 → 지금 할 일` 순서로 추적합니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
 - 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.
 - `editorial.revisit`에는 첫 방문용 `quick_answer`, 다시 활용할 수 있는 `reuse_case`, 막혔을 때 볼 `failure_case`, `artifact_type`, 다시 검토해야 할 변화 2~4개인 `update_triggers`를 기록합니다. 이는 편집자가 글의 지속 가치를 점검하는 내부 메타데이터일 뿐입니다. 값을 본문에 그대로 옮기거나 `다시 찾을 때`, `처음 읽기`, `적용할 때`, `막혔을 때` 같은 상자로 출력하지 않습니다. 글의 흐름에 필요한 핵심 답·실패 조건·변경 조건만 자연스럽게 설명합니다. `artifact_type`은 `command_recipe`, `configuration`, `decision_matrix`, `checklist`, `troubleshooting_tree`, `experiment_fixture` 중 하나입니다.
+- `editorial.original_value`에 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `proof_method`는 `executed_test`, `document_comparison`, `source_triangulation`, `configuration_walkthrough`, `incident_trace`, `measured_comparison` 중 실제 작업과 맞는 값을 쓰고, `contribution`에는 원문에 없던 비교·예제·실패 조건·적용 기준 중 적어도 하나를 구체적으로 남깁니다. `reader_question`을 복사하거나 원문 요약을 새 가치로 포장하지 않습니다.
 - `code`, `table`, `ul`이 실제로 복사·비교·점검에 유용할 때만 최대 하나에 `reusable: true`와 구체적인 `reuse_label`을 내부 메타데이터로 넣습니다. 뉴스 주제에 맞지 않으면 재사용 블록을 만들지 않습니다. 이 메타데이터는 별도 제목·상자·배지로 출력하지 않습니다.
 - 표는 비교가 실제로 쉬워질 때 1~3개 사용합니다. 설정·코드가 핵심이면 복사 가능한 코드 예제를 넣습니다.
 - 본문 설명 이미지 2~4장을 관련 문단 직후에 배치하고, 캡션은 그림에서 읽어야 할 결론을 설명합니다.
@@ -208,7 +211,7 @@
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`, `search_intent`. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`, `search_intent`, `original_value`. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason`, 연결 역할 `role`을 기록합니다. 역할은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다.
@@ -243,5 +246,6 @@
 - 관련 글 2개가 주제상 자연스럽고 `https://won0322.tistory.com/<숫자>` 형식의 실제 공개 글인가
 - 데스크톱·모바일에서 좌우 여백, 표·코드 스크롤, 이미지 글자가 깨지지 않는가
 - 본문에 `style=`이나 중첩 패딩, 중복 제목이 없는가
-- 최근 60일과 같은 URL 또는 사실상 같은 주제가 없는가
+- 같은 URL은 최근 60일, 사실상 같은 `primary_query`·주제는 최근 365일에 없는가
+- `editorial.original_value`의 새 기여와 증명 방법이 본문에 실제로 반영됐는가
 - 최종 가드가 `COMPLETE`이고 커밋·푸시·배포 확인이 각각 한 번뿐인가

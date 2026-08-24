@@ -1,0 +1,3 @@
+query,page_url,current_impressions,current_clicks,previous_impressions,previous_clicks,current_position,previous_position
+spring transaction rollback,https://example.com/spring-transaction,40,2,100,8,9.4,7.1
+github copilot limit,https://example.com/copilot-limit,45,0,15,0,11.2,14.8

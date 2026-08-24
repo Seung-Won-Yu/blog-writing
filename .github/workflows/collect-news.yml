@@ -2,9 +2,9 @@ name: Collect daily news
 
 on:
   schedule:
-    # 08:20 KST. Daily topic radar; the Monday/Thursday 09:00 editor favors
-    # durable community questions, engineering cases, and primary evidence.
-    - cron: '20 23 * * *'
+    # 07:17 KST. Recent GitHub schedule delays reached about 49 minutes, so
+    # this leaves a 103-minute buffer before the Monday/Wednesday 09:00 editor.
+    - cron: '17 22 * * *'
   workflow_dispatch:
 
 permissions:

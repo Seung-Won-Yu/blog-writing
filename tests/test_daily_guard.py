@@ -1564,6 +1564,38 @@ class DailyGuardTests(unittest.TestCase):
         self.assertEqual(topic_duplicates[0]["reason"], "same_topic_key")
         self.assertEqual(entity_duplicates[0]["reason"], "recent_entity")
 
+    def test_blocks_same_search_need_across_the_evergreen_window(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_json(
+                root / "data" / "days" / "2026-01-30.json",
+                {
+                    "primary_query": "Cloudflare 리전 힌트 구성 가이드",
+                    "news": [
+                        {
+                            "title_kr": "리전별 원본 요청 경로 구성하기",
+                            "url": "https://example.com/old-routing-guide",
+                        }
+                    ],
+                },
+            )
+            current = {
+                "primary_query": "Cloudflare 리전 힌트 설정 방법",
+                "news": [
+                    {
+                        "title_kr": "지역 힌트로 요청 경로 바꾸기",
+                        "url": "https://example.net/new-routing-guide",
+                    }
+                ],
+            }
+
+            duplicates = find_recent_duplicates(
+                "2026-08-26", current, root=root, window_days=365
+            )
+
+        self.assertEqual(duplicates[0]["reason"], "similar_primary_query")
+        self.assertEqual(duplicates[0]["previous_day"], "2026-01-30")
+
     def test_saturday_rotation_only_uses_previous_publish_ready_cases(self):
         from blog_pipeline.publishing.daily_guard import find_recent_draft_duplicates
 

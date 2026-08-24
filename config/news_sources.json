@@ -62,6 +62,21 @@
       "출시", "발표", "공개", "업데이트", "지원", "제공", "가격", "요금", "버전", "릴리스",
       "now available", "announce", "announces", "launched", "launch", "release", "update",
       "pricing", "availability", "introduces", "new feature"
+    ],
+    "reader_problem_keywords": [
+      "오류", "실패", "안됨", "느림", "병목", "장애", "복구", "누락", "충돌", "비용", "보안", "권한", "마이그레이션", "원인", "해결",
+      "error", "failure", "slow", "bottleneck", "incident", "recovery", "missing", "conflict", "cost", "security", "permission", "migration", "root cause", "troubleshooting"
+    ],
+    "search_intent_keywords": [
+      "방법", "이유", "원리", "비교", "차이", "선택", "기준", "언제", "어떻게", "설정", "구현", "확인", "예제",
+      "how to", "why", "versus", "difference", "choose", "when to", "setup", "configure", "implementation", "example"
+    ],
+    "artifact_keywords": [
+      "체크리스트", "명령어", "코드", "설정값", "로그", "질의", "쿼리", "템플릿", "표", "실험", "측정", "재현",
+      "checklist", "command", "code", "configuration", "log", "query", "template", "benchmark", "experiment", "reproduce"
+    ],
+    "shallow_keywords": [
+      "주목할", "총정리", "모음", "핵심 정리", "필수", "베스트", "추천", "전망", "트렌드", "알아야 할", "top 10", "roundup", "must know", "prediction", "trend"
     ]
   },
   "audience_lanes": {
@@ -160,11 +175,14 @@
     "max_per_source": 1,
     "max_per_family": 1,
     "max_per_topic_family": 1,
+    "max_problem_signals": 5,
     "min_lead_score": 8,
     "min_reader_relevance": 2,
     "fallback_min_reader_relevance": 2,
     "min_evergreen_fit": 4,
     "fallback_min_evergreen_fit": 2,
+    "min_durable_problem_score": 3,
+    "fallback_min_durable_problem_score": 1,
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 2,
     "brand_cooldown_days": 7,
@@ -316,6 +334,7 @@
       "url": "https://yozm.wishket.com/magazine/feed/",
       "weight": 3,
       "evergreen_bias": 4,
+      "allow_unknown_date": true,
       "lane_bias": {"practical": 2},
       "include_summary": false,
       "fallbacks": [

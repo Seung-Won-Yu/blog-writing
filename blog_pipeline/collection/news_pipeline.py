@@ -39,6 +39,43 @@ COHERENCE_STOP_TOKENS = {
     "with",
 }
 
+SEARCH_FEEDBACK_STOP_TOKENS = {
+    "ai",
+    "it",
+    "개발",
+    "가이드",
+    "방법",
+    "사용",
+    "정리",
+    "the",
+    "and",
+    "for",
+    "how",
+}
+
+SEARCH_FEEDBACK_ALIASES = {
+    "깃허브": "github",
+    "코파일럿": "copilot",
+    "스프링": "spring",
+    "포스트그레스": "postgresql",
+    "포스트그레sql": "postgresql",
+}
+
+EDITORIAL_ANGLE_MAP = {
+    "problem_solving": ("troubleshooting", "troubleshooting", "troubleshooting_tree"),
+    "measurement": ("measurement", "hands_on_test", "decision_matrix"),
+    "decision_guide": ("decision", "decision_guide", "decision_matrix"),
+    "implementation_guide": ("implementation", "decision_guide", "configuration"),
+    "case_study": ("case_study", "incident_trace", "checklist"),
+}
+EDITORIAL_ANGLE_PRIORITY = {
+    "measurement": 5,
+    "case_study": 4,
+    "implementation_guide": 3,
+    "decision_guide": 2,
+    "problem_solving": 1,
+}
+
 
 def validate_day_id(value):
     """Return a strict YYYY-MM-DD value that is safe to use in output paths."""
@@ -208,6 +245,127 @@ def match_keyword_groups(text, keyword_groups):
     ]
 
 
+def _keyword_matches_in(text, keywords):
+    normalized = str(text or "").casefold()
+    return list(
+        dict.fromkeys(
+            keyword
+            for keyword in keywords or []
+            if _keyword_matches(normalized, keyword)
+        )
+    )
+
+
+def _search_feedback(candidate, opportunities):
+    """Attach known Search Console demand without creating competing articles."""
+    def feedback_tokens(value):
+        return {
+            SEARCH_FEEDBACK_ALIASES.get(token, token)
+            for token in normalize_title(value).split()
+            if len(token) >= 2 and token not in SEARCH_FEEDBACK_STOP_TOKENS
+        }
+
+    candidate_tokens = feedback_tokens(
+        "{} {}".format(
+            candidate.get("title", ""),
+            str(candidate.get("summary", ""))[:600],
+        )
+    )
+    matched = []
+    demand_score = 0
+    existing_page_conflict = False
+    for opportunity in opportunities or []:
+        if not isinstance(opportunity, dict):
+            continue
+        query = str(opportunity.get("query") or "").strip()
+        query_tokens = feedback_tokens(query)
+        if len(query_tokens) < 2:
+            continue
+        overlap = candidate_tokens & query_tokens
+        if len(overlap) < 2 or len(overlap) / len(query_tokens) < 2 / 3:
+            continue
+        action = str(opportunity.get("action") or "").strip().casefold()
+        impressions = max(0, int(opportunity.get("impressions") or 0))
+        conflict = action in {
+            "retitle_existing",
+            "refresh_existing",
+            "revise_existing",
+            "merge_existing",
+        }
+        existing_page_conflict = existing_page_conflict or conflict
+        if not conflict and action in {
+            "new_article",
+            "expand_cluster",
+            "supporting_article",
+        }:
+            demand_score = max(
+                demand_score,
+                4
+                if impressions >= 500
+                else 3
+                if impressions >= 100
+                else 2
+                if impressions >= 20
+                else 1,
+            )
+        matched.append(
+            {
+                "query": query,
+                "action": action,
+                "impressions": impressions,
+                "page_url": str(opportunity.get("page_url") or ""),
+                "existing_page_conflict": conflict,
+            }
+        )
+    return {
+        "matched_queries": matched,
+        "demand_score": demand_score,
+        "existing_page_conflict": existing_page_conflict,
+    }
+
+
+def _editorial_angle(candidate):
+    matches = candidate.get("article_type_matches") or {}
+    choices = [
+        article_type
+        for article_type in EDITORIAL_ANGLE_MAP
+        if article_type in matches
+    ]
+    chosen = max(
+        choices,
+        key=lambda article_type: (
+            len(matches.get(article_type) or []),
+            EDITORIAL_ANGLE_PRIORITY[article_type],
+        ),
+        default="",
+    )
+    if chosen:
+        intent, shape, artifact = EDITORIAL_ANGLE_MAP[chosen]
+    elif candidate.get("announcement_matches"):
+        intent, shape, artifact = "change", "change_impact", "checklist"
+    else:
+        intent, shape, artifact = "explanation", "decision_guide", "checklist"
+    group = candidate.get("group")
+    if group == "official":
+        source_role = "primary_evidence"
+    elif group == "research":
+        source_role = "background_evidence"
+    elif group == "community":
+        source_role = "problem_signal"
+    elif chosen in {"measurement", "case_study", "implementation_guide"}:
+        source_role = "case_evidence"
+    elif group in {"korean_editorial", "general_editorial"}:
+        source_role = "problem_signal"
+    else:
+        source_role = "context_evidence"
+    return {
+        "intent": intent,
+        "recommended_shape": shape,
+        "recommended_artifact": artifact,
+        "source_role": source_role,
+    }
+
+
 def score_candidate(
     candidate,
     interest_keywords,
@@ -218,6 +376,7 @@ def score_candidate(
     brand_keywords=None,
     lasting_value_keywords=None,
     content_signals=None,
+    search_opportunities=None,
 ):
     now = now or dt.datetime.now(dt.timezone.utc)
     if now.tzinfo is None:
@@ -305,16 +464,38 @@ def score_candidate(
         ]
         if type_matches:
             article_type_matches[article_type] = list(dict.fromkeys(type_matches))
-    evidence_matches = [
-        keyword
-        for keyword in content_signals.get("evidence_keywords", [])
-        if _keyword_matches(haystack, keyword)
-    ]
-    announcement_matches = [
-        keyword
-        for keyword in content_signals.get("announcement_keywords", [])
-        if _keyword_matches(title_haystack, keyword)
-    ]
+    evidence_matches = _keyword_matches_in(
+        haystack, content_signals.get("evidence_keywords", [])
+    )
+    announcement_matches = _keyword_matches_in(
+        title_haystack, content_signals.get("announcement_keywords", [])
+    )
+    reader_problem_matches = _keyword_matches_in(
+        haystack, content_signals.get("reader_problem_keywords", [])
+    )
+    search_intent_matches = _keyword_matches_in(
+        haystack, content_signals.get("search_intent_keywords", [])
+    )
+    artifact_matches = _keyword_matches_in(
+        haystack, content_signals.get("artifact_keywords", [])
+    )
+    shallow_matches = _keyword_matches_in(
+        title_haystack, content_signals.get("shallow_keywords", [])
+    )
+    durable_problem_score = min(
+        10,
+        min(4, len(reader_problem_matches))
+        + min(3, len(search_intent_matches))
+        + min(2, len(artifact_matches))
+        + min(1, len(evidence_matches)),
+    )
+    shallow_penalty = (
+        -3
+        if shallow_matches and durable_problem_score < 4
+        else -1
+        if shallow_matches
+        else 0
+    )
 
     candidate["score"] = score
     candidate["score_reasons"] = reasons
@@ -332,6 +513,14 @@ def score_candidate(
     candidate["announcement_only"] = bool(announcement_matches) and not bool(
         article_type_matches
     )
+    candidate["reader_problem_matches"] = reader_problem_matches
+    candidate["search_intent_matches"] = search_intent_matches
+    candidate["artifact_matches"] = artifact_matches
+    candidate["shallow_matches"] = shallow_matches
+    candidate["durable_problem_score"] = durable_problem_score
+    candidate["shallow_penalty"] = shallow_penalty
+    candidate["search_feedback"] = _search_feedback(candidate, search_opportunities)
+    candidate["editorial_angle"] = _editorial_angle(candidate)
     return candidate
 
 
@@ -414,6 +603,18 @@ def score_lead_candidate(candidate):
             + min(4, len(candidate.get("lasting_value_matches") or [])),
         ),
         "evergreen_fit": evergreen_fit,
+        "durable_problem": int(candidate.get("durable_problem_score", 0)),
+        "known_search_demand": int(
+            (candidate.get("search_feedback") or {}).get("demand_score", 0)
+        ),
+        "cannibalization_penalty": (
+            -8
+            if (candidate.get("search_feedback") or {}).get(
+                "existing_page_conflict"
+            )
+            else 0
+        ),
+        "shallow_penalty": int(candidate.get("shallow_penalty", 0)),
         "announcement_penalty": announcement_penalty,
         "freshness": (
             3

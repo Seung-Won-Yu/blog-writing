@@ -28,6 +28,8 @@ NATURAL_VOICE_POLICY_START = date(2026, 8, 4)
 AD_FLOW_POLICY_START = date(2026, 8, 4)
 SOURCE_RECENCY_POLICY_START = date(2026, 8, 6)
 SEARCH_CONVERSION_POLICY_START = date(2026, 8, 11)
+ORIGINAL_VALUE_POLICY_START = date(2026, 8, 26)
+VISUAL_TREND_POLICY_START = date(2026, 8, 26)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -254,6 +256,21 @@ RENDER_FAMILIES = {
     "isometric_model",
     "tactile_paper",
     "macro_object",
+}
+ORIGINAL_PROOF_METHODS = {
+    "executed_test",
+    "document_comparison",
+    "source_triangulation",
+    "configuration_walkthrough",
+    "incident_trace",
+    "measured_comparison",
+}
+EDITORIAL_TREATMENTS = {
+    "tactile_realism",
+    "documentary_closeup",
+    "quiet_minimalism",
+    "playful_surrealism",
+    "local_workplace",
 }
 EDITORIAL_LENGTH_RULES = {
     "headline": (25, 70),
@@ -951,6 +968,72 @@ def _revisit_value_reasons(source, identity):
     return ["quality_revisit_value"] if invalid else []
 
 
+def _original_value_reasons(source, identity):
+    """Require an explicit value-add plan beyond rewriting the source article."""
+    if date.fromisoformat(identity.publish_date) < ORIGINAL_VALUE_POLICY_START:
+        return []
+    editorial = (
+        source.get("editorial")
+        if isinstance(source.get("editorial"), dict)
+        else {}
+    )
+    original = (
+        editorial.get("original_value")
+        if isinstance(editorial.get("original_value"), dict)
+        else {}
+    )
+    minimum_lengths = {
+        "durable_question": 20,
+        "source_gap": 24,
+        "contribution": 30,
+        "reader_outcome": 20,
+        "limits": 16,
+    }
+    invalid = (
+        plain(original.get("proof_method")) not in ORIGINAL_PROOF_METHODS
+        or any(
+            len(plain(original.get(key))) < minimum
+            for key, minimum in minimum_lengths.items()
+        )
+    )
+    return ["quality_original_value"] if invalid else []
+
+
+def _visual_trend_reasons(source, identity, *, require_image=False):
+    """Keep generated covers specific, human, and useful in image search."""
+    if date.fromisoformat(identity.publish_date) < VISUAL_TREND_POLICY_START:
+        return []
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    cover = visual.get("cover") if isinstance(visual.get("cover"), dict) else {}
+    fields = ("editorial_treatment", "focal_subject", "texture_cue", "authenticity_cue")
+    invalid = (
+        plain(cover.get("editorial_treatment")) not in EDITORIAL_TREATMENTS
+        or any(len(plain(cover.get(key))) < 6 for key in fields[1:])
+    )
+    if not require_image:
+        return ["quality_visual_trend"] if invalid else []
+
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
+    invalid |= any(
+        plain(cover.get(key)) != plain(cover_image.get(key)) for key in fields
+    )
+    alt = plain(cover_image.get("alt"))
+    alt_terms = _search_terms(alt)
+    context_terms = _search_terms(source.get("primary_query"))
+    context_terms.update(_search_terms(cover.get("focal_subject")))
+    invalid |= (
+        not 15 <= len(alt) <= 160
+        or not alt_terms.intersection(context_terms)
+        or alt.casefold() in {"대표 이미지", "블로그 이미지", "설명 이미지"}
+    )
+    path = plain(cover_image.get("path"))
+    if path:
+        stem = path.rsplit("/", 1)[-1].rsplit(".", 1)[0].casefold()
+        invalid |= bool(re.fullmatch(r"(?:image|visual|cover|img)[-_]?\d*", stem))
+    return ["quality_visual_trend"] if invalid else []
+
+
 def _korean_content_reasons(source):
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
     news = source.get("news") if isinstance(source.get("news"), list) else []
@@ -1565,12 +1648,14 @@ def source_authoring_reasons(source, identity):
         lambda: _search_metadata_reasons(source, identity),
         lambda: _search_conversion_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
+        lambda: _original_value_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
         lambda: _prose_reasons(source, identity),
         lambda: _visual_role_reasons(source, identity),
+        lambda: _visual_trend_reasons(source, identity),
     )
     reasons = _run_quality_validators(validators)
     reasons.extend(_generation_reasons(source))
@@ -1585,6 +1670,7 @@ def source_quality_reasons(source, identity):
     validators = (
         lambda: _schema_reasons(source, identity),
         lambda: _visual_reasons(source, identity),
+        lambda: _visual_trend_reasons(source, identity, require_image=True),
         lambda: _experiment_reasons(source, identity),
     )
     reasons.extend(_run_quality_validators(validators))
