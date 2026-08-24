@@ -1,0 +1,94 @@
+{
+  "title": "CloudFormation 드리프트 감지: 콘솔 변경을 IaC로 되돌리는 기준",
+  "title_candidates": [
+    "CloudFormation 드리프트 감지: 콘솔 변경을 IaC로 되돌리는 기준",
+    "AWS, ClickOps를 관리형 IaC로 전환하는 CloudFormation 드리프트 운영법 공개",
+    "CloudFormation 설계도와 실제 서버 랙 사이에서 수동 레버 하나만 어긋난 장면: 코드는 바뀌지 않았는데 실제…"
+  ],
+  "category": "최신 IT·개발 소식",
+  "draft_id": "2026-08-24",
+  "publish_date": "2026-08-24",
+  "content_type": "daily_news",
+  "content_label": "뉴스 심층글",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-24T09:00:00+09:00",
+  "tags": [
+    "CloudFormation",
+    "드리프트 감지",
+    "Infrastructure as Code",
+    "IaC",
+    "ClickOps",
+    "AWS",
+    "EventBridge",
+    "인프라 운영"
+  ],
+  "meta_description": "배포 코드는 그대로인데 운영 장애가 난 뒤 콘솔을 열어 보니 보안 그룹 규칙 하나가 달라져 있다. 누군가 급하게 바꾼 설정이 템플릿에는 남지 않은 전형적인 ClickOps다. AWS가 8월 21일 공… 기존 AWS 리소스를 IaC Generator로 템플릿화하고 CloudFormati…",
+  "key_summary": [
+    "1. AWS, ClickOps를 관리형 IaC로 전환하는 CloudFormation 드리프트 운영법 공개",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 최신 IT·개발 소식로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: CloudFormation 드리프트 감지: 콘솔 변경을 IaC로 되돌리는 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-24.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-24.html",
+  "before_ad_html": "docs/tistory/2026-08-24-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-24-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-24-adfit.html",
+  "source_sha256": "41322f2b8f59af18d85b6a4e2bdbb7d6ce6ba5723c10b226357e80a7e58f50e0",
+  "html_sha256": "08c202535f43121c926c4b149db89da84dd9d832b52bd7d3f7d030a46540123b",
+  "adfit_sha256": "5ec53d04821bf46d5f4ce8c3123fd2b7a76e9604a2d8ad130c0b36d8c1aae4ea",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/CloudFormation-드리프트-대표.webp",
+      "path": "docs/tistory/assets/2026-08-24/CloudFormation-드리프트-대표.webp",
+      "original_url": "",
+      "alt": "CloudFormation 설계도와 실제 서버 랙 사이에서 빨간 수동 레버 하나만 어긋난 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/AWS-CloudFormation-드리프트-공식문서.webp",
+      "path": "docs/tistory/assets/2026-08-24/AWS-CloudFormation-드리프트-공식문서.webp",
+      "original_url": "",
+      "alt": "AWS CloudFormation 공식 문서의 템플릿 기대값과 실제 리소스 값 차이인 드리프트 설명",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/템플릿-실제상태-드리프트-비교.webp",
+      "path": "docs/tistory/assets/2026-08-24/템플릿-실제상태-드리프트-비교.webp",
+      "original_url": "",
+      "alt": "CloudFormation 템플릿과 실제 상태의 값 변경 리소스 삭제 수동 추가 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/드리프트-대응-판단경로.webp",
+      "path": "docs/tistory/assets/2026-08-24/드리프트-대응-판단경로.webp",
+      "original_url": "",
+      "alt": "CloudFormation 드리프트 감지 뒤 담당자가 템플릿 반영 또는 되돌림을 선택하는 판단 경로",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 24 (월) · 약 12분</p>
+    <p class="digest-lead">배포 코드는 그대로인데 운영 장애가 난 뒤 콘솔을 열어 보니 보안 그룹 규칙 하나가 달라져 있다. 누군가 급하게 바꾼 설정이 템플릿에는 남지 않은 전형적인 ClickOps다. AWS가 8월 21일 공개한 실전 가이드는 이 어긋남을 단순 경고로 끝내지 않고, 기존 리소스를 IaC로 가져오고 정기 감지와 사람 검토를 붙이는 흐름을 보여 준다. CloudFormation의 ‘드리프트’가 무엇인지부터 감지 명령, import와 recreate 선택, 자동 복구를 제한해야 하는 이유까지 실제 운영 순서로 이어 본다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/CloudFormation-드리프트-대표.webp" alt="CloudFormation 설계도와 실제 서버 랙 사이에서 빨간 수동 레버 하나만 어긋난 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">오늘의 핵심뉴스</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">심층 분석 · AWS Cloud Operations Blog · 2026. 8. 22</p>
+    <h3>AWS, ClickOps를 관리형 IaC로 전환하는 CloudFormation 드리프트 운영법 공개</h3>
+    <p class="digest-blurb">기존 AWS 리소스를 IaC Generator로 템플릿화하고 CloudFormation 드리프트 감지, 담당자 알림, 제한적 복구까지 이어지는 운영 방법을 다뤘다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">코드가 아니라 실제 인프라가 먼저 바뀌는 순간</h4><p>장애 대응 중 보안 그룹 포트를 콘솔에서 잠깐 열고, 문제가 끝난 뒤 템플릿에 반영하는 일을 잊을 수 있다. 다음 배포 전까지 서비스는 동작하지만 저장소의 CloudFormation 템플릿과 실제 AWS 리소스는 서로 다른 상태가 된다. 이런 수동 변경을 흔히 ClickOps라고 부르고, 선언된 기대 상태와 실제 상태의 차이를 CloudFormation은 드리프트로 다룬다.</p><p>AWS가 8월 21일 공개한 글은 이미 콘솔 중심으로 운영해 온 리소스를 관리형 IaC로 옮기는 흐름을 제시한다. IaC Generator로 기존 리소스를 스캔하고 템플릿을 만든 뒤, import할지 새로 만들지 검토하고, 정기 드리프트 감지와 알림을 붙이는 방식이다. 핵심은 도구 하나를 켜는 것이 아니라 발견·판단·반영 책임을 연결하는 데 있다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/AWS-CloudFormation-드리프트-공식문서.webp" alt="AWS CloudFormation 공식 문서의 템플릿 기대값과 실제 리소스 값 차이인 드리프트 설명" width="1200" height="630" loading="lazy"><figcaption>AWS 공식 문서에서 드리프트는 템플릿에 명시한 기대값과 실제 리소스 값의 차이를 뜻한다. 삭제된 리소스도 드리프트로 본다.</figcaption></figure><h4 class="digest-subheading">CloudFormation이 비교하는 것은 명시한 속성이다</h4><p>스택 드리프트 감지는 템플릿의 기대 구성과 실제 리소스 구성을 비교한다. 속성 값이 달라진 리소스는 MODIFIED, 템플릿에 있으나 실제로 사라진 리소스는 DELETED로 나타난다. 다만 템플릿에 값을 직접 적지 않고 서비스 기본값에 맡긴 속성은 비교 대상에서 빠질 수 있다. 운영상 중요한 기본값이라면 템플릿에 명시적으로 넣어야 감지 기준이 된다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-24/템플릿-실제상태-드리프트-비교.webp" alt="CloudFormation 템플릿과 실제 상태의 값 변경 리소스 삭제 수동 추가 비교" width="1200" height="630" loading="lazy"><figcaption>값 변경과 템플릿 리소스 삭제는 직접 드리프트로 드러난다. 콘솔에서 새로 만든 리소스는 기존 스택의 템플릿에 없으므로 IaC Generator·AWS Config·자산 목록과 함께 찾아야 한다.</figcaption></figure><p>중첩 스택도 주의해야 한다. 상위 스택에서 드리프트 감지를 실행해도 중첩 스택의 내부 리소스까지 자동으로 모두 내려가 확인하지 않는다. 각 중첩 스택에서 따로 감지해야 한다. 리소스 유형별 드리프트 지원 여부가 다르므로 NO_SUPPORT를 정상 일치로 오해해서도 안 된다.</p><h4 class="digest-subheading">첫 실행은 감지와 상세 조회만 한다</h4><p>운영 중인 스택에서 처음부터 복구까지 자동화하지 않는다. 감지를 시작하고 완료 상태를 확인한 뒤, 차이가 난 리소스의 expected와 actual 속성을 읽는 세 단계면 충분하다. CloudFormation 문서는 CREATE_COMPLETE, UPDATE_COMPLETE, UPDATE_ROLLBACK_COMPLETE, UPDATE_ROLLBACK_FAILED 같은 상태에서 드리프트 감지를 시작할 수 있다고 안내한다.</p><pre class="digest-code-block language-bash"><code># 1) 스택 전체 드리프트 감지 시작
+DETECTION_ID=$(aws cloudformation detect-stack-drift \
+  --stack-name production-api \
+  --query StackDriftDetectionId --output text)
+
+# 2) 감지 완료와 전체 상태 확인
+aws cloudformation describe-stack-drift-detection-status \
+  --stack-drift-detection-id &quot;$DETECTION_ID&quot;
+
+# 3) 실제 차이가 난 리소스 상세 확인
+aws cloudformation describe-stack-resource-drifts \
+  --stack-name production-api \
+  --stack-resource-drift-status-filters MODIFIED DELETED</code></pre><p>대형 스택에서는 감지가 즉시 끝나지 않으므로 detection ID를 저장하고 상태가 DETECTION_COMPLETE인지 확인한다. 결과에는 논리 ID, 물리 ID, 리소스 유형, 예상·실제 속성 차이가 포함된다. 명령 결과를 티켓이나 변경 기록에 붙이고 담당 리소스 소유자에게 먼저 확인을 요청하면, 의도한 긴급 변경을 무심코 되돌리는 사고를 줄일 수 있다.</p></div>
+  </div>
+</section>
+</article>
