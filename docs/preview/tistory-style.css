@@ -6408,9 +6408,87 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 }
 
+/* Tablet portrait keeps the desktop sidebar, but gives article cards a readable line length. */
+@media screen and (min-width: 768px) and (max-width: 900px) {
+  body #content > .inner:has(> .post-item) {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   body {
     background: var(--sw-canvas) !important;
+  }
+
+  /* Keep the mobile drawer focused on identity, categories, and notices. */
+  #aside {
+    right: -100vw;
+    width: min(88vw, 360px);
+    max-width: 360px;
+    padding: 76px 22px 32px;
+    box-shadow: -18px 0 48px rgba(23, 27, 24, 0.18);
+  }
+
+  .mobile-menu #aside {
+    right: 0;
+  }
+
+  #aside .close {
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    border-color: var(--sw-line-strong);
+  }
+
+  #aside .dev-profile-card {
+    margin-bottom: 24px;
+  }
+
+  #aside .sidebar-1 .category {
+    margin-bottom: 0;
+    padding-top: 18px;
+  }
+
+  #aside .category ul li a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  #aside .category ul li ul li a {
+    padding-left: 14px;
+    color: var(--sw-muted);
+    font-size: 14px;
+  }
+
+  #aside .sidebar-2 {
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+
+  #aside .post-list,
+  #aside .visitor-count {
+    display: none;
+  }
+
+  #tt-body-index .revenue_unit_wrap.position_list {
+    max-width: 100%;
+    margin: 16px auto !important;
+    overflow: hidden;
+  }
+
+  #tt-body-index .post-header {
+    padding-top: 16px;
+  }
+
+  #tt-body-index .post-item .excerpt {
+    margin-bottom: 12px;
+    -webkit-line-clamp: 2;
   }
 
   #header .inner {

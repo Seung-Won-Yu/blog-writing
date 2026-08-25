@@ -560,7 +560,11 @@ def find_recent_draft_duplicates(
             else (
                 f"{previous_day}-guide"
                 if identity.content_type == "evergreen_guide"
-                else previous_day
+                else (
+                    f"{previous_day}-project"
+                    if identity.content_type == "project_log"
+                    else previous_day
+                )
             )
         )
         previous_identity = resolve_draft_identity(previous_draft_id)
@@ -979,7 +983,8 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
             meta_source
             and meta_source != identity.source
         ) or (
-            identity.content_type in {"automation_case", "evergreen_guide"}
+            identity.content_type
+            in {"automation_case", "evergreen_guide", "project_log"}
             and meta_source != identity.source
         ):
             reasons.append("invalid_publish_source")
@@ -1312,6 +1317,14 @@ def inspect_publish_ready_drafts(*, root=ROOT):
             continue
         if publish_date >= PUBLISH_GATE_START:
             draft_ids.add(identity.draft_id)
+    for source_path in sorted((root / "data" / "project_logs").glob("*.json")):
+        try:
+            identity = resolve_draft_identity(f"{source_path.stem}-project")
+            publish_date = date.fromisoformat(identity.publish_date)
+        except (TypeError, ValueError):
+            continue
+        if publish_date >= PUBLISH_GATE_START:
+            draft_ids.add(identity.draft_id)
     for meta_path in sorted((root / "docs" / "tistory").glob("*.json")):
         try:
             identity = resolve_draft_identity(meta_path.stem)
@@ -1329,6 +1342,7 @@ def inspect_publish_ready_drafts(*, root=ROOT):
             window_days={
                 "automation_case": 90,
                 "evergreen_guide": 365,
+                "project_log": 365,
             }.get(
                 identity.content_type,
                 365

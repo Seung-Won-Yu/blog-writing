@@ -40,6 +40,7 @@ HERE = Path(__file__).resolve().parents[2]
 DAYS_DIR = HERE / "data" / "days"
 AUTOMATION_CASES_DIR = HERE / "data" / "automation_cases"
 GUIDES_DIR = HERE / "data" / "guides"
+PROJECT_LOGS_DIR = HERE / "data" / "project_logs"
 OUT_DIR = HERE / "docs" / "tistory"
 
 DEFAULT_BLOG_URL = "https://won0322.tistory.com"
@@ -118,7 +119,12 @@ def day_files():
     return sorted(DAYS_DIR.glob("*.json"))
 
 
-def draft_files(days_dir=None, automation_cases_dir=None, guides_dir=None):
+def draft_files(
+    days_dir=None,
+    automation_cases_dir=None,
+    guides_dir=None,
+    project_logs_dir=None,
+):
     """Return every supported source with its collision-safe draft identity."""
     daily_root = Path(days_dir) if days_dir is not None else DAYS_DIR
     automation_root = (
@@ -127,6 +133,11 @@ def draft_files(days_dir=None, automation_cases_dir=None, guides_dir=None):
         else AUTOMATION_CASES_DIR
     )
     guide_root = Path(guides_dir) if guides_dir is not None else GUIDES_DIR
+    project_root = (
+        Path(project_logs_dir)
+        if project_logs_dir is not None
+        else PROJECT_LOGS_DIR
+    )
     discovered = [
         (resolve_draft_identity(path.stem), path)
         for path in daily_root.glob("*.json")
@@ -138,6 +149,10 @@ def draft_files(days_dir=None, automation_cases_dir=None, guides_dir=None):
     discovered.extend(
         (resolve_draft_identity(f"{path.stem}-guide"), path)
         for path in guide_root.glob("*.json")
+    )
+    discovered.extend(
+        (resolve_draft_identity(f"{path.stem}-project"), path)
+        for path in project_root.glob("*.json")
     )
     return sorted(discovered, key=lambda item: item[0].draft_id)
 
@@ -764,6 +779,9 @@ def render_post(day_id, day):
         elif content_type == "evergreen_guide":
             section_heading = "개발 가이드"
             analysis_label = "최신 기준"
+        elif content_type == "project_log":
+            section_heading = "프로젝트 제작기"
+            analysis_label = "개발 기록"
         else:
             section_heading = (
                 "실전 IT 아티클"
@@ -945,6 +963,20 @@ def write_post(
                 )
         else:
             raise ValueError("unsupported evergreen guide publication_mode")
+    elif content_type == "project_log":
+        category = plain(day.get("category"))
+        expected_category = category_for_identity(identity)
+        if category != expected_category:
+            raise ValueError(f"project log category must be {expected_category}")
+        publication_mode = plain(day.get("publication_mode")) or "scheduled"
+        scheduled_at = plain(day.get("scheduled_at"))
+        expected_schedule = regular_schedule_for_identity(identity)
+        if publication_mode != "scheduled":
+            raise ValueError("unsupported project log publication_mode")
+        if not expected_schedule or scheduled_at != expected_schedule:
+            raise ValueError(
+                "project log scheduled publication requires Friday 18:00 KST"
+            )
     else:
         category = plain(day.get("category")) or category_for_identity(identity)
         publication_mode = "scheduled"
@@ -1074,7 +1106,7 @@ def main():
     group.add_argument("--day", help="export one YYYY-MM-DD day")
     group.add_argument(
         "--draft-id",
-        help="export one daily, automation, or evergreen guide draft",
+        help="export one daily, automation, evergreen guide, or project draft",
     )
     group.add_argument("--all", action="store_true", help="export every draft")
     args = parser.parse_args()

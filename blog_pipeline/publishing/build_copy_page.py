@@ -45,6 +45,7 @@ def is_allowed_source(source):
         ("data", "days"),
         ("data", "automation_cases"),
         ("data", "guides"),
+        ("data", "project_logs"),
     }:
         return False
     return len(path.parts) == 3 and path.suffix == ".json" and (ROOT / path).is_file()
@@ -171,6 +172,7 @@ def apply_guard_results(drafts, *, root=ROOT):
                     {
                         "automation_case": 90,
                         "evergreen_guide": 365,
+                        "project_log": 365,
                     }.get(identity.content_type, 60)
                 ),
             )
@@ -670,13 +672,13 @@ def render(drafts):
 <body>
   <div class="wrap">
     <nav class="desk-nav" aria-label="발행 도구">
-      <a href="./" aria-current="page">데일리 뉴스 발행</a>
+      <a href="./" aria-current="page">글 발행 도우미</a>
       <a href="integration.html">보강글 HTML 조립</a>
     </nav>
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">월·수 09:00 실전 IT 아티클과 금요일 업무자동화 실험의 발행 준비물을 확인합니다.</p>
+      <p class="lead">월·수 09:00 실전 IT 아티클과 금요일 자동화·프로젝트 글의 발행 준비물을 확인합니다.</p>
     </header>
 
     <div class="layout">

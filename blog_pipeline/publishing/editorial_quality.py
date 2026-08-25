@@ -21,6 +21,7 @@ from .draft_identity import (
 DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
+PROJECT_QUALITY_POLICY_START = date(2026, 8, 28)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
@@ -84,6 +85,14 @@ GUIDE_COVERAGE = {
     "security",
     "operations",
     "plan",
+}
+PROJECT_COVERAGE = {
+    "motivation",
+    "architecture",
+    "safety",
+    "evidence",
+    "limits",
+    "next_step",
 }
 RENDERABLE_BLOCK_TYPES = {
     "h",
@@ -314,6 +323,16 @@ DEPTH_POLICIES = {
         "minimum_blocks": 19,
         "required_block_types": {"table", "ul"},
     },
+    "project_log": {
+        "minimum_headings": 5,
+        "maximum_headings": 7,
+        "minimum_visuals": 2,
+        "maximum_visuals": 5,
+        "minimum_minutes": 8,
+        "maximum_minutes": 16,
+        "minimum_blocks": 15,
+        "required_block_types": {"table", "ul"},
+    },
 }
 
 
@@ -326,6 +345,7 @@ def policy_active(identity):
     start = {
         "automation_case": AUTOMATION_QUALITY_POLICY_START,
         "evergreen_guide": GUIDE_QUALITY_POLICY_START,
+        "project_log": PROJECT_QUALITY_POLICY_START,
     }.get(identity.content_type, DAILY_QUALITY_POLICY_START)
     return publish_date >= start
 
@@ -826,6 +846,7 @@ def _editorial_reasons(source, identity):
     required_coverage = {
         "automation_case": AUTOMATION_COVERAGE,
         "evergreen_guide": GUIDE_COVERAGE,
+        "project_log": PROJECT_COVERAGE,
     }.get(identity.content_type)
     if required_coverage is None:
         required_coverage = (
@@ -956,7 +977,8 @@ def _revisit_value_reasons(source, identity):
     ]
     reusable_count_invalid = (
         len(marked_reusable) != 1
-        if identity.content_type in {"evergreen_guide", "automation_case"}
+        if identity.content_type
+        in {"evergreen_guide", "automation_case", "project_log"}
         else len(marked_reusable) > 1
     )
     reusable_metadata_invalid = bool(marked_reusable) and (

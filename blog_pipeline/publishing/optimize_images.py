@@ -460,6 +460,7 @@ def _check_all(root):
         (Path(root) / "data" / "days", ""),
         (Path(root) / "data" / "automation_cases", "-automation"),
         (Path(root) / "data" / "guides", "-guide"),
+        (Path(root) / "data" / "project_logs", "-project"),
     )
     sources = []
     for source_root, suffix in roots:

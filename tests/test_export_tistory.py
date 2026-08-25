@@ -305,20 +305,23 @@ class SaturdayAutomationExportTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "scheduled_at"):
                 write_post("2026-07-18-automation", day=automation)
 
-    def test_bulk_discovery_includes_daily_automation_and_guide_sources(self):
+    def test_bulk_discovery_includes_all_supported_sources(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             daily = root / "days"
             automation = root / "automation_cases"
             guides = root / "guides"
+            projects = root / "project_logs"
             daily.mkdir()
             automation.mkdir()
             guides.mkdir()
+            projects.mkdir()
             (daily / "2026-07-18.json").write_text("{}", encoding="utf-8")
             (automation / "2026-07-18.json").write_text("{}", encoding="utf-8")
             (guides / "2026-07-18.json").write_text("{}", encoding="utf-8")
+            (projects / "2026-08-28.json").write_text("{}", encoding="utf-8")
 
-            discovered = draft_files(daily, automation, guides)
+            discovered = draft_files(daily, automation, guides, projects)
 
         self.assertEqual(
             [(identity.draft_id, path.name) for identity, path in discovered],
@@ -326,8 +329,25 @@ class SaturdayAutomationExportTests(unittest.TestCase):
                 ("2026-07-18", "2026-07-18.json"),
                 ("2026-07-18-automation", "2026-07-18.json"),
                 ("2026-07-18-guide", "2026-07-18.json"),
+                ("2026-08-28-project", "2026-08-28.json"),
             ],
         )
+
+    def test_project_log_uses_its_own_heading(self):
+        project = copy.deepcopy(LEAD_DAY)
+        project.update(
+            {
+                "draft_id": "2026-08-28-project",
+                "publish_date": "2026-08-28",
+                "content_type": "project_log",
+                "content_label": "프로젝트 제작기",
+            }
+        )
+
+        rendered = render_post("2026-08-28-project", project)
+
+        self.assertIn('<h2 class="digest-news-heading">프로젝트 제작기</h2>', rendered)
+        self.assertIn("개발 기록", rendered)
 
     def test_exports_a_second_saturday_draft_without_overwriting_daily_news(self):
         automation = copy.deepcopy(LEAD_DAY)

@@ -72,6 +72,28 @@ class CopyPageTests(unittest.TestCase):
         self.assertEqual(windows["2026-07-25"], 60)
         self.assertEqual(windows["2026-07-25-automation"], 90)
 
+    def test_copy_page_uses_long_guard_window_for_project_series(self):
+        from blog_pipeline.publishing.build_copy_page import apply_guard_results
+
+        drafts = [
+            {
+                "draft_id": "2026-08-28-project",
+                "publish_date": "2026-08-28",
+                "content_type": "project_log",
+                "content_label": "프로젝트 제작기",
+                "publish_ready": True,
+            }
+        ]
+
+        with patch(
+            "blog_pipeline.publishing.daily_guard.inspect_draft_state",
+            return_value={"status": "COMPLETE", "reasons": []},
+        ) as inspect:
+            checked = apply_guard_results(drafts, root=Path("/tmp/example"))
+
+        self.assertTrue(checked[0]["publish_ready"])
+        self.assertEqual(inspect.call_args.kwargs["window_days"], 365)
+
     def test_copy_page_disables_a_publish_ready_draft_when_guard_is_partial(self):
         from blog_pipeline.publishing.build_copy_page import apply_guard_results
 
@@ -321,7 +343,7 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
         self.assertIn("오늘 글 발행 준비", html)
         self.assertIn("월·수 09:00 실전 IT 아티클", html)
-        self.assertIn("금요일 업무자동화 실험", html)
+        self.assertIn("금요일 자동화·프로젝트 글", html)
         self.assertNotIn("수요일 개발 가이드", html)
         self.assertIn("HTML 모드에 한 번 붙여넣고", html)
         self.assertNotIn("Run workflow", html)

@@ -10,6 +10,7 @@
 
 ```text
 Use case: photorealistic-natural
+Asset intent: editorial-scene
 Asset type: Korean technology blog cover for a weekly stock-app development series, 1200x630 landscape crop
 Primary request: show why a developer built a paper-trading research app to record decisions before risking real money
 Scene/backdrop: a real, slightly worn dark-wood workbench at night, quiet home development workspace

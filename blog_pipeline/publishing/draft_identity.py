@@ -10,6 +10,7 @@ from datetime import date
 _DAILY_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})$")
 _AUTOMATION_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-automation$")
 _GUIDE_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-guide$")
+_PROJECT_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-project$")
 
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
 EVERGREEN_DAILY_START = date(2026, 8, 25)
@@ -19,16 +20,19 @@ LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
     "automation_case": "업무자동화",
     "evergreen_guide": "나만의 정리",
+    "project_log": "프로젝트·회고",
 }
 V2_CATEGORIES = {
     "daily_news": "최신 IT·개발 소식",
     "automation_case": "자동화·실험",
     "evergreen_guide": "개발 가이드",
+    "project_log": "프로젝트·회고",
 }
 CURRENT_CATEGORIES = {
     "daily_news": "실전 IT 아티클",
     "automation_case": "자동화·실험",
     "evergreen_guide": "개발 가이드",
+    "project_log": "프로젝트·회고",
 }
 
 
@@ -100,6 +104,10 @@ def regular_schedule_for_identity(identity):
         ):
             return None
         hour = "18:00:00"
+    elif identity.content_type == "project_log":
+        if publish_day.weekday() != 4:
+            return None
+        hour = "18:00:00"
     else:
         return None
     return f"{identity.publish_date}T{hour}+09:00"
@@ -131,16 +139,27 @@ def resolve_draft_identity(draft_id, payload=None):
             )
         else:
             match = _GUIDE_ID.fullmatch(value)
-            if not match:
-                raise ValueError(f"invalid draft id: {draft_id}")
-            publish_date = match.group(1)
-            identity = DraftIdentity(
-                draft_id=value,
-                publish_date=publish_date,
-                content_type="evergreen_guide",
-                content_label="개발 가이드",
-                source=f"data/guides/{publish_date}.json",
-            )
+            if match:
+                publish_date = match.group(1)
+                identity = DraftIdentity(
+                    draft_id=value,
+                    publish_date=publish_date,
+                    content_type="evergreen_guide",
+                    content_label="개발 가이드",
+                    source=f"data/guides/{publish_date}.json",
+                )
+            else:
+                match = _PROJECT_ID.fullmatch(value)
+                if not match:
+                    raise ValueError(f"invalid draft id: {draft_id}")
+                publish_date = match.group(1)
+                identity = DraftIdentity(
+                    draft_id=value,
+                    publish_date=publish_date,
+                    content_type="project_log",
+                    content_label="프로젝트 제작기",
+                    source=f"data/project_logs/{publish_date}.json",
+                )
 
     date.fromisoformat(identity.publish_date)
     if not isinstance(payload, dict):
@@ -152,7 +171,11 @@ def resolve_draft_identity(draft_id, payload=None):
         "content_type": identity.content_type,
         "content_label": identity.content_label,
     }
-    if identity.content_type in {"automation_case", "evergreen_guide"}:
+    if identity.content_type in {
+        "automation_case",
+        "evergreen_guide",
+        "project_log",
+    }:
         missing = [key for key in expected if not str(payload.get(key) or "").strip()]
         if missing:
             raise ValueError(
@@ -176,3 +199,8 @@ def automation_draft_id(day_id):
 def guide_draft_id(day_id):
     publish_date = date.fromisoformat(str(day_id)).isoformat()
     return f"{publish_date}-guide"
+
+
+def project_draft_id(day_id):
+    publish_date = date.fromisoformat(str(day_id)).isoformat()
+    return f"{publish_date}-project"

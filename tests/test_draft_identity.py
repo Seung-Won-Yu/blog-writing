@@ -14,6 +14,7 @@ class DraftIdentityTests(unittest.TestCase):
         daily = resolve_draft_identity("2026-07-18")
         automation = resolve_draft_identity("2026-07-18-automation")
         guide = resolve_draft_identity("2026-07-18-guide")
+        project = resolve_draft_identity("2026-08-28-project")
 
         self.assertEqual(daily.source, "data/days/2026-07-18.json")
         self.assertEqual(daily.content_type, "daily_news")
@@ -24,6 +25,9 @@ class DraftIdentityTests(unittest.TestCase):
         self.assertEqual(guide.source, "data/guides/2026-07-18.json")
         self.assertEqual(guide.content_type, "evergreen_guide")
         self.assertEqual(guide.content_label, "개발 가이드")
+        self.assertEqual(project.source, "data/project_logs/2026-08-28.json")
+        self.assertEqual(project.content_type, "project_log")
+        self.assertEqual(project.content_label, "프로젝트 제작기")
         self.assertEqual(automation.publish_date, daily.publish_date)
         self.assertEqual(guide.publish_date, daily.publish_date)
         self.assertNotEqual(automation.draft_id, daily.draft_id)
@@ -94,6 +98,17 @@ class DraftIdentityTests(unittest.TestCase):
         )
         self.assertIsNone(
             regular_schedule_for_identity(resolve_draft_identity("2026-07-23-guide"))
+        )
+        self.assertEqual(
+            regular_schedule_for_identity(
+                resolve_draft_identity("2026-08-28-project")
+            ),
+            "2026-08-28T18:00:00+09:00",
+        )
+        self.assertIsNone(
+            regular_schedule_for_identity(
+                resolve_draft_identity("2026-08-29-project")
+            )
         )
 
     def test_category_taxonomy_preserves_each_historical_epoch(self):
