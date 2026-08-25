@@ -28,6 +28,11 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("overflow-x: hidden;", layer_css)
         self.assertIn("#tt-body-index .pagination", layer_css)
         self.assertIn("gap: 22px;", layer_css)
+        self.assertIn("width: min(88vw, 360px);", layer_css)
+        self.assertIn("right: -100vw;", layer_css)
+        self.assertIn("min-height: 44px;", layer_css)
+        self.assertIn("#aside .post-list", layer_css)
+        self.assertIn("#tt-body-index .post-header", layer_css)
 
     def test_home_uses_six_equal_cards_instead_of_a_broken_lead_card(self):
         layer_css = LAYER_PATH.read_text(encoding="utf-8")

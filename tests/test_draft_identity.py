@@ -103,7 +103,7 @@ class DraftIdentityTests(unittest.TestCase):
         )
         self.assertEqual(
             category_for_content_type("daily_news", "2026-07-22"),
-            "최신 IT·개발 소식",
+            "IT 트렌드 해설",
         )
         self.assertEqual(
             category_for_content_type("automation_case", "2026-07-26"),
@@ -122,11 +122,11 @@ class DraftIdentityTests(unittest.TestCase):
         self.assertEqual(current.content_label, "실전 IT 아티클")
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-24"),
-            "최신 IT·개발 소식",
+            "IT 트렌드 해설",
         )
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-25"),
-            "실전 개발 노트",
+            "실전 IT 아티클",
         )
 
 

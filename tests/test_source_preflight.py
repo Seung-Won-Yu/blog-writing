@@ -87,7 +87,7 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(result["status"], "READY")
         self.assertEqual(
             result["expected_identity"]["category"],
-            "최신 IT·개발 소식",
+            "IT 트렌드 해설",
         )
 
     def test_wednesday_guide_preflight_uses_the_recurring_schedule(self):

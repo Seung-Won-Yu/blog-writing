@@ -21,7 +21,7 @@ LEGACY_CATEGORIES = {
     "evergreen_guide": "나만의 정리",
 }
 CURRENT_CATEGORIES = {
-    "daily_news": "최신 IT·개발 소식",
+    "daily_news": "IT 트렌드 해설",
     "automation_case": "자동화·실험",
     "evergreen_guide": "개발 가이드",
 }
@@ -48,7 +48,7 @@ def category_for_content_type(content_type, publish_date=None):
         except ValueError:
             published = CATEGORY_TAXONOMY_V2_START
         if key == "daily_news" and published >= EVERGREEN_DAILY_START:
-            return "실전 개발 노트"
+            return "실전 IT 아티클"
         if published < CATEGORY_TAXONOMY_V2_START:
             category_map = LEGACY_CATEGORIES
     return category_map[key]
