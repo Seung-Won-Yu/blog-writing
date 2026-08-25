@@ -68,7 +68,7 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(result["reasons"], [])
         self.assertFalse((root / "docs" / "tistory" / f"{day}.html").exists())
 
-    def test_tomorrow_preflight_uses_the_new_blog_category(self):
+    def test_v2_preflight_preserves_the_category_recorded_at_publish_time(self):
         day = "2026-07-22"
         source = valid_daily_source(day)
         source.pop("images")
@@ -87,7 +87,7 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(result["status"], "READY")
         self.assertEqual(
             result["expected_identity"]["category"],
-            "IT 트렌드 해설",
+            "최신 IT·개발 소식",
         )
 
     def test_wednesday_guide_preflight_uses_the_recurring_schedule(self):

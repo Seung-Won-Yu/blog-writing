@@ -20,8 +20,13 @@ LEGACY_CATEGORIES = {
     "automation_case": "업무자동화",
     "evergreen_guide": "나만의 정리",
 }
+V2_CATEGORIES = {
+    "daily_news": "최신 IT·개발 소식",
+    "automation_case": "자동화·실험",
+    "evergreen_guide": "개발 가이드",
+}
 CURRENT_CATEGORIES = {
-    "daily_news": "IT 트렌드 해설",
+    "daily_news": "실전 IT 아티클",
     "automation_case": "자동화·실험",
     "evergreen_guide": "개발 가이드",
 }
@@ -37,21 +42,26 @@ class DraftIdentity:
 
 
 def category_for_content_type(content_type, publish_date=None):
-    """Return the Tistory leaf category for a draft and taxonomy date."""
+    """Return the category recorded by the taxonomy active on publish day.
+
+    Historical source metadata is immutable even when live Tistory categories
+    are renamed later.  The 2026-08-25 redesign therefore starts a new epoch
+    instead of retroactively validating July and August drafts against it.
+    """
     key = str(content_type or "daily_news").strip()
     if key not in CURRENT_CATEGORIES:
         key = "daily_news"
-    category_map = CURRENT_CATEGORIES
-    if publish_date:
-        try:
-            published = date.fromisoformat(str(publish_date).strip())
-        except ValueError:
-            published = CATEGORY_TAXONOMY_V2_START
-        if key == "daily_news" and published >= EVERGREEN_DAILY_START:
-            return "실전 IT 아티클"
-        if published < CATEGORY_TAXONOMY_V2_START:
-            category_map = LEGACY_CATEGORIES
-    return category_map[key]
+    if not publish_date:
+        return CURRENT_CATEGORIES[key]
+    try:
+        published = date.fromisoformat(str(publish_date).strip())
+    except ValueError:
+        return CURRENT_CATEGORIES[key]
+    if published < CATEGORY_TAXONOMY_V2_START:
+        return LEGACY_CATEGORIES[key]
+    if published < EVERGREEN_DAILY_START:
+        return V2_CATEGORIES[key]
+    return CURRENT_CATEGORIES[key]
 
 
 def content_label_for_daily(publish_date):

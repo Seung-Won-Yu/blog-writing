@@ -96,14 +96,14 @@ class DraftIdentityTests(unittest.TestCase):
             regular_schedule_for_identity(resolve_draft_identity("2026-07-23-guide"))
         )
 
-    def test_category_taxonomy_changes_from_july_22_without_rewriting_history(self):
+    def test_category_taxonomy_preserves_each_historical_epoch(self):
         self.assertEqual(
             category_for_content_type("daily_news", "2026-07-21"),
             "데일리IT뉴스",
         )
         self.assertEqual(
             category_for_content_type("daily_news", "2026-07-22"),
-            "IT 트렌드 해설",
+            "최신 IT·개발 소식",
         )
         self.assertEqual(
             category_for_content_type("automation_case", "2026-07-26"),
@@ -122,10 +122,20 @@ class DraftIdentityTests(unittest.TestCase):
         self.assertEqual(current.content_label, "실전 IT 아티클")
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-24"),
-            "IT 트렌드 해설",
+            "최신 IT·개발 소식",
         )
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-25"),
+            "실전 IT 아티클",
+        )
+
+    def test_current_category_is_used_when_publish_date_is_missing_or_invalid(self):
+        self.assertEqual(
+            category_for_content_type("daily_news"),
+            "실전 IT 아티클",
+        )
+        self.assertEqual(
+            category_for_content_type("daily_news", "not-a-date"),
             "실전 IT 아티클",
         )
 
