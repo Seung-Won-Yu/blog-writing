@@ -77,8 +77,8 @@ class CopyPageTests(unittest.TestCase):
 
         drafts = [
             {
-                "draft_id": "2026-08-28-project",
-                "publish_date": "2026-08-28",
+                "draft_id": "2026-08-29-project",
+                "publish_date": "2026-08-29",
                 "content_type": "project_log",
                 "content_label": "프로젝트 제작기",
                 "publish_ready": True,

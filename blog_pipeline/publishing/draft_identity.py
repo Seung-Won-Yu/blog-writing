@@ -105,7 +105,7 @@ def regular_schedule_for_identity(identity):
             return None
         hour = "18:00:00"
     elif identity.content_type == "project_log":
-        if publish_day.weekday() != 4:
+        if publish_day.weekday() != 5:
             return None
         hour = "18:00:00"
     else:

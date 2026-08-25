@@ -2,7 +2,8 @@
 title: "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유"
 series: "모의투자부터 시작한 주식 앱 제작기"
 episode: 1
-planned_publish_at: "2026-08-28T18:00:00+09:00"
+published_at: "2026-08-25T12:07:36+09:00"
+public_url: "https://won0322.tistory.com/213"
 category: "프로젝트·회고"
 primary_query: "좋은 주식 고르는 법"
 meta_description: "랭킹 편향과 API 한도 사이에서 랭킹 80개와 종목 마스터 순환 120개를 섞어 미국주식 후보 200개를 만드는 edgelab의 실제 알고리즘을 설명한다."
@@ -152,7 +153,7 @@ Amihud의 유동성 연구와 Frazzini·Israel·Moskowitz의 실제 거래비용
 ---
 
 **다음 글**: 주식 선정 알고리즘 만들기 — 급등주를 빼고 정배열을 보는 기준
-(2026-09-04 예정)
+(2026-08-29 예정)
 
 ### 공개 참고자료
 

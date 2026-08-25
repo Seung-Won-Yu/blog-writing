@@ -975,7 +975,7 @@ def write_post(
             raise ValueError("unsupported project log publication_mode")
         if not expected_schedule or scheduled_at != expected_schedule:
             raise ValueError(
-                "project log scheduled publication requires Friday 18:00 KST"
+                "project log scheduled publication requires Saturday 18:00 KST"
             )
     else:
         category = plain(day.get("category")) or category_for_identity(identity)

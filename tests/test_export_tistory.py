@@ -319,7 +319,7 @@ class SaturdayAutomationExportTests(unittest.TestCase):
             (daily / "2026-07-18.json").write_text("{}", encoding="utf-8")
             (automation / "2026-07-18.json").write_text("{}", encoding="utf-8")
             (guides / "2026-07-18.json").write_text("{}", encoding="utf-8")
-            (projects / "2026-08-28.json").write_text("{}", encoding="utf-8")
+            (projects / "2026-08-29.json").write_text("{}", encoding="utf-8")
 
             discovered = draft_files(daily, automation, guides, projects)
 
@@ -329,7 +329,7 @@ class SaturdayAutomationExportTests(unittest.TestCase):
                 ("2026-07-18", "2026-07-18.json"),
                 ("2026-07-18-automation", "2026-07-18.json"),
                 ("2026-07-18-guide", "2026-07-18.json"),
-                ("2026-08-28-project", "2026-08-28.json"),
+                ("2026-08-29-project", "2026-08-29.json"),
             ],
         )
 
@@ -337,14 +337,14 @@ class SaturdayAutomationExportTests(unittest.TestCase):
         project = copy.deepcopy(LEAD_DAY)
         project.update(
             {
-                "draft_id": "2026-08-28-project",
-                "publish_date": "2026-08-28",
+                "draft_id": "2026-08-29-project",
+                "publish_date": "2026-08-29",
                 "content_type": "project_log",
                 "content_label": "프로젝트 제작기",
             }
         )
 
-        rendered = render_post("2026-08-28-project", project)
+        rendered = render_post("2026-08-29-project", project)
 
         self.assertIn('<h2 class="digest-news-heading">프로젝트 제작기</h2>', rendered)
         self.assertIn("개발 기록", rendered)
