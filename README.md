@@ -8,6 +8,7 @@
 - 블로그: [하루 한 시간 나를 Develop!](https://won0322.tistory.com/)
 - 뉴스 레이더: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
 - 실전글 후보함: [금요일 개발·자동화 레이더](https://seung-won-yu.github.io/blog-writing/automation-inbox/)
+- 프로젝트 연재: [모의투자부터 시작한 주식 앱 제작기](editorial/edgelab/README.md)
 
 ## 주요 기능
 
