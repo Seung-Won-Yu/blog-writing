@@ -1,8 +1,7 @@
 {
-  "title": "미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유",
+  "title": "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
   "title_candidates": [
-    "미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유",
-    "미국주식 선정 알고리즘, 랭킹 80개와 순환 120개를 섞은 이유",
+    "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
     "인기 종목 트레이와 종목 마스터 순환 서랍 사이의 후보 클립보드: 이미 오른 종목만 반복되는 랭킹 밖에서는 어떤 주식을…"
   ],
   "category": "프로젝트·회고",
@@ -13,7 +12,7 @@
   "publication_mode": "scheduled",
   "scheduled_at": "2026-08-28T18:00:00+09:00",
   "tags": [
-    "미국주식 선정 알고리즘",
+    "좋은 주식 고르는 법",
     "미국주식 후보 수집",
     "종목 선정 알고리즘",
     "주식 앱 만들기",
@@ -23,7 +22,7 @@
   ],
   "meta_description": "처음에는 거래대금과 상승률 랭킹만 잘 모으면 좋은 종목을 찾을 수 있다고 생각했다. 하지만 며칠 돌려 보니 화면에는 이미 크게 움직인 익숙한 종목이 반복됐고, 랭킹 밖의 조용한 종목은 처음부터 비교… 랭킹에 오른 종목만 반복해서 보는 편향과 전체 미국주식을 매번 깊게 조회하는 비용 사…",
   "key_summary": [
-    "1. 미국주식 선정 알고리즘, 랭킹 80개와 순환 120개를 섞은 이유",
+    "1. 좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
     "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
   ],
   "publish_checklist": [
@@ -33,7 +32,7 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 프로젝트·회고로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: 미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유"
+    "추천 제목: 좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유"
   ],
   "generation_provider": "codex-agent",
   "estimated_read_minutes": 10,
@@ -45,9 +44,9 @@
   "before_ad_html": "docs/tistory/2026-08-28-project-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-28-project-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-28-project-adfit.html",
-  "source_sha256": "01a768f01c66bba65fc6c59e807c3633d03ef0b7e4ad4c185caadc76e821db26",
-  "html_sha256": "bed5d3eb0ac5bdddb4994c3cc15420fd8550c1f7a57ac71579d3a427db6395d3",
-  "adfit_sha256": "045e1c7b284693c110f94f2ff7daaed9006a7d0d0b3898eb1059ec4f350e70a4",
+  "source_sha256": "22576dce4f5caba22d3dabee41171faaaa092e7dc6fbddca873aefabd3747e66",
+  "html_sha256": "afa69032f7faee498233cad5caed0c33577fee8fe4d81cd91b823ac05fb5e87b",
+  "adfit_sha256": "77f7d5818a98f1413aee6b2ee2c19948f1b70d30271b9e9d4c2aae687d8bd3b6",
   "image_assets": [
     {
       "kind": "cover",
