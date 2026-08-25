@@ -247,8 +247,8 @@
   "news": [
     {
       "title_kr": "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
-      "source": "edgelab 프로젝트",
-      "url": "https://github.com/Seung-Won-Yu/edgelab/tree/54c8dcf1c45853e46034b12a78e811b7e80bc64f",
+      "source": "개인 프로젝트 기록 · 공개 자료 참고",
+      "url": "https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs",
       "published_at": "2026-08-25T12:07:36+09:00",
       "blurb_kr": "랭킹에 오른 종목만 반복해서 보는 편향과 전체 미국주식을 매번 깊게 조회하는 비용 사이에서, 랭킹 80개와 종목 마스터 순환 120개를 합쳐 후보 200개를 만드는 실제 수집 구조를 정리했다.",
       "content": [
@@ -273,9 +273,12 @@
           "text": "현재 수집기는 실시간 거래대금, 실시간 거래량, 하루 상승률, 하루 하락률, 토스 거래대금, 토스 거래량까지 여섯 랭킹 레인을 읽는다. 같은 종목이 여러 레인에 나오면 중복을 제거하고 최대 80개까지만 랭킹 후보로 남긴다. 이 80개는 ‘지금 시장이 보고 있는 종목’에 가깝다."
         },
         {
-          "t": "code",
-          "language": "text",
-          "text": "순환 점수 = SHA256(날짜 키 + 종목 코드)\n\n랭킹 후보를 제외한 활성 보통주를 이 점수로 정렬 → 앞의 120개 선택"
+          "t": "ul",
+          "items": [
+            "점수 만들기 — 날짜 키와 종목 코드를 SHA-256으로 묶어 같은 날에는 같은 순환 점수를 만든다.",
+            "후보 정리 — 랭킹에 이미 들어온 종목과 비활성 종목, ETF를 제외한다.",
+            "120개 선택 — 남은 활성 보통주를 점수순으로 정렬해 앞의 120개를 사전탐색에 넣는다."
+          ]
         },
         {
           "t": "visual",
@@ -388,11 +391,11 @@
         },
         {
           "t": "p",
-          "text": "이 글을 쓰며 후보 탐색과 정밀 조회 경계를 검증하는 tests.test_universe 11개를 실제로 실행했고 모두 통과했다. 랭킹 중복 제거, 결정적 순환, 200개 가격 배치 상한, 24+20 정밀 조회, 100개 토픽 제한을 코드가 반복해 지키는지는 확인했다. 다만 테스트 통과는 이 후보들이 수익을 낸다는 증거가 아니다. 후보 누락률과 전략 성과는 앞으로 쌓이는 전향적 모의투자 표본으로 따로 판단해야 한다."
+          "text": "이 구조는 숫자를 논문에서 그대로 베낀 결과가 아니다. Barber와 Odean의 연구는 거래량 급증과 극단적 등락처럼 눈에 띄는 종목에 개인투자자의 매수가 쏠릴 수 있음을 보여 줬고, Lee와 Swaminathan은 과거 거래량이 모멘텀의 크기와 지속성을 구분하는 정보가 될 수 있다고 설명했다. 그래서 랭킹은 버리지 않되 전체 후보군으로 착각하지 않았다. Amihud의 유동성 연구와 Frazzini·Israel·Moskowitz의 실제 거래비용 연구는 거래대금, 스프레드, 가격 충격을 매수 판단 전에 따로 확인하게 만든 근거가 됐다."
         },
         {
           "t": "p",
-          "text": "다음 편에서는 후보 200개를 모은 뒤 실제 개별주 분석 대상으로 무엇을 남기는지 다룬다. 단순히 많이 오른 주식을 고르지 않고 10달러 가격 하한, 유동성, 스프레드, 급등주 제외, 정배열 구조를 어떤 순서로 적용하는지 코드와 실패 사례를 함께 확인할 예정이다."
+          "text": "다만 80·120·24·20은 논문이 제시한 정답이 아니라 현재 API와 실시간 구독 한도에 맞춰 내가 시험 중인 설계값이다. 후보 탐색 경계를 검증하는 tests.test_universe 11개는 모두 통과했지만, 테스트가 수익성을 증명하지는 않는다. 다음 편에서는 후보 200개 중 10달러 가격 하한, 유동성, 스프레드, 급등주 제외, 정배열 구조를 어떤 순서로 적용해 실제 분석 대상을 남기는지 이어간다."
         },
         {
           "t": "quote",
@@ -401,29 +404,34 @@
       ],
       "references": [
         {
-          "title": "edgelab 기준 커밋",
-          "url": "https://github.com/Seung-Won-Yu/edgelab/tree/54c8dcf1c45853e46034b12a78e811b7e80bc64f",
+          "title": "Nasdaq Trader 종목 디렉터리 필드 정의",
+          "url": "https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs",
           "kind": "official"
         },
         {
-          "title": "후보 탐색과 정밀 조회 구현",
-          "url": "https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/edgelab/universe.py",
+          "title": "Python hashlib SHA-256 공식 문서",
+          "url": "https://docs.python.org/3/library/hashlib.html",
           "kind": "documentation"
         },
         {
-          "title": "랭킹 레인과 후보 수 설정",
-          "url": "https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/edgelab/runtime.py",
-          "kind": "reference"
+          "title": "관심 종목 편향 — Barber·Odean (2008)",
+          "url": "https://academic.oup.com/rfs/article-abstract/21/2/785/1607197",
+          "kind": "research"
         },
         {
-          "title": "후보 탐색 경계 테스트",
-          "url": "https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/tests/test_universe.py",
-          "kind": "reference"
+          "title": "거래량과 모멘텀 — Lee·Swaminathan (2000)",
+          "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/0022-1082.00280",
+          "kind": "research"
         },
         {
-          "title": "edgelab 설계 문서",
-          "url": "https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/docs/DESIGN.md",
-          "kind": "reference"
+          "title": "주식 유동성과 가격 영향 — Amihud (2002)",
+          "url": "https://doi.org/10.1016/S1386-4181(01)00024-6",
+          "kind": "research"
+        },
+        {
+          "title": "거래비용과 가격 충격 — Frazzini·Israel·Moskowitz",
+          "url": "https://pages.stern.nyu.edu/~afrazzin/pdf/Trading%20Cost%20of%20Asset%20Pricing%20Anomalies%20-%20Frazzini,%20Israel%20and%20Moskowitz.pdf",
+          "kind": "research"
         }
       ]
     }

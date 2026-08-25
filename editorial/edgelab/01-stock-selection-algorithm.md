@@ -14,8 +14,6 @@ tags:
   - 페이퍼 트레이딩
   - 파이썬 주식 프로젝트
   - edgelab
-source_project: "https://github.com/Seung-Won-Yu/edgelab"
-source_revision: "54c8dcf1c45853e46034b12a78e811b7e80bc64f"
 cover: "assets/01-stock-selection-algorithm-cover.webp"
 cover_alt: "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에서 분석 후보를 고르는 작업대"
 ---
@@ -67,12 +65,11 @@ cover_alt: "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에�
 나머지 120개는 활성 보통주 종목 마스터에서 고른다. 단, 실행할 때마다 결과가
 흔들리는 난수를 쓰지는 않는다.
 
-```text
-순환 점수 = SHA256(날짜 키 + 종목 코드)
-
-랭킹 후보를 제외한 활성 보통주를 이 점수로 정렬
-  → 앞의 120개 선택
-```
+- **점수 만들기** — 날짜 키와 종목 코드를 SHA-256으로 묶어 같은 날에는 같은
+  순환 점수를 만든다.
+- **후보 정리** — 랭킹에 이미 들어온 종목과 비활성 종목, ETF를 제외한다.
+- **120개 선택** — 남은 활성 보통주를 점수순으로 정렬해 앞의 120개를
+  사전탐색에 넣는다.
 
 같은 날짜에는 같은 후보가 재현되고 날짜가 바뀌면 탐색 구간도 달라진다. 나중에
 왜 그 종목을 봤는지 다시 확인할 수 있는 **결정적 순환**이다.
@@ -131,6 +128,18 @@ cover_alt: "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에�
 실행해 모두 통과했다. 랭킹 중복 제거, 결정적 순환, 200개 가격 배치 상한,
 24+20 정밀 조회, 100개 토픽 제한을 코드가 반복해서 지키는지는 확인했다.
 
+## 논문에서 가져온 것은 숫자가 아니라 질문이었다
+
+Barber와 Odean의 연구는 거래량 급증과 극단적 등락처럼 눈에 띄는 종목에
+개인투자자의 매수가 쏠릴 수 있음을 보여 줬다. Lee와 Swaminathan은 과거
+거래량이 모멘텀의 크기와 지속성을 구분하는 정보가 될 수 있다고 설명했다.
+그래서 랭킹은 버리지 않되 전체 후보군으로 착각하지 않았다.
+
+Amihud의 유동성 연구와 Frazzini·Israel·Moskowitz의 실제 거래비용 연구는
+거래대금, 스프레드, 가격 충격을 매수 판단 전에 따로 확인하게 만든 근거가 됐다.
+다만 `80·120·24·20`은 논문이 제시한 정답이 아니다. 현재 API와 실시간 구독
+한도에 맞춰 내가 시험 중인 설계값이다.
+
 다만 테스트 통과는 이 후보들이 수익을 낸다는 증거가 아니다. 순환 주기는 전체
 종목 수에 따라 길어질 수 있고, 한 번의 탐색에서 랭킹 밖의 모든 기회를 잡는다고
 보장할 수도 없다. 후보 누락률과 전략 성과는 앞으로 쌓이는 전향적 모의투자
@@ -145,13 +154,17 @@ cover_alt: "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에�
 **다음 글**: 주식 선정 알고리즘 만들기 — 급등주를 빼고 정배열을 보는 기준
 (2026-09-04 예정)
 
-### 프로젝트 근거
+### 공개 참고자료
 
-- [edgelab 기준 커밋](https://github.com/Seung-Won-Yu/edgelab/tree/54c8dcf1c45853e46034b12a78e811b7e80bc64f)
-- [후보 탐색과 정밀 조회 구현](https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/edgelab/universe.py)
-- [랭킹 레인과 후보 수 설정](https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/edgelab/runtime.py)
-- [후보 탐색 경계 테스트](https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/tests/test_universe.py)
-- [설계 문서](https://github.com/Seung-Won-Yu/edgelab/blob/54c8dcf1c45853e46034b12a78e811b7e80bc64f/docs/DESIGN.md)
+아래 자료는 랭킹 편향, 거래량과 모멘텀, 유동성, 실제 거래비용을 설계에
+반영할 때 참고한 외부 연구와 공개 문서다.
+
+- [Nasdaq Trader 종목 디렉터리 필드 정의](https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs)
+- [Python hashlib SHA-256 공식 문서](https://docs.python.org/3/library/hashlib.html)
+- [관심 종목 편향 — Barber·Odean (2008)](https://academic.oup.com/rfs/article-abstract/21/2/785/1607197)
+- [거래량과 모멘텀 — Lee·Swaminathan (2000)](https://onlinelibrary.wiley.com/doi/abs/10.1111/0022-1082.00280)
+- [주식 유동성과 가격 영향 — Amihud (2002)](https://doi.org/10.1016/S1386-4181(01)00024-6)
+- [거래비용과 가격 충격 — Frazzini·Israel·Moskowitz](https://pages.stern.nyu.edu/~afrazzin/pdf/Trading%20Cost%20of%20Asset%20Pricing%20Anomalies%20-%20Frazzini,%20Israel%20and%20Moskowitz.pdf)
 
 > 이 글은 미국주식 수집·선정 소프트웨어의 구현 기록이며 투자 자문이나 종목
 > 추천이 아니다. 모의투자 결과와 테스트는 실제 투자 성과를 보장하지 않는다.
