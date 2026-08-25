@@ -33,6 +33,7 @@ class TistorySkinTests(unittest.TestCase):
         self.assertIn("min-height: 44px;", layer_css)
         self.assertIn("#aside .post-list", layer_css)
         self.assertIn("#tt-body-index .post-header", layer_css)
+        self.assertIn("(min-width: 768px) and (max-width: 900px)", layer_css)
 
     def test_home_uses_six_equal_cards_instead_of_a_broken_lead_card(self):
         layer_css = LAYER_PATH.read_text(encoding="utf-8")
@@ -107,6 +108,11 @@ class TistorySkinTests(unittest.TestCase):
 
     def test_sidebar_keeps_navigation_and_removes_low_value_clutter(self):
         skin_html = SKIN_PATH.read_text(encoding="utf-8")
+        components_html = COMPONENTS_PATH.read_text(encoding="utf-8")
+        project_path = (
+            "/category/%EC%8B%A4%EC%A0%84%20IT%20%EC%95%84%ED%8B%B0%ED%81%B4/"
+            "%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%C2%B7%ED%9A%8C%EA%B3%A0"
+        )
 
         self.assertIn('aria-label="글 분류"', skin_html)
         self.assertIn('class="post-list tab-ui"', skin_html)
@@ -121,6 +127,8 @@ class TistorySkinTests(unittest.TestCase):
         self.assertNotIn('class="recent-comment"', skin_html)
         self.assertNotIn("<s_random_tags>", skin_html)
         self.assertNotIn('class="count"', skin_html)
+        self.assertIn(f'href="{project_path}"', skin_html)
+        self.assertIn(f'href="{project_path}"', components_html)
 
     def test_footer_uses_blog_identity_instead_of_stock_skin_credit(self):
         skin_html = SKIN_PATH.read_text(encoding="utf-8")

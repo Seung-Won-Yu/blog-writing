@@ -6408,6 +6408,14 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 }
 
+/* Tablet portrait keeps the desktop sidebar, but gives article cards a readable line length. */
+@media screen and (min-width: 768px) and (max-width: 900px) {
+  body #content > .inner:has(> .post-item) {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   body {
     background: var(--sw-canvas) !important;
