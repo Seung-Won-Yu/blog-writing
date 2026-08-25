@@ -1,9 +1,9 @@
 {
-  "title": "주식 모의투자 앱을 직접 만든 이유: 종목 추천보다 먼저 기록한 것",
+  "title": "미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유",
   "title_candidates": [
-    "주식 모의투자 앱을 직접 만든 이유: 종목 추천보다 먼저 기록한 것",
-    "주식 모의투자 앱 edgelab, 종목 추천보다 판단 기록을 먼저 만든 이유",
-    "모의투자 판단 기록장과 분리된 실주문 케이블: 왜 이 앱은 모의수익률보다 매수하지 않은 이유를 먼저 기록할까?"
+    "미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유",
+    "미국주식 선정 알고리즘, 랭킹 80개와 순환 120개를 섞은 이유",
+    "인기 종목 트레이와 종목 마스터 순환 서랍 사이의 후보 클립보드: 이미 오른 종목만 반복되는 랭킹 밖에서는 어떤 주식을…"
   ],
   "category": "프로젝트·회고",
   "draft_id": "2026-08-28-project",
@@ -13,18 +13,17 @@
   "publication_mode": "scheduled",
   "scheduled_at": "2026-08-28T18:00:00+09:00",
   "tags": [
-    "주식 모의투자 앱",
-    "주식 앱 만들기",
-    "투자 알고리즘",
+    "미국주식 선정 알고리즘",
+    "미국주식 후보 수집",
     "종목 선정 알고리즘",
+    "주식 앱 만들기",
     "페이퍼 트레이딩",
-    "파이썬 프로젝트",
-    "미국주식",
-    "개발 회고"
+    "파이썬 주식 프로젝트",
+    "edgelab"
   ],
-  "meta_description": "주식 앱이라면 오늘 살 종목부터 보여 줘야 할 것 같다. 그런데 내가 만든 앱에서 먼저 남기기로 한 것은 매수하지 않은 이유였다. 스프레드가 넓거나 비용을 빼면 손익비가 부족한 신호, 오래된 데이터를… 실주문 경로를 없애고 읽기 전용 수집, 비용과 위험을 반영한 판단, 보수적 가상체결…",
+  "meta_description": "처음에는 거래대금과 상승률 랭킹만 잘 모으면 좋은 종목을 찾을 수 있다고 생각했다. 하지만 며칠 돌려 보니 화면에는 이미 크게 움직인 익숙한 종목이 반복됐고, 랭킹 밖의 조용한 종목은 처음부터 비교… 랭킹에 오른 종목만 반복해서 보는 편향과 전체 미국주식을 매번 깊게 조회하는 비용 사…",
   "key_summary": [
-    "1. 주식 모의투자 앱 edgelab, 종목 추천보다 판단 기록을 먼저 만든 이유",
+    "1. 미국주식 선정 알고리즘, 랭킹 80개와 순환 120개를 섞은 이유",
     "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
   ],
   "publish_checklist": [
@@ -34,10 +33,10 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 프로젝트·회고로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: 주식 모의투자 앱을 직접 만든 이유: 종목 추천보다 먼저 기록한 것"
+    "추천 제목: 미국주식 선정 알고리즘: 랭킹 80개와 순환 120개를 섞은 이유"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 8,
+  "estimated_read_minutes": 10,
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/project_logs/2026-08-28.json",
@@ -46,37 +45,37 @@
   "before_ad_html": "docs/tistory/2026-08-28-project-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-28-project-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-28-project-adfit.html",
-  "source_sha256": "79e4f39ddad52a3917f2e195f77be2001c0aa48e62edebeab07474f6d38a4991",
-  "html_sha256": "e8c5fbfdc8c9589b32d393f8864d00808f1c6163841ed876a6bb2baff512965c",
-  "adfit_sha256": "f59235f328325f507b86449f7dc7dea0aa5995ca3190386881f5bdcd80540c23",
+  "source_sha256": "01a768f01c66bba65fc6c59e807c3633d03ef0b7e4ad4c185caadc76e821db26",
+  "html_sha256": "bed5d3eb0ac5bdddb4994c3cc15420fd8550c1f7a57ac71579d3a427db6395d3",
+  "adfit_sha256": "045e1c7b284693c110f94f2ff7daaed9006a7d0d0b3898eb1059ec4f350e70a4",
   "image_assets": [
     {
       "kind": "cover",
       "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/주식모의투자앱-판단기록-대표.webp",
-      "path": "docs/tistory/assets/2026-08-28-project/주식모의투자앱-판단기록-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
       "original_url": "",
-      "alt": "주식 모의투자 앱의 판단 기록장 옆에 실주문 케이블이 분리된 작업대",
+      "alt": "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에서 분석 후보를 고르는 작업대",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_1",
       "title": "본문 이해 이미지 1",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/주식모의투자앱-판단흐름.webp",
-      "path": "docs/tistory/assets/2026-08-28-project/주식모의투자앱-판단흐름.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-후보수집-80-120.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-후보수집-80-120.webp",
       "original_url": "",
-      "alt": "주식 모의투자 앱이 시장 데이터를 수집해 판단하고 모의체결한 뒤 기록하는 흐름",
+      "alt": "랭킹 80개와 종목 마스터 순환 120개를 합쳐 사전탐색 200개를 만드는 후보 수집 구조",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_2",
       "title": "본문 이해 이미지 2",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/주식모의투자앱-안전경계.webp",
-      "path": "docs/tistory/assets/2026-08-28-project/주식모의투자앱-안전경계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-정밀요청-24-20.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-정밀요청-24-20.webp",
       "original_url": "",
-      "alt": "주식 모의투자 앱의 읽기 전용 데이터와 모의계좌에서 실주문 단자가 분리된 안전 경계",
+      "alt": "가격 사전필터 뒤 랭킹 주식 12개와 순환 주식 12개 및 ETF 20개만 정밀 조회하는 구조",
       "width": 1200,
       "height": 630
     }
