@@ -1,12 +1,12 @@
-# Blog News Radar
+# Blog Editorial Pipeline
 
-[![Collect daily news](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
+[![Collect Monday Wednesday news candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
 [![Collect Friday automation candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml)
 
-`쑥쑥자라나라` 블로그를 위한 AI·IT 심층뉴스 제작 프로젝트입니다. 여러 출처의 새 글을 모아 후보를 정리하고, 매일 핵심뉴스 한 건을 추가 조사해 설명 이미지와 함께 읽을 만한 글로 만듭니다.
+`쑥쑥자라나라` 블로그를 위한 실전 IT 콘텐츠 제작 프로젝트입니다. 여러 출처의 새 글을 모아 후보를 정리하되, 월요일은 오래 검색되는 문제 해결 가이드, 수요일은 최신 변화의 영향 해설, 금요일은 직접 실행한 자동화 실험으로 나누어 만듭니다.
 
 - 블로그: [하루 한 시간 나를 Develop!](https://won0322.tistory.com/)
-- 뉴스 레이더: [오늘의 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
+- 월·수 후보 레이더: [요일별 수집 결과](https://seung-won-yu.github.io/blog-writing/inbox/)
 - 실전글 후보함: [금요일 개발·자동화 레이더](https://seung-won-yu.github.io/blog-writing/automation-inbox/)
 - 토요일 프로젝트 연재: [모의투자부터 시작한 주식 앱 제작기](editorial/edgelab/README.md)
 
@@ -15,22 +15,23 @@
 - RSS·Atom·HTML 출처를 하나의 후보 형식으로 정규화
 - 추적 파라미터를 제거한 canonical URL 기반 중복 방지
 - 공식 발표·국내외 일반 기술 매체·독립 보안 출처를 함께 탐색
-- 14일보다 오래된 기사 제외와 같은 운영사 피드의 중복 선정 제한
+- 최대 30일 후보를 수집하되 최종 글의 핵심 단서는 최근 7일 자료로 제한
 - `일상에 닿는 변화`, `바로 쓰는 도구`, `깊이 읽는 기술` 관점으로 후보 분류
 - 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
 - 최소 3개의 정상 출처·후보 출처가 없으면 직전 정상 후보함을 보존하는 오류 처리
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
 - GitHub Trending·공식 릴리스·공식 가이드·요즘IT에서 금요일 개발·자동화 실험 후보를 별도 선정
-- 상시 검색형 개발 가이드 주제를 월·수 실전 IT 아티클에 통합해 복사·광고·미리보기 흐름으로 제공
+- 월요일 문제 해결·수요일 변화 해설을 서로 다른 점수와 카테고리로 선정
 
 ## 운영 흐름
 
 ```text
-07:17 KST · GitHub Actions
+월·수 07:17 KST · GitHub Actions
   → RSS·Atom·HTML 수집
   → URL·제목 정규화
   → 최근 사용 기사와 중복 확인
   → 출처·신선도·장기 문제 해결성·검색 수요 점수 계산
+  → 월요일은 지속성·재사용성, 수요일은 변화·독자 영향에 가중치
   → 기존 검색 유입 글과 충돌하는 후보 제외
   → 오늘의 추천 후보 5건과 추가 후보 저장
   → GitHub Pages 뉴스 레이더 갱신
@@ -38,8 +39,9 @@
   ※ GitHub 예약 실행 지연을 고려해 09:00 편집보다 103분 먼저 예약합니다.
      당일 후보함이 없거나 오래됐으면 편집 작업이 로컬 수집을 한 번 실행합니다.
 
-09:00 KST · Codex 예약 작업
-  → 핵심뉴스 1건 선정·추가 검색
+월·수 09:00 KST · Codex 예약 작업
+  → 월요일은 오래 검색되는 문제 해결 1건 선정
+  → 수요일은 최근 변화가 기존 흐름에 미치는 영향 1건 선정
   → 공식 문서와 독립 자료 교차 확인
   → 8~12분 심층글 작성
   → 한국어 설명 도식·표·차트 생성·검수
@@ -56,7 +58,7 @@
   → 실제 반복 작업·공개 도구·개발/AI 실전 주제 1건 선정
   → 안전한 임시 환경에서 최소 예제 실행
   → 실제 화면·로그와 한국어 설명 도식 제작
-  → 뉴스글과 분리된 두 번째 티스토리 초안 생성
+  → 월·수 글과 분리된 금요일 티스토리 초안 생성
   → 테스트·GitHub Pages 배포 확인
 
 토요일 10:00 KST · Codex 주식 앱 제작기 편집
@@ -71,20 +73,20 @@
 
 ```
 
-별도 수요일 개발 가이드 예약은 일시중지했습니다. 가이드형 주제는 월·수 실전 IT 아티클에 통합합니다. 티스토리에서는 `실전 IT`를 큰 묶음으로만 쓰고 실제 글은 `IT 트렌드 해설`, `개발 가이드`, `자동화·실험`, `프로젝트·회고`에 배치합니다.
+별도 수요일 개발 가이드 예약은 일시중지했습니다. 대신 월요일 09:00 글이 오래 검색되는 `개발 가이드`, 수요일 09:00 글이 최근 변화의 `IT 트렌드 해설`을 담당합니다. 티스토리에서는 `실전 IT`를 큰 묶음으로만 쓰고 실제 글은 `IT 트렌드 해설`, `개발 가이드`, `자동화·실험`, `프로젝트·회고`에 배치합니다.
 
 GitHub Actions의 정기 작업은 뉴스·개발·자동화 후보 수집, 중복 제거, 우선순위 계산까지만 수행하며 저장소 실행·글·이미지를 생성하지 않습니다. 후보 페이지는 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 예약합니다.
 
 ## 콘텐츠 성장 원칙
 
-블로그는 세 축을 함께 키웁니다.
+블로그는 네 역할을 함께 키웁니다.
 
-- 실전 IT 아티클: 월·수에 커뮤니티와 기술블로그에서 반복되는 문제 한 건을 골라 원리·사례·선택 기준까지 설명
-- 개발 가이드: Java·Spring·PostgreSQL·API·보안·운영처럼 오래 검색되는 문제 해결 글
+- 월요일 개발 가이드: Java·Spring·PostgreSQL·API·보안·운영처럼 반복 검색되는 문제를 원리·실패 조건·재사용 판단표까지 설명
+- 수요일 IT 트렌드 해설: 최근 변화가 기존 사용·개발 흐름에서 바꾸는 조건과 지금 확인할 행동을 설명
 - 금요일 자동화·실험: 직접 실행한 반복 업무와 공개 도구의 실패·수정·결과 기록
 - 토요일 프로젝트 연재: 1편은 공개 완료했고, 2편부터 `edgelab` 주식 앱의 실제 구현·실험·서버 모의투자를 매주 이어가는 제작기
 
-새 글은 세 축 중 하나에 분명히 속해야 하며, 같은 축의 공개 글 2개 이상과 연결합니다. 검색량만 기대한 낯선 주제를 넓게 다루거나 뉴스 원문을 바꿔 말하는 글은 만들지 않습니다. 제목은 핵심 검색어와 얻는 답을 함께 담고, 태그는 기술·문제·기능·사용 상황을 구체적으로 나타냅니다. 원문에 없던 비교·실행 증거·실패 조건·재사용 산출물 중 하나가 없으면 발행 준비를 통과하지 않습니다.
+새 글은 한 역할에 분명히 속해야 하며, 같은 축의 공개 글 2개 이상과 연결합니다. 검색량만 기대한 낯선 주제를 넓게 다루거나 뉴스 원문을 바꿔 말하는 글은 만들지 않습니다. 제목은 핵심 검색어와 얻는 답을 함께 담고, 태그는 기술·문제·기능·사용 상황을 구체적으로 나타냅니다. 도입은 독자가 겪는 장면·방치했을 때의 손해·글에서 얻을 결과·답할 질문을 연결합니다. 원문에 없던 비교·실행 증거·실패 조건·재사용 산출물 중 하나가 없으면 발행 준비를 통과하지 않습니다.
 
 대표 이미지는 포괄적인 AI·노트북 장면 대신 글 고유의 실제 대상·질감·사용 흔적을 한 장면에 두고, 본문 이미지는 흐름·비교·실제 증거를 설명합니다. 이미지 alt와 파일명에도 실제 주제를 기록해 이미지 검색과 접근성을 함께 챙깁니다.
 
@@ -150,7 +152,7 @@ python3 -m unittest \
 ## 프로젝트 구조
 
 ```text
-.github/workflows/collect-news.yml   정기 뉴스 수집
+.github/workflows/collect-news.yml   월·수 실전 IT 후보 수집
 .github/workflows/collect-automation.yml 금요일 개발·자동화 후보 수집
 agent/DAILY_EDITOR.md                월·수 09:00 실전 IT 아티클 편집·발행 준비 계약
 agent/SATURDAY_AUTOMATION.md         금요일 14:00 실전 개발·자동화 계약(파일명은 기존 작업 호환용)
@@ -160,13 +162,13 @@ blog_pipeline/collection/            수집·정규화·중복 제거·선정
 blog_pipeline/publishing/            이미지 최적화·HTML·검사
 config/news_sources.json             출처와 선정 규칙
 config/automation_sources.json       개발·자동화 출처와 임시 점수 규칙
-data/days/                            완성된 일일 글 데이터
+data/days/                            완성된 월·수 실전 IT 글 데이터
 data/automation_cases/                금요일 실전 개발·자동화 데이터
 data/project_logs/                    토요일 주식 앱 제작기 데이터
 data/project_logs/published/          이미 공개한 프로젝트 글 구조화 기록
 editorial/edgelab/                    40편 연재 지도와 원고
 data/guides/                          기존 개발 가이드 발행 기록
-docs/inbox/                           최신 뉴스 후보 JSON·페이지
+docs/inbox/                           최신 월·수 실전 IT 후보 JSON·페이지
 docs/automation-inbox/                최신 개발·자동화 후보 JSON·페이지
 docs/tistory/                         티스토리 복사용 결과와 이미지
 tests/                                수집 파이프라인 회귀 테스트
@@ -174,7 +176,7 @@ tests/                                수집 파이프라인 회귀 테스트
 
 ## 데이터 원칙
 
-- 원뉴스 후보는 `latest` 두 파일만 유지합니다.
+- 수집 후보는 `latest` JSON·페이지 두 파일만 유지합니다.
 - 실제 활용한 기사의 URL은 최근 기록과 비교해 반복 선정을 줄입니다.
 - 수집 과정에는 생성형 AI API 키가 필요하지 않습니다.
 - 로그인 정보와 외부 서비스 API 키를 저장소에 저장하지 않습니다.

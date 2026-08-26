@@ -1,6 +1,6 @@
 # 쑥쑥자라나라 금요일 실전 개발·자동화 편집 계약
 
-이 문서는 매주 금요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·수 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 품질 기준을 통과할 때만 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성하며 발행 횟수를 채우기 위한 실험은 하지 않습니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
+이 문서는 매주 금요일 14:00 KST에 실행되는 두 번째 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·수 09:00 실행되는 실전 IT 아티클 작업과 원본·이미지·HTML·가드를 완전히 분리합니다. 품질 기준을 통과할 때만 `executed_experiment` 역할로 독자가 실제로 따라 할 수 있는 자동화 실험기, 사용법, 공개 도구 적용 사례, 개발·AI 실전 검증 글을 작성하며 발행 횟수를 채우기 위한 실험은 하지 않습니다. 티스토리 붙여넣기와 18:00 예약 발행은 사용자가 직접 합니다.
 
 사용자가 현재 대화에서 당일 추가 발행을 명시한 경우에만 `publication_mode: "manual_extra"`를 사용할 수 있습니다. 이때 `manual_extra_reason`에 요청 근거를 남기고 `scheduled_at`은 같은 날짜의 KST 실행 시각으로 기록합니다. 수집기·정기 워크플로는 이 값을 만들지 않으며, 별도 요청이 없는 비금요일 실행은 계속 건너뜁니다.
 
@@ -164,9 +164,11 @@
 }
 ```
 
+`editorial.weekly_lane`은 `executed_experiment`로, `editorial.article_shape`은 `hands_on_test`, `troubleshooting`, `incident_trace` 중 실제 실험 흐름과 맞는 값으로 기록합니다. `editorial.reader_hook`에는 구체적인 작업 장면 `scene`, 자동화하지 않거나 잘못 실행했을 때의 `stakes`, 독자가 가져갈 검증된 결과 `payoff`, 실험으로 답할 `open_question`을 각각 20~180자로 기록하고 이 내용이 실제 도입에 이어지게 합니다.
+
 티스토리에서는 `실전 IT > 자동화·실험`을 선택합니다. `실전 IT`에는 글을 직접 넣지 않습니다.
 
-그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을, `editorial.original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
+그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.reader_hook`에는 `scene`, `stakes`, `payoff`, `open_question`을, `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을, `editorial.original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 
 `publish_date`는 2026-08-28부터 금요일이어야 하며 `date_label`과 `weekday`는 그 날짜에서 계산한 값과 정확히 일치해야 합니다. 이전 토요일 발행본은 역사 자료로 계속 유효합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용한 Codex 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 생성 이미지와 실제 캡처·실측 자료를 함께 쓰므로 `mixed`로 기록하며, 비워 두거나 결정적 대체기 이름을 넣지 않습니다.
 

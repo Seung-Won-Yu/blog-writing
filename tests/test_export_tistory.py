@@ -525,6 +525,19 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("digest-news-heading", html)
         self.assertNotIn("오늘의 핵심뉴스", html)
 
+    def test_future_monday_lane_renders_as_a_guide_without_legacy_news_labels(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["draft_id"] = "2026-08-31"
+        day["publish_date"] = "2026-08-31"
+        day["content_label"] = "개발 가이드"
+
+        html = render_post("2026-08-31", day)
+
+        self.assertIn("실전 가이드", html)
+        self.assertNotIn("오늘의 핵심뉴스", html)
+        self.assertNotIn("digest-kicker", html)
+        self.assertNotIn("digest-news-heading", html)
+
     def test_deep_links_ignore_non_http_reference_and_related_urls(self):
         day = copy.deepcopy(LEAD_DAY)
         day["news"][0]["references"].append(

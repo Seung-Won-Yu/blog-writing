@@ -14,6 +14,7 @@ _PROJECT_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-project$")
 
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
 EVERGREEN_DAILY_START = date(2026, 8, 25)
+WEEKLY_EDITORIAL_LANES_START = date(2026, 8, 31)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 FRIDAY_AUTOMATION_SCHEDULE_START = date(2026, 8, 28)
 LEGACY_CATEGORIES = {
@@ -65,12 +66,23 @@ def category_for_content_type(content_type, publish_date=None):
         return LEGACY_CATEGORIES[key]
     if published < EVERGREEN_DAILY_START:
         return V2_CATEGORIES[key]
+    if (
+        key == "daily_news"
+        and published >= WEEKLY_EDITORIAL_LANES_START
+        and published.weekday() == 0
+    ):
+        return CURRENT_CATEGORIES["evergreen_guide"]
     return CURRENT_CATEGORIES[key]
 
 
 def content_label_for_daily(publish_date):
     """Keep historical labels stable while switching the recurring lane."""
     published = date.fromisoformat(str(publish_date).strip())
+    if (
+        published >= WEEKLY_EDITORIAL_LANES_START
+        and published.weekday() == 0
+    ):
+        return "개발 가이드"
     return "IT 트렌드 해설" if published >= EVERGREEN_DAILY_START else "뉴스 심층글"
 
 
@@ -79,6 +91,25 @@ def category_for_identity(identity):
         identity.content_type,
         identity.publish_date,
     )
+
+
+def editorial_lane_for_identity(identity):
+    """Return the future weekly promise made to a reader for this draft."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    if (
+        identity.content_type == "daily_news"
+        and publish_day >= WEEKLY_EDITORIAL_LANES_START
+    ):
+        return {0: "evergreen_problem", 2: "change_explainer"}.get(
+            publish_day.weekday(),
+            "",
+        )
+    if (
+        identity.content_type == "automation_case"
+        and publish_day >= FRIDAY_AUTOMATION_SCHEDULE_START
+    ):
+        return "executed_experiment"
+    return ""
 
 
 def is_regular_automation_day(publish_day):
@@ -92,6 +123,11 @@ def regular_schedule_for_identity(identity):
     """Return the canonical KST schedule for a recurring draft, if eligible."""
     publish_day = date.fromisoformat(identity.publish_date)
     if identity.content_type == "daily_news":
+        if (
+            publish_day >= WEEKLY_EDITORIAL_LANES_START
+            and publish_day.weekday() not in {0, 2}
+        ):
+            return None
         hour = "09:00:00"
     elif identity.content_type == "automation_case":
         if not is_regular_automation_day(publish_day):

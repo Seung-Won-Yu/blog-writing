@@ -1,6 +1,8 @@
 # 쑥쑥자라나라 실전 IT 아티클 편집 계약
 
-이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 일일 수집 결과는 주제를 찾는 레이더로만 사용합니다. 기준을 통과하면 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건을 만들고, 통과하지 못하면 발행 횟수를 채우기 위해 글을 만들지 않습니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
+이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 수집 결과는 주제를 찾는 레이더로만 사용합니다. 기준을 통과하면 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건을 만들고, 통과하지 못하면 발행 횟수를 채우기 위해 글을 만들지 않습니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
+
+월요일과 수요일은 같은 글을 날짜만 바꾸어 만들지 않습니다. 월요일 `evergreen_problem`은 오래 검색되는 개발 문제와 재사용 가능한 해결 기준을 남기고 `개발 가이드`에 넣습니다. 수요일 `change_explainer`는 최근 변화가 기존 사용·개발 흐름을 어떻게 바꾸는지 확인하고 `IT 트렌드 해설`에 넣습니다. 월·수 외 날짜에는 이 계약으로 새 원고를 만들지 않습니다.
 
 ## 운영 흐름
 
@@ -25,7 +27,7 @@
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
    - `NEW`: 아래 전체 흐름을 한 번만 수행합니다.
 
-2. `docs/inbox/latest.json`의 `day`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `editorial_angle`, `search_feedback`만 읽습니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 `day`가 당일과 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 추천 수가 적다는 이유만으로 로컬 수집을 반복하거나 전체 편집을 중단하지 않습니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
+2. `docs/inbox/latest.json`의 `day`, `selection.editorial_lane`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `weekly_lane_score`, `editorial_angle`, `search_feedback`만 읽습니다. 월요일 후보함은 `evergreen_problem`, 수요일 후보함은 `change_explainer`여야 합니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르거나 `selection.editorial_lane`이 요일 역할과 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 날짜·역할이 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 추천 수가 적다는 이유만으로 로컬 수집을 반복하거나 전체 편집을 중단하지 않습니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
 
    후보 하나의 공식 근거가 부족하거나 중복이라고 해서 전체 편집을 중단하지 않습니다. 검증 가능한 주제를 찾을 때까지 다음 대체 순서를 반드시 지킵니다.
 
@@ -40,17 +42,20 @@
 
 3. 다음 기준으로 오래 갈 실전 아티클 주제 1건을 고릅니다.
 
+   - 월요일: 반복되는 오류·설정·선택 질문을 잡고 원리, 재현 또는 문서 비교, 실패 조건, 다시 쓸 판단표·체크리스트를 남깁니다. 단순 발표 대응형 `change_impact`는 월요일 글로 선택하지 않습니다.
+   - 수요일: 최근 7일 안의 확인된 변화를 잡고 바뀐 전제, 영향받는 독자, 기존 방식과의 차이, 지금 확인할 행동과 아직 모르는 범위를 설명합니다. `change_impact`, `incident_trace`, `research_interpretation`, `troubleshooting` 중 하나를 사용합니다.
+
    - 독자가 실제로 바뀐 점을 이해하거나 적용할 수 있는가
    - 공식 발표·문서·데이터로 핵심 사실을 교차 확인할 수 있는가
    - 원리, 비교, 설정법, 영향, 한계를 한 흐름으로 깊게 설명할 수 있는가
    - 표·차트·타임라인·비교·동작 흐름 중 주제에 맞는 설명 시각물이 가능한가
    - 같은 URL은 최근 60일, `primary_query`·핵심 질문·주제는 최근 365일과 겹치지 않는가
 
-   원문은 예약 시각 기준 30일 이내에서 선택합니다. 최신성은 동점자를 가르는 조건일 뿐입니다. 순수 릴리스 노트·가격·기능 발표는 시간이 지나도 남을 문제·원리·비교·사례와 연결되지 않으면 탈락시킵니다. 소식은 글을 여는 단서로만 쓰고, 본문의 80% 이상은 나중에도 쓸 설명·예시·트레이드오프로 구성합니다. 후보 하나를 요약해 재작성하지 말고, 검색자가 반복해서 묻는 질문 하나를 정한 뒤 공식·1차 자료와 독립 자료를 더 찾아 답합니다. 30일을 넘긴 자료는 배경 근거로만 사용할 수 있고 주제 선정의 최신 단서로 계산하지 않습니다.
+   후보함에서는 예약 시각 기준 30일 이내 자료를 검토할 수 있지만, 최종 글의 핵심 단서는 최근 7일 안에 확인된 공식 발표·변경 기록·문서에서 선택합니다. 최신성은 동점자를 가르는 조건이며 같은 품질의 후보 사이에서만 우선순위에 반영합니다. 순수 릴리스 노트·가격·기능 발표는 시간이 지나도 남을 문제·원리·비교·사례와 연결되지 않으면 탈락시킵니다. 소식은 글을 여는 단서로만 쓰고, 본문의 80% 이상은 나중에도 쓸 설명·예시·트레이드오프로 구성합니다. 후보 하나를 요약해 재작성하지 말고, 검색자가 반복해서 묻는 질문 하나를 정한 뒤 공식·1차 자료와 독립 자료를 더 찾아 답합니다. 30일을 넘긴 자료는 배경 근거로만 사용할 수 있고 주제 선정의 최신 단서로 계산하지 않습니다.
 
    최종 주제는 `실전 개발 문제 해결`, `AI·업무자동화 활용`, `실제 프로젝트에서 다시 쓰일 기술` 중 하나와 연결돼야 합니다. 블로그의 기존 축과 이어지지 않는 화제성 기사, 원문을 요약하는 것 외에 새 가치가 없는 기사는 점수가 높아도 선택하지 않습니다. 관련 글은 같은 축의 오래가는 기준 글 1개와 직접 실행한 실험·프로젝트 글 1개를 우선합니다. 둘 중 어느 한 쪽도 자연스럽게 이어지지 않으면 역할을 억지로 채우지 말고 주제상 가장 가까운 공개 글만 선택합니다.
 
-   후보끼리 비교할 때는 `검색 지속성 35 · 실제 문제 해결성 30 · 근거의 신뢰성 20 · 현재 관심도 10 · 기존 글 연결성 5`의 100점 편집 점수를 사용합니다. 총점 75점 이상이면서 `반복 검색 질문`, `공식 근거`, `원문에 없던 기여`, `기존 글 비중복`을 모두 충족한 후보만 집필합니다. 점수가 높아도 필수 조건 하나가 빠지면 탈락입니다. 이 점수는 수집기의 `lead_score`를 보완하며, 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 최종 기준입니다. 수집기는 독자 관련성 기준을 낮춰 추천 수를 채우지 않으며, 추천 5건도 같은 `topic_family`를 한 건만 포함합니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 새 문제를 찾고, 찾지 못하면 `NO_PUBLISH_QUALITY`로 종료합니다.
+   후보끼리 비교할 때는 `검색 지속성 35 · 실제 문제 해결성 30 · 근거의 신뢰성 20 · 현재 관심도 10 · 기존 글 연결성 5`의 100점 편집 점수를 사용합니다. 월요일은 지속성·문제 해결성·재사용 산출물을 먼저 보고, 수요일은 최신 변화·독자 영향·행동 가능성을 먼저 보되 장기 질문과 연결되지 않는 발표 요약은 제외합니다. 총점 75점 이상이면서 `반복 검색 질문`, `공식 근거`, `원문에 없던 기여`, `기존 글 비중복`을 모두 충족한 후보만 집필합니다. 점수가 높아도 필수 조건 하나가 빠지면 탈락입니다. 이 점수는 수집기의 `lead_score`와 요일별 `weekly_lane_score`를 보완하며, 오래 검색되고 실제로 써먹을 수 있는 주제를 고르는 최종 기준입니다. 수집기는 독자 관련성 기준을 낮춰 추천 수를 채우지 않으며, 추천 5건도 같은 `topic_family`를 한 건만 포함합니다. 기준을 만족한 후보가 모두 중복이면 직접 조사로 새 문제를 찾고, 찾지 못하면 `NO_PUBLISH_QUALITY`로 종료합니다.
 
    같은 canonical URL은 제외합니다. 제목이 거의 같거나 결론이 같은 사건도 제외합니다. 후속 보도는 이전 글 이후 달라진 사실이 제목과 본문에 분명할 때만 선택합니다.
 
@@ -165,6 +170,7 @@
 - 제목은 `핵심 검색어 + 구체적으로 달라진 대상·상황·결과`로 만듭니다. 핵심 검색어는 한 번만 쓰고 앞 20자 안에 자연스럽게 배치합니다. 제목에서 `독자에게 미치는 영향`, `우리에게 중요한 이유`처럼 글의 효용을 설명하지 말고 실제 제품·기능·문제·결과를 직접 말합니다. 보통 35~60자 안에서 모바일 2~3줄을 목표로 하며 `충격`, `역대급`, `무조건 봐야` 같은 클릭베이트와 검색어 나열은 금지합니다.
 - 태그 5~8개는 `핵심 제품·기술`, `독자가 겪는 문제`, `세부 기능·설정`, `사용 상황`을 섞습니다. `AI`, `IT`, `뉴스`, `정보`처럼 내용과 연결되지 않는 넓은 단어로 칸을 채우지 않습니다. 최소 2개는 `primary_query`의 실제 검색어와 직접 연결합니다.
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
+- `editorial.reader_hook`에는 독자가 마주친 구체적 `scene`, 방치했을 때의 `stakes`, 끝까지 읽고 얻는 `payoff`, 다음 문단을 여는 `open_question`을 각각 20~180자로 기록합니다. 네 값 중 최소 두 값의 핵심 단어가 실제 도입에 나타나야 하며, 내부 필드명을 본문에 노출하거나 클릭베이트 문장으로 바꾸지 않습니다.
 - 기본 글은 약 8~12분 분량으로 씁니다. 다만 `change_impact`처럼 답이 짧고 분명한 변경 대응 글은 6~10분으로 끝내며 분량을 채우려고 배경 설명을 늘리지 않습니다. 소제목 5~7개를 사용합니다.
 - 모바일에서 한 문단이 벽처럼 보이지 않도록 도입은 320자, 본문 문단은 220자를 넘기지 않습니다. 한 문단에는 한 생각만 두고 긴 조건은 표나 목록으로 나눕니다.
 - 핵심 흐름은 `독자가 마주칠 문제 장면 → 왜 생기는지 → 작동 원리 → 실제 예시 → 선택과 트레이드오프 → 남는 기준`입니다. 주제에 맞게 순서를 바꾸되 단순 발표 요약으로 시작해 영향 정리로 끝내지 않습니다.
@@ -208,11 +214,11 @@
 
 당일 파일은 `schema_version: 3`, `format: lead-story-v1`을 사용합니다.
 
-- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: IT 트렌드 해설`, `category: IT 트렌드 해설`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다. 티스토리의 `실전 IT`는 큰 묶음이므로 글을 직접 넣지 않고 `IT 트렌드 해설` 하위 카테고리를 선택합니다.
+- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|수`, `content_type: daily_news`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다. 월요일은 `content_label: 개발 가이드`, `category: 개발 가이드`, `editorial.weekly_lane: evergreen_problem`이고, 수요일은 `content_label: IT 트렌드 해설`, `category: IT 트렌드 해설`, `editorial.weekly_lane: change_explainer`입니다. 티스토리의 `실전 IT`는 큰 묶음이므로 글을 직접 넣지 않고 해당 하위 카테고리를 선택합니다.
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `revisit`, `search_intent`, `original_value`. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `weekly_lane`, `reader_hook`, `revisit`, `search_intent`, `original_value`. `reader_hook`에는 `scene`, `stakes`, `payoff`, `open_question`을 기록합니다. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason`, 연결 역할 `role`을 기록합니다. 역할은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다.

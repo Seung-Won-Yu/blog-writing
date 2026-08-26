@@ -21,10 +21,12 @@ from zoneinfo import ZoneInfo
 from .news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
+    editorial_lane_for_day,
     make_candidate,
     match_keyword_groups,
     score_candidate,
     score_lead_candidate,
+    score_weekly_lane_candidate,
     select_lead_shortlist,
     select_candidates,
     validate_day_id,
@@ -572,6 +574,7 @@ def build_inbox(
         now = now.replace(tzinfo=dt.timezone.utc)
     now = now.astimezone(dt.timezone.utc)
     day_id = day_id or now.date().isoformat()
+    editorial_lane = editorial_lane_for_day(day_id)
 
     candidates = []
     errors = []
@@ -651,9 +654,10 @@ def build_inbox(
             search_opportunities=search_opportunities,
         )
         score_lead_candidate(candidate)
+        score_weekly_lane_candidate(candidate, editorial_lane)
     candidates.sort(
         key=lambda item: (
-            item.get("lead_score", 0),
+            item.get("weekly_lane_score", item.get("lead_score", 0)),
             item.get("lead_score_breakdown", {}).get("evergreen_fit", 0),
             item.get("lead_score_breakdown", {}).get("lasting_value", 0),
             item.get("lead_score_breakdown", {}).get("freshness", 0),
@@ -716,6 +720,7 @@ def build_inbox(
         else:
             eligible_candidates.append(candidate)
     selection = dict(config.get("selection", {}))
+    selection["editorial_lane"] = editorial_lane
     selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
     selection["recent_url_excluded"] = recent_url_excluded
     selection["recent_publisher_excluded"] = recent_publisher_excluded
@@ -935,6 +940,13 @@ def _candidate_card(item, featured=False):
         else {}
     )
     durable_score = escape(str(item.get("durable_problem_score", 0)))
+    lane_labels = {
+        "evergreen_problem": "월요일 지속형",
+        "change_explainer": "수요일 변화형",
+        "research_radar": "탐색형",
+    }
+    lane_label = escape(lane_labels.get(item.get("weekly_lane"), ""))
+    lane_score = escape(str(item.get("weekly_lane_score", 0)))
     angle_text = " · ".join(
         escape(str(value))
         for value in (
@@ -957,7 +969,8 @@ def _candidate_card(item, featured=False):
         else ""
     )
     angle_html = (
-        '<p class="angle">오래가는 문제 {durable_score}점 · {angle_text}{search_note}</p>'.format(
+        '<p class="angle">{lane_note}오래가는 문제 {durable_score}점 · {angle_text}{search_note}</p>'.format(
+            lane_note=(f"{lane_label} 적합도 {lane_score}점 · " if lane_label else ""),
             durable_score=durable_score,
             angle_text=angle_text,
             search_note=(" · " + escape(search_note)) if search_note else "",
@@ -1029,13 +1042,29 @@ def render_inbox_html(inbox):
 
     day = escape(str(inbox.get("day", "")))
     generated_at = escape(str(inbox.get("generated_at", "")))
+    selection = inbox.get("selection") if isinstance(inbox.get("selection"), dict) else {}
+    lane = str(selection.get("editorial_lane") or "research_radar")
+    lane_heading = escape(
+        {
+            "evergreen_problem": "월요일 문제 해결 후보함",
+            "change_explainer": "수요일 변화 해설 후보함",
+            "research_radar": "실전 IT 아티클 후보함",
+        }.get(lane, "실전 IT 아티클 후보함")
+    )
+    lane_intro = escape(
+        {
+            "evergreen_problem": "반복 검색되는 문제, 실패 조건, 다시 쓸 판단 기준이 분명한 후보를 먼저 보여 줍니다.",
+            "change_explainer": "최근 변화가 기존 흐름에서 바꾸는 조건과 독자가 지금 확인할 행동이 분명한 후보를 먼저 보여 줍니다.",
+            "research_radar": "새 소식보다 오래 남는 문제·사례·선택 기준을 우선했습니다.",
+        }.get(lane, "새 소식보다 오래 남는 문제·사례·선택 기준을 우선했습니다.")
+    )
     return """<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>{day} 실전 IT 아티클 후보함</title>
+  <title>{day} {lane_heading}</title>
   <style>
     :root {{ color-scheme: light; --ink:#1f2933; --muted:#65717d; --line:#dfe4e8; --paper:#fff; --wash:#f5f6f4; --accent:#28684a; }}
     * {{ box-sizing:border-box; }}
@@ -1065,8 +1094,8 @@ def render_inbox_html(inbox):
 <main>
   <header>
     <p class="generated">{day} · 생성 {generated_at}</p>
-    <h1>실전 IT 아티클 후보함</h1>
-    <p class="intro">새 소식보다 오래 남는 문제·사례·선택 기준을 우선했습니다. 원문과 추가 근거를 확인한 뒤 내 경험과 판단을 더해 글감으로 사용하세요.</p>
+    <h1>{lane_heading}</h1>
+    <p class="intro">{lane_intro} 원문과 추가 근거를 확인한 뒤 내 경험과 판단을 더해 글감으로 사용하세요.</p>
   </header>
   <section>
     <h2>오늘의 추천 {selected_count}건</h2>
@@ -1092,6 +1121,8 @@ def render_inbox_html(inbox):
 """.format(
         day=day,
         generated_at=generated_at,
+        lane_heading=lane_heading,
+        lane_intro=lane_intro,
         selected_count=len(selected),
         selected_html=selected_html,
         problem_signal_count=len(problem_signals),

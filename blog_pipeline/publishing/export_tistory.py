@@ -795,17 +795,18 @@ def render_post(day_id, day):
             section_heading = "프로젝트 제작기"
             analysis_label = "개발 기록"
         else:
-            section_heading = (
-                "" if identity.content_label == "IT 트렌드 해설" else "오늘의 핵심뉴스"
-            )
-            analysis_label = (
-                "핵심 해설"
-                if identity.content_label == "IT 트렌드 해설"
-                else "심층 분석"
-            )
+            current_label = identity.content_label in {
+                "IT 트렌드 해설",
+                "개발 가이드",
+            }
+            section_heading = "" if current_label else "오늘의 핵심뉴스"
+            analysis_label = {
+                "IT 트렌드 해설": "핵심 해설",
+                "개발 가이드": "실전 가이드",
+            }.get(identity.content_label, "심층 분석")
         kicker_html = (
             ""
-            if identity.content_label == "IT 트렌드 해설"
+            if identity.content_label in {"IT 트렌드 해설", "개발 가이드"}
             else f'    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>\n'
         )
         section_heading_html = (

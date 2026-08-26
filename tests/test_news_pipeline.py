@@ -4,9 +4,11 @@ import unittest
 from blog_pipeline.collection.news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
+    editorial_lane_for_day,
     make_candidate,
     score_candidate,
     score_lead_candidate,
+    score_weekly_lane_candidate,
     select_lead_shortlist,
     select_candidates,
     validate_day_id,
@@ -42,6 +44,57 @@ class CanonicalUrlTests(unittest.TestCase):
         )
 
         self.assertEqual(value, "https://example.com/news/item?id=7")
+
+
+class WeeklyEditorialLaneTests(unittest.TestCase):
+    def test_resolves_monday_wednesday_and_radar_days(self):
+        self.assertEqual(editorial_lane_for_day("2026-08-31"), "evergreen_problem")
+        self.assertEqual(editorial_lane_for_day("2026-09-02"), "change_explainer")
+        self.assertEqual(editorial_lane_for_day("2026-09-01"), "research_radar")
+
+    def test_weekly_scores_prefer_durability_on_monday_and_change_on_wednesday(self):
+        durable = {
+            "lead_score": 30,
+            "lead_score_breakdown": {
+                "reader_relevance": 2,
+                "actionability": 3,
+                "evidence": 4,
+                "lasting_value": 7,
+                "evergreen_fit": 8,
+                "durable_problem": 8,
+                "known_search_demand": 0,
+                "freshness": 0,
+                "shallow_penalty": 0,
+                "cannibalization_penalty": 0,
+                "announcement_penalty": 0,
+            },
+            "announcement_matches": [],
+        }
+        current_change = {
+            "lead_score": 30,
+            "lead_score_breakdown": {
+                "reader_relevance": 5,
+                "actionability": 4,
+                "evidence": 5,
+                "lasting_value": 2,
+                "evergreen_fit": 3,
+                "durable_problem": 3,
+                "known_search_demand": 2,
+                "freshness": 3,
+                "shallow_penalty": 0,
+                "cannibalization_penalty": 0,
+                "announcement_penalty": -1,
+            },
+            "announcement_matches": ["update"],
+        }
+
+        monday_durable = score_weekly_lane_candidate(dict(durable), "evergreen_problem")
+        monday_change = score_weekly_lane_candidate(dict(current_change), "evergreen_problem")
+        wednesday_durable = score_weekly_lane_candidate(dict(durable), "change_explainer")
+        wednesday_change = score_weekly_lane_candidate(dict(current_change), "change_explainer")
+
+        self.assertGreater(monday_durable["weekly_lane_score"], monday_change["weekly_lane_score"])
+        self.assertGreater(wednesday_change["weekly_lane_score"], wednesday_durable["weekly_lane_score"])
 
     def test_rejects_non_web_and_hostless_urls(self):
         for unsafe in (

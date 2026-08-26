@@ -111,8 +111,8 @@ class WorkflowConfigTests(unittest.TestCase):
     def test_collection_workflow_only_collects_ranked_candidates(self):
         workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
-        self.assertIn("name: Collect daily news", workflow)
-        self.assertIn("cron: '17 22 * * *'", workflow)
+        self.assertIn("name: Collect Monday Wednesday news candidates", workflow)
+        self.assertIn("cron: '17 22 * * 0,2'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news --today", workflow
@@ -204,7 +204,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`docs/inbox/latest.json`", contract)
         self.assertIn("`problem_signals`", contract)
         self.assertIn("`unknown_publication_date: true`", contract)
-        self.assertIn("당일 날짜와 다르면", contract)
+        self.assertIn("당일 날짜와 다르거나 `selection.editorial_lane`", contract)
         self.assertNotIn("`docs/inbox/YYYY-MM-DD.json`", contract)
         self.assertIn("최근 60일", contract)
         self.assertIn("최근 365일", contract)
@@ -250,6 +250,13 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`NO_PUBLISH_QUALITY`", contract)
         self.assertIn("75점", contract)
         self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
+        self.assertIn("월요일 `evergreen_problem`", contract)
+        self.assertIn("수요일 `change_explainer`", contract)
+        self.assertIn("`selection.editorial_lane`", contract)
+        self.assertIn("`weekly_lane_score`", contract)
+        self.assertIn("`editorial.reader_hook`", contract)
+        for field in ("`scene`", "`stakes`", "`payoff`", "`open_question`"):
+            self.assertIn(field, contract)
 
     def test_saturday_contract_stages_and_checks_the_complete_publish_bundle(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
@@ -272,6 +279,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`NO_PUBLISH_QUALITY`", contract)
         self.assertIn("75점", contract)
         self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
+        self.assertIn("`executed_experiment`", contract)
+        self.assertIn("`editorial.reader_hook`", contract)
 
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
         contract = GUIDE_CONTRACT.read_text(encoding="utf-8")

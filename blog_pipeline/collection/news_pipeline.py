@@ -89,6 +89,15 @@ def validate_day_id(value):
     return text
 
 
+def editorial_lane_for_day(day_id):
+    """Return the reader promise used to rank a recurring collection day."""
+    publish_day = dt.date.fromisoformat(validate_day_id(day_id))
+    return {
+        0: "evergreen_problem",
+        2: "change_explainer",
+    }.get(publish_day.weekday(), "research_radar")
+
+
 def canonicalize_url(url):
     value = str(url or "").strip()
     if not value:
@@ -631,6 +640,49 @@ def score_lead_candidate(candidate):
     return candidate
 
 
+def score_weekly_lane_candidate(candidate, lane):
+    """Rerank one useful candidate for Monday or Wednesday's distinct job."""
+    breakdown = candidate.get("lead_score_breakdown") or {}
+
+    def metric(name):
+        return int(breakdown.get(name, 0))
+
+    penalties = (
+        metric("cannibalization_penalty")
+        + metric("shallow_penalty")
+        + metric("announcement_penalty")
+    )
+    if lane == "evergreen_problem":
+        components = {
+            "durable_problem": metric("durable_problem") * 3,
+            "evergreen_fit": metric("evergreen_fit") * 2,
+            "lasting_value": metric("lasting_value"),
+            "actionability": metric("actionability"),
+            "evidence": metric("evidence"),
+            "known_search_demand": metric("known_search_demand"),
+            "penalties": penalties,
+        }
+    elif lane == "change_explainer":
+        components = {
+            "freshness": metric("freshness") * 3,
+            "reader_relevance": metric("reader_relevance") * 2,
+            "actionability": metric("actionability"),
+            "evidence": metric("evidence"),
+            "known_search_demand": metric("known_search_demand") * 2,
+            "durable_problem": metric("durable_problem"),
+            "lasting_value": min(3, metric("lasting_value")),
+            "change_signal": 4 if candidate.get("announcement_matches") else 0,
+            "penalties": penalties,
+        }
+    else:
+        components = {"general_value": int(candidate.get("lead_score", 0))}
+
+    candidate["weekly_lane"] = lane
+    candidate["weekly_lane_score_breakdown"] = components
+    candidate["weekly_lane_score"] = sum(components.values())
+    return candidate
+
+
 def select_lead_shortlist(
     candidates,
     max_items=5,
@@ -643,7 +695,7 @@ def select_lead_shortlist(
     ranked = sorted(
         candidates,
         key=lambda item: (
-            int(item.get("lead_score", 0))
+            int(item.get("weekly_lane_score", item.get("lead_score", 0)))
             - (
                 int(research_selection_penalty)
                 if item.get("group") == "research"
@@ -679,8 +731,10 @@ def select_lead_shortlist(
             break
     for rank, item in enumerate(selected, 1):
         item["lead_rank"] = rank
-        item["selection_reason"] = "실전 아티클 후보 {} · 점수 {}".format(
-            rank, item.get("lead_score", 0)
+        item["selection_reason"] = "{} 후보 {} · 주간 점수 {}".format(
+            item.get("weekly_lane") or "실전 아티클",
+            rank,
+            item.get("weekly_lane_score", item.get("lead_score", 0)),
         )
     return selected
 

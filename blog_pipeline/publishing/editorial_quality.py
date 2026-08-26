@@ -12,7 +12,10 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from .draft_identity import (
     EVERGREEN_DAILY_START,
+    FRIDAY_AUTOMATION_SCHEDULE_START,
+    WEEKLY_EDITORIAL_LANES_START,
     category_for_identity,
+    editorial_lane_for_identity,
     is_regular_automation_day,
     regular_schedule_for_identity,
 )
@@ -32,6 +35,7 @@ SEARCH_CONVERSION_POLICY_START = date(2026, 8, 11)
 ORIGINAL_VALUE_POLICY_START = date(2026, 8, 26)
 VISUAL_TREND_POLICY_START = date(2026, 8, 26)
 MOBILE_READABILITY_POLICY_START = date(2026, 8, 26)
+READER_HOOK_POLICY_START = date(2026, 8, 28)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -1030,6 +1034,83 @@ def _original_value_reasons(source, identity):
     return ["quality_original_value"] if invalid else []
 
 
+def _weekly_lane_reasons(source, identity):
+    """Keep Monday, Wednesday, and Friday from becoming the same generic post."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    expected = editorial_lane_for_identity(identity)
+    policy_applies = (
+        identity.content_type == "daily_news"
+        and publish_day >= WEEKLY_EDITORIAL_LANES_START
+    ) or (
+        identity.content_type == "automation_case"
+        and publish_day >= FRIDAY_AUTOMATION_SCHEDULE_START
+    )
+    if not policy_applies:
+        return []
+
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    article_shape = plain(editorial.get("article_shape"))
+    invalid = not expected or plain(editorial.get("weekly_lane")) != expected
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    reusable = [
+        block
+        for block in content
+        if isinstance(block, dict) and block.get("reusable") is True
+    ]
+    if expected == "evergreen_problem":
+        invalid |= article_shape == "change_impact" or len(reusable) != 1
+    elif expected == "change_explainer":
+        invalid |= article_shape not in {
+            "change_impact",
+            "incident_trace",
+            "research_interpretation",
+            "troubleshooting",
+        }
+    elif expected == "executed_experiment":
+        invalid |= article_shape not in {
+            "hands_on_test",
+            "incident_trace",
+            "troubleshooting",
+        }
+    return ["quality_weekly_lane"] if invalid else []
+
+
+def _reader_hook_reasons(source, identity):
+    """Require a concrete scene, stakes, and payoff that appear in the opening."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    active = (
+        identity.content_type == "daily_news"
+        and publish_day >= WEEKLY_EDITORIAL_LANES_START
+    ) or (
+        identity.content_type == "automation_case"
+        and publish_day >= READER_HOOK_POLICY_START
+    )
+    if not active:
+        return []
+
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    hook = editorial.get("reader_hook") if isinstance(editorial.get("reader_hook"), dict) else {}
+    fields = ("scene", "stakes", "payoff", "open_question")
+    values = [plain(hook.get(key)) for key in fields]
+    opening_terms = _search_terms(editorial.get("opening"))
+    overlap_count = sum(
+        bool(opening_terms.intersection(_search_terms(value))) for value in values
+    )
+    invalid = (
+        any(not 20 <= len(value) <= 180 for value in values)
+        or len({value.casefold() for value in values}) != len(values)
+        or overlap_count < 2
+        or any(
+            phrase in " ".join(values).casefold()
+            for phrase in CLICKBAIT_TITLE_PHRASES
+        )
+    )
+    return ["quality_reader_hook"] if invalid else []
+
+
 def _visual_trend_reasons(source, identity, *, require_image=False):
     """Keep generated covers specific, human, and useful in image search."""
     if date.fromisoformat(identity.publish_date) < VISUAL_TREND_POLICY_START:
@@ -1694,6 +1775,8 @@ def source_authoring_reasons(source, identity):
         lambda: _search_conversion_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
         lambda: _original_value_reasons(source, identity),
+        lambda: _weekly_lane_reasons(source, identity),
+        lambda: _reader_hook_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),

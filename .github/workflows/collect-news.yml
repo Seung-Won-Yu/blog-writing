@@ -1,17 +1,17 @@
-name: Collect daily news
+name: Collect Monday Wednesday news candidates
 
 on:
   schedule:
-    # 07:17 KST. Recent GitHub schedule delays reached about 49 minutes, so
-    # this leaves a 103-minute buffer before the Monday/Wednesday 09:00 editor.
-    - cron: '17 22 * * *'
+    # Monday/Wednesday 07:17 KST. Recent GitHub schedule delays reached about
+    # 49 minutes, so this leaves a 103-minute buffer before the 09:00 editor.
+    - cron: '17 22 * * 0,2'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: daily-news-collection
+  group: monday-wednesday-news-collection
   cancel-in-progress: false
 
 jobs:
@@ -44,6 +44,6 @@ jobs:
             echo "No inbox changes"
             exit 0
           fi
-          git commit -m "chore: collect daily news candidates"
+          git commit -m "chore: collect Monday Wednesday candidates"
           git pull --rebase origin main
           git push origin HEAD:main

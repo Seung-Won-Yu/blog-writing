@@ -1269,6 +1269,39 @@ class InboxTests(unittest.TestCase):
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', page)
         self.assertNotRegex(page, r"[ \t]+\n")
 
+    def test_review_inbox_explains_the_day_specific_ranking(self):
+        page = render_inbox_html(
+            {
+                "day": "2026-08-31",
+                "generated_at": "",
+                "selection": {"editorial_lane": "evergreen_problem"},
+                "selected": [
+                    {
+                        "id": "one",
+                        "title": "오래 검색되는 설정 오류 해결 방법",
+                        "url": "https://example.com/guide",
+                        "source_name": "Example",
+                        "group": "official",
+                        "score": 10,
+                        "weekly_lane": "evergreen_problem",
+                        "weekly_lane_score": 42,
+                        "durable_problem_score": 8,
+                        "editorial_angle": {
+                            "intent": "troubleshooting",
+                            "recommended_shape": "troubleshooting",
+                            "recommended_artifact": "troubleshooting_tree",
+                        },
+                    }
+                ],
+                "candidates": [],
+                "errors": [],
+            }
+        )
+
+        self.assertIn("월요일 문제 해결 후보함", page)
+        self.assertIn("월요일 지속형 적합도 42점", page)
+        self.assertIn("실패 조건, 다시 쓸 판단 기준", page)
+
     def test_builds_diverse_selection_and_records_source_errors(self):
         config = {
             "interest_keywords": ["AI", "GitHub Actions"],

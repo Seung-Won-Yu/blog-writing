@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 from blog_pipeline.publishing.draft_identity import (
     category_for_content_type,
+    editorial_lane_for_identity,
     resolve_draft_identity,
 )
 from blog_pipeline.publishing.editorial_quality import (
@@ -131,11 +132,7 @@ def valid_daily_source(day="2026-07-19"):
         "date_label": f"{publish_day.year}. {publish_day.month}. {publish_day.day}",
         "weekday": weekdays[publish_day.weekday()],
         "content_type": "daily_news",
-        "content_label": (
-            "IT 트렌드 해설"
-            if publish_day >= date(2026, 8, 25)
-            else "뉴스 심층글"
-        ),
+        "content_label": resolve_draft_identity(day).content_label,
         "category": category_for_content_type("daily_news", day),
         "scheduled_at": f"{day}T09:00:00+09:00",
         "primary_query": "일반 사용자가 확인할 최신 기능 변경과 적용 조건",
@@ -259,6 +256,23 @@ def valid_daily_source(day="2026-07-19"):
         }
         source["visual"]["cover"].update(trend)
         source["images"]["cover"].update(trend)
+    if publish_day >= date(2026, 8, 31):
+        identity = resolve_draft_identity(day)
+        lane = editorial_lane_for_identity(identity)
+        source["editorial"]["weekly_lane"] = lane
+        source["editorial"]["reader_hook"] = {
+            "scene": "설정 화면을 열었지만 새 기능의 적용 조건과 확인 위치가 서로 달라 멈춘 장면",
+            "stakes": "조건을 잘못 읽으면 기존 설정을 덮어쓰거나 실제 적용 여부를 놓칠 수 있다.",
+            "payoff": "공식 문서를 비교한 판단표로 내 환경의 적용 여부와 다음 행동을 결정한다.",
+            "open_question": "새 기능은 내 계정에서 어떤 조건으로 켜지고 어디에서 결과를 확인할까?",
+        }
+        source["editorial"]["opening"] = (
+            "설정 화면을 열었지만 새 기능의 적용 조건과 확인 위치가 서로 달라 손이 멈춘다. "
+            "기존 값을 먼저 기록하지 않으면 설정을 덮어쓰고도 실제 적용 여부를 놓칠 수 있다. "
+            "공식 문서를 비교한 판단표로 내 환경의 적용 여부와 다음 행동을 결정해 본다."
+        )
+        if lane == "change_explainer":
+            source["editorial"]["article_shape"] = "change_impact"
     return source
 
 
@@ -344,6 +358,21 @@ def valid_automation_source(day="2026-07-25"):
         ad_index,
         {"t": "p", "text": "구현에 들어가기 전 입력과 기대 결과를 한 번 더 확인한다."},
     )
+    if date.fromisoformat(day) >= date(2026, 8, 28):
+        identity = resolve_draft_identity(f"{day}-automation")
+        source["editorial"]["weekly_lane"] = editorial_lane_for_identity(identity)
+        source["editorial"]["article_shape"] = "hands_on_test"
+        source["editorial"]["reader_hook"] = {
+            "scene": "다운로드 폴더에 같은 이름의 첨부파일이 쌓여 필요한 파일을 다시 찾는 장면",
+            "stakes": "바로 이동시키면 중복 파일을 덮어쓰고 잘못 분류한 결과를 되돌리기 어렵다.",
+            "payoff": "미리보기와 실행 기록, 원상복구 절차를 함께 검증해 안전한 자동화 기준을 얻는다.",
+            "open_question": "자동 정리가 실제 파일을 잃지 않고 실패 뒤에도 되돌아올 수 있을까?",
+        }
+        source["editorial"]["opening"] = (
+            "다운로드 폴더에 같은 이름의 첨부파일이 쌓이면 필요한 파일을 다시 찾느라 시간이 든다. "
+            "바로 이동시키면 중복 파일을 덮어쓰고 잘못 분류한 결과를 되돌리기 어렵다. "
+            "미리보기와 실행 기록, 원상복구까지 직접 검증해 안전한 자동화 기준을 확인한다."
+        )
     return source
 
 
@@ -440,6 +469,34 @@ class EditorialQualityTests(unittest.TestCase):
             source_quality_reasons(
                 source, resolve_draft_identity("2026-08-26")
             ),
+        )
+
+    def test_future_monday_and_wednesday_require_distinct_weekly_lanes(self):
+        monday = valid_daily_source("2026-08-31")
+        wednesday = valid_daily_source("2026-09-02")
+
+        monday_reasons = source_quality_reasons(
+            monday, resolve_draft_identity("2026-08-31")
+        )
+        wednesday_reasons = source_quality_reasons(
+            wednesday, resolve_draft_identity("2026-09-02")
+        )
+
+        self.assertNotIn("quality_weekly_lane", monday_reasons)
+        self.assertNotIn("quality_weekly_lane", wednesday_reasons)
+        monday["editorial"]["weekly_lane"] = "change_explainer"
+        self.assertIn(
+            "quality_weekly_lane",
+            source_quality_reasons(monday, resolve_draft_identity("2026-08-31")),
+        )
+
+    def test_future_weekly_articles_require_a_hook_grounded_in_the_opening(self):
+        source = valid_daily_source("2026-08-31")
+        source["editorial"]["reader_hook"].pop("stakes")
+
+        self.assertIn(
+            "quality_reader_hook",
+            source_quality_reasons(source, resolve_draft_identity("2026-08-31")),
         )
 
     def test_trend_cover_requires_specific_treatment_and_matching_image_metadata(self):

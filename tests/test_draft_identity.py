@@ -3,6 +3,7 @@ import unittest
 from blog_pipeline.publishing.draft_identity import (
     automation_draft_id,
     category_for_content_type,
+    editorial_lane_for_identity,
     guide_draft_id,
     regular_schedule_for_identity,
     resolve_draft_identity,
@@ -153,6 +154,35 @@ class DraftIdentityTests(unittest.TestCase):
             category_for_content_type("daily_news", "not-a-date"),
             "IT 트렌드 해설",
         )
+
+    def test_new_weekly_lanes_separate_monday_and_wednesday(self):
+        monday = resolve_draft_identity("2026-08-31")
+        wednesday = resolve_draft_identity("2026-09-02")
+        friday = resolve_draft_identity("2026-09-04")
+
+        self.assertEqual(monday.content_label, "개발 가이드")
+        self.assertEqual(category_for_content_type("daily_news", monday.publish_date), "개발 가이드")
+        self.assertEqual(editorial_lane_for_identity(monday), "evergreen_problem")
+        self.assertEqual(
+            regular_schedule_for_identity(monday),
+            "2026-08-31T09:00:00+09:00",
+        )
+
+        self.assertEqual(wednesday.content_label, "IT 트렌드 해설")
+        self.assertEqual(category_for_content_type("daily_news", wednesday.publish_date), "IT 트렌드 해설")
+        self.assertEqual(editorial_lane_for_identity(wednesday), "change_explainer")
+        self.assertEqual(
+            regular_schedule_for_identity(wednesday),
+            "2026-09-02T09:00:00+09:00",
+        )
+
+        self.assertEqual(editorial_lane_for_identity(friday), "")
+        self.assertIsNone(regular_schedule_for_identity(friday))
+
+    def test_friday_automation_has_an_executed_experiment_lane(self):
+        identity = resolve_draft_identity("2026-08-28-automation")
+
+        self.assertEqual(editorial_lane_for_identity(identity), "executed_experiment")
 
 
 if __name__ == "__main__":
