@@ -1,7 +1,7 @@
 {
-  "title": "애플 로그인 이메일 인증 오류: 새 릴레이 도메인 확인 4곳",
+  "title": "애플 로그인 이메일 오류: 새 도메인 확인 4곳",
   "title_candidates": [
-    "애플 로그인 이메일 인증 오류: 새 릴레이 도메인 확인 4곳",
+    "애플 로그인 이메일 오류: 새 도메인 확인 4곳",
     "Apple 로그인 새 릴레이 도메인, 올해 후반부터 적용",
     "가입 서버의 이메일 규칙 카드에서 Sign in with Apple 주소만 새 도메인으로 갈라지는 장면: 같은 Apple…"
   ],
@@ -33,7 +33,7 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: 애플 로그인 이메일 인증 오류: 새 릴레이 도메인 확인 4곳"
+    "추천 제목: 애플 로그인 이메일 오류: 새 도메인 확인 4곳"
   ],
   "generation_provider": "codex-agent",
   "estimated_read_minutes": 7,
@@ -45,7 +45,7 @@
   "before_ad_html": "docs/tistory/2026-08-26-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-26-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-26-adfit.html",
-  "source_sha256": "f1efe988623781ee5ca9555ac1e65dc870b35513197a84db2b9cf5181dfca99a",
+  "source_sha256": "d518ce90f4867da0296c50a74da6427ac371e00ab7248186a4a33f210af2d4c0",
   "html_sha256": "c23bdfe8c4ce51e1105b38bf8e23b5bfe833f8a59c5252840b07f4ec9c3c2a97",
   "adfit_sha256": "d159ec06959beaafb9b9b359aad60a0d2a69575de7e291ede5ec4e7084dbc49d",
   "image_assets": [
