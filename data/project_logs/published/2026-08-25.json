@@ -1,18 +1,22 @@
 {
   "schema_version": 3,
   "format": "lead-story-v1",
-  "draft_id": "2026-08-28-project",
-  "publish_date": "2026-08-28",
-  "date_label": "2026. 8. 28",
-  "weekday": "금",
+  "draft_id": "2026-08-25-project",
+  "publish_date": "2026-08-25",
+  "date_label": "2026. 8. 25",
+  "weekday": "화",
   "content_type": "project_log",
   "content_label": "프로젝트 제작기",
   "category": "프로젝트·회고",
-  "scheduled_at": "2026-08-28T18:00:00+09:00",
-  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-25T12:07:36+09:00",
+  "publication_mode": "published",
   "archive_status": "published",
   "published_url": "https://won0322.tistory.com/213",
   "actual_published_at": "2026-08-25T12:07:36+09:00",
+  "published_asset_compatibility": {
+    "path_namespace": "2026-08-28-project",
+    "reason": "공개 글 213이 이 GitHub Pages 이미지 경로를 사용하므로 이미지 파일만 유지한다."
+  },
   "primary_query": "좋은 주식 고르는 법",
   "tags": [
     "좋은 주식 고르는 법",
