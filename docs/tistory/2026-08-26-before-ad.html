@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 26 (수) · 약 10분</p>
+    <p class="digest-lead">로그인 콜백은 정상인데, 가입 단계에서만 ‘허용되지 않은 이메일 형식’이 뜨는 경우가 있다. 이메일 주소를 사람이 입력한 값으로만 생각하면 원인을 찾기 어렵다. Apple이 8월 24일 공지한 변경 뒤 새 Sign in with Apple 릴레이 주소는 `private.icloud.com`으로 발급된다. 반면 iCloud+ Hide My Email 주소는 `icloud.com`에 그대로 남는다. 이 차이는 단순 문자열 치환이 아니라, 가입 검증·도메인 allowlist·메일 반송 처리에서 서로 다른 규칙을 적용해야 한다는 뜻이다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-26/Sign-in-with-Apple-도메인변경-대표.webp" alt="Sign in with Apple의 private.icloud.com 새 릴레이 주소를 허용 규칙에 추가하는 운영 장면" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">실전 IT 아티클</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실전 해설 · Apple Developer · 2026. 8. 24</p>
+    <h3>Apple, Sign in with Apple 신규 릴레이 주소를 private.icloud.com으로 변경하고 Hide My Email은 icloud.com 유지</h3>
+    <p class="digest-blurb">Apple은 새 Sign in with Apple 주소를 private.icloud.com으로 발급하고 기존 privaterelay.appleid.com 주소는 계속 전달한다고 밝혔다. iCloud+ Hide My Email 주소는 커뮤니티 피드백 뒤 icloud.com에 유지한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">가입 검증이 이메일 한 줄에서 멈추는 때</h4><p>소셜 로그인을 붙인 뒤 콜백까지는 성공했는데, 계정 생성 직전에 이메일 도메인 검증이 실패하는 일이 있다. 일반 가입자는 거의 만나지 않는 규칙이라 배포 전 테스트에서도 빠지기 쉽다. 그러나 이메일 주소는 로그인 공급자가 계정 식별과 알림 전달을 위해 넘기는 운영 데이터이기도 하다.</p><p>Apple은 8월 24일 새 Sign in with Apple 주소를 기존 `privaterelay.appleid.com` 대신 `private.icloud.com`으로 발급한다고 알렸다. 기존 주소는 계속 메일을 전달한다. 같은 공지에서 iCloud+ Hide My Email 주소는 `icloud.com`에 남는다고 분명히 했다. 따라서 ‘Apple 릴레이 주소’를 한 가지 도메인으로 가정한 코드와 운영 규칙을 나눠 봐야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-26/Apple-릴레이-도메인-비교.webp" alt="Hide My Email의 icloud.com 유지와 Sign in with Apple의 private.icloud.com 변경을 비교한 도식" width="1200" height="630" loading="lazy"><figcaption>새 발급 규칙은 두 기능에 다르게 적용된다. Hide My Email은 `icloud.com`을 유지하지만 Sign in with Apple의 신규 주소만 `private.icloud.com`을 쓴다.</figcaption></figure><h4 class="digest-subheading">두 기능은 비슷해 보여도 계정 흐름이 다르다</h4><p>Hide My Email은 iCloud+ 사용자가 웹 폼이나 뉴스레터에 실제 주소 대신 임의 주소를 만들고, 이를 자신의 받은편지함으로 전달받는 기능이다. Apple 지원 문서는 iCloud.com에서 주소를 만들고 레이블·전달 주소를 관리하는 흐름을 설명한다. 반면 Sign in with Apple은 앱이나 웹 서비스의 로그인 과정에서 사용자가 이메일 공유를 제한할 때 릴레이 주소를 서비스에 제공할 수 있는 인증 기능이다.</p><p>주소의 겉모양이 비슷하다고 동일한 식별자 정책을 적용하면 위험하다. 로그인 공급자가 보내는 `sub` 같은 안정적인 사용자 식별자와, 사용자가 선택할 수 있는 이메일 전달 주소는 역할이 다르다. 애플리케이션은 이메일을 로그인 계정의 불변 키로 쓰기보다 검증·연락 수단으로 다루고, 공급자가 제공하는 식별자는 별도로 보관하는 편이 변경에 강하다.</p><div class="digest-table-wrap" role="region" aria-label="Apple 이메일 주소를 처리하는 운영 규칙 비교" tabindex="0"><table class="digest-data-table"><caption>Apple 이메일 주소를 처리하는 운영 규칙 비교</caption><thead><tr><th scope="col">구분</th><th scope="col">새로 생성되는 주소</th><th scope="col">기존 주소</th><th scope="col">서비스가 확인할 곳</th></tr></thead><tbody><tr><td>Sign in with Apple</td><td>`private.icloud.com`</td><td>`privaterelay.appleid.com`은 전달 유지</td><td>가입 검증·allowlist·메일 라우팅</td></tr><tr><td>Hide My Email</td><td>`icloud.com` 유지</td><td>기존 `icloud.com` 주소 유지</td><td>폼 입력·전달 주소·반송 처리</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>

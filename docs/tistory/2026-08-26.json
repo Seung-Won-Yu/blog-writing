@@ -1,0 +1,82 @@
+{
+  "title": "Sign in with Apple 도메인 변경 방법: private.icloud.com 허용 전 4곳 점검",
+  "title_candidates": [
+    "Sign in with Apple 도메인 변경 방법: private.icloud.com 허용 전 4곳 점검",
+    "Apple, Sign in with Apple 신규 릴레이 주소를 private.icloud.com으로 변경하고 Hide…",
+    "가입 서버의 이메일 규칙 카드에서 Sign in with Apple 주소만 새 도메인으로 갈라지는 장면: 같은 Apple…"
+  ],
+  "category": "실전 IT 아티클",
+  "draft_id": "2026-08-26",
+  "publish_date": "2026-08-26",
+  "content_type": "daily_news",
+  "content_label": "실전 IT 아티클",
+  "publication_mode": "scheduled",
+  "scheduled_at": "2026-08-26T09:00:00+09:00",
+  "tags": [
+    "Sign in with Apple",
+    "private.icloud.com",
+    "이메일 검증",
+    "도메인 allowlist",
+    "계정 가입",
+    "iCloud+"
+  ],
+  "meta_description": "로그인 콜백은 정상인데, 가입 단계에서만 ‘허용되지 않은 이메일 형식’이 뜨는 경우가 있다. 이메일 주소를 사람이 입력한 값으로만 생각하면 원인을 찾기 어렵다. Apple이 8월 24일 공지한 변경… Apple은 새 Sign in with Apple 주소를 private.icloud.…",
+  "key_summary": [
+    "1. Apple, Sign in with Apple 신규 릴레이 주소를 private.icloud.com으로 변경하고 Hide My…",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 실전 IT 아티클로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Sign in with Apple 도메인 변경 방법: private.icloud.com 허용 전 4곳 점검"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-26.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-26.html",
+  "before_ad_html": "docs/tistory/2026-08-26-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-26-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-26-adfit.html",
+  "source_sha256": "0e6dc541f2f678fdbb105c09894aac3eaa97f2dca15bd7712c36ba8c11936d01",
+  "html_sha256": "deb4bd8ae9209e591cdf74e47f5bdda81aa542776c479412b580349cec65882b",
+  "adfit_sha256": "00853d8d2c6c1be890d229f04022abee733d4f5f23603a143c4b7cd9063c3e57",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-26/Sign-in-with-Apple-도메인변경-대표.webp",
+      "path": "docs/tistory/assets/2026-08-26/Sign-in-with-Apple-도메인변경-대표.webp",
+      "original_url": "",
+      "alt": "Sign in with Apple의 private.icloud.com 새 릴레이 주소를 허용 규칙에 추가하는 운영 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-26/Apple-릴레이-도메인-비교.webp",
+      "path": "docs/tistory/assets/2026-08-26/Apple-릴레이-도메인-비교.webp",
+      "original_url": "",
+      "alt": "Hide My Email의 icloud.com 유지와 Sign in with Apple의 private.icloud.com 변경을 비교한 도식",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-26/Apple-로그인-도메인-점검순서.webp",
+      "path": "docs/tistory/assets/2026-08-26/Apple-로그인-도메인-점검순서.webp",
+      "original_url": "",
+      "alt": "Sign in with Apple 새 도메인의 이메일 검증과 allowlist 반송 목록을 점검하는 조건부 흐름도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
