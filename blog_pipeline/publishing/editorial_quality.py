@@ -31,6 +31,7 @@ SOURCE_RECENCY_POLICY_START = date(2026, 8, 6)
 SEARCH_CONVERSION_POLICY_START = date(2026, 8, 11)
 ORIGINAL_VALUE_POLICY_START = date(2026, 8, 26)
 VISUAL_TREND_POLICY_START = date(2026, 8, 26)
+MOBILE_READABILITY_POLICY_START = date(2026, 8, 26)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
 
 PUBLISHABLE_ORIGINS = {
@@ -282,8 +283,8 @@ EDITORIAL_TREATMENTS = {
     "local_workplace",
 }
 EDITORIAL_LENGTH_RULES = {
-    "headline": (25, 70),
-    "opening": (180, 1200),
+    "headline": (25, 60),
+    "opening": (120, 600),
     "closing": (100, 1000),
     "action": (30, 500),
     "audience_problem": (40, 500),
@@ -334,6 +335,14 @@ DEPTH_POLICIES = {
         "required_block_types": {"table", "ul"},
     },
 }
+
+
+def depth_policy_for(identity, article_shape=""):
+    """Return a copy so a concise change alert is not padded into a report."""
+    policy = dict(DEPTH_POLICIES[identity.content_type])
+    if identity.content_type == "daily_news" and plain(article_shape) == "change_impact":
+        policy.update(minimum_minutes=6, maximum_minutes=12)
+    return policy
 
 
 def plain(value):
@@ -1184,9 +1193,9 @@ def _depth_reasons(source, identity):
     headings = [block for block in blocks if block.get("t") == "h"]
     visuals = [block for block in blocks if block.get("t") == "visual"]
     ad_indexes = [index for index, block in enumerate(blocks) if block.get("t") == "ad_break"]
-    policy = DEPTH_POLICIES[identity.content_type]
     editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
     article_shape = plain(editorial.get("article_shape"))
+    policy = depth_policy_for(identity, article_shape)
     minimum_visuals = policy["minimum_visuals"]
     if (
         date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START
@@ -1261,6 +1270,20 @@ def _prose_reasons(source, identity):
         )
         if unnatural:
             reasons.append("quality_natural_voice")
+
+    if date.fromisoformat(identity.publish_date) >= MOBILE_READABILITY_POLICY_START:
+        editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+        opening = plain(editorial.get("opening"))
+        news = source.get("news") if isinstance(source.get("news"), list) else []
+        item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+        content = item.get("content") if isinstance(item.get("content"), list) else []
+        paragraphs = [
+            plain(block.get("text"))
+            for block in content
+            if isinstance(block, dict) and block.get("t") == "p" and plain(block.get("text"))
+        ]
+        if len(opening) > 320 or any(len(paragraph) > 220 for paragraph in paragraphs):
+            reasons.append("quality_readability")
 
     long_segments = [
         re.sub(r"\s+", " ", value).strip().casefold()

@@ -134,24 +134,24 @@ class DraftIdentityTests(unittest.TestCase):
         current = resolve_draft_identity("2026-08-25")
 
         self.assertEqual(previous.content_label, "뉴스 심층글")
-        self.assertEqual(current.content_label, "실전 IT 아티클")
+        self.assertEqual(current.content_label, "IT 트렌드 해설")
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-24"),
             "최신 IT·개발 소식",
         )
         self.assertEqual(
             category_for_content_type("daily_news", "2026-08-25"),
-            "실전 IT 아티클",
+            "IT 트렌드 해설",
         )
 
     def test_current_category_is_used_when_publish_date_is_missing_or_invalid(self):
         self.assertEqual(
             category_for_content_type("daily_news"),
-            "실전 IT 아티클",
+            "IT 트렌드 해설",
         )
         self.assertEqual(
             category_for_content_type("daily_news", "not-a-date"),
-            "실전 IT 아티클",
+            "IT 트렌드 해설",
         )
 
 

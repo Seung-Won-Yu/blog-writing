@@ -29,7 +29,7 @@ V2_CATEGORIES = {
     "project_log": "프로젝트·회고",
 }
 CURRENT_CATEGORIES = {
-    "daily_news": "실전 IT 아티클",
+    "daily_news": "IT 트렌드 해설",
     "automation_case": "자동화·실험",
     "evergreen_guide": "개발 가이드",
     "project_log": "프로젝트·회고",
@@ -71,7 +71,7 @@ def category_for_content_type(content_type, publish_date=None):
 def content_label_for_daily(publish_date):
     """Keep historical labels stable while switching the recurring lane."""
     published = date.fromisoformat(str(publish_date).strip())
-    return "실전 IT 아티클" if published >= EVERGREEN_DAILY_START else "뉴스 심층글"
+    return "IT 트렌드 해설" if published >= EVERGREEN_DAILY_START else "뉴스 심층글"
 
 
 def category_for_identity(identity):

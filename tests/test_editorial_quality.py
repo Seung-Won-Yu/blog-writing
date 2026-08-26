@@ -8,6 +8,7 @@ from blog_pipeline.publishing.draft_identity import (
     resolve_draft_identity,
 )
 from blog_pipeline.publishing.editorial_quality import (
+    depth_policy_for,
     estimate_read_minutes,
     measurement_digest,
     source_quality_reasons,
@@ -131,7 +132,7 @@ def valid_daily_source(day="2026-07-19"):
         "weekday": weekdays[publish_day.weekday()],
         "content_type": "daily_news",
         "content_label": (
-            "실전 IT 아티클"
+            "IT 트렌드 해설"
             if publish_day >= date(2026, 8, 25)
             else "뉴스 심층글"
         ),
@@ -1206,6 +1207,42 @@ class EditorialQualityTests(unittest.TestCase):
         )
 
         self.assertNotIn("quality_depth", reasons)
+
+    def test_change_impact_uses_a_concise_depth_range(self):
+        identity = resolve_draft_identity("2026-08-26")
+
+        policy = depth_policy_for(identity, "change_impact")
+
+        self.assertEqual(policy["minimum_minutes"], 6)
+        self.assertEqual(policy["maximum_minutes"], 12)
+
+    def test_mobile_readability_rejects_wall_of_text_paragraphs(self):
+        source = valid_daily_source("2026-08-26")
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-26")
+        )
+
+        self.assertIn("quality_readability", reasons)
+
+    def test_mobile_readability_accepts_short_opening_and_paragraphs(self):
+        source = valid_daily_source("2026-08-26")
+        source["editorial"]["opening"] = (
+            "로그인은 통과했지만 가입 마지막 단계에서 이메일 검증이 멈춘다. "
+            "새 도메인을 기존 규칙과 함께 허용하면 해결할 수 있고, 배포 전 신규·기존 계정을 모두 확인한다."
+        )
+        for index, block in enumerate(source["news"][0]["content"]):
+            if block.get("t") == "p":
+                block["text"] = (
+                    f"{index + 1}번째 확인 지점은 한 문단에 한 가지 조건만 설명한다. "
+                    "모바일에서 빠르게 읽고 실제 설정과 결과를 바로 대조할 수 있다."
+                )
+
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-08-26")
+        )
+
+        self.assertNotIn("quality_readability", reasons)
 
     def test_non_numeric_generation_revision_fails_closed_without_crashing(self):
         source = valid_daily_source()

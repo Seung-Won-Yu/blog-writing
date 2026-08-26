@@ -21,10 +21,10 @@ from .draft_identity import (
 from .editorial_format import image_kinds_for_day, is_lead_story, lead_visual_kinds
 from .editorial_quality import (
     COVER_VARIETY_POLICY_START,
-    DEPTH_POLICIES,
     EDITORIAL_LENGTH_RULES,
     PUBLISH_GATE_START,
     REVISIT_VALUE_POLICY_START,
+    depth_policy_for,
     estimate_read_minutes,
     source_authoring_reasons,
     source_quality_reasons,
@@ -1194,7 +1194,7 @@ def _source_preflight_diagnostics(source, identity):
     ad_position = None
     if len(ad_indexes) == 1:
         ad_position = round(ad_indexes[0] / max(1, len(blocks) - 1), 3)
-    policy = DEPTH_POLICIES[identity.content_type]
+    policy = depth_policy_for(identity, editorial.get("article_shape"))
     depth = {
         "estimated_minutes": estimate_read_minutes(source),
         "blocks": len(blocks),

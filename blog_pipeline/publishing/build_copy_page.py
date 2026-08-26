@@ -220,7 +220,7 @@ def render_preview_page(draft, fragment):
             <div class="inner">
               <span class="category">{esc(draft.get("category") or "본문 미리보기")}</span>
               <h1>{esc(draft.get("title"))}</h1>
-              <span class="meta"><span class="date">{esc(draft.get("publish_date"))} · {esc(draft.get("content_label"))}</span></span>
+              <span class="meta"><span class="date">{esc(draft.get("publish_date"))}{'' if draft.get("content_label") == 'IT 트렌드 해설' else ' · ' + esc(draft.get("content_label"))}</span></span>
             </div>
           </div>
           <div class="entry-content" id="article-view">

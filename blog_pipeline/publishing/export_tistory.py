@@ -66,6 +66,18 @@ def esc(value):
     return html.escape(html.unescape(str(value or "")), quote=True)
 
 
+def inline_markup(value):
+    """Render only backtick-delimited inline code after escaping every segment."""
+    source = html.unescape(str(value or ""))
+    parts = re.split(r"(`[^`\n]+`)", source)
+    return "".join(
+        f"<code>{esc(part[1:-1])}</code>"
+        if len(part) >= 2 and part.startswith("`") and part.endswith("`")
+        else esc(part)
+        for part in parts
+    )
+
+
 def plain(value):
     return " ".join(str(value or "").split())
 
@@ -220,11 +232,11 @@ def render_content_blocks(blocks, images=None):
             if not headers or not table_rows:
                 continue
             caption = plain(block.get("caption"))
-            head_html = "".join(f'<th scope="col">{esc(value)}</th>' for value in headers)
+            head_html = "".join(f'<th scope="col">{inline_markup(value)}</th>' for value in headers)
             body_html = "".join(
                 "<tr>"
                 + "".join(
-                    f"<td>{esc(value)}</td>" for value in row
+                    f"<td>{inline_markup(value)}</td>" for value in row
                 )
                 + "</tr>"
                 for row in table_rows
@@ -242,7 +254,7 @@ def render_content_blocks(blocks, images=None):
             continue
         if block_type in {"ul", "list"}:
             items = block.get("items") if isinstance(block.get("items"), list) else []
-            item_html = "".join(f"<li>{esc(item)}</li>" for item in items if plain(item))
+            item_html = "".join(f"<li>{inline_markup(item)}</li>" for item in items if plain(item))
             if item_html:
                 rows.append(f'<ul class="digest-bullet-list">{item_html}</ul>')
             continue
@@ -260,11 +272,11 @@ def render_content_blocks(blocks, images=None):
         if not text:
             continue
         if block_type == "h":
-            rows.append(f'<h4 class="digest-subheading">{esc(text)}</h4>')
+            rows.append(f'<h4 class="digest-subheading">{inline_markup(text)}</h4>')
         elif block_type == "quote":
-            rows.append(f'<blockquote class="digest-evidence-quote">{esc(text)}</blockquote>')
+            rows.append(f'<blockquote class="digest-evidence-quote">{inline_markup(text)}</blockquote>')
         else:
-            rows.append(f'<p>{esc(text)}</p>')
+            rows.append(f'<p>{inline_markup(text)}</p>')
     if not rows:
         return ""
     return '<div class="digest-full-content">' + "".join(rows) + "</div>"
@@ -531,7 +543,7 @@ def build_content_visual(asset, caption=""):
     height = int(asset.get("height") or 630)
     caption_text = plain(caption)
     caption_html = (
-        f'<figcaption>{esc(caption_text)}</figcaption>' if caption_text else ""
+        f'<figcaption>{inline_markup(caption_text)}</figcaption>' if caption_text else ""
     )
     return (
         '<figure class="digest-content-figure">'
@@ -610,7 +622,7 @@ def build_lead_news_section(item, images, analysis_label="심층 분석"):
     published = source_date_label(item.get("published_at"))
     source_meta = " · ".join(value for value in (source, published) if value)
     blurb = plain(item.get("blurb_kr"))
-    summary_html = f'<p class="digest-blurb">{esc(blurb)}</p>' if blurb else ""
+    summary_html = f'<p class="digest-blurb">{inline_markup(blurb)}</p>' if blurb else ""
     before_content = render_content_blocks(before_blocks, images)
     after_content = render_content_blocks(after_blocks, images)
     references = build_reference_section(item.get("references"))
@@ -661,7 +673,7 @@ def build_news_section(news, flow_image=None, story_images=None):
                 else ""
             )
         summary_html = (
-            f'<p class="digest-blurb">{esc(blurb)}</p>'
+            f'<p class="digest-blurb">{inline_markup(blurb)}</p>'
             if blurb
             else ""
         )
@@ -756,7 +768,7 @@ def build_closing_section(editorial):
     closing_copy = " ".join(value for value in (closing, action) if value)
     return f"""
 <section class="digest-closing">
-  <p class="digest-closing-copy">{esc(closing_copy)}</p>
+  <p class="digest-closing-copy">{inline_markup(closing_copy)}</p>
 </section>""".strip()
 
 
@@ -784,25 +796,31 @@ def render_post(day_id, day):
             analysis_label = "개발 기록"
         else:
             section_heading = (
-                "실전 IT 아티클"
-                if identity.content_label == "실전 IT 아티클"
-                else "오늘의 핵심뉴스"
+                "" if identity.content_label == "IT 트렌드 해설" else "오늘의 핵심뉴스"
             )
             analysis_label = (
-                "실전 해설"
-                if identity.content_label == "실전 IT 아티클"
+                "핵심 해설"
+                if identity.content_label == "IT 트렌드 해설"
                 else "심층 분석"
             )
+        kicker_html = (
+            ""
+            if identity.content_label == "IT 트렌드 해설"
+            else f'    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>\n'
+        )
+        section_heading_html = (
+            f'  <h2 class="digest-news-heading">{esc(section_heading)}</h2>\n'
+            if section_heading
+            else ""
+        )
         return f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
-    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
-    <p class="digest-lead">{esc(lead)}</p>
+{kicker_html}    <p class="digest-lead">{inline_markup(lead)}</p>
   </section>
 
   {build_editorial_image(images.get("cover"), "cover")}
 
-  <h2 class="digest-news-heading">{section_heading}</h2>
-  {build_lead_news_section(lead_story, images, analysis_label)}
+{section_heading_html}  {build_lead_news_section(lead_story, images, analysis_label)}
 
   {build_related_posts(day.get("related_posts"))}
 
@@ -812,7 +830,7 @@ def render_post(day_id, day):
     return f"""<article class="daily-digest-post" data-digest-version="2">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
-    <p class="digest-lead">{esc(lead)}</p>
+    <p class="digest-lead">{inline_markup(lead)}</p>
   </section>
 
   {build_editorial_image(images.get("cover"), "cover")}

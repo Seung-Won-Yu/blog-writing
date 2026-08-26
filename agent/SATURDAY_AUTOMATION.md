@@ -164,7 +164,7 @@
 }
 ```
 
-티스토리에서는 `실전 IT 아티클 > 자동화·실험`을 선택합니다.
+티스토리에서는 `실전 IT > 자동화·실험`을 선택합니다. `실전 IT`에는 글을 직접 넣지 않습니다.
 
 그 밖에 `date_label`, `weekday`, `primary_query`, `tags`, `visual`, `editorial`, `news` 정확히 1건, `related_posts` 2건 이상, `generation`, `images`를 사용합니다. `editorial.search_intent`에는 `query`, `reader_need`, `answer_format`을, `editorial.original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `related_posts`는 `config/tistory_public_posts.json`에 등록된 실제 공개 URL만 사용하고 각 항목에 `title`, `url`, 현재 실험과 연결되는 `reason`, `role`을 기록합니다. `role`은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다. `news[0].content`에는 `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`를 필요한 만큼 배치합니다. 이름은 기존 렌더러 호환을 위한 저장 필드이며 내용은 뉴스 요약이 아니라 실제 자동화 실험 전체입니다.
 

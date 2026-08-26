@@ -44,7 +44,7 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertIn("quality_editorial", result["reasons"])
         self.assertEqual(result["expected_identity"]["category"], "데일리IT뉴스")
         self.assertEqual(result["expected_identity"]["publication_mode"], "scheduled")
-        self.assertEqual(result["editorial_lengths"]["opening"]["minimum"], 180)
+        self.assertEqual(result["editorial_lengths"]["opening"]["minimum"], 120)
         self.assertLess(result["editorial_lengths"]["opening"]["actual"], 180)
         self.assertEqual(result["invalid_scene_labels"], ["visual_1"])
 

@@ -13,6 +13,7 @@ from blog_pipeline.publishing.export_tistory import (
     build_title_candidates,
     draft_files,
     estimate_read_minutes,
+    inline_markup,
     post_title,
     render_post,
     should_preserve_published_export,
@@ -420,6 +421,13 @@ class SaturdayAutomationExportTests(unittest.TestCase):
 
 
 class EditorialReadingFlowTests(unittest.TestCase):
+    def test_inline_code_is_readable_and_escaped(self):
+        rendered = inline_markup("`private.icloud.com` <script>alert(1)</script>")
+
+        self.assertIn("<code>private.icloud.com</code>", rendered)
+        self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", rendered)
+        self.assertNotIn("<script>", rendered)
+
     def test_exports_a_scheduled_wednesday_guide(self):
         guide = copy.deepcopy(LEAD_DAY)
         guide.update(
@@ -507,12 +515,14 @@ class EditorialReadingFlowTests(unittest.TestCase):
         day = copy.deepcopy(LEAD_DAY)
         day["draft_id"] = "2026-08-25"
         day["publish_date"] = "2026-08-25"
-        day["content_label"] = "실전 IT 아티클"
+        day["content_label"] = "IT 트렌드 해설"
 
         html = render_post("2026-08-25", day)
 
-        self.assertIn("실전 IT 아티클", html)
-        self.assertIn("실전 해설", html)
+        self.assertIn("핵심 해설", html)
+        self.assertNotIn("IT 트렌드 해설", html)
+        self.assertNotIn("digest-kicker", html)
+        self.assertNotIn("digest-news-heading", html)
         self.assertNotIn("오늘의 핵심뉴스", html)
 
     def test_deep_links_ignore_non_http_reference_and_related_urls(self):

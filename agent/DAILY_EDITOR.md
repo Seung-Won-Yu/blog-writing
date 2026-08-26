@@ -165,7 +165,8 @@
 - 제목은 `핵심 검색어 + 구체적으로 달라진 대상·상황·결과`로 만듭니다. 핵심 검색어는 한 번만 쓰고 앞 20자 안에 자연스럽게 배치합니다. 제목에서 `독자에게 미치는 영향`, `우리에게 중요한 이유`처럼 글의 효용을 설명하지 말고 실제 제품·기능·문제·결과를 직접 말합니다. 보통 35~60자 안에서 모바일 2~3줄을 목표로 하며 `충격`, `역대급`, `무조건 봐야` 같은 클릭베이트와 검색어 나열은 금지합니다.
 - 태그 5~8개는 `핵심 제품·기술`, `독자가 겪는 문제`, `세부 기능·설정`, `사용 상황`을 섞습니다. `AI`, `IT`, `뉴스`, `정보`처럼 내용과 연결되지 않는 넓은 단어로 칸을 채우지 않습니다. 최소 2개는 `primary_query`의 실제 검색어와 직접 연결합니다.
 - 첫 5문장 안에 구체적인 장면, 확인된 변화, 계속 읽을 이유를 둡니다.
-- 전체는 약 8~12분 분량으로, 소제목 5~7개를 사용합니다.
+- 기본 글은 약 8~12분 분량으로 씁니다. 다만 `change_impact`처럼 답이 짧고 분명한 변경 대응 글은 6~10분으로 끝내며 분량을 채우려고 배경 설명을 늘리지 않습니다. 소제목 5~7개를 사용합니다.
+- 모바일에서 한 문단이 벽처럼 보이지 않도록 도입은 320자, 본문 문단은 220자를 넘기지 않습니다. 한 문단에는 한 생각만 두고 긴 조건은 표나 목록으로 나눕니다.
 - 핵심 흐름은 `독자가 마주칠 문제 장면 → 왜 생기는지 → 작동 원리 → 실제 예시 → 선택과 트레이드오프 → 남는 기준`입니다. 주제에 맞게 순서를 바꾸되 단순 발표 요약으로 시작해 영향 정리로 끝내지 않습니다.
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 사고·유출·장애처럼 한 지점의 문제가 여러 서비스나 사용자에게 번지는 주제는 `incident_trace`를 사용해 `발생 지점 → 데이터·서비스 이동 경로 → 확인된 영향과 미확인 범위 → 지금 할 일` 순서로 추적합니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
 - 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.
@@ -207,7 +208,7 @@
 
 당일 파일은 `schema_version: 3`, `format: lead-story-v1`을 사용합니다.
 
-- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: 실전 IT 아티클`, `category: 실전 IT 아티클`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다.
+- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|화|수|목|금|토|일`, `content_type: daily_news`, `content_label: IT 트렌드 해설`, `category: IT 트렌드 해설`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다. 티스토리의 `실전 IT`는 큰 묶음이므로 글을 직접 넣지 않고 `IT 트렌드 해설` 하위 카테고리를 선택합니다.
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
@@ -219,7 +220,7 @@
 
 모든 `visual_N`은 `content`에서 실제로 한 번 이상 사용합니다. `coverage`는 `change`, `mechanism`, `comparison`, `application`, `limits`, `decision`을 모두 포함합니다. `decision`은 별도 체크리스트를 강요하는 항목이 아니라 독자가 선택하거나 확인할 기준이 본문에 자연스럽게 설명됐는지 확인하는 내부 분류입니다. 태그는 중복 없이 5~8개, 참고 자료는 3~6개로 공식 발표·문서와 독립 자료를 모두 포함합니다. `generation.provider`는 `codex-agent`, `generation.model`은 실제 사용 모델 ID, `generation.revision`은 7 이상을 기록합니다. `generation.image_provider`는 전부 생성 이미지면 `codex-imagegen`, 생성 이미지와 실제 캡처·실측 차트를 함께 쓰면 `mixed`로 기록하며 비워 두거나 결정적 대체기 이름을 넣지 않습니다. 최적화 명령이 `generation.image_policy`를 `webp-v1`으로 기록합니다. `author_note` 필드는 금지합니다.
 
-`editorial` 문자열 길이는 `headline 25~70`, `opening 180~1200`, `closing 100~1000`, `action 30~500`, `audience_problem 40~500`, `reader_takeaway 40~500`, `why_now 40~500`, `topic_key 6~100`, `reader_question 30~300`자입니다. `visual.assets[*].scene_label`은 쉼표로 합친 문자열이 아니라 비어 있지 않은 문자열 2~4개의 JSON 배열로 기록합니다.
+`editorial` 문자열 길이는 `headline 25~60`, `opening 120~600`, `closing 100~1000`, `action 30~500`, `audience_problem 40~500`, `reader_takeaway 40~500`, `why_now 40~500`, `topic_key 6~100`, `reader_question 30~300`자입니다. 실제 발행 대상의 도입은 320자 이하로 씁니다. `visual.assets[*].scene_label`은 쉼표로 합친 문자열이 아니라 비어 있지 않은 문자열 2~4개의 JSON 배열로 기록합니다.
 
 ## HTML 디자인 계약
 
