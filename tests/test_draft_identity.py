@@ -5,6 +5,7 @@ from blog_pipeline.publishing.draft_identity import (
     category_for_content_type,
     editorial_lane_for_identity,
     guide_draft_id,
+    publication_mode_for_identity,
     regular_schedule_for_identity,
     resolve_draft_identity,
 )
@@ -86,7 +87,13 @@ class DraftIdentityTests(unittest.TestCase):
             regular_schedule_for_identity(
                 resolve_draft_identity("2026-08-28-automation")
             ),
-            "2026-08-28T18:00:00+09:00",
+            "2026-08-28T09:00:00+09:00",
+        )
+        self.assertEqual(
+            publication_mode_for_identity(
+                resolve_draft_identity("2026-08-28-automation")
+            ),
+            "manual_review",
         )
         self.assertIsNone(
             regular_schedule_for_identity(
@@ -104,7 +111,13 @@ class DraftIdentityTests(unittest.TestCase):
             regular_schedule_for_identity(
                 resolve_draft_identity("2026-08-29-project")
             ),
-            "2026-08-29T18:00:00+09:00",
+            "2026-08-29T09:00:00+09:00",
+        )
+        self.assertEqual(
+            publication_mode_for_identity(
+                resolve_draft_identity("2026-08-29-project")
+            ),
+            "manual_review",
         )
         self.assertIsNone(
             regular_schedule_for_identity(

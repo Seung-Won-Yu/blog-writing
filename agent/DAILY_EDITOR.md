@@ -27,18 +27,19 @@
    - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
    - `NEW`: 아래 전체 흐름을 한 번만 수행합니다.
 
-2. `docs/inbox/latest.json`의 `day`, `selection.editorial_lane`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `weekly_lane_score`, `editorial_angle`, `search_feedback`만 읽습니다. 월요일 후보함은 `evergreen_problem`, 수요일 후보함은 `change_explainer`여야 합니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르거나 `selection.editorial_lane`이 요일 역할과 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 날짜·역할이 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 공식 발표·문서 2개와 독립 자료 1개 이상을 직접 검색해 교차 확인하거나, 충분한 자료가 없으면 초안 생성을 중단합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 추천 수가 적다는 이유만으로 로컬 수집을 반복하거나 전체 편집을 중단하지 않습니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
+2. `docs/inbox/latest.json`의 `day`, `selection.editorial_lane`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `weekly_lane_score`, `editorial_angle`, `search_feedback`만 읽습니다. 월요일 후보함은 `evergreen_problem`, 수요일 후보함은 `change_explainer`여야 합니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르거나 `selection.editorial_lane`이 요일 역할과 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 날짜·역할이 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
 
    후보 하나의 공식 근거가 부족하거나 중복이라고 해서 전체 편집을 중단하지 않습니다. 검증 가능한 주제를 찾을 때까지 다음 대체 순서를 반드시 지킵니다.
 
    1. `selected`를 날짜·중복·독자 문제 기준으로 모두 검토합니다.
    2. 모두 탈락하면 `problem_signals`와 `candidates`에서 발표 후 30일 이내, 서로 다른 발행처의 상위 후보를 최대 10건까지 검토합니다. 요즘IT·GeekNews·Hacker News·Lobsters 같은 편집·커뮤니티 글은 문제 발견 단서로, 기업 기술블로그와 공식 문서는 구현·운영 근거로 구분합니다. 제목·날짜·출처·최근 글 중복으로 먼저 좁히고, 독자의 문제·원리·판단 기준으로 풀어낼 후보만 원문을 엽니다.
-   3. 그래도 없으면 공식 제품 블로그·변경 기록·문서 최소 3곳을 직접 검색합니다.
-   4. 첫 원문이 부정확하면 같은 사건을 억지로 보강하지 말고 다음 후보로 이동합니다. 공식 근거가 충분한 후보를 찾는 즉시 아래 집필 단계로 진행합니다.
+   3. 모두 75점 미만·중복·근거 부족이면 `python3 -m blog_pipeline.collection.collect_news --today`를 같은 실행에서 딱 한 번 다시 실행하고, 새 `selected`·`problem_signals`·`candidates` 상위 10건만 다시 평가합니다. 수집 결과가 실질적으로 같아도 반복 수집하지 않습니다.
+   4. 재수집 뒤에도 없으면 Codex 웹 리서치로 공식 제품 블로그·변경 기록·표준·문서 최소 3곳과 독립 자료 1곳 이상을 직접 검색해 후보함에 없던 질문을 찾습니다.
+   5. 첫 원문이 부정확하면 같은 사건을 억지로 보강하지 말고 다음 후보로 이동합니다. 공식 근거가 충분한 후보를 찾는 즉시 아래 집필 단계로 진행합니다.
 
    후보 원문이 `Could not resolve host`, DNS 오류, 502, 503, 504로 열리지 않으면 5초 뒤 한 번만 다시 확인합니다. 두 번 실패하면 해당 후보를 `temporary_source_unavailable`로 기록하고 즉시 다음 후보로 이동합니다. 일시적 네트워크 오류가 한 후보의 탈락 이유가 될 수는 있어도 전체 후보 검토를 멈추는 이유가 되어서는 안 됩니다. 한 후보의 원문 접근에 30초 이상 머물지 않습니다.
 
-   검증 가능한 후보는 있지만 아래 75점 기준이나 필수 품질 조건을 통과한 후보가 없으면 오류가 아니라 `NO_PUBLISH_QUALITY`로 종료합니다. 실제 검토한 후보 제목과 탈락 이유, 편집 점수만 보고하고 원고·이미지·커밋·푸시를 만들지 않습니다. `BLOCKED`는 저장소 충돌·권한 문제 또는 모든 유효 후보의 원문이 일시적으로 열리지 않아 품질 판단 자체가 불가능할 때만 사용합니다. `selected` 일부만 확인했거나 `candidates`에 미검토 최신 공식 후보가 남아 있으면 중단하지 않습니다. 모든 유효 후보가 일시적 원문 접근 오류로만 남았더라도 같은 실행에서 대체 후보 검토를 끝낸 뒤 `BLOCKED`로 종료하며, 별도 예약 재실행 상태를 만들지 않습니다.
+   기존 후보 평가, 1회 재수집, Codex 직접 리서치를 모두 끝낸 뒤에도 75점 기준이나 필수 품질 조건을 통과한 질문이 없을 때만 오류가 아닌 `NO_PUBLISH_QUALITY`로 종료합니다. 실제 검토한 후보 제목과 탈락 이유, 편집 점수, 재수집·직접 리서치 범위를 보고하고 원고·이미지·커밋·푸시를 만들지 않습니다. `BLOCKED`는 저장소 충돌·권한 문제 또는 모든 유효 후보의 원문이 일시적으로 열리지 않아 품질 판단 자체가 불가능할 때만 사용합니다. `selected` 일부만 확인했거나 `candidates`에 미검토 최신 공식 후보가 남아 있으면 중단하지 않습니다. 모든 유효 후보가 일시적 원문 접근 오류로만 남았더라도 같은 실행에서 대체 후보 검토를 끝낸 뒤 `BLOCKED`로 종료하며, 별도 예약 재실행 상태를 만들지 않습니다.
 
 3. 다음 기준으로 오래 갈 실전 아티클 주제 1건을 고릅니다.
 
@@ -214,7 +215,7 @@
 
 당일 파일은 `schema_version: 3`, `format: lead-story-v1`을 사용합니다.
 
-- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|수`, `content_type: daily_news`, `publication_mode: scheduled`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다. 월요일은 `content_label: 개발 가이드`, `category: 개발 가이드`, `editorial.weekly_lane: evergreen_problem`이고, 수요일은 `content_label: IT 트렌드 해설`, `category: IT 트렌드 해설`, `editorial.weekly_lane: change_explainer`입니다. 티스토리의 `실전 IT`는 큰 묶음이므로 글을 직접 넣지 않고 해당 하위 카테고리를 선택합니다.
+- 식별 필드는 정확히 `draft_id: YYYY-MM-DD`, `publish_date: YYYY-MM-DD`, `date_label: YYYY. M. D`, `weekday: 월|수`, `content_type: daily_news`, `publication_mode: manual_review`, `scheduled_at: YYYY-MM-DDT09:00:00+09:00`으로 기록합니다. `scheduled_at`은 Codex 제작 시작 기준이며 티스토리 예약 발행 시각이 아닙니다. 월요일은 `content_label: 개발 가이드`, `category: 개발 가이드`, `editorial.weekly_lane: evergreen_problem`이고, 수요일은 `content_label: IT 트렌드 해설`, `category: IT 트렌드 해설`, `editorial.weekly_lane: change_explainer`입니다. 티스토리의 `실전 IT`는 큰 묶음이므로 글을 직접 넣지 않고 해당 하위 카테고리를 선택합니다.
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.

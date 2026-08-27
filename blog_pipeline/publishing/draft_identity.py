@@ -18,6 +18,7 @@ WEEKLY_EDITORIAL_LANES_START = date(2026, 8, 31)
 CURIOSITY_EDITORIAL_LANES_START = date(2026, 9, 1)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 FRIDAY_AUTOMATION_SCHEDULE_START = date(2026, 8, 28)
+MANUAL_REVIEW_PUBLICATION_START = date(2026, 8, 28)
 LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
     "automation_case": "업무자동화",
@@ -136,6 +137,17 @@ def is_regular_automation_day(publish_day):
     return publish_day.weekday() == 5
 
 
+def publication_mode_for_identity(identity):
+    """Return how a completed draft is handed off to the Tistory owner."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    if (
+        publish_day >= MANUAL_REVIEW_PUBLICATION_START
+        and identity.content_type in {"daily_news", "automation_case", "project_log"}
+    ):
+        return "manual_review"
+    return "scheduled"
+
+
 def regular_schedule_for_identity(identity):
     """Return the canonical KST schedule for a recurring draft, if eligible."""
     publish_day = date.fromisoformat(identity.publish_date)
@@ -152,7 +164,11 @@ def regular_schedule_for_identity(identity):
     elif identity.content_type == "automation_case":
         if not is_regular_automation_day(publish_day):
             return None
-        hour = "18:00:00"
+        hour = (
+            "09:00:00"
+            if publish_day >= MANUAL_REVIEW_PUBLICATION_START
+            else "18:00:00"
+        )
     elif identity.content_type == "evergreen_guide":
         if (
             publish_day < WEEKLY_GUIDE_SCHEDULE_START
@@ -163,7 +179,11 @@ def regular_schedule_for_identity(identity):
     elif identity.content_type == "project_log":
         if publish_day.weekday() != 5:
             return None
-        hour = "18:00:00"
+        hour = (
+            "09:00:00"
+            if publish_day >= MANUAL_REVIEW_PUBLICATION_START
+            else "18:00:00"
+        )
     else:
         return None
     return f"{identity.publish_date}T{hour}+09:00"

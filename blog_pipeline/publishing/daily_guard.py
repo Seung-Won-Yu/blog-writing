@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 from blog_pipeline.collection.news_pipeline import validate_day_id
 from .draft_identity import (
     category_for_identity,
+    publication_mode_for_identity,
     regular_schedule_for_identity,
     resolve_draft_identity,
 )
@@ -1143,7 +1144,7 @@ def _source_preflight_diagnostics(source, identity):
     regular_schedule = regular_schedule_for_identity(identity)
     is_manual_extra = source.get("publication_mode") == "manual_extra"
     publication_mode = (
-        "manual_extra" if is_manual_extra or not regular_schedule else "scheduled"
+        "manual_extra" if is_manual_extra else publication_mode_for_identity(identity)
     )
     scheduled_at = (
         str(source.get("scheduled_at") or "").strip()

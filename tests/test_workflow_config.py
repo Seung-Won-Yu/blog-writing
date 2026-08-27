@@ -12,6 +12,7 @@ EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
 SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
 GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 CURIOSITY_CONTRACT = ROOT / "agent" / "CURIOSITY_EDITOR.md"
+PROJECT_CONTRACT = ROOT / "agent" / "PROJECT_SERIES.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -241,7 +242,9 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("문제 장면 → 왜 생기는지", contract)
         self.assertIn("후보 하나의 공식 근거가 부족하거나 중복이라고 해서", contract)
         self.assertIn("상위 후보를 최대 10건까지 검토", contract)
-        self.assertIn("공식 제품 블로그·변경 기록·문서 최소 3곳", contract)
+        self.assertIn("공식 제품 블로그·변경 기록·표준·문서 최소 3곳", contract)
+        self.assertIn("collect_news --today`를 같은 실행에서 딱 한 번", contract)
+        self.assertIn("Codex 웹 리서치", contract)
         self.assertIn("`selected` 일부만 확인했거나", contract)
         self.assertIn("실제 검토한 후보 제목과 탈락 이유", contract)
         self.assertIn("`temporary_source_unavailable`", contract)
@@ -253,6 +256,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("직전 2일의 핵심 `topic_family`", contract)
         self.assertIn("단순 기능 추가·가격·사용법·일반 연구에는 `rotation_exception`을 쓰지 않습니다", contract)
         self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("`publication_mode: manual_review`", contract)
         self.assertIn("75점", contract)
         self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
         self.assertIn("월요일 `evergreen_problem`", contract)
@@ -282,6 +286,8 @@ class WorkflowConfigTests(unittest.TestCase):
             contract,
         )
         self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("collect_automation --today`를 같은 실행에서 딱 한 번", contract)
+        self.assertIn("Codex 웹 리서치", contract)
         self.assertIn("75점", contract)
         self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
         self.assertIn("`executed_experiment`", contract)
@@ -320,11 +326,23 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("오래된 표준과 원 논문", contract)
         self.assertIn("`NO_PUBLISH_EVIDENCE`", contract)
         self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("후보를 최대 10건까지 한 번 더 탐색", contract)
+        self.assertIn("`publication_mode`: `manual_review`", contract)
         self.assertIn("data/days/YYYY-MM-DD.json", contract)
         self.assertIn("daily_guard --today --source-only --window-days 365", contract)
         self.assertIn("publish_bundle --today --stage", contract)
         self.assertIn("publish_bundle --today --check", contract)
         self.assertIn("티스토리에는 자동 발행하지 않습니다", contract)
+
+    def test_project_contract_runs_at_nine_and_expands_evidence_before_hold(self):
+        contract = PROJECT_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("매주 토요일 09:00 KST", contract)
+        self.assertIn("`publication_mode`은 `manual_review`", contract)
+        self.assertIn("한 번 더 탐색", contract)
+        self.assertIn("Codex 웹 리서치", contract)
+        self.assertIn("그래도 핵심 구현 증거가 없을 때만", contract)
+        self.assertIn("티스토리 예약 시각이 아니다", contract)
 
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")
@@ -491,9 +509,10 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("SATURDAY_AUTOMATION.md", daily)
         self.assertNotIn("### GitHub 적용 사례형", daily)
-        self.assertIn("금요일 14:00 KST", contract)
+        self.assertIn("금요일 09:00 KST", contract)
         self.assertIn("2026-08-28부터 금요일", contract)
-        self.assertIn("18:00 예약 발행", contract)
+        self.assertIn("사용자가 최종 확인 뒤 직접", contract)
+        self.assertIn('"publication_mode": "manual_review"', contract)
         self.assertIn("직접 실행 실험기", contract)
         self.assertIn("따라하기", contract)
         self.assertIn("공개 도구 적용 사례", contract)

@@ -690,7 +690,7 @@ def render_automation_inbox_html(inbox):
   <section><h2>우선 검토할 후보 {selected_count}건</h2><div class="grid">{selected_html}</div></section>
   <section><h2>추가 후보 {remaining_count}건</h2><div class="grid">{remaining_html}</div></section>
   <section><h2>수집 상태</h2><ul class="errors">{errors}</ul></section>
-  <footer>후보함은 글이 아닙니다. 14:00 Codex 작업이 공식 문서·버전·권한을 확인하고 안전한 임시 환경에서 직접 검증한 뒤 한 건만 집필합니다.</footer>
+  <footer>후보함은 글이 아닙니다. 09:00 Codex 작업이 공식 문서·버전·권한을 확인하고 안전한 임시 환경에서 직접 검증한 뒤 한 건만 집필합니다.</footer>
 </main>
 </body>
 </html>

@@ -26,6 +26,7 @@ from urllib.parse import urlsplit
 from .draft_identity import (
     category_for_content_type,
     category_for_identity,
+    publication_mode_for_identity,
     regular_schedule_for_identity,
     resolve_draft_identity,
 )
@@ -927,7 +928,8 @@ def write_post(
                 f"automation category must be {expected_category}"
             )
         scheduled_at = plain(day.get("scheduled_at"))
-        publication_mode = plain(day.get("publication_mode")) or "scheduled"
+        expected_publication_mode = publication_mode_for_identity(identity)
+        publication_mode = plain(day.get("publication_mode")) or expected_publication_mode
         if publication_mode == "manual_extra":
             try:
                 manual_time = datetime.datetime.fromisoformat(scheduled_at)
@@ -942,8 +944,8 @@ def write_post(
                 raise ValueError(
                     "manual extra requires same-day KST scheduled_at and explicit reason"
                 )
-        elif publication_mode == "scheduled":
-            expected_schedule = f"{publish_date}T18:00:00+09:00"
+        elif publication_mode == expected_publication_mode:
+            expected_schedule = regular_schedule_for_identity(identity)
             if scheduled_at != expected_schedule:
                 raise ValueError(
                     f"automation scheduled_at must be {expected_schedule}"
@@ -987,21 +989,26 @@ def write_post(
         expected_category = category_for_identity(identity)
         if category != expected_category:
             raise ValueError(f"project log category must be {expected_category}")
-        publication_mode = plain(day.get("publication_mode")) or "scheduled"
+        expected_publication_mode = publication_mode_for_identity(identity)
+        publication_mode = plain(day.get("publication_mode")) or expected_publication_mode
         scheduled_at = plain(day.get("scheduled_at"))
         expected_schedule = regular_schedule_for_identity(identity)
-        if publication_mode != "scheduled":
+        if publication_mode != expected_publication_mode:
             raise ValueError("unsupported project log publication_mode")
         if not expected_schedule or scheduled_at != expected_schedule:
             raise ValueError(
-                "project log scheduled publication requires Saturday 18:00 KST"
+                "project log production requires Saturday 09:00 KST"
             )
     else:
         category = plain(day.get("category")) or category_for_identity(identity)
-        publication_mode = "scheduled"
-        scheduled_at = plain(day.get("scheduled_at")) or (
-            f"{publish_date}T09:00:00+09:00"
-        )
+        expected_publication_mode = publication_mode_for_identity(identity)
+        publication_mode = plain(day.get("publication_mode")) or expected_publication_mode
+        expected_schedule = regular_schedule_for_identity(identity)
+        scheduled_at = plain(day.get("scheduled_at")) or expected_schedule
+        if publication_mode != expected_publication_mode:
+            raise ValueError("unsupported daily publication_mode")
+        if not expected_schedule or scheduled_at != expected_schedule:
+            raise ValueError("daily production requires the canonical 09:00 KST time")
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     image_assets = build_image_assets(day)
 

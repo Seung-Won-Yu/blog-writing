@@ -52,6 +52,8 @@ def is_allowed_source(source):
 
 
 def scheduled_label(value, *, publication_mode="scheduled"):
+    if publication_mode == "manual_review":
+        return "1차 검수 완료 · 티스토리에서 직접 발행"
     text = str(value or "").strip()
     if not text:
         return ""

@@ -17,6 +17,7 @@ from .draft_identity import (
     category_for_identity,
     editorial_lane_for_identity,
     is_regular_automation_day,
+    publication_mode_for_identity,
     regular_schedule_for_identity,
 )
 
@@ -809,6 +810,7 @@ def _identity_reasons(source, identity):
     weekday_labels = ["월", "화", "수", "목", "금", "토", "일"]
     publication_mode = plain(source.get("publication_mode")) or "scheduled"
     manual_extra = publication_mode == "manual_extra"
+    expected_publication_mode = publication_mode_for_identity(identity)
     expected_category = category_for_identity(identity)
     expected = {
         "schema_version": 3,
@@ -834,10 +836,10 @@ def _identity_reasons(source, identity):
                 and len(plain(source.get("manual_extra_reason"))) >= 20
             )
         else:
-            invalid = invalid or publication_mode != "scheduled"
+            invalid = invalid or publication_mode != expected_publication_mode
             invalid = invalid or not is_regular_automation_day(publish_day)
-            invalid = invalid or source.get("scheduled_at") != (
-                f"{identity.publish_date}T18:00:00+09:00"
+            invalid = invalid or source.get("scheduled_at") != regular_schedule_for_identity(
+                identity
             )
     elif identity.content_type == "evergreen_guide":
         if manual_extra:
@@ -853,7 +855,7 @@ def _identity_reasons(source, identity):
             invalid = invalid or not expected_schedule
             invalid = invalid or source.get("scheduled_at") != expected_schedule
     else:
-        invalid = invalid or publication_mode != "scheduled"
+        invalid = invalid or publication_mode != expected_publication_mode
         invalid = invalid or source.get("scheduled_at") != regular_schedule_for_identity(
             identity
         )

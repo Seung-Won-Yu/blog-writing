@@ -38,6 +38,14 @@ class CopyPageTests(unittest.TestCase):
             "즉시 발행 · 2026. 7. 19. (일) 18:40",
         )
 
+    def test_manual_review_hides_internal_production_time(self):
+        self.assertEqual(
+            scheduled_label(
+                "2026-08-28T09:00:00+09:00", publication_mode="manual_review"
+            ),
+            "1차 검수 완료 · 티스토리에서 직접 발행",
+        )
+
     def test_copy_page_uses_ninety_day_guard_for_saturday_automation(self):
         from blog_pipeline.publishing.build_copy_page import apply_guard_results
 

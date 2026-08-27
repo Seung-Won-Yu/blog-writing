@@ -350,6 +350,34 @@ class SaturdayAutomationExportTests(unittest.TestCase):
         self.assertIn('<h2 class="digest-news-heading">프로젝트 제작기</h2>', rendered)
         self.assertIn("개발 기록", rendered)
 
+    def test_future_daily_export_is_handed_off_for_manual_review(self):
+        future = copy.deepcopy(LEAD_DAY)
+        future.update(
+            {
+                "draft_id": "2026-08-31",
+                "publish_date": "2026-08-31",
+                "content_type": "daily_news",
+                "content_label": "개발 가이드",
+                "category": "개발 가이드",
+                "publication_mode": "manual_review",
+                "scheduled_at": "2026-08-31T09:00:00+09:00",
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "blog_pipeline.publishing.export_tistory.OUT_DIR", Path(directory)
+        ), patch(
+            "blog_pipeline.publishing.export_tistory.policy_active",
+            return_value=False,
+        ):
+            write_post("2026-08-31", day=future)
+            meta = json.loads(
+                (Path(directory) / "2026-08-31.json").read_text(encoding="utf-8")
+            )
+
+        self.assertEqual(meta["publication_mode"], "manual_review")
+        self.assertEqual(meta["scheduled_at"], "2026-08-31T09:00:00+09:00")
+
     def test_exports_a_second_saturday_draft_without_overwriting_daily_news(self):
         automation = copy.deepcopy(LEAD_DAY)
         automation.update(

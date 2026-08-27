@@ -6,6 +6,8 @@ from datetime import date, timedelta
 from blog_pipeline.publishing.draft_identity import (
     category_for_content_type,
     editorial_lane_for_identity,
+    publication_mode_for_identity,
+    regular_schedule_for_identity,
     resolve_draft_identity,
 )
 from blog_pipeline.publishing.editorial_quality import (
@@ -134,7 +136,8 @@ def valid_daily_source(day="2026-07-19"):
         "content_type": "daily_news",
         "content_label": resolve_draft_identity(day).content_label,
         "category": category_for_content_type("daily_news", day),
-        "scheduled_at": f"{day}T09:00:00+09:00",
+        "publication_mode": publication_mode_for_identity(resolve_draft_identity(day)),
+        "scheduled_at": regular_schedule_for_identity(resolve_draft_identity(day)),
         "primary_query": "일반 사용자가 확인할 최신 기능 변경과 적용 조건",
         "tags": ["기능 변경", "사용 방법", "적용 조건", "업데이트", "체크리스트"],
         "editorial": {
@@ -412,6 +415,7 @@ def valid_curiosity_source(day="2026-09-01"):
 
 def valid_automation_source(day="2026-07-25"):
     source = valid_daily_source(day)
+    identity = resolve_draft_identity(f"{day}-automation")
     cover_image = copy.deepcopy(source["images"]["cover"])
     source.update(
         {
@@ -419,7 +423,8 @@ def valid_automation_source(day="2026-07-25"):
             "content_type": "automation_case",
             "content_label": "업무자동화 실험",
             "category": category_for_content_type("automation_case", day),
-            "scheduled_at": f"{day}T18:00:00+09:00",
+            "publication_mode": publication_mode_for_identity(identity),
+            "scheduled_at": regular_schedule_for_identity(identity),
             "primary_query": "메일 첨부파일을 날짜별 폴더로 자동 정리하기",
             "tags": ["업무자동화", "메일 정리", "파일 정리", "반복 업무", "따라하기"],
         }
@@ -493,7 +498,6 @@ def valid_automation_source(day="2026-07-25"):
         {"t": "p", "text": "구현에 들어가기 전 입력과 기대 결과를 한 번 더 확인한다."},
     )
     if date.fromisoformat(day) >= date(2026, 8, 28):
-        identity = resolve_draft_identity(f"{day}-automation")
         source["editorial"]["weekly_lane"] = editorial_lane_for_identity(identity)
         source["editorial"]["article_shape"] = "hands_on_test"
         source["editorial"]["reader_hook"] = {

@@ -2,7 +2,8 @@ name: Collect Friday automation candidates
 
 on:
   schedule:
-    # 07:17 KST Friday. Leaves a wide delay buffer before the 14:00 task.
+    # 07:17 KST Friday. Leaves a 103-minute buffer before the 09:00 editor,
+    # matching the Monday/Wednesday delay allowance.
     - cron: '17 22 * * 4'
   workflow_dispatch:
 
