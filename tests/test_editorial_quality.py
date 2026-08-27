@@ -276,6 +276,140 @@ def valid_daily_source(day="2026-07-19"):
     return source
 
 
+def valid_curiosity_source(day="2026-09-01"):
+    source = valid_daily_source(day)
+    source.update(
+        {
+            "primary_query": "QR코드 손상 인식",
+            "tags": ["QR코드", "QR코드 인식", "오류 복원", "스마트폰 카메라", "리드 솔로몬"],
+        }
+    )
+    source["editorial"].update(
+        {
+            "headline": "QR코드 손상 인식: 일부가 지워져도 읽히는 이유와 복원 원리",
+            "article_shape": "research_interpretation",
+            "topic_key": "qr-code-error-correction-principle",
+            "reader_question": "QR코드 일부가 찢어지거나 가려져도 스마트폰이 내용을 읽을 수 있는 이유는 무엇일까?",
+            "entities": ["QR코드", "리드-솔로몬 오류 정정"],
+            "coverage": [
+                "question",
+                "mechanism",
+                "example",
+                "misconception",
+                "evidence",
+                "takeaway",
+            ],
+            "search_intent": {
+                "query": "QR코드 손상 인식",
+                "reader_need": "QR코드 일부가 가려져도 인식되는 이유와 실패하는 경계를 알고 싶다.",
+                "answer_format": "오류 복원 원리와 손상 범위별 결과를 그림과 표로 보여 준다.",
+            },
+            "reader_hook": {
+                "scene": "종이에 인쇄한 QR코드 모서리가 찢어졌는데도 스마트폰 카메라가 링크를 읽는 장면",
+                "stakes": "손상돼도 무조건 읽힌다고 믿으면 중요한 안내나 결제 코드가 필요한 순간 실패할 수 있다.",
+                "payoff": "오류 정정 원리와 손상 위치별 경계를 이해해 다시 인쇄해야 할 때를 판단한다.",
+                "open_question": "QR코드는 어떤 정보를 여분으로 담고 어디까지 손상된 데이터를 복원할 수 있을까?",
+            },
+            "opening": (
+                "종이에 인쇄한 QR코드 모서리가 찢어졌는데도 스마트폰 카메라는 링크를 읽는다. "
+                "하지만 손상돼도 무조건 인식되는 것은 아니다. "
+                "오류 정정 원리와 손상 위치별 경계를 알면 언제 다시 인쇄해야 하는지 분명히 판단할 수 있다."
+            ),
+            "original_value": {
+                "durable_question": "QR코드가 일부 손상된 뒤에도 데이터를 읽는 원리와 실패 경계는 무엇일까?",
+                "source_gap": "표준 설명은 오류 정정 수준을 정의하지만 일상에서 보이는 손상 위치와 실패 장면을 함께 연결하지 않는다.",
+                "contribution": "공식 오류 정정 수준과 실제 손상 위치를 비교해 인식 가능한 경우와 다시 인쇄할 경우를 한 표로 재구성한다.",
+                "proof_method": "source_triangulation",
+                "reader_outcome": "독자는 손상된 QR코드가 실패할 조건을 이해하고 교체 여부를 판단할 수 있다.",
+                "limits": "카메라 성능과 인쇄 품질에 따른 모든 인식률을 하나의 수치로 단정하지 않는다.",
+            },
+        }
+    )
+    source["news"][0].update(
+        {
+            "title_kr": "QR코드 오류 정정과 손상 복원의 원리",
+            "source": "QR Code 표준과 오류 정정 참고 자료",
+            "url": "https://www.qrcode.com/en/about/error_correction.html",
+            "published_at": "2020-01-01T00:00:00+09:00",
+            "blurb_kr": "QR코드는 오류 정정 수준에 따라 일부가 손상돼도 데이터를 복원할 수 있다.",
+            "references": [
+                {
+                    "kind": "official",
+                    "title": "QR Code error correction",
+                    "url": "https://www.qrcode.com/en/about/error_correction.html",
+                },
+                {
+                    "kind": "documentation",
+                    "title": "QR Code standard overview",
+                    "url": "https://www.iso.org/standard/83389.html",
+                },
+                {
+                    "kind": "research",
+                    "title": "Error correction reference",
+                    "url": "https://www.thonky.com/qr-code-tutorial/error-correction-coding",
+                },
+            ],
+        }
+    )
+    source["news"][0]["content"] = [
+        {"t": "h", "text": "찢어진 모서리보다 먼저 보는 세 개의 큰 사각형"},
+        {"t": "p", "text": repeated_text("위치 찾기 패턴", 3)},
+        {"t": "p", "text": repeated_text("카메라가 방향을 잡는 과정", 3)},
+        {"t": "visual", "image": "visual_1", "caption": "QR코드의 위치 패턴과 데이터 영역, 오류 정정 영역을 구분해 보여 준다."},
+        {"t": "p", "text": repeated_text("손상 위치에 따른 차이", 3)},
+        {"t": "h", "text": "사라진 정보를 추측하는 대신 여분의 조각으로 복원한다"},
+        {"t": "p", "text": repeated_text("리드 솔로몬 오류 정정", 3)},
+        {"t": "ad_break"},
+        {"t": "h", "text": "같은 크기의 얼룩도 위치가 다르면 결과가 달라진다"},
+        {"t": "p", "text": repeated_text("중앙과 모서리 손상 비교", 3)},
+        {"t": "visual", "image": "visual_2", "caption": "같은 면적이 가려져도 위치 패턴과 데이터 영역의 손상 결과가 달라지는 이유를 비교한다."},
+        {"t": "p", "text": repeated_text("인식 실패 경계", 3)},
+        {
+            "t": "table",
+            "caption": "손상 장면별로 먼저 확인할 QR코드 영역",
+            "headers": ["장면", "영향", "확인"],
+            "rows": [["모서리 얼룩", "위치 패턴 영향 가능", "다른 카메라로 재확인"], ["중앙 가림", "데이터와 로고 영역 영향", "원본 크기와 대비 확인"]],
+        },
+        {"t": "h", "text": "오류 정정 수준이 높다고 언제나 좋은 것은 아니다"},
+        {"t": "p", "text": repeated_text("용량과 복원력의 교환", 3)},
+        {"t": "ul", "items": ["세 위치 패턴이 가려졌는지 본다.", "인쇄 대비와 초점 상태를 확인한다.", "중요한 용도라면 새 코드로 교체한다."]},
+        {"t": "p", "text": repeated_text("다시 인쇄할 판단", 3)},
+        {"t": "p", "text": repeated_text("남는 한계와 다음 확인", 3)},
+    ]
+    source["visual"]["assets"][0].update(
+        {
+            "label": "QR코드의 위치·데이터·오류 정정 영역",
+            "steps": "위치 패턴 확인 → 데이터 조각 판독 → 오류 정정으로 복원",
+            "curiosity_hook": "찢어진 부분의 정보는 어디에서 다시 가져올까?",
+            "korean_labels": ["위치 패턴", "데이터", "오류 정정"],
+        }
+    )
+    source["visual"]["assets"][1].update(
+        {
+            "label": "같은 면적의 손상이 위치에 따라 만드는 차이",
+            "steps": "모서리 손상 → 중앙 손상 → 위치 패턴 손상 비교",
+            "curiosity_hook": "같은 크기로 가려도 왜 한쪽만 실패할까?",
+            "korean_labels": ["모서리", "중앙", "위치 패턴"],
+        }
+    )
+    trend = {
+        "editorial_treatment": "tactile_realism",
+        "focal_subject": "모서리가 찢어진 종이 QR코드를 스마트폰 카메라로 확인하는 손",
+        "texture_cue": "접힌 종이와 번진 잉크, 무광 스마트폰 화면 질감",
+        "authenticity_cue": "실제로 주머니에서 꺼낸 듯한 구김과 자연스러운 손 그림자",
+    }
+    source["visual"]["cover"].update(trend)
+    source["images"]["cover"].update(
+        {
+            **trend,
+            "alt": "모서리가 찢어진 QR코드를 스마트폰으로 인식하며 오류 복원 원리를 확인하는 장면",
+        }
+    )
+    source["images"]["visual_1"]["alt"] = "QR코드 위치 패턴과 데이터·오류 정정 영역 설명도"
+    source["images"]["visual_2"]["alt"] = "QR코드 손상 위치에 따른 인식 결과 비교도"
+    return source
+
+
 def valid_automation_source(day="2026-07-25"):
     source = valid_daily_source(day)
     cover_image = copy.deepcopy(source["images"]["cover"])
@@ -488,6 +622,30 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn(
             "quality_weekly_lane",
             source_quality_reasons(monday, resolve_draft_identity("2026-08-31")),
+        )
+
+    def test_tuesday_and_thursday_curiosity_articles_use_timeless_quality_rules(self):
+        for day in ("2026-09-01", "2026-09-03"):
+            source = valid_curiosity_source(day)
+            reasons = source_quality_reasons(source, resolve_draft_identity(day))
+
+            with self.subTest(day=day):
+                self.assertEqual(reasons, [])
+
+    def test_curiosity_article_rejects_generic_daily_coverage(self):
+        source = valid_curiosity_source()
+        source["editorial"]["coverage"] = [
+            "change",
+            "mechanism",
+            "comparison",
+            "application",
+            "limits",
+            "decision",
+        ]
+
+        self.assertIn(
+            "quality_editorial",
+            source_quality_reasons(source, resolve_draft_identity("2026-09-01")),
         )
 
     def test_future_weekly_articles_require_a_hook_grounded_in_the_opening(self):

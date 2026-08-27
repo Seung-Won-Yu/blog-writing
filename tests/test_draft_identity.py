@@ -179,6 +179,33 @@ class DraftIdentityTests(unittest.TestCase):
         self.assertEqual(editorial_lane_for_identity(friday), "")
         self.assertIsNone(regular_schedule_for_identity(friday))
 
+    def test_curiosity_lanes_fill_tuesday_and_thursday_without_rewriting_history(self):
+        previous_tuesday = resolve_draft_identity("2026-08-25")
+        tuesday = resolve_draft_identity("2026-09-01")
+        thursday = resolve_draft_identity("2026-09-03")
+
+        self.assertEqual(previous_tuesday.content_label, "IT 트렌드 해설")
+        self.assertEqual(
+            category_for_content_type("daily_news", previous_tuesday.publish_date),
+            "IT 트렌드 해설",
+        )
+
+        for identity, lane in (
+            (tuesday, "curiosity_mechanism"),
+            (thursday, "curiosity_myth_history"),
+        ):
+            with self.subTest(day=identity.publish_date):
+                self.assertEqual(identity.content_label, "궁금한 IT 원리")
+                self.assertEqual(
+                    category_for_content_type("daily_news", identity.publish_date),
+                    "궁금한 IT 원리",
+                )
+                self.assertEqual(editorial_lane_for_identity(identity), lane)
+                self.assertEqual(
+                    regular_schedule_for_identity(identity),
+                    f"{identity.publish_date}T09:00:00+09:00",
+                )
+
     def test_friday_automation_has_an_executed_experiment_lane(self):
         identity = resolve_draft_identity("2026-08-28-automation")
 

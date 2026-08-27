@@ -73,6 +73,18 @@ DAILY_COVERAGE = {
     "limits",
     "decision",
 }
+CURIOSITY_COVERAGE = {
+    "question",
+    "mechanism",
+    "example",
+    "misconception",
+    "evidence",
+    "takeaway",
+}
+CURIOSITY_LANES = {
+    "curiosity_mechanism",
+    "curiosity_myth_history",
+}
 AUTOMATION_COVERAGE = {
     "problem",
     "setup",
@@ -344,6 +356,16 @@ DEPTH_POLICIES = {
 def depth_policy_for(identity, article_shape=""):
     """Return a copy so a concise change alert is not padded into a report."""
     policy = dict(DEPTH_POLICIES[identity.content_type])
+    if editorial_lane_for_identity(identity) in CURIOSITY_LANES:
+        policy.update(
+            minimum_headings=4,
+            maximum_headings=7,
+            minimum_visuals=2,
+            maximum_visuals=5,
+            minimum_minutes=6,
+            maximum_minutes=12,
+            minimum_blocks=13,
+        )
     if identity.content_type == "daily_news" and plain(article_shape) == "change_impact":
         policy.update(minimum_minutes=6, maximum_minutes=12)
     return policy
@@ -856,11 +878,14 @@ def _editorial_reasons(source, identity):
         and len({plain(item).casefold() for item in entities if plain(item)}) == len(entities)
     ):
         reasons.append("quality_editorial")
+    weekly_lane = editorial_lane_for_identity(identity)
     required_coverage = {
         "automation_case": AUTOMATION_COVERAGE,
         "evergreen_guide": GUIDE_COVERAGE,
         "project_log": PROJECT_COVERAGE,
     }.get(identity.content_type)
+    if weekly_lane in CURIOSITY_LANES:
+        required_coverage = CURIOSITY_COVERAGE
     if required_coverage is None:
         required_coverage = (
             DAILY_COVERAGE
@@ -1075,6 +1100,13 @@ def _weekly_lane_reasons(source, identity):
             "incident_trace",
             "troubleshooting",
         }
+    elif expected in CURIOSITY_LANES:
+        invalid |= article_shape not in {
+            "research_interpretation",
+            "decision_guide",
+            "incident_trace",
+            "troubleshooting",
+        }
     return ["quality_weekly_lane"] if invalid else []
 
 
@@ -1221,9 +1253,11 @@ def _source_freshness_reasons(source, identity):
     scheduled = scheduled.astimezone(timezone.utc)
     if published > scheduled + timedelta(hours=6):
         return ["quality_source_freshness"]
+    curiosity_article = editorial_lane_for_identity(identity) in CURIOSITY_LANES
     if (
         identity.content_type == "daily_news"
         and date.fromisoformat(identity.publish_date) >= SOURCE_RECENCY_POLICY_START
+        and not curiosity_article
     ):
         source_age = scheduled - published
         if source_age > timedelta(days=7):
@@ -1255,6 +1289,7 @@ def _source_freshness_reasons(source, identity):
     if (
         identity.content_type == "daily_news"
         and published < scheduled - timedelta(days=14)
+        and not curiosity_article
     ):
         return ["quality_source_freshness"]
     return []
@@ -1281,6 +1316,7 @@ def _depth_reasons(source, identity):
     if (
         date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START
         and article_shape in {"hands_on_test", "troubleshooting", "research_interpretation"}
+        and editorial_lane_for_identity(identity) not in CURIOSITY_LANES
     ):
         minimum_visuals = max(minimum_visuals, 3)
     block_types = {block.get("t") for block in blocks}
@@ -1542,9 +1578,13 @@ def _visual_reasons(source, identity):
             for origin in origins
         ):
             reasons.append("quality_visual_evidence")
-        if article_shape == "research_interpretation" and not any(
-            origin in {"annotated_capture", "measured_chart"}
-            for origin in origins
+        if (
+            article_shape == "research_interpretation"
+            and editorial_lane_for_identity(identity) not in CURIOSITY_LANES
+            and not any(
+                origin in {"annotated_capture", "measured_chart"}
+                for origin in origins
+            )
         ):
             reasons.append("quality_visual_evidence")
     return reasons

@@ -11,6 +11,7 @@ AUTOMATION_COLLECT_WORKFLOW = (
 EDITOR_CONTRACT = ROOT / "agent" / "DAILY_EDITOR.md"
 SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
 GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
+CURIOSITY_CONTRACT = ROOT / "agent" / "CURIOSITY_EDITOR.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -19,6 +20,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             SATURDAY_CONTRACT,
             GUIDE_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
             self.assertIn("예약 실행은 한 번만", contract)
@@ -43,6 +45,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             SATURDAY_CONTRACT,
             GUIDE_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
             self.assertIn("/tmp/blog-writing-qa/", contract)
@@ -53,6 +56,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             SATURDAY_CONTRACT,
             GUIDE_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
             self.assertIn("Google Chrome 앱 실행 파일을 직접 호출하지 않습니다", contract)
@@ -154,6 +158,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "agent" / "DAILY_EDITOR.md",
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "agent" / "DEVELOPMENT_GUIDE.md",
+            ROOT / "agent" / "CURIOSITY_EDITOR.md",
             ROOT / "agent" / "REPOSITORY_SYNC.md",
             ROOT / "config" / "tistory_public_posts.json",
             ROOT / "config" / "search_opportunities.json",
@@ -302,6 +307,25 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("content_role: hook", contract)
         self.assertIn("content_role: explanation", contract)
 
+    def test_curiosity_contract_enforces_evergreen_tuesday_thursday_articles(self):
+        contract = CURIOSITY_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("매주 화·목 09:00 KST", contract)
+        self.assertIn("`궁금한 IT 원리`", contract)
+        self.assertIn("`curiosity_mechanism`", contract)
+        self.assertIn("`curiosity_myth_history`", contract)
+        self.assertIn("12개월 뒤에도 검색할 질문", contract)
+        self.assertIn("최근 365일", contract)
+        self.assertIn("공식 문서·표준·원 논문", contract)
+        self.assertIn("오래된 표준과 원 논문", contract)
+        self.assertIn("`NO_PUBLISH_EVIDENCE`", contract)
+        self.assertIn("`NO_PUBLISH_QUALITY`", contract)
+        self.assertIn("data/days/YYYY-MM-DD.json", contract)
+        self.assertIn("daily_guard --today --source-only --window-days 365", contract)
+        self.assertIn("publish_bundle --today --stage", contract)
+        self.assertIn("publish_bundle --today --check", contract)
+        self.assertIn("티스토리에는 자동 발행하지 않습니다", contract)
+
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")
 
@@ -319,6 +343,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             GUIDE_CONTRACT,
             SATURDAY_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
 
@@ -337,6 +362,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             GUIDE_CONTRACT,
             SATURDAY_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
 
@@ -350,6 +376,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             GUIDE_CONTRACT,
             SATURDAY_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
 
@@ -364,6 +391,7 @@ class WorkflowConfigTests(unittest.TestCase):
             EDITOR_CONTRACT,
             GUIDE_CONTRACT,
             SATURDAY_CONTRACT,
+            CURIOSITY_CONTRACT,
         ):
             contract = contract_path.read_text(encoding="utf-8")
 
@@ -499,7 +527,12 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
 
     def test_all_editorial_contracts_require_natural_search_focused_writing(self):
-        for path in (EDITOR_CONTRACT, SATURDAY_CONTRACT, GUIDE_CONTRACT):
+        for path in (
+            EDITOR_CONTRACT,
+            SATURDAY_CONTRACT,
+            GUIDE_CONTRACT,
+            CURIOSITY_CONTRACT,
+        ):
             with self.subTest(path=path.name):
                 contract = path.read_text(encoding="utf-8")
                 self.assertIn("핵심 검색어", contract)

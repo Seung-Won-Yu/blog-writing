@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from .draft_identity import resolve_draft_identity
+from .draft_identity import editorial_lane_for_identity, resolve_draft_identity
 from .editorial_quality import PUBLISH_GATE_START
 from .export_tistory import TISTORY_ADFIT_MARKER, safe_http_url
 
@@ -165,6 +165,12 @@ def apply_guard_results(drafts, *, root=ROOT):
             continue
         if publish_date >= PUBLISH_GATE_START and draft.get("publish_ready"):
             identity = resolve_draft_identity(draft.get("draft_id"), draft)
+            curiosity_window = (
+                365
+                if editorial_lane_for_identity(identity)
+                in {"curiosity_mechanism", "curiosity_myth_history"}
+                else 60
+            )
             result = daily_guard.inspect_draft_state(
                 identity.draft_id,
                 root=root,
@@ -173,7 +179,7 @@ def apply_guard_results(drafts, *, root=ROOT):
                         "automation_case": 90,
                         "evergreen_guide": 365,
                         "project_log": 365,
-                    }.get(identity.content_type, 60)
+                    }.get(identity.content_type, curiosity_window)
                 ),
             )
             draft["quality_reasons"] = list(result.get("reasons") or [])
@@ -678,7 +684,7 @@ def render(drafts):
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">월·수 09:00 실전 IT 아티클과 금요일 자동화·프로젝트 글의 발행 준비물을 확인합니다.</p>
+      <p class="lead">월·수 실전 IT, 화·목 궁금한 IT 원리, 금요일 자동화, 토요일 프로젝트 글의 발행 준비물을 확인합니다.</p>
     </header>
 
     <div class="layout">

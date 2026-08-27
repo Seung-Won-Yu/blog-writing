@@ -15,6 +15,7 @@ _PROJECT_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})-project$")
 CATEGORY_TAXONOMY_V2_START = date(2026, 7, 22)
 EVERGREEN_DAILY_START = date(2026, 8, 25)
 WEEKLY_EDITORIAL_LANES_START = date(2026, 8, 31)
+CURIOSITY_EDITORIAL_LANES_START = date(2026, 9, 1)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 FRIDAY_AUTOMATION_SCHEDULE_START = date(2026, 8, 28)
 LEGACY_CATEGORIES = {
@@ -35,6 +36,7 @@ CURRENT_CATEGORIES = {
     "evergreen_guide": "개발 가이드",
     "project_log": "프로젝트·회고",
 }
+CURIOSITY_CATEGORY = "궁금한 IT 원리"
 
 
 @dataclass(frozen=True)
@@ -66,18 +68,28 @@ def category_for_content_type(content_type, publish_date=None):
         return LEGACY_CATEGORIES[key]
     if published < EVERGREEN_DAILY_START:
         return V2_CATEGORIES[key]
-    if (
-        key == "daily_news"
-        and published >= WEEKLY_EDITORIAL_LANES_START
-        and published.weekday() == 0
-    ):
-        return CURRENT_CATEGORIES["evergreen_guide"]
+    if key == "daily_news":
+        if (
+            published >= CURIOSITY_EDITORIAL_LANES_START
+            and published.weekday() in {1, 3}
+        ):
+            return CURIOSITY_CATEGORY
+        if (
+            published >= WEEKLY_EDITORIAL_LANES_START
+            and published.weekday() == 0
+        ):
+            return CURRENT_CATEGORIES["evergreen_guide"]
     return CURRENT_CATEGORIES[key]
 
 
 def content_label_for_daily(publish_date):
     """Keep historical labels stable while switching the recurring lane."""
     published = date.fromisoformat(str(publish_date).strip())
+    if (
+        published >= CURIOSITY_EDITORIAL_LANES_START
+        and published.weekday() in {1, 3}
+    ):
+        return CURIOSITY_CATEGORY
     if (
         published >= WEEKLY_EDITORIAL_LANES_START
         and published.weekday() == 0
@@ -100,10 +112,15 @@ def editorial_lane_for_identity(identity):
         identity.content_type == "daily_news"
         and publish_day >= WEEKLY_EDITORIAL_LANES_START
     ):
-        return {0: "evergreen_problem", 2: "change_explainer"}.get(
-            publish_day.weekday(),
-            "",
-        )
+        lanes = {0: "evergreen_problem", 2: "change_explainer"}
+        if publish_day >= CURIOSITY_EDITORIAL_LANES_START:
+            lanes.update(
+                {
+                    1: "curiosity_mechanism",
+                    3: "curiosity_myth_history",
+                }
+            )
+        return lanes.get(publish_day.weekday(), "")
     if (
         identity.content_type == "automation_case"
         and publish_day >= FRIDAY_AUTOMATION_SCHEDULE_START
@@ -123,9 +140,12 @@ def regular_schedule_for_identity(identity):
     """Return the canonical KST schedule for a recurring draft, if eligible."""
     publish_day = date.fromisoformat(identity.publish_date)
     if identity.content_type == "daily_news":
+        regular_days = {0, 2}
+        if publish_day >= CURIOSITY_EDITORIAL_LANES_START:
+            regular_days.update({1, 3})
         if (
             publish_day >= WEEKLY_EDITORIAL_LANES_START
-            and publish_day.weekday() not in {0, 2}
+            and publish_day.weekday() not in regular_days
         ):
             return None
         hour = "09:00:00"
