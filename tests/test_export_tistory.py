@@ -725,6 +725,17 @@ class EditorialReadingFlowTests(unittest.TestCase):
 
         self.assertEqual(rows[:3], ["1. 첫 번째 뉴스", "2. 두 번째 뉴스", "3. 세 번째 뉴스"])
 
+    def test_lead_story_summary_uses_the_reader_outcome_not_a_news_digest_prompt(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["editorial"]["reader_takeaway"] = (
+            "준비물과 실행 순서를 따라 완성 파일을 직접 확인할 수 있다."
+        )
+
+        rows = build_key_summary(day)
+
+        self.assertTrue(any(row.startswith("직접 얻는 결과:") for row in rows))
+        self.assertFalse(any("각 소식의 핵심" in row for row in rows))
+
     def test_renders_opening_closing_action_and_dynamic_news_count(self):
         day = dict(FALLBACK_DAY)
         day["editorial"] = {

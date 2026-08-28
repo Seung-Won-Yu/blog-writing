@@ -500,6 +500,20 @@ def valid_automation_source(day="2026-07-25"):
     if date.fromisoformat(day) >= date(2026, 8, 28):
         source["editorial"]["weekly_lane"] = editorial_lane_for_identity(identity)
         source["editorial"]["article_shape"] = "hands_on_test"
+        source["editorial"]["reader_walkthrough"] = {
+            "reader_level": "beginner",
+            "prerequisites": [
+                "Python이 설치된 개인 테스트 컴퓨터",
+                "원본이 아닌 첨부파일 복사본 폴더",
+            ],
+            "steps": [
+                "복사본 파일을 테스트 입력 폴더에 넣는다.",
+                "제공된 명령을 복사해 작은 예제를 실행한다.",
+                "성공 목록과 오류 목록을 실제 파일과 대조한다.",
+            ],
+            "success_check": "성공 목록의 파일 수와 날짜별 출력 폴더의 실제 파일 수가 같으면 성공이다.",
+            "recovery": "오류가 나면 출력 폴더만 비우고 보존된 입력 복사본으로 같은 단계를 다시 실행한다.",
+        }
         source["editorial"]["reader_hook"] = {
             "scene": "다운로드 폴더에 같은 이름의 첨부파일이 쌓여 필요한 파일을 다시 찾는 장면",
             "stakes": "바로 이동시키면 중복 파일을 덮어쓰고 잘못 분류한 결과를 되돌리기 어렵다.",
@@ -511,6 +525,15 @@ def valid_automation_source(day="2026-07-25"):
             "바로 이동시키면 중복 파일을 덮어쓰고 잘못 분류한 결과를 되돌리기 어렵다. "
             "미리보기와 실행 기록, 원상복구까지 직접 검증해 안전한 자동화 기준을 확인한다."
         )
+        headings = [
+            block
+            for block in source["news"][0]["content"]
+            if block.get("t") == "h"
+        ]
+        headings[0]["text"] = "먼저 결과부터 확인한다"
+        headings[1]["text"] = "준비물과 테스트 복사본을 챙긴다"
+        headings[2]["text"] = "1단계: 작은 예제를 실행한다"
+        headings[-1]["text"] = "개발 기록: 실패한 입력과 복구 방법"
     return source
 
 
@@ -626,6 +649,28 @@ class EditorialQualityTests(unittest.TestCase):
         self.assertIn(
             "quality_weekly_lane",
             source_quality_reasons(monday, resolve_draft_identity("2026-08-31")),
+        )
+
+    def test_future_automation_requires_a_beginner_walkthrough(self):
+        source = valid_automation_source("2026-08-28")
+        source["editorial"].pop("reader_walkthrough")
+
+        self.assertIn(
+            "quality_reader_walkthrough",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-28-automation")
+            ),
+        )
+
+    def test_future_automation_keeps_developer_proof_in_the_final_record(self):
+        source = valid_automation_source("2026-08-28")
+        source["news"][0]["content"][1]["text"] += " SHA-256과 소스 커밋을 먼저 확인한다."
+
+        self.assertIn(
+            "quality_reader_walkthrough",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-28-automation")
+            ),
         )
 
     def test_tuesday_and_thursday_curiosity_articles_use_timeless_quality_rules(self):

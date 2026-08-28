@@ -1112,6 +1112,91 @@ def _weekly_lane_reasons(source, identity):
     return ["quality_weekly_lane"] if invalid else []
 
 
+def _automation_walkthrough_reasons(source, identity):
+    """Keep Friday experiments usable by a beginner before showing proof details."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    if (
+        identity.content_type != "automation_case"
+        or publish_day < FRIDAY_AUTOMATION_SCHEDULE_START
+    ):
+        return []
+
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    walkthrough = (
+        editorial.get("reader_walkthrough")
+        if isinstance(editorial.get("reader_walkthrough"), dict)
+        else {}
+    )
+    prerequisites = walkthrough.get("prerequisites")
+    prerequisites = prerequisites if isinstance(prerequisites, list) else []
+    steps = walkthrough.get("steps")
+    steps = steps if isinstance(steps, list) else []
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    headings = [
+        plain(block.get("text"))
+        for block in content
+        if isinstance(block, dict) and block.get("t") == "h"
+    ]
+    heading_text = "\n".join(headings)
+    first_code_index = next(
+        (
+            index
+            for index, block in enumerate(content)
+            if isinstance(block, dict) and block.get("t") == "code"
+        ),
+        -1,
+    )
+    developer_record_index = next(
+        (
+            index
+            for index, block in enumerate(content)
+            if isinstance(block, dict)
+            and block.get("t") == "h"
+            and "개발 기록" in plain(block.get("text"))
+        ),
+        -1,
+    )
+    early_blocks = (
+        content[:developer_record_index] if developer_record_index >= 0 else content
+    )
+    early_text = "\n".join(
+        plain(block.get("text"))
+        for block in early_blocks
+        if isinstance(block, dict) and block.get("t") in {"h", "p", "quote"}
+    ).casefold()
+    developer_only_markers = (
+        "sha-256",
+        "커밋 해시",
+        "소스 커밋",
+        "output_exists",
+        "fixture 생성",
+    )
+
+    invalid = (
+        plain(walkthrough.get("reader_level")) not in {"beginner", "general"}
+        or not 2 <= len(prerequisites) <= 6
+        or any(not 10 <= len(plain(value)) <= 120 for value in prerequisites)
+        or not 3 <= len(steps) <= 7
+        or any(not 12 <= len(plain(value)) <= 160 for value in steps)
+        or len(plain(walkthrough.get("success_check"))) < 30
+        or len(plain(walkthrough.get("recovery"))) < 30
+        or "준비" not in heading_text
+        or not any(marker in heading_text for marker in ("단계", "실행"))
+        or not any(marker in heading_text for marker in ("결과", "확인"))
+        or first_code_index < 0
+        or not any(
+            isinstance(block, dict) and block.get("t") == "ul"
+            for block in content[:first_code_index]
+        )
+        or developer_record_index < int(len(content) * 0.65)
+        or any(marker in early_text for marker in developer_only_markers)
+    )
+    return ["quality_reader_walkthrough"] if invalid else []
+
+
 def _reader_hook_reasons(source, identity):
     """Require a concrete scene, stakes, and payoff that appear in the opening."""
     publish_day = date.fromisoformat(identity.publish_date)
@@ -1818,6 +1903,7 @@ def source_authoring_reasons(source, identity):
         lambda: _revisit_value_reasons(source, identity),
         lambda: _original_value_reasons(source, identity),
         lambda: _weekly_lane_reasons(source, identity),
+        lambda: _automation_walkthrough_reasons(source, identity),
         lambda: _reader_hook_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),

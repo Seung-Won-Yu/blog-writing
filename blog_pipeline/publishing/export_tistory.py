@@ -394,6 +394,11 @@ def build_key_summary(day):
         rows.append("함께 익힐 용어: " + ", ".join(terms[:4]))
     elif not rows:
         rows.append("오늘 수집된 뉴스가 없습니다.")
+    elif is_lead_story(day):
+        editorial = day.get("editorial") if isinstance(day.get("editorial"), dict) else {}
+        takeaway = plain(editorial.get("reader_takeaway"))
+        if takeaway:
+            rows.append("직접 얻는 결과: " + trim_text(takeaway, 96))
     elif len(rows) < 4:
         rows.append("각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요.")
     return rows[:4]
