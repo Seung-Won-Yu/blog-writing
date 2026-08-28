@@ -1,4 +1,4 @@
-"""Collect and rank public sources for Friday development and automation experiments."""
+"""Collect and rank public sources for Friday developer and AI insight articles."""
 
 import argparse
 import datetime as dt
@@ -64,7 +64,7 @@ def _criterion_score(text, spec, bias=0):
 
 
 def score_automation_candidate(candidate, criteria, source=None):
-    """Attach the five weekly editorial criterion scores to a candidate."""
+    """Attach the five Friday developer-insight scores to a candidate."""
     source = source or {}
     text = "{} {}".format(candidate.get("title", ""), candidate.get("summary", ""))
     biases = source.get("criteria_bias") or {}
@@ -92,7 +92,7 @@ def score_automation_candidate(candidate, criteria, source=None):
     candidate["raw_score_breakdown"] = raw_scores
     candidate["score_reasons"] = reasons
     candidate["experiment_type"] = str(
-        source.get("experiment_type") or "직접 실행 실험기"
+        source.get("experiment_type") or "근거 기반 개발 인사이트"
     )
     candidate["verification_hint"] = str(source.get("verification_hint") or "")
     candidate["verification_status"] = "metadata_only"
@@ -125,7 +125,7 @@ def _prepare_evergreen_candidate(raw):
     url = canonicalize_url(raw.get("url"))
     if not candidate_id or not title or not url:
         return None
-    problem_lane = str(raw.get("problem_lane") or "생활·사무").strip()
+    problem_lane = str(raw.get("problem_lane") or "개발·AI 생태계").strip()
     return {
         "id": "evergreen:{}".format(candidate_id),
         "title": title,
@@ -232,7 +232,7 @@ def build_automation_inbox(
     last_problem_lane="",
     last_tool_brand="",
 ):
-    """Collect public candidates and rank them for a reproducible experiment."""
+    """Collect public candidates and rank them for a sourced developer article."""
     now = now or dt.datetime.now(dt.timezone.utc)
     base_config = dict(config)
     base_config["selection"] = {
@@ -356,7 +356,7 @@ def build_automation_inbox(
     }
     return {
         "schema_version": 1,
-        "lane": "saturday_automation",
+        "lane": "friday_developer_insight",
         "content_type": "automation_candidates",
         "execution_status": "not_run",
         "day": base.get("day", day_id or ""),
@@ -603,7 +603,7 @@ def _candidate_card(item, criteria, featured=False):
         <h3><a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>
         {summary_html}
         <div class="criteria">{criteria_html}</div>
-        <p class="notice">README·라이선스·권한을 확인하고 임시 환경에서 실행하기 전까지 검증 완료로 보지 않습니다.</p>
+        <p class="notice">공식 문서·저장소·연구 자료를 교차 확인하고, 원문에 더할 지도·비교·판단 기준이 분명해져야 집필 후보가 됩니다.</p>
       </article>""".format(
         card_class="card featured" if featured else "card",
         experiment_type=experiment_type,
@@ -649,7 +649,7 @@ def render_automation_inbox_html(inbox):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-  <title>{day} 금요일 개발·자동화 후보함</title>
+  <title>{day} 금요일 개발·AI 인사이트 후보함</title>
   <style>
     :root {{ --ink:#17211c; --muted:#647069; --line:#dce4df; --paper:#fff; --wash:#f3f6f4; --accent:#176848; --amber:#a76512; }}
     * {{ box-sizing:border-box; }}
@@ -682,15 +682,15 @@ def render_automation_inbox_html(inbox):
 <body>
 <main>
   <header>
-    <p class="eyebrow">FRIDAY PRACTICAL RADAR</p>
+    <p class="eyebrow">FRIDAY DEVELOPER INSIGHT RADAR</p>
     <p class="generated">{day} · 생성 {generated_at}</p>
-    <h1>금요일 개발·자동화 후보함</h1>
-    <p class="intro">GitHub Trending, 공식 자료와 요즘IT에서 직접 검증해 볼 만한 개발·AI·자동화 주제를 모았습니다. 점수는 메타데이터 기반 임시 점수이며 실제 실행 결과가 아닙니다.</p>
+    <h1>금요일 개발·AI 인사이트 후보함</h1>
+    <p class="intro">GitHub, 공식 문서, 공개 저장소, 연구와 요즘IT에서 개발자가 궁금해할 주제를 모았습니다. 점수는 메타데이터 기반 임시 점수이며 출처 확인과 독자에게 새로 줄 분석을 검토한 뒤 한 건만 고릅니다.</p>
   </header>
   <section><h2>우선 검토할 후보 {selected_count}건</h2><div class="grid">{selected_html}</div></section>
   <section><h2>추가 후보 {remaining_count}건</h2><div class="grid">{remaining_html}</div></section>
   <section><h2>수집 상태</h2><ul class="errors">{errors}</ul></section>
-  <footer>후보함은 글이 아닙니다. 09:00 Codex 작업이 공식 문서·버전·권한을 확인하고 안전한 임시 환경에서 직접 검증한 뒤 한 건만 집필합니다.</footer>
+  <footer>후보함은 글이 아닙니다. 09:00 Codex 작업이 공식 자료를 3개 이상 교차 확인하고 지도·비교표·판단 기준 같은 독자 가치를 만든 뒤 한 건만 집필합니다. 도구 비교와 실습 글만 같은 조건에서 직접 실행합니다.</footer>
 </main>
 </body>
 </html>
@@ -771,7 +771,7 @@ def automation_collection_quality_result(inbox, config):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="금요일 개발·자동화 실험 후보함을 생성합니다.")
+    parser = argparse.ArgumentParser(description="금요일 개발·AI 인사이트 후보함을 생성합니다.")
     day_group = parser.add_mutually_exclusive_group()
     day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘")
     day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")
@@ -808,7 +808,7 @@ def main(argv=None):
     quality = automation_collection_quality_result(inbox, config)
     if not quality["ok"]:
         print(
-            "개발·자동화 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
+            "개발·AI 인사이트 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(
                 quality["successful_sources"],
                 quality["candidate_sources"],
                 quality["candidates"],
@@ -819,7 +819,7 @@ def main(argv=None):
         return 2
     paths = write_automation_inbox(inbox, args.output_dir)
     print(
-        "개발·자동화 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(
+        "개발·AI 인사이트 후보함 생성: 추천 {}건 / 전체 {}건 / 오류 {}건\n{}".format(
             len(inbox["selected"]),
             len(inbox["candidates"]),
             len(inbox["errors"]),

@@ -18,6 +18,7 @@ WEEKLY_EDITORIAL_LANES_START = date(2026, 8, 31)
 CURIOSITY_EDITORIAL_LANES_START = date(2026, 9, 1)
 WEEKLY_GUIDE_SCHEDULE_START = date(2026, 7, 22)
 FRIDAY_AUTOMATION_SCHEDULE_START = date(2026, 8, 28)
+FRIDAY_DEVELOPER_INSIGHT_START = date(2026, 8, 28)
 MANUAL_REVIEW_PUBLICATION_START = date(2026, 8, 28)
 LEGACY_CATEGORIES = {
     "daily_news": "데일리IT뉴스",
@@ -33,7 +34,7 @@ V2_CATEGORIES = {
 }
 CURRENT_CATEGORIES = {
     "daily_news": "IT 트렌드 해설",
-    "automation_case": "자동화·실험",
+    "automation_case": "AI·개발 도구",
     "evergreen_guide": "개발 가이드",
     "project_log": "프로젝트·회고",
 }
@@ -68,6 +69,11 @@ def category_for_content_type(content_type, publish_date=None):
     if published < CATEGORY_TAXONOMY_V2_START:
         return LEGACY_CATEGORIES[key]
     if published < EVERGREEN_DAILY_START:
+        return V2_CATEGORIES[key]
+    if (
+        key == "automation_case"
+        and published < FRIDAY_DEVELOPER_INSIGHT_START
+    ):
         return V2_CATEGORIES[key]
     if key == "daily_news":
         if (
@@ -126,7 +132,11 @@ def editorial_lane_for_identity(identity):
         identity.content_type == "automation_case"
         and publish_day >= FRIDAY_AUTOMATION_SCHEDULE_START
     ):
-        return "executed_experiment"
+        return (
+            "developer_insight"
+            if publish_day >= FRIDAY_DEVELOPER_INSIGHT_START
+            else "executed_experiment"
+        )
     return ""
 
 
@@ -206,11 +216,16 @@ def resolve_draft_identity(draft_id, payload=None):
         match = _AUTOMATION_ID.fullmatch(value)
         if match:
             publish_date = match.group(1)
+            publish_day = date.fromisoformat(publish_date)
             identity = DraftIdentity(
                 draft_id=value,
                 publish_date=publish_date,
                 content_type="automation_case",
-                content_label="업무자동화 실험",
+                content_label=(
+                    "개발·AI 인사이트"
+                    if publish_day >= FRIDAY_DEVELOPER_INSIGHT_START
+                    else "업무자동화 실험"
+                ),
                 source=f"data/automation_cases/{publish_date}.json",
             )
         else:

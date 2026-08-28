@@ -421,7 +421,7 @@ def valid_automation_source(day="2026-07-25"):
         {
             "draft_id": f"{day}-automation",
             "content_type": "automation_case",
-            "content_label": "업무자동화 실험",
+            "content_label": identity.content_label,
             "category": category_for_content_type("automation_case", day),
             "publication_mode": publication_mode_for_identity(identity),
             "scheduled_at": regular_schedule_for_identity(identity),
@@ -497,7 +497,10 @@ def valid_automation_source(day="2026-07-25"):
         ad_index,
         {"t": "p", "text": "구현에 들어가기 전 입력과 기대 결과를 한 번 더 확인한다."},
     )
-    if date.fromisoformat(day) >= date(2026, 8, 28):
+    if (
+        date.fromisoformat(day) >= date(2026, 8, 28)
+        and editorial_lane_for_identity(identity) == "executed_experiment"
+    ):
         source["editorial"]["weekly_lane"] = editorial_lane_for_identity(identity)
         source["editorial"]["article_shape"] = "hands_on_test"
         source["editorial"]["reader_walkthrough"] = {
@@ -536,6 +539,100 @@ def valid_automation_source(day="2026-07-25"):
         headings[1]["text"] = "준비물과 테스트 복사본을 챙긴다"
         headings[2]["text"] = "1단계: 작은 예제를 실행한다"
         headings[-1]["text"] = "개발 기록: 실패한 입력과 복구 방법"
+    elif editorial_lane_for_identity(identity) == "developer_insight":
+        source["primary_query"] = "Agent Skills 사용처"
+        source["tags"] = [
+            "Agent Skills",
+            "AI 에이전트",
+            "GitHub",
+            "Codex",
+            "Claude Code",
+        ]
+        source["editorial"].update(
+            {
+                "headline": "Agent Skills는 어디에 쓰일까: GitHub 공개 스킬 생태계 지도",
+                "topic_key": "agent-skills-github-use-case-map",
+                "reader_question": "GitHub와 공식 문서에 공개된 Agent Skills는 개발 과정의 어느 작업에서 실제로 쓰일까?",
+                "entities": ["Agent Skills", "GitHub", "Codex", "Claude Code"],
+                "coverage": [
+                    "question",
+                    "sources",
+                    "mechanism",
+                    "comparison",
+                    "application",
+                    "limits",
+                    "judgment",
+                ],
+                "weekly_lane": "developer_insight",
+                "article_shape": "ecosystem_map",
+                "search_intent": {
+                    "query": "Agent Skills",
+                    "reader_need": "공개 스킬이 어떤 개발 업무에서 쓰이고 무엇을 기준으로 골라야 하는지 알고 싶다.",
+                    "answer_format": "공식 문서와 GitHub 표본을 용도별 지도와 비교표로 설명한다.",
+                },
+                "reader_hook": {
+                    "scene": "GitHub에서 Agent Skill을 검색했지만 비슷한 저장소가 너무 많아 용도를 구분하기 어려운 장면",
+                    "stakes": "인기 순위만 따라 설치하면 현재 프로젝트와 맞지 않는 지침이 작업 범위를 불필요하게 키울 수 있다.",
+                    "payoff": "공식 정의와 공개 표본을 개발 단계별로 분류해 지금 필요한 스킬을 고르는 지도를 얻는다.",
+                    "open_question": "공개 Agent Skills는 코딩·검증·문서화 중 어디에 가장 많이 쓰이고 어떤 빈틈이 남아 있을까?",
+                },
+                "opening": (
+                    "GitHub에서 Agent Skill을 검색하면 비슷한 저장소가 너무 많아 용도를 구분하기 어렵다. "
+                    "인기 순위만 따라 설치하면 프로젝트와 맞지 않는 지침이 작업 범위를 키울 수 있다. "
+                    "공식 정의와 공개 표본을 개발 단계별로 분류해 필요한 스킬을 고르는 기준을 만든다."
+                ),
+            }
+        )
+        source["editorial"]["revisit"]["artifact_type"] = "source_map"
+        source["editorial"]["original_value"].update(
+            {
+                "durable_question": "Agent Skills가 개발 업무의 어느 단계에 쓰이고 어떤 기준으로 선택해야 하는가?",
+                "source_gap": "공식 문서는 형식과 기능을 설명하지만 공개 스킬의 실제 용도 분포와 선택 기준은 한눈에 보여 주지 않는다.",
+                "contribution": "공식 문서와 GitHub 공개 표본을 같은 분류표에 놓고 개발 단계별 사용처와 선택 한계를 새로 정리한다.",
+                "proof_method": "source_triangulation",
+                "reader_outcome": "독자는 자신의 개발 단계에 맞는 스킬 유형과 설치 전 확인 기준을 고를 수 있다.",
+                "limits": "표본은 확인 시점의 공개 저장소에 한정되며 전체 생태계의 사용량을 대표하지 않는다.",
+            }
+        )
+        source["verification"] = {
+            "mode": "source_research",
+            "checked_at": f"{day}T09:05:00+09:00",
+            "source_count": 3,
+            "source_urls": [
+                "https://learn.chatgpt.com/docs/build-skills",
+                "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+                "https://github.com/anthropics/skills",
+            ],
+            "scope": "OpenAI와 Anthropic의 공식 문서, 공개 GitHub 스킬 저장소를 같은 기준으로 조사한다.",
+            "method": "스킬의 설명과 파일 구조를 읽고 코딩·검증·문서화·운영 용도로 분류한 뒤 공통점과 차이를 대조한다.",
+            "selection_rule": "공식 출처이거나 출처와 라이선스를 확인할 수 있는 공개 저장소만 표본에 포함한다.",
+            "limitations": "확인 시점의 공개 자료만 다루며 설치 수나 실제 조직 사용량으로 해석하지 않는다.",
+            "evidence_files": ["visual_3"],
+            "problem_lane": "Agent Skills 생태계",
+            "tool_brand": "OpenAI·Anthropic·GitHub",
+        }
+        cover_trend = {
+            "editorial_treatment": "documentary_closeup",
+            "focal_subject": "Agent Skills 공식 문서와 GitHub 저장소를 나란히 분류하는 개발자의 손",
+            "texture_cue": "실제 문서 화면과 인쇄한 분류 메모, 연필 표시의 질감",
+            "authenticity_cue": "공개 저장소 이름과 분류 흔적이 남은 현실적인 조사 책상",
+        }
+        source["visual"]["cover"].update(cover_trend)
+        source["images"]["cover"].update(
+            {
+                **cover_trend,
+                "alt": "Agent Skills 공식 문서와 GitHub 공개 스킬의 사용처를 분류하는 개발자 조사 장면",
+            }
+        )
+        readable_content = []
+        for block in source["news"][0]["content"]:
+            text = str(block.get("text") or "") if isinstance(block, dict) else ""
+            if isinstance(block, dict) and block.get("t") == "p" and len(text) > 220:
+                for start in range(0, len(text), 200):
+                    readable_content.append({"t": "p", "text": text[start:start + 200]})
+            else:
+                readable_content.append(block)
+        source["news"][0]["content"] = readable_content
     return source
 
 
@@ -602,6 +699,7 @@ class EditorialQualityTests(unittest.TestCase):
             ("2026-08-04", valid_daily_source("2026-08-04")),
             ("2026-08-05-guide", valid_guide_source("2026-08-05")),
             ("2026-08-08-automation", valid_automation_source("2026-08-08")),
+            ("2026-09-04-automation", valid_automation_source("2026-09-04")),
         ]
         for draft_id, source in cases:
             with self.subTest(draft_id=draft_id):
@@ -653,72 +751,29 @@ class EditorialQualityTests(unittest.TestCase):
             source_quality_reasons(monday, resolve_draft_identity("2026-08-31")),
         )
 
-    def test_future_automation_requires_a_beginner_walkthrough(self):
-        source = valid_automation_source("2026-08-28")
-        source["editorial"].pop("reader_walkthrough")
+    def test_developer_insight_requires_traceable_source_research(self):
+        source = valid_automation_source("2026-09-04")
+        identity = resolve_draft_identity("2026-09-04-automation")
 
-        self.assertIn(
-            "quality_reader_walkthrough",
-            source_quality_reasons(
-                source, resolve_draft_identity("2026-08-28-automation")
-            ),
-        )
+        self.assertNotIn("quality_reader_walkthrough", source_quality_reasons(source, identity))
+        source["verification"]["source_urls"] = source["verification"]["source_urls"][:2]
+        source["verification"]["source_count"] = 2
 
-    def test_future_automation_keeps_developer_proof_in_the_final_record(self):
-        source = valid_automation_source("2026-08-28")
-        source["news"][0]["content"][1]["text"] += " SHA-256과 소스 커밋을 먼저 확인한다."
+        reasons = source_quality_reasons(source, identity)
+        self.assertIn("quality_insight_evidence", reasons)
 
-        self.assertIn(
-            "quality_reader_walkthrough",
-            source_quality_reasons(
-                source, resolve_draft_identity("2026-08-28-automation")
-            ),
-        )
-
-    def test_future_automation_requires_easiest_method_before_code(self):
-        source = valid_automation_source("2026-08-28")
-        source["editorial"]["reader_walkthrough"].pop("easiest_method_considered")
-
-        self.assertIn(
-            "quality_reader_walkthrough",
-            source_quality_reasons(
-                source, resolve_draft_identity("2026-08-28-automation")
-            ),
-        )
-
-    def test_future_automation_collapses_long_code(self):
-        source = valid_automation_source("2026-08-28")
-        code = next(
+    def test_developer_insight_does_not_require_a_code_block(self):
+        source = valid_automation_source("2026-09-04")
+        source["news"][0]["content"] = [
             block
             for block in source["news"][0]["content"]
-            if block.get("t") == "code"
-        )
-        code["text"] = "\n".join(f"print({index})" for index in range(21))
+            if block.get("t") != "code"
+        ]
 
-        self.assertIn(
-            "quality_reader_walkthrough",
-            source_quality_reasons(
-                source, resolve_draft_identity("2026-08-28-automation")
-            ),
+        reasons = source_quality_reasons(
+            source, resolve_draft_identity("2026-09-04-automation")
         )
-
-    def test_future_automation_requires_a_useful_summary_for_collapsed_code(self):
-        source = valid_automation_source("2026-08-28")
-        code = next(
-            block
-            for block in source["news"][0]["content"]
-            if block.get("t") == "code"
-        )
-        code["text"] = "\n".join(f"print({index})" for index in range(21))
-        code["collapsed"] = True
-        code["summary"] = "코드"
-
-        self.assertIn(
-            "quality_reader_walkthrough",
-            source_quality_reasons(
-                source, resolve_draft_identity("2026-08-28-automation")
-            ),
-        )
+        self.assertNotIn("quality_depth", reasons)
 
     def test_tuesday_and_thursday_curiosity_articles_use_timeless_quality_rules(self):
         for day in ("2026-09-01", "2026-09-03"):

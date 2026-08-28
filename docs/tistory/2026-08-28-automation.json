@@ -1,42 +1,41 @@
 {
-  "title": "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
+  "title": "Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이",
   "title_candidates": [
-    "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
-    "세 업무 PDF가 한 권의 탐색 가능한 문서로 묶이고 잘못된 입력 한 장은 분리되는 장면: 합치는 도중 한 파일이 깨져도…"
+    "Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이",
+    "반복 업무의 매뉴얼을 하나의 스킬 폴더로 묶어 여러 개발 결과에 연결하는 구조: 매번 길어지는 프롬프트를 언제 재사용 가…"
   ],
-  "category": "자동화·실험",
+  "category": "AI·개발 도구",
   "draft_id": "2026-08-28-automation",
   "publish_date": "2026-08-28",
   "content_type": "automation_case",
-  "content_label": "업무자동화 실험",
+  "content_label": "개발·AI 인사이트",
   "publication_mode": "manual_review",
   "scheduled_at": "2026-08-28T09:00:00+09:00",
   "tags": [
-    "PDF 합치기",
-    "PDF 병합 자동화",
-    "PDF 책갈피",
-    "pypdf",
-    "문서 자동화",
-    "깨진 PDF",
-    "Mac 미리보기 PDF",
-    "PDF24"
+    "Agent Skills",
+    "AI 에이전트",
+    "프롬프트",
+    "MCP",
+    "Codex",
+    "GitHub Copilot",
+    "Claude Code"
   ],
-  "meta_description": "견적서·회의록·영수증 PDF를 한 번 합치려는데 Python 설치와 긴 코드부터 마주할 필요는 없다. Mac은 기본 미리보기 앱, Windows는 파일이 PC 밖으로 나가지 않는 PDF24 Creat… 한두 번 합칠 때는 코딩 없는 방법으로 끝내고, 같은 작업이 매달 반복될 때만 입력…",
+  "meta_description": "AI 에이전트에게 코드 리뷰 기준, 문서 형식, 배포 확인 순서를 매번 다시 설명하다 보면 프롬프트가 업무 매뉴얼처럼 길어진다. Agent Skills는 이 반복을 줄이기 위해 작업 지침과 참고자료,… 반복되는 전문 절차는 스킬로, 한 번성 요청은 프롬프트로, 외부 도구 연결은 MCP…",
   "key_summary": [
-    "1. PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
-    "직접 얻는 결과: Mac과 Windows에서 코딩 없이 PDF를 합치는 가장 쉬운 방법을 먼저 고르고, 같은 작업이 반복될 때만 안전한 Python 자동화로 확장할 수 있다."
+    "1. Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이",
+    "직접 얻는 결과: 독자는 네 방식의 차이와 Agent Skills의 실제 구조를 이해하고, 코드 리뷰·문서·배포 같은 반복 업무에 스킬을 쓸지 판단하는 선택표와 설치 전 점검표를 얻는다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
     "본문 이미지가 정상 표시되는지 확인하기",
     "원문 링크와 핵심 사실을 직접 대조해 확인하기",
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
-    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화"
+    "추천 제목: Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 15,
+  "estimated_read_minutes": 10,
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/automation_cases/2026-08-28.json",
@@ -45,47 +44,47 @@
   "before_ad_html": "docs/tistory/2026-08-28-automation-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-28-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-28-automation-adfit.html",
-  "source_sha256": "188bbd8ee6aaee2d469f9824e3a8c32839a0e45ac6e9506de6efecfb1dd8f4ac",
-  "html_sha256": "a4049e06c2beb89db33abfde9d14ee40ae91e91d05ea2dab5dcb46e23e2a8877",
-  "adfit_sha256": "6ff8d6051def123cc0cbca49885699dd192d4b322f69f294acf1d35c391593bf",
+  "source_sha256": "1a70d5e216b9526e86c1afde30abaa6eb301b996a8cc1cc2c040e96e52ab4489",
+  "html_sha256": "5f9bcc004708664acc27018ac7a1c5e0f3ad8a8d64fd97d29f3f75315d923d7f",
+  "adfit_sha256": "420129b51546f0501f9f7c8a7b69aa7db52169ae9829563415b04515ccee4f87",
   "image_assets": [
     {
       "kind": "cover",
       "title": "대표 이미지",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-업무지도-대표.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-업무지도-대표.webp",
       "original_url": "",
-      "alt": "PDF 합치기 후 세 책갈피가 꽂힌 한 문서와 결과에서 제외된 잘못된 입력 한 장",
+      "alt": "지침 카드와 참고자료가 든 Agent Skills 폴더가 코드 리뷰·문서·배포·보고서 결과에 연결된 장면",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_1",
       "title": "본문 이해 이미지 1",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-공식명세.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-공식명세.webp",
       "original_url": "",
-      "alt": "합성 업무 PDF 세 쪽과 견적서 회의록 영수증 책갈피 목적지가 일치한 실제 검증 화면",
+      "alt": "Agent Skills 공식 명세에서 SKILL.md와 scripts·references·assets 디렉터리 구조가 보이는 화면",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_2",
       "title": "본문 이해 이미지 2",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-점진적공개.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-점진적공개.webp",
       "original_url": "",
-      "alt": "깨진 PDF 입력에서 PdfStreamError가 난 뒤 임시 출력을 제거하고 헤더 검사로 재실행한 증거",
+      "alt": "Agent Skills가 목록·지침·자료를 필요한 순서대로 여는 점진적 공개 구조",
       "width": 1200,
       "height": 630
     },
     {
       "kind": "visual_3",
       "title": "본문 이해 이미지 3",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-선택지도.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-선택지도.webp",
       "original_url": "",
-      "alt": "PDF 입력 검사와 잘못된 파일 제외를 거쳐 안전 병합하고 책갈피를 확인하는 절차",
+      "alt": "프롬프트·상시 지침·Agent Skill·MCP를 요청 범위와 용도로 비교한 선택 지도",
       "width": 1200,
       "height": 630
     }

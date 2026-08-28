@@ -95,6 +95,15 @@ AUTOMATION_COVERAGE = {
     "failure",
     "rollback",
 }
+DEVELOPER_INSIGHT_COVERAGE = {
+    "question",
+    "sources",
+    "mechanism",
+    "comparison",
+    "application",
+    "limits",
+    "judgment",
+}
 GUIDE_COVERAGE = {
     "foundation",
     "request_flow",
@@ -213,6 +222,11 @@ TITLE_INTENT_MARKERS = {
     "실험",
     "구현",
     "로드맵",
+    "맵",
+    "분석",
+    "활용",
+    "쓰는",
+    "쓰일",
 }
 GENERIC_TAGS = {
     "ai",
@@ -266,6 +280,10 @@ ARTICLE_SHAPES = {
     "incident_trace",
     "troubleshooting",
     "research_interpretation",
+    "ecosystem_map",
+    "official_document_guide",
+    "evidence_based_list",
+    "developer_career_analysis",
 }
 REVISIT_ARTIFACT_TYPES = {
     "command_recipe",
@@ -274,6 +292,10 @@ REVISIT_ARTIFACT_TYPES = {
     "checklist",
     "troubleshooting_tree",
     "experiment_fixture",
+    "source_map",
+    "evaluation_matrix",
+    "skill_map",
+    "reading_guide",
 }
 RENDER_FAMILIES = {
     "photorealistic_natural",
@@ -369,6 +391,17 @@ def depth_policy_for(identity, article_shape=""):
         )
     if identity.content_type == "daily_news" and plain(article_shape) == "change_impact":
         policy.update(minimum_minutes=6, maximum_minutes=12)
+    if editorial_lane_for_identity(identity) == "developer_insight":
+        policy.update(
+            minimum_headings=5,
+            maximum_headings=8,
+            minimum_visuals=3,
+            maximum_visuals=6,
+            minimum_minutes=8,
+            maximum_minutes=20,
+            minimum_blocks=15,
+            required_block_types={"table", "ul"},
+        )
     return policy
 
 
@@ -732,7 +765,36 @@ def _schema_reasons(source, identity, *, require_images=True):
     revision = generation.get("revision")
     invalid |= not isinstance(revision, int) or isinstance(revision, bool)
 
-    if identity.content_type == "automation_case":
+    if (
+        identity.content_type == "automation_case"
+        and editorial_lane_for_identity(identity) == "developer_insight"
+    ):
+        verification = source.get("verification")
+        if not isinstance(verification, dict):
+            invalid = True
+            verification = {}
+        for key in (
+            "mode",
+            "checked_at",
+            "scope",
+            "method",
+            "selection_rule",
+            "limitations",
+            "problem_lane",
+            "tool_brand",
+        ):
+            invalid |= not _strict_text(verification.get(key))
+        invalid |= not _strict_text_list(
+            verification.get("source_urls"), minimum=3
+        )
+        invalid |= not _strict_text_list(
+            verification.get("evidence_files"), minimum=1
+        )
+        source_count = verification.get("source_count")
+        invalid |= not isinstance(source_count, int) or isinstance(
+            source_count, bool
+        )
+    elif identity.content_type == "automation_case":
         verification = source.get("verification")
         if not isinstance(verification, dict):
             invalid = True
@@ -890,6 +952,8 @@ def _editorial_reasons(source, identity):
         "evergreen_guide": GUIDE_COVERAGE,
         "project_log": PROJECT_COVERAGE,
     }.get(identity.content_type)
+    if weekly_lane == "developer_insight":
+        required_coverage = DEVELOPER_INSIGHT_COVERAGE
     if weekly_lane in CURIOSITY_LANES:
         required_coverage = CURIOSITY_COVERAGE
     if required_coverage is None:
@@ -1106,6 +1170,17 @@ def _weekly_lane_reasons(source, identity):
             "incident_trace",
             "troubleshooting",
         }
+    elif expected == "developer_insight":
+        invalid |= article_shape not in {
+            "ecosystem_map",
+            "official_document_guide",
+            "evidence_based_list",
+            "developer_career_analysis",
+            "research_interpretation",
+            "decision_guide",
+            "hands_on_test",
+            "troubleshooting",
+        }
     elif expected in CURIOSITY_LANES:
         invalid |= article_shape not in {
             "research_interpretation",
@@ -1122,6 +1197,7 @@ def _automation_walkthrough_reasons(source, identity):
     if (
         identity.content_type != "automation_case"
         or publish_day < FRIDAY_AUTOMATION_SCHEDULE_START
+        or editorial_lane_for_identity(identity) == "developer_insight"
     ):
         return []
 
@@ -1669,10 +1745,14 @@ def _visual_reasons(source, identity):
     )
     if provider != expected_provider:
         reasons.append("quality_visual_provenance")
-    if identity.content_type == "automation_case" and not any(
-        origin in {"capture", "annotated_capture"} for origin in origins
-    ):
-        reasons.append("quality_visual_provenance")
+    if identity.content_type == "automation_case":
+        required_evidence_origins = (
+            {"annotated_capture", "measured_chart"}
+            if editorial_lane_for_identity(identity) == "developer_insight"
+            else {"capture", "annotated_capture"}
+        )
+        if not any(origin in required_evidence_origins for origin in origins):
+            reasons.append("quality_visual_provenance")
     if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
         editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
         article_shape = plain(editorial.get("article_shape"))
@@ -1772,9 +1852,110 @@ def _visual_role_reasons(source, identity):
     return []
 
 
+def _developer_insight_evidence_reasons(source, identity):
+    """Require traceable research evidence without pretending every article is a test."""
+    verification = (
+        source.get("verification")
+        if isinstance(source.get("verification"), dict)
+        else {}
+    )
+    mode = plain(verification.get("mode"))
+    source_urls = verification.get("source_urls")
+    source_urls = source_urls if isinstance(source_urls, list) else []
+    canonical_sources = [_canonical_url(url) for url in source_urls]
+    evidence_files = verification.get("evidence_files")
+    evidence_files = evidence_files if isinstance(evidence_files, list) else []
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    evidence_valid = bool(evidence_files) and all(
+        isinstance(key, str)
+        and re.fullmatch(r"visual_\d+", plain(key))
+        and isinstance(images.get(plain(key)), dict)
+        and plain(images[plain(key)].get("origin"))
+        in {"annotated_capture", "measured_chart"}
+        for key in evidence_files
+    )
+
+    checked_at = _aware_datetime(verification.get("checked_at"))
+    scheduled = _aware_datetime(source.get("scheduled_at"))
+    deadline = _backfill_deadline(source, scheduled)
+    if not deadline and scheduled:
+        deadline = scheduled + timedelta(hours=6)
+    checked_at_valid = bool(
+        checked_at
+        and scheduled
+        and scheduled - timedelta(days=30) <= checked_at <= deadline
+    )
+
+    invalid = (
+        mode not in {"source_research", "measured_analysis", "executed"}
+        or len(source_urls) < 3
+        or any(not value for value in canonical_sources)
+        or len(set(canonical_sources)) != len(canonical_sources)
+        or verification.get("source_count") != len(source_urls)
+        or isinstance(verification.get("source_count"), bool)
+        or not checked_at_valid
+        or len(plain(verification.get("scope"))) < 30
+        or len(plain(verification.get("method"))) < 30
+        or len(plain(verification.get("selection_rule"))) < 30
+        or len(plain(verification.get("limitations"))) < 20
+        or len(plain(verification.get("problem_lane"))) < 2
+        or len(plain(verification.get("tool_brand"))) < 2
+        or not evidence_valid
+    )
+
+    if mode == "measured_analysis":
+        measured = verification.get("measurement_files")
+        invalid |= not (
+            isinstance(measured, list)
+            and measured
+            and all(
+                plain(key) in evidence_files
+                and isinstance(images.get(plain(key)), dict)
+                and plain(images[plain(key)].get("origin")) == "measured_chart"
+                for key in measured
+            )
+            and len(plain(verification.get("measurement_note"))) >= 20
+        )
+
+    if mode == "executed":
+        environment = (
+            verification.get("environment")
+            if isinstance(verification.get("environment"), dict)
+            else {}
+        )
+        commands = verification.get("commands")
+        started = _aware_datetime(verification.get("started_at"))
+        completed = _aware_datetime(verification.get("completed_at"))
+        invalid |= (
+            verification.get("command_exit_code") != 0
+            or isinstance(verification.get("command_exit_code"), bool)
+            or not started
+            or not completed
+            or not scheduled
+            or not scheduled - timedelta(days=14)
+            <= started
+            <= completed
+            <= deadline
+            or not isinstance(commands, list)
+            or not commands
+            or any(not _strict_text(command) for command in commands)
+            or any(
+                len(plain(verification.get(key))) < 20
+                for key in ("input_fixture", "expected", "actual", "failure", "rollback")
+            )
+            or any(
+                not _strict_text(environment.get(key))
+                for key in ("os", "runtime", "tool_version", "source_revision")
+            )
+        )
+    return ["quality_insight_evidence"] if invalid else []
+
+
 def _experiment_reasons(source, identity):
     if identity.content_type != "automation_case":
         return []
+    if editorial_lane_for_identity(identity) == "developer_insight":
+        return _developer_insight_evidence_reasons(source, identity)
     verification = source.get("verification") if isinstance(source.get("verification"), dict) else {}
     environment = verification.get("environment") if isinstance(verification.get("environment"), dict) else {}
     required_environment = {"os", "runtime", "tool_version", "source_revision"}

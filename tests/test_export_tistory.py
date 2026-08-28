@@ -447,6 +447,28 @@ class SaturdayAutomationExportTests(unittest.TestCase):
         self.assertNotIn("오늘의 핵심뉴스", body)
         self.assertTrue(meta["publish_ready"])
 
+    def test_future_friday_renders_the_developer_insight_heading(self):
+        insight = copy.deepcopy(LEAD_DAY)
+        insight.update(
+            {
+                "draft_id": "2026-09-04-automation",
+                "content_type": "automation_case",
+                "content_label": "개발·AI 인사이트",
+                "publish_date": "2026-09-04",
+                "scheduled_at": "2026-09-04T09:00:00+09:00",
+                "publication_mode": "manual_review",
+                "category": "AI·개발 도구",
+                "date_label": "2026. 9. 4",
+                "weekday": "금",
+            }
+        )
+
+        body = render_post("2026-09-04-automation", insight)
+
+        self.assertIn("개발·AI 인사이트", body)
+        self.assertIn("근거와 해설", body)
+        self.assertNotIn("실행 기록", body)
+
 
 class EditorialReadingFlowTests(unittest.TestCase):
     def test_inline_code_is_readable_and_escaped(self):

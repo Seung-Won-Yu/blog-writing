@@ -6,126 +6,109 @@
   "date_label": "2026. 8. 28",
   "weekday": "금",
   "content_type": "automation_case",
-  "content_label": "업무자동화 실험",
-  "category": "자동화·실험",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
   "publication_mode": "manual_review",
   "scheduled_at": "2026-08-28T09:00:00+09:00",
-  "primary_query": "PDF 합치기",
+  "primary_query": "Agent Skills 프롬프트 MCP 차이",
   "tags": [
-    "PDF 합치기",
-    "PDF 병합 자동화",
-    "PDF 책갈피",
-    "pypdf",
-    "문서 자동화",
-    "깨진 PDF",
-    "Mac 미리보기 PDF",
-    "PDF24"
+    "Agent Skills",
+    "AI 에이전트",
+    "프롬프트",
+    "MCP",
+    "Codex",
+    "GitHub Copilot",
+    "Claude Code"
   ],
   "editorial": {
-    "headline": "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
-    "opening": "견적서·회의록·영수증 PDF를 한 번 합치려는데 Python 설치와 긴 코드부터 마주할 필요는 없다. Mac은 기본 미리보기 앱, Windows는 파일이 PC 밖으로 나가지 않는 PDF24 Creator로 몇 번만 눌러 끝낼 수 있다. 같은 작업이 매달 반복되고 잘못된 파일까지 자동으로 걸러야 할 때만 Python 방식이 이득이다. 이 글은 가장 쉬운 방법부터 고른 뒤, 필요한 사람만 검증된 자동화까지 이어서 볼 수 있게 구성했다.",
-    "closing": "PDF를 한두 번 합친다면 운영체제 기본 기능이나 로컬 화면 도구가 가장 빠르다. 매달 같은 순서의 증빙이나 회의 자료를 묶고 책갈피와 입력 검사까지 반복할 때만 자동화의 준비 비용이 값을 한다. 테스트에서는 견적서·회의록·영수증 세 개가 3쪽짜리 한 파일로 합쳐졌고 잘못된 한 파일은 제외됐다.",
-    "action": "오늘 한 번만 합친다면 Mac 미리보기나 Windows PDF24를 사용하고, 정기 작업이라면 복사본 세 개로 접힌 자동화 코드를 시험한 뒤 페이지 순서와 책갈피를 확인한다.",
-    "audience_problem": "PDF 몇 개를 합치고 싶은 일반 독자가 한 번뿐인 작업에도 개발 환경을 설치하거나 민감한 업무 파일을 온라인 사이트에 올려야 한다고 느낀다.",
-    "reader_takeaway": "Mac과 Windows에서 코딩 없이 PDF를 합치는 가장 쉬운 방법을 먼저 고르고, 같은 작업이 반복될 때만 안전한 Python 자동화로 확장할 수 있다.",
-    "why_now": "문서가 늘수록 단순 병합보다 입력 검증과 탐색 가능한 결과가 중요해지며, 순서를 틀리거나 불완전 파일을 전달하면 수동 작업보다 복구 비용이 커진다.",
-    "topic_key": "safe-pdf-merge-with-bookmarks",
-    "reader_question": "PDF를 한두 번 합칠 때와 매달 반복할 때 각각 가장 쉽고 안전한 방법은 무엇일까?",
+    "headline": "Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이",
+    "opening": "AI 에이전트에게 코드 리뷰 기준, 문서 형식, 배포 확인 순서를 매번 다시 설명하다 보면 프롬프트가 업무 매뉴얼처럼 길어진다. Agent Skills는 이 반복을 줄이기 위해 작업 지침과 참고자료, 필요하면 실행 스크립트까지 폴더 하나로 묶는 방식이다. 다만 프롬프트나 MCP를 대신하는 만능 기능은 아니다. 네 도구의 경계를 알아야 필요한 곳에만 스킬을 쓸 수 있다.",
+    "closing": "Agent Skills의 핵심은 에이전트를 갑자기 더 똑똑하게 만드는 데 있지 않다. 반복해서 설명하던 일의 순서와 판단 기준을 검토 가능한 파일로 남기고, 필요한 순간에만 불러오게 만드는 데 있다. 프롬프트는 지금의 요청, 상시 지침은 늘 지킬 원칙, MCP는 외부 도구와의 연결이다. 이 세 가지 사이에 반복되는 전문 절차가 생겼을 때 스킬이 가장 큰 값을 한다.",
+    "action": "새 스킬을 찾기 전에 최근 한 달 동안 AI에게 세 번 이상 반복한 업무 하나를 고르고, 입력·작업 순서·성공 확인·실패 시 중단 조건을 네 줄로 먼저 적어 본다.",
+    "audience_problem": "AI 에이전트를 쓰는 개발자가 프롬프트, 저장소 지침, Agent Skills, MCP의 역할을 구분하지 못해 같은 설명을 반복하거나 필요 이상의 도구와 권한을 설치한다.",
+    "reader_takeaway": "독자는 네 방식의 차이와 Agent Skills의 실제 구조를 이해하고, 코드 리뷰·문서·배포 같은 반복 업무에 스킬을 쓸지 판단하는 선택표와 설치 전 점검표를 얻는다.",
+    "why_now": "Agent Skills가 공개 표준으로 확산되고 GitHub Copilot과 Codex 같은 도구가 이를 지원하면서, 공개 스킬을 무작정 설치하기보다 용도·출처·권한을 구분하는 기준이 필요해졌다.",
+    "topic_key": "agent-skills-prompt-mcp-decision-guide",
+    "reader_question": "Agent Skills는 프롬프트·상시 지침·MCP와 무엇이 다르고 개발 과정의 어느 작업에 쓰는 것이 좋을까?",
     "entities": [
-      "pypdf 6.16.2",
-      "PdfWriter",
-      "PdfReader",
-      "PDF 책갈피"
+      "Agent Skills",
+      "SKILL.md",
+      "GitHub Copilot",
+      "Codex",
+      "Claude Code",
+      "MCP"
     ],
     "coverage": [
-      "problem",
-      "setup",
-      "implementation",
-      "evidence",
+      "question",
+      "sources",
+      "mechanism",
       "comparison",
-      "failure",
-      "rollback"
+      "application",
+      "limits",
+      "judgment"
     ],
-    "weekly_lane": "executed_experiment",
-    "article_shape": "troubleshooting",
-    "reader_walkthrough": {
-      "reader_level": "beginner",
-      "prerequisites": [
-        "원본을 보존하기 위해 따로 만든 PDF 복사본",
-        "Mac 미리보기 앱 또는 Windows 10·11 컴퓨터",
-        "반복 자동화를 선택할 때만 Python 3.9 이상"
-      ],
-      "steps": [
-        "한두 번만 합친다면 운영체제에 맞는 기본·로컬 화면 방법을 고른다.",
-        "Mac은 미리보기 썸네일로, Windows는 PDF24 드래그 방식으로 순서를 맞춘다.",
-        "같은 규칙이 매달 반복될 때만 PDF 파일명 앞에 01·02·03 순서를 붙인다.",
-        "접힌 전체 코드를 저장하고 명령 한 줄로 실행한 뒤 생성 파일과 제외 목록을 확인한다."
-      ],
-      "success_check": "합쳐진 PDF를 열었을 때 모든 페이지가 원하는 순서로 보이고, 자동화 방식은 왼쪽 책갈피까지 입력 순서와 같으면 성공이다.",
-      "recovery": "순서가 틀리면 복사본으로 돌아가 썸네일이나 파일명을 다시 정렬하고, 자동화 오류는 임시 파일만 지운 뒤 제외 목록부터 확인한다.",
-      "easiest_method_considered": "Mac은 설치가 필요 없는 미리보기 앱을, Windows는 파일을 외부에 올리지 않는 로컬 PDF24 Creator를 먼저 사용한다.",
-      "code_needed_when": "같은 이름 규칙과 순서로 PDF를 매달 반복해서 합치고, 잘못된 입력 제외와 책갈피 생성까지 매번 확인해야 할 때만 코드를 선택한다."
-    },
+    "weekly_lane": "developer_insight",
+    "article_shape": "ecosystem_map",
     "reader_hook": {
-      "scene": "견적서·회의록·영수증 PDF를 한 번 합치려는데 Python 설치와 긴 코드부터 마주한 장면을 가장 쉬운 방법부터 다시 풀었다.",
-      "stakes": "한 번뿐인 작업에 개발 환경을 설치하면 해결보다 준비가 길어지고, 민감한 업무 문서를 무심코 온라인 서비스에 올릴 수도 있다.",
-      "payoff": "Mac 미리보기와 Windows 로컬 도구를 먼저 고르고, 매달 반복하는 사람만 잘못된 입력 제외와 책갈피가 있는 자동화로 확장한다.",
-      "open_question": "PDF 합치기는 언제 화면에서 몇 번 누르는 것으로 충분하고 언제부터 자동화가 더 쉬워질까?"
+      "scene": "코드 리뷰를 맡길 때마다 같은 기준과 결과 형식을 긴 프롬프트로 다시 붙여 넣는 장면",
+      "stakes": "프롬프트가 길어질수록 핵심 요청이 묻히고, 공개 스킬을 목적 없이 설치하면 불필요한 지침과 실행 권한까지 따라올 수 있다.",
+      "payoff": "프롬프트·상시 지침·스킬·MCP를 한 장의 선택 지도로 나눠 지금 필요한 방법만 고를 수 있다.",
+      "open_question": "반복되는 설명은 언제 프롬프트를 넘어 하나의 Agent Skill로 만들어야 할까?"
     },
     "search_intent": {
-      "query": "PDF 합치기",
-      "reader_need": "Mac과 Windows에서 PDF를 가장 쉽게 합치는 방법을 찾고, 반복 작업일 때만 자동화하는 기준도 알고 싶다.",
-      "answer_format": "운영체제별 쉬운 순서, 방법 선택표, 접어 둔 선택형 전체 코드, 성공 확인과 실패 복구"
+      "query": "Agent Skills",
+      "reader_need": "Agent Skills의 뜻과 사용처를 이해하고 프롬프트나 MCP 대신 언제 선택해야 하는지 알고 싶다.",
+      "answer_format": "네 방식 비교표, 공식 파일 구조, 개발 단계별 사용처, 설치 전 보안 점검표"
     },
     "revisit": {
-      "quick_answer": "Mac은 미리보기, Windows는 로컬 PDF24로 먼저 합치고, 같은 규칙이 매달 반복될 때만 파일명 순서와 입력 검사가 있는 자동화를 사용한다.",
-      "reuse_case": "월별 증빙, 회의 자료, 견적서 묶음처럼 파일명으로 순서를 정할 수 있는 반복 문서 배치에 접힌 전체 코드를 다시 사용할 수 있다.",
-      "failure_case": "암호화 PDF, 동적 폼, 전자서명 문서, 손상된 교차 참조가 섞이면 단순 헤더 검사만으로 충분하지 않아 별도 보존 검증이 필요하다.",
-      "artifact_type": "command_recipe",
+      "quick_answer": "같은 전문 절차를 여러 번 반복하고 참고자료나 검증 단계까지 함께 불러와야 할 때 Agent Skill을 쓴다.",
+      "reuse_case": "코드 리뷰, 문서 작성, 디자인 구현, 배포 확인처럼 입력은 달라도 작업 순서와 품질 기준이 반복되는 업무에 적용한다.",
+      "failure_case": "한 번성 요청을 스킬로 만들거나 검토하지 않은 외부 스크립트에 넓은 실행 권한을 주면 관리 비용과 보안 위험이 더 커진다.",
+      "artifact_type": "skill_map",
       "update_triggers": [
-        "pypdf 메이저 버전 변경",
-        "암호화 PDF 입력 추가",
-        "전자서명 보존 요구",
-        "동적 폼 문서 병합"
+        "Agent Skills 명세 변경",
+        "GitHub Copilot 스킬 경로 변경",
+        "Codex 스킬 지원 방식 변경",
+        "allowed-tools 필드 안정화"
       ]
     },
     "original_value": {
-      "durable_question": "여러 PDF를 합칠 때 쉬운 화면 방식과 반복 자동화를 어떻게 나누고 입력 오류와 탐색 불편까지 줄일 수 있을까?",
-      "source_gap": "운영체제별 공식 사용법과 Python 병합·책갈피 문서는 나뉘어 있어, 한두 번 작업과 정기 작업이 각각 무엇을 선택해야 하는지 한 흐름에서 판단하기 어렵다.",
-      "contribution": "Mac·Windows의 쉬운 로컬 방법을 먼저 비교하고, 합성 문서 세 개와 잘못된 PDF 한 개로 헤더 검사·임시 출력·책갈피 목적지 대조가 필요한 반복 자동화의 경계를 직접 확인했다.",
-      "proof_method": "executed_test",
-      "reader_outcome": "독자는 실제 자료를 건드리지 않고 같은 fixture로 실패와 복구를 확인한 뒤 자신의 문서 폴더에 적용 범위를 넓힐 수 있다.",
-      "limits": "암호화, 전자서명, 양식 필드, 매우 큰 PDF의 메모리 사용량과 시각적 레이아웃 보존은 이번 작은 실험에서 측정하지 않았다."
+      "durable_question": "Agent Skills를 프롬프트·상시 지침·MCP와 어떻게 구분하고 실제 개발 업무의 어느 단계에 적용해야 할까?",
+      "source_gap": "공식 문서는 각 기능과 파일 형식을 따로 설명하지만 네 방식을 하나의 선택 기준으로 비교하고 공개 스킬의 사용처와 설치 위험까지 이어서 보여 주지는 않는다.",
+      "contribution": "Agent Skills 명세, GitHub Copilot 문서, OpenAI와 Anthropic의 공식 사례를 같은 기준으로 대조해 역할·구조·사용처·보안 경계를 한 흐름으로 재구성했다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 반복 업무 하나를 스킬로 만들 가치가 있는지 판단하고, 공개 스킬을 설치하기 전에 파일·권한·출처를 점검할 수 있다.",
+      "limits": "제품별 지원 경로와 선택 필드는 달라질 수 있으며 공개 사례만으로 특정 스킬의 품질이나 실제 조직 사용량을 보증하지 않는다."
     }
   },
   "visual": {
-    "subject": "세 업무 PDF가 한 권의 탐색 가능한 문서로 묶이고 잘못된 입력 한 장은 분리되는 장면",
-    "hook": "합치는 도중 한 파일이 깨져도 반쪽짜리 결과를 남기지 않을 수 있을까?",
-    "motif": "두꺼운 문서 묶음, 세 책갈피 탭, 제외된 종이 한 장, 실제 출력 페이지",
+    "subject": "반복 업무의 매뉴얼을 하나의 스킬 폴더로 묶어 여러 개발 결과에 연결하는 구조",
+    "hook": "매번 길어지는 프롬프트를 언제 재사용 가능한 스킬로 바꿔야 할까?",
+    "motif": "열린 스킬 폴더, 지침 카드, 참고자료, 스크립트, 코드 리뷰·문서·배포·보고서 결과",
     "cover": {
-      "label": "세 책갈피가 꽂힌 한 문서와 제외된 잘못된 입력 한 장",
+      "label": "하나의 스킬 폴더가 여러 개발 업무 결과에 연결되는 장면",
       "scene_label": [
-        "한 파일로 병합",
-        "책갈피 세 개",
-        "잘못된 입력 제외"
+        "반복 지침 한 묶음",
+        "여러 업무에 재사용",
+        "필요한 자료 연결"
       ],
-      "steps": "유효한 세 문서가 한 권으로 묶이고 잘못된 한 장은 결과 밖에 남는다.",
-      "curiosity_hook": "확장자는 PDF인데 실제 문서가 아니면 병합은 어디에서 멈출까?",
+      "steps": "지침·스크립트·참고자료를 한 폴더에 묶고 코드 리뷰·문서·배포·보고서 작업에 재사용한다.",
+      "curiosity_hook": "하나의 폴더가 서로 다른 네 가지 업무에서 어떻게 같은 기준을 지켜 줄까?",
       "logic_type": "single_moment",
       "content_role": "hook",
       "origin": "imagegen",
       "cover_kind": "editorial_scene",
-      "art_direction": "navigable_document_object",
-      "composition_type": "bound_volume_bookmark_tabs",
-      "palette_family": "cobalt_coral_parchment",
+      "art_direction": "reusable_work_manual",
+      "composition_type": "central_skill_folder_with_outputs",
+      "palette_family": "forest_teal_ivory_orange",
       "render_family": "isometric_model",
       "editorial_treatment": "quiet_minimalism",
-      "focal_subject": "세 개 책갈피가 꽂힌 병합 문서 한 권과 옆에 분리된 잘못된 입력 종이",
-      "texture_cue": "무광 종이 단면과 반투명 탭, 눌린 책등의 미세한 질감",
-      "authenticity_cue": "조금씩 어긋난 페이지와 책갈피 간격, 실제 제본에서 생기는 자연스러운 그림자",
+      "focal_subject": "지침 카드와 참고자료가 든 중앙 폴더에서 네 가지 작업 결과로 가는 연결",
+      "texture_cue": "무광 종이, 반투명 인덱스 탭, 연필 표시와 실제 책상 그림자",
+      "authenticity_cue": "조금씩 어긋난 카드와 종이 가장자리, 실제 업무 파일처럼 눌린 흔적",
       "korean_labels": [],
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nAsset type: Korean blog cover image, 1200x630 landscape\nPrimary request: Show one finished combined office document as a tactile isometric model, opened slightly on a quiet desk, with exactly three distinct colored bookmark tabs visibly marking three sections. Beside it lies one small rejected torn sheet whose corner reveals it is invalid, separated from the finished volume. The scene must instantly communicate “three PDFs combined into one navigable file after rejecting one bad input.”\nScene/backdrop: clean warm-gray work surface with subtle real shadows, no room interior.\nSubject: one thick merged document volume, three bookmark tabs, one rejected loose sheet.\nStyle/medium: refined editorial isometric miniature, quiet minimalism, realistic matte paper and translucent tabs, not a UI.\nComposition/framing: single close object scene centered in the middle 55%, slight overhead three-quarter angle, generous breathing room; no arrows, no cards, no flowchart.\nLighting/mood: soft directional studio light, calm and trustworthy.\nColor palette: cobalt blue, coral orange, pale parchment, charcoal accents.\nMaterials/textures: matte paper edges, translucent bookmark plastic, embossed spine, slight natural page misalignment.\nText: no readable text, no letters, no numbers.\nAuthenticity cue: believable page thickness, imperfect tab alignment, physical binding shadow.\nConstraints: editorial_scene; cover_kind editorial_scene; art_direction navigable_document_object; composition_type bound_volume_bookmark_tabs; palette_family cobalt_coral_parchment; render_family isometric_model; editorial_treatment quiet_minimalism; focal_subject one combined document with three tabs and one rejected sheet.\nAvoid: people, hands, laptops, screens, logos, fake dashboards, charts, tables, title slides, split panels, grids, multiple cards, step arrows, roadmaps, process diagrams, neon, generic AI imagery, robots, watermarks.",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nAsset type: Korean technology magazine blog cover, 1200x630 landscape\nPrimary request: Create an editorial cover image about Agent Skills as reusable operating manuals for AI agents. Show a clean three-quarter overhead desk scene with one central open folder containing modular instruction cards, a small script sheet, reference notes, and an asset tile. Thin physical connector lines lead from the folder to four recognizable work outcomes: a checked code review sheet, a polished document page, a small deployment package, and a chart/report. The subject should communicate one reusable skill guides many different tasks.\nScene/backdrop: quiet warm-gray studio desk, no room interior.\nStyle/medium: premium tactile editorial illustration, realistic paper and translucent folder materials, subtle isometric depth, modern Korean IT magazine mood.\nComposition/framing: one strong central folder occupying the middle 55%, four smaller outcomes around it, generous negative space, readable at mobile thumbnail size.\nLighting/mood: soft directional studio light, intelligent, calm, useful.\nColor palette: deep forest green, teal, warm ivory, muted orange accent, charcoal.\nMaterials/textures: matte paper, translucent index tabs, subtle pencil marks, realistic shadows.\nText: no readable text, no letters, no numbers.\nConstraints: no brand logos, no UI screenshot, no fake dashboard, no human face, no robot, no glowing brain, no circuit-board cliché, no watermark.\nAvoid: generic AI orb, neon cyberpunk, dense flowchart, multiple panels, tiny labels, illegible text.",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -136,22 +119,24 @@
     },
     "assets": [
       {
-        "label": "실제 병합 PDF 세 쪽과 책갈피 목적지 검증",
+        "label": "Agent Skills 공식 명세에서 확인한 폴더 구조",
         "scene_label": [
-          "출력 3쪽",
-          "책갈피 3개",
-          "깨진 입력 1개 제외"
+          "SKILL.md 필수",
+          "scripts 선택",
+          "references 선택",
+          "assets 선택"
         ],
-        "steps": "생성된 PDF를 다시 읽어 페이지 수와 각 책갈피의 실제 목적지를 기대값과 대조한다.",
-        "curiosity_hook": "세 책갈피는 정말 견적서·회의록·영수증의 첫 쪽을 가리킬까?",
+        "steps": "공식 명세 화면에서 필수 파일과 선택 디렉터리를 직접 확인한다.",
+        "curiosity_hook": "Agent Skill을 만들려면 거대한 플러그인부터 개발해야 할까?",
         "evidence_type": "screenshot",
         "logic_type": "evidence",
         "content_role": "explanation",
         "origin": "capture",
-        "capture_tool": "playwright",
-        "capture_target": "local pypdf experiment result page",
-        "captured_at": "2026-08-28T09:11:19+09:00",
-        "capture_note": "합성 PDF를 실제로 렌더링한 세 페이지와 result.json의 페이지·책갈피·제외 수치를 같은 로컬 증거 화면에 배치했다.",
+        "capture_tool": "browser",
+        "capture_target": "https://agentskills.io/specification",
+        "captured_at": "2026-08-28T10:12:00+09:00",
+        "capture_note": "Agent Skills 공식 명세의 Directory structure와 SKILL.md format이 함께 보이는 화면을 브라우저에서 직접 캡처했다.",
+        "source_url": "https://agentskills.io/specification",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -161,54 +146,55 @@
         }
       },
       {
-        "label": "잘못된 PDF가 만든 실패와 불완전 출력 롤백",
+        "label": "필요한 순간에만 세부 자료를 여는 점진적 공개 구조",
         "scene_label": [
-          "PdfStreamError",
-          "임시 출력 제거",
-          "헤더 검사 후 재실행"
+          "목록은 작게",
+          "지침은 필요할 때",
+          "자료는 그때만"
         ],
-        "steps": "확장자만 믿은 병합 실패 → 임시·불완전 출력 제거 → %PDF- 헤더 검사 → 안전 재실행",
-        "curiosity_hook": "이미 세 문서를 읽은 뒤 네 번째에서 실패하면 무엇을 남기지 말아야 할까?",
-        "evidence_type": "screenshot",
-        "logic_type": "conditional",
-        "content_role": "explanation",
-        "origin": "annotated_capture",
-        "condition": "입력 파일이 .pdf 확장자를 가졌지만 PDF 헤더와 EOF 구조를 갖추지 못한 경우",
-        "capture_tool": "playwright",
-        "capture_target": "local pypdf failure recovery report",
-        "captured_at": "2026-08-28T09:11:37+09:00",
-        "capture_note": "실제 stderr와 종료 코드 2의 실패, 임시 파일 제거, 헤더 검사 후 종료 코드 0으로 통과한 값을 기사 전용 화면에 주석으로 정리했다.",
-        "qa": {
-          "topic_match": true,
-          "caption_match": true,
-          "mobile_readable": true,
-          "text_reviewed": true,
-          "not_generic": true
-        }
-      },
-      {
-        "label": "입력 검사부터 최종 PDF 책갈피 확인까지의 안전 절차",
-        "scene_label": [
-          "입력 검사",
-          "잘못된 파일 제외",
-          "안전 병합",
-          "책갈피·최종 PDF"
-        ],
-        "steps": "입력 헤더 확인 → 잘못된 파일 분리 → 임시 파일 병합 → 책갈피 목적지 확인 → 최종 이름 확정",
-        "curiosity_hook": "병합보다 앞과 뒤에 어떤 검사를 두어야 반쪽짜리 결과를 막을까?",
+        "steps": "이름·설명 목록 → 전체 SKILL.md 지침 → 필요한 스크립트·참고자료·자산 순서로 연다.",
+        "curiosity_hook": "설치한 모든 스킬의 긴 설명을 에이전트가 매번 한꺼번에 읽는 걸까?",
         "evidence_type": "diagram",
         "logic_type": "flow",
         "content_role": "explanation",
         "origin": "imagegen",
         "generation_model": "gpt-image-2",
-        "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean technical explainer image for a blog article, 1200x630 landscape\nPrimary request: Explain the safe PDF merge logic as one clear left-to-right physical document workflow using four stages and exact Korean labels.\nScene/backdrop: light neutral background with subtle paper texture.\nSubject: four connected objects: a small stack of incoming PDF sheets, a header inspection magnifier, one thick merged document, and three colored bookmark tabs inside the final document. A small invalid sheet branches downward into a rejected tray.\nStyle/medium: crisp editorial technical illustration, dimensional paper objects with restrained isometric depth, not a screenshot.\nComposition/framing: simple horizontal process diagram across the center with one small downward rejection branch; large labels readable on mobile.\nLighting/mood: bright, precise, calm.\nColor palette: cobalt blue, coral orange, mint green, warm gray.\nText (verbatim): \"입력 검사\", \"잘못된 파일 제외\", \"안전 병합\", \"책갈피 확인\", \"최종 PDF\"\nConstraints: include each Korean label exactly once; show three valid documents becoming one three-section final PDF; show one invalid document separated before merge; no extra numbers or English.\nAvoid: logos, fake UI, dashboard cards, people, laptops, robots, generic database cylinders, decorative charts, tiny text, misspelled Korean, watermark.",
+        "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean technical explainer image for a blog article, 1200x630 landscape\nPrimary request: Explain progressive disclosure in Agent Skills as three large connected physical layers that open only when needed.\nScene/backdrop: clean warm ivory background with subtle paper texture.\nSubject: three horizontal stages connected left to right. Stage 1 is a small index card representing skill metadata. Stage 2 is an opened instruction booklet representing the full SKILL.md. Stage 3 is a tidy resource box containing a script sheet, reference note, and image asset tile. Use one calm arrow between stages.\nStyle/medium: premium tactile editorial infographic, paper craft with restrained isometric depth, simple enough for a mobile blog.\nComposition/framing: three equal stages across the center, ample whitespace, large Korean labels.\nLighting/mood: bright, precise, calm.\nColor palette: forest green, teal, warm ivory, muted orange accent.\nText (verbatim): \"1 목록\", \"2 지침\", \"3 자료\", \"항상 작게\", \"필요할 때\", \"그때만 열기\"\nConstraints: include each Korean phrase exactly once; no other readable text; the resource box must visibly contain three different resource types; no brand logos.\nAvoid: fake dashboard, robot, glowing brain, dense flowchart, tiny text, misspelled Korean, extra numbers, watermark.",
         "korean_labels": [
-          "입력 검사",
-          "잘못된 파일 제외",
-          "안전 병합",
-          "책갈피 확인",
-          "최종 PDF"
+          "목록",
+          "지침",
+          "자료",
+          "항상 작게",
+          "필요할 때",
+          "그때만 열기"
         ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "프롬프트·상시 지침·Agent Skill·MCP 선택 지도",
+        "scene_label": [
+          "한 번성 요청",
+          "항상 지킬 원칙",
+          "반복 전문 절차",
+          "외부 도구 연결"
+        ],
+        "steps": "요청의 반복성·적용 범위·외부 연결 필요를 기준으로 네 방식을 나눠 고른다.",
+        "curiosity_hook": "긴 프롬프트를 스킬로 바꾸는 것과 MCP를 연결하는 것은 같은 일일까?",
+        "evidence_type": "screenshot",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "capture_tool": "terminal",
+        "capture_target": "official-source comparison matrix rendered for this article",
+        "captured_at": "2026-08-28T10:18:00+09:00",
+        "capture_note": "Agent Skills 명세와 GitHub·OpenAI·Anthropic 공식 설명을 역할·적용 범위·외부 연결 기준으로 대조해 기사 전용 선택 지도로 렌더링했다.",
+        "source_url": "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -222,27 +208,27 @@
   "generation": {
     "provider": "codex-agent",
     "model": "gpt-5.6-sol",
-    "revision": 12,
+    "revision": 13,
     "image_provider": "mixed",
     "image_policy": "webp-v1"
   },
   "images": {
     "cover": {
       "origin": "imagegen",
-      "alt": "PDF 합치기 후 세 책갈피가 꽂힌 한 문서와 결과에서 제외된 잘못된 입력 한 장",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
+      "alt": "지침 카드와 참고자료가 든 Agent Skills 폴더가 코드 리뷰·문서·배포·보고서 결과에 연결된 장면",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-업무지도-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-업무지도-대표.webp",
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nAsset type: Korean blog cover image, 1200x630 landscape\nPrimary request: Show one finished combined office document as a tactile isometric model, opened slightly on a quiet desk, with exactly three distinct colored bookmark tabs visibly marking three sections. Beside it lies one small rejected torn sheet whose corner reveals it is invalid, separated from the finished volume. The scene must instantly communicate “three PDFs combined into one navigable file after rejecting one bad input.”\nScene/backdrop: clean warm-gray work surface with subtle real shadows, no room interior.\nSubject: one thick merged document volume, three bookmark tabs, one rejected loose sheet.\nStyle/medium: refined editorial isometric miniature, quiet minimalism, realistic matte paper and translucent tabs, not a UI.\nComposition/framing: single close object scene centered in the middle 55%, slight overhead three-quarter angle, generous breathing room; no arrows, no cards, no flowchart.\nLighting/mood: soft directional studio light, calm and trustworthy.\nColor palette: cobalt blue, coral orange, pale parchment, charcoal accents.\nMaterials/textures: matte paper edges, translucent bookmark plastic, embossed spine, slight natural page misalignment.\nText: no readable text, no letters, no numbers.\nAuthenticity cue: believable page thickness, imperfect tab alignment, physical binding shadow.\nConstraints: editorial_scene; cover_kind editorial_scene; art_direction navigable_document_object; composition_type bound_volume_bookmark_tabs; palette_family cobalt_coral_parchment; render_family isometric_model; editorial_treatment quiet_minimalism; focal_subject one combined document with three tabs and one rejected sheet.\nAvoid: people, hands, laptops, screens, logos, fake dashboards, charts, tables, title slides, split panels, grids, multiple cards, step arrows, roadmaps, process diagrams, neon, generic AI imagery, robots, watermarks.",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nAsset type: Korean technology magazine blog cover, 1200x630 landscape\nPrimary request: Create an editorial cover image about Agent Skills as reusable operating manuals for AI agents. Show a clean three-quarter overhead desk scene with one central open folder containing modular instruction cards, a small script sheet, reference notes, and an asset tile. Thin physical connector lines lead from the folder to four recognizable work outcomes: a checked code review sheet, a polished document page, a small deployment package, and a chart/report. The subject should communicate one reusable skill guides many different tasks.\nScene/backdrop: quiet warm-gray studio desk, no room interior.\nStyle/medium: premium tactile editorial illustration, realistic paper and translucent folder materials, subtle isometric depth, modern Korean IT magazine mood.\nComposition/framing: one strong central folder occupying the middle 55%, four smaller outcomes around it, generous negative space, readable at mobile thumbnail size.\nLighting/mood: soft directional studio light, intelligent, calm, useful.\nColor palette: deep forest green, teal, warm ivory, muted orange accent, charcoal.\nMaterials/textures: matte paper, translucent index tabs, subtle pencil marks, realistic shadows.\nText: no readable text, no letters, no numbers.\nConstraints: no brand logos, no UI screenshot, no fake dashboard, no human face, no robot, no glowing brain, no circuit-board cliché, no watermark.\nAvoid: generic AI orb, neon cyberpunk, dense flowchart, multiple panels, tiny labels, illegible text.",
       "cover_kind": "editorial_scene",
-      "art_direction": "navigable_document_object",
-      "composition_type": "bound_volume_bookmark_tabs",
-      "palette_family": "cobalt_coral_parchment",
+      "art_direction": "reusable_work_manual",
+      "composition_type": "central_skill_folder_with_outputs",
+      "palette_family": "forest_teal_ivory_orange",
       "render_family": "isometric_model",
       "editorial_treatment": "quiet_minimalism",
-      "focal_subject": "세 개 책갈피가 꽂힌 병합 문서 한 권과 옆에 분리된 잘못된 입력 종이",
-      "texture_cue": "무광 종이 단면과 반투명 탭, 눌린 책등의 미세한 질감",
-      "authenticity_cue": "조금씩 어긋난 페이지와 책갈피 간격, 실제 제본에서 생기는 자연스러운 그림자",
+      "focal_subject": "지침 카드와 참고자료가 든 중앙 폴더에서 네 가지 작업 결과로 가는 연결",
+      "texture_cue": "무광 종이, 반투명 인덱스 탭, 연필 표시와 실제 책상 그림자",
+      "authenticity_cue": "조금씩 어긋난 카드와 종이 가장자리, 실제 업무 파일처럼 눌린 흔적",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -253,18 +239,18 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 42232,
+      "bytes": 46336,
       "quality": 82,
-      "sha256": "5e73b8c062e8c0133a6a3cba4ab0a00c8e8203b9d8f50b9afff7361d588cfdc4"
+      "sha256": "06227796ef5767822d57b9f1e632d1b4ea9835d897fbb46c1617e5fc4dae1653"
     },
     "visual_1": {
       "origin": "capture",
-      "alt": "합성 업무 PDF 세 쪽과 견적서 회의록 영수증 책갈피 목적지가 일치한 실제 검증 화면",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
-      "capture_tool": "playwright",
-      "capture_target": "local pypdf experiment result page",
-      "captured_at": "2026-08-28T09:11:19+09:00",
+      "alt": "Agent Skills 공식 명세에서 SKILL.md와 scripts·references·assets 디렉터리 구조가 보이는 화면",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-공식명세.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-공식명세.webp",
+      "capture_tool": "browser",
+      "capture_target": "https://agentskills.io/specification",
+      "captured_at": "2026-08-28T10:12:00+09:00",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -275,19 +261,18 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 26688,
+      "bytes": 39134,
       "quality": 82,
-      "sha256": "1accd57d6d0fe4f23cfea7daf320aeef7206936a309d869f3f3d776501a076a8",
-      "capture_sha256": "1accd57d6d0fe4f23cfea7daf320aeef7206936a309d869f3f3d776501a076a8"
+      "sha256": "c63d1363d8d15e5dbc47dab194f02c949b112508a92838e92c2cc38fb09f1f6b",
+      "capture_sha256": "c63d1363d8d15e5dbc47dab194f02c949b112508a92838e92c2cc38fb09f1f6b"
     },
     "visual_2": {
-      "origin": "annotated_capture",
-      "alt": "깨진 PDF 입력에서 PdfStreamError가 난 뒤 임시 출력을 제거하고 헤더 검사로 재실행한 증거",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
-      "capture_tool": "playwright",
-      "capture_target": "local pypdf failure recovery report",
-      "captured_at": "2026-08-28T09:11:37+09:00",
+      "origin": "imagegen",
+      "alt": "Agent Skills가 목록·지침·자료를 필요한 순서대로 여는 점진적 공개 구조",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-점진적공개.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-점진적공개.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean technical explainer image for a blog article, 1200x630 landscape\nPrimary request: Explain progressive disclosure in Agent Skills as three large connected physical layers that open only when needed.\nScene/backdrop: clean warm ivory background with subtle paper texture.\nSubject: three horizontal stages connected left to right. Stage 1 is a small index card representing skill metadata. Stage 2 is an opened instruction booklet representing the full SKILL.md. Stage 3 is a tidy resource box containing a script sheet, reference note, and image asset tile. Use one calm arrow between stages.\nStyle/medium: premium tactile editorial infographic, paper craft with restrained isometric depth, simple enough for a mobile blog.\nComposition/framing: three equal stages across the center, ample whitespace, large Korean labels.\nLighting/mood: bright, precise, calm.\nColor palette: forest green, teal, warm ivory, muted orange accent.\nText (verbatim): \"1 목록\", \"2 지침\", \"3 자료\", \"항상 작게\", \"필요할 때\", \"그때만 열기\"\nConstraints: include each Korean phrase exactly once; no other readable text; the resource box must visibly contain three different resource types; no brand logos.\nAvoid: fake dashboard, robot, glowing brain, dense flowchart, tiny text, misspelled Korean, extra numbers, watermark.",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -298,18 +283,18 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 27326,
+      "bytes": 45400,
       "quality": 82,
-      "sha256": "d69fd56ad386a700546798c5665a620b58f78fde8220056ef77f13be8a8f3bc9",
-      "capture_sha256": "d69fd56ad386a700546798c5665a620b58f78fde8220056ef77f13be8a8f3bc9"
+      "sha256": "f4048ab208b0f76e3b4f54c20f678640112585d3266f5f9081f427c7b00adaed"
     },
     "visual_3": {
-      "origin": "imagegen",
-      "alt": "PDF 입력 검사와 잘못된 파일 제외를 거쳐 안전 병합하고 책갈피를 확인하는 절차",
-      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
-      "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: infographic-diagram\nAsset type: Korean technical explainer image for a blog article, 1200x630 landscape\nPrimary request: Explain the safe PDF merge logic as one clear left-to-right physical document workflow using four stages and exact Korean labels.\nScene/backdrop: light neutral background with subtle paper texture.\nSubject: four connected objects: a small stack of incoming PDF sheets, a header inspection magnifier, one thick merged document, and three colored bookmark tabs inside the final document. A small invalid sheet branches downward into a rejected tray.\nStyle/medium: crisp editorial technical illustration, dimensional paper objects with restrained isometric depth, not a screenshot.\nComposition/framing: simple horizontal process diagram across the center with one small downward rejection branch; large labels readable on mobile.\nLighting/mood: bright, precise, calm.\nColor palette: cobalt blue, coral orange, mint green, warm gray.\nText (verbatim): \"입력 검사\", \"잘못된 파일 제외\", \"안전 병합\", \"책갈피 확인\", \"최종 PDF\"\nConstraints: include each Korean label exactly once; show three valid documents becoming one three-section final PDF; show one invalid document separated before merge; no extra numbers or English.\nAvoid: logos, fake UI, dashboard cards, people, laptops, robots, generic database cylinders, decorative charts, tiny text, misspelled Korean, watermark.",
+      "origin": "annotated_capture",
+      "alt": "프롬프트·상시 지침·Agent Skill·MCP를 요청 범위와 용도로 비교한 선택 지도",
+      "path": "docs/tistory/assets/2026-08-28-automation/Agent-Skills-선택지도.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/Agent-Skills-선택지도.webp",
+      "capture_tool": "terminal",
+      "capture_target": "official-source comparison matrix rendered for this article",
+      "captured_at": "2026-08-28T10:18:00+09:00",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -320,333 +305,318 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 50452,
+      "bytes": 38122,
       "quality": 82,
-      "sha256": "8243587f19aa7ca43ebb9f4d4f16752a9a51ba9c2caeb7d1cf92dd5962500ccf"
+      "sha256": "980d6ed3530ae5daa57cd9029d9aecba2b96d5837c63948313082ca63aa06ddd",
+      "capture_sha256": "980d6ed3530ae5daa57cd9029d9aecba2b96d5837c63948313082ca63aa06ddd"
     }
   },
   "news": [
     {
-      "title_kr": "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
-      "source": "Apple 지원 · PDF24 · pypdf 공식 문서",
-      "url": "https://support.apple.com/ko-kr/guide/preview/prvw43696/mac",
+      "title_kr": "Agent Skills는 어디에 쓰일까: 프롬프트·MCP와의 차이",
+      "source": "Agent Skills 명세 · GitHub Docs · OpenAI · Anthropic",
+      "url": "https://agentskills.io/specification",
       "published_at": "2026-08-28T00:00:00+09:00",
-      "blurb_kr": "한두 번 합칠 때는 코딩 없는 방법으로 끝내고, 같은 작업이 매달 반복될 때만 입력 검사와 책갈피가 있는 자동화로 확장한다.",
+      "blurb_kr": "반복되는 전문 절차는 스킬로, 한 번성 요청은 프롬프트로, 외부 도구 연결은 MCP로 나누면 AI 에이전트의 작업 구조가 선명해진다.",
       "references": [
         {
-          "title": "Mac용 미리보기에서 PDF 통합하기",
-          "url": "https://support.apple.com/ko-kr/guide/preview/prvw43696/mac",
+          "title": "Agent Skills Specification",
+          "url": "https://agentskills.io/specification",
           "kind": "official"
         },
         {
-          "title": "PDF24 Creator",
-          "url": "https://tools.pdf24.org/ko/creator",
+          "title": "About agent skills",
+          "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
           "kind": "official"
         },
         {
-          "title": "Merging PDF files",
-          "url": "https://pypdf.readthedocs.io/en/stable/user/merging-pdfs.html",
-          "kind": "documentation"
+          "title": "Adding agent skills for GitHub Copilot",
+          "url": "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills",
+          "kind": "official"
         },
         {
-          "title": "Handling Outlines",
-          "url": "https://pypdf.readthedocs.io/en/stable/user/handling-outlines.html",
-          "kind": "documentation"
+          "title": "Introducing the Codex app",
+          "url": "https://openai.com/index/introducing-the-codex-app/",
+          "kind": "official"
         },
         {
-          "title": "Create and Modify PDF Files in Python",
-          "url": "https://realpython.com/creating-modifying-pdf/",
-          "kind": "independent"
+          "title": "Equipping agents for the real world with Agent Skills",
+          "url": "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+          "kind": "official"
+        },
+        {
+          "title": "Agent Skill Security: Threat Models, Attacks, Defenses, and Evaluation",
+          "url": "https://arxiv.org/abs/2607.13987",
+          "kind": "research"
         }
       ],
       "content": [
         {
           "t": "h",
-          "text": "어떤 방법이 가장 쉬울까?"
+          "text": "프롬프트를 잘 써도 같은 설명이 반복되는 이유"
         },
         {
           "t": "p",
-          "text": "견적서·회의록·영수증을 한 파일로 보내려는 순간, 검색 결과가 Python 코드부터 보여 주면 해결보다 준비가 더 커진다. 한두 번 합치는 일이라면 프로그램을 만들 이유가 없다. Mac은 기본 미리보기 앱으로 끝낼 수 있고, Windows는 PDF24 Creator처럼 파일을 컴퓨터 안에서 처리하는 화면 도구가 더 쉽다."
+          "text": "코드 리뷰를 맡길 때는 보안·성능·테스트 기준을 붙이고, 보고서를 만들 때는 제목 구조와 표 형식을 다시 적는다. 한 번은 괜찮지만 같은 설명을 세 번째 붙여 넣는 순간부터 프롬프트는 질문이 아니라 복사해 쓰는 업무 매뉴얼이 된다."
         },
         {
           "t": "p",
-          "text": "자동화가 필요한 경우는 따로 있다. 매달 같은 형식의 문서를 같은 순서로 묶고, 이름만 PDF인 잘못된 파일을 걸러내며, 긴 결과에 문서별 책갈피까지 넣어야 할 때다. 아래 표에서 자신의 상황 한 줄만 고르면 된다. 처음부터 모든 방법을 따라 할 필요는 없다."
+          "text": "Agent Skill은 바로 그 매뉴얼을 파일로 분리한다. 특정 업무가 들어왔을 때만 절차를 읽고, 필요한 참고자료와 스크립트를 함께 사용한다. 프롬프트를 없애는 기능이 아니라 프롬프트에 매번 붙이던 반복 절차를 재사용 가능하게 만드는 장치에 가깝다."
         },
         {
           "t": "table",
-          "caption": "PDF를 합치는 상황별 가장 쉬운 선택",
+          "caption": "프롬프트·상시 지침·Agent Skill·MCP를 고르는 기준",
           "headers": [
-            "내 상황",
-            "먼저 쓸 방법",
-            "준비",
-            "파일 처리 위치"
+            "방식",
+            "가장 잘 맞는 일",
+            "적용 범위",
+            "예시"
           ],
           "rows": [
             [
-              "Mac에서 한두 번",
-              "미리보기 앱",
-              "설치 없음",
-              "내 Mac"
+              "프롬프트",
+              "지금 한 번의 요청",
+              "현재 대화·작업",
+              "이 함수 이름을 바꿔 줘"
             ],
             [
-              "Windows에서 한두 번",
-              "PDF24 Creator",
-              "최초 1회 설치",
-              "내 PC"
+              "상시 지침",
+              "늘 지킬 기본 원칙",
+              "모든 관련 작업",
+              "한국어로 답하고 기존 포맷 유지"
             ],
             [
-              "같은 규칙이 매달 반복",
-              "Python 자동화",
-              "최초 1회 설정",
-              "내 컴퓨터"
+              "Agent Skill",
+              "반복되는 전문 절차",
+              "관련 작업일 때만",
+              "코드 리뷰·문서 제작·배포 점검"
+            ],
+            [
+              "MCP",
+              "외부 도구·데이터 연결",
+              "연결된 시스템",
+              "GitHub·DB·업무 도구 조회"
             ]
-          ]
-        },
-        {
-          "t": "p",
-          "text": "회사 문서나 개인정보가 든 파일이라면 편하다는 이유만으로 웹 변환 사이트에 바로 올리지 않는 편이 안전하다. 서비스마다 업로드·보관·삭제 정책이 다르기 때문이다. 이 글은 Mac 기본 기능과 Windows 오프라인 도구를 먼저 두고, 반복 작업용 코드도 로컬에서만 실행한다."
+          ],
+          "reuse_label": "AI 작업 방식 선택표"
         },
         {
           "t": "visual",
           "image": "visual_3",
-          "caption": "반복 자동화를 고른 경우에도 입력 검사, 잘못된 파일 제외, 임시 병합, 책갈피 확인을 통과한 뒤에만 최종 PDF를 남긴다."
+          "caption": "한 번성 요청은 프롬프트, 항상 적용할 원칙은 상시 지침, 반복되는 전문 절차는 스킬, 외부 시스템 연결은 MCP가 중심이다."
+        },
+        {
+          "t": "p",
+          "text": "GitHub 문서도 간단하고 늘 관련되는 규칙은 사용자 지정 지침에, 자세하고 특정 작업에서만 필요한 절차는 스킬에 두는 방향을 설명한다. MCP는 다른 축이다. 도구에 닿는 연결을 제공하고, 스킬은 그 도구를 어떤 순서와 기준으로 쓸지 가르칠 수 있다."
         },
         {
           "t": "h",
-          "text": "Mac: 미리보기 앱으로 합친다"
+          "text": "Agent Skill은 폴더 하나로 시작한다"
         },
         {
           "t": "p",
-          "text": "Mac에는 별도 설치가 필요 없다. Apple은 미리보기에서 여러 PDF의 전체 내용이나 선택한 페이지만 다른 PDF로 옮길 수 있다고 안내한다. 다만 미리보기의 변경사항은 자동 저장될 수 있으므로 원본을 남기려면 먼저 파일 > 복제를 선택해 사본에서 작업하는 것이 중요하다."
+          "text": "공식 명세에서 스킬의 최소 단위는 디렉터리와 SKILL.md 파일 하나다. SKILL.md 앞부분에는 이름과 설명을 넣고, 본문에는 단계·예시·예외처럼 에이전트가 따라야 할 지침을 쓴다. 거대한 플러그인이나 별도 서버가 필수인 구조가 아니다."
         },
         {
-          "t": "ul",
-          "items": [
-            "합칠 PDF를 미리보기로 각각 연다.",
-            "각 창에서 보기 > 썸네일을 눌러 왼쪽에 페이지 목록을 띄운다.",
-            "한 PDF의 썸네일을 다른 PDF의 원하는 위치로 끌어놓는다.",
-            "순서가 다르면 썸네일을 다시 끌어 옮긴 뒤 복사본을 저장한다."
-          ]
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "공식 명세는 SKILL.md를 필수로 두고 scripts·references·assets는 선택 디렉터리로 설명한다."
         },
         {
           "t": "p",
-          "text": "파일 전체를 넣고 싶다면 Finder의 PDF 아이콘을 열려 있는 문서의 썸네일 사이드바로 끌어도 된다. 특정 페이지만 옮길 때는 Command 키를 누른 채 여러 썸네일을 고른다. 완성 파일을 닫기 전 첫 페이지와 마지막 페이지, 문서가 바뀌는 경계만 확인하면 한 번짜리 작업은 여기서 끝이다."
-        },
-        {
-          "t": "h",
-          "text": "Windows: PDF24에 파일을 끌어놓는다"
-        },
-        {
-          "t": "p",
-          "text": "Windows 10·11에서는 PDF24 Creator를 한 번 설치해 두면 마우스로 합칠 수 있다. 공식 안내상 이 데스크톱 프로그램은 오프라인으로 작동하고 파일을 인터넷에 업로드하지 않는다. 개인용과 업무용 모두 무료이며, PDF 병합·분할·페이지 정렬을 드래그 앤 드롭 화면에서 처리한다."
-        },
-        {
-          "t": "ul",
-          "items": [
-            "PDF24 Creator를 공식 사이트나 Microsoft Store에서 설치해 연다.",
-            "합칠 PDF를 화면으로 끌어놓고 원하는 순서로 다시 정렬한다.",
-            "병합 기능을 실행한 뒤 결과를 새 이름으로 저장한다.",
-            "완성 PDF를 열어 문서 경계와 전체 페이지 수를 확인한다."
-          ]
-        },
-        {
-          "t": "p",
-          "text": "PDF24는 Mac용이 아니므로 Mac 사용자는 앞의 미리보기가 더 간단하다. 회사가 승인한 프로그램만 설치할 수 있는 환경이라면 먼저 사내 정책을 확인한다. 설치 권한이 없다고 해서 민감한 문서를 임의의 온라인 사이트에 올리는 것으로 우회하지 않는다."
+          "text": "scripts에는 반복 실행할 코드를, references에는 세부 문서나 도메인 지식을, assets에는 템플릿과 이미지·스키마를 둘 수 있다. 지침만으로 충분한 스킬은 SKILL.md 하나로 끝내도 된다. 파일이 많을수록 좋은 것이 아니라 작업에 필요한 근거가 제자리에 있는지가 중요하다."
         },
         {
           "t": "ad_break"
         },
         {
           "t": "h",
-          "text": "매달 반복할 때만 자동화를 쓴다"
+          "text": "모든 지침을 한꺼번에 읽지 않는 구조"
         },
         {
           "t": "p",
-          "text": "매달 증빙 열 개를 같은 순서로 묶는다면 화면에서 파일을 정렬하는 일도 반복 노동이 된다. 이때 자동화는 클릭을 줄이는 것보다 규칙을 고정하는 데 의미가 있다. 파일명 앞의 01·02·03을 순서로 사용하고, 열 수 없는 PDF는 제외 목록에 남기며, 정상 문서마다 첫 페이지로 이동하는 책갈피를 만든다."
+          "text": "설치한 스킬이 많아지면 매번 모든 문서를 읽느라 대화 공간을 낭비할 것 같지만, 공식 명세는 점진적 공개를 기본 원리로 둔다. 시작할 때는 각 스킬의 이름과 설명만 보고, 관련 작업이라고 판단한 뒤에야 SKILL.md 전체를 읽는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "이름·설명은 작은 목록으로 확인하고, 관련 작업일 때 지침을 열며, 스크립트와 참고자료는 실제로 필요할 때만 추가로 읽는다."
+        },
+        {
+          "t": "p",
+          "text": "세 번째 단계에서 scripts·references·assets를 필요한 만큼만 연다. 그래서 좋은 description은 소개 문구가 아니라 호출 조건이다. 무엇을 하는지와 언제 써야 하는지가 구체적일수록 엉뚱한 작업에서 켜지거나 필요한 순간에 빠질 가능성을 줄일 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "공개 스킬은 개발 과정의 어디에 쓰일까"
+        },
+        {
+          "t": "p",
+          "text": "OpenAI는 Codex 스킬의 예로 디자인 구현, 프로젝트 관리, 클라우드 배포, 이미지 생성, API 개발, PDF·스프레드시트·문서 제작을 제시한다. 내부에서는 평가 실행, 학습 작업 점검, 문서 초안, 성장 실험 보고처럼 반복되지만 팀별 기준이 필요한 일에도 활용한다고 밝혔다."
         },
         {
           "t": "table",
-          "caption": "화면 방식에서 자동화로 넘어갈 기준",
+          "caption": "개발 단계별로 스킬이 값을 만드는 자리",
           "headers": [
-            "확인 질문",
-            "아니요",
-            "예"
+            "단계",
+            "스킬에 담을 것",
+            "얻는 효과"
           ],
           "rows": [
             [
-              "같은 작업이 정기적으로 반복되는가",
-              "미리보기·PDF24 사용",
-              "자동화 검토"
+              "기획·조사",
+              "출처 우선순위·비교 기준·산출물 형식",
+              "조사 범위와 근거가 흔들리지 않는다"
             ],
             [
-              "파일 순서 규칙이 매번 같은가",
-              "화면에서 직접 정렬",
-              "파일명으로 고정"
+              "구현",
+              "프로젝트 규칙·디자인 자료·완료 조건",
+              "코드 생성보다 앞선 판단을 재사용한다"
             ],
             [
-              "잘못된 입력과 책갈피를 함께 확인해야 하는가",
-              "완성 파일만 확인",
-              "검증 코드가 유리"
+              "검토·테스트",
+              "확인 순서·위험 기준·회귀 테스트",
+              "리뷰마다 빠지는 항목을 줄인다"
+            ],
+            [
+              "문서·보고",
+              "독자 수준·문서 구조·렌더 검증",
+              "팀이 원하는 형식을 반복해서 맞춘다"
+            ],
+            [
+              "배포·운영",
+              "사전 점검·승인 경계·실패 대응",
+              "실행 전후의 확인 절차를 고정한다"
             ]
           ]
         },
         {
           "t": "p",
-          "text": "세 질문에서 모두 ‘예’일 때 아래 자동화를 고려하면 된다. 한 달에 한 번 파일 두세 개를 합치는 정도라면 화면 방식이 여전히 빠르다. 자동화는 무조건 고급인 방법이 아니라 반복 횟수와 오류 비용이 준비 시간을 넘어설 때 선택하는 도구다."
-        },
-        {
-          "t": "h",
-          "text": "준비: 복사본과 파일 순서를 만든다"
+          "text": "GitHub Copilot은 클라우드 에이전트, 코드 리뷰, CLI, 앱, VS Code와 JetBrains의 에이전트 모드에서 스킬을 지원한다고 안내한다. 프로젝트 스킬은 저장소 안에 두어 팀과 함께 버전 관리하고, 개인 스킬은 여러 프로젝트에서 공통으로 사용할 수 있다."
         },
         {
           "t": "ul",
           "items": [
-            "Python 3.9 이상이 설치된 Windows 또는 macOS 컴퓨터",
-            "원본이 아닌 PDF 복사본 세 개 이상",
-            "메모장이나 텍스트 편집기",
-            "새로 만든 pdf-merge 작업 폴더"
+            "프로젝트 전용: .github/skills, .claude/skills, .agents/skills",
+            "개인 공통: ~/.copilot/skills 또는 ~/.agents/skills",
+            "재사용할 기준은 저장소에 넣어 변경 이유와 검토 이력을 남긴다.",
+            "한 제품에서만 쓰는 선택 필드는 다른 에이전트에서도 같은 방식으로 동작한다고 가정하지 않는다."
           ]
         },
         {
-          "t": "p",
-          "text": "pdf-merge 안에 input-pdfs 폴더를 만들고 복사본을 넣는다. 프로그램은 파일명 순서대로 합치므로 01-견적서, 02-회의록, 03-영수증처럼 앞에 두 자리 번호를 붙인다. 이 이름은 합쳐진 PDF의 왼쪽 책갈피에도 사용된다."
-        },
-        {
-          "t": "code",
-          "language": "text",
-          "text": "pdf-merge/\n├─ merge_pdfs.py\n└─ input-pdfs/\n   ├─ 01-견적서.pdf\n   ├─ 02-회의록.pdf\n   └─ 03-영수증.pdf"
-        },
-        {
           "t": "h",
-          "text": "실행: 긴 코드는 필요할 때만 연다"
+          "text": "좋은 스킬은 설명보다 경계가 분명하다"
         },
         {
           "t": "p",
-          "text": "처음 한 번만 pypdf를 설치하고, 아래 접힌 코드를 열어 전부 복사한 뒤 merge_pdfs.py로 저장한다. 평소 독자는 코드를 읽을 필요가 없다. 입력 폴더와 실행 명령, 결과 파일만 알면 된다. 기존 업무문서-묶음.pdf가 있으면 덮어쓰지 않고 멈추도록 만들었다."
+          "text": "좋은 스킬은 지시를 많이 담은 스킬이 아니다. 언제 시작하고 무엇을 입력으로 받으며 어디까지 끝내는지가 분명하다. 실패하면 멈출 조건과 사용자의 확인이 필요한 지점을 써 두어야 에이전트가 스스로 범위를 키우는 일을 줄일 수 있다."
         },
         {
-          "t": "code",
-          "language": "python",
-          "text": "from pathlib import Path\nfrom pypdf import PdfReader, PdfWriter\n\nINPUT_DIR = Path('input-pdfs')\nTEMP_FILE = Path('업무문서-묶음.tmp.pdf')\nOUTPUT_FILE = Path('업무문서-묶음.pdf')\n\ndef has_pdf_header(path):\n    with path.open('rb') as file:\n        return file.read(5) == b'%PDF-'\n\nvalid = []\nexcluded = []\nfor path in sorted(INPUT_DIR.glob('*.pdf')):\n    if not has_pdf_header(path):\n        excluded.append(f'{path.name}: PDF 형식 아님')\n        continue\n    try:\n        reader = PdfReader(str(path))\n        valid.append((path, reader.metadata.title or path.stem, len(reader.pages)))\n    except Exception as error:\n        excluded.append(f'{path.name}: {type(error).__name__}')\n\nif not valid:\n    raise SystemExit('합칠 수 있는 PDF가 없습니다.')\nif OUTPUT_FILE.exists():\n    raise SystemExit('기존 업무문서-묶음.pdf를 다른 곳으로 옮긴 뒤 다시 실행하세요.')\n\nwriter = PdfWriter()\npage_cursor = 0\nfor path, title, page_count in valid:\n    writer.append(str(path))\n    writer.add_outline_item(title=title, page_number=page_cursor)\n    page_cursor += page_count\n\ntry:\n    with TEMP_FILE.open('wb') as output:\n        writer.write(output)\n    merged = PdfReader(str(TEMP_FILE))\n    bookmarks = [item for item in merged.outline if not isinstance(item, list)]\n    if len(merged.pages) != page_cursor or len(bookmarks) != len(valid):\n        raise RuntimeError('페이지 또는 책갈피 검증에 실패했습니다.')\n    TEMP_FILE.replace(OUTPUT_FILE)\nexcept Exception:\n    TEMP_FILE.unlink(missing_ok=True)\n    raise\n\nprint(f'완료: {OUTPUT_FILE} / {page_cursor}쪽 / 책갈피 {len(valid)}개')\nif excluded:\n    print('제외된 파일:')\n    for reason in excluded:\n        print(f'- {reason}')",
-          "collapsed": true,
-          "summary": "매달 반복할 때 쓰는 전체 자동화 코드 보기",
+          "t": "ul",
+          "items": [
+            "description에 무엇을 하고 언제 쓰는지 함께 적는다.",
+            "입력·작업 순서·완료 조건·실패 시 중단 조건을 분리한다.",
+            "긴 배경지식은 references로 옮기고 한 파일에는 한 주제만 둔다.",
+            "scripts의 의존성과 오류 메시지를 확인하고 작은 입력으로 먼저 검증한다.",
+            "assets의 템플릿과 예시는 실제 결과 형식과 맞는지 렌더링해 본다.",
+            "명령 실행과 네트워크 접근은 작업에 필요한 최소 범위만 허용한다."
+          ],
           "reusable": true,
-          "reuse_label": "PDF 순서 병합·잘못된 입력 제외·책갈피 생성 전체 스크립트"
+          "reuse_label": "Agent Skill 제작·설치 전 6문항 점검표"
         },
         {
           "t": "p",
-          "text": "Windows는 명령 프롬프트에서 py를, macOS는 터미널에서 python3를 사용한다. 먼저 pypdf를 설치한 다음 같은 창에서 스크립트를 실행한다. 성공하면 pdf-merge 폴더에 업무문서-묶음.pdf가 생기고 완료 문구에 전체 페이지와 책갈피 개수가 나온다."
-        },
-        {
-          "t": "code",
-          "language": "bash",
-          "text": "# Windows\npy -m pip install pypdf==6.16.2\npy merge_pdfs.py\n\n# macOS\npython3 -m pip install pypdf==6.16.2\npython3 merge_pdfs.py"
-        },
-        {
-          "t": "visual",
-          "image": "visual_1",
-          "caption": "실제 테스트에서는 견적서·회의록·영수증이 1~3쪽에 놓였고 왼쪽 책갈피 세 개가 각 문서의 시작 쪽과 일치했다."
-        },
-        {
-          "t": "p",
-          "text": "완성 파일은 세 곳만 본다. 첫째, 페이지가 01·02·03 순서인지 확인한다. 둘째, 왼쪽 책갈피를 눌렀을 때 각 문서의 첫 쪽으로 이동하는지 본다. 셋째, 제외된 파일 목록이 나타났다면 그 파일을 직접 열어 실제로 문제가 있는지 확인한다."
+          "text": "Anthropic은 대표 입력으로 먼저 평가해 부족한 부분을 찾은 뒤 스킬을 점진적으로 만들라고 권한다. 처음부터 모든 예외를 담으려 하면 긴 매뉴얼만 생긴다. 실제 작업에서 반복된 성공 방법과 자주 난 실수를 기록하고, 필요할 때 참고 파일을 나누는 편이 유지하기 쉽다."
         },
         {
           "t": "h",
-          "text": "결과가 이상하면 여기부터 확인한다"
+          "text": "남의 스킬을 바로 설치하면 안 되는 이유"
         },
         {
           "t": "p",
-          "text": "테스트에는 PDF 확장자만 붙인 일반 텍스트 파일을 하나 섞었다. 확장자만 믿고 합치면 네 번째 파일에서 작업이 멈췄지만, 자동화는 실제 PDF 헤더와 열기 가능 여부를 먼저 확인해 그 파일을 제외하고 정상 문서 세 개만 합쳤다. 오류가 나도 임시 결과를 지우고 입력 복사본은 그대로 남긴다."
+          "text": "공개 스킬은 읽을 수 있는 파일이라는 장점과 실행 가능한 지침이라는 위험을 함께 가진다. GitHub는 프롬프트 인젝션·숨은 지침·악성 스크립트를 경고한다. 327개 공개 스킬을 분석한 2026년 연구도 저장소 등록부터 실행·업데이트까지 여러 단계의 위험을 따로 점검해야 한다고 제안한다."
         },
         {
-          "t": "visual",
-          "image": "visual_2",
-          "caption": "이름만 PDF인 파일에서 실제 오류가 났지만 임시 결과를 제거했고, 입력 검사 뒤 정상 PDF만 다시 안전하게 합쳤다."
-        },
-        {
-          "t": "ul",
-          "items": [
-            "순서가 틀리면 파일명 앞의 01·02·03을 고치고 다시 실행한다.",
-            "기존 업무문서-묶음.pdf가 있다는 메시지는 이전 결과를 다른 곳으로 옮긴 뒤 해결한다.",
-            "제외 목록의 파일은 확장자만 바꾸지 말고 원본 프로그램에서 PDF로 다시 저장한다.",
-            "암호·전자서명·입력 양식이 있는 문서는 복사본에서 보존 여부를 별도로 확인한다."
+          "t": "table",
+          "caption": "공개 Agent Skill 설치 전 다섯 가지 질문",
+          "headers": [
+            "확인 질문",
+            "괜찮은 신호",
+            "멈춰야 할 신호"
+          ],
+          "rows": [
+            [
+              "출처와 라이선스가 보이는가",
+              "공식 문서·공개 이력·명확한 라이선스",
+              "작성자·버전·배포 경로가 불명확"
+            ],
+            [
+              "SKILL.md를 먼저 읽었는가",
+              "목적·범위·중단 조건이 구체적",
+              "다른 지침을 무시하라는 문구"
+            ],
+            [
+              "스크립트를 검토했는가",
+              "의존성과 입출력이 작고 명확",
+              "원격 코드 다운로드·광범위한 파일 접근"
+            ],
+            [
+              "권한이 최소한인가",
+              "필요할 때 사용자 확인",
+              "shell·bash를 이유 없이 사전 승인"
+            ],
+            [
+              "작은 입력으로 시험했는가",
+              "복사본·샌드박스에서 결과 확인",
+              "실제 저장소나 운영 데이터에 바로 실행"
+            ]
           ]
         },
         {
           "t": "p",
-          "text": "Mac 미리보기와 PDF24에서도 원칙은 같다. 원본이 아니라 복사본에서 시작하고, 결과를 새 이름으로 저장하며, 전달 전에 문서 경계를 확인한다. 자동화가 실패하면 원인을 고친 뒤 입력 복사본에서 다시 시작한다. 실패한 중간 파일을 정상 결과처럼 이어 쓰지 않는다."
-        },
-        {
-          "t": "h",
-          "text": "개발 기록: 어디까지 직접 확인했나"
-        },
-        {
-          "t": "p",
-          "text": "Mac 미리보기의 순서와 원본 자동 저장 주의점은 Apple 공식 사용 설명서로 확인했다. PDF24 Creator가 Windows 10·11에서 오프라인으로 작동하고 파일을 PC에 유지한다는 내용도 PDF24 공식 안내를 기준으로 정리했다."
-        },
-        {
-          "t": "p",
-          "text": "PDF24의 드래그 앤 드롭 병합과 페이지 정렬 역시 공식 기능 설명을 확인했다. 이 두 화면 방식은 이번 로컬 실험의 성능 비교 대상이 아니라, 독자가 가장 쉬운 선택지를 먼저 고르도록 설명하기 위한 공식 사용법이다."
-        },
-        {
-          "t": "p",
-          "text": "자동화는 실제 업무 문서 대신 제목만 있는 1쪽짜리 견적서·회의록·영수증과 이름만 PDF인 잘못된 파일을 만들어 실행했다. Python 3.9.6과 pypdf 6.16.2에서 네 입력 중 정상 세 개가 3쪽으로 합쳐졌고 책갈피 세 개의 이동 위치도 일치했다."
-        },
-        {
-          "t": "p",
-          "text": "파일 이름만 바꾼 일반 텍스트는 병합 전에 제외됐고, 오류 시 임시 결과가 제거되는 것도 확인했다. 암호화 PDF, 전자서명 문서, 입력 양식, 수백 쪽짜리 큰 파일은 시험하지 않았다. 이런 문서는 어떤 방법을 쓰든 원본 보존과 결과 검증을 별도로 해야 한다."
+          "text": "allowed-tools는 명세에서도 실험적 필드이며 구현마다 지원이 다를 수 있다. 특히 shell이나 bash를 미리 허용하면 확인 단계가 사라질 수 있다. 외부 스킬은 설치 파일 전체와 의존성, 네트워크 연결을 읽고 복사본 환경에서 시험한 뒤 범위를 넓히는 편이 안전하다."
         },
         {
           "t": "quote",
-          "text": "좋은 자동화 글은 코드가 긴 글이 아니라, 독자가 가장 쉬운 해결책을 먼저 고르고 반복이 생겼을 때만 한 단계 더 갈 수 있는 글이다."
+          "text": "프롬프트가 ‘이번에 무엇을 할까’를 묻는다면, 스킬은 ‘이 일을 우리 방식으로 어떻게 끝낼까’를 기록한다."
         }
       ]
     }
   ],
   "related_posts": [
     {
-      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
-      "url": "https://won0322.tistory.com/190",
-      "reason": "자동 처리 전에 문서의 출처와 예상 밖 내용을 먼저 확인하는 기준을 입력 검증 단계에 적용할 수 있다.",
-      "role": "foundation"
-    },
-    {
       "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
       "url": "https://won0322.tistory.com/198",
-      "reason": "pypdf 같은 공개 패키지를 실제 작업에 넣기 전 출처·라이선스·권한·배포 경계를 확인하는 다음 단계로 이어진다.",
+      "reason": "공개 스킬의 스크립트와 권한을 검토한 뒤 실제 저장소로 옮길 때 확인할 보안 경계로 이어진다.",
       "role": "next_step"
+    },
+    {
+      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+      "url": "https://won0322.tistory.com/190",
+      "reason": "문서와 외부 자료를 읽는 스킬에서 숨은 지침과 신뢰 경계를 확인하는 구체적인 검토 기준으로 이어진다.",
+      "role": "foundation"
     }
   ],
   "verification": {
-    "mode": "executed",
-    "started_at": "2026-08-28T09:07:23+09:00",
-    "completed_at": "2026-08-28T09:07:33+09:00",
-    "command_exit_code": 0,
-    "stdout_excerpt": "입력 4개 → 채택 3개 / 제외 1개. 출력 3쪽 · 책갈피 3개 · 일치 True. 8월 견적서 1쪽, 프로젝트 회의록 2쪽, 출장 영수증 3쪽.",
-    "environment": {
-      "os": "macOS 26.6.2 (25G83)",
-      "runtime": "Python 3.9.6",
-      "tool_version": "pypdf 6.16.2 · ReportLab 4.4.10",
-      "source_revision": "py-pdf/pypdf 6.16.2 · 1da09878621e5286e00510e4d378dfdf8940e541"
-    },
-    "commands": [
-      "python3 -m venv --system-site-packages /tmp/blog-writing-qa/2026-08-28-automation/venv",
-      "/tmp/blog-writing-qa/2026-08-28-automation/venv/bin/python -m pip install pypdf==6.16.2",
-      "/tmp/blog-writing-qa/2026-08-28-automation/venv/bin/python experiment.py --mode fail",
-      "/tmp/blog-writing-qa/2026-08-28-automation/venv/bin/python experiment.py --mode safe",
-      "pdftoppm -png -r 90 output/업무문서-묶음.pdf output/merged-page"
+    "mode": "source_research",
+    "checked_at": "2026-08-28T10:20:00+09:00",
+    "source_count": 6,
+    "source_urls": [
+      "https://agentskills.io/specification",
+      "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills",
+      "https://openai.com/index/introducing-the-codex-app/",
+      "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+      "https://arxiv.org/abs/2607.13987"
     ],
-    "input_fixture": "ReportLab으로 만든 1쪽짜리 견적서·회의록·영수증 PDF 세 개와 PDF 확장자만 가진 UTF-8 텍스트 파일 한 개를 임시 폴더에 배치했다.",
-    "expected": "잘못된 입력은 제외되고 정상 PDF 세 개가 파일명 순서의 3쪽 문서로 합쳐지며 책갈피 세 개가 각 문서의 시작 쪽을 가리킨다.",
-    "actual": "첫 병합은 잘못된 네 번째 입력에서 PdfStreamError로 종료됐다. 헤더 검사 뒤 세 문서를 병합했고 3쪽·책갈피 3개·목적지 일치 True를 확인했다.",
-    "failure": "AppleSDGothicNeo.ttc는 ReportLab에서 지원하지 않는 윤곽으로 실패해 AppleGothic.ttf로 바꿨다. 이후 이름만 PDF인 입력은 PdfStreamError와 종료 코드 2를 냈다.",
-    "rollback": "예외가 나면 업무문서-묶음.tmp.pdf와 불완전한 업무문서-묶음.pdf만 제거하고 네 입력 파일은 보존했다. 정상 검증 뒤에만 임시 파일을 최종 이름으로 교체했다.",
+    "scope": "Agent Skills의 공개 명세와 GitHub Copilot·OpenAI Codex·Anthropic의 공식 문서를 대상으로 구조, 호출 방식, 사용처, 설치 위험을 조사했다.",
+    "method": "각 공식 자료에서 반복해서 확인되는 정의와 파일 구조를 추출하고 프롬프트·상시 지침·MCP와 역할을 대조한 뒤 개발 단계별 사용처와 점검표로 재구성했다.",
+    "selection_rule": "제품 홍보성 요약보다 명세와 공식 기술 문서를 우선하고, 같은 주장에는 서로 다른 공식 출처에서 확인 가능한 내용만 사용했다.",
+    "limitations": "공개 문서에 나타난 지원 범위만 다루며 제품별 내부 구현, 비공개 조직 사용량, 개별 커뮤니티 스킬의 품질을 일반화하지 않는다.",
     "evidence_files": [
-      "visual_1",
-      "visual_2"
+      "visual_3"
     ],
-    "problem_lane": "PDF·문서 정리",
-    "tool_brand": "pypdf"
+    "problem_lane": "Agent Skills 선택과 적용",
+    "tool_brand": "Agent Skills·GitHub·OpenAI·Anthropic"
   }
 }

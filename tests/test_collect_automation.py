@@ -168,7 +168,7 @@ class AutomationScoringTests(unittest.TestCase):
             [90, 50, 40],
         )
 
-    def test_default_config_matches_the_saturday_editorial_weights_and_sources(self):
+    def test_default_config_matches_the_friday_developer_insight_policy(self):
         config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
 
         self.assertEqual(
@@ -178,17 +178,43 @@ class AutomationScoringTests(unittest.TestCase):
         self.assertGreaterEqual(config["max_workers"], 4)
         self.assertEqual(config["selection"]["max_items"], 5)
         self.assertEqual(config["selection"]["max_candidates"], 25)
-        self.assertEqual(config["selection"]["exclude_recent_days"], 90)
+        self.assertEqual(config["selection"]["mode"], "developer_insight_shortlist")
+        self.assertEqual(config["selection"]["exclude_recent_days"], 180)
         self.assertGreaterEqual(
-            config["selection"]["minimum_criterion_scores"]["broad_appeal"],
+            config["selection"]["minimum_criterion_scores"]["developer_relevance"],
             8,
         )
-        self.assertEqual(config["criteria"]["broad_appeal"]["label"], "대중 공감도")
+        self.assertEqual(
+            list(config["criteria"]),
+            [
+                "search_durability",
+                "developer_relevance",
+                "source_authority",
+                "original_contribution",
+                "curiosity_pull",
+            ],
+        )
+        self.assertEqual(config["criteria"]["developer_relevance"]["label"], "개발자 관련성")
         source_types = {source["type"] for source in config["sources"]}
         self.assertIn("github_trending", source_types)
         self.assertIn("atom", source_types)
         self.assertIn("rss", source_types)
-        self.assertTrue(all(source.get("enabled", True) for source in config["sources"]))
+        enabled_ids = {
+            source["id"]
+            for source in config["sources"]
+            if source.get("enabled", True)
+        }
+        self.assertEqual(
+            enabled_ids,
+            {
+                "github-trending-weekly",
+                "yozmit-evergreen-dev",
+                "playwright-releases",
+                "uv-releases",
+                "actions-runner-releases",
+                "github-changelog-automation",
+            },
+        )
         source_ids = {source["id"] for source in config["sources"]}
         self.assertIn("google-workspace-updates", source_ids)
         self.assertIn("power-automate-blog", source_ids)
@@ -212,9 +238,11 @@ class AutomationScoringTests(unittest.TestCase):
         evergreen_ids = {
             item["id"] for item in config["evergreen_candidates"]
         }
-        self.assertIn("im-not-ai-korean-writing-test", evergreen_ids)
-        self.assertIn("vibe-coding-recovery-basics", evergreen_ids)
+        self.assertIn("agent-skills-ecosystem-map", evergreen_ids)
+        self.assertIn("official-skill-authoring-guide", evergreen_ids)
         self.assertIn("agent-skills-same-task-comparison", evergreen_ids)
+        self.assertIn("agent-skills-benchmark-reality", evergreen_ids)
+        self.assertIn("ai-engineering-career-map", evergreen_ids)
         self.assertGreaterEqual(len(config["evergreen_candidates"]), 6)
         self.assertTrue(
             all(
@@ -396,7 +424,7 @@ class AutomationScoringTests(unittest.TestCase):
 
         self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 0)
 
-    def test_default_policy_rejects_a_tool_release_with_only_one_generic_title_word(self):
+    def test_default_policy_rejects_a_tool_release_without_an_editorial_question(self):
         config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
         candidate = {
             "id": "file-api",
@@ -416,15 +444,17 @@ class AutomationScoringTests(unittest.TestCase):
             config["selection"],
         )
 
-        self.assertEqual(candidate["score_breakdown"]["broad_appeal"], 7)
+        self.assertGreaterEqual(
+            candidate["raw_score_breakdown"]["developer_relevance"], 8
+        )
         self.assertEqual(selected, [])
 
-    def test_default_policy_accepts_a_specific_evergreen_development_topic(self):
+    def test_default_policy_accepts_an_official_document_development_topic(self):
         config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
         candidate = {
-            "id": "vibe-coding-recovery",
-            "title": "바이브 코딩이 막힐 때 되돌리는 법",
-            "summary": "Git 복구와 로컬·배포 차이를 직접 실습한다.",
+            "id": "official-agent-skill-guide",
+            "title": "좋은 Agent Skill은 무엇이 다를까: 공식 문서 설계 원칙",
+            "summary": "공식 문서와 공개 저장소를 비교해 스킬의 구조와 한계를 분석한다.",
             "source_id": "yozmit-evergreen-dev",
             "source_family": "yozmit-evergreen",
             "source_kind": "evergreen_editorial",
@@ -437,7 +467,7 @@ class AutomationScoringTests(unittest.TestCase):
         )
 
         self.assertGreaterEqual(
-            candidate["raw_score_breakdown"]["broad_appeal"],
+            candidate["raw_score_breakdown"]["developer_relevance"],
             8,
         )
         self.assertEqual([item["id"] for item in selected], [candidate["id"]])
@@ -460,7 +490,7 @@ class AutomationScoringTests(unittest.TestCase):
         )
 
         self.assertGreaterEqual(
-            candidate["raw_score_breakdown"]["broad_appeal"],
+            candidate["raw_score_breakdown"]["developer_relevance"],
             8,
         )
         self.assertEqual([item["id"] for item in selected], [candidate["id"]])
@@ -592,6 +622,7 @@ class AutomationScoringTests(unittest.TestCase):
         )
 
         self.assertEqual(result["content_type"], "automation_candidates")
+        self.assertEqual(result["lane"], "friday_developer_insight")
         self.assertEqual(len(result["selected"]), 2)
         self.assertEqual(len(result["candidates"]), 2)
         self.assertTrue(
@@ -893,6 +924,8 @@ class AutomationInboxTests(unittest.TestCase):
         self.assertIn("&lt;b&gt;unsafe&lt;/b&gt;", page)
         self.assertIn("-webkit-line-clamp:4", page)
         self.assertIn(".featured .summary", page)
+        self.assertIn("금요일 개발·AI 인사이트 후보함", page)
+        self.assertIn("공식 문서·저장소·연구 자료를 교차 확인", page)
 
     def test_writes_latest_json_and_review_page(self):
         with tempfile.TemporaryDirectory() as directory:

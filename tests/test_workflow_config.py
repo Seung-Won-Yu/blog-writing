@@ -134,10 +134,10 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("GEMINI_API_KEY", workflow)
         self.assertNotIn("models: read", workflow)
 
-    def test_saturday_collection_workflow_only_collects_ranked_candidates(self):
+    def test_friday_developer_insight_workflow_only_collects_ranked_candidates(self):
         workflow = AUTOMATION_COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
-        self.assertIn("name: Collect Friday automation candidates", workflow)
+        self.assertIn("name: Collect Friday developer insight candidates", workflow)
         self.assertIn("cron: '17 22 * * 4'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
@@ -290,7 +290,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("Codex 웹 리서치", contract)
         self.assertIn("75점", contract)
         self.assertIn("원고·이미지·커밋·푸시를 만들지", contract)
-        self.assertIn("`executed_experiment`", contract)
+        self.assertIn("`developer_insight`", contract)
         self.assertIn("`editorial.reader_hook`", contract)
 
     def test_development_guide_contract_enforces_the_complete_pipeline(self):
@@ -305,7 +305,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --resume-check", contract)
         self.assertIn("현업 도구·공개 지식 비교", contract)
         self.assertIn("인기도와 품질을 같은 것처럼", contract)
-        self.assertIn("같은 입력으로 실행할 수 있는 비교", contract)
+        self.assertIn("여러 GitHub 저장소·공식 문서·Agent Skills", contract)
+        self.assertIn("금요일 개발·AI 인사이트로 보내고", contract)
         self.assertIn("daily_guard --draft-id YYYY-MM-DD-guide --source-only", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --stage", contract)
         self.assertIn("publish_bundle --draft-id YYYY-MM-DD-guide --check", contract)
@@ -503,7 +504,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("소제목 5~7개", contract)
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
 
-    def test_saturday_contract_owns_verified_hands_on_automation_cases(self):
+    def test_friday_contract_owns_sourced_developer_ai_insights(self):
         daily = EDITOR_CONTRACT.read_text(encoding="utf-8")
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
@@ -513,20 +514,24 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("2026-08-28부터 금요일", contract)
         self.assertIn("사용자가 최종 확인 뒤 직접", contract)
         self.assertIn('"publication_mode": "manual_review"', contract)
-        self.assertIn("직접 실행 실험기", contract)
-        self.assertIn("따라하기", contract)
-        self.assertIn("공개 도구 적용 사례", contract)
-        self.assertIn("도구·워크플로 비교 실험", contract)
+        self.assertIn("생태계 지도", contract)
+        self.assertIn("공식 문서 해설", contract)
+        self.assertIn("근거 기반 목록", contract)
+        self.assertIn("개발자 커리어 분석", contract)
         self.assertIn("GitHub 스타·버전·최근 활동·라이선스", contract)
         self.assertIn("상황별 선택", contract)
         self.assertIn("검색 지속성 20", contract)
+        self.assertIn("개발자 관련성 25", contract)
+        self.assertIn("출처 신뢰도 20", contract)
+        self.assertIn("원문에 더하는 분석 20", contract)
+        self.assertIn("궁금증 유발력 15", contract)
         self.assertIn("검증한 버전·커밋", contract)
         self.assertIn("기대 결과와 실제 결과", contract)
         self.assertIn("임시 디렉터리", contract)
         self.assertIn("의심스러운 설치 스크립트", contract)
         self.assertIn("구조 분석", contract)
         self.assertIn("측정하지 않은 숫자", contract)
-        self.assertIn("실제 실행 화면", contract)
+        self.assertIn("공식 문서·GitHub 화면의 주석 캡처", contract)
         self.assertIn("화면이나 터미널 결과를 이미지 생성으로 꾸며내지 않습니다", contract)
         self.assertIn("대표 이미지 1장과 본문 시각물 3~6개", contract)
         self.assertIn("YYYY-MM-DD-automation", contract)
@@ -538,17 +543,16 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("검증 완료의 증거가 아닙니다", contract)
         self.assertIn("공식 출처를 직접 검색", contract)
         self.assertIn("도구명을 지워도", contract)
-        self.assertIn("코드를 이해해야만 효용을 얻는가", contract)
-        self.assertIn("대중 공감도", contract)
-        self.assertIn("이메일·문서·PDF·표·일정·파일", contract)
-        self.assertIn("완성한 작업이나 해결한 문제를 제목 앞부분", contract)
+        self.assertIn("코드를 이해해야만 효용을 얻는 개발 주제도 허용", contract)
+        self.assertIn("개발자와 IT에 관심 있는 독자", contract)
+        self.assertIn("공식·원출처 포함 3개 이상의 근거", contract)
+        self.assertIn("제목은 `구체적 대상 + 독자가 가진 질문 + 읽고 얻을 판단`", contract)
         self.assertIn("`editorial.reader_walkthrough`", contract)
         self.assertIn("첫 코드보다 앞에 준비물 목록", contract)
-        self.assertIn("운영체제 기본 기능", contract)
         self.assertIn("20줄을 넘는 전체 코드", contract)
         self.assertIn("`easiest_method_considered`", contract)
-        self.assertIn("마지막 `개발 기록`", contract)
-        self.assertIn("전체 복사 가능한 산출물", contract)
+        self.assertIn("코드는 필수가 아닙니다", contract)
+        self.assertIn("`근거와 한계`", contract)
         self.assertIn("`origin`", contract)
         self.assertIn("`imagegen`", contract)
         self.assertIn("결정적 대체 이미지는 발행 준비를 통과하지", contract)
@@ -567,12 +571,19 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("보고서", contract)
                 self.assertIn("이번 글에서는", contract)
 
-    def test_saturday_contract_matches_the_enforced_experiment_schema(self):
+    def test_friday_contract_matches_the_developer_insight_evidence_schema(self):
         contract = SATURDAY_CONTRACT.read_text(encoding="utf-8")
 
         for field in (
             "verification",
             "mode",
+            "checked_at",
+            "scope",
+            "method",
+            "selection_rule",
+            "limitations",
+            "source_urls",
+            "source_count",
             "environment",
             "commands",
             "input_fixture",

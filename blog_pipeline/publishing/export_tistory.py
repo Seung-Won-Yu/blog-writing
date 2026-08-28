@@ -26,6 +26,7 @@ from urllib.parse import urlsplit
 from .draft_identity import (
     category_for_content_type,
     category_for_identity,
+    editorial_lane_for_identity,
     publication_mode_for_identity,
     regular_schedule_for_identity,
     resolve_draft_identity,
@@ -786,8 +787,8 @@ def build_closing_section(editorial):
 </section>""".strip()
 
 
-def render_post(day_id, day):
-    identity = resolve_draft_identity(day_id)
+def render_post(draft_id, day):
+    identity = resolve_draft_identity(draft_id, day)
     label = plain(day.get("date_label"))
     weekday = plain(day.get("weekday"))
     date_text = f"{label} ({weekday})" if weekday else label
@@ -800,8 +801,12 @@ def render_post(day_id, day):
         lead_story = news[0] if news else {}
         content_type = plain(day.get("content_type"))
         if content_type == "automation_case":
-            section_heading = "업무자동화 실험"
-            analysis_label = "실행 기록"
+            section_heading = identity.content_label
+            analysis_label = (
+                "근거와 해설"
+                if editorial_lane_for_identity(identity) == "developer_insight"
+                else "실행 기록"
+            )
         elif content_type == "evergreen_guide":
             section_heading = "개발 가이드"
             analysis_label = "최신 기준"
@@ -1043,7 +1048,7 @@ def write_post(
         and generation_revision >= MIN_PUBLISH_REVISION
     )
 
-    post_html = render_post(publish_date, day)
+    post_html = render_post(draft_id, day)
     before_ad_html, after_ad_html = split_post_around_first_story(post_html)
     before_ad_path = OUT_DIR / f"{draft_id}-before-ad.html"
     after_ad_path = OUT_DIR / f"{draft_id}-after-ad.html"

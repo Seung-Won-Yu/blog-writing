@@ -139,6 +139,14 @@ class DraftIdentityTests(unittest.TestCase):
             "자동화·실험",
         )
         self.assertEqual(
+            category_for_content_type("automation_case", "2026-08-28"),
+            "AI·개발 도구",
+        )
+        self.assertEqual(
+            category_for_content_type("automation_case", "2026-09-04"),
+            "AI·개발 도구",
+        )
+        self.assertEqual(
             category_for_content_type("evergreen_guide", "2026-07-22"),
             "개발 가이드",
         )
@@ -219,10 +227,18 @@ class DraftIdentityTests(unittest.TestCase):
                     f"{identity.publish_date}T09:00:00+09:00",
                 )
 
-    def test_friday_automation_has_an_executed_experiment_lane(self):
-        identity = resolve_draft_identity("2026-08-28-automation")
+    def test_friday_lane_starts_with_the_first_friday_run(self):
+        historical = resolve_draft_identity("2026-08-22-automation")
+        current = resolve_draft_identity("2026-08-28-automation")
 
-        self.assertEqual(editorial_lane_for_identity(identity), "executed_experiment")
+        self.assertEqual(historical.content_label, "업무자동화 실험")
+        self.assertEqual(editorial_lane_for_identity(historical), "")
+        self.assertEqual(current.content_label, "개발·AI 인사이트")
+        self.assertEqual(editorial_lane_for_identity(current), "developer_insight")
+        self.assertEqual(
+            category_for_content_type(current.content_type, current.publish_date),
+            "AI·개발 도구",
+        )
 
 
 if __name__ == "__main__":

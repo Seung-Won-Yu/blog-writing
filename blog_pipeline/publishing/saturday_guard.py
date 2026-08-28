@@ -1,4 +1,4 @@
-"""Guard the separate weekly hands-on automation draft.
+"""Guard the Friday developer-insight draft namespace.
 
 The module path is retained for compatibility with existing jobs and history.
 """
@@ -37,7 +37,7 @@ def inspect_saturday_state(day_id, *, root=ROOT, window_days=90):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(
-        description="금요일 업무자동화 실험 초안의 중복 실행을 막습니다."
+        description="금요일 개발·AI 인사이트 초안의 중복 실행을 막습니다."
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--today", action="store_true")

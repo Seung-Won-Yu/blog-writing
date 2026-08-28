@@ -1073,7 +1073,7 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         from .export_tistory import build_adfit_ready_html, render_post
 
         try:
-            canonical_body = render_post(identity.publish_date, source)
+            canonical_body = render_post(identity.draft_id, source)
             canonical_adfit = build_adfit_ready_html(canonical_body)
         except SCHEMA_EXCEPTIONS:
             reasons.append("invalid_render_contract")
