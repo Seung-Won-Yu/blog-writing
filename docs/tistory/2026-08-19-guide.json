@@ -23,7 +23,7 @@
   "meta_description": "주문 저장은 실패했는데 감사 로그만 남았거나, 예외를 잡아 처리했는데 마지막 commit에서 UnexpectedRollbackException을 만난 적이 있다. Spring의 @Transaction… 기본 REQUIRED는 기존 물리 트랜잭션에 참여한다. 독립 기록이 필요할 때만 R…",
   "key_summary": [
     "1. Spring @Transactional 전파와 롤백 규칙을 서비스 경계에서 점검하는 법",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: REQUIRED·REQUIRES_NEW·NESTED의 물리 경계를 구분하고, 롤백 규칙과 커넥션 풀 크기를 함께 검증하는 배포 전 점검 절차를 적용할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-08-19-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-19-guide-adfit.html",
   "source_sha256": "c5ef2daa54f5397d1a6aea9a2a50da2de66a087ed7be2f9ed360686cb61da5d1",
-  "html_sha256": "a158413635ad0a15fbad8afa9646a13657e3569b5861ff74ec429fa963cf5d9b",
-  "adfit_sha256": "6b6d5a2aa5d1eaf4c998c8da598f120b557cf3320e81632e852c1e074cb356de",
+  "html_sha256": "14d9b2453c36bd17a6ec2be395fade9dec358bc5fede1b4b1ad41bd58633f6dc",
+  "adfit_sha256": "c092abc38d736880a8c5fb78036e42ea9602ec8f3e8693ff62e68cc691c88b2f",
   "image_assets": [
     {
       "kind": "cover",

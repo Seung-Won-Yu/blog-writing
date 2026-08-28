@@ -23,7 +23,7 @@
   "meta_description": "운영에서 주문 목록 API가 느려졌는데, 개발 환경에서는 같은 SQL이 금방 끝나는 장면이 있다. 인덱스가 없다고 단정하고 추가했다가 쓰기 비용만 키우는 경우도 흔하다. 이 글은 PostgreSQL의… EXPLAIN ANALYZE는 계획의 예상 비용뿐 아니라 실제 시간·행 수·반복 횟…",
   "key_summary": [
     "1. PostgreSQL EXPLAIN ANALYZE로 느린 쿼리를 해결하는 법",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: EXPLAIN ANALYZE의 cost·actual time·rows·loops를 읽고, 순차 스캔·조인·정렬·통계 오차를 구분하며, 안전하게 인덱스와 통계를 검증하는 절…"
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-08-05-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-05-guide-adfit.html",
   "source_sha256": "abe7763e64ccf8c175e7fbadb3535eb32a17ceb2812bee172da9fc3fd3d9ba4f",
-  "html_sha256": "a1fb5a5bd9514db735481a553ca74695809b0c24e82d93ce32ab029258817baf",
-  "adfit_sha256": "cb26ad7784c57c22a84a1fd06c5ab1d6f5ca0155fd67d33a72c6fab195339608",
+  "html_sha256": "fd0890ae24f046430618e110b54042e82b8d16cb087b30f77ffbc9d0eca44256",
+  "adfit_sha256": "e2d1f344fd5e1bed2184d5c5919db72c49f9a95e508f97cb7f159389374060df",
   "image_assets": [
     {
       "kind": "cover",

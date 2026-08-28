@@ -23,7 +23,7 @@
   "meta_description": "로그인 API가 평소보다 많이 호출된다고 해서 모두 공격은 아니다. 모바일 앱의 재시도, 잘못된 배치 작업, 한 사용자의 빠른 클릭도 같은 증상으로 보인다. 그러나 제한이 없으면 인증 서비스와 데이터… 토큰 버킷은 짧은 정상 버스트는 허용하면서 평균 호출량을 제한한다. Redis의 L…",
   "key_summary": [
     "1. Redis 토큰 버킷으로 과도한 API 호출을 제어하는 실전 설계",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: 고정 윈도우와 토큰 버킷의 차이, Redis 원자 연산 구조, HTTP 429 헤더, 키 설계·장애 대응·검증 순서를 구현할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-07-29-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-29-guide-adfit.html",
   "source_sha256": "aa99d6282fc3f19fec5388777420b32c3dfc44a407e268d8363f629dfed2a5c4",
-  "html_sha256": "0983e72dd82028d1173f750fe31c71972be2eabe5ead5e3ee540ebe6e6267998",
-  "adfit_sha256": "80bdbbb978c4b04eba0303bc4448680b5aed35d5d79be1319a5c471ca6f10f06",
+  "html_sha256": "4348fe06bfeebe8f80a5c7118610904b3935543f9e542e80f7205d186bb45467",
+  "adfit_sha256": "69d46a5835d25396ab8127e14823e9742072d6b279ec7caa5e434802563ffcee",
   "image_assets": [
     {
       "kind": "cover",

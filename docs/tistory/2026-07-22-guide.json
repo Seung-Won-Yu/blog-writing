@@ -23,7 +23,7 @@
   "meta_description": "주문 버튼을 한 번 눌렀는데 주문이 두 건 생기는 문제는 사용자의 실수만으로 설명할 수 없다. 서버가 주문을 저장한 뒤 응답이 끊기면, 앱과 프록시는 성공 여부를 모른 채 같은 POST 요청을 재시도… POST 재시도는 성공 여부가 불명확한 네트워크 실패에서 시작된다. 클라이언트가 논…",
   "key_summary": [
     "1. Idempotency-Key로 중복 주문을 막는 API 설계와 PostgreSQL 구현",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: Idempotency-Key의 책임 범위, PostgreSQL의 유니크 제약과 트랜잭션으로 경쟁 상태를 막는 순서, 재시도 응답과 만료 정책을 구현·검증할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-07-22-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-22-guide-adfit.html",
   "source_sha256": "9ca5002b25bd0a7cd459e3f1d0775cdeabc31348db4d101c3fa36c7d216a2927",
-  "html_sha256": "3d6c23cfdbb731b59116af2ffaa32c7562562e660bf8a77d74074c4b019147c1",
-  "adfit_sha256": "1ebcecc59c71c8be28edada59a73a236fc5941e8daad2380859e8bd325b5e86c",
+  "html_sha256": "0df613944e87c95597595b35b68f8ff49dbdc04121de4a5e4df254b6a9edc0b5",
+  "adfit_sha256": "575dd7fef95ec4a6b2374570963d05b9b2c434afe1bc9fee7a40de041e8c4bf1",
   "image_assets": [
     {
       "kind": "cover",

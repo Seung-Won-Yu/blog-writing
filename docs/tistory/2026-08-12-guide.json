@@ -23,7 +23,7 @@
   "meta_description": "모바일 앱이나 SPA에서 소셜 로그인을 붙인 뒤 콜백 URL에 code가 보이면, 그 값만 가로채도 토큰을 바꿀 수 있는지 불안해진다. PKCE는 인가 요청을 시작한 클라이언트만 그 코드를 토큰으로… PKCE는 인가 요청의 code_challenge와 토큰 요청의 code_verifi…",
   "key_summary": [
     "1. OAuth 2.0 PKCE로 인가 코드 탈취를 막는 구현 점검",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: PKCE S256 요청을 만들고 토큰 교환을 검증하며, redirect URI·state·scope·토큰 회전의 점검 기준을 적용할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -45,8 +45,8 @@
   "after_ad_html": "docs/tistory/2026-08-12-guide-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-12-guide-adfit.html",
   "source_sha256": "e63a269b380aa29ab7ad7fff9a8135b1f4a3ff0620a1fb37664bcad0b62cc0f1",
-  "html_sha256": "a477f51a59ebb3b957e1992a6383d2dc93feff2722efabda759fe770922ea619",
-  "adfit_sha256": "56bf7ce5fb9d8706ec8bb1c5d52723512fab875d148ba89f8d1971f152e7395a",
+  "html_sha256": "a5355af88607725857de74fa9141e136b20f8815ffbe6714a1c120fdc4a0d20d",
+  "adfit_sha256": "3970d77298180d4eb456cfc7180b5a78078e81ea8d85d34c4d734baa1ea85e2c",
   "image_assets": [
     {
       "kind": "cover",
