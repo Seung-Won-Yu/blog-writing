@@ -611,6 +611,10 @@ def _schema_reasons(source, identity, *, require_images=True):
             invalid |= not isinstance(block.get("reusable"), bool)
         if "reuse_label" in block:
             invalid |= not _strict_text(block.get("reuse_label"))
+        if "collapsed" in block:
+            invalid |= kind != "code" or not isinstance(block.get("collapsed"), bool)
+        if "summary" in block:
+            invalid |= kind != "code" or not _strict_text(block.get("summary"))
 
     related = source.get("related_posts")
     if not isinstance(related, list):
@@ -1183,6 +1187,8 @@ def _automation_walkthrough_reasons(source, identity):
         or any(not 12 <= len(plain(value)) <= 160 for value in steps)
         or len(plain(walkthrough.get("success_check"))) < 30
         or len(plain(walkthrough.get("recovery"))) < 30
+        or len(plain(walkthrough.get("easiest_method_considered"))) < 30
+        or len(plain(walkthrough.get("code_needed_when"))) < 30
         or "준비" not in heading_text
         or not any(marker in heading_text for marker in ("단계", "실행"))
         or not any(marker in heading_text for marker in ("결과", "확인"))
@@ -1193,6 +1199,16 @@ def _automation_walkthrough_reasons(source, identity):
         )
         or developer_record_index < int(len(content) * 0.65)
         or any(marker in early_text for marker in developer_only_markers)
+        or any(
+            isinstance(block, dict)
+            and block.get("t") == "code"
+            and len(str(block.get("text") or "").splitlines()) > 20
+            and (
+                block.get("collapsed") is not True
+                or len(plain(block.get("summary"))) < 8
+            )
+            for block in content
+        )
     )
     return ["quality_reader_walkthrough"] if invalid else []
 

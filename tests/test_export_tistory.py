@@ -539,6 +539,22 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("오늘의 정처기 문제", html)
         self.assertNotIn("오늘의 IT · 개발 · 기획 용어", html)
 
+    def test_long_optional_code_can_render_collapsed(self):
+        day = copy.deepcopy(LEAD_DAY)
+        code = next(
+            block
+            for block in day["news"][0]["content"]
+            if block.get("t") == "code"
+        )
+        code["collapsed"] = True
+        code["summary"] = "반복 작업용 전체 코드 보기"
+
+        html = render_post("2026-07-17", day)
+
+        self.assertIn('<details class="digest-code-details">', html)
+        self.assertIn("<summary>반복 작업용 전체 코드 보기</summary>", html)
+        self.assertIn('class="digest-code-block language-yaml"', html)
+
     def test_future_daily_lane_renders_as_a_practical_it_article(self):
         day = copy.deepcopy(LEAD_DAY)
         day["draft_id"] = "2026-08-25"

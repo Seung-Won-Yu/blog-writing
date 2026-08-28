@@ -1,8 +1,7 @@
 {
-  "title": "PDF 합치기 자동화: 깨진 파일은 빼고 책갈피까지 만드는 방법",
+  "title": "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
   "title_candidates": [
-    "PDF 합치기 자동화: 깨진 파일은 빼고 책갈피까지 만드는 방법",
-    "PDF 여러 개를 순서대로 합치고 책갈피까지 만드는 방법",
+    "PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
     "세 업무 PDF가 한 권의 탐색 가능한 문서로 묶이고 잘못된 입력 한 장은 분리되는 장면: 합치는 도중 한 파일이 깨져도…"
   ],
   "category": "자동화·실험",
@@ -19,12 +18,13 @@
     "pypdf",
     "문서 자동화",
     "깨진 PDF",
-    "파이썬 PDF"
+    "Mac 미리보기 PDF",
+    "PDF24"
   ],
-  "meta_description": "견적서, 회의록, 영수증을 한 번에 보낼 때마다 파일 세 개를 열고 순서를 확인한다면 이 자동화를 그대로 따라 해볼 수 있다. PDF 이름 앞에 01, 02, 03을 붙여 폴더에 넣고 스크립트를 한… Python 자동화가 처음인 사람도 준비물부터 실행 결과 확인까지 따라 할 수 있게…",
+  "meta_description": "견적서·회의록·영수증 PDF를 한 번 합치려는데 Python 설치와 긴 코드부터 마주할 필요는 없다. Mac은 기본 미리보기 앱, Windows는 파일이 PC 밖으로 나가지 않는 PDF24 Creat… 한두 번 합칠 때는 코딩 없는 방법으로 끝내고, 같은 작업이 매달 반복될 때만 입력…",
   "key_summary": [
-    "1. PDF 여러 개를 순서대로 합치고 책갈피까지 만드는 방법",
-    "직접 얻는 결과: Python 자동화가 처음이어도 준비물, 폴더 모양, 설치 명령, 전체 스크립트, 성공 확인 순서를 그대로 따라 PDF 병합 자동화를 실행할 수 있다."
+    "1. PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화",
+    "직접 얻는 결과: Mac과 Windows에서 코딩 없이 PDF를 합치는 가장 쉬운 방법을 먼저 고르고, 같은 작업이 반복될 때만 안전한 Python 자동화로 확장할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -33,10 +33,10 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 자동화·실험로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: PDF 합치기 자동화: 깨진 파일은 빼고 책갈피까지 만드는 방법"
+    "추천 제목: PDF 합치기 가장 쉬운 방법: Mac·Windows·반복 자동화"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 12,
+  "estimated_read_minutes": 15,
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/automation_cases/2026-08-28.json",
@@ -45,9 +45,9 @@
   "before_ad_html": "docs/tistory/2026-08-28-automation-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-28-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-28-automation-adfit.html",
-  "source_sha256": "ed898833396e827cf4a37ac3dee466db8527322c6c4e8b6fe6fabb55680bec85",
-  "html_sha256": "049d4cf834c848ea17a81424423efb5145013f8f0280b67f21967987676a9fff",
-  "adfit_sha256": "ae80082e576096cca18748b14558766a1eebe5106e195ef764f2e4f890489a9a",
+  "source_sha256": "188bbd8ee6aaee2d469f9824e3a8c32839a0e45ac6e9506de6efecfb1dd8f4ac",
+  "html_sha256": "a4049e06c2beb89db33abfde9d14ee40ae91e91d05ea2dab5dcb46e23e2a8877",
+  "adfit_sha256": "6ff8d6051def123cc0cbca49885699dd192d4b322f69f294acf1d35c391593bf",
   "image_assets": [
     {
       "kind": "cover",

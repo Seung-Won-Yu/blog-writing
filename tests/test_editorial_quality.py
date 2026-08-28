@@ -513,6 +513,8 @@ def valid_automation_source(day="2026-07-25"):
             ],
             "success_check": "성공 목록의 파일 수와 날짜별 출력 폴더의 실제 파일 수가 같으면 성공이다.",
             "recovery": "오류가 나면 출력 폴더만 비우고 보존된 입력 복사본으로 같은 단계를 다시 실행한다.",
+            "easiest_method_considered": "운영체제 기본 기능이나 안전한 로컬 화면 도구로 같은 일을 더 짧게 해결할 수 있는지 먼저 비교한다.",
+            "code_needed_when": "같은 규칙의 작업이 정기적으로 반복되어 매번 누르고 확인하는 시간이 코드 준비보다 커질 때만 사용한다.",
         }
         source["editorial"]["reader_hook"] = {
             "scene": "다운로드 폴더에 같은 이름의 첨부파일이 쌓여 필요한 파일을 다시 찾는 장면",
@@ -665,6 +667,51 @@ class EditorialQualityTests(unittest.TestCase):
     def test_future_automation_keeps_developer_proof_in_the_final_record(self):
         source = valid_automation_source("2026-08-28")
         source["news"][0]["content"][1]["text"] += " SHA-256과 소스 커밋을 먼저 확인한다."
+
+        self.assertIn(
+            "quality_reader_walkthrough",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-28-automation")
+            ),
+        )
+
+    def test_future_automation_requires_easiest_method_before_code(self):
+        source = valid_automation_source("2026-08-28")
+        source["editorial"]["reader_walkthrough"].pop("easiest_method_considered")
+
+        self.assertIn(
+            "quality_reader_walkthrough",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-28-automation")
+            ),
+        )
+
+    def test_future_automation_collapses_long_code(self):
+        source = valid_automation_source("2026-08-28")
+        code = next(
+            block
+            for block in source["news"][0]["content"]
+            if block.get("t") == "code"
+        )
+        code["text"] = "\n".join(f"print({index})" for index in range(21))
+
+        self.assertIn(
+            "quality_reader_walkthrough",
+            source_quality_reasons(
+                source, resolve_draft_identity("2026-08-28-automation")
+            ),
+        )
+
+    def test_future_automation_requires_a_useful_summary_for_collapsed_code(self):
+        source = valid_automation_source("2026-08-28")
+        code = next(
+            block
+            for block in source["news"][0]["content"]
+            if block.get("t") == "code"
+        )
+        code["text"] = "\n".join(f"print({index})" for index in range(21))
+        code["collapsed"] = True
+        code["summary"] = "코드"
 
         self.assertIn(
             "quality_reader_walkthrough",

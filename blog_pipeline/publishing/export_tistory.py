@@ -265,9 +265,17 @@ def render_content_blocks(blocks, images=None):
                 continue
             language = re.sub(r"[^a-z0-9_-]+", "", plain(block.get("language")).lower())
             language_class = f" language-{language}" if language else ""
-            rows.append(
+            code_html = (
                 f'<pre class="digest-code-block{language_class}"><code>{esc(code)}</code></pre>'
             )
+            if block.get("collapsed") is True:
+                summary = plain(block.get("summary")) or "전체 코드 보기"
+                rows.append(
+                    '<details class="digest-code-details">'
+                    f'<summary>{esc(summary)}</summary>{code_html}</details>'
+                )
+            else:
+                rows.append(code_html)
             continue
         text = plain(block.get("text"))
         if not text:
