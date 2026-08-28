@@ -1,0 +1,93 @@
+{
+  "title": "PDF 합치기 실험: 문서 3개를 책갈피 한 파일로 자동 병합",
+  "title_candidates": [
+    "PDF 합치기 실험: 문서 3개를 책갈피 한 파일로 자동 병합",
+    "PDF 합치기와 문서별 책갈피 자동 생성 실험",
+    "세 업무 PDF가 한 권의 탐색 가능한 문서로 묶이고 잘못된 입력 한 장은 분리되는 장면: 합치는 도중 한 파일이 깨져도…"
+  ],
+  "category": "자동화·실험",
+  "draft_id": "2026-08-28-automation",
+  "publish_date": "2026-08-28",
+  "content_type": "automation_case",
+  "content_label": "업무자동화 실험",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-08-28T09:00:00+09:00",
+  "tags": [
+    "PDF 합치기",
+    "PDF 병합 자동화",
+    "PDF 책갈피",
+    "pypdf",
+    "문서 자동화",
+    "깨진 PDF",
+    "파이썬 PDF"
+  ],
+  "meta_description": "견적서, 회의록, 영수증을 한 번에 전달하려고 파일을 하나씩 열고 순서를 맞추는 작업은 작지만 자주 반복된다. 네 개의 테스트 파일을 자동 병합했더니 이름만 .pdf인 한 파일에서 작업이 멈췄다. 불… pypdf 6.16.2로 합성 업무 PDF 세 개를 순서대로 병합하고, 이름만 PD…",
+  "key_summary": [
+    "1. PDF 합치기와 문서별 책갈피 자동 생성 실험",
+    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 자동화·실험로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: PDF 합치기 실험: 문서 3개를 책갈피 한 파일로 자동 병합"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-08-28.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-28-automation.html",
+  "before_ad_html": "docs/tistory/2026-08-28-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-28-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-28-automation-adfit.html",
+  "source_sha256": "7c9108a68f714bd96ed3894f313300893a1794445cc4e3b456da78259d5f30f7",
+  "html_sha256": "b15de25b2b3160a04b33b638c60d64e43bc4e609e6175a355d55b91dacbb8d86",
+  "adfit_sha256": "631867fe4618d81d4717c09128ac866eb9440c48e636978f2e931fe551800e03",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-책갈피-대표.webp",
+      "original_url": "",
+      "alt": "PDF 합치기 후 세 책갈피가 꽂힌 한 문서와 결과에서 제외된 잘못된 입력 한 장",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실행결과-증거.webp",
+      "original_url": "",
+      "alt": "합성 업무 PDF 세 쪽과 견적서 회의록 영수증 책갈피 목적지가 일치한 실제 검증 화면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-실패복구-증거.webp",
+      "original_url": "",
+      "alt": "깨진 PDF 입력에서 PdfStreamError가 난 뒤 임시 출력을 제거하고 헤더 검사로 재실행한 증거",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
+      "path": "docs/tistory/assets/2026-08-28-automation/PDF병합-안전절차.webp",
+      "original_url": "",
+      "alt": "PDF 입력 검사와 잘못된 파일 제외를 거쳐 안전 병합하고 책갈피를 확인하는 절차",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
