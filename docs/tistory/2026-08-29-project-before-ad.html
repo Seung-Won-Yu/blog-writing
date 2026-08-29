@@ -1,0 +1,18 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 8. 29 (토) · 약 11분</p>
+    <p class="digest-lead">후보 200개를 모았지만, 어떤 순서로 탈락시킬지는 더 어려웠다. 가격이 싼 종목을 먼저 빼면 되는지, 거래대금과 스프레드 중 무엇을 앞에 둘지부터 애매했다. 당일 크게 오른 종목은 점수가 좋아 보였고, 정배열은 추세가 이어질 것처럼 보였다. 하지만 눈에 띄는 종목과 실제로 분석할 수 있는 종목은 같지 않았다. 그래서 edgelab의 실제 코드와 경계 테스트를 다시 대조해 관문을 두 층으로 나눴다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-29-project/주식-선정-관문-대표.webp" alt="급등 후보 카드가 황동 검사 게이트에서 멈추고 다른 후보가 구조 분석대로 넘어가는 주식 선정 작업대" width="1200" height="630" loading="eager"></figure>
+
+  <h2 class="digest-news-heading">프로젝트 제작기</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">개발 기록 · 개인 프로젝트 기록 · 공개 자료 참고 · 2026. 8. 29</p>
+    <h3>주식 선정 알고리즘: 급등주를 빼고 정배열을 보는 기준</h3>
+    <p class="digest-blurb">후보 200개를 가격·스프레드·거래대금의 공급 관문과 급등·ATR·SMA20·SMA50의 전략 관문으로 나눠 탈락시키는 edgelab의 실제 코드, 경계 테스트, 결측값 수정 기록을 정리했다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">후보 200개를 모은 다음이 더 어려웠다</h4><p>이전 편에서 랭킹 80개와 종목 마스터 순환 120개를 합쳐 후보 200개를 만들었다. 이제는 그중 무엇을 먼저 버릴지가 문제였다. 가격이 싼 종목을 먼저 빼면 되는지, 거래대금과 스프레드 중 어느 값을 먼저 봐야 하는지부터 애매했다.</p><p>당일 크게 오른 종목은 점수가 좋아 보였고, <code>현재가&gt;SMA20&gt;SMA50</code> 정배열은 추세가 이어질 것처럼 보였다. 그러나 눈에 띄는 종목과 실제로 분석할 수 있는 종목은 같지 않았다.</p><p>처음에는 <code>가격 → 유동성 → 스프레드 → 급등 제외 → 정배열</code>을 한 줄짜리 깔때기로 만들면 된다고 생각했다. 실제 코드를 다시 따라가 보니 구조가 달랐다. 값싼 단계에서 비싼 정밀 조회를 쓸 후보를 줄이는 관문과, 정밀 지표가 준비된 뒤 전략 가설을 판정하는 관문이 따로 있었다. 이번 질문은 ‘어떤 종목이 오를까’가 아니라 ‘어떤 값을 모르는 채 다음 단계로 넘기면 안 될까’로 바뀌었다.</p><blockquote class="digest-evidence-quote">후보 200개에서 급등주와 거래하기 어려운 종목을 어떤 기준으로 빼고, SMA20·SMA50 정배열은 어디에서 확인해야 할까?</blockquote><h4 class="digest-subheading">실제 구현은 한 줄 필터가 아니라 두 층이다</h4><p>첫 층은 후보 공급 관문이다. 개별주 S1에 정밀 일봉과 호가 분석을 더 쓸 가치가 있는지 판단한다. 코드의 조건식은 보통주인지 확인한 뒤 가격 10달러 이상, 스프레드 40bp 이하, 당일 거래대금 2천만 달러 이상을 함께 요구한다. 조건을 통과한 종목은 랭킹 출신과 순환 출신으로 나눠 유동성 순으로 정렬한다. 이 단계는 매수 신호가 아니라 분석 예산을 배분하는 경계다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-29-project/후보-두단계-필터-흐름.webp" alt="후보 200개를 가격·스프레드·거래대금 공급 관문과 급등·ATR·SMA20·SMA50 전략 관문으로 나누는 실제 코드 흐름" width="1200" height="630" loading="lazy"><figcaption>실제 코드는 가격·스프레드·거래대금을 묶은 공급 관문과 급등·ATR·정배열의 전략 관문을 분리한다. 관문별 탈락 수는 현재 따로 집계하지 않는다.</figcaption></figure><p>두 번째 층은 전략 판정이다. 정밀 조회에서 현재 가격과 호가, 완결 일봉을 받아 등락률과 SMA20·SMA50를 계산한 뒤 같은 가격·스프레드·거래대금 조건을 다시 확인한다.</p><p>그 다음 당일 +5% 초과 급등, ATR 범위, <code>현재가&gt;SMA20&gt;SMA50</code> 구조를 차례로 본다. 같은 값을 두 번 확인하는 것은 중복처럼 보이지만, 두 시점의 값이 어긋나거나 깨졌을 때 조용히 통과시키지 않는 안전장치다.</p><h4 class="digest-subheading">가격·유동성·스프레드는 같은 질문이 아니다</h4><p>10달러 가격 하한은 싼 주식이 나쁘다는 선언이 아니다. 현재 S1의 주문 규모와 최소 호가 단위를 고려했을 때 가격이 낮을수록 1센트 차이가 차지하는 비율이 커지는 비용 경계다.</p><p>40bp는 <code>(매도호가-매수호가)/중간가격×10,000</code>으로 본 상대 스프레드 상한이다. 거래대금 2천만 달러는 하루에 실제로 돈이 얼마나 오갔는지를 보는 별도 유동성 관문이다. Investor.gov도 bid와 ask의 차이를 spread라고 설명한다.</p></div>
+  </div>
+</section>
+</article>
