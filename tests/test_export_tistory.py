@@ -18,6 +18,7 @@ from blog_pipeline.publishing.export_tistory import (
     render_post,
     should_preserve_published_export,
     split_post_around_first_story,
+    write_published_project_revision,
     write_post,
 )
 
@@ -334,7 +335,7 @@ class SaturdayAutomationExportTests(unittest.TestCase):
             ],
         )
 
-    def test_project_log_uses_its_own_heading(self):
+    def test_project_log_starts_with_plain_summary_without_repeating_title_or_date(self):
         project = copy.deepcopy(LEAD_DAY)
         project.update(
             {
@@ -342,13 +343,77 @@ class SaturdayAutomationExportTests(unittest.TestCase):
                 "publish_date": "2026-08-29",
                 "content_type": "project_log",
                 "content_label": "프로젝트 제작기",
+                "series": "모의투자부터 시작한 주식 앱 제작기",
+                "episode": 2,
+                "reader_access": {
+                    "quick_summary": [
+                        "후보를 모으는 규칙과 실제 분석할 종목을 고르는 규칙은 서로 다른 일이다.",
+                        "먼저 거래하기 어려운 종목을 빼고, 남은 후보에서 추세와 예외를 확인한다.",
+                        "숫자는 정답이 아니라 현재 앱에서 검증 중인 시험 기준으로 읽어야 한다.",
+                    ],
+                    "glossary": [
+                        {"term": "스프레드", "meaning": "사려는 가격과 팔려는 가격 사이의 차이다."},
+                        {"term": "이동평균선", "meaning": "최근 일정 기간의 평균 가격을 이은 선이다."},
+                        {"term": "결측값", "meaning": "수집 실패 등으로 값이 비어 있는 상태다."},
+                    ],
+                },
             }
         )
 
         rendered = render_post("2026-08-29-project", project)
 
-        self.assertIn('<h2 class="digest-news-heading">프로젝트 제작기</h2>', rendered)
-        self.assertIn("개발 기록", rendered)
+        self.assertIn("30초 요약", rendered)
+        self.assertIn("먼저 알아둘 말", rendered)
+        self.assertIn("실제 구현과 확인 결과", rendered)
+        self.assertNotIn('<h2 class="digest-news-heading">프로젝트 제작기</h2>', rendered)
+        self.assertNotIn("개발 기록", rendered)
+        self.assertNotIn("digest-source", rendered)
+        self.assertNotIn("digest-closing", rendered)
+        self.assertNotIn("2026. 8. 29 (토)", rendered)
+
+    def test_published_project_revision_is_copy_ready_and_keeps_original_url(self):
+        source = json.loads(
+            (
+                Path(__file__).resolve().parents[1]
+                / "data/project_logs/published/2026-08-25.json"
+            ).read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            projects = root / "data" / "project_logs"
+            published = projects / "published"
+            output = root / "docs" / "tistory"
+            published.mkdir(parents=True)
+            (published / "2026-08-25.json").write_text(
+                json.dumps(source, ensure_ascii=False), encoding="utf-8"
+            )
+            with patch(
+                "blog_pipeline.publishing.export_tistory.HERE", root
+            ), patch(
+                "blog_pipeline.publishing.export_tistory.PROJECT_LOGS_DIR", projects
+            ), patch(
+                "blog_pipeline.publishing.export_tistory.OUT_DIR", output
+            ):
+                write_published_project_revision("2026-08-25")
+
+            meta = json.loads(
+                (output / "2026-08-25-project-revision.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            rendered = (
+                output / "2026-08-25-project-revision.html"
+            ).read_text(encoding="utf-8")
+
+        self.assertEqual(meta["artifact_type"], "published_revision")
+        self.assertEqual(meta["published_url"], "https://won0322.tistory.com/213")
+        self.assertTrue(meta["publish_ready"])
+        self.assertGreaterEqual(
+            meta["reader_scores"]["general_reader_understanding"], 8.5
+        )
+        self.assertGreaterEqual(meta["reader_scores"]["public_readability"], 8.5)
+        self.assertIn("30초 요약", rendered)
+        self.assertNotIn("digest-closing", rendered)
 
     def test_future_daily_export_is_handed_off_for_manual_review(self):
         future = copy.deepcopy(LEAD_DAY)

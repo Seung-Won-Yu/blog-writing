@@ -1,7 +1,9 @@
 import copy
+import json
 import math
 import unittest
 from datetime import date, timedelta
+from pathlib import Path
 
 from blog_pipeline.publishing.draft_identity import (
     category_for_content_type,
@@ -14,8 +16,12 @@ from blog_pipeline.publishing.editorial_quality import (
     depth_policy_for,
     estimate_read_minutes,
     measurement_digest,
+    project_reader_scores,
     source_quality_reasons,
 )
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def repeated_text(label, count=80):
@@ -694,6 +700,46 @@ def valid_guide_source(day="2026-07-22"):
 
 
 class EditorialQualityTests(unittest.TestCase):
+    def test_project_story_scores_above_eight_point_five_for_general_readers(self):
+        source = json.loads(
+            (ROOT / "data/project_logs/2026-08-29.json").read_text(encoding="utf-8")
+        )
+        identity = resolve_draft_identity("2026-08-29-project", source)
+
+        scores = project_reader_scores(source, identity)
+
+        self.assertGreaterEqual(scores["general_reader_understanding"], 8.5)
+        self.assertGreaterEqual(scores["public_readability"], 8.5)
+        self.assertNotIn("quality_reader_access", source_quality_reasons(source, identity))
+
+    def test_project_story_rewrites_instead_of_accepting_missing_reader_aids(self):
+        source = json.loads(
+            (ROOT / "data/project_logs/2026-08-29.json").read_text(encoding="utf-8")
+        )
+        source.pop("reader_access")
+        identity = resolve_draft_identity("2026-08-29-project", source)
+
+        scores = project_reader_scores(source, identity)
+
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertIn("quality_reader_access", source_quality_reasons(source, identity))
+
+    def test_project_story_rejects_jargon_in_summary_and_long_mobile_paragraphs(self):
+        source = json.loads(
+            (ROOT / "data/project_logs/2026-08-29.json").read_text(encoding="utf-8")
+        )
+        source["reader_access"]["quick_summary"][0] = (
+            "SMA20과 ATR을 적용해 S1 후보를 거르는 내부 알고리즘의 실행 결과를 확인한다."
+        )
+        source["news"][0]["content"][1]["text"] = "긴 모바일 문단 " * 40
+        identity = resolve_draft_identity("2026-08-29-project", source)
+
+        scores = project_reader_scores(source, identity)
+
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertLess(scores["public_readability"], 8.5)
+        self.assertIn("quality_reader_access", source_quality_reasons(source, identity))
+
     def test_all_future_content_lanes_satisfy_new_contract(self):
         cases = [
             ("2026-08-04", valid_daily_source("2026-08-04")),

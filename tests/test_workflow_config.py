@@ -353,6 +353,10 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("Codex 웹 리서치", contract)
         self.assertIn("그래도 핵심 구현 증거가 없을 때만", contract)
         self.assertIn("티스토리 예약 시각이 아니다", contract)
+        self.assertIn("일반 독자 8.5 제작 기준", contract)
+        self.assertIn("`30초 요약`", contract)
+        self.assertIn("본문 한 문단은 200자 이하", contract)
+        self.assertIn("결과로 끝내지 말고", contract)
 
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")

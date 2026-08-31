@@ -1,7 +1,7 @@
 {
-  "title": "주식 선정 알고리즘: 급등주를 빼고 정배열을 보는 기준",
+  "title": "주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?",
   "title_candidates": [
-    "주식 선정 알고리즘: 급등주를 빼고 정배열을 보는 기준",
+    "주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?",
     "급등 후보가 물리 검사 게이트에서 멈추고 차분한 후보가 구조 분석대로 넘어가는 작업대: 눈에 띄는 종목과 분석할 수 있는…"
   ],
   "category": "프로젝트·회고",
@@ -20,9 +20,9 @@
     "파이썬 주식 앱",
     "edgelab"
   ],
-  "meta_description": "후보 200개를 모았지만, 어떤 순서로 탈락시킬지는 더 어려웠다. 가격이 싼 종목을 먼저 빼면 되는지, 거래대금과 스프레드 중 무엇을 앞에 둘지부터 애매했다. 당일 크게 오른 종목은 점수가 좋아 보였… 후보 200개를 가격·스프레드·거래대금의 공급 관문과 급등·ATR·SMA20·SMA…",
+  "meta_description": "후보 200개를 모으고 나니 더 어려운 문제가 생겼다. 눈에 잘 띄는 종목과 실제로 분석할 만한 종목은 같지 않았다. 가격이 너무 낮거나 거래가 드문 종목을 먼저 빼야 했고, 당일 크게 오른 종목을… 후보 200개에서 거래하기 어려운 종목을 먼저 빼고, 남은 후보의 급등 여부와 가격…",
   "key_summary": [
-    "1. 주식 선정 알고리즘: 급등주를 빼고 정배열을 보는 기준",
+    "1. 주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?",
     "직접 얻는 결과: 가격 10달러, 스프레드 40bp, 거래대금 2천만 달러, 당일 +5%, SMA20·SMA50를 실제 코드에서 어떤 두 단계로 나눴는지와 각 기준의 한계를 이해한다."
   ],
   "publish_checklist": [
@@ -32,10 +32,14 @@
     "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
     "태그 입력 후 카테고리를 프로젝트·회고로 지정하기",
     "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
-    "추천 제목: 주식 선정 알고리즘: 급등주를 빼고 정배열을 보는 기준"
+    "추천 제목: 주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 11,
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/project_logs/2026-08-29.json",
@@ -44,9 +48,9 @@
   "before_ad_html": "docs/tistory/2026-08-29-project-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-29-project-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-29-project-adfit.html",
-  "source_sha256": "6fd23cdf4d710f23658d9d09683035d84e1a0c2209153e35291d40bfe3b0fa4c",
-  "html_sha256": "325f7d356b40ca1b5a701c15bd662b2203b9c56fc4d4b9d09f2130f19eb2a5cf",
-  "adfit_sha256": "df597f44ff6cf2b80e496295d3098e2425c3b8bc7a78b702f7fd90d6c8b26fc5",
+  "source_sha256": "0d072e649472039fbacb8c1dbc47ed1d58eac8cfd06eec0500f86bdedb8451a4",
+  "html_sha256": "a97490e958b748e8a9a10aeba08b9d53bddac2756ad6ac431df0b3ade47533be",
+  "adfit_sha256": "236de433769a12b4d4032e5070a4aad0890ac335aebdf848466204fdd28bf937",
   "image_assets": [
     {
       "kind": "cover",

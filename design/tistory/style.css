@@ -5433,6 +5433,74 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   line-height: 1.9 !important;
 }
 
+.daily-digest-post .digest-project-aid {
+  margin: 0 0 48px !important;
+  padding: 26px 0 28px !important;
+  border: 0 !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  background: transparent !important;
+}
+
+.daily-digest-post .digest-project-aid > h2 {
+  margin: 0 0 12px !important;
+  color: var(--sw-ink) !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.45 !important;
+}
+
+.daily-digest-post .digest-project-aid > .digest-bullet-list {
+  margin: 0 !important;
+}
+
+.daily-digest-post .digest-project-glossary {
+  margin: 24px 0 0 !important;
+  padding: 20px 0 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+}
+
+.daily-digest-post .digest-project-glossary h3 {
+  margin: 0 0 10px !important;
+  color: var(--sw-ink) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.5 !important;
+}
+
+.daily-digest-post .digest-project-glossary dl,
+.daily-digest-post .digest-project-glossary div,
+.daily-digest-post .digest-project-glossary dt,
+.daily-digest-post .digest-project-glossary dd {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.daily-digest-post .digest-project-glossary div {
+  display: grid !important;
+  grid-template-columns: 118px minmax(0, 1fr) !important;
+  gap: 16px !important;
+  padding: 10px 0 !important;
+  border-top: 1px solid var(--sw-line) !important;
+}
+
+.daily-digest-post .digest-project-glossary div:first-child {
+  border-top: 0 !important;
+}
+
+.daily-digest-post .digest-project-glossary dt {
+  color: var(--sw-accent) !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1.65 !important;
+}
+
+.daily-digest-post .digest-project-glossary dd {
+  color: var(--sw-muted) !important;
+  font-size: 15px !important;
+  line-height: 1.72 !important;
+}
+
 .daily-digest-post .digest-reading-guide {
   margin: 0 0 52px !important;
   padding: 20px 0 0 !important;
@@ -6116,7 +6184,7 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   font-size: .92em;
 }
 
-.daily-digest-post > section:not(.digest-hero, .digest-summary, .digest-throughline, .digest-reading-guide, .digest-news-card, .digest-quiz, .digest-terms, .digest-closing) {
+.daily-digest-post > section:not(.digest-hero, .digest-summary, .digest-throughline, .digest-project-aid, .digest-reading-guide, .digest-news-card, .digest-quiz, .digest-terms, .digest-closing) {
   margin: 0 0 34px;
   padding: 26px 0 30px;
   border-top: 1px solid var(--sw-line);
@@ -6626,10 +6694,16 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   }
 
   .daily-digest-post .digest-throughline,
+  .daily-digest-post .digest-project-aid,
   .daily-digest-post .digest-quiz,
   .daily-digest-post .digest-terms {
     padding-right: 0 !important;
     padding-left: 0 !important;
+  }
+
+  .daily-digest-post .digest-project-glossary div {
+    grid-template-columns: 1fr !important;
+    gap: 3px !important;
   }
 
   .daily-digest-post .digest-news-card h3 {

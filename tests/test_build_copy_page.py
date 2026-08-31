@@ -46,6 +46,61 @@ class CopyPageTests(unittest.TestCase):
             "1차 검수 완료 · 티스토리에서 직접 발행",
         )
 
+    def test_published_revision_is_labeled_as_a_body_replacement(self):
+        self.assertEqual(
+            scheduled_label("", publication_mode="published_revision"),
+            "공개 글 수정본 · 티스토리에서 본문 교체",
+        )
+
+    def test_copy_page_loads_a_published_project_revision(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tistory = root / "docs" / "tistory"
+            published = root / "data" / "project_logs" / "published"
+            tistory.mkdir(parents=True)
+            published.mkdir(parents=True)
+            source = {
+                "draft_id": "2026-08-25-project",
+                "publish_date": "2026-08-25",
+                "content_type": "project_log",
+                "content_label": "프로젝트 제작기",
+            }
+            (published / "2026-08-25.json").write_text(
+                json.dumps(source, ensure_ascii=False), encoding="utf-8"
+            )
+            artifact = "2026-08-25-project-revision"
+            (tistory / f"{artifact}.html").write_text("draft", encoding="utf-8")
+            (tistory / f"{artifact}.json").write_text(
+                json.dumps(
+                    {
+                        "artifact_type": "published_revision",
+                        "draft_id": artifact,
+                        "revision_of": "2026-08-25-project",
+                        "publish_date": "2026-08-25",
+                        "content_type": "project_log",
+                        "content_label": "프로젝트 제작기 수정본",
+                        "publication_mode": "published_revision",
+                        "source": "data/project_logs/published/2026-08-25.json",
+                        "title": "좋은 주식은 어떻게 고를까?",
+                        "publish_ready": True,
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            with patch("blog_pipeline.publishing.build_copy_page.ROOT", root), patch(
+                "blog_pipeline.publishing.build_copy_page.TISTORY_DIR", tistory
+            ):
+                drafts = load_drafts()
+
+        self.assertEqual(len(drafts), 1)
+        self.assertEqual(drafts[0]["artifact_type"], "published_revision")
+        self.assertEqual(
+            drafts[0]["scheduled_label"],
+            "공개 글 수정본 · 티스토리에서 본문 교체",
+        )
+
     def test_copy_page_uses_ninety_day_guard_for_saturday_automation(self):
         from blog_pipeline.publishing.build_copy_page import apply_guard_results
 

@@ -26,6 +26,7 @@ DAILY_QUALITY_POLICY_START = date(2026, 7, 19)
 AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 PROJECT_QUALITY_POLICY_START = date(2026, 8, 28)
+PROJECT_READER_ACCESS_POLICY_START = date(2026, 8, 25)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
@@ -374,6 +375,11 @@ DEPTH_POLICIES = {
         "required_block_types": {"table", "ul"},
     },
 }
+
+PROJECT_OPENING_JARGON = re.compile(
+    r"(?<![0-9A-Za-z])(?:S[123]|ATR|NaN|SMA\d+|API|bp|edgelab|bid[- ]ask)(?![0-9A-Za-z])|정배열",
+    re.IGNORECASE,
+)
 
 
 def depth_policy_for(identity, article_shape=""):
@@ -1526,6 +1532,129 @@ def _depth_reasons(source, identity):
     return ["quality_depth"] if invalid else []
 
 
+def project_reader_scores(source, identity):
+    """Score the observable project-story traits that a general reader sees."""
+    if (
+        identity.content_type != "project_log"
+        or date.fromisoformat(identity.publish_date)
+        < PROJECT_READER_ACCESS_POLICY_START
+    ):
+        return {}
+
+    understanding = 10.0
+    readability = 10.0
+    series = plain(source.get("series"))
+    episode = source.get("episode")
+    access = (
+        source.get("reader_access")
+        if isinstance(source.get("reader_access"), dict)
+        else {}
+    )
+    summary = access.get("quick_summary")
+    glossary = access.get("glossary")
+    editorial = (
+        source.get("editorial")
+        if isinstance(source.get("editorial"), dict)
+        else {}
+    )
+    opening = plain(editorial.get("opening"))
+
+    if not 10 <= len(series) <= 80:
+        understanding -= 1.0
+    if isinstance(episode, bool) or not isinstance(episode, int) or episode < 1:
+        understanding -= 1.0
+
+    valid_summary = (
+        isinstance(summary, list)
+        and len(summary) == 3
+        and all(20 <= len(plain(item)) <= 110 for item in summary)
+        and len({plain(item).casefold() for item in summary}) == 3
+    )
+    if not valid_summary:
+        understanding -= 3.0
+
+    valid_glossary = isinstance(glossary, list) and 3 <= len(glossary) <= 5
+    glossary_terms = []
+    if valid_glossary:
+        for item in glossary:
+            if not isinstance(item, dict):
+                valid_glossary = False
+                break
+            term = plain(item.get("term"))
+            meaning = plain(item.get("meaning"))
+            if not 2 <= len(term) <= 30 or not 15 <= len(meaning) <= 120:
+                valid_glossary = False
+                break
+            glossary_terms.append(term.casefold())
+        valid_glossary = valid_glossary and len(set(glossary_terms)) == len(glossary_terms)
+    if not valid_glossary:
+        understanding -= 2.0
+
+    plain_language_copy = "\n".join(
+        [opening]
+        + ([plain(item) for item in summary] if isinstance(summary, list) else [])
+    )
+    if PROJECT_OPENING_JARGON.search(plain_language_copy):
+        understanding -= 2.0
+
+    if not 120 <= len(opening) <= 260:
+        readability -= 2.0
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    paragraphs = [
+        plain(block.get("text"))
+        for block in content
+        if isinstance(block, dict) and block.get("t") == "p" and plain(block.get("text"))
+    ]
+    if any(len(paragraph) > 200 for paragraph in paragraphs):
+        readability -= 2.0
+
+    run = 0
+    maximum_run = 0
+    for block in content:
+        if not isinstance(block, dict):
+            continue
+        if block.get("t") == "h":
+            run = 0
+        elif block.get("t") not in {"ad_break", "visual"}:
+            run += 1
+            maximum_run = max(maximum_run, run)
+    if maximum_run > 4:
+        readability -= 1.0
+
+    if any(
+        block.get("t") == "table"
+        and isinstance(block.get("headers"), list)
+        and len(block.get("headers")) > 4
+        for block in content
+        if isinstance(block, dict)
+    ):
+        readability -= 1.0
+
+    if any(
+        block.get("t") == "code"
+        and len(str(block.get("text") or "").splitlines()) > 12
+        and block.get("collapsed") is not True
+        for block in content
+        if isinstance(block, dict)
+    ):
+        readability -= 1.0
+
+    return {
+        "general_reader_understanding": max(0.0, round(understanding, 1)),
+        "public_readability": max(0.0, round(readability, 1)),
+    }
+
+
+def _project_reader_access_reasons(source, identity):
+    scores = project_reader_scores(source, identity)
+    if scores and min(scores.values()) < 8.5:
+        return ["quality_reader_access"]
+    return []
+
+
 def _prose_reasons(source, identity):
     values = [plain(value) for value in _text_values(source)]
     searchable = "\n".join(values).casefold()
@@ -2106,6 +2235,7 @@ def source_authoring_reasons(source, identity):
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
+        lambda: _project_reader_access_reasons(source, identity),
         lambda: _prose_reasons(source, identity),
         lambda: _visual_role_reasons(source, identity),
         lambda: _visual_trend_reasons(source, identity),

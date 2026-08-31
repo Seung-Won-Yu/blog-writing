@@ -1043,12 +1043,12 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         and has_inline_post_style(body_html)
     ):
         reasons.append("inline_post_style")
-    rendered_news_marker = (
-        'class="digest-news-card digest-lead-story"'
+    rendered_news_count = (
+        body_html.count('id="digest-news-1"')
         if lead_story
-        else 'class="digest-news-card"'
+        else body_html.count('class="digest-news-card"')
     )
-    if body_html.count(rendered_news_marker) != expected_news_count:
+    if rendered_news_count != expected_news_count:
         reasons.append("rendered_news_count")
     if lead_story and body_html.count('data-digest-ad-break="true"') != 1:
         reasons.append("rendered_ad_break")

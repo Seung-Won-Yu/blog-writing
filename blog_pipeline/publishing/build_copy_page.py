@@ -48,10 +48,21 @@ def is_allowed_source(source):
         ("data", "project_logs"),
     }:
         return False
-    return len(path.parts) == 3 and path.suffix == ".json" and (ROOT / path).is_file()
+    regular_source = len(path.parts) == 3
+    published_project = (
+        len(path.parts) == 4
+        and path.parts[:3] == ("data", "project_logs", "published")
+    )
+    return (
+        (regular_source or published_project)
+        and path.suffix == ".json"
+        and (ROOT / path).is_file()
+    )
 
 
 def scheduled_label(value, *, publication_mode="scheduled"):
+    if publication_mode == "published_revision":
+        return "공개 글 수정본 · 티스토리에서 본문 교체"
     if publication_mode == "manual_review":
         return "1차 검수 완료 · 티스토리에서 직접 발행"
     text = str(value or "").strip()
@@ -94,15 +105,31 @@ def load_drafts():
         draft_id = str(meta.get("draft_id") or file_draft_id)
         if draft_id != file_draft_id:
             continue
-        try:
-            identity = resolve_draft_identity(draft_id, meta)
-        except ValueError:
-            continue
-        if source != identity.source or not is_allowed_source(source):
-            continue
+        artifact_type = str(meta.get("artifact_type") or "")
+        if artifact_type == "published_revision":
+            if not is_allowed_source(source):
+                continue
+            try:
+                source_payload = json.loads((ROOT / source).read_text(encoding="utf-8"))
+                identity = resolve_draft_identity(meta.get("revision_of"), source_payload)
+            except (OSError, json.JSONDecodeError, ValueError):
+                continue
+            if (
+                identity.content_type != "project_log"
+                or source_payload.get("draft_id") != meta.get("revision_of")
+                or meta.get("publish_date") != identity.publish_date
+            ):
+                continue
+        else:
+            try:
+                identity = resolve_draft_identity(draft_id, meta)
+            except ValueError:
+                continue
+            if source != identity.source or not is_allowed_source(source):
+                continue
         publish_date = identity.publish_date
         content_type = identity.content_type
-        content_label = identity.content_label
+        content_label = str(meta.get("content_label") or identity.content_label)
         scheduled_at = str(meta.get("scheduled_at") or "")
         publication_mode = str(meta.get("publication_mode") or "scheduled")
         drafts.append(
@@ -112,6 +139,7 @@ def load_drafts():
                 "publish_date": publish_date,
                 "content_type": content_type,
                 "content_label": content_label,
+                "artifact_type": artifact_type,
                 "publication_mode": publication_mode,
                 "scheduled_at": scheduled_at,
                 "scheduled_label": scheduled_label(
@@ -156,6 +184,9 @@ def apply_guard_results(drafts, *, root=ROOT):
     checked = []
     for original in drafts:
         draft = dict(original)
+        if draft.get("artifact_type") == "published_revision":
+            checked.append(draft)
+            continue
         try:
             publish_date = datetime.fromisoformat(
                 str(draft.get("publish_date") or "")

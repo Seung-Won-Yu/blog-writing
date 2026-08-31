@@ -35,6 +35,7 @@ from .editorial_format import image_kinds_for_day, is_lead_story
 from .editorial_quality import (
     estimate_read_minutes as estimate_editorial_read_minutes,
     policy_active,
+    project_reader_scores,
     source_quality_reasons,
 )
 
@@ -614,6 +615,83 @@ def build_related_posts(related_posts):
 </section>""".strip()
 
 
+def build_project_reader_aid(day):
+    """Render a plain-language on-ramp before a project log gets technical."""
+    access = day.get("reader_access") if isinstance(day.get("reader_access"), dict) else {}
+    quick_summary = access.get("quick_summary") if isinstance(access.get("quick_summary"), list) else []
+    glossary = access.get("glossary") if isinstance(access.get("glossary"), list) else []
+    quick_rows = "".join(
+        f"<li>{inline_markup(item)}</li>" for item in quick_summary if plain(item)
+    )
+    glossary_rows = "".join(
+        "<div>"
+        f"<dt>{esc(item.get('term'))}</dt>"
+        f"<dd>{inline_markup(item.get('meaning'))}</dd>"
+        "</div>"
+        for item in glossary
+        if isinstance(item, dict)
+        and plain(item.get("term"))
+        and plain(item.get("meaning"))
+    )
+    if not quick_rows:
+        return ""
+    series = plain(day.get("series")) or "모의투자부터 시작한 주식 앱 제작기"
+    episode = day.get("episode")
+    episode_label = f" · {episode}편" if isinstance(episode, int) and episode > 0 else ""
+    glossary_html = (
+        '<div class="digest-project-glossary">'
+        '<h3>먼저 알아둘 말</h3>'
+        f"<dl>{glossary_rows}</dl></div>"
+        if glossary_rows
+        else ""
+    )
+    return f"""
+<section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">{esc(series)}{esc(episode_label)}</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list">{quick_rows}</ul>
+  {glossary_html}
+</section>""".strip()
+
+
+def build_project_log_section(item, images):
+    """Render the project body without repeating Tistory's title and date."""
+    if not isinstance(item, dict):
+        return '<p class="digest-empty">프로젝트 기록이 없습니다.</p>'
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    break_indexes = [
+        index
+        for index, block in enumerate(content)
+        if isinstance(block, dict) and block.get("t") == "ad_break"
+    ]
+    if break_indexes:
+        split_at = break_indexes[0]
+        before_blocks = content[:split_at]
+        after_blocks = content[split_at + 1 :]
+        break_html = AD_BREAK_MARKER
+    else:
+        before_blocks = content
+        after_blocks = []
+        break_html = ""
+
+    before_content = render_content_blocks(before_blocks, images)
+    after_content = render_content_blocks(after_blocks, images)
+    references = build_reference_section(item.get("references"))
+    continuation = ""
+    if after_content or references:
+        continuation = (
+            '<section class="digest-lead-continuation">'
+            f'<div class="digest-news-copy">{after_content}{references}</div></section>'
+        )
+    return f"""
+<h2 class="digest-news-heading">실제 구현과 확인 결과</h2>
+<section id="digest-news-1" class="digest-news-card digest-lead-story digest-project-story">
+  <div class="digest-news-copy">{before_content}</div>
+</section>
+{break_html}
+{continuation}""".strip()
+
+
 def build_lead_news_section(item, images, analysis_label="심층 분석"):
     if not isinstance(item, dict):
         return '<p class="digest-empty">오늘 수집된 뉴스가 없습니다.</p>'
@@ -811,7 +889,7 @@ def render_post(draft_id, day):
             section_heading = "개발 가이드"
             analysis_label = "최신 기준"
         elif content_type == "project_log":
-            section_heading = "프로젝트 제작기"
+            section_heading = ""
             analysis_label = "개발 기록"
         else:
             current_label = identity.content_label in {
@@ -826,6 +904,7 @@ def render_post(draft_id, day):
         kicker_html = (
             ""
             if identity.content_label in {"IT 트렌드 해설", "개발 가이드"}
+            or content_type == "project_log"
             else f'    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>\n'
         )
         section_heading_html = (
@@ -833,20 +912,29 @@ def render_post(draft_id, day):
             if section_heading
             else ""
         )
-        return f"""<article class="daily-digest-post" data-digest-version="3">
+        detail_html = (
+            f"  {build_project_reader_aid(day)}\n\n  {build_project_log_section(lead_story, images)}"
+            if content_type == "project_log"
+            else f"{section_heading_html}  {build_lead_news_section(lead_story, images, analysis_label)}"
+        )
+        closing_html = "" if content_type == "project_log" else build_closing_section(editorial)
+        rendered = f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
 {kicker_html}    <p class="digest-lead">{inline_markup(lead)}</p>
   </section>
 
   {build_editorial_image(images.get("cover"), "cover")}
 
-{section_heading_html}  {build_lead_news_section(lead_story, images, analysis_label)}
+{detail_html}
 
   {build_related_posts(day.get("related_posts"))}
 
-  {build_closing_section(editorial)}
+  {closing_html}
 </article>
 """
+        if content_type == "project_log":
+            return rendered.replace("\n  \n</article>\n", "\n\n</article>\n")
+        return rendered
     return f"""<article class="daily-digest-post" data-digest-version="2">
   <section class="digest-hero" aria-label="글 소개">
     <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>
@@ -1094,6 +1182,7 @@ def write_post(
                 "publish_checklist": build_publish_checklist(day),
                 "generation_provider": generation_provider,
                 "estimated_read_minutes": estimate_read_minutes(day),
+                "reader_scores": project_reader_scores(day, identity),
                 "quality_reasons": quality_reasons,
                 "publish_ready": publish_ready,
                 "source": identity.source,
@@ -1113,6 +1202,92 @@ def write_post(
         encoding="utf-8",
     )
     print(f"exported: {html_path}")
+
+
+def write_published_project_revision(publish_date):
+    """Build a copy-ready replacement body for an already published episode."""
+    source_path = PROJECT_LOGS_DIR / "published" / f"{publish_date}.json"
+    try:
+        day = json.loads(source_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("published project source is missing or invalid") from exc
+
+    original_draft_id = plain(day.get("draft_id"))
+    identity = resolve_draft_identity(original_draft_id, day)
+    if identity.content_type != "project_log" or identity.publish_date != publish_date:
+        raise ValueError("published project revision must match its source date")
+
+    artifact_id = f"{publish_date}-project-revision"
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    html_path = OUT_DIR / f"{artifact_id}.html"
+    meta_path = OUT_DIR / f"{artifact_id}.json"
+    before_ad_path = OUT_DIR / f"{artifact_id}-before-ad.html"
+    after_ad_path = OUT_DIR / f"{artifact_id}-after-ad.html"
+    adfit_path = OUT_DIR / f"{artifact_id}-adfit.html"
+
+    post_html = render_post(original_draft_id, day)
+    before_ad_html, after_ad_html = split_post_around_first_story(post_html)
+    html_path.write_text(post_html, encoding="utf-8")
+    before_ad_path.write_text(before_ad_html, encoding="utf-8")
+    after_ad_path.write_text(after_ad_html, encoding="utf-8")
+    adfit_path.write_text(build_adfit_ready_html(post_html), encoding="utf-8")
+
+    reader_scores = project_reader_scores(day, identity)
+    quality_reasons = (
+        []
+        if reader_scores and min(reader_scores.values()) >= 8.5
+        else ["quality_reader_access"]
+    )
+    source_relative = source_path.relative_to(HERE).as_posix()
+    meta_path.write_text(
+        json.dumps(
+            {
+                "artifact_type": "published_revision",
+                "draft_id": artifact_id,
+                "revision_of": original_draft_id,
+                "publish_date": publish_date,
+                "content_type": identity.content_type,
+                "content_label": "프로젝트 제작기 수정본",
+                "publication_mode": "published_revision",
+                "scheduled_at": plain(day.get("actual_published_at")),
+                "published_url": safe_http_url(day.get("published_url")),
+                "title": post_title(day),
+                "title_candidates": build_title_candidates(day),
+                "category": plain(day.get("category")),
+                "tags": build_recommended_tags(day),
+                "meta_description": build_meta_description(day),
+                "key_summary": build_key_summary(day),
+                "publish_checklist": [
+                    "기존 공개 글의 제목과 본문을 이 수정본으로 교체한다.",
+                    "카테고리와 기존 공개 주소는 그대로 유지한다.",
+                    "데스크톱과 모바일 미리보기에서 30초 요약과 용어 풀이를 확인한다.",
+                ],
+                "generation_provider": plain(
+                    (day.get("generation") or {}).get("provider")
+                    if isinstance(day.get("generation"), dict)
+                    else ""
+                ),
+                "estimated_read_minutes": estimate_read_minutes(day),
+                "reader_scores": reader_scores,
+                "quality_reasons": quality_reasons,
+                "publish_ready": not quality_reasons,
+                "source": source_relative,
+                "source_page": safe_http_url(day.get("published_url")),
+                "html": f"docs/tistory/{artifact_id}.html",
+                "before_ad_html": f"docs/tistory/{artifact_id}-before-ad.html",
+                "after_ad_html": f"docs/tistory/{artifact_id}-after-ad.html",
+                "adfit_html": f"docs/tistory/{artifact_id}-adfit.html",
+                "source_sha256": file_sha256(source_path),
+                "html_sha256": file_sha256(html_path),
+                "adfit_sha256": file_sha256(adfit_path),
+                "image_assets": build_image_assets(day),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    print(f"exported published revision: {html_path}")
 
 
 def read_export(day_id):
@@ -1152,6 +1327,10 @@ def main():
         "--draft-id",
         help="export one daily, automation, evergreen guide, or project draft",
     )
+    group.add_argument(
+        "--published-project-revision",
+        help="export a replacement body for one published project date",
+    )
     group.add_argument("--all", action="store_true", help="export every draft")
     args = parser.parse_args()
 
@@ -1163,6 +1342,8 @@ def main():
         write_post(args.day)
     elif args.draft_id:
         write_post(args.draft_id)
+    elif args.published_project_revision:
+        write_published_project_revision(args.published_project_revision)
     else:
         for identity, _ in draft_files():
             if should_preserve_published_export(identity.draft_id):

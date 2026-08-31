@@ -1,0 +1,85 @@
+{
+  "artifact_type": "published_revision",
+  "draft_id": "2026-08-25-project-revision",
+  "revision_of": "2026-08-25-project",
+  "publish_date": "2026-08-25",
+  "content_type": "project_log",
+  "content_label": "프로젝트 제작기 수정본",
+  "publication_mode": "published_revision",
+  "scheduled_at": "2026-08-25T12:07:36+09:00",
+  "published_url": "https://won0322.tistory.com/213",
+  "title": "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
+  "title_candidates": [
+    "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
+    "인기 종목 트레이와 종목 마스터 순환 서랍 사이의 후보 클립보드: 이미 오른 종목만 반복되는 랭킹 밖에서는 어떤 주식을…"
+  ],
+  "category": "프로젝트·회고",
+  "tags": [
+    "좋은 주식 고르는 법",
+    "미국주식 후보 수집",
+    "종목 선정 알고리즘",
+    "주식 앱 만들기",
+    "페이퍼 트레이딩",
+    "파이썬 주식 프로젝트",
+    "edgelab"
+  ],
+  "meta_description": "처음에는 거래가 많거나 많이 오른 종목의 순위만 모으면 좋은 후보를 찾을 수 있다고 생각했다. 하지만 며칠 돌려 보니 이미 크게 움직인 익숙한 종목만 반복됐고, 순위 밖의 조용한 종목은 비교 대상에도… 랭킹에 오른 종목만 반복해서 보는 편향과 전체 미국주식을 매번 깊게 조회하는 비용…",
+  "key_summary": [
+    "1. 좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
+    "직접 얻는 결과: 랭킹 80개와 종목 마스터 순환 120개를 합쳐 200개를 사전 탐색한 뒤 주식 24개와 ETF 20개만 정밀 조회하는 실제 후보 수집 구조를 이해한다."
+  ],
+  "publish_checklist": [
+    "기존 공개 글의 제목과 본문을 이 수정본으로 교체한다.",
+    "카테고리와 기존 공개 주소는 그대로 유지한다.",
+    "데스크톱과 모바일 미리보기에서 30초 요약과 용어 풀이를 확인한다."
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/project_logs/published/2026-08-25.json",
+  "source_page": "https://won0322.tistory.com/213",
+  "html": "docs/tistory/2026-08-25-project-revision.html",
+  "before_ad_html": "docs/tistory/2026-08-25-project-revision-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-25-project-revision-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-25-project-revision-adfit.html",
+  "source_sha256": "99165e993be80f70ee0754c7cf3616651a8f132ed72968e7eb559dae7e874279",
+  "html_sha256": "eb50e8eabb2c74b94aeb40758054e077a7e56b03f9e49a163e141eed3b42681f",
+  "adfit_sha256": "9a96d39c5eb49f94776fc1f3cad773a4c22d8d5e555c51166977ae03014b1e73",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
+      "original_url": "",
+      "alt": "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에서 분석 후보를 고르는 작업대",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-후보수집-80-120.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-후보수집-80-120.webp",
+      "original_url": "",
+      "alt": "랭킹 80개와 종목 마스터 순환 120개를 합쳐 사전탐색 200개를 만드는 후보 수집 구조",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-정밀요청-24-20.webp",
+      "path": "docs/tistory/assets/2026-08-28-project/미국주식-정밀요청-24-20.webp",
+      "original_url": "",
+      "alt": "가격 사전필터 뒤 랭킹 주식 12개와 순환 주식 12개 및 ETF 20개만 정밀 조회하는 구조",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
