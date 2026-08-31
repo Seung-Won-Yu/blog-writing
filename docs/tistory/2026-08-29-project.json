@@ -2,7 +2,7 @@
   "title": "주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?",
   "title_candidates": [
     "주식 선정 알고리즘: 급등한 주식을 왜 탈락시켰을까?",
-    "급등 후보가 물리 검사 게이트에서 멈추고 차분한 후보가 구조 분석대로 넘어가는 작업대: 눈에 띄는 종목과 분석할 수 있는…"
+    "18퍼센트 급등 후보는 멈추고 1.2퍼센트 상승 후보는 통과하는 주식 선정 관문: 눈에 띄는 종목과 분석할 수 있는 종목…"
   ],
   "category": "프로젝트·회고",
   "draft_id": "2026-08-29-project",
@@ -48,9 +48,9 @@
   "before_ad_html": "docs/tistory/2026-08-29-project-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-29-project-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-29-project-adfit.html",
-  "source_sha256": "0d072e649472039fbacb8c1dbc47ed1d58eac8cfd06eec0500f86bdedb8451a4",
-  "html_sha256": "a97490e958b748e8a9a10aeba08b9d53bddac2756ad6ac431df0b3ade47533be",
-  "adfit_sha256": "236de433769a12b4d4032e5070a4aad0890ac335aebdf848466204fdd28bf937",
+  "source_sha256": "0bd1f5cc0985731fa289909c067193ecdadc8a2f5477c287c79bd8dc071fcbe2",
+  "html_sha256": "cb785de4a28d3ebbec8b4c2bdf99341bc46adf434798f335a18a29a575ac6fe7",
+  "adfit_sha256": "19b0ba3cd91f31404bdd8265464d0c1daaad24d891dd690ec57b0004c28f5031",
   "image_assets": [
     {
       "kind": "cover",
@@ -58,7 +58,7 @@
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-29-project/주식-선정-관문-대표.webp",
       "path": "docs/tistory/assets/2026-08-29-project/주식-선정-관문-대표.webp",
       "original_url": "",
-      "alt": "급등 후보 카드가 황동 검사 게이트에서 멈추고 다른 후보가 구조 분석대로 넘어가는 주식 선정 작업대",
+      "alt": "당일 18퍼센트 급등한 후보는 멈추고 1.2퍼센트 상승한 차분한 후보는 분석 단계로 통과하는 주식 선정 관문",
       "width": 1200,
       "height": 630
     },
@@ -78,7 +78,7 @@
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-29-project/필터-경계-회귀테스트.webp",
       "path": "docs/tistory/assets/2026-08-29-project/필터-경계-회귀테스트.webp",
       "original_url": "",
-      "alt": "가격 9.99달러, 스프레드 41bp, 거래대금 19999999달러, 당일 18퍼센트 상승, NaN 등락률 경계 테스트 표",
+      "alt": "기본 후보는 통과하고 급등 후보와 등락률 값이 없는 후보는 제외하는 핵심 테스트 세 가지",
       "width": 1200,
       "height": 630
     }

@@ -1760,6 +1760,20 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertNotIn("quality_visual_variety", reasons)
 
+    def test_project_story_accepts_a_thumbnail_first_infographic_cover(self):
+        source = json.loads(
+            (ROOT / "data/project_logs/2026-08-29.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        identity = resolve_draft_identity("2026-08-29-project", source)
+
+        reasons = source_quality_reasons(source, identity)
+
+        self.assertNotIn("quality_visual_variety", reasons)
+        self.assertNotIn("quality_visual_trend", reasons)
+        self.assertNotIn("quality_visual_provenance", reasons)
+
     def test_august_cover_rejects_text_heavy_label_set(self):
         day = "2026-08-04"
         source = valid_daily_source(day)

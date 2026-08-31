@@ -1942,6 +1942,24 @@ def _visual_role_reasons(source, identity):
         cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
         style_keys = ("art_direction", "composition_type", "palette_family")
         cover_prompt = plain(cover_image.get("generation_prompt")).casefold()
+        cover_kind = plain(cover.get("cover_kind")).casefold()
+        image_cover_kind = plain(cover_image.get("cover_kind")).casefold()
+        project_infographic_cover = (
+            identity.content_type == "project_log"
+            and date.fromisoformat(identity.publish_date)
+            >= PROJECT_READER_ACCESS_POLICY_START
+            and cover_kind == "infographic_diagram"
+        )
+        prompt_matches_kind = (
+            cover_kind == REQUIRED_COVER_KIND
+            and cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIXES)
+            and REQUIRED_COVER_PROMPT_TOKEN in cover_prompt
+        ) or (
+            project_infographic_cover
+            and cover_prompt.startswith("use case: infographic-diagram")
+            and "asset type:" in cover_prompt
+            and "blog cover" in cover_prompt
+        )
         if (
             any(not _strict_text(cover.get(key)) for key in style_keys)
             or any(not _strict_text(cover_image.get(key)) for key in style_keys)
@@ -1951,10 +1969,9 @@ def _visual_role_reasons(source, identity):
             )
             or plain(cover.get("composition_type")).casefold()
             in BANNED_COVER_COMPOSITIONS
-            or plain(cover.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
-            or plain(cover_image.get("cover_kind")).casefold() != REQUIRED_COVER_KIND
-            or not cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIXES)
-            or REQUIRED_COVER_PROMPT_TOKEN not in cover_prompt
+            or cover_kind != image_cover_kind
+            or (cover_kind != REQUIRED_COVER_KIND and not project_infographic_cover)
+            or not prompt_matches_kind
         ):
             return ["quality_visual_variety"]
         if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:

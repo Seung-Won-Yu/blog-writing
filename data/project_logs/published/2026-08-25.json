@@ -111,33 +111,33 @@
     }
   },
   "visual": {
-    "subject": "인기 종목 트레이와 종목 마스터 순환 서랍 사이의 후보 클립보드",
+    "subject": "랭킹 80개와 순환 120개의 미국주식 카드가 후보 200개로 합쳐지는 선정 구조",
     "hook": "이미 오른 종목만 반복되는 랭킹 밖에서는 어떤 주식을 찾을 수 있을까?",
     "motif": "랭킹 트레이, 순환 서랍, 사전 탐색 클립보드",
     "cover": {
       "content_role": "hook",
       "origin": "imagegen",
       "logic_type": "comparison",
-      "label": "인기 종목 트레이와 순환 서랍에서 소수 후보를 고르는 작업대",
+      "label": "랭킹 카드 트레이와 순환 탐색 휠이 후보 200개로 합쳐지는 선정 구조",
       "scene_label": [
         "현재 관심 종목",
         "순환 탐색 종목"
       ],
-      "steps": "현재 시장의 관심 종목과 종목 마스터의 순환 표본을 한 작업대에서 비교해 정밀 분석 후보를 추린다.",
+      "steps": "현재 시장의 관심 종목 80개와 종목 마스터 순환 표본 120개를 합쳐 사전탐색 후보 200개를 만든다.",
       "curiosity_hook": "랭킹에 없는 종목을 제한된 호출 안에서 어떻게 발견할까?",
       "evidence_type": "diagram",
-      "cover_kind": "editorial_scene",
-      "art_direction": "stock_discovery_workbench",
-      "composition_type": "ranking_tray_rotation_drawer_shortlist",
-      "palette_family": "walnut_charcoal_sage_amber",
-      "render_family": "photorealistic_natural",
-      "editorial_treatment": "documentary_closeup",
-      "focal_subject": "인기 종목 트레이와 큰 종목 마스터 순환 서랍 사이의 소수 후보 클립보드",
-      "texture_cue": "손때 묻은 종이 카드와 짙은 목재, 무광 금속 서랍",
-      "authenticity_cue": "사용 흔적과 비대칭 정렬, 실제 작업대의 불균일한 조명",
+      "cover_kind": "infographic_diagram",
+      "art_direction": "stock_ranking_rotation_merge",
+      "composition_type": "ranked_tray_rotation_wheel_shortlist",
+      "palette_family": "ivory_deep_teal_brass",
+      "render_family": "isometric_model",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "랭킹 80개와 순환 120개가 후보 200개로 합쳐지는 미국주식 선정 구조",
+      "texture_cue": "따뜻한 종이 질감과 짙은 청록색 카드 트레이, 황동 돋보기",
+      "authenticity_cue": "주가 카드와 캔들 차트 단서를 사용하되 수익 상승을 암시하지 않는 분석 화면",
       "generation_model": "gpt-image",
       "korean_labels": [],
-      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Korean IT blog cover about a US stock selection algorithm. A real dark-wood research desk with a small current-attention card tray, a much larger rotating stock-master drawer, a review board, and a concise shortlist clipboard between them. Documentary close-up, calm analytical mood, walnut, charcoal, muted sage and restrained amber, realistic paper and metal texture. No readable text, numbers, logos, profit claim, rising chart, cash, robot, dashboard, floating UI, generic business cards or watermark."
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technology blog cover, landscape 1.91:1. Two streams of US stock cards, a ranked tray and a rotating discovery drawer, merge into a shortlist under a magnifying glass. Warm off-white paper, deep teal and brass, readable at thumbnail size. Exact text once: 80 + 120 → 200. No other words, tickers, logos, watermark, people or profit imagery."
     },
     "assets": [
       {
@@ -204,27 +204,27 @@
   "generation": {
     "provider": "codex-agent",
     "model": "gpt-5.6",
-    "revision": 10,
+    "revision": 11,
     "image_provider": "codex-imagegen",
     "image_policy": "webp-v1"
   },
   "images": {
     "cover": {
       "origin": "imagegen",
-      "alt": "미국주식 랭킹 트레이와 종목 마스터 순환 서랍에서 분석 후보를 고르는 작업대",
+      "alt": "랭킹 80개와 순환 120개의 미국주식 후보가 합쳐져 200개 사전탐색 목록이 되는 선정 알고리즘",
       "path": "docs/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
       "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-28-project/미국주식-선정알고리즘-대표.webp",
       "generation_model": "gpt-image",
-      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Korean IT blog cover about a US stock selection algorithm. A real dark-wood research desk with a small current-attention card tray, a much larger rotating stock-master drawer, a review board, and a concise shortlist clipboard between them. Documentary close-up, calm analytical mood, walnut, charcoal, muted sage and restrained amber, realistic paper and metal texture. No readable text, numbers, logos, profit claim, rising chart, cash, robot, dashboard, floating UI, generic business cards or watermark.",
-      "cover_kind": "editorial_scene",
-      "art_direction": "stock_discovery_workbench",
-      "composition_type": "ranking_tray_rotation_drawer_shortlist",
-      "palette_family": "walnut_charcoal_sage_amber",
-      "render_family": "photorealistic_natural",
-      "editorial_treatment": "documentary_closeup",
-      "focal_subject": "인기 종목 트레이와 큰 종목 마스터 순환 서랍 사이의 소수 후보 클립보드",
-      "texture_cue": "손때 묻은 종이 카드와 짙은 목재, 무광 금속 서랍",
-      "authenticity_cue": "사용 흔적과 비대칭 정렬, 실제 작업대의 불균일한 조명",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technology blog cover, landscape 1.91:1. Two streams of US stock cards, a ranked tray and a rotating discovery drawer, merge into a shortlist under a magnifying glass. Warm off-white paper, deep teal and brass, readable at thumbnail size. Exact text once: 80 + 120 → 200. No other words, tickers, logos, watermark, people or profit imagery.",
+      "cover_kind": "infographic_diagram",
+      "art_direction": "stock_ranking_rotation_merge",
+      "composition_type": "ranked_tray_rotation_wheel_shortlist",
+      "palette_family": "ivory_deep_teal_brass",
+      "render_family": "isometric_model",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "랭킹 80개와 순환 120개가 후보 200개로 합쳐지는 미국주식 선정 구조",
+      "texture_cue": "따뜻한 종이 질감과 짙은 청록색 카드 트레이, 황동 돋보기",
+      "authenticity_cue": "주가 카드와 캔들 차트 단서를 사용하되 수익 상승을 암시하지 않는 분석 화면",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -235,9 +235,9 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 65312,
+      "bytes": 116152,
       "quality": 82,
-      "sha256": "3bb29e6f472cc0850eaa3ce686ed377342daa70a318258ed8bf1d7fe71116ad1"
+      "sha256": "f1c746a188b202450dc977d0dd86b024d84d9edd8402e190e30ee18388385ab2"
     },
     "visual_1": {
       "origin": "imagegen",
@@ -382,7 +382,7 @@
         },
         {
           "t": "p",
-          "text": "순위 밖 후보의 거래 가능성은 자세한 조회 뒤에 판단한다. 앱의 개별주 전략(S1)은 가격 10달러 이상, 매수·매도 가격 차이 0.4%(40bp) 이하, 거래대금 2천만 달러 이상을 요구한다. 핵심은 아직 없는 값을 그럴듯한 숫자로 채우지 않는 것이다. 후보를 넓게 모으는 규칙과 거래 가능성을 확인하는 규칙을 나눠야 누락과 오판을 구분할 수 있다."
+          "text": "순위 밖 후보의 거래 가능성은 자세한 조회 뒤에 판단한다. 앱의 개별주 후보 규칙(S1)은 가격 10달러 이상, 매수·매도 가격 차이 0.4%(40bp) 이하, 거래대금 2천만 달러 이상을 요구한다. 핵심은 아직 없는 값을 그럴듯한 숫자로 채우지 않는 것이다. 후보를 넓게 모으는 규칙과 거래 가능성을 확인하는 규칙을 나눠야 누락과 오판을 구분할 수 있다."
         },
         {
           "t": "h",
@@ -407,7 +407,7 @@
         },
         {
           "t": "p",
-          "text": "ETF는 개별주 랭킹에서 우연히 잡히기를 기다리지 않는다. 전략이 관찰할 고정 ETF 풀에서 최대 20개를 별도로 골라 정밀 조회한다. 정밀 데이터가 들어오면 ETF 전략 S2는 스프레드 15bp 이하와 거래대금 5천만 달러 이상 같은 더 엄격한 유동성 관문을 적용한다."
+          "text": "ETF는 개별주 랭킹에서 우연히 잡히기를 기다리지 않는다. 전략이 관찰할 고정 ETF 풀에서 최대 20개를 별도로 골라 정밀 조회한다. 정밀 데이터가 들어오면 ETF 후보 규칙(S2)은 스프레드 15bp 이하와 거래대금 5천만 달러 이상 같은 더 엄격한 유동성 관문을 적용한다."
         },
         {
           "t": "p",
