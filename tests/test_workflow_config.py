@@ -13,6 +13,7 @@ SATURDAY_CONTRACT = ROOT / "agent" / "SATURDAY_AUTOMATION.md"
 GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 CURIOSITY_CONTRACT = ROOT / "agent" / "CURIOSITY_EDITOR.md"
 PROJECT_CONTRACT = ROOT / "agent" / "PROJECT_SERIES.md"
+READER_QUALITY_CONTRACT = ROOT / "agent" / "READER_QUALITY_LOOP.md"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -34,6 +35,16 @@ class WorkflowConfigTests(unittest.TestCase):
 
         self.assertIn("과거 날짜의 뉴스 글이나 티스토리 발행이 누락됐어도", contract)
         self.assertIn("누락일을 자동으로 소급 생성하지", contract)
+
+    def test_collection_contracts_guard_against_stale_latest_inboxes(self):
+        daily = EDITOR_CONTRACT.read_text(encoding="utf-8")
+        friday = SATURDAY_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("inbox_guard --kind news --today", daily)
+        self.assertIn("RECOLLECT_REQUIRED", daily)
+        self.assertIn("inbox_guard --kind automation --today", friday)
+        self.assertIn("RECOLLECT_REQUIRED", friday)
+        self.assertIn("보존된 이전 후보", friday)
 
     def test_weekly_contracts_do_not_depend_on_the_daily_draft(self):
         for contract_path in (SATURDAY_CONTRACT, GUIDE_CONTRACT):
@@ -78,6 +89,9 @@ class WorkflowConfigTests(unittest.TestCase):
         )
         self.assertIn("actions/upload-pages-artifact@v3", workflow)
         self.assertIn("actions/deploy-pages@v5", workflow)
+        self.assertIn("blog_pipeline.publishing.pages_smoke", workflow)
+        self.assertIn("steps.deployment.outputs.page_url", workflow)
+        self.assertIn("REMOTE_PUSHED_VERIFY_PENDING", workflow)
 
     def test_pages_deploy_does_not_depend_on_runtime_apt_packages(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
@@ -120,8 +134,9 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("cron: '17 22 * * 0,2'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
-            "python3 -m blog_pipeline.collection.collect_news --today", workflow
+            "python3 -m blog_pipeline.collection.collect_news", workflow
         )
+        self.assertIn("args=(--today)", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.sync_tistory_posts", workflow
         )
@@ -145,9 +160,10 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("cron: '17 22 * * 4'", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
-            "python3 -m blog_pipeline.collection.collect_automation --today",
+            "python3 -m blog_pipeline.collection.collect_automation",
             workflow,
         )
+        self.assertIn("args=(--today)", workflow)
         self.assertIn("tests.test_collect_automation", workflow)
         self.assertIn("git add docs/automation-inbox", workflow)
         self.assertIn("git pull --rebase origin main", workflow)
@@ -161,6 +177,31 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("export_tistory", workflow)
         self.assertNotIn("GEMINI_API_KEY", workflow)
         self.assertNotIn("models: read", workflow)
+
+    def test_collection_workflows_expose_recovery_date_status_and_bounded_runtime(self):
+        for workflow_path, status_path in (
+            (COLLECT_WORKFLOW, "docs/inbox/status.json"),
+            (AUTOMATION_COLLECT_WORKFLOW, "docs/automation-inbox/status.json"),
+        ):
+            workflow = workflow_path.read_text(encoding="utf-8")
+            with self.subTest(workflow=workflow_path.name):
+                self.assertIn("target_day:", workflow)
+                self.assertIn("force_off_schedule:", workflow)
+                self.assertIn("--regular-day-only", workflow)
+                self.assertIn("group: content-main-writer", workflow)
+                self.assertIn("timeout-minutes: 25", workflow)
+                self.assertIn("continue-on-error: true", workflow)
+                self.assertIn(status_path, workflow)
+                self.assertIn("GITHUB_STEP_SUMMARY", workflow)
+                self.assertIn("Fail when collection handoff is not ready", workflow)
+
+    def test_pages_deploy_has_a_bounded_runtime(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("timeout-minutes: 35", workflow)
+        self.assertIn("paths-ignore:", workflow)
+        self.assertIn("docs/inbox/**", workflow)
+        self.assertIn("docs/automation-inbox/**", workflow)
 
     def test_agent_contract_and_clean_package_layout_exist(self):
         expected = (
@@ -219,7 +260,7 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`docs/inbox/latest.json`", contract)
         self.assertIn("`problem_signals`", contract)
         self.assertIn("`unknown_publication_date: true`", contract)
-        self.assertIn("당일 날짜와 다르거나 `selection.editorial_lane`", contract)
+        self.assertIn("inbox_guard --kind news --today", contract)
         self.assertNotIn("`docs/inbox/YYYY-MM-DD.json`", contract)
         self.assertIn("최근 60일", contract)
         self.assertIn("최근 365일", contract)
@@ -357,6 +398,25 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`30초 요약`", contract)
         self.assertIn("본문 한 문단은 200자 이하", contract)
         self.assertIn("결과로 끝내지 말고", contract)
+
+    def test_all_active_editor_contracts_rewrite_until_reader_scores_reach_eight_point_five(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            CURIOSITY_CONTRACT,
+            SATURDAY_CONTRACT,
+            PROJECT_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("8.5", contract)
+                self.assertIn("quality_reader_access", contract)
+                self.assertIn("public_readability", contract)
+                self.assertIn("READER_QUALITY_LOOP.md", contract)
+
+        recovery = READER_QUALITY_CONTRACT.read_text(encoding="utf-8")
+        self.assertIn("사용자에게 넘기지 않는다", recovery)
+        self.assertIn("두 점수가 모두", recovery)
+        self.assertIn("다음 후보로 원고를 새로", recovery)
 
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")

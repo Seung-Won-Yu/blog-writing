@@ -17,6 +17,7 @@ from blog_pipeline.publishing.editorial_quality import (
     estimate_read_minutes,
     measurement_digest,
     project_reader_scores,
+    reader_access_scores,
     source_quality_reasons,
 )
 
@@ -146,6 +147,18 @@ def valid_daily_source(day="2026-07-19"):
         "scheduled_at": regular_schedule_for_identity(resolve_draft_identity(day)),
         "primary_query": "일반 사용자가 확인할 최신 기능 변경과 적용 조건",
         "tags": ["기능 변경", "사용 방법", "적용 조건", "업데이트", "체크리스트"],
+        "reader_access": {
+            "quick_summary": [
+                "새 기능이 적용되지 않는 문제와 독자가 먼저 확인할 조건을 설명한다.",
+                "업데이트의 적용 조건과 실제 사용 장면을 연결해 판단 순서를 보여 준다.",
+                "새 기능의 결과가 환경마다 달라질 수 있어 확인할 한계를 함께 남긴다.",
+            ],
+            "glossary": [
+                {"term": "새 기능", "meaning": "업데이트로 추가돼 사용자가 새로 확인하거나 선택할 수 있는 동작이다."},
+                {"term": "적용 조건", "meaning": "새 기능이나 규칙이 실제로 작동하기 위해 먼저 맞아야 하는 기준이다."},
+                {"term": "사용 장면", "meaning": "독자가 기능을 실제로 켜고 결과를 확인하게 되는 구체적인 상황이다."},
+            ],
+        },
         "editorial": {
             "headline": "새 기능 업데이트, 일반 사용자가 먼저 확인할 적용 조건과 바뀐 점",
             "opening": repeated_text("구체적인 사용 장면", 5),
@@ -416,6 +429,18 @@ def valid_curiosity_source(day="2026-09-01"):
     )
     source["images"]["visual_1"]["alt"] = "QR코드 위치 패턴과 데이터·오류 정정 영역 설명도"
     source["images"]["visual_2"]["alt"] = "QR코드 손상 위치에 따른 인식 결과 비교도"
+    source["reader_access"] = {
+        "quick_summary": [
+            "QR코드가 일부 찢어져도 남은 정보 조각으로 내용을 복원할 수 있다.",
+            "위치 패턴과 데이터 영역의 손상은 같은 크기여도 인식 결과가 다르다.",
+            "오류 정정 수준이 높아도 인쇄 상태와 카메라 환경에 따라 실패할 수 있다.",
+        ],
+        "glossary": [
+            {"term": "QR코드", "meaning": "카메라로 읽을 수 있도록 정보를 검고 흰 사각형에 담은 이차원 코드다."},
+            {"term": "위치 패턴", "meaning": "카메라가 QR코드의 방향과 범위를 찾도록 모서리에 둔 큰 사각형 표시다."},
+            {"term": "오류 정정", "meaning": "일부 정보가 사라져도 여분의 데이터 조각으로 원래 내용을 복원하는 방식이다."},
+        ],
+    }
     return source
 
 
@@ -590,6 +615,18 @@ def valid_automation_source(day="2026-07-25"):
             }
         )
         source["editorial"]["revisit"]["artifact_type"] = "source_map"
+        source["reader_access"] = {
+            "quick_summary": [
+                "GitHub에서 Agent Skills를 찾을 때 인기보다 실제 개발 업무와의 연결을 먼저 봐야 한다.",
+                "공식 정의와 공개 스킬 표본을 비교하면 코딩·검증·문서화의 사용처를 구분할 수 있다.",
+                "개발 단계에 맞지 않는 스킬은 지침 범위를 키울 수 있어 설치 전 확인이 필요하다.",
+            ],
+            "glossary": [
+                {"term": "Agent Skills", "meaning": "에이전트가 특정 작업을 일관되게 수행하도록 지침과 자료를 묶은 단위다."},
+                {"term": "GitHub", "meaning": "코드와 문서를 공개하거나 협업하며 스킬 예제를 확인할 수 있는 저장소 서비스다."},
+                {"term": "개발 단계", "meaning": "기획·코딩·검증·문서화·운영처럼 소프트웨어 작업을 목적별로 나눈 구간이다."},
+            ],
+        }
         source["editorial"]["original_value"].update(
             {
                 "durable_question": "Agent Skills가 개발 업무의 어느 단계에 쓰이고 어떤 기준으로 선택해야 하는가?",
@@ -638,7 +675,23 @@ def valid_automation_source(day="2026-07-25"):
                     readable_content.append({"t": "p", "text": text[start:start + 200]})
             else:
                 readable_content.append(block)
-        source["news"][0]["content"] = readable_content
+        rhythmic_content = []
+        paragraph_run = 0
+        for block in readable_content:
+            if isinstance(block, dict) and block.get("t") == "p":
+                if paragraph_run == 4:
+                    rhythmic_content.append(
+                        {
+                            "t": "quote",
+                            "text": "여기까지의 근거를 실제 선택 기준과 다시 연결한다.",
+                        }
+                    )
+                    paragraph_run = 0
+                paragraph_run += 1
+            else:
+                paragraph_run = 0
+            rhythmic_content.append(block)
+        source["news"][0]["content"] = rhythmic_content
     return source
 
 
@@ -700,6 +753,107 @@ def valid_guide_source(day="2026-07-22"):
 
 
 class EditorialQualityTests(unittest.TestCase):
+    def test_all_new_weekday_lanes_score_reader_access_above_eight_point_five(self):
+        monday = valid_daily_source("2026-08-31")
+        wednesday = valid_daily_source("2026-09-02")
+        for source in (monday, wednesday):
+            for index, block in enumerate(source["news"][0]["content"]):
+                if block.get("t") == "p":
+                    block["text"] = repeated_text(f"읽기 쉬운 문단 {index}", 2)
+        cases = [
+            ("2026-08-31", monday),
+            ("2026-09-01", valid_curiosity_source("2026-09-01")),
+            ("2026-09-02", wednesday),
+            (
+                "2026-09-04-automation",
+                valid_automation_source("2026-09-04"),
+            ),
+        ]
+
+        for draft_id, source in cases:
+            with self.subTest(draft_id=draft_id):
+                identity = resolve_draft_identity(draft_id, source)
+                scores = reader_access_scores(source, identity)
+                self.assertGreaterEqual(
+                    scores["general_reader_understanding"], 8.5
+                )
+                self.assertGreaterEqual(scores["public_readability"], 8.5)
+                self.assertNotIn(
+                    "quality_reader_access",
+                    source_quality_reasons(source, identity),
+                )
+
+    def test_new_weekday_article_rewrites_long_mobile_paragraphs(self):
+        source = valid_curiosity_source("2026-09-01")
+        paragraph = next(
+            block
+            for block in source["news"][0]["content"]
+            if block.get("t") == "p"
+        )
+        paragraph["text"] = "모바일에서 읽기 어려운 긴 설명 " * 30
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        scores = reader_access_scores(source, identity)
+
+        self.assertLess(scores["public_readability"], 8.5)
+        self.assertIn(
+            "quality_reader_access",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_new_weekday_article_requires_plain_summary_and_glossary(self):
+        source = valid_daily_source("2026-08-31")
+        source.pop("reader_access")
+        identity = resolve_draft_identity("2026-08-31", source)
+
+        scores = reader_access_scores(source, identity)
+
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertIn(
+            "quality_reader_access",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_unrelated_reader_aid_cannot_mask_a_difficult_article(self):
+        source = valid_curiosity_source("2026-09-01")
+        source["reader_access"] = {
+            "quick_summary": [
+                "세탁기 사용 시간과 빨래 양을 맞추면 생활 전기 사용량을 줄일 수 있다.",
+                "운동화 보관 장소의 습도를 낮추면 냄새와 소재 손상을 함께 줄일 수 있다.",
+                "식재료 보관 온도는 종류마다 달라 냉장고 칸을 나눠 사용하는 편이 안전하다.",
+            ],
+            "glossary": [
+                {"term": "세탁기", "meaning": "물과 세제를 사용해 옷의 오염을 자동으로 씻어 내는 생활 가전이다."},
+                {"term": "운동화", "meaning": "걷기와 운동에 맞게 충격을 줄이도록 만든 신발 종류다."},
+                {"term": "식재료", "meaning": "조리해 음식을 만들 때 사용하는 채소·고기·양념 같은 재료다."},
+            ],
+        }
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        scores = reader_access_scores(source, identity)
+
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertIn(
+            "quality_reader_access",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_single_five_block_reading_wall_cannot_pass_at_exactly_eight_point_five(self):
+        source = valid_curiosity_source("2026-09-01")
+        source["news"][0]["content"][1:1] = [
+            {"t": "p", "text": f"이어지는 설명 문단 {index}"}
+            for index in range(3)
+        ]
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        scores = reader_access_scores(source, identity)
+
+        self.assertLess(scores["public_readability"], 8.5)
+        self.assertIn(
+            "quality_reader_access",
+            source_quality_reasons(source, identity),
+        )
+
     def test_project_story_scores_above_eight_point_five_for_general_readers(self):
         source = json.loads(
             (ROOT / "data/project_logs/2026-08-29.json").read_text(encoding="utf-8")

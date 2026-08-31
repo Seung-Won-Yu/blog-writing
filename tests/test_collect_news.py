@@ -1458,6 +1458,12 @@ class InboxTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["title"], "인스타 사진 AI 연동 중단")
         self.assertEqual(result["candidates"][0]["summary"], "")
 
+    def test_regular_day_only_rejects_manual_tuesday_collection(self):
+        with self.assertRaises(SystemExit) as error:
+            collect_news_main(["--day", "2026-09-01", "--regular-day-only"])
+
+        self.assertEqual(error.exception.code, 2)
+
 
 if __name__ == "__main__":
     unittest.main()

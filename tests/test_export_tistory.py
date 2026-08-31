@@ -371,6 +371,23 @@ class SaturdayAutomationExportTests(unittest.TestCase):
         self.assertNotIn("digest-closing", rendered)
         self.assertNotIn("2026. 8. 29 (토)", rendered)
 
+    def test_regular_post_renders_plain_summary_and_glossary_before_technical_body(self):
+        source = json.loads(
+            (
+                Path(__file__).resolve().parents[1]
+                / "data/days/2026-08-31.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        rendered = render_post("2026-08-31", source)
+
+        self.assertIn("30초 요약", rendered)
+        self.assertIn("먼저 알아둘 말", rendered)
+        self.assertLess(
+            rendered.index("30초 요약"),
+            rendered.index("큐가 멈췄는데 러너는 온라인으로 보이는 이유"),
+        )
+
     def test_published_project_revision_is_copy_ready_and_keeps_original_url(self):
         source = json.loads(
             (

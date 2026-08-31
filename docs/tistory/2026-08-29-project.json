@@ -48,9 +48,9 @@
   "before_ad_html": "docs/tistory/2026-08-29-project-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-29-project-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-29-project-adfit.html",
-  "source_sha256": "0bd1f5cc0985731fa289909c067193ecdadc8a2f5477c287c79bd8dc071fcbe2",
-  "html_sha256": "cb785de4a28d3ebbec8b4c2bdf99341bc46adf434798f335a18a29a575ac6fe7",
-  "adfit_sha256": "19b0ba3cd91f31404bdd8265464d0c1daaad24d891dd690ec57b0004c28f5031",
+  "source_sha256": "034c86f9dbef374ad28122798105600033c18642ce0090f1aa2e42e332e00845",
+  "html_sha256": "8fdad84fe14a9d24a8c87670a8fd74bdd4b87ee4404c6d8b9010a452b8d97134",
+  "adfit_sha256": "00cd51a42426a527504730709db7ea3cf19ab8a010b85aa49cee9bf0b13b910f",
   "image_assets": [
     {
       "kind": "cover",

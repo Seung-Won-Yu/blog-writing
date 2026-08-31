@@ -27,6 +27,7 @@ AUTOMATION_QUALITY_POLICY_START = date(2026, 7, 25)
 GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 PROJECT_QUALITY_POLICY_START = date(2026, 8, 28)
 PROJECT_READER_ACCESS_POLICY_START = date(2026, 8, 25)
+COMMON_READER_ACCESS_POLICY_START = date(2026, 8, 31)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
@@ -1532,6 +1533,180 @@ def _depth_reasons(source, identity):
     return ["quality_depth"] if invalid else []
 
 
+def _valid_reader_summary(access):
+    summary = access.get("quick_summary")
+    return (
+        isinstance(summary, list)
+        and len(summary) == 3
+        and all(20 <= len(plain(item)) <= 110 for item in summary)
+        and len({plain(item).casefold() for item in summary}) == 3
+    )
+
+
+def _valid_reader_glossary(access):
+    glossary = access.get("glossary")
+    if not isinstance(glossary, list) or not 3 <= len(glossary) <= 5:
+        return False
+    terms = []
+    for item in glossary:
+        if not isinstance(item, dict):
+            return False
+        term = plain(item.get("term"))
+        meaning = plain(item.get("meaning"))
+        if not 2 <= len(term) <= 30 or not 15 <= len(meaning) <= 120:
+            return False
+        terms.append(term.casefold())
+    return len(set(terms)) == len(terms)
+
+
+def _reader_access_semantically_linked(source, access):
+    """Tie the on-ramp to the article instead of accepting placeholder copy."""
+    summary = access.get("quick_summary")
+    glossary = access.get("glossary")
+    if not isinstance(summary, list) or not isinstance(glossary, list):
+        return False
+    editorial = (
+        source.get("editorial")
+        if isinstance(source.get("editorial"), dict)
+        else {}
+    )
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    headings = [
+        plain(block.get("text"))
+        for block in content
+        if isinstance(block, dict) and block.get("t") == "h"
+    ]
+    core_text = " ".join(
+        [
+            plain(source.get("primary_query")),
+            plain(editorial.get("headline")),
+            plain(item.get("title_kr")),
+            " ".join(
+                plain(value)
+                for value in editorial.get("entities", [])
+                if plain(value)
+            )
+            if isinstance(editorial.get("entities"), list)
+            else "",
+        ]
+    )
+    anchor_text = " ".join(
+        [
+            core_text,
+            plain(editorial.get("opening")),
+            plain(editorial.get("reader_question")),
+            *headings,
+        ]
+    )
+    generic_roots = (
+        "확인",
+        "사용",
+        "결과",
+        "기준",
+        "문제",
+        "설명",
+        "현재",
+        "실제",
+        "독자",
+        "이번",
+        "다시",
+        "필요",
+        "방법",
+        "글에",
+        "있",
+    )
+
+    def link_terms(value):
+        return {
+            token.strip(".")
+            for token in _search_terms(value)
+            if token.strip(".")
+            and not token.strip(".").startswith(generic_roots)
+        }
+
+    anchor_terms = link_terms(anchor_text)
+    core_terms = link_terms(core_text)
+    matched_terms = set()
+    matched_core_terms = set()
+    for sentence in summary:
+        sentence_terms = link_terms(sentence)
+        matches = {
+            anchor
+            for anchor in anchor_terms
+            if any(
+                anchor in term or term in anchor
+                for term in sentence_terms
+            )
+        }
+        if not matches:
+            return False
+        matched_terms.update(matches)
+        matched_core_terms.update(
+            anchor
+            for anchor in core_terms
+            if any(
+                anchor in term or term in anchor
+                for term in sentence_terms
+            )
+        )
+    if len(matched_terms) < 3 or len(matched_core_terms) < 2:
+        return False
+
+    visible_parts = [anchor_text, *[plain(sentence) for sentence in summary]]
+    for block in content:
+        if not isinstance(block, dict):
+            continue
+        visible_parts.extend(
+            plain(value)
+            for value in (
+                block.get("text"),
+                block.get("caption"),
+                " ".join(block.get("items") or [])
+                if isinstance(block.get("items"), list)
+                else "",
+                " ".join(block.get("headers") or [])
+                if isinstance(block.get("headers"), list)
+                else "",
+            )
+            if plain(value)
+        )
+        rows = block.get("rows") if isinstance(block.get("rows"), list) else []
+        for row in rows:
+            if isinstance(row, list):
+                visible_parts.append(" ".join(plain(cell) for cell in row))
+    visible_compact = re.sub(
+        r"\s+", "", " ".join(visible_parts).casefold()
+    )
+    return all(
+        re.sub(r"\s+", "", plain(item.get("term")).casefold())
+        in visible_compact
+        for item in glossary
+        if isinstance(item, dict)
+    )
+
+
+def _maximum_same_reader_block_run(content):
+    maximum = 0
+    run = 0
+    previous_type = ""
+    for block in content:
+        if not isinstance(block, dict):
+            continue
+        block_type = str(block.get("t") or "")
+        if block_type in {"h", "visual", "ad_break"}:
+            run = 0
+            previous_type = ""
+        elif block_type == previous_type:
+            run += 1
+        else:
+            run = 1
+            previous_type = block_type
+        maximum = max(maximum, run)
+    return maximum
+
+
 def project_reader_scores(source, identity):
     """Score the observable project-story traits that a general reader sees."""
     if (
@@ -1551,7 +1726,6 @@ def project_reader_scores(source, identity):
         else {}
     )
     summary = access.get("quick_summary")
-    glossary = access.get("glossary")
     editorial = (
         source.get("editorial")
         if isinstance(source.get("editorial"), dict)
@@ -1560,34 +1734,16 @@ def project_reader_scores(source, identity):
     opening = plain(editorial.get("opening"))
 
     if not 10 <= len(series) <= 80:
-        understanding -= 1.0
+        understanding -= 2.0
     if isinstance(episode, bool) or not isinstance(episode, int) or episode < 1:
-        understanding -= 1.0
+        understanding -= 2.0
 
-    valid_summary = (
-        isinstance(summary, list)
-        and len(summary) == 3
-        and all(20 <= len(plain(item)) <= 110 for item in summary)
-        and len({plain(item).casefold() for item in summary}) == 3
-    )
-    if not valid_summary:
+    if not _valid_reader_summary(access):
         understanding -= 3.0
 
-    valid_glossary = isinstance(glossary, list) and 3 <= len(glossary) <= 5
-    glossary_terms = []
-    if valid_glossary:
-        for item in glossary:
-            if not isinstance(item, dict):
-                valid_glossary = False
-                break
-            term = plain(item.get("term"))
-            meaning = plain(item.get("meaning"))
-            if not 2 <= len(term) <= 30 or not 15 <= len(meaning) <= 120:
-                valid_glossary = False
-                break
-            glossary_terms.append(term.casefold())
-        valid_glossary = valid_glossary and len(set(glossary_terms)) == len(glossary_terms)
-    if not valid_glossary:
+    if not _valid_reader_glossary(access):
+        understanding -= 2.0
+    if not _reader_access_semantically_linked(source, access):
         understanding -= 2.0
 
     plain_language_copy = "\n".join(
@@ -1611,18 +1767,9 @@ def project_reader_scores(source, identity):
     if any(len(paragraph) > 200 for paragraph in paragraphs):
         readability -= 2.0
 
-    run = 0
-    maximum_run = 0
-    for block in content:
-        if not isinstance(block, dict):
-            continue
-        if block.get("t") == "h":
-            run = 0
-        elif block.get("t") not in {"ad_break", "visual"}:
-            run += 1
-            maximum_run = max(maximum_run, run)
+    maximum_run = _maximum_same_reader_block_run(content)
     if maximum_run > 4:
-        readability -= 1.0
+        readability -= 2.0
 
     if any(
         block.get("t") == "table"
@@ -1631,7 +1778,7 @@ def project_reader_scores(source, identity):
         for block in content
         if isinstance(block, dict)
     ):
-        readability -= 1.0
+        readability -= 2.0
 
     if any(
         block.get("t") == "code"
@@ -1640,7 +1787,7 @@ def project_reader_scores(source, identity):
         for block in content
         if isinstance(block, dict)
     ):
-        readability -= 1.0
+        readability -= 2.0
 
     return {
         "general_reader_understanding": max(0.0, round(understanding, 1)),
@@ -1648,8 +1795,84 @@ def project_reader_scores(source, identity):
     }
 
 
-def _project_reader_access_reasons(source, identity):
-    scores = project_reader_scores(source, identity)
+def reader_access_scores(source, identity):
+    """Score the visible on-ramp and mobile reading rhythm for every new lane."""
+    project_scores = project_reader_scores(source, identity)
+    if project_scores:
+        return project_scores
+    if (
+        identity.content_type not in {"daily_news", "automation_case"}
+        or date.fromisoformat(identity.publish_date)
+        < COMMON_READER_ACCESS_POLICY_START
+    ):
+        return {}
+
+    understanding = 10.0
+    readability = 10.0
+    editorial = (
+        source.get("editorial")
+        if isinstance(source.get("editorial"), dict)
+        else {}
+    )
+    opening = plain(editorial.get("opening"))
+    access = (
+        source.get("reader_access")
+        if isinstance(source.get("reader_access"), dict)
+        else {}
+    )
+    if not _valid_reader_summary(access):
+        understanding -= 2.0
+    if not _valid_reader_glossary(access):
+        understanding -= 2.0
+    if not _reader_access_semantically_linked(source, access):
+        understanding -= 2.0
+    if _reader_hook_reasons(source, identity):
+        understanding -= 2.0
+    if not 100 <= len(opening) <= 320:
+        understanding -= 2.0
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    paragraphs = [
+        plain(block.get("text"))
+        for block in content
+        if isinstance(block, dict)
+        and block.get("t") == "p"
+        and plain(block.get("text"))
+    ]
+    if not paragraphs or any(len(paragraph) > 220 for paragraph in paragraphs):
+        readability -= 2.0
+
+    maximum_run = _maximum_same_reader_block_run(content)
+    if maximum_run > 4:
+        readability -= 2.0
+
+    if any(
+        block.get("t") == "table"
+        and isinstance(block.get("headers"), list)
+        and len(block.get("headers")) > 4
+        for block in content
+        if isinstance(block, dict)
+    ):
+        readability -= 2.0
+    if any(
+        block.get("t") == "code"
+        and len(str(block.get("text") or "").splitlines()) > 20
+        and block.get("collapsed") is not True
+        for block in content
+        if isinstance(block, dict)
+    ):
+        readability -= 2.0
+
+    return {
+        "general_reader_understanding": max(0.0, round(understanding, 1)),
+        "public_readability": max(0.0, round(readability, 1)),
+    }
+
+
+def _reader_access_reasons(source, identity):
+    scores = reader_access_scores(source, identity)
     if scores and min(scores.values()) < 8.5:
         return ["quality_reader_access"]
     return []
@@ -2252,7 +2475,7 @@ def source_authoring_reasons(source, identity):
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
-        lambda: _project_reader_access_reasons(source, identity),
+        lambda: _reader_access_reasons(source, identity),
         lambda: _prose_reasons(source, identity),
         lambda: _visual_role_reasons(source, identity),
         lambda: _visual_trend_reasons(source, identity),

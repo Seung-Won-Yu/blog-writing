@@ -21,7 +21,7 @@
     "ARC",
     "CI/CD 운영"
   ],
-  "meta_description": "워크플로가 `Queued`에 머무는데 셀프 호스티드 러너 화면은 `Idle` 또는 `Online`으로 보일 수 있다. 8월 26일 러너 v2.337.0이 공개됐고, 8월 31일에는 GitHub Ent… GitHub가 셀프 호스티드 Actions Runner v2.337.0을 공개했다.…",
+  "meta_description": "자동 테스트·배포 작업(워크플로)이 `Queued`, 즉 대기 중인데 일을 맡는 전용 컴퓨터(셀프 호스티드 러너)는 `Online`으로 보일 때가 있다. 화면만 보면 멀쩡하지만, 등록 가능한 최저 버… GitHub가 셀프 호스티드 Actions Runner v2.337.0을 공개했다.…",
   "key_summary": [
     "1. GitHub Actions Runner v2.337.0 공개, 30일 업데이트 기준 다시 시작",
     "직접 얻는 결과: 등록 최저 버전과 이동하는 실행 유효 버전을 구분하고, 상태·버전·로그를 확인한 뒤 고정 서버·컨테이너·ARC에 맞는 업데이트와 검증 절차를 만들 수 있다."
@@ -37,6 +37,10 @@
   ],
   "generation_provider": "codex-agent",
   "estimated_read_minutes": 11,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-08-31.json",
@@ -45,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-08-31-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-31-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-31-adfit.html",
-  "source_sha256": "978d6fa0487faad0762ff2e4e54c8f050d5f5750c425c0dd59e5de5813ad3c33",
-  "html_sha256": "373f0ac42ba6df0a8dd1dd262107bdd753be83af8807b7375d7f1fd6c43e963f",
-  "adfit_sha256": "76893d04ccc5c1e982b6a2099ce9818f062080aa9927a86dd20651ef0a6d76b9",
+  "source_sha256": "8707734ab9540316d3d995ced28a79fc6fc2b23dab579c96a35ea98a6b2a9b0d",
+  "html_sha256": "0569657f9e1c514220eb635a9734a4e344bb4fd47e146efc434beb453cd7a56b",
+  "adfit_sha256": "e0cbf81ccb3f9d49ffb691a3da525aff269c8ca3b6a48def90c5c88bf9d8d054",
   "image_assets": [
     {
       "kind": "cover",

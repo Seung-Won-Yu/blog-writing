@@ -8,6 +8,7 @@ from pathlib import Path
 from .draft_identity import editorial_lane_for_identity, resolve_draft_identity
 from .editorial_quality import PUBLISH_GATE_START
 from .export_tistory import TISTORY_ADFIT_MARKER, safe_http_url
+from .skin_contract import inspect_skin_contract
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -154,6 +155,7 @@ def load_drafts():
                 "publish_checklist": meta.get("publish_checklist") or [],
                 "image_assets": safe_image_assets(meta.get("image_assets")),
                 "generation_provider": meta.get("generation_provider") or "unknown",
+                "reader_scores": dict(meta.get("reader_scores") or {}),
                 "publish_ready": bool(meta.get("publish_ready")),
                 "quality_reasons": list(meta.get("quality_reasons") or []),
                 "source": source,
@@ -321,10 +323,31 @@ def render_draft_buttons(drafts):
     return "\n".join(rendered)
 
 
-def render(drafts):
+def render_skin_contract_status(contract):
+    contract = contract if isinstance(contract, dict) else {}
+    ready = contract.get("status") == "COMPLETE"
+    state_class = "is-ready" if ready else "is-error"
+    title = "발행 스킨 준비 완료" if ready else "발행 중지 · 스킨 계약 확인 필요"
+    version = str(contract.get("version") or "unknown")
+    digest = str(contract.get("sha256") or "")[:12]
+    reasons = ", ".join(str(item) for item in contract.get("reasons", []) if item)
+    if ready:
+        detail = f"{version} · CSS {digest} · 스킨 변경 시 티스토리에 다시 적용"
+    else:
+        detail = reasons or "스킨 CSS와 미리보기 파일을 확인하세요."
+    return (
+        f'<p class="skin-contract {state_class}">'
+        f'<strong>{esc(title)}</strong><span>{esc(detail)}</span></p>'
+    )
+
+
+def render(drafts, skin_contract=None):
+    if skin_contract is None:
+        skin_contract = inspect_skin_contract(ROOT)
     payload = json_for_script(drafts)
     latest = str((drafts[0].get("draft_id") or drafts[0].get("day") or "")) if drafts else ""
     buttons = render_draft_buttons(drafts)
+    skin_status = render_skin_contract_status(skin_contract)
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -423,6 +446,34 @@ def render(drafts):
       color: var(--muted);
       font-size: 14px;
     }}
+    .skin-contract {{
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+      align-items: center;
+      margin: 14px 0 0;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 12px;
+    }}
+    .skin-contract strong {{ font-weight: 900; }}
+    .skin-contract span {{ color: var(--muted); }}
+    .skin-contract.is-ready {{
+      border-color: #9fc8b7;
+      background: var(--accent-soft);
+      color: #175940;
+    }}
+    .skin-contract.is-error {{
+      border-color: #e1aaa4;
+      background: #fff0ed;
+      color: #9a2e22;
+    }}
+    #readerScores[data-ready="true"] {{
+      color: var(--accent);
+      font-weight: 900;
+    }}
+    #readerScores[data-ready="false"] {{ color: #9a2e22; }}
     .layout {{
       display: grid;
       grid-template-columns: 240px minmax(0, 1fr);
@@ -718,6 +769,7 @@ def render(drafts):
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
       <p class="lead">월·수 실전 IT, 화·목 궁금한 IT 원리, 금요일 자동화, 토요일 프로젝트 글의 발행 준비물을 확인합니다.</p>
+      {skin_status}
     </header>
 
     <div class="layout">
@@ -734,6 +786,7 @@ def render(drafts):
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="btn" type="button" data-copy="tags">복사</button></div>
             <div class="field"><span class="label">발행 방식</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
+            <div class="field"><span class="label">독자 품질</span><span class="value" id="readerScores"></span></div>
           </section>
 
           <section class="image-card" id="imageCard" hidden>
@@ -791,6 +844,7 @@ def render(drafts):
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
       schedule: document.getElementById("schedule"),
+      readerScores: document.getElementById("readerScores"),
       imageCard: document.getElementById("imageCard"),
       coverPreview: document.getElementById("coverPreview"),
       coverTitle: document.getElementById("coverTitle"),
@@ -850,6 +904,20 @@ def render(drafts):
       }} catch (error) {{
         return "";
       }}
+    }}
+
+    function renderReaderScores(scores) {{
+      const understanding = Number(scores && scores.general_reader_understanding);
+      const readability = Number(scores && scores.public_readability);
+      if (!Number.isFinite(understanding) || !Number.isFinite(readability)) {{
+        els.readerScores.textContent = "정책 적용 전 기록";
+        els.readerScores.removeAttribute("data-ready");
+        return;
+      }}
+      const ready = understanding >= 8.5 && readability >= 8.5;
+      els.readerScores.textContent =
+        "이해도 " + understanding.toFixed(1) + " · 가독성 " + readability.toFixed(1);
+      els.readerScores.dataset.ready = String(ready);
     }}
 
     function filenameFromUrl(url) {{
@@ -956,6 +1024,7 @@ def render(drafts):
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
       els.schedule.textContent = draft.scheduled_label || draft.scheduled_at || "직접 지정";
+      renderReaderScores(draft.reader_scores);
       renderCover(draft.image_assets);
       currentBaseHtml = "";
       currentAdfitHtml = "";

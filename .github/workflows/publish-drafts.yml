@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'docs/inbox/**'
+      - 'docs/automation-inbox/**'
+      - 'config/tistory_public_posts.json'
   workflow_dispatch:
 
 permissions:
@@ -18,6 +22,7 @@ concurrency:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     env:
       # CI only validates already-rendered WebP assets; production image generation
       # happens locally with a Korean font. Avoid a slow apt mirror dependency here.
@@ -60,3 +65,22 @@ jobs:
 
       - id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: Verify the public handoff page
+        id: public-verify
+        continue-on-error: true
+        run: |
+          python3 -m blog_pipeline.publishing.pages_smoke \
+            --url "${{ steps.deployment.outputs.page_url }}" \
+            --expected-file docs/index.html \
+            --cache-key "${{ github.sha }}"
+
+      - name: Summarize public verification
+        if: always()
+        run: |
+          echo "## GitHub Pages handoff" >> "$GITHUB_STEP_SUMMARY"
+          echo "- deployment: ${{ steps.deployment.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- public verification: ${{ steps.public-verify.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          if [[ "${{ steps.public-verify.outcome }}" != "success" ]]; then
+            echo "- status: REMOTE_PUSHED_VERIFY_PENDING" >> "$GITHUB_STEP_SUMMARY"
+          fi

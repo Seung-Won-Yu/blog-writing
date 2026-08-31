@@ -27,9 +27,11 @@ from .editorial_quality import (
     REVISIT_VALUE_POLICY_START,
     depth_policy_for,
     estimate_read_minutes,
+    reader_access_scores,
     source_authoring_reasons,
     source_quality_reasons,
 )
+from .skin_contract import inspect_project_html_contract, inspect_skin_contract
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1036,6 +1038,15 @@ def _inspect_draft_state(draft_id, *, root=ROOT, window_days=14):
         body_html = html_path.read_text(encoding="utf-8")
     except OSError:
         body_html = ""
+    if identity.content_type == "project_log":
+        project_contract = inspect_project_html_contract(
+            body_html,
+            meta.get("image_assets", []),
+        )
+        reasons.extend(project_contract.get("reasons") or [])
+        if Path(root).resolve() == ROOT.resolve():
+            skin_contract = inspect_skin_contract(root)
+            reasons.extend(skin_contract.get("reasons") or [])
     if body_html.count('class="daily-digest-post"') != 1:
         reasons.append("body_count")
     if (
@@ -1217,6 +1228,7 @@ def _source_preflight_diagnostics(source, identity):
         "editorial_lengths": editorial_lengths,
         "invalid_scene_labels": invalid_scene_labels,
         "depth": depth,
+        "reader_scores": reader_access_scores(source, identity),
     }
 
 

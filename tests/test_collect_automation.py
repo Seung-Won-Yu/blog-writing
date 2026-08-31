@@ -9,6 +9,7 @@ from blog_pipeline.collection.collect_automation import (
     build_automation_inbox,
     load_recent_automation_history,
     load_recent_automation_urls,
+    main as collect_automation_main,
     render_automation_inbox_html,
     score_automation_candidate,
     select_automation_candidates,
@@ -948,6 +949,14 @@ class AutomationInboxTests(unittest.TestCase):
             self.assertEqual(Path(paths["html"]).name, "index.html")
             self.assertTrue((output / "latest.json").is_file())
             self.assertTrue((output / "index.html").is_file())
+
+    def test_regular_day_only_rejects_manual_thursday_collection(self):
+        with self.assertRaises(SystemExit) as error:
+            collect_automation_main(
+                ["--day", "2026-09-03", "--regular-day-only"]
+            )
+
+        self.assertEqual(error.exception.code, 2)
 
 
 if __name__ == "__main__":

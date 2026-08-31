@@ -36,6 +36,7 @@ from .editorial_quality import (
     estimate_read_minutes as estimate_editorial_read_minutes,
     policy_active,
     project_reader_scores,
+    reader_access_scores,
     source_quality_reasons,
 )
 
@@ -616,7 +617,7 @@ def build_related_posts(related_posts):
 
 
 def build_project_reader_aid(day):
-    """Render a plain-language on-ramp before a project log gets technical."""
+    """Render a plain-language on-ramp before a regular post gets technical."""
     access = day.get("reader_access") if isinstance(day.get("reader_access"), dict) else {}
     quick_summary = access.get("quick_summary") if isinstance(access.get("quick_summary"), list) else []
     glossary = access.get("glossary") if isinstance(access.get("glossary"), list) else []
@@ -635,7 +636,11 @@ def build_project_reader_aid(day):
     )
     if not quick_rows:
         return ""
-    series = plain(day.get("series")) or "모의투자부터 시작한 주식 앱 제작기"
+    series = (
+        plain(day.get("series"))
+        or plain(day.get("content_label"))
+        or "이 글의 핵심"
+    )
     episode = day.get("episode")
     episode_label = f" · {episode}편" if isinstance(episode, int) and episode > 0 else ""
     glossary_html = (
@@ -912,11 +917,22 @@ def render_post(draft_id, day):
             if section_heading
             else ""
         )
-        detail_html = (
-            f"  {build_project_reader_aid(day)}\n\n  {build_project_log_section(lead_story, images)}"
-            if content_type == "project_log"
-            else f"{section_heading_html}  {build_lead_news_section(lead_story, images, analysis_label)}"
-        )
+        reader_aid_html = build_project_reader_aid(day)
+        if content_type == "project_log":
+            detail_html = (
+                f"  {reader_aid_html}\n\n  "
+                f"{build_project_log_section(lead_story, images)}"
+            )
+        else:
+            lead_html = (
+                f"{section_heading_html}  "
+                f"{build_lead_news_section(lead_story, images, analysis_label)}"
+            )
+            detail_html = (
+                f"  {reader_aid_html}\n\n{lead_html}"
+                if reader_aid_html
+                else lead_html
+            )
         closing_html = "" if content_type == "project_log" else build_closing_section(editorial)
         rendered = f"""<article class="daily-digest-post" data-digest-version="3">
   <section class="digest-hero" aria-label="글 소개">
@@ -1182,7 +1198,7 @@ def write_post(
                 "publish_checklist": build_publish_checklist(day),
                 "generation_provider": generation_provider,
                 "estimated_read_minutes": estimate_read_minutes(day),
-                "reader_scores": project_reader_scores(day, identity),
+                "reader_scores": reader_access_scores(day, identity),
                 "quality_reasons": quality_reasons,
                 "publish_ready": publish_ready,
                 "source": identity.source,

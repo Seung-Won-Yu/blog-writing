@@ -20,10 +20,13 @@
 - `일상에 닿는 변화`, `바로 쓰는 도구`, `깊이 읽는 기술` 관점으로 후보 분류
 - 최신 후보만 유지해 불필요한 원문 데이터 누적 방지
 - 최소 3개의 정상 출처·후보 출처가 없으면 직전 정상 후보함을 보존하는 오류 처리
+- 후보함과 별도 `status.json`으로 대상 날짜·요일 역할·신선도·실패 사유를 09시 편집기에 전달
 - GitHub Actions를 이용한 정기 수집과 GitHub Pages 결과 확인
 - GitHub Trending·공식 문서·공개 저장소·연구·요즘IT에서 금요일 개발·AI 인사이트 후보를 별도 선정
 - 월요일 문제 해결·수요일 변화 해설을 서로 다른 점수와 카테고리로 선정
 - 화요일 작동 원리·목요일 기술 오해와 역사를 `궁금한 IT 원리`로 분리하고 365일 중복 방지
+- 2026-09-01 이후 모든 정규 글의 일반 독자 이해도·공개 가독성 8.5 미만 발행 차단
+- Pages 배포 뒤 공개 발행 도우미와 CI 산출물의 SHA-256 일치 여부 제한 재확인
 
 ## 운영 흐름
 
@@ -36,10 +39,11 @@
   → 월요일은 지속성·재사용성, 수요일은 변화·독자 영향에 가중치
   → 기존 검색 유입 글과 충돌하는 후보 제외
   → 오늘의 추천 후보 5건과 추가 후보 저장
-  → GitHub Pages 뉴스 레이더 갱신
+  → 저장소 후보함과 상태 기록 갱신(Pages는 완성 원고 변경 때만 배포)
 
   ※ GitHub 예약 실행 지연을 고려해 09:00 편집보다 103분 먼저 예약합니다.
      당일 후보함이 없거나 오래됐으면 편집 작업이 로컬 수집을 한 번 실행합니다.
+     `inbox_guard`는 마지막 정상 후보함과 이번 실패 상태를 구분해 오래된 후보 사용을 막습니다.
 
 월·수 09:00 KST · Codex 예약 작업
   → 월요일은 오래 검색되는 문제 해결 1건 선정
@@ -178,9 +182,13 @@ agent/DAILY_EDITOR.md                월·수 09:00 실전 IT 아티클 편집·
 agent/CURIOSITY_EDITOR.md            화·목 09:00 궁금한 IT 원리 편집·발행 준비 계약
 agent/SATURDAY_AUTOMATION.md         금요일 09:00 실전 개발·자동화 계약(파일명은 기존 작업 호환용)
 agent/PROJECT_SERIES.md              토요일 09:00 주식 앱 제작기 편집 계약
+agent/READER_QUALITY_LOOP.md         전 요일 8.5 미달 자동 재편집 계약
 agent/DEVELOPMENT_GUIDE.md           일시중지된 수요일 개발 가이드의 호환·기록용 계약
 blog_pipeline/collection/            수집·정규화·중복 제거·선정
+blog_pipeline/collection/inbox_guard.py 수집 날짜·역할·신선도 인계 검사
 blog_pipeline/publishing/            이미지 최적화·HTML·검사
+blog_pipeline/publishing/skin_contract.py 프로젝트 글·이미지·공통 스킨 계약 검사
+blog_pipeline/publishing/pages_smoke.py 공개 Pages와 CI 발행 도우미 일치 검사
 config/news_sources.json             출처와 선정 규칙
 config/automation_sources.json       개발·자동화 출처와 임시 점수 규칙
 data/days/                            완성된 월~목 실전·지식 IT 글 데이터

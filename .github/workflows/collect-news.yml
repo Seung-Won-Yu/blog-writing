@@ -6,17 +6,28 @@ on:
     # 49 minutes, so this leaves a 103-minute buffer before the 09:00 editor.
     - cron: '17 22 * * 0,2'
   workflow_dispatch:
+    inputs:
+      target_day:
+        description: '수집 대상 날짜(YYYY-MM-DD, 비우면 오늘)'
+        required: false
+        type: string
+      force_off_schedule:
+        description: '월·수 외 날짜의 진단용 수집 허용'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
 
 concurrency:
-  group: monday-wednesday-news-collection
+  group: content-main-writer
   cancel-in-progress: false
 
 jobs:
   collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,12 +41,28 @@ jobs:
         run: python3 -m blog_pipeline.collection.sync_tistory_posts
 
       - name: Collect and rank news candidates
-        run: python3 -m blog_pipeline.collection.collect_news --today
+        id: collect
+        continue-on-error: true
+        env:
+          TARGET_DAY: ${{ github.event.inputs.target_day || '' }}
+          FORCE_OFF_SCHEDULE: ${{ github.event.inputs.force_off_schedule || 'false' }}
+        run: |
+          args=(--today)
+          if [[ -n "$TARGET_DAY" ]]; then
+            args=(--day "$TARGET_DAY")
+          fi
+          if [[ "$FORCE_OFF_SCHEDULE" != "true" ]]; then
+            args+=(--regular-day-only)
+          fi
+          python3 -m blog_pipeline.collection.collect_news "${args[@]}"
 
       - name: Verify collection pipeline
+        id: verify
+        if: always()
         run: python3 -m unittest tests.test_collect_news tests.test_news_pipeline tests.test_review_inbox tests.test_sync_tistory_posts
 
       - name: Commit today's inbox
+        if: always() && steps.verify.outcome == 'success' && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure')
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -47,3 +74,21 @@ jobs:
           git commit -m "chore: collect Monday Wednesday candidates"
           git pull --rebase origin main
           python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref HEAD:main
+
+      - name: Summarize collection handoff
+        if: always()
+        run: |
+          echo "## Monday/Wednesday collection" >> "$GITHUB_STEP_SUMMARY"
+          echo "- target: ${TARGET_DAY:-today}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- outcome: ${{ steps.collect.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f docs/inbox/status.json ]]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat docs/inbox/status.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+        env:
+          TARGET_DAY: ${{ github.event.inputs.target_day || '' }}
+
+      - name: Fail when collection handoff is not ready
+        if: steps.collect.outcome != 'success'
+        run: exit 1

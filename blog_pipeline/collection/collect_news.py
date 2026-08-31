@@ -18,6 +18,7 @@ from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 from zoneinfo import ZoneInfo
 
+from .inbox_guard import write_collection_status
 from .news_pipeline import (
     canonicalize_url,
     deduplicate_candidates,
@@ -1257,6 +1258,11 @@ def main(argv=None):
     day_group = parser.add_mutually_exclusive_group()
     day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘 날짜 사용")
     day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")
+    parser.add_argument(
+        "--regular-day-only",
+        action="store_true",
+        help="월·수 정규 수집일이 아니면 실행을 중단",
+    )
     parser.add_argument("--config", default="config/news_sources.json")
     parser.add_argument("--output-dir", default="docs/inbox")
     parser.add_argument("--published-days-dir", default="data/days")
@@ -1273,6 +1279,8 @@ def main(argv=None):
         day_id = validate_day_id(args.day or now.date().isoformat())
     except ValueError as exc:
         parser.error(str(exc))
+    if args.regular_day_only and dt.date.fromisoformat(day_id).weekday() not in {0, 2}:
+        parser.error("뉴스 정규 수집일은 월요일과 수요일입니다.")
     lookback_days = int(config.get("selection", {}).get("exclude_recent_days", 14))
     publisher_cooldown_days = int(
         config.get("selection", {}).get("publisher_cooldown_days", 1)
@@ -1331,6 +1339,21 @@ def main(argv=None):
         for reason in quality["reasons"]
         if reason in HARD_COLLECTION_FAILURE_REASONS
     ]
+    write_collection_status(
+        args.output_dir,
+        kind="news",
+        day_id=day_id,
+        generated_at=inbox.get("generated_at"),
+        state=(
+            "BLOCKED"
+            if hard_reasons
+            else "PARTIAL"
+            if quality["reasons"]
+            else "READY"
+        ),
+        reasons=quality["reasons"],
+        quality=quality,
+    )
     if hard_reasons:
         print(
             "뉴스 후보함 생성 중단: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(

@@ -47,10 +47,10 @@
 
    이 명령은 DNS·연결 실패·timeout·HTTP 5xx만 3초, 6초 간격으로 최대 3회 재시도합니다. 실행 환경이 GitHub 네트워크를 제한하면 같은 명령을 승인된 외부 네트워크 권한으로 실행합니다. 원시 `git push`를 제한된 환경에서 반복하지 않습니다.
 
-   - 성공: 해당 커밋의 GitHub Actions와 공개 Pages를 확인합니다. 둘 다 확인된 경우만 `COMPLETE`입니다.
+   - 성공: 해당 커밋의 GitHub Actions와 공개 Pages를 확인합니다. `Publish reviewed drafts`는 배포 뒤 `pages_smoke`로 공개 발행 도우미와 CI의 `docs/index.html` SHA-256이 같은지 제한 재시도합니다. 둘 다 확인된 경우만 `COMPLETE`입니다.
    - 최대 3회 뒤에도 DNS·5xx·timeout: 커밋과 깨끗한 작업 트리를 보존하고 `LOCAL_COMPLETE`로 보고합니다. 다음 예약 실행은 시작 단계에서 이 커밋을 감지해 새 작업과 함께 다시 push합니다.
    - 인증·권한·non-fast-forward: 재시도하지 않고 `BLOCKED`로 보고합니다. 강제 push, rebase, reset은 하지 않습니다.
 
-3. GitHub Actions API만 일시적으로 열리지 않지만 push가 성공했다면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 새 원고를 다시 만들지 않습니다.
+3. GitHub Actions API가 일시적으로 열리지 않거나 Pages 전파 지연으로 `pages_smoke`가 일치하지 않지만 push와 배포가 성공했다면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 배포를 반복하거나 새 원고를 다시 만들지 않습니다.
 
 4. `LOCAL_COMPLETE`와 `REMOTE_PUSHED_VERIFY_PENDING`은 콘텐츠 실패가 아닙니다. 생성 파일, 검증 수, 로컬 커밋 해시, 미확인 단계만 짧게 보고합니다. 별도 25분 재예약이나 중복 작업을 만들지 않습니다.

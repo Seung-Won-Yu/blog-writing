@@ -11,6 +11,7 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 from .collect_news import build_inbox, fetch_url
+from .inbox_guard import write_collection_status
 from .news_pipeline import canonicalize_url, normalize_title, validate_day_id
 
 
@@ -775,6 +776,11 @@ def main(argv=None):
     day_group = parser.add_mutually_exclusive_group()
     day_group.add_argument("--today", action="store_true", help="한국 시간 기준 오늘")
     day_group.add_argument("--day", help="후보함 날짜 (YYYY-MM-DD)")
+    parser.add_argument(
+        "--regular-day-only",
+        action="store_true",
+        help="금요일 정규 수집일이 아니면 실행을 중단",
+    )
     parser.add_argument("--config", default="config/automation_sources.json")
     parser.add_argument("--output-dir", default="docs/automation-inbox")
     parser.add_argument("--automation-cases-dir", default="data/automation_cases")
@@ -787,6 +793,8 @@ def main(argv=None):
         day_id = validate_day_id(args.day or now.date().isoformat())
     except ValueError as exc:
         parser.error(str(exc))
+    if args.regular_day_only and dt.date.fromisoformat(day_id).weekday() != 4:
+        parser.error("개발·AI 인사이트 정규 수집일은 금요일입니다.")
     lookback = int(config.get("selection", {}).get("exclude_recent_days", 90))
     history = load_recent_automation_history(
         args.automation_cases_dir,
@@ -806,6 +814,15 @@ def main(argv=None):
         last_tool_brand=history["last_tool_brand"],
     )
     quality = automation_collection_quality_result(inbox, config)
+    write_collection_status(
+        args.output_dir,
+        kind="automation",
+        day_id=day_id,
+        generated_at=inbox.get("generated_at"),
+        state="READY" if quality["ok"] else "BLOCKED",
+        reasons=quality["reasons"],
+        quality=quality,
+    )
     if not quality["ok"]:
         print(
             "개발·AI 인사이트 후보함 보존: 정상 출처 {}건 / 후보 출처 {}건 / 후보 {}건 / 추천 {}건 / {}".format(

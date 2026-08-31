@@ -1,5 +1,8 @@
 # 쑥쑥자라나라 실전 IT 아티클 편집 계약
 
+원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
+사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용합니다.
+
 이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 수집 결과는 주제를 찾는 레이더로만 사용합니다. 기준을 통과하면 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건을 만들고, 통과하지 못하면 발행 횟수를 채우기 위해 글을 만들지 않습니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
 
 월요일과 수요일은 같은 글을 날짜만 바꾸어 만들지 않습니다. 월요일 `evergreen_problem`은 오래 검색되는 개발 문제와 재사용 가능한 해결 기준을 남기고 `개발 가이드`에 넣습니다. 수요일 `change_explainer`는 최근 변화가 기존 사용·개발 흐름을 어떻게 바꾸는지 확인하고 `IT 트렌드 해설`에 넣습니다. 월·수 외 날짜에는 이 계약으로 새 원고를 만들지 않습니다.
@@ -24,10 +27,12 @@
    브라우저·Playwright 검증의 스냅샷, 로그, 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD/`에서만 생성합니다. Playwright CLI도 그 임시 디렉터리에서 실행하고 저장소에는 최종 검증을 통과한 `docs/tistory/assets/YYYY-MM-DD/*.webp`만 남깁니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필을 재사용하지 않고 Playwright CLI 또는 제공된 브라우저 도구만 사용합니다. 임시 검증 파일 때문에 작업 트리를 더럽히거나 사용자 파일을 자동 삭제하지 않습니다.
 
    - `COMPLETE`: 즉시 종료합니다. 원문 확인, 재집필, 이미지 재생성, 테스트, 커밋, 푸시를 반복하지 않습니다.
-   - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다.
+   - `PARTIAL`: 출력된 `reasons`의 누락 단계만 복구합니다. 이미 유효한 JSON·이미지·HTML은 다시 만들지 않습니다. 단, `quality_reader_access`는 중단 사유가 아니며 공통 독자 품질 루프로 원고 JSON을 자동 재편집합니다.
    - `NEW`: 아래 전체 흐름을 한 번만 수행합니다.
 
-2. `docs/inbox/latest.json`의 `day`, `selection.editorial_lane`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `weekly_lane_score`, `editorial_angle`, `search_feedback`만 읽습니다. 월요일 후보함은 `evergreen_problem`, 수요일 후보함은 `change_explainer`여야 합니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 파일의 `day`가 당일 날짜와 다르거나 `selection.editorial_lane`이 요일 역할과 다르면 `python3 -m blog_pipeline.collection.collect_news --today`를 한 번 실행합니다. 재실행 후에도 날짜·역할이 다르거나 당일 `candidates`가 비어 있으면 보존된 이전 `latest.json` 후보는 사용하지 않습니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
+2. 먼저 `python3 -m blog_pipeline.collection.inbox_guard --kind news --today`를 실행합니다. `READY`면 후보함을 사용하고, `READY_WITH_RESEARCH_FALLBACK`이면 후보함의 부족 사유를 유지한 채 추가 후보와 직접 리서치까지 확인합니다. `RECOLLECT_REQUIRED`면 보존된 `latest.json`을 읽기 전에 `collect_news --today`를 같은 실행에서 한 번만 다시 수행하고 가드를 재실행합니다. 재실행 뒤에도 준비되지 않으면 이전 후보를 쓰지 않고 Codex 웹 리서치로 이동합니다.
+
+   그다음 `docs/inbox/latest.json`의 `day`, `selection.editorial_lane`, `selected`, `problem_signals`, `candidates` 상위 10건에서 제목·날짜·출처·URL과 `durable_problem_score`, `weekly_lane_score`, `editorial_angle`, `search_feedback`만 읽습니다. 월요일 후보함은 `evergreen_problem`, 수요일 후보함은 `change_explainer`여야 합니다. `problem_signals`는 요즘IT·커뮤니티·편집 글에서 문제만 발견하는 보조 목록이며, `unknown_publication_date: true`는 원문에서 30일 이내 발행을 확인한 뒤에만 선택합니다. `search_feedback.existing_page_conflict: true`는 새 글 후보에서 제외하고, `search_feedback.demand_score > 0`는 제안 action이 `new_article`, `expand_cluster`, `supporting_article`일 때만 수요 신호로 사용합니다. 당일 후보함에 후보가 있으면 `selected`를 먼저 보고, 추천이 3건 미만이거나 적합한 주제가 없을 때는 `problem_signals`과 `candidates`의 서로 다른 발행처를 최대 10건까지 검토합니다. 후보함 전체 JSON을 문맥으로 읽지 않습니다.
 
    후보 하나의 공식 근거가 부족하거나 중복이라고 해서 전체 편집을 중단하지 않습니다. 검증 가능한 주제를 찾을 때까지 다음 대체 순서를 반드시 지킵니다.
 
@@ -174,6 +179,7 @@
 - `editorial.reader_hook`에는 독자가 마주친 구체적 `scene`, 방치했을 때의 `stakes`, 끝까지 읽고 얻는 `payoff`, 다음 문단을 여는 `open_question`을 각각 20~180자로 기록합니다. 네 값 중 최소 두 값의 핵심 단어가 실제 도입에 나타나야 하며, 내부 필드명을 본문에 노출하거나 클릭베이트 문장으로 바꾸지 않습니다.
 - 기본 글은 약 8~12분 분량으로 씁니다. 다만 `change_impact`처럼 답이 짧고 분명한 변경 대응 글은 6~10분으로 끝내며 분량을 채우려고 배경 설명을 늘리지 않습니다. 소제목 5~7개를 사용합니다.
 - 모바일에서 한 문단이 벽처럼 보이지 않도록 도입은 320자, 본문 문단은 220자를 넘기지 않습니다. 한 문단에는 한 생각만 두고 긴 조건은 표나 목록으로 나눕니다.
+- 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_access`가 나오면 보류 상태로 넘기지 말고 도입·긴 문단·연속 블록·넓은 표·긴 코드를 같은 실행에서 다시 편집한 뒤 재검사합니다.
 - 핵심 흐름은 `독자가 마주칠 문제 장면 → 왜 생기는지 → 작동 원리 → 실제 예시 → 선택과 트레이드오프 → 남는 기준`입니다. 주제에 맞게 순서를 바꾸되 단순 발표 요약으로 시작해 영향 정리로 끝내지 않습니다.
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 사고·유출·장애처럼 한 지점의 문제가 여러 서비스나 사용자에게 번지는 주제는 `incident_trace`를 사용해 `발생 지점 → 데이터·서비스 이동 경로 → 확인된 영향과 미확인 범위 → 지금 할 일` 순서로 추적합니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
 - 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.

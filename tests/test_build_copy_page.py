@@ -440,6 +440,42 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn('aria-live="polite"', html)
         self.assertIn('href="integration.html"', html)
         self.assertIn("보강글 HTML 조립", html)
+        self.assertIn("독자 품질", html)
+        self.assertIn("이해도 ", html)
+        self.assertIn("가독성 ", html)
+        self.assertIn("understanding >= 8.5 && readability >= 8.5", html)
+
+    def test_shows_ready_skin_contract_without_claiming_remote_deployment(self):
+        page = render(
+            [],
+            skin_contract={
+                "status": "COMPLETE",
+                "version": "project-reader-v1",
+                "sha256": "b04fa6c54c841a8fbb347876560585f6",
+                "reasons": [],
+            },
+        )
+
+        self.assertIn("발행 스킨 준비 완료", page)
+        self.assertIn("project-reader-v1", page)
+        self.assertIn("CSS b04fa6c54c84", page)
+        self.assertIn("스킨 변경 시 티스토리에 다시 적용", page)
+        self.assertNotIn("티스토리 적용 완료", page)
+
+    def test_warns_when_skin_contract_is_not_ready(self):
+        page = render(
+            [],
+            skin_contract={
+                "status": "PARTIAL",
+                "version": "project-reader-v1",
+                "sha256": "",
+                "reasons": ["stale_preview_skin_css"],
+            },
+        )
+
+        self.assertIn("발행 중지 · 스킨 계약 확인 필요", page)
+        self.assertIn("stale_preview_skin_css", page)
+        self.assertIn('class="skin-contract is-error"', page)
 
     def test_draft_buttons_expose_selected_state_and_fetch_recovery(self):
         html = render(

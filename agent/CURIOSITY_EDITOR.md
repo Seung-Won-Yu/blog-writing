@@ -1,5 +1,8 @@
 # 궁금한 IT 원리 편집 계약
 
+원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
+사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용합니다.
+
 이 문서는 매주 화·목 09:00 KST에 실행되는 Codex 지식글 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 일상에서 자주 마주치지만 원리는 잘 알려지지 않은 IT 질문을 쉽고 정확하게 풀어 `궁금한 IT 원리` 카테고리에 한 편만 준비합니다. 티스토리 붙여넣기와 발행은 사용자가 직접 하며, 기준을 채울 주제가 없으면 횟수를 맞추려고 만들지 않습니다.
 
 화요일 `curiosity_mechanism`은 QR코드·와이파이·GPS·파일 삭제·캐시처럼 일상 기술이 실제로 작동하는 원리를 풉니다. 목요일 `curiosity_myth_history`는 시크릿 모드·충전·비밀번호·클라우드 같은 기술 오해를 검증하거나 지금 구조가 된 역사적 이유를 설명합니다. TOP 형식은 항목들이 하나의 명확한 질문에 답하고 순위 기준을 근거로 설명할 수 있을 때만 사용합니다. 동물·연예·생활 일반 상식처럼 블로그의 IT 정체성과 연결되지 않는 주제는 다루지 않습니다.
@@ -15,7 +18,7 @@
    python3 -m blog_pipeline.publishing.daily_guard --today
    ```
 
-2. 오늘이 화요일이나 목요일이 아니면 새 글을 만들지 않습니다. 당일 가드가 `COMPLETE`면 즉시 종료합니다. 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 먼저 실행합니다. `READY`면 유효한 원고와 이미지를 다시 만들지 않고 검증·스테이징부터 복구하고, `PARTIAL`이면 사용자 변경을 보존한 채 중단합니다. 다른 예약 글의 누락과 관계없이 오늘 지식글만 판단하며 과거 누락일을 자동으로 소급 생성하지 않습니다.
+2. 오늘이 화요일이나 목요일이 아니면 새 글을 만들지 않습니다. 당일 가드가 `COMPLETE`면 즉시 종료합니다. 작업 트리가 더러우면 `python3 -m blog_pipeline.publishing.publish_bundle --today --resume-check`를 먼저 실행합니다. `READY`면 유효한 원고와 이미지를 다시 만들지 않고 검증·스테이징부터 복구하고, 알 수 없는 `PARTIAL` 변경은 사용자 변경을 보존한 채 중단합니다. 다만 당일 원고의 `quality_reader_access`는 중단 사유가 아니며 공통 독자 품질 루프로 자동 재편집합니다. 다른 예약 글의 누락과 관계없이 오늘 지식글만 판단하며 과거 누락일을 자동으로 소급 생성하지 않습니다.
 
 3. 브라우저·Playwright 검증 로그와 원본 캡처는 저장소 루트가 아니라 `/tmp/blog-writing-qa/YYYY-MM-DD/`에만 둡니다. Google Chrome 앱 실행 파일을 직접 호출하지 않습니다. GUI Chrome이나 사용자 프로필 대신 Playwright CLI 또는 제공된 브라우저 도구를 사용합니다.
 
@@ -49,6 +52,7 @@
 - `editorial.coverage`는 `question`, `mechanism`, `example`, `misconception`, `evidence`, `takeaway`를 모두 포함합니다. 화요일은 `editorial.weekly_lane: curiosity_mechanism`, 목요일은 `editorial.weekly_lane: curiosity_myth_history`입니다. `article_shape`은 `research_interpretation`, `decision_guide`, `incident_trace`, `troubleshooting` 중 실제 질문에 맞는 것을 고릅니다.
 - 표는 비교나 손상 범위처럼 관계를 더 빨리 이해시킬 때만 사용합니다. TOP 형식은 숫자를 붙이기 전에 선정 기준을 밝히고, 실제 순위 근거가 없으면 `다섯 가지 사례`처럼 씁니다.
 - 모바일 문단은 220자, 도입은 320자를 넘기지 않습니다. 모든 소제목에 같은 말투나 번호를 반복하지 않고 `개요`, `현황`, `분석`, `결론`, `시사점` 같은 보고서 소제목을 쓰지 않습니다.
+- 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_access`가 나오면 발행 보류로 끝내지 말고 도입·긴 문단·연속 블록·넓은 표를 쉬운 흐름으로 다시 편집한 뒤 재검사합니다.
 - `이번 글에서는`, `살펴보겠습니다`, `알아보겠습니다`, `정리해보겠습니다`, `결론적으로`, `도움이 되길 바랍니다` 같은 상투 문구를 쓰지 않습니다. 친구에게 흥미로운 원리를 설명하듯 자연스럽게 쓰되 확인한 사실과 작성자의 추론을 구분합니다.
 - 태그 5~8개는 대상 기술·작동 원리·독자의 질문·사용 장면을 섞고 `AI`, `IT`, `정보`, `잡학`처럼 넓은 단어로 채우지 않습니다.
 

@@ -10,6 +10,26 @@ from tests.test_editorial_quality import valid_daily_source, valid_guide_source
 
 
 class SourcePreflightTests(unittest.TestCase):
+    def test_preflight_exposes_reader_scores_for_same_run_repair(self):
+        day = "2026-08-31"
+        source = valid_daily_source(day)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "data" / "days" / f"{day}.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                json.dumps(source, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
+            result = inspect_source_state(day, root=root)
+
+        self.assertEqual(
+            set(result["reader_scores"]),
+            {"general_reader_understanding", "public_readability"},
+        )
+
     def test_authoring_gate_does_not_require_generated_image_outputs(self):
         source = valid_daily_source("2026-07-21")
         source.pop("images")
