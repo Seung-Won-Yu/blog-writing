@@ -1,0 +1,505 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-08-31",
+  "publish_date": "2026-08-31",
+  "date_label": "2026. 8. 31",
+  "weekday": "월",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-08-31T09:00:00+09:00",
+  "primary_query": "GitHub Actions 러너 업데이트",
+  "tags": [
+    "GitHub Actions",
+    "러너 업데이트",
+    "셀프 호스티드 러너",
+    "CI 큐 대기",
+    "actions runner",
+    "ARC",
+    "CI/CD 운영"
+  ],
+  "visual": {
+    "subject": "낡은 버전 다이얼 때문에 작업 티켓을 받지 못하는 셀프 호스티드 러너 장비",
+    "hook": "러너가 온라인인데도 작업이 계속 큐에 남는다면 멈춘 곳은 서비스가 아니라 버전 게이트일 수 있다.",
+    "motif": "러너 장비, 버전 다이얼, 작업 티켓, 차단 게이트",
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "label": "온라인 표시 뒤에서 작업을 막는 낡은 러너 버전",
+      "scene_label": [
+        "업데이트 지연",
+        "큐 대기",
+        "버전 게이트"
+      ],
+      "steps": "작동 중인 러너 장비가 낡은 버전 다이얼 때문에 새 작업 티켓을 받지 못한다.",
+      "curiosity_hook": "초록 상태등이 켜져 있는데도 왜 작업 티켓은 게이트 밖에 쌓일까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "runner-checkpoint-closeup",
+      "palette_family": "industrial_gray_amber_signal_red",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "낡은 버전 다이얼이 달린 작은 러너 장비",
+      "texture_cue": "긁힌 금속 표면과 모서리가 닳은 작업 티켓",
+      "authenticity_cue": "한국어 운영 라벨과 손으로 남긴 점검 표시",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "업데이트 지연",
+        "큐 대기"
+      ],
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: Korean practical IT article cover. Asset intent: editorial-scene. Primary request: 1200x630 landscape documentary macro close-up of one compact rack-mounted CI runner appliance at a physical intake checkpoint. Its green power light is on, but a worn version dial is below the checkpoint mark and a small pile of paper job tickets waits outside the gate. Scene/backdrop: restrained Korean workshop operations bench, not a generic desk. Style/medium: natural editorial photography with tactile realism. Composition/framing: one dominant appliance fills 55 percent of the frame, close crop, visible gate and waiting tickets, no infographic layout. Lighting/mood: calm daylight, operational tension without drama. Color palette: industrial gray, muted amber, one signal red accent. Materials/textures: scratched metal, worn paper edges, imperfect operations stickers. Text (verbatim): 업데이트 지연 and 큐 대기 only, tiny but legible Korean labels. Constraints: article-specific, mobile-thumbnail readable, no extra text. Avoid: person, laptop, generic developer desk, GitHub logo, dashboard, cards, flowchart, arrows, large title, robot, neon, glossy stock photo, watermark."
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "label": "워크플로 작업이 러너에 배정되기 전 통과하는 네 단계",
+        "scene_label": [
+          "작업 생성",
+          "라벨 일치",
+          "버전 확인",
+          "작업 배정"
+        ],
+        "steps": "워크플로 작업이 큐에 들어온 뒤 라벨과 연결 상태, 러너 버전 조건을 통과해야 실제 러너에 배정된다.",
+        "curiosity_hook": "온라인 상태와 라벨이 맞아도 버전 조건에서 작업이 멈출 수 있다.",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "작업 생성",
+          "라벨 일치",
+          "연결 확인",
+          "버전 확인",
+          "작업 배정",
+          "큐 대기"
+        ],
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT article explanatory image. Primary request: 1200x630 landscape Korean technical flow diagram showing one workflow job ticket moving through four gates before a small self-hosted runner appliance. Scene/backdrop: clean dark-gray and pale-amber technical canvas. Style/medium: crisp flat editorial diagram, not UI. Composition/framing: one left-to-right flow with generous whitespace and exactly four clear gates. Text (verbatim): 작업 생성, 라벨 일치, 연결 확인, 버전 확인, 작업 배정, 큐 대기. Make 버전 확인 the distinct stop gate and show 큐 대기 beneath it as the failed outcome; successful path continues to 작업 배정. Constraints: high contrast, large mobile-readable Korean text, simple precise arrows, no extra text. Avoid: UI screenshot, dashboard, cards grid, person, brand logo, 3D gloss, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "condition": "셀프 호스티드 러너에서 자동 업데이트를 비활성화했거나 불변 컨테이너 이미지를 사용하는 경우",
+        "label": "설치 방식에 따라 달라지는 러너 업데이트 경로",
+        "scene_label": [
+          "자동 업데이트",
+          "고정 서버",
+          "컨테이너 이미지",
+          "ARC"
+        ],
+        "steps": "자동 업데이트 사용 여부와 설치 형태를 확인해 자체 업데이트, 패키지 교체, 이미지 재빌드 경로를 선택한다.",
+        "curiosity_hook": "같은 업데이트라도 고정 서버와 일회성 컨테이너는 무엇을 바꿔야 할까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "자동 업데이트",
+          "고정 서버",
+          "컨테이너",
+          "ARC 운영",
+          "패키지 교체",
+          "이미지 재빌드"
+        ],
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT article explanatory image. Primary request: 1200x630 landscape Korean conditional decision diagram for updating a self-hosted CI runner. Begin with one clear decision label 자동 업데이트 and split into two concise operational paths. Path one shows 고정 서버 leading to 패키지 교체. Path two groups 컨테이너 and ARC 운영 leading to 이미지 재빌드. Scene/backdrop: light technical paper with charcoal ink and muted yellow/red accents. Style/medium: flat ink-and-paper editorial diagram, not UI. Composition/framing: large central branch, two balanced paths, generous whitespace. Text (verbatim): 자동 업데이트, 고정 서버, 컨테이너, ARC 운영, 패키지 교체, 이미지 재빌드 only. Constraints: mobile-readable Korean text, clear branch conditions, no extra text. Avoid: UI, terminal screenshot, dashboard, cards grid, people, brand logo, 3D gloss, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "GitHub Actions 러너 업데이트: 큐 대기 전에 확인할 5곳",
+    "opening": "워크플로가 `Queued`에 머무는데 셀프 호스티드 러너 화면은 `Idle` 또는 `Online`으로 보일 수 있다. 8월 26일 러너 v2.337.0이 공개됐고, 8월 31일에는 GitHub Enterprise Cloud의 구버전 등록 brownout이 다시 진행된다. 등록 최저 버전 2.329.0만 맞추면 끝나는 문제가 아니다. 실행 중인 러너는 새 릴리스마다 30일 안에 따라가야 한다.",
+    "closing": "셀프 호스티드 러너의 초록 상태등은 프로세스가 연결됐다는 뜻이지, 앞으로도 계속 작업을 받을 수 있다는 보증이 아니다. 등록 하한과 실행 유효 버전을 분리해 보고, 자동 업데이트 여부와 이미지 소유자를 자산 목록에 함께 적어야 한다. 릴리스 알림부터 작은 검증 작업, 교체와 되돌림까지 한 주기로 묶으면 큐 대기는 갑작스러운 장애가 아니라 미리 발견할 수 있는 운영 신호가 된다.",
+    "action": "오늘 조직의 러너 목록에서 이름·상태·버전·자동 업데이트 여부·이미지 소유자를 한 번에 적고, 30일 안에 갱신되지 않는 경로를 업데이트 작업으로 등록한다.",
+    "audience_problem": "셀프 호스티드 GitHub Actions 러너가 온라인으로 보이는데도 작업이 큐에 남거나, 재등록과 실행에 필요한 버전 조건을 혼동해 업데이트 시점을 놓친다.",
+    "reader_takeaway": "등록 최저 버전과 이동하는 실행 유효 버전을 구분하고, 상태·버전·로그를 확인한 뒤 고정 서버·컨테이너·ARC에 맞는 업데이트와 검증 절차를 만들 수 있다.",
+    "why_now": "GitHub Actions Runner v2.337.0이 8월 26일 공개된 직후인 8월 31일, Enterprise Cloud의 두 번째 구버전 등록 brownout 일정이 진행된다.",
+    "topic_key": "github-actions-self-hosted-runner-update-queue",
+    "reader_question": "GitHub Actions 셀프 호스티드 러너가 작업을 받지 못할 때 버전 문제를 어떻게 확인하고 설치 방식별로 안전하게 업데이트해야 할까?",
+    "entities": [
+      "GitHub Actions",
+      "actions/runner",
+      "self-hosted runner",
+      "Actions Runner Controller",
+      "GitHub Enterprise Cloud"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "decision_guide",
+    "weekly_lane": "evergreen_problem",
+    "reader_hook": {
+      "scene": "워크플로는 Queued에 머무는데 셀프 호스티드 러너의 상태등과 설정 화면은 정상으로 보인다.",
+      "stakes": "버전 조건을 놓치면 새 러너 등록이 막히고 기존 러너도 작업을 받지 못해 배포와 테스트가 함께 멈출 수 있다.",
+      "payoff": "등록·실행 버전 규칙을 구분하고 설치 방식별 업데이트와 검증 순서를 한 점검표로 가져간다.",
+      "open_question": "온라인 상태와 라벨이 맞는데도 작업이 배정되지 않는다면 어느 단계에서 버전 게이트를 확인해야 할까?"
+    },
+    "revisit": {
+      "quick_answer": "러너 목록의 상태와 버전을 함께 확인한다. 2.329.0은 등록 하한일 뿐이며, 실행 러너는 각 새 릴리스 뒤 30일 안에 업데이트해야 한다.",
+      "reuse_case": "워크플로 큐 대기, 러너 신규 등록 실패, 컨테이너 이미지 교체, ARC 업그레이드, 정기 CI 자산 점검 때 같은 순서를 다시 쓴다.",
+      "failure_case": "버전이 최신이어도 라벨 불일치, 서비스 중지, 443 통신 차단, 인증 범위 문제라면 작업이 배정되지 않으므로 상태와 _diag 로그를 함께 확인한다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "actions/runner 새 릴리스 공개",
+        "GitHub의 등록 하한 변경",
+        "러너 이미지 또는 ARC 버전 변경",
+        "자동 업데이트 정책 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "GitHub Actions 러너",
+      "reader_need": "셀프 호스티드 러너가 큐를 받지 못하는 원인이 버전인지 확인하고 설치 형태에 맞게 중단 없이 갱신하고 싶다.",
+      "answer_format": "등록·실행 버전 비교표, 러너 자산 조회 명령, 설치 방식별 업데이트 판단표, 완료 체크리스트"
+    },
+    "original_value": {
+      "durable_question": "셀프 호스티드 CI 러너가 온라인인데도 작업을 받지 못할 때 버전 문제를 어떻게 분리하고 재발하지 않게 운영할까?",
+      "source_gap": "공식 공지는 버전 규칙과 일정, 문서는 개별 진단법을 설명하지만 큐 대기에서 시작해 설치 방식별 업데이트와 되돌림까지 한 흐름으로 묶지 않는다.",
+      "contribution": "등록 하한과 실행 유효 버전을 구분하고, 고정 서버·자동 업데이트·컨테이너·ARC별 소유 지점과 검증·롤백 기준을 하나의 판단표로 연결한다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "운영자는 상태 표시만 믿지 않고 러너 버전과 로그를 근거로 원인을 좁힌 뒤 환경에 맞는 업데이트 주기를 만들 수 있다.",
+      "limits": "GitHub Enterprise Server는 별도 릴리스와 호환 기준을 따르며, 조직별 네트워크·이미지 배포·ARC 구성은 해당 운영 문서와 함께 확인해야 한다."
+    }
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 11,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "GitHub Actions 셀프 호스티드 러너가 낡은 버전 다이얼 때문에 작업 큐를 받지 못하는 장면",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: Korean practical IT article cover. Asset intent: editorial-scene. Primary request: 1200x630 landscape documentary macro close-up of one compact rack-mounted CI runner appliance at a physical intake checkpoint. Its green power light is on, but a worn version dial is below the checkpoint mark and a small pile of paper job tickets waits outside the gate. Scene/backdrop: restrained Korean workshop operations bench, not a generic desk. Style/medium: natural editorial photography with tactile realism. Composition/framing: one dominant appliance fills 55 percent of the frame, close crop, visible gate and waiting tickets, no infographic layout. Lighting/mood: calm daylight, operational tension without drama. Color palette: industrial gray, muted amber, one signal red accent. Materials/textures: scratched metal, worn paper edges, imperfect operations stickers. Text (verbatim): 업데이트 지연 and 큐 대기 only, tiny but legible Korean labels. Constraints: article-specific, mobile-thumbnail readable, no extra text. Avoid: person, laptop, generic developer desk, GitHub logo, dashboard, cards, flowchart, arrows, large title, robot, neon, glossy stock photo, watermark.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "runner-checkpoint-closeup",
+      "palette_family": "industrial_gray_amber_signal_red",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "낡은 버전 다이얼이 달린 작은 러너 장비",
+      "texture_cue": "긁힌 금속 표면과 모서리가 닳은 작업 티켓",
+      "authenticity_cue": "한국어 운영 라벨과 손으로 남긴 점검 표시",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 96332,
+      "quality": 82,
+      "sha256": "2967b2c5fd4f65d59db19c9219ff388e9bc58d9054a3460d0c7cddce93ddd436"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "GitHub Actions 작업이 라벨과 연결 상태 및 러너 버전을 확인한 뒤 배정되는 흐름",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-작업-배정-흐름.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-작업-배정-흐름.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT article explanatory image. Primary request: 1200x630 landscape Korean technical flow diagram showing one workflow job ticket moving through four gates before a small self-hosted runner appliance. Scene/backdrop: clean dark-gray and pale-amber technical canvas. Style/medium: crisp flat editorial diagram, not UI. Composition/framing: one left-to-right flow with generous whitespace and exactly four clear gates. Text (verbatim): 작업 생성, 라벨 일치, 연결 확인, 버전 확인, 작업 배정, 큐 대기. Make 버전 확인 the distinct stop gate and show 큐 대기 beneath it as the failed outcome; successful path continues to 작업 배정. Constraints: high contrast, large mobile-readable Korean text, simple precise arrows, no extra text. Avoid: UI screenshot, dashboard, cards grid, person, brand logo, 3D gloss, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 36502,
+      "quality": 82,
+      "sha256": "d85475667aab2ac2685236fb4531103b8693eeb909b7f0814da5a25ebaabd927"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "GitHub Actions 러너의 고정 서버 패키지 교체와 컨테이너 및 ARC 이미지 재빌드 경로",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-경로.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-경로.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT article explanatory image. Primary request: 1200x630 landscape Korean conditional decision diagram for updating a self-hosted CI runner. Begin with one clear decision label 자동 업데이트 and split into two concise operational paths. Path one shows 고정 서버 leading to 패키지 교체. Path two groups 컨테이너 and ARC 운영 leading to 이미지 재빌드. Scene/backdrop: light technical paper with charcoal ink and muted yellow/red accents. Style/medium: flat ink-and-paper editorial diagram, not UI. Composition/framing: large central branch, two balanced paths, generous whitespace. Text (verbatim): 자동 업데이트, 고정 서버, 컨테이너, ARC 운영, 패키지 교체, 이미지 재빌드 only. Constraints: mobile-readable Korean text, clear branch conditions, no extra text. Avoid: UI, terminal screenshot, dashboard, cards grid, people, brand logo, 3D gloss, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 58148,
+      "quality": 82,
+      "sha256": "a180e9697f49a9f4563fdd7b5ded3cd35085840ab86f032dc92ebf1b542daaf6"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "GitHub Actions 권한 최소화: GITHUB_TOKEN과 pull_request_target을 분리해야 하는 이유",
+      "url": "https://won0322.tistory.com/139",
+      "reason": "러너를 최신으로 유지한 뒤에도 워크플로와 토큰 권한을 분리해야 셀프 호스티드 실행 환경의 위험 범위를 줄일 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Dependabot 3일 쿨다운: 일반 업데이트와 보안 업데이트 차이, 설정법까지",
+      "url": "https://won0322.tistory.com/132",
+      "reason": "새 릴리스를 놓치지 않되 검증 시간을 확보하는 업데이트 캘린더를 코드 의존성 관리에도 이어 적용할 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "GitHub Actions Runner v2.337.0 공개, 30일 업데이트 기준 다시 시작",
+      "source": "actions/runner",
+      "url": "https://github.com/actions/runner/releases/tag/v2.337.0",
+      "published_at": "2026-08-26T14:33:00Z",
+      "blurb_kr": "GitHub가 셀프 호스티드 Actions Runner v2.337.0을 공개했다. Enterprise Cloud는 8월 31일 구버전 등록 brownout 일정에 들어가며, 실행 러너는 각 새 릴리스 뒤 30일 안에 갱신해야 한다.",
+      "references": [
+        {
+          "title": "Release v2.337.0",
+          "url": "https://github.com/actions/runner/releases/tag/v2.337.0",
+          "kind": "official"
+        },
+        {
+          "title": "GitHub Actions: Minimum version enforcement timeline for self-hosted runners",
+          "url": "https://github.blog/changelog/2026-06-12-github-actions-minimum-version-enforcement-timeline-for-self-hosted-runners/",
+          "kind": "official"
+        },
+        {
+          "title": "Self-hosted runners reference",
+          "url": "https://docs.github.com/en/actions/reference/runners/self-hosted-runners",
+          "kind": "official"
+        },
+        {
+          "title": "Monitoring and troubleshooting self-hosted runners",
+          "url": "https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/monitor-and-troubleshoot?platform=linux",
+          "kind": "official"
+        },
+        {
+          "title": "GitHub Actions Self-Hosted Runner Updates: Prepare Before Enforcement",
+          "url": "https://gitdash.dev/blog/github-actions-self-hosted-runner-enforcement",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "큐가 멈췄는데 러너는 온라인으로 보이는 이유"
+        },
+        {
+          "t": "p",
+          "text": "워크플로 작업은 `runs-on` 라벨에 맞는 러너가 연결되면 바로 배정될 것처럼 보인다. 하지만 실제로는 러너 서비스 연결, 라벨 일치, 사용 가능 상태, 서비스가 허용하는 버전 조건을 모두 통과해야 한다. 한 단계라도 맞지 않으면 작업은 `Queued`에 남는다."
+        },
+        {
+          "t": "p",
+          "text": "설정 화면의 `Idle`은 러너가 연결돼 작업을 기다린다는 상태다. 그 표시만으로 버전 유효성이나 다음 재등록 성공까지 보장하지 않는다. GitHub도 오래된 러너는 새 등록에 실패하거나 기존 작업을 받지 못해 워크플로가 큐에 머물 수 있다고 안내한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "작업은 라벨과 연결 상태만 맞으면 끝나지 않는다. 서비스가 허용하는 러너 버전까지 통과해야 배정되며, 실패하면 워크플로는 큐에 남는다."
+        },
+        {
+          "t": "h",
+          "text": "2.329.0은 등록선이고 실행선은 계속 움직인다"
+        },
+        {
+          "t": "p",
+          "text": "GitHub Enterprise Cloud의 새 아키텍처에 러너를 등록하거나 재등록하려면 2.329.0 이상이어야 한다. 이 숫자는 영구 지원 버전이 아니다. 이미 등록된 러너가 계속 작업을 받으려면 새 러너 릴리스가 나온 뒤 30일 안에 갱신해야 한다."
+        },
+        {
+          "t": "table",
+          "caption": "셀프 호스티드 러너의 두 가지 버전 조건",
+          "headers": [
+            "구분",
+            "기준",
+            "놓쳤을 때",
+            "확인할 곳"
+          ],
+          "rows": [
+            [
+              "등록·재등록",
+              "2.329.0 이상",
+              "config 등록이 차단될 수 있음",
+              "러너 버전과 brownout 일정"
+            ],
+            [
+              "작업 실행",
+              "각 새 릴리스 뒤 30일 이내",
+              "새 작업이 큐에 배정되지 않음",
+              "릴리스 날짜와 현재 버전"
+            ],
+            [
+              "중요 보안 업데이트",
+              "공지된 즉시 기준",
+              "패치 전까지 큐 배정 중단 가능",
+              "보안 공지와 릴리스 노트"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "메이저·마이너뿐 아니라 패치 릴리스도 30일 계산의 새 기준이 된다. 8월 26일 공개된 v2.337.0처럼 최신 릴리스가 보이더라도 점진 배포 때문에 조직 설정의 다운로드 안내에는 다른 버전이 제시될 수 있다. 조직에 실제 제공된 버전을 기준으로 확인한다."
+        },
+        {
+          "t": "h",
+          "text": "상태·버전·로그를 한 번에 모아 원인을 좁힌다"
+        },
+        {
+          "t": "p",
+          "text": "먼저 저장소·조직·엔터프라이즈 설정의 `Actions → Runners`에서 이름, 라벨, 상태, 버전을 본다. 여러 러너를 운영한다면 API로 목록을 내려받아야 누락을 줄일 수 있다. 이 작업에는 러너 조회 권한이 있는 인증이 필요하다."
+        },
+        {
+          "t": "code",
+          "language": "bash",
+          "text": "# 조직 러너의 이름·상태·버전·라벨 목록\ngh api --paginate /orgs/ORG/actions/runners \\\n  --jq '.runners[] | [\n    .name,\n    .status,\n    .version,\n    (.labels | map(.name) | join(\",\"))\n  ] | @tsv'\n\n# 고정 Linux 러너 서비스와 최근 자체 업데이트 흔적\ncd /opt/actions-runner\n./svc.sh status\ngrep -h 'SelfUpdater' _diag/Runner_*.log | tail -20",
+          "reusable": true,
+          "reuse_label": "GitHub Actions 셀프 호스티드 러너 버전 점검 명령"
+        },
+        {
+          "t": "p",
+          "text": "러너 디렉터리의 `_diag/Runner_*.log`에는 연결과 자체 업데이트 기록이, `Worker_*.log`에는 개별 작업 실행 기록이 남는다. 일회성 러너는 종료와 함께 로그가 사라질 수 있으므로 외부 로그 저장소로 전달해야 원인을 재구성할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "버전이 최신인데도 큐가 멈추면 라벨, 서비스 프로세스, 포트 443 통신을 차례로 본다. `config.sh --check`는 필요한 GitHub 서비스 연결을 검사하고 실패 항목의 로그 경로를 알려 준다. TLS 검증 해제는 상시 해결책이 아니라 진단용 마지막 수단이다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "업데이트 대상은 설치 파일이 아니라 소유 경로다"
+        },
+        {
+          "t": "p",
+          "text": "일반 고정 서버에서 자동 업데이트가 켜져 있으면 러너는 작업을 받을 때 또는 릴리스 뒤 일정 기간 안에 자체 갱신한다. `Runner_`와 `SelfUpdate` 로그에서 성공 흔적을 확인한다. 서비스는 켜져 있지만 업데이트 서비스에 닿지 못하는 방화벽 구성도 함께 본다."
+        },
+        {
+          "t": "p",
+          "text": "`config.sh --disableupdate`로 자동 업데이트를 끈 환경은 운영자가 릴리스 캘린더를 소유해야 한다. 고정 서버는 패키지를 교체하고 서비스를 다시 올리지만, 불변 컨테이너와 ARC는 실행 중인 컨테이너 안에서 고치지 않는다. 베이스 이미지의 러너 버전을 올려 새 이미지를 배포한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "자동 업데이트를 쓰는 고정 서버는 자체 갱신 로그를 확인한다. 자동 업데이트를 끈 서버는 패키지 교체를, 컨테이너와 ARC는 새 러너가 들어간 이미지 재빌드를 운영 단위로 삼는다."
+        },
+        {
+          "t": "table",
+          "caption": "설치 형태별 업데이트와 되돌림 기준",
+          "headers": [
+            "설치 형태",
+            "업데이트 지점",
+            "완료 신호",
+            "되돌림"
+          ],
+          "rows": [
+            [
+              "고정 서버·자동 업데이트",
+              "러너 자체 업데이트",
+              "SelfUpdate 성공과 검증 작업 완료",
+              "서비스 중지 후 이전 검증 패키지"
+            ],
+            [
+              "고정 서버·수동 업데이트",
+              "설치 패키지와 서비스",
+              "새 버전 표시와 연결 상태",
+              "백업한 구성과 이전 패키지"
+            ],
+            [
+              "불변 컨테이너",
+              "베이스 이미지 태그·다이제스트",
+              "새 컨테이너 등록과 1회 작업",
+              "이전 이미지 다이제스트 재배포"
+            ],
+            [
+              "ARC 러너 스케일셋",
+              "러너 이미지와 컨트롤러 호환",
+              "새 pod 등록·스케일·작업 완료",
+              "이전 chart·이미지 조합"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "러너 패키지만 바꿔도 운영체제, Docker, 언어 런타임, 캐시는 자동으로 갱신되지 않는다. 러너 호환성 복구와 호스트 이미지 유지보수를 한 작업으로 뭉치면 실패 범위가 커진다. 두 변경을 분리하고 각자 검증·되돌림 기준을 둔다."
+        },
+        {
+          "t": "h",
+          "text": "작은 검증 작업이 업데이트 완료를 결정한다"
+        },
+        {
+          "t": "p",
+          "text": "대규모 러너 풀을 한 번에 바꾸지 않는다. 같은 라벨을 가진 러너 중 하나를 교체하고, 체크아웃·캐시·아티팩트 업로드·컨테이너 실행처럼 실제 팀이 쓰는 경로를 포함한 짧은 검증 워크플로를 보낸다. 단순 `echo` 성공만으로는 부족하다."
+        },
+        {
+          "t": "p",
+          "text": "완료 신호는 새 버전 표시, `Idle` 연결, 검증 작업 배정, 작업 로그, 결과 업로드까지 이어지는 것이다. 기존 러너를 바로 지우지 말고 새 경로가 한 번 이상 성공할 때까지 드레인 상태로 둔다. 실패하면 이전 패키지나 이미지 다이제스트로 돌아간다."
+        },
+        {
+          "t": "p",
+          "text": "brownout 중 간헐적으로만 실패했다면 한 번의 성공을 정상 판정으로 삼지 않는다. 공지된 시간대와 이후에 같은 검증 작업을 반복해 등록과 실행 경로를 나눠 본다. GitHub 전체 장애 여부도 상태 페이지에서 확인해 로컬 러너 문제와 섞지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "30일 규칙을 자산 캘린더로 바꾼다"
+        },
+        {
+          "t": "p",
+          "text": "릴리스 알림만 구독하고 담당자가 없으면 30일은 금방 지난다. 러너 이름, 현재 버전, 자동 업데이트 여부, 패키지·이미지 저장소, 소유 팀, 마지막 검증 시각을 자산 목록에 남긴다. 새 릴리스가 나오면 목록과 실제 버전을 비교하는 정기 작업을 연다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "저장소·조직·엔터프라이즈 범위의 러너를 모두 목록화한다.",
+            "2.329.0 등록 하한과 새 릴리스 뒤 30일 실행 조건을 구분한다.",
+            "자동 업데이트를 끈 서버와 컨테이너·ARC 이미지의 소유자를 지정한다.",
+            "Runner_·SelfUpdate 로그를 외부에 보존하고 실패 알림을 연결한다.",
+            "새 패키지나 이미지는 한 러너에서 실제 검증 작업을 거친 뒤 넓힌다.",
+            "이전 패키지·이미지 다이제스트·chart 조합을 되돌림 경로로 보존한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "GitHub Enterprise Server는 github.com의 brownout 일정과 같은 기준으로 단정하면 안 된다. 사용하는 GHES 버전의 릴리스 문서가 요구하는 러너 버전을 따로 확인한다. Enterprise Cloud와 GHES를 함께 운영하면 자산 목록에서도 두 경계를 분리한다."
+        },
+        {
+          "t": "p",
+          "text": "운영 목표는 모든 러너가 항상 최신이라는 문구가 아니다. 새 릴리스가 나온 뒤 누가 어디를 바꾸고, 무엇으로 정상 동작을 증명하며, 실패하면 어떤 패키지나 이미지로 돌아가는지가 30일 안에 실행되는 상태다."
+        },
+        {
+          "t": "quote",
+          "text": "러너의 온라인 상태는 현재 연결을 보여 주고, 업데이트 캘린더는 다음 작업도 받을 수 있게 만든다."
+        }
+      ]
+    }
+  ]
+}

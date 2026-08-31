@@ -1,0 +1,28 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">워크플로가 <code>Queued</code>에 머무는데 셀프 호스티드 러너 화면은 <code>Idle</code> 또는 <code>Online</code>으로 보일 수 있다. 8월 26일 러너 v2.337.0이 공개됐고, 8월 31일에는 GitHub Enterprise Cloud의 구버전 등록 brownout이 다시 진행된다. 등록 최저 버전 2.329.0만 맞추면 끝나는 문제가 아니다. 실행 중인 러너는 새 릴리스마다 30일 안에 따라가야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-대표.webp" alt="GitHub Actions 셀프 호스티드 러너가 낡은 버전 다이얼 때문에 작업 큐를 받지 못하는 장면" width="1200" height="630" loading="eager"></figure>
+
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실전 가이드 · actions/runner · 2026. 8. 26</p>
+    <h3>GitHub Actions Runner v2.337.0 공개, 30일 업데이트 기준 다시 시작</h3>
+    <p class="digest-blurb">GitHub가 셀프 호스티드 Actions Runner v2.337.0을 공개했다. Enterprise Cloud는 8월 31일 구버전 등록 brownout 일정에 들어가며, 실행 러너는 각 새 릴리스 뒤 30일 안에 갱신해야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">큐가 멈췄는데 러너는 온라인으로 보이는 이유</h4><p>워크플로 작업은 <code>runs-on</code> 라벨에 맞는 러너가 연결되면 바로 배정될 것처럼 보인다. 하지만 실제로는 러너 서비스 연결, 라벨 일치, 사용 가능 상태, 서비스가 허용하는 버전 조건을 모두 통과해야 한다. 한 단계라도 맞지 않으면 작업은 <code>Queued</code>에 남는다.</p><p>설정 화면의 <code>Idle</code>은 러너가 연결돼 작업을 기다린다는 상태다. 그 표시만으로 버전 유효성이나 다음 재등록 성공까지 보장하지 않는다. GitHub도 오래된 러너는 새 등록에 실패하거나 기존 작업을 받지 못해 워크플로가 큐에 머물 수 있다고 안내한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-작업-배정-흐름.webp" alt="GitHub Actions 작업이 라벨과 연결 상태 및 러너 버전을 확인한 뒤 배정되는 흐름" width="1200" height="630" loading="lazy"><figcaption>작업은 라벨과 연결 상태만 맞으면 끝나지 않는다. 서비스가 허용하는 러너 버전까지 통과해야 배정되며, 실패하면 워크플로는 큐에 남는다.</figcaption></figure><h4 class="digest-subheading">2.329.0은 등록선이고 실행선은 계속 움직인다</h4><p>GitHub Enterprise Cloud의 새 아키텍처에 러너를 등록하거나 재등록하려면 2.329.0 이상이어야 한다. 이 숫자는 영구 지원 버전이 아니다. 이미 등록된 러너가 계속 작업을 받으려면 새 러너 릴리스가 나온 뒤 30일 안에 갱신해야 한다.</p><div class="digest-table-wrap" role="region" aria-label="셀프 호스티드 러너의 두 가지 버전 조건" tabindex="0"><table class="digest-data-table"><caption>셀프 호스티드 러너의 두 가지 버전 조건</caption><thead><tr><th scope="col">구분</th><th scope="col">기준</th><th scope="col">놓쳤을 때</th><th scope="col">확인할 곳</th></tr></thead><tbody><tr><td>등록·재등록</td><td>2.329.0 이상</td><td>config 등록이 차단될 수 있음</td><td>러너 버전과 brownout 일정</td></tr><tr><td>작업 실행</td><td>각 새 릴리스 뒤 30일 이내</td><td>새 작업이 큐에 배정되지 않음</td><td>릴리스 날짜와 현재 버전</td></tr><tr><td>중요 보안 업데이트</td><td>공지된 즉시 기준</td><td>패치 전까지 큐 배정 중단 가능</td><td>보안 공지와 릴리스 노트</td></tr></tbody></table></div><p>메이저·마이너뿐 아니라 패치 릴리스도 30일 계산의 새 기준이 된다. 8월 26일 공개된 v2.337.0처럼 최신 릴리스가 보이더라도 점진 배포 때문에 조직 설정의 다운로드 안내에는 다른 버전이 제시될 수 있다. 조직에 실제 제공된 버전을 기준으로 확인한다.</p><h4 class="digest-subheading">상태·버전·로그를 한 번에 모아 원인을 좁힌다</h4><p>먼저 저장소·조직·엔터프라이즈 설정의 <code>Actions → Runners</code>에서 이름, 라벨, 상태, 버전을 본다. 여러 러너를 운영한다면 API로 목록을 내려받아야 누락을 줄일 수 있다. 이 작업에는 러너 조회 권한이 있는 인증이 필요하다.</p><pre class="digest-code-block language-bash"><code># 조직 러너의 이름·상태·버전·라벨 목록
+gh api --paginate /orgs/ORG/actions/runners \
+  --jq &#x27;.runners[] | [
+    .name,
+    .status,
+    .version,
+    (.labels | map(.name) | join(&quot;,&quot;))
+  ] | @tsv&#x27;
+
+# 고정 Linux 러너 서비스와 최근 자체 업데이트 흔적
+cd /opt/actions-runner
+./svc.sh status
+grep -h &#x27;SelfUpdater&#x27; _diag/Runner_*.log | tail -20</code></pre><p>러너 디렉터리의 <code>_diag/Runner_*.log</code>에는 연결과 자체 업데이트 기록이, <code>Worker_*.log</code>에는 개별 작업 실행 기록이 남는다. 일회성 러너는 종료와 함께 로그가 사라질 수 있으므로 외부 로그 저장소로 전달해야 원인을 재구성할 수 있다.</p><p>버전이 최신인데도 큐가 멈추면 라벨, 서비스 프로세스, 포트 443 통신을 차례로 본다. <code>config.sh --check</code>는 필요한 GitHub 서비스 연결을 검사하고 실패 항목의 로그 경로를 알려 준다. TLS 검증 해제는 상시 해결책이 아니라 진단용 마지막 수단이다.</p></div>
+  </div>
+</section>
+</article>

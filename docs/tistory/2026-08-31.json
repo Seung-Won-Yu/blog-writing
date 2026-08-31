@@ -1,0 +1,83 @@
+{
+  "title": "GitHub Actions 러너 업데이트: 큐 대기 전에 확인할 5곳",
+  "title_candidates": [
+    "GitHub Actions 러너 업데이트: 큐 대기 전에 확인할 5곳",
+    "GitHub Actions Runner v2.337.0 공개, 30일 업데이트 기준 다시 시작",
+    "낡은 버전 다이얼 때문에 작업 티켓을 받지 못하는 셀프 호스티드 러너 장비: 러너가 온라인인데도 작업이 계속 큐에 남는다…"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-08-31",
+  "publish_date": "2026-08-31",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-08-31T09:00:00+09:00",
+  "tags": [
+    "GitHub Actions",
+    "러너 업데이트",
+    "셀프 호스티드 러너",
+    "CI 큐 대기",
+    "actions runner",
+    "ARC",
+    "CI/CD 운영"
+  ],
+  "meta_description": "워크플로가 `Queued`에 머무는데 셀프 호스티드 러너 화면은 `Idle` 또는 `Online`으로 보일 수 있다. 8월 26일 러너 v2.337.0이 공개됐고, 8월 31일에는 GitHub Ent… GitHub가 셀프 호스티드 Actions Runner v2.337.0을 공개했다.…",
+  "key_summary": [
+    "1. GitHub Actions Runner v2.337.0 공개, 30일 업데이트 기준 다시 시작",
+    "직접 얻는 결과: 등록 최저 버전과 이동하는 실행 유효 버전을 구분하고, 상태·버전·로그를 확인한 뒤 고정 서버·컨테이너·ARC에 맞는 업데이트와 검증 절차를 만들 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GitHub Actions 러너 업데이트: 큐 대기 전에 확인할 5곳"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 11,
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-08-31.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-08-31.html",
+  "before_ad_html": "docs/tistory/2026-08-31-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-08-31-after-ad.html",
+  "adfit_html": "docs/tistory/2026-08-31-adfit.html",
+  "source_sha256": "978d6fa0487faad0762ff2e4e54c8f050d5f5750c425c0dd59e5de5813ad3c33",
+  "html_sha256": "373f0ac42ba6df0a8dd1dd262107bdd753be83af8807b7375d7f1fd6c43e963f",
+  "adfit_sha256": "76893d04ccc5c1e982b6a2099ce9818f062080aa9927a86dd20651ef0a6d76b9",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-대표.webp",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-대표.webp",
+      "original_url": "",
+      "alt": "GitHub Actions 셀프 호스티드 러너가 낡은 버전 다이얼 때문에 작업 큐를 받지 못하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-작업-배정-흐름.webp",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-작업-배정-흐름.webp",
+      "original_url": "",
+      "alt": "GitHub Actions 작업이 라벨과 연결 상태 및 러너 버전을 확인한 뒤 배정되는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-경로.webp",
+      "path": "docs/tistory/assets/2026-08-31/GitHub-Actions-러너-업데이트-경로.webp",
+      "original_url": "",
+      "alt": "GitHub Actions 러너의 고정 서버 패키지 교체와 컨테이너 및 ARC 이미지 재빌드 경로",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
