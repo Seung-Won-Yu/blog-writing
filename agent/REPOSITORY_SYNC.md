@@ -39,11 +39,17 @@
 
 1. 원고·이미지·HTML·가드·테스트가 모두 통과하면 네트워크 상태와 무관하게 발행 묶음을 스테이징하고 하나의 로컬 커밋으로 확정합니다. 검증 전 커밋은 금지합니다.
 
-2. `git push origin main`을 독립 명령으로 한 번 실행합니다.
+2. 검증된 커밋은 아래 단일 배포 명령으로 전송합니다.
+
+   ```bash
+   python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main
+   ```
+
+   이 명령은 DNS·연결 실패·timeout·HTTP 5xx만 3초, 6초 간격으로 최대 3회 재시도합니다. 실행 환경이 GitHub 네트워크를 제한하면 같은 명령을 승인된 외부 네트워크 권한으로 실행합니다. 원시 `git push`를 제한된 환경에서 반복하지 않습니다.
 
    - 성공: 해당 커밋의 GitHub Actions와 공개 Pages를 확인합니다. 둘 다 확인된 경우만 `COMPLETE`입니다.
-   - DNS·5xx·timeout: 커밋과 깨끗한 작업 트리를 보존하고 `LOCAL_COMPLETE`로 보고합니다. 다음 예약 실행은 시작 단계에서 이 커밋을 감지해 새 작업과 함께 다시 push합니다.
-   - 인증·권한·non-fast-forward: `BLOCKED`로 보고합니다. 강제 push, rebase, reset은 하지 않습니다.
+   - 최대 3회 뒤에도 DNS·5xx·timeout: 커밋과 깨끗한 작업 트리를 보존하고 `LOCAL_COMPLETE`로 보고합니다. 다음 예약 실행은 시작 단계에서 이 커밋을 감지해 새 작업과 함께 다시 push합니다.
+   - 인증·권한·non-fast-forward: 재시도하지 않고 `BLOCKED`로 보고합니다. 강제 push, rebase, reset은 하지 않습니다.
 
 3. GitHub Actions API만 일시적으로 열리지 않지만 push가 성공했다면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 새 원고를 다시 만들지 않습니다.
 

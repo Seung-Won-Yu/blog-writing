@@ -128,7 +128,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("tests.test_sync_tistory_posts", workflow)
         self.assertIn("git add config/tistory_public_posts.json docs/inbox", workflow)
         self.assertIn("git pull --rebase origin main", workflow)
-        self.assertIn("git push origin HEAD:main", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.publishing.repository_sync push "
+            "--remote origin --ref HEAD:main",
+            workflow,
+        )
         self.assertNotIn("generate_daily_draft", workflow)
         self.assertNotIn("generate_editorial_images", workflow)
         self.assertNotIn("GEMINI_API_KEY", workflow)
@@ -147,7 +151,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("tests.test_collect_automation", workflow)
         self.assertIn("git add docs/automation-inbox", workflow)
         self.assertIn("git pull --rebase origin main", workflow)
-        self.assertIn("git push origin HEAD:main", workflow)
+        self.assertIn(
+            "python3 -m blog_pipeline.publishing.repository_sync push "
+            "--remote origin --ref HEAD:main",
+            workflow,
+        )
         self.assertNotIn("generate_daily_draft", workflow)
         self.assertNotIn("generate_editorial_images", workflow)
         self.assertNotIn("export_tistory", workflow)
@@ -177,6 +185,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "blog_pipeline" / "publishing" / "build_integration_page.py",
             ROOT / "blog_pipeline" / "publishing" / "daily_guard.py",
             ROOT / "blog_pipeline" / "publishing" / "publish_bundle.py",
+            ROOT / "blog_pipeline" / "publishing" / "repository_sync.py",
             ROOT / "blog_pipeline" / "publishing" / "saturday_guard.py",
             ROOT / "blog_pipeline" / "publishing" / "generate_editorial_images.py",
             ROOT / "blog_pipeline" / "publishing" / "optimize_images.py",
@@ -355,7 +364,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("REMOTE_PUSHED_VERIFY_PENDING", contract)
         self.assertIn("실제 분기", contract)
         self.assertNotIn("git pull --ff-only origin main", contract)
-        self.assertNotIn("최대 세 번", contract)
+        self.assertIn("최대 3회", contract)
+        self.assertIn("blog_pipeline.publishing.repository_sync push", contract)
 
     def test_all_editorial_contracts_require_varied_cover_art_direction(self):
         for contract_path in (

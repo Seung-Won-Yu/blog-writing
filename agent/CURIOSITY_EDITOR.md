@@ -107,4 +107,4 @@ python3 -m blog_pipeline.publishing.publish_bundle --today --check
 git diff --cached --check
 ```
 
-모든 기준을 통과하고 실제 diff가 있을 때 하나의 로컬 커밋으로 확정한 뒤 `git push origin main`을 한 번만 실행합니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지입니다. 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 당일 카드에 연결돼야 `COMPLETE`입니다. DNS·5xx·timeout이면 커밋을 보존하고 `LOCAL_COMPLETE`, push 뒤 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 티스토리에는 자동 발행하지 않습니다.
+모든 기준을 통과하고 실제 diff가 있을 때 하나의 로컬 커밋으로 확정한 뒤 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`을 한 번만 실행합니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지입니다. 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 당일 카드에 연결돼야 `COMPLETE`입니다. 명령 내부의 일시적 네트워크 최대 3회 재시도 뒤에도 실패하면 커밋을 보존하고 `LOCAL_COMPLETE`, push 뒤 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 티스토리에는 자동 발행하지 않습니다.

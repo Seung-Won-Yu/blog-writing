@@ -221,7 +221,7 @@ git diff --cached --check
 
 데스크톱과 모바일 미리보기에서 실제 캡처 글자, 한국어 도식, 표·코드 가로 스크롤, 광고 위치, 이미지 캡션을 확인합니다. GitHub Pages 루트에서 당일 `개발·AI 인사이트` 카드의 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 연결돼야 합니다. 같은 날 다른 카드의 존재 여부는 완료 조건으로 삼지 않습니다.
 
-실제 분기가 없고 `publish_bundle`이 `READY`이며 staged diff가 있을 때 하나의 로컬 커밋으로 확정합니다. `git push origin main`이 DNS·5xx·timeout으로 실패하면 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 개발·AI 인사이트 카드 연결까지 확인된 경우만 `COMPLETE`입니다. 티스토리에는 자동 발행하지 않습니다.
+실제 분기가 없고 `publish_bundle`이 `READY`이며 staged diff가 있을 때 하나의 로컬 커밋으로 확정합니다. 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`이 일시적 네트워크 최대 3회 재시도 뒤에도 실패하면 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 해당 커밋의 `Publish reviewed drafts` 성공과 공개 루트의 당일 개발·AI 인사이트 카드 연결까지 확인된 경우만 `COMPLETE`입니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 

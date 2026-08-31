@@ -46,4 +46,4 @@ jobs:
           fi
           git commit -m "chore: collect Monday Wednesday candidates"
           git pull --rebase origin main
-          git push origin HEAD:main
+          python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref HEAD:main
