@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "news",
+  "target_day": "2026-09-02",
+  "editorial_lane": "change_explainer",
+  "generated_at": "2026-09-01T23:29:31.825122+00:00",
+  "state": "PARTIAL",
+  "reasons": [
+    "insufficient_selected_candidates"
+  ],
+  "quality": {
+    "ok": false,
+    "reasons": [
+      "insufficient_selected_candidates"
+    ],
+    "successful_sources": 30,
+    "candidate_sources": 26,
+    "candidates": 126,
+    "selected": 2
+  }
+}
