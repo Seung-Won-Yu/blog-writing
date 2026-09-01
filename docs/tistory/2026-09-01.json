@@ -1,0 +1,87 @@
+{
+  "title": "브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?",
+  "title_candidates": [
+    "브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?",
+    "브라우저 캐시 삭제와 HTTP 재검증의 원리",
+    "오래된 웹 파일 층을 들어 올리자 최신 화면이 맞춰지는 브라우저 창: 서버는 이미 고쳐졌는데 내 화면만 깨져 있다면 브라…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-01",
+  "publish_date": "2026-09-01",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-01T09:00:00+09:00",
+  "tags": [
+    "브라우저 캐시",
+    "캐시 삭제",
+    "강력 새로고침",
+    "Cache-Control",
+    "ETag",
+    "웹사이트 오류",
+    "정적 파일 버전"
+  ],
+  "meta_description": "웹사이트가 업데이트됐다는 안내를 받았는데 내 화면만 글자와 버튼이 어긋나 보일 때가 있다. 서버가 아직 고장 났다고 생각하기 쉽지만, 브라우저가 어제 받은 화면 조각을 다시 쓰는 중일 수 있다. 캐시… 브라우저는 저장된 응답의 사용 기한과 검증표를 확인하며, 캐시 삭제는 오래된 로컬…",
+  "key_summary": [
+    "1. 브라우저 캐시 삭제와 HTTP 재검증의 원리",
+    "직접 얻는 결과: 브라우저가 같은 URL의 응답을 저장하고 다시 쓰는 원리, ETag 재검증, 캐시 삭제가 통하는 문제와 통하지 않는 문제를 구분할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-01.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-01.html",
+  "before_ad_html": "docs/tistory/2026-09-01-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-01-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-01-adfit.html",
+  "source_sha256": "e84e5bc445fc6363e7baa5b2567abff0978c0e78f5fb6f80c94fc102aa65fc00",
+  "html_sha256": "8e75e21b1068f925dc858a5c13e2c3a5443f2e9fccf8f172e98b581e6c8c6768",
+  "adfit_sha256": "ffce2f5136962f60d2ac4958f5b5cb6a1a9cb7f48bcd2a76e8f1d878b072c6e4",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-01/브라우저-캐시-삭제-대표.webp",
+      "path": "docs/tistory/assets/2026-09-01/브라우저-캐시-삭제-대표.webp",
+      "original_url": "",
+      "alt": "브라우저 캐시의 이전 파일 층을 걷어 내자 깨진 웹페이지가 최신 화면으로 맞춰지는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-01/브라우저-캐시-재검증-흐름.webp",
+      "path": "docs/tistory/assets/2026-09-01/브라우저-캐시-재검증-흐름.webp",
+      "original_url": "",
+      "alt": "같은 URL의 브라우저 캐시가 사용 기한과 ETag를 확인해 저장본 또는 새 파일을 고르는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-01/브라우저-저장공간-오류-경계.webp",
+      "path": "docs/tistory/assets/2026-09-01/브라우저-저장공간-오류-경계.webp",
+      "original_url": "",
+      "alt": "깨진 화면은 HTTP 캐시, 로그인 반복은 쿠키, 오프라인 앱은 사이트 데이터를 확인하는 비교도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
