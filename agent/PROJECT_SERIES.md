@@ -2,6 +2,12 @@
 
 원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
 사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용한다.
+먼저 `agent/WEEKLY_PIPELINE.md`에서 09:00 제작·사용자 수동 발행 경계와
+토요일 실제 구현 증거 우선 선정 기준을 확인한다.
+이어서 `agent/WEEKLY_READER_PROMISES.md`를 읽고 공통 디자인 골격과 토요일의
+연재 독자 약속을 적용한다. 새 원고의 `editorial.reader_path`는 선택 사항이 아니다.
+이미지를 만들기 전 `agent/WEEKLY_VISUAL_PROMISES.md`를 읽고 토요일의
+`project_evidence_story` 역할을 실제 브리프와 이미지 메타데이터에 적용한다.
 
 이 문서는 2026-08-29부터 매주 토요일 09:00 KST에 실행되는 Codex 주식 앱
 제작기 작업의 유일한 계약이다. 글과 티스토리 도우미까지 만들지만 티스토리에
@@ -35,6 +41,28 @@
 
    `COMPLETE` 또는 `READY`인 묶음은 다시 조사하거나 생성하지 않는다. `PARTIAL`은
    기존 변경을 보존하고 누락 단계만 복구한다.
+
+계획표에 회차가 있다는 이유만으로 자동 채택하지 않는다. 아래 토요일 전용 100점
+표에서 80점 이상이어야 하며 실제 구현 증거, 채택·수정·기각 판정, 공개 안전성은
+각각 1점 이상이 아니면 총점과 관계없이 보류한다.
+
+- 실제 코드·테스트·리플레이·모의투자 증거 30
+- 앞 편 질문을 이어받고 다음 편을 소진하지 않는 연재 흐름 15
+- 채택·수정·기각으로 끝나는 판단 15
+- 독자가 자기 프로젝트에 가져갈 선택 기준·정보 15
+- 문제 장면과 예상 밖 결과가 만드는 이야기·궁금증 10
+- 공식 문서·거래소 자료·원 논문 보강 5
+- 비공개 정보를 제거하고 공개용 근거로 재구성할 수 있는가 10
+
+선택한 회차는 `editorial.selection_evaluation`에 그대로 기록한다.
+`policy: project_story-v1`, `threshold: 80`, `decision: selected`,
+`rejected_reasons: []`를 사용하고 `criteria`에는
+`implementation_evidence`, `episode_continuity`, `decision_verdict`,
+`transferable_value`, `story_hook`, `public_sources`, `public_safety`의 실제 점수를
+쓴다. `total`은 일곱 점수의 합과 같아야 한다. `hard_gates`에는
+`implementation_evidence`, `decision_verdict`, `public_safety`를 모두 `true`로
+기록한다. 세 대응 점수가 하나라도 0이거나 게이트가 열려 있으면 총점과 관계없이
+원고를 만들지 않으며 가드는 `quality_selection_evaluation`으로 차단한다.
 
 ## 비공개 Git을 실제 근거로 사용한다
 
@@ -92,6 +120,16 @@ SMA20·SMA50 구조 → 전략 입력`
 근거는 해당 회차와 직접 관련된 공식 문서·거래소 자료·원 논문을 웹에서 다시
 확인해 3~6개 연결한다.
 
+공개 저장소로 보낼 수 있는 payload는 이 계약의 `data/project_logs`,
+`editorial/edgelab`, `docs/tistory`, `docs/preview`에 만드는 블로그용 요약 원고,
+외부 공개 링크, 비식별 집계값, 새로 그린 설명 도식뿐이다. 비공개 저장소의 원문
+코드·patch·diff·로그·DB 행·설정 파일·환경 변수·URL·브랜치·커밋 해시·절대 경로,
+서버·계정·주문·포지션 식별자와 토큰·키·쿠키는 복사하거나 Pages 산출물과 커밋
+메시지에 넣지 않는다. 숫자는 공개해도 개인 계정이나 주문을 역추적할 수 없는
+집계값만 허용한다. 최종 스테이징 전에 diff와 이미지 메타데이터를 이 금지 목록과
+대조하고 하나라도 남으면 공개용 요약을 다시 쓰거나 `NO_PUBLISH_EVIDENCE`로
+보류한다.
+
 - 논문이 설명한 질문과 edgelab에서 선택한 파라미터를 구분한다.
 - 외부 연구의 수치를 앱에서 직접 측정한 결과처럼 쓰지 않는다.
 - 현재 구현 숫자는 코드·설정·테스트에서 확인된 값만 쓴다.
@@ -135,11 +173,22 @@ SMA20·SMA50 구조 → 전략 입력`
 - 생성 후 `general_reader_understanding`과 `public_readability`를 계산해 둘 다
   8.5 이상인지 확인한다. 부족하면 `quality_reader_access`를 결과로 끝내지 말고
   해당 원인을 고친 뒤 다시 내보낸다.
+- `editorial.reader_path`에는 `reader_level: mixed`, 실제 첫 소제목과 같은
+  `entry_heading`, 이번 편의 갈등에 먼저 답하는 `immediate_answer`, 본문 안의
+  실제 판단 목록과 연결되는 `action_steps` 2~5개, 채택·수정·기각 결론을 확인하는
+  `completion_check`를 기록한다. 개발 과정은 이야기로 이어가되 독자가 자기
+  프로젝트에 가져갈 선택 기준을 목록으로 한 번은 분명하게 보여 준다.
 
 ## 이미지와 개인정보
 
 대표 이미지 1장과 본문 이미지 2~4장을 기본으로 하되 장수를 채우지 않는다.
 
+- 2026-09-02 이후 `visual.weekday_profile: project_evidence_story`, 대표
+  `weekday_role: episode_conflict`, 본문 필수 `teaching_role:
+  implementation_evidence`, `decision_result`를 사용한다. 프로필과 대표 역할은
+  `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응
+  `images.visual_N`에 똑같이 기록하고 허용 `logic_type`은 공통 이미지 약속을
+  따른다.
 - 대표는 회차 고유의 갈등이나 판단 장면을 보여 주고 가짜 투자 화면·상승 차트·
   현금·수익 약속을 넣지 않는다.
 - 본문은 실제 코드 흐름을 재구성한 한국어 도식, 개인정보를 가린 실제 화면,

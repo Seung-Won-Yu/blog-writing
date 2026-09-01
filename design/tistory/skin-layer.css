@@ -1064,6 +1064,51 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   text-align: left !important;
 }
 
+/* Tuesday IT comics: dialogue stays selectable and readable outside the image. */
+.daily-digest-post .digest-content-figure.digest-toon-panel {
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+}
+
+.daily-digest-post .digest-toon-dialogue {
+  display: grid !important;
+  margin: 14px 0 0 !important;
+  padding: 0 !important;
+  gap: 8px !important;
+  list-style: none !important;
+}
+
+.daily-digest-post .digest-toon-bubble {
+  display: grid !important;
+  margin: 0 !important;
+  padding: 12px 14px !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items: start !important;
+  gap: 10px !important;
+  border-left: 3px solid var(--sw-accent) !important;
+  background: var(--sw-surface-subtle) !important;
+}
+
+.daily-digest-post .digest-toon-speaker {
+  display: inline-flex !important;
+  min-height: 26px !important;
+  padding: 2px 8px !important;
+  align-items: center !important;
+  border: 1px solid var(--sw-accent-line) !important;
+  border-radius: 999px !important;
+  color: var(--sw-accent) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1.5 !important;
+}
+
+.daily-digest-post .digest-toon-bubble p {
+  margin: 0 !important;
+  color: var(--sw-text) !important;
+  font-size: 16px !important;
+  line-height: 1.72 !important;
+}
+
 .daily-digest-post .digest-table-wrap {
   width: 100% !important;
   max-width: 100% !important;
@@ -2083,6 +2128,21 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
   .daily-digest-post .digest-full-content p {
     font-size: 16.5px !important;
     line-height: 1.88 !important;
+  }
+
+  .daily-digest-post .digest-toon-bubble {
+    padding: 12px !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .daily-digest-post .digest-toon-speaker {
+    width: max-content !important;
+  }
+
+  .daily-digest-post .digest-toon-bubble p {
+    font-size: 16.5px !important;
+    line-height: 1.78 !important;
   }
 
   .daily-digest-post .digest-reading-item a {

@@ -2,6 +2,15 @@
 
 원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
 사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용합니다.
+먼저 `agent/WEEKLY_PIPELINE.md`에서 09:00 제작·사용자 수동 발행 경계와
+화·목 직접 리서치 선정 기준을 확인합니다.
+이어서 `agent/WEEKLY_READER_PROMISES.md`를 읽고 공통 디자인 골격과 화·목의
+일반 독자 약속을 적용합니다. 새 원고의 `editorial.reader_path`는 선택 사항이 아닙니다.
+이미지를 만들기 전 `agent/WEEKLY_VISUAL_PROMISES.md`를 읽고 화요일의
+`everyday_mechanism` 또는 목요일의 `myth_evidence` 역할을 실제 브리프에 적용합니다.
+2026-09-08 이후 화요일에는
+`editorial/curiosity/characters/HARU_CHARACTER_BIBLE.md`도 읽고 고정 남성 캐릭터
+`하루`의 얼굴·복장·소품을 기준 시트와 동일하게 유지합니다.
 
 이 문서는 매주 화·목 09:00 KST에 실행되는 Codex 지식글 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 일상에서 자주 마주치지만 원리는 잘 알려지지 않은 IT 질문을 쉽고 정확하게 풀어 `궁금한 IT 원리` 카테고리에 한 편만 준비합니다. 티스토리 붙여넣기와 발행은 사용자가 직접 하며, 기준을 채울 주제가 없으면 횟수를 맞추려고 만들지 않습니다.
 
@@ -26,14 +35,28 @@
 
 1. `editorial/curiosity/IDEA_BANK.md`, 최근 365일의 제목·`primary_query`·`topic_key`, `config/tistory_public_posts.json`, 30일 이내의 `config/search_opportunities.json`을 읽습니다. 아이디어 뱅크는 후보이지 발행 약속이 아니며, 이미 답한 질문·검색 의도가 겹치는 질문·근거가 빈약한 질문은 건너뜁니다.
 
-2. 후보는 아래 100점 기준에서 75점 이상이어야 합니다.
+2. 후보는 공통 60점과 당일 역할 40점을 합친 100점 기준에서 75점 이상이어야
+   합니다. 공통 점수만 높은 질문이 다른 요일 역할로 섞이지 않게 당일 역할의
+   세 항목 중 하나라도 0점이면 총점과 관계없이 제외합니다.
 
-   - 12개월 뒤에도 검색할 질문인가 25
-   - 비개발자도 겪는 구체적인 장면이 있는가 20
-   - 원리를 한 문장과 그림으로 설명할 수 있는가 20
+   공통 60점:
+
+   - 12개월 뒤에도 검색할 질문인가 20
    - 공식 문서·표준·원 논문으로 핵심을 검증할 수 있는가 20
-   - 기존 글과 연결되는 다음 읽을거리가 있는가 10
-   - 제목만 흥미롭고 내용은 얕은 목록이 아닌가 5
+   - 한 문장과 쉬운 그림으로 핵심을 먼저 설명할 수 있는가 10
+   - 기존 글과 연결되고 제목보다 깊은 다음 읽을거리가 있는가 10
+
+   화요일 `curiosity_mechanism` 전용 40점:
+
+   - 비개발자도 실제로 겪는 구체적인 장면인가 15
+   - 입력→처리→결과의 작동 원리에 의외성이 있는가 15
+   - 독자가 해볼 안전한 1분 확인을 만들 수 있는가 10
+
+   목요일 `curiosity_myth_history` 전용 40점:
+
+   - 널리 믿는 설명과 실제 사실 사이의 경계가 분명한가 15
+   - 당시 문서·표준·실험으로 오해 또는 역사적 선택을 검증할 수 있는가 15
+   - 독자가 직접 확인하거나 앞으로 판단할 기준을 만들 수 있는가 10
 
 3. 최근 60일에 같은 대표 URL이 있거나 최근 365일에 사실상 같은 `primary_query`, `topic_key`, 제목 질문이 있으면 제외합니다. 단어만 바꾼 `왜`, `이유`, `원리`, `TOP` 제목을 새 주제로 보지 않습니다. 검색 수요 신호가 있더라도 독자의 질문과 정확히 맞지 않으면 사용하지 않습니다.
 
@@ -43,16 +66,35 @@
 
 6. 핵심 사실마다 공개 웹에서 직접 확인 가능한 자료를 둡니다. 참고 자료 3~6개에 공식 문서·표준·기관 자료 1개 이상과 독립 설명·원 논문·교육 자료 1개 이상을 포함합니다. 역사적 주장에는 당시 문서나 신뢰할 수 있는 기록을 우선하고, 수치에는 조건·단위·범위를 함께 씁니다. 첫 후보군과 확장 리서치를 모두 마친 뒤에도 확인 가능한 질문이 없을 때만 `NO_PUBLISH_EVIDENCE`, 품질이 부족할 때만 `NO_PUBLISH_QUALITY`로 종료하며 원고·이미지·커밋·푸시를 만들지 않습니다.
 
+7. 선택한 후보는 `editorial.selection_evaluation`에 기계 판독 가능한 점수로
+   남깁니다. 공통 키는 `policy`, `criteria`, `total`, `threshold`, `hard_gates`,
+   `decision`, `rejected_reasons`이며 `decision: selected`일 때 탈락 사유는 빈
+   배열이어야 합니다. `criteria` 값은 실제 부여 점수이고 위 배점을 넘길 수
+   없으며 `total`은 합계와 같아야 합니다.
+
+   - 화요일 `policy: curiosity_mechanism-v1`, `threshold: 75`, 기준 키는
+     `evergreen_question`, `verifiable_sources`, `simple_explanation`,
+     `cluster_depth`, `everyday_scene`, `surprising_mechanism`,
+     `one_minute_check`입니다. 하드 게이트는 `role_specific_nonzero`,
+     `evidence_ready`, `duplicate_free` 세 값을 모두 `true`로 기록합니다.
+   - 목요일 `policy: curiosity_myth_history-v1`, `threshold: 75`, 마지막 세
+     기준 키만 `belief_fact_boundary`, `historical_evidence`, `direct_check`로
+     바꿉니다. 하드 게이트 이름은 화요일과 같습니다.
+   - 요일 전용 세 기준 중 하나라도 0점이거나 하드 게이트가 열려 있으면 원고를
+     만들지 않습니다. 가드는 기록 누락·초과 점수·합계 불일치도
+     `quality_selection_evaluation`으로 차단합니다.
+
 ## 글 구성
 
 - 제목은 독자가 검색할 핵심 검색어를 앞 20자 안에 한 번만 넣고, `왜`, `어떻게`, `정말`, `어디까지` 가운데 실제 질문에 맞는 표현으로 25~60자 안에서 완결합니다. `충격`, `소름`, `역대급`, `안 보면 손해` 같은 클릭베이트는 쓰지 않습니다.
 - 첫 5문장에는 독자가 본 장면, 잘못 알았을 때 생기는 오해, 끝까지 읽으면 얻는 답, 아직 남은 질문을 자연스럽게 둡니다. `editorial.reader_hook`의 `scene`, `stakes`, `payoff`, `open_question`을 각각 20~180자로 기록하고 최소 두 값의 핵심 단어가 도입에 나타나야 합니다.
-- 6~12분 분량, 소제목 4~7개, 대표 이미지 1장, 본문 설명 이미지 2~4장을 기본으로 합니다. 분량을 늘리기 위한 백과사전식 배경은 넣지 않습니다.
-- 흐름은 `호기심이 생기는 장면 → 짧은 답 → 작동 원리 → 눈에 보이는 예시 → 흔한 오해·실패 경계 → 생활이나 개발에서 쓸 기준`입니다. 질문과 답 사이에 불필요한 목차·인사말·반복 요약을 넣지 않습니다.
+- 5~10분 분량, 소제목 4~6개, 대표 이미지 1장, 본문 설명 이미지 2~4장을 기본으로 합니다. 분량을 늘리기 위한 백과사전식 배경은 넣지 않습니다.
+- 흐름은 `호기심이 생기는 장면 → 먼저 답 → 1분 확인 → 쉬운 원리 → 흔한 오해·실패 경계 → 선택형 심화`입니다. 비개발자가 심화를 건너뛰어도 제목의 답과 직접 확인할 방법을 모두 얻어야 합니다. 질문과 답 사이에 불필요한 목차·인사말·반복 요약을 넣지 않습니다.
+- `editorial.reader_path`에는 `reader_level: general`, 실제 첫 소제목과 같은 `entry_heading`, 쉬운 즉답 `immediate_answer`, 본문 앞 35%의 실제 목록과 연결되는 `action_steps` 2~5개, 마지막 확인 문장과 연결되는 `completion_check`, 심화 소제목과 같은 `advanced_heading`을 기록합니다. 심화 소제목 전에는 핵심 검색어를 제외한 새 약어·프로토콜·상태 코드를 네 개 넘게 꺼내지 않습니다.
 - `editorial.coverage`는 `question`, `mechanism`, `example`, `misconception`, `evidence`, `takeaway`를 모두 포함합니다. 화요일은 `editorial.weekly_lane: curiosity_mechanism`, 목요일은 `editorial.weekly_lane: curiosity_myth_history`입니다. `article_shape`은 `research_interpretation`, `decision_guide`, `incident_trace`, `troubleshooting` 중 실제 질문에 맞는 것을 고릅니다.
 - 표는 비교나 손상 범위처럼 관계를 더 빨리 이해시킬 때만 사용합니다. TOP 형식은 숫자를 붙이기 전에 선정 기준을 밝히고, 실제 순위 근거가 없으면 `다섯 가지 사례`처럼 씁니다.
 - 모바일 문단은 220자, 도입은 320자를 넘기지 않습니다. 모든 소제목에 같은 말투나 번호를 반복하지 않고 `개요`, `현황`, `분석`, `결론`, `시사점` 같은 보고서 소제목을 쓰지 않습니다.
-- 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_access`가 나오면 발행 보류로 끝내지 말고 도입·긴 문단·연속 블록·넓은 표를 쉬운 흐름으로 다시 편집한 뒤 재검사합니다.
+- 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_path` 또는 `quality_reader_access`가 나오면 발행 보류로 끝내지 말고 즉답·초반 확인 목록·용어 순서·긴 문단·연속 블록·넓은 표를 쉬운 흐름으로 다시 편집한 뒤 재검사합니다.
 - `이번 글에서는`, `살펴보겠습니다`, `알아보겠습니다`, `정리해보겠습니다`, `결론적으로`, `도움이 되길 바랍니다` 같은 상투 문구를 쓰지 않습니다. 친구에게 흥미로운 원리를 설명하듯 자연스럽게 쓰되 확인한 사실과 작성자의 추론을 구분합니다.
 - 태그 5~8개는 대상 기술·작동 원리·독자의 질문·사용 장면을 섞고 `AI`, `IT`, `정보`, `잡학`처럼 넓은 단어로 채우지 않습니다.
 
@@ -65,6 +107,8 @@
 
 ## 이미지와 HTML
 
+- 2026-09-02 이후 화요일은 `visual.weekday_profile: everyday_mechanism`, 대표 `weekday_role: surprising_everyday_result`, 본문 필수 `teaching_role: mechanism_cutaway`, `one_minute_check`를 사용합니다. 목요일은 `visual.weekday_profile: myth_evidence`, 대표 `weekday_role: belief_result_conflict`, 본문 필수 `teaching_role: myth_fact_boundary`, `history_or_direct_check`를 사용합니다. 프로필과 대표 역할은 `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응 `images.visual_N`에 똑같이 기록하고 허용 `logic_type`은 공통 이미지 약속을 따릅니다.
+- 2026-09-08 이후 화요일은 `하루의 IT 원리툰` 네 컷으로 고정합니다. `일상 질문 → 숨은 원리 → 1분 확인 → 예외 경계`를 각각 한 컷에 하나씩 맡기고, 모든 컷은 실제 `imagegen`에서 기준 시트를 참조합니다. 그림 안에는 글자나 말풍선을 만들지 않고 짧은 대사는 본문 `visual` 블록에 기록해 HTML 말풍선으로 출력합니다. 제목에는 `[AI툰]` 같은 접두어를 붙이지 않고 독자가 검색할 질문을 그대로 앞세웁니다.
 - 대표는 문제·결과가 한 장면에 보이는 `cover_kind: editorial_scene`으로 만듭니다. `art_direction`, `composition_type`, `palette_family`, `render_family`, `editorial_treatment`, `focal_subject`, `texture_cue`, `authenticity_cue`를 주제에 맞게 기록합니다. 생성 프롬프트에는 `Asset intent: editorial-scene`을 넣습니다.
 - 최근 7개 대표 이미지와 구도를 비교합니다. `three_column_cards`, `four_step_cards`, `linear_flow`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`, `title_slide`를 대표 이미지 구성으로 반복하지 않습니다. 대표 이미지에는 단계 화살표나 작은 설명 카드를 빽빽하게 넣지 않습니다.
 - 대표 이미지의 한국어 라벨은 1~3개로 제한합니다. 화면의 45~70%는 핵심 사물·장면이 차지해야 하며 `노트북 앞 사람` 같은 포괄적인 AI 장면을 피합니다. `images.cover.alt`는 핵심 검색어와 실제 장면을 포함한 15~160자로 씁니다.

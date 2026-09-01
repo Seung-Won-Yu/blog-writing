@@ -388,6 +388,32 @@ class SaturdayAutomationExportTests(unittest.TestCase):
             rendered.index("큐가 멈췄는데 러너는 온라인으로 보이는 이유"),
         )
 
+    def test_curiosity_post_uses_an_explainer_entry_instead_of_news_labels(self):
+        source = json.loads(
+            (
+                Path(__file__).resolve().parents[1]
+                / "data/days/2026-09-01.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        rendered = render_post("2026-09-01", source)
+
+        self.assertIn("원리를 쉽게 풀어보면", rendered)
+        self.assertIn(
+            '<h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>',
+            rendered,
+        )
+        self.assertNotIn(
+            '<p class="digest-source">원리를 쉽게 풀어보면</p>',
+            rendered,
+        )
+        self.assertNotIn("오늘의 핵심뉴스", rendered)
+        self.assertNotIn("심층 분석", rendered)
+        self.assertNotIn("2022. 6. 6", rendered)
+        self.assertNotIn("digest-kicker", rendered)
+        self.assertNotIn("브라우저 캐시 삭제와 HTTP 재검증의 원리", rendered)
+        self.assertNotIn("\n    \n", rendered)
+
     def test_published_project_revision_is_copy_ready_and_keeps_original_url(self):
         source = json.loads(
             (
@@ -642,6 +668,50 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("글 순서", html)
         self.assertNotIn("오늘의 정처기 문제", html)
         self.assertNotIn("오늘의 IT · 개발 · 기획 용어", html)
+
+    def test_tuesday_toon_dialogue_renders_as_safe_accessible_html(self):
+        day = copy.deepcopy(LEAD_DAY)
+        block = next(
+            item
+            for item in day["news"][0]["content"]
+            if item.get("image") == "visual_1"
+        )
+        block.update(
+            {
+                "toon_panel": 1,
+                "dialogue": [
+                    {
+                        "speaker": "하루",
+                        "text": "왜 아직 읽히지? <script>alert(1)</script>",
+                    }
+                ],
+            }
+        )
+
+        html = render_post("2026-07-17", day)
+
+        self.assertIn(
+            'class="digest-content-figure digest-toon-panel" data-toon-panel="1"',
+            html,
+        )
+        self.assertIn(
+            'class="digest-toon-dialogue" aria-label="하루의 대화"', html
+        )
+        self.assertIn('class="digest-toon-speaker">하루</span>', html)
+        self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", html)
+        self.assertNotIn("<script>alert(1)</script>", html)
+        image_at = html.index('class="digest-content-image"')
+        dialogue_at = html.index('class="digest-toon-dialogue"')
+        caption_at = html.index("요청에서 검증까지의 에이전트 작업 흐름")
+        self.assertLess(image_at, dialogue_at)
+        self.assertLess(dialogue_at, caption_at)
+
+    def test_non_toon_visual_html_is_unchanged(self):
+        html = render_post("2026-07-17", LEAD_DAY)
+
+        self.assertIn('<figure class="digest-content-figure">', html)
+        self.assertNotIn("digest-toon-panel", html)
+        self.assertNotIn("digest-toon-dialogue", html)
 
     def test_long_optional_code_can_render_collapsed(self):
         day = copy.deepcopy(LEAD_DAY)

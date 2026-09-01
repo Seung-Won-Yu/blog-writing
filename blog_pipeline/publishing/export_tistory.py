@@ -64,6 +64,7 @@ TISTORY_ADFIT_MARKER = (
     'data-ad-id-mobile="713980"></figure>'
 )
 AD_BREAK_MARKER = '<div class="digest-ad-break" data-digest-ad-break="true"></div>'
+CURIOSITY_RENDER_LANES = {"curiosity_mechanism", "curiosity_myth_history"}
 
 
 def esc(value):
@@ -226,7 +227,12 @@ def render_content_blocks(blocks, images=None):
             continue
         if block_type == "visual":
             asset = images.get(plain(block.get("image")))
-            visual = build_content_visual(asset, block.get("caption"))
+            visual = build_content_visual(
+                asset,
+                block.get("caption"),
+                dialogue=block.get("dialogue"),
+                toon_panel=block.get("toon_panel"),
+            )
             if visual:
                 rows.append(visual)
             continue
@@ -553,7 +559,7 @@ def build_editorial_image(asset, kind):
     )
 
 
-def build_content_visual(asset, caption=""):
+def build_content_visual(asset, caption="", dialogue=None, toon_panel=None):
     if not isinstance(asset, dict) or not plain(asset.get("url")):
         return ""
     width = int(asset.get("width") or 1200)
@@ -562,11 +568,38 @@ def build_content_visual(asset, caption=""):
     caption_html = (
         f'<figcaption>{inline_markup(caption_text)}</figcaption>' if caption_text else ""
     )
+    dialogue_rows = []
+    if isinstance(dialogue, list):
+        for line in dialogue:
+            if not isinstance(line, dict):
+                continue
+            speaker = plain(line.get("speaker"))
+            text = plain(line.get("text"))
+            if not speaker or not text:
+                continue
+            dialogue_rows.append(
+                '<li class="digest-toon-bubble">'
+                f'<span class="digest-toon-speaker">{esc(speaker)}</span>'
+                f'<p>{inline_markup(text)}</p></li>'
+            )
+    is_toon = bool(dialogue_rows)
+    dialogue_html = (
+        '<ul class="digest-toon-dialogue" aria-label="하루의 대화">'
+        f'{"".join(dialogue_rows)}</ul>'
+        if is_toon
+        else ""
+    )
+    figure_class = "digest-content-figure"
+    panel_attr = ""
+    if is_toon:
+        figure_class += " digest-toon-panel"
+        if isinstance(toon_panel, int) and not isinstance(toon_panel, bool):
+            panel_attr = f' data-toon-panel="{toon_panel}"'
     return (
-        '<figure class="digest-content-figure">'
+        f'<figure class="{figure_class}"{panel_attr}>'
         f'<img class="digest-content-image" src="{esc(asset.get("url"))}" '
         f'alt="{esc(asset.get("alt"))}" width="{width}" height="{height}" loading="lazy">'
-        f"{caption_html}</figure>"
+        f"{dialogue_html}{caption_html}</figure>"
     )
 
 
@@ -697,7 +730,14 @@ def build_project_log_section(item, images):
 {continuation}""".strip()
 
 
-def build_lead_news_section(item, images, analysis_label="심층 분석"):
+def build_lead_news_section(
+    item,
+    images,
+    analysis_label="심층 분석",
+    *,
+    show_source_meta=True,
+    show_item_title=True,
+):
     if not isinstance(item, dict):
         return '<p class="digest-empty">오늘 수집된 뉴스가 없습니다.</p>'
     content = item.get("content") if isinstance(item.get("content"), list) else []
@@ -716,9 +756,18 @@ def build_lead_news_section(item, images, analysis_label="심층 분석"):
         after_blocks = []
         break_html = ""
 
-    source = plain(item.get("source"))
-    published = source_date_label(item.get("published_at"))
+    source = plain(item.get("source")) if show_source_meta else ""
+    published = source_date_label(item.get("published_at")) if show_source_meta else ""
     source_meta = " · ".join(value for value in (source, published) if value)
+    source_line = " · ".join(
+        value for value in (plain(analysis_label), source_meta) if value
+    )
+    source_html = (
+        f'<p class="digest-source">{esc(source_line)}</p>' if source_line else ""
+    )
+    item_title_html = (
+        f"<h3>{esc(item.get('title_kr'))}</h3>" if show_item_title else ""
+    )
     blurb = plain(item.get("blurb_kr"))
     summary_html = f'<p class="digest-blurb">{inline_markup(blurb)}</p>' if blurb else ""
     before_content = render_content_blocks(before_blocks, images)
@@ -730,13 +779,14 @@ def build_lead_news_section(item, images, analysis_label="심층 분석"):
             '<section class="digest-lead-continuation">'
             f'<div class="digest-news-copy">{after_content}{references}</div></section>'
         )
+    lead_parts = [
+        part for part in (source_html, item_title_html, summary_html, before_content) if part
+    ]
+    lead_copy = "\n    ".join(lead_parts)
     return f"""
 <section id="digest-news-1" class="digest-news-card digest-lead-story">
   <div class="digest-news-copy">
-    <p class="digest-source">{esc(analysis_label)}{' · ' + esc(source_meta) if source_meta else ''}</p>
-    <h3>{esc(item.get('title_kr'))}</h3>
-    {summary_html}
-    {before_content}
+    {lead_copy}
   </div>
 </section>
 {break_html}
@@ -883,6 +933,8 @@ def render_post(draft_id, day):
     if is_lead_story(day):
         lead_story = news[0] if news else {}
         content_type = plain(day.get("content_type"))
+        weekly_lane = editorial_lane_for_identity(identity)
+        lead_options = {}
         if content_type == "automation_case":
             section_heading = identity.content_label
             analysis_label = (
@@ -896,6 +948,13 @@ def render_post(draft_id, day):
         elif content_type == "project_log":
             section_heading = ""
             analysis_label = "개발 기록"
+        elif weekly_lane in CURIOSITY_RENDER_LANES:
+            section_heading = "원리를 쉽게 풀어보면"
+            analysis_label = ""
+            lead_options = {
+                "show_source_meta": False,
+                "show_item_title": False,
+            }
         else:
             current_label = identity.content_label in {
                 "IT 트렌드 해설",
@@ -909,6 +968,7 @@ def render_post(draft_id, day):
         kicker_html = (
             ""
             if identity.content_label in {"IT 트렌드 해설", "개발 가이드"}
+            or weekly_lane in CURIOSITY_RENDER_LANES
             or content_type == "project_log"
             else f'    <p class="digest-kicker">{esc(date_text)} · 약 {estimate_read_minutes(day)}분</p>\n'
         )
@@ -926,7 +986,7 @@ def render_post(draft_id, day):
         else:
             lead_html = (
                 f"{section_heading_html}  "
-                f"{build_lead_news_section(lead_story, images, analysis_label)}"
+                f"{build_lead_news_section(lead_story, images, analysis_label, **lead_options)}"
             )
             detail_html = (
                 f"  {reader_aid_html}\n\n{lead_html}"

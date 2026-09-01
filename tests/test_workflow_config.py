@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 from pathlib import Path
 
@@ -14,6 +15,13 @@ GUIDE_CONTRACT = ROOT / "agent" / "DEVELOPMENT_GUIDE.md"
 CURIOSITY_CONTRACT = ROOT / "agent" / "CURIOSITY_EDITOR.md"
 PROJECT_CONTRACT = ROOT / "agent" / "PROJECT_SERIES.md"
 READER_QUALITY_CONTRACT = ROOT / "agent" / "READER_QUALITY_LOOP.md"
+WEEKLY_READER_CONTRACT = ROOT / "agent" / "WEEKLY_READER_PROMISES.md"
+WEEKLY_VISUAL_CONTRACT = ROOT / "agent" / "WEEKLY_VISUAL_PROMISES.md"
+WEEKLY_PIPELINE_CONTRACT = ROOT / "agent" / "WEEKLY_PIPELINE.md"
+HARU_BIBLE = ROOT / "editorial" / "curiosity" / "characters" / "HARU_CHARACTER_BIBLE.md"
+HARU_SHEET = ROOT / "editorial" / "curiosity" / "characters" / "haru-character-sheet-v1.png"
+PUBLISH_BUNDLE = ROOT / "blog_pipeline" / "publishing" / "publish_bundle.py"
+HARU_SHA256 = "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da"
 
 
 class WorkflowConfigTests(unittest.TestCase):
@@ -131,7 +139,8 @@ class WorkflowConfigTests(unittest.TestCase):
         workflow = COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("name: Collect Monday Wednesday news candidates", workflow)
-        self.assertIn("cron: '17 22 * * 0,2'", workflow)
+        self.assertIn("cron: '30 21 * * 0,2'", workflow)
+        self.assertIn("150-minute buffer", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_news", workflow
@@ -157,7 +166,8 @@ class WorkflowConfigTests(unittest.TestCase):
         workflow = AUTOMATION_COLLECT_WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("name: Collect Friday developer insight candidates", workflow)
-        self.assertIn("cron: '17 22 * * 4'", workflow)
+        self.assertIn("cron: '30 21 * * 4'", workflow)
+        self.assertIn("150-minute buffer", workflow)
         self.assertIn("contents: write", workflow)
         self.assertIn(
             "python3 -m blog_pipeline.collection.collect_automation",
@@ -195,6 +205,62 @@ class WorkflowConfigTests(unittest.TestCase):
                 self.assertIn("GITHUB_STEP_SUMMARY", workflow)
                 self.assertIn("Fail when collection handoff is not ready", workflow)
 
+    def test_weekly_pipeline_contract_fixes_schedule_inputs_and_manual_handoff(self):
+        pipeline = WEEKLY_PIPELINE_CONTRACT.read_text(encoding="utf-8")
+
+        for contract_path in (
+            EDITOR_CONTRACT,
+            CURIOSITY_CONTRACT,
+            SATURDAY_CONTRACT,
+            PROJECT_CONTRACT,
+        ):
+            with self.subTest(contract=contract_path.name):
+                self.assertIn(
+                    "WEEKLY_PIPELINE.md",
+                    contract_path.read_text(encoding="utf-8"),
+                )
+        self.assertIn("06:30 KST", pipeline)
+        self.assertIn("150분", pipeline)
+        self.assertIn("09:00 KST", pipeline)
+        self.assertIn("10:00 KST 전후", pipeline)
+        self.assertIn("자동 발행하지 않는다", pipeline)
+        self.assertIn("editorial.selection_evaluation", pipeline)
+        for role in (
+            "evergreen_problem",
+            "curiosity_mechanism",
+            "change_explainer",
+            "curiosity_myth_history",
+            "developer_insight",
+            "project_series",
+        ):
+            self.assertIn(role, pipeline)
+
+    def test_legacy_wednesday_guide_is_explicitly_inactive(self):
+        legacy = GUIDE_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("비활성 레거시 계약", legacy)
+        self.assertIn("PAUSED", legacy)
+        self.assertIn("실행 금지", legacy)
+
+    def test_project_series_limits_private_evidence_to_public_safe_summaries(self):
+        contract = PROJECT_CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("공개 저장소로 보낼 수 있는 payload", contract)
+        self.assertIn("비식별 집계값", contract)
+        self.assertIn("비공개 저장소의 원문", contract)
+        self.assertIn("코드·patch·diff·로그·DB 행", contract)
+        self.assertIn("토큰·키·쿠키", contract)
+        self.assertIn("이미지 메타데이터", contract)
+        self.assertIn("토요일 전용 100점", contract)
+        self.assertIn("80점 이상", contract)
+        self.assertIn("실제 코드·테스트·리플레이·모의투자 증거 30", contract)
+        self.assertIn("policy: project_story-v1", contract)
+        self.assertIn("quality_selection_evaluation", contract)
+        publish_bundle = PUBLISH_BUNDLE.read_text(encoding="utf-8")
+        self.assertIn("project_public_safety_reasons", publish_bundle)
+        self.assertIn("private_evidence_leak", publish_bundle)
+        self.assertIn("read_bytes", publish_bundle)
+
     def test_pages_deploy_has_a_bounded_runtime(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 
@@ -209,6 +275,7 @@ class WorkflowConfigTests(unittest.TestCase):
             ROOT / "agent" / "SATURDAY_AUTOMATION.md",
             ROOT / "agent" / "DEVELOPMENT_GUIDE.md",
             ROOT / "agent" / "CURIOSITY_EDITOR.md",
+            ROOT / "agent" / "WEEKLY_PIPELINE.md",
             ROOT / "agent" / "REPOSITORY_SYNC.md",
             ROOT / "config" / "tistory_public_posts.json",
             ROOT / "config" / "search_opportunities.json",
@@ -372,6 +439,11 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("`curiosity_mechanism`", contract)
         self.assertIn("`curiosity_myth_history`", contract)
         self.assertIn("12개월 뒤에도 검색할 질문", contract)
+        self.assertIn("공통 60점", contract)
+        self.assertIn("화요일 `curiosity_mechanism` 전용 40점", contract)
+        self.assertIn("목요일 `curiosity_myth_history` 전용 40점", contract)
+        self.assertIn("안전한 1분 확인", contract)
+        self.assertIn("믿는 설명과 실제 사실", contract)
         self.assertIn("최근 365일", contract)
         self.assertIn("공식 문서·표준·원 논문", contract)
         self.assertIn("오래된 표준과 원 논문", contract)
@@ -417,6 +489,87 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("사용자에게 넘기지 않는다", recovery)
         self.assertIn("두 점수가 모두", recovery)
         self.assertIn("다음 후보로 원고를 새로", recovery)
+
+    def test_all_active_editors_share_design_but_keep_distinct_reader_promises(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            CURIOSITY_CONTRACT,
+            SATURDAY_CONTRACT,
+            PROJECT_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("WEEKLY_READER_PROMISES.md", contract)
+                self.assertIn("editorial.reader_path", contract)
+
+        promises = WEEKLY_READER_CONTRACT.read_text(encoding="utf-8")
+        for weekday in ("월요일", "화요일", "수요일", "목요일", "금요일", "토요일"):
+            self.assertIn(weekday, promises)
+        self.assertIn("공통 디자인", promises)
+        self.assertIn("reader_level", promises)
+        self.assertIn("entry_heading", promises)
+        self.assertIn("immediate_answer", promises)
+        self.assertIn("action_steps", promises)
+        self.assertIn("completion_check", promises)
+        self.assertIn("advanced_heading", promises)
+
+    def test_all_active_editors_share_image_quality_but_keep_weekday_visual_roles(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            CURIOSITY_CONTRACT,
+            SATURDAY_CONTRACT,
+            PROJECT_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("WEEKLY_VISUAL_PROMISES.md", contract)
+
+        promises = WEEKLY_VISUAL_CONTRACT.read_text(encoding="utf-8")
+        for weekday in ("월요일", "화요일", "수요일", "목요일", "금요일", "토요일"):
+            self.assertIn(weekday, promises)
+        for field in (
+            "visual.weekday_profile",
+            "visual.subject_terms",
+            "weekday_role",
+            "teaching_role",
+            "visual_claim",
+            "teaching_claim",
+            "render_family",
+        ):
+            self.assertIn(field, promises)
+
+    def test_tuesday_toon_uses_the_locked_male_haru_reference(self):
+        curiosity = CURIOSITY_CONTRACT.read_text(encoding="utf-8")
+        promises = WEEKLY_VISUAL_CONTRACT.read_text(encoding="utf-8")
+        bible = HARU_BIBLE.read_text(encoding="utf-8")
+
+        self.assertTrue(HARU_SHEET.exists())
+        self.assertEqual(
+            hashlib.sha256(HARU_SHEET.read_bytes()).hexdigest(),
+            HARU_SHA256,
+        )
+        self.assertIn("HARU_CHARACTER_BIBLE.md", curiosity)
+        self.assertIn("고정 남성 캐릭터", curiosity)
+        self.assertIn("하루의 IT 원리툰", promises)
+        self.assertIn("20대 후반 한국인 남성", bible)
+        self.assertIn(HARU_SHA256, bible)
+        self.assertIn("no speech bubbles", bible)
+
+    def test_toon_styles_are_scoped_and_preview_mirrors_the_skin_source(self):
+        skin_css = (ROOT / "design" / "tistory" / "style.css").read_text(
+            encoding="utf-8"
+        )
+        preview_css = (
+            ROOT / "docs" / "preview" / "tistory-style.css"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(skin_css, preview_css)
+        self.assertIn(
+            ".daily-digest-post .digest-content-figure.digest-toon-panel",
+            skin_css,
+        )
+        self.assertIn(".daily-digest-post .digest-toon-dialogue", skin_css)
+        self.assertIn(".daily-digest-post .digest-toon-bubble p", skin_css)
 
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")

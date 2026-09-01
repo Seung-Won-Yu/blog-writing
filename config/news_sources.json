@@ -183,6 +183,31 @@
     "fallback_min_evergreen_fit": 2,
     "min_durable_problem_score": 3,
     "fallback_min_durable_problem_score": 1,
+    "min_freshness": 0,
+    "fallback_min_freshness": 0,
+    "require_change_signal": false,
+    "by_editorial_lane": {
+      "evergreen_problem": {
+        "policy_label": "월요일 반복 검색 문제",
+        "min_evergreen_fit": 4,
+        "fallback_min_evergreen_fit": 2,
+        "min_durable_problem_score": 3,
+        "fallback_min_durable_problem_score": 1,
+        "min_freshness": 0,
+        "fallback_min_freshness": 0,
+        "require_change_signal": false
+      },
+      "change_explainer": {
+        "policy_label": "수요일 최근 변화와 독자 영향",
+        "min_evergreen_fit": 1,
+        "fallback_min_evergreen_fit": 0,
+        "min_durable_problem_score": 0,
+        "fallback_min_durable_problem_score": 0,
+        "min_freshness": 1,
+        "fallback_min_freshness": 1,
+        "require_change_signal": true
+      }
+    },
     "exclude_recent_days": 60,
     "publisher_cooldown_days": 2,
     "brand_cooldown_days": 7,

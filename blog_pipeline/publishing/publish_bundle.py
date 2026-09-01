@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -11,6 +12,62 @@ from zoneinfo import ZoneInfo
 
 from .daily_guard import ROOT
 from .draft_identity import resolve_draft_identity
+
+
+_PROJECT_PRIVATE_PATTERNS = (
+    (
+        "absolute_path",
+        re.compile(
+            r"(?i)(?:/Users/[A-Za-z0-9._-]+(?:/[^\s\"'<>\x00]+)+|"
+            r"/home/[A-Za-z0-9._-]+(?:/[^\s\"'<>\x00]+)+|"
+            r"[A-Z]:\\Users\\[A-Za-z0-9._-]+(?:\\[^\s\"'<>\x00]+)+)"
+        ),
+    ),
+    (
+        "private_repository",
+        re.compile(
+            r"(?i)(?:https?://github\.com/|git@github\.com:|"
+            r"ssh://git@github\.com/)[^\s\"'<>]+/edgelab(?:\.git)?(?:\b|/)"
+        ),
+    ),
+    ("aws_access_key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
+    (
+        "github_token",
+        re.compile(
+            r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})\b"
+        ),
+    ),
+    ("api_secret", re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b")),
+    (
+        "private_key",
+        re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+    ),
+    (
+        "jwt",
+        re.compile(
+            r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\."
+            r"[A-Za-z0-9_-]{10,}\b"
+        ),
+    ),
+)
+_PROJECT_SECRET_ASSIGNMENT = re.compile(
+    r"(?i)(?:\"|')?(?:api[_-]?key|access[_-]?token|refresh[_-]?token|"
+    r"secret|password|passwd|private[_-]?key|cookie)(?:\"|')?"
+    r"\s*(?:[:=])\s*(?:\"|')?([^\s,;\"'<>]{12,})"
+)
+_PROJECT_IDENTIFIER_ASSIGNMENT = re.compile(
+    r"(?i)(?:\"|')?(?:account[_-]?(?:id|number)|order[_-]?id|"
+    r"position[_-]?id|server[_-]?(?:ip|host)|계좌번호|주문번호)"
+    r"(?:\"|')?\s*(?:[:=])\s*(?:\"|')?([^\s,;\"'<>]{4,})"
+)
+_PROJECT_REVISION_ASSIGNMENT = re.compile(
+    r"(?i)(?:\"|')?(?:commit(?:[_-]?(?:sha|hash))?|branch|source_revision)"
+    r"(?:\"|')?\s*(?:[:=])\s*(?:\"|')?([^\s,;\"'<>]{4,})"
+)
+_SAFE_PLACEHOLDER = re.compile(
+    r"(?i)^(?:redacted|masked|placeholder|example|sample|none|null|"
+    r"your[_-].*|test[_-].*|dummy[_-].*|x{3,}|\*{3,}|\$\{.*\}|\[.*\])$"
+)
 
 
 def _read_json(path):
@@ -75,6 +132,66 @@ def required_publish_bundle_paths(draft_id, *, root=ROOT):
     return paths
 
 
+def _project_public_scan_paths(draft_id, root):
+    """Return the public project payload plus its reusable editorial source."""
+    paths = {
+        Path(path)
+        for path in required_publish_bundle_paths(draft_id, root=root)
+    }
+    editorial_root = Path(root) / "editorial" / "edgelab"
+    if editorial_root.is_dir():
+        paths.update(
+            path.relative_to(root)
+            for path in editorial_root.rglob("*")
+            if path.is_file()
+        )
+    return sorted(paths, key=lambda path: path.as_posix())
+
+
+def _project_private_kinds(raw):
+    text = raw.decode("utf-8", errors="ignore")
+    kinds = {
+        kind
+        for kind, pattern in _PROJECT_PRIVATE_PATTERNS
+        if pattern.search(text)
+    }
+    for match in _PROJECT_SECRET_ASSIGNMENT.finditer(text):
+        if not _SAFE_PLACEHOLDER.fullmatch(match.group(1).strip()):
+            kinds.add("assigned_secret")
+    for match in _PROJECT_IDENTIFIER_ASSIGNMENT.finditer(text):
+        if not _SAFE_PLACEHOLDER.fullmatch(match.group(1).strip()):
+            kinds.add("private_identifier")
+    for match in _PROJECT_REVISION_ASSIGNMENT.finditer(text):
+        if not _SAFE_PLACEHOLDER.fullmatch(match.group(1).strip()):
+            kinds.add("private_revision")
+    return kinds
+
+
+def project_public_safety_reasons(draft_id, *, root=ROOT):
+    """Fail closed when a project handoff contains private implementation data.
+
+    Reasons deliberately expose only a repository-relative path and a leak kind;
+    the matched value must never be copied into logs or the Pages handoff.
+    """
+    root = Path(root).resolve()
+    identity = resolve_draft_identity(draft_id)
+    if identity.content_type != "project_log":
+        return []
+
+    reasons = []
+    for relative in _project_public_scan_paths(identity.draft_id, root):
+        path = root / relative
+        try:
+            raw = path.read_bytes()
+        except OSError:
+            continue
+        for kind in sorted(_project_private_kinds(raw)):
+            reasons.append(
+                f"private_evidence_leak:{relative.as_posix()}:{kind}"
+            )
+    return reasons
+
+
 def _git_paths(root, *args, paths):
     result = subprocess.run(
         ["git", *args, "-z", "--", *paths],
@@ -90,7 +207,7 @@ def publish_bundle_tracking_reasons(draft_id, *, root=ROOT):
     """Reject missing, untracked, or unstaged files in a publish bundle."""
     root = Path(root)
     paths = required_publish_bundle_paths(draft_id, root=root)
-    reasons = []
+    reasons = project_public_safety_reasons(draft_id, root=root)
     missing = {path for path in paths if not (root / path).is_file()}
     for path in sorted(missing):
         reasons.append(f"missing_publish_bundle:{path}")
@@ -117,6 +234,12 @@ def stage_publish_bundle(draft_id, *, root=ROOT):
     if missing:
         raise FileNotFoundError(
             "publish bundle is incomplete: " + ", ".join(sorted(missing))
+        )
+    safety_reasons = project_public_safety_reasons(draft_id, root=root)
+    if safety_reasons:
+        raise ValueError(
+            "project public-safety check failed: "
+            + ", ".join(safety_reasons)
         )
     subprocess.run(["git", "add", "--", *paths], cwd=root, check=True)
     return paths
@@ -145,7 +268,7 @@ def publish_bundle_resume_reasons(draft_id, *, root=ROOT):
     except (OSError, subprocess.CalledProcessError):
         return ["git_resume_check_failed"]
 
-    reasons = []
+    reasons = project_public_safety_reasons(draft_id, root=root)
     if not changed:
         reasons.append("no_local_publish_bundle")
     if identity.source not in changed:

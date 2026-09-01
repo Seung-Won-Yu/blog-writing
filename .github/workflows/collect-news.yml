@@ -2,9 +2,9 @@ name: Collect Monday Wednesday news candidates
 
 on:
   schedule:
-    # Monday/Wednesday 07:17 KST. Recent GitHub schedule delays reached about
-    # 49 minutes, so this leaves a 103-minute buffer before the 09:00 editor.
-    - cron: '17 22 * * 0,2'
+    # Monday/Wednesday 06:30 KST. GitHub schedules may start late, so the
+    # collector gets a 150-minute buffer before the 09:00 editor handoff.
+    - cron: '30 21 * * 0,2'
   workflow_dispatch:
     inputs:
       target_day:

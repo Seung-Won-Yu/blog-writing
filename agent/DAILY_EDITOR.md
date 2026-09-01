@@ -2,6 +2,12 @@
 
 원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
 사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용합니다.
+먼저 `agent/WEEKLY_PIPELINE.md`에서 06:30 수집·09:00 제작·사용자 수동 발행
+경계와 월·수의 서로 다른 선정 통과선을 확인합니다.
+이어서 `agent/WEEKLY_READER_PROMISES.md`를 읽고 공통 디자인 골격과 월·수의
+독자 약속을 적용합니다. 새 원고의 `editorial.reader_path`는 선택 사항이 아닙니다.
+이미지를 만들기 전 `agent/WEEKLY_VISUAL_PROMISES.md`를 읽고 월요일의
+`practical_diagnosis` 또는 수요일의 `change_impact` 역할을 실제 브리프에 적용합니다.
 
 이 문서는 매주 월·수 09:00 KST에 실행되는 Codex 편집자의 유일한 작업 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. GitHub Actions의 수집 결과는 주제를 찾는 레이더로만 사용합니다. 기준을 통과하면 소식 요약이 아니라 실제 문제, 작동 원리, 예시, 선택 기준을 남기는 실전 IT 아티클 1건을 만들고, 통과하지 못하면 발행 횟수를 채우기 위해 글을 만들지 않습니다. 티스토리 붙여넣기와 발행은 사용자가 직접 합니다.
 
@@ -89,6 +95,8 @@
    `READY`일 때만 다음 단계로 갑니다. `PARTIAL`이면 출력된 `expected_identity`, `editorial_lengths`, `invalid_scene_labels`, `depth`, `duplicates`에서 실패한 JSON 필드만 고쳐 같은 명령을 다시 실행합니다. 원고 사전검사가 실패한 상태에서는 이미지와 HTML을 만들지 않습니다.
 
 6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지는 기본 2장, 서로 다른 세 번째 설명 지점이나 실제 증거가 꼭 필요할 때만 최대 4장까지 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지와 같은 이미지의 변형본은 만들지 않습니다. 생성 전에 대표 브리프를 `visual.cover`, 본문 브리프를 `visual.assets`에 기록합니다. 둘 다 아래 필드를 사용하되 대표는 `content_role: hook`, 본문은 `content_role: explanation`으로 기록합니다. 모든 `label`은 서로 다른 질문이어야 하며 대표가 답한 비교·순서·결과를 본문 이미지에서 다시 만들지 않습니다.
+
+   2026-09-02 이후에는 요일별 이미지 역할을 먼저 확정합니다. 월요일은 `visual.weekday_profile: practical_diagnosis`, 대표 `weekday_role: problem_scene`, 본문 필수 `teaching_role: diagnosis_flow`, `recovery_boundary`를 사용합니다. 수요일은 `visual.weekday_profile: change_impact`, 대표 `weekday_role: changed_condition_scene`, 본문 필수 `teaching_role: before_after_change`, `action_check`를 사용합니다. 프로필과 대표 역할은 `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응 `images.visual_N`에 똑같이 기록합니다. 정확한 허용 `logic_type`은 공통 이미지 약속을 따릅니다.
 
    - `label`: 이미지가 답할 핵심 질문
    - `scene_label`: 기사 고유 시각 단서 2~4개
@@ -180,6 +188,7 @@
 - 기본 글은 약 8~12분 분량으로 씁니다. 다만 `change_impact`처럼 답이 짧고 분명한 변경 대응 글은 6~10분으로 끝내며 분량을 채우려고 배경 설명을 늘리지 않습니다. 소제목 5~7개를 사용합니다.
 - 모바일에서 한 문단이 벽처럼 보이지 않도록 도입은 320자, 본문 문단은 220자를 넘기지 않습니다. 한 문단에는 한 생각만 두고 긴 조건은 표나 목록으로 나눕니다.
 - 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_access`가 나오면 보류 상태로 넘기지 말고 도입·긴 문단·연속 블록·넓은 표·긴 코드를 같은 실행에서 다시 편집한 뒤 재검사합니다.
+- 월요일과 수요일의 `editorial.reader_path.reader_level`은 `practitioner`입니다. 월요일은 해결 순서와 실패 경계를, 수요일은 영향받는 조건과 지금 확인할 일을 본문 앞 절반 안의 실제 목록으로 보여 줍니다. 구현명·약어·버전 번호를 독자의 문제 장면과 먼저 할 일보다 앞에 쌓지 않습니다.
 - 핵심 흐름은 `독자가 마주칠 문제 장면 → 왜 생기는지 → 작동 원리 → 실제 예시 → 선택과 트레이드오프 → 남는 기준`입니다. 주제에 맞게 순서를 바꾸되 단순 발표 요약으로 시작해 영향 정리로 끝내지 않습니다.
 - 2026-08-04 이후 `editorial.article_shape`은 `change_impact`, `hands_on_test`, `decision_guide`, `incident_trace`, `troubleshooting`, `research_interpretation` 중 하나를 고릅니다. 직전 글과 같은 전개를 쓰지 않습니다. 사고·유출·장애처럼 한 지점의 문제가 여러 서비스나 사용자에게 번지는 주제는 `incident_trace`를 사용해 `발생 지점 → 데이터·서비스 이동 경로 → 확인된 영향과 미확인 범위 → 지금 할 일` 순서로 추적합니다. 고른 형태에 맞춰 독자의 실제 질문 순서로 소제목을 만들며 `무엇이 바뀌었나`를 모든 글의 첫 소제목으로 반복하지 않습니다.
 - 실제 순서대로 따라 해야 하는 절차가 아니라면 모든 소제목에 번호를 붙이지 않습니다. 질문·장면·결과가 자연스럽게 이어지도록 제목 형식을 섞습니다.
@@ -225,7 +234,7 @@
 - `primary_query`, `tags`
 - `visual.subject`, `hook`, `motif`, `assets`
 - `editorial.headline`, `opening`, `closing`, `action`. `action`은 별도 행동 유도 상자로 출력하지 않고 `closing` 뒤에 자연스러운 마지막 문장으로 이어집니다. 주제상 행동 제안이 어색하면 관찰하거나 다시 확인할 조건을 한 문장으로 적습니다.
-- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `weekly_lane`, `reader_hook`, `revisit`, `search_intent`, `original_value`. `reader_hook`에는 `scene`, `stakes`, `payoff`, `open_question`을 기록합니다. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
+- `editorial` 확장 필드: `audience_problem`, `reader_takeaway`, `why_now`, `topic_key`, `reader_question`, `entities`, `coverage`, `article_shape`, `weekly_lane`, `reader_hook`, `reader_path`, `revisit`, `search_intent`, `original_value`. `reader_hook`에는 `scene`, `stakes`, `payoff`, `open_question`을 기록합니다. `reader_path`에는 `reader_level: practitioner`, 실제 첫 소제목과 같은 `entry_heading`, 초반 답인 `immediate_answer`, 본문 앞 절반의 목록과 연결되는 `action_steps` 2~5개, 마지막 확인 문장과 연결되는 `completion_check`를 기록합니다. `search_intent`에는 `query`, `reader_need`, `answer_format`을 기록합니다. `original_value`에는 `durable_question`, `source_gap`, `contribution`, `proof_method`, `reader_outcome`, `limits`를 기록합니다. `freshness_exception`은 2026-08-25 이전 산출물을 위한 호환 필드일 뿐 새 아티클에 추가하지 않습니다.
 - `news` 정확히 1건: `title_kr`, `source`, `url`, `published_at`, `blurb_kr`, `references`, `content`
 - `content` 블록: `h`, `p`, `table`, `visual`, `code`, `ul`, `quote`, `ad_break`
 - `related_posts` 2건 이상: `config/tistory_public_posts.json`에 있는 실제 공개 URL만 사용하고 각 항목의 `title`, `url`, 현재 글과 연결되는 이유 `reason`, 연결 역할 `role`을 기록합니다. 역할은 `foundation`과 `next_step`을 각각 1개 이상 포함합니다.

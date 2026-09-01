@@ -13,6 +13,12 @@ from blog_pipeline.publishing.draft_identity import (
     resolve_draft_identity,
 )
 from blog_pipeline.publishing.editorial_quality import (
+    HARU_CHARACTER_ANCHOR,
+    HARU_CHARACTER_ID,
+    HARU_CHARACTER_NAME,
+    HARU_CHARACTER_VERSION,
+    HARU_REFERENCE_ASSET,
+    HARU_REFERENCE_SHA256,
     depth_policy_for,
     estimate_read_minutes,
     measurement_digest,
@@ -30,6 +36,65 @@ def repeated_text(label, count=80):
         f"{label} {index + 1}번째 조건에서 독자가 확인할 실제 결과와 예외, 다음 행동을 구체적으로 설명한다."
         for index in range(count)
     )
+
+
+def selection_evaluation(profile):
+    criteria_by_profile = {
+        "curiosity_mechanism": {
+            "evergreen_question": 20,
+            "verifiable_sources": 20,
+            "simple_explanation": 10,
+            "cluster_depth": 10,
+            "everyday_scene": 15,
+            "surprising_mechanism": 15,
+            "one_minute_check": 10,
+        },
+        "curiosity_myth_history": {
+            "evergreen_question": 20,
+            "verifiable_sources": 20,
+            "simple_explanation": 10,
+            "cluster_depth": 10,
+            "belief_fact_boundary": 15,
+            "historical_evidence": 15,
+            "direct_check": 10,
+        },
+        "project_story": {
+            "implementation_evidence": 30,
+            "episode_continuity": 15,
+            "decision_verdict": 15,
+            "transferable_value": 15,
+            "story_hook": 10,
+            "public_sources": 5,
+            "public_safety": 10,
+        },
+    }
+    gates_by_profile = {
+        "curiosity_mechanism": {
+            "role_specific_nonzero": True,
+            "evidence_ready": True,
+            "duplicate_free": True,
+        },
+        "curiosity_myth_history": {
+            "role_specific_nonzero": True,
+            "evidence_ready": True,
+            "duplicate_free": True,
+        },
+        "project_story": {
+            "implementation_evidence": True,
+            "decision_verdict": True,
+            "public_safety": True,
+        },
+    }
+    criteria = criteria_by_profile[profile]
+    return {
+        "policy": f"{profile}-v1",
+        "criteria": criteria,
+        "total": sum(criteria.values()),
+        "threshold": 80 if profile == "project_story" else 75,
+        "hard_gates": gates_by_profile[profile],
+        "decision": "selected",
+        "rejected_reasons": [],
+    }
 
 
 IMAGEGEN_PROMPT = "실제 제품의 변경 전후와 사용자가 확인할 결과를 한 장면에 보여 주는 한국어 설명 이미지"
@@ -107,6 +172,174 @@ def image_asset(origin="imagegen"):
             }
         )
     return asset
+
+
+def apply_weekday_visual_profile(
+    source,
+    *,
+    profile,
+    cover_role,
+    subject_terms,
+    cover_claim,
+    assignments,
+):
+    """Mirror the weekday teaching job across briefs and generated images."""
+    source["visual"]["weekday_profile"] = profile
+    source["visual"]["subject_terms"] = list(subject_terms)
+    for cover in (source["visual"]["cover"], source["images"]["cover"]):
+        cover["weekday_profile"] = profile
+        cover["weekday_role"] = cover_role
+        cover["visual_claim"] = cover_claim
+    source["visual"]["cover"]["label"] = (
+        f"{subject_terms[0]}: {source['visual']['cover']['label']}"
+    )
+    source["images"]["cover"]["alt"] = (
+        f"{cover_claim}. {source['images']['cover']['alt']}"
+    )
+    source["images"]["cover"]["generation_prompt"] = (
+        f"{source['images']['cover']['generation_prompt']} "
+        f"Topic focus: {', '.join(subject_terms)}."
+    )
+    content = source["news"][0]["content"]
+    for index, (teaching_role, logic_type, teaching_claim) in enumerate(
+        assignments, 1
+    ):
+        brief = source["visual"]["assets"][index - 1]
+        brief["teaching_role"] = teaching_role
+        brief["logic_type"] = logic_type
+        brief["teaching_claim"] = teaching_claim
+        if logic_type == "conditional":
+            brief["condition"] = f"{subject_terms[0]} 조건이 달라지는 경우"
+        brief["label"] = f"{subject_terms[(index - 1) % len(subject_terms)]}: {brief['label']}"
+        image_key = f"visual_{index}"
+        image = source["images"][image_key]
+        image["teaching_role"] = teaching_role
+        image["teaching_claim"] = teaching_claim
+        image["alt"] = f"{subject_terms[(index - 1) % len(subject_terms)]}: {image['alt']}"
+        if brief.get("origin") == "imagegen":
+            prompt = (
+                f"{brief['generation_prompt']} "
+                f"Topic focus: {', '.join(subject_terms)}."
+            )
+            brief["generation_prompt"] = prompt
+            image["generation_prompt"] = prompt
+        elif brief.get("origin") in {"capture", "annotated_capture"}:
+            capture_target = (
+                f"{subject_terms[(index - 1) % len(subject_terms)]} "
+                f"{brief['capture_target']}"
+            )
+            brief["capture_target"] = capture_target
+            image["capture_target"] = capture_target
+        elif brief.get("origin") == "measured_chart":
+            brief["measurement_source"] = (
+                f"{subject_terms[(index - 1) % len(subject_terms)]} "
+                f"{brief['measurement_source']}"
+            )
+        visual_block = next(
+            block
+            for block in content
+            if block.get("t") == "visual" and block.get("image") == image_key
+        )
+        visual_block["caption"] = f"{teaching_claim}. {visual_block['caption']}"
+
+
+def apply_toon_profile(source):
+    """Build a valid four-panel Haru contract for future Tuesday fixtures."""
+    source["visual"]["toon"] = {
+        "format": "it_explainer_comic",
+        "series": "하루의 IT 원리툰",
+        "character_id": HARU_CHARACTER_ID,
+        "character_version": HARU_CHARACTER_VERSION,
+        "character_name": HARU_CHARACTER_NAME,
+        "character_anchor": HARU_CHARACTER_ANCHOR,
+        "reference_asset": HARU_REFERENCE_ASSET,
+        "reference_sha256": HARU_REFERENCE_SHA256,
+        "panel_count": 4,
+        "dialogue_mode": "html_bubbles",
+    }
+    identity_fields = {
+        "character_id": HARU_CHARACTER_ID,
+        "character_version": HARU_CHARACTER_VERSION,
+        "character_reference_sha256": HARU_REFERENCE_SHA256,
+    }
+    safe_prompt = (
+        f" Character anchor: {HARU_CHARACTER_ANCHOR}. "
+        "Constraints: no text; no letters; no labels; no speech bubbles."
+    )
+    source["visual"]["cover"].update(identity_fields)
+    source["images"]["cover"].update(identity_fields)
+    source["visual"]["cover"]["korean_labels"] = []
+    source["images"]["cover"]["korean_labels"] = []
+    source["images"]["cover"]["generation_prompt"] += safe_prompt
+
+    beats = (
+        "everyday_question",
+        "hidden_mechanism",
+        "one_minute_check",
+        "exception_boundary",
+    )
+    dialogue = (
+        "찢어진 QR코드가 왜 아직 읽히는 걸까?",
+        "여분의 조각이 빠진 정보를 다시 맞춰요.",
+        "모서리 세 곳과 인쇄 대비부터 확인해 봐요.",
+        "위치 표시가 가려지면 같은 손상도 실패해요.",
+    )
+    content = source["news"][0]["content"]
+    for index, (brief, beat, line) in enumerate(
+        zip(source["visual"]["assets"], beats, dialogue), 1
+    ):
+        image = source["images"][f"visual_{index}"]
+        brief.update(
+            {
+                **identity_fields,
+                "toon_panel": index,
+                "toon_beat": beat,
+                "character_presence": "haru",
+                "korean_labels": [],
+            }
+        )
+        brief["generation_prompt"] += safe_prompt
+        image.update(identity_fields)
+        image["korean_labels"] = []
+        image["generation_prompt"] += safe_prompt
+        block = next(
+            item
+            for item in content
+            if item.get("t") == "visual"
+            and item.get("image") == f"visual_{index}"
+        )
+        block["toon_panel"] = index
+        block["dialogue"] = [{"speaker": HARU_CHARACTER_NAME, "text": line}]
+
+
+def expand_curiosity_to_four_panels(source):
+    """Add the everyday-question and exception beats used by Tuesday comics."""
+    source["visual"]["assets"].extend(
+        [
+            visual_asset(label="QR코드를 비추는 일상 질문 장면"),
+            visual_asset(label="QR코드 복원이 실패하는 예외 경계"),
+        ]
+    )
+    source["images"]["visual_3"] = image_asset()
+    source["images"]["visual_4"] = image_asset()
+    content = source["news"][0]["content"]
+    second_index = next(
+        index
+        for index, block in enumerate(content)
+        if block.get("t") == "visual" and block.get("image") == "visual_2"
+    )
+    content[second_index + 1 : second_index + 1] = [
+        {
+            "t": "visual",
+            "image": "visual_3",
+            "caption": "손상된 QR코드에서 먼저 확인할 위치를 보여 준다.",
+        },
+        {
+            "t": "visual",
+            "image": "visual_4",
+            "caption": "오류 정정으로도 복원하기 어려운 손상 경계를 보여 준다.",
+        },
+    ]
 
 
 def valid_daily_source(day="2026-07-19"):
@@ -295,6 +528,65 @@ def valid_daily_source(day="2026-07-19"):
         )
         if lane == "change_explainer":
             source["editorial"]["article_shape"] = "change_impact"
+    if publish_day >= date(2026, 9, 2):
+        lane = editorial_lane_for_identity(resolve_draft_identity(day))
+        if lane in {"evergreen_problem", "change_explainer"}:
+            action_steps = [
+                "내 환경이 이번 변경의 적용 대상인지 먼저 확인한다.",
+                "기존 값을 기록하고 바뀐 결과 신호를 비교한다.",
+                "실패하면 되돌릴 조건과 다음 확인 위치를 남긴다.",
+            ]
+            source["news"][0]["content"].insert(
+                2,
+                {"t": "ul", "items": action_steps},
+            )
+            source["editorial"]["reader_path"] = {
+                "reader_level": "practitioner",
+                "entry_heading": source["news"][0]["content"][0]["text"],
+                "immediate_answer": source["reader_access"]["quick_summary"][0],
+                "action_steps": action_steps,
+                "completion_check": source["editorial"]["action"],
+            }
+            if lane == "evergreen_problem":
+                apply_weekday_visual_profile(
+                    source,
+                    profile="practical_diagnosis",
+                    cover_role="problem_scene",
+                    subject_terms=("새 기능", "적용 조건"),
+                    cover_claim="막힌 새 기능 적용 조건을 한 장면에서 먼저 보여 준다",
+                    assignments=(
+                        (
+                            "diagnosis_flow",
+                            "flow",
+                            "새 기능 적용 조건을 원인별 진단 순서로 좁힌다",
+                        ),
+                        (
+                            "recovery_boundary",
+                            "conditional",
+                            "새 기능 적용 실패 뒤 되돌릴 경계를 비교한다",
+                        ),
+                    ),
+                )
+            else:
+                apply_weekday_visual_profile(
+                    source,
+                    profile="change_impact",
+                    cover_role="changed_condition_scene",
+                    subject_terms=("새 기능", "적용 조건"),
+                    cover_claim="새 기능 적용 전제와 변경 뒤 결과의 충돌을 보여 준다",
+                    assignments=(
+                        (
+                            "before_after_change",
+                            "comparison",
+                            "새 기능 변경 전후의 적용 조건을 비교한다",
+                        ),
+                        (
+                            "action_check",
+                            "flow",
+                            "새 기능 적용 뒤 지금 확인할 행동을 순서로 보여 준다",
+                        ),
+                    ),
+                )
     return source
 
 
@@ -374,12 +666,12 @@ def valid_curiosity_source(day="2026-09-01"):
         }
     )
     source["news"][0]["content"] = [
-        {"t": "h", "text": "찢어진 모서리보다 먼저 보는 세 개의 큰 사각형"},
-        {"t": "p", "text": repeated_text("위치 찾기 패턴", 3)},
-        {"t": "p", "text": repeated_text("카메라가 방향을 잡는 과정", 3)},
+        {"t": "h", "text": "먼저 답하면, QR코드는 여분의 조각으로 복원한다"},
+        {"t": "p", "text": "QR코드는 일부가 찢어져도 남은 조각과 여분의 정보를 맞춰 원래 내용을 되찾을 수 있다."},
+        {"t": "ul", "items": ["세 모서리의 큰 사각형이 가려졌는지 본다.", "화면 밝기와 인쇄 대비를 바꿔 다시 비춰 본다.", "중요한 용도에서 계속 실패하면 새 코드로 교체한다."]},
         {"t": "visual", "image": "visual_1", "caption": "QR코드의 위치 패턴과 데이터 영역, 오류 정정 영역을 구분해 보여 준다."},
-        {"t": "p", "text": repeated_text("손상 위치에 따른 차이", 3)},
-        {"t": "h", "text": "사라진 정보를 추측하는 대신 여분의 조각으로 복원한다"},
+        {"t": "p", "text": "같은 크기로 가려져도 방향을 찾는 큰 사각형이 남았는지에 따라 인식 결과가 달라진다."},
+        {"t": "h", "text": "조금 더 깊이: 사라진 정보를 복원하는 원리"},
         {"t": "p", "text": repeated_text("리드 솔로몬 오류 정정", 3)},
         {"t": "ad_break"},
         {"t": "h", "text": "같은 크기의 얼룩도 위치가 다르면 결과가 달라진다"},
@@ -441,6 +733,97 @@ def valid_curiosity_source(day="2026-09-01"):
             {"term": "오류 정정", "meaning": "일부 정보가 사라져도 여분의 데이터 조각으로 원래 내용을 복원하는 방식이다."},
         ],
     }
+    source["editorial"].update(
+        {
+            "action": "세 모서리의 큰 사각형과 인쇄 대비를 확인하고 계속 실패하면 새 QR코드로 교체한다.",
+            "closing": "QR코드는 손상된 모양을 추측하는 것이 아니라 여분의 정보로 빠진 조각을 복원한다. 중요한 용도라면 인식이 한 번 됐다는 이유만 믿지 말고 손상 위치와 인쇄 상태를 함께 확인한다.",
+            "reader_path": {
+                "reader_level": "general",
+                "entry_heading": "먼저 답하면, QR코드는 여분의 조각으로 복원한다",
+                "immediate_answer": "QR코드는 일부가 찢어져도 남은 조각과 여분의 정보를 맞춰 원래 내용을 되찾을 수 있다.",
+                "action_steps": [
+                    "세 모서리의 큰 사각형이 가려졌는지 본다.",
+                    "화면 밝기와 인쇄 대비를 바꿔 다시 비춰 본다.",
+                    "중요한 용도에서 계속 실패하면 새 코드로 교체한다.",
+                ],
+                "advanced_heading": "조금 더 깊이: 사라진 정보를 복원하는 원리",
+                "completion_check": "세 모서리의 큰 사각형과 인쇄 대비를 확인하고 계속 실패하면 새 QR코드로 교체한다.",
+            },
+        }
+    )
+    publish_day = date.fromisoformat(day)
+    if publish_day >= date(2026, 9, 2):
+        lane = editorial_lane_for_identity(resolve_draft_identity(day))
+        if lane in {"curiosity_mechanism", "curiosity_myth_history"}:
+            source["editorial"]["selection_evaluation"] = (
+                selection_evaluation(lane)
+            )
+        if lane == "curiosity_mechanism":
+            if publish_day >= date(2026, 9, 8):
+                expand_curiosity_to_four_panels(source)
+            apply_weekday_visual_profile(
+                source,
+                profile="everyday_mechanism",
+                cover_role="surprising_everyday_result",
+                subject_terms=("QR코드", "오류 정정"),
+                cover_claim="손상된 QR코드가 읽히는 의외의 결과를 보여 준다",
+                assignments=(
+                    *(
+                        (
+                            (
+                                "everyday_scene",
+                                "comparison",
+                                "손상된 QR코드가 읽히는 일상 질문 장면을 보여 준다",
+                            ),
+                        )
+                        if publish_day >= date(2026, 9, 8)
+                        else ()
+                    ),
+                    (
+                        "mechanism_cutaway",
+                        "flow",
+                        "QR코드 오류 정정이 손상된 정보를 복원하는 흐름을 보여 준다",
+                    ),
+                    (
+                        "one_minute_check",
+                        "comparison",
+                        "손상된 QR코드를 1분 안에 확인할 위치를 비교한다",
+                    ),
+                    *(
+                        (
+                            (
+                                "misconception_boundary",
+                                "conditional",
+                                "QR코드 오류 정정이 실패하는 손상 경계를 보여 준다",
+                            ),
+                        )
+                        if publish_day >= date(2026, 9, 8)
+                        else ()
+                    ),
+                ),
+            )
+            if publish_day >= date(2026, 9, 8):
+                apply_toon_profile(source)
+        elif lane == "curiosity_myth_history":
+            apply_weekday_visual_profile(
+                source,
+                profile="myth_evidence",
+                cover_role="belief_result_conflict",
+                subject_terms=("QR코드", "오류 정정"),
+                cover_claim="QR코드는 늘 복원된다는 믿음과 실제 손상 경계를 보여 준다",
+                assignments=(
+                    (
+                        "myth_fact_boundary",
+                        "comparison",
+                        "QR코드 손상에 관한 믿음과 실제 복원 경계를 비교한다",
+                    ),
+                    (
+                        "history_or_direct_check",
+                        "flow",
+                        "QR코드 오류 정정의 근거와 직접 확인 순서를 보여 준다",
+                    ),
+                ),
+            )
     return source
 
 
@@ -692,6 +1075,50 @@ def valid_automation_source(day="2026-07-25"):
                 paragraph_run = 0
             rhythmic_content.append(block)
         source["news"][0]["content"] = rhythmic_content
+    if date.fromisoformat(day) >= date(2026, 9, 2):
+        identity = resolve_draft_identity(f"{day}-automation")
+        if editorial_lane_for_identity(identity) == "developer_insight":
+            action_steps = [
+                "지금 해결할 개발 단계를 먼저 한 문장으로 적는다.",
+                "공식 문서와 공개 표본에서 그 단계에 맞는 스킬을 비교한다.",
+                "설치 전에 권한·지침 범위·업데이트 조건을 확인한다.",
+            ]
+            content = source["news"][0]["content"]
+            content.insert(2, {"t": "ul", "items": action_steps})
+            first_heading = next(
+                block["text"] for block in content if block.get("t") == "h"
+            )
+            source["editorial"]["reader_path"] = {
+                "reader_level": "developer",
+                "entry_heading": first_heading,
+                "immediate_answer": source["reader_access"]["quick_summary"][0],
+                "action_steps": action_steps,
+                "completion_check": source["editorial"]["action"],
+            }
+            apply_weekday_visual_profile(
+                source,
+                profile="developer_decision",
+                cover_role="tool_choice_scene",
+                subject_terms=("Agent Skills", "GitHub"),
+                cover_claim="Agent Skills를 고를 때 GitHub와 공식 문서 사이의 선택 장면을 보여 준다",
+                assignments=(
+                    (
+                        "source_evidence",
+                        "evidence",
+                        "Agent Skills 공식 근거가 GitHub 화면 어디에 있는지 보여 준다",
+                    ),
+                    (
+                        "decision_map",
+                        "comparison",
+                        "Agent Skills를 개발 단계에 맞춰 고르는 결정 지도를 보여 준다",
+                    ),
+                    (
+                        "use_case",
+                        "evidence",
+                        "GitHub 공개 스킬을 실제 개발 용도별로 비교한다",
+                    ),
+                ),
+            )
     return source
 
 
@@ -752,22 +1179,73 @@ def valid_guide_source(day="2026-07-22"):
     return source
 
 
+def future_project_source(day="2026-09-05"):
+    source = json.loads(
+        (ROOT / "data/project_logs/2026-08-29.json").read_text(encoding="utf-8")
+    )
+    publish_day = date.fromisoformat(day)
+    source.update(
+        {
+            "draft_id": f"{day}-project",
+            "publish_date": day,
+            "date_label": f"{publish_day.year}. {publish_day.month}. {publish_day.day}",
+            "weekday": "토",
+            "scheduled_at": f"{day}T09:00:00+09:00",
+        }
+    )
+    content = source["news"][0]["content"]
+    first_heading = next(block["text"] for block in content if block.get("t") == "h")
+    action_list = next(block for block in content if block.get("t") == "ul")
+    source["editorial"]["reader_path"] = {
+        "reader_level": "mixed",
+        "entry_heading": first_heading,
+        "immediate_answer": source["reader_access"]["quick_summary"][0],
+        "action_steps": action_list["items"][:3],
+        "completion_check": source["editorial"]["action"],
+    }
+    apply_weekday_visual_profile(
+        source,
+        profile="project_evidence_story",
+        cover_role="episode_conflict",
+        subject_terms=("주식 선정", "급등주"),
+        cover_claim="주식 선정에서 급등주를 멈출지 통과시킬지의 갈등을 보여 준다",
+        assignments=(
+            (
+                "implementation_evidence",
+                "flow",
+                "주식 선정 알고리즘의 구현 흐름과 필터 순서를 보여 준다",
+            ),
+            (
+                "decision_result",
+                "comparison",
+                "급등주 제외 실험의 통과와 탈락 결과를 비교한다",
+            ),
+        ),
+    )
+    source["editorial"]["selection_evaluation"] = selection_evaluation(
+        "project_story"
+    )
+    return source
+
+
 class EditorialQualityTests(unittest.TestCase):
     def test_all_new_weekday_lanes_score_reader_access_above_eight_point_five(self):
-        monday = valid_daily_source("2026-08-31")
+        monday = valid_daily_source("2026-09-07")
         wednesday = valid_daily_source("2026-09-02")
         for source in (monday, wednesday):
             for index, block in enumerate(source["news"][0]["content"]):
                 if block.get("t") == "p":
                     block["text"] = repeated_text(f"읽기 쉬운 문단 {index}", 2)
         cases = [
-            ("2026-08-31", monday),
-            ("2026-09-01", valid_curiosity_source("2026-09-01")),
+            ("2026-09-07", monday),
+            ("2026-09-08", valid_curiosity_source("2026-09-08")),
+            ("2026-09-03", valid_curiosity_source("2026-09-03")),
             ("2026-09-02", wednesday),
             (
                 "2026-09-04-automation",
                 valid_automation_source("2026-09-04"),
             ),
+            ("2026-09-05-project", future_project_source("2026-09-05")),
         ]
 
         for draft_id, source in cases:
@@ -782,6 +1260,415 @@ class EditorialQualityTests(unittest.TestCase):
                     "quality_reader_access",
                     source_quality_reasons(source, identity),
                 )
+
+    def test_each_weekday_requires_its_own_visual_teaching_profile(self):
+        cases = [
+            ("2026-09-07", valid_daily_source("2026-09-07")),
+            ("2026-09-08", valid_curiosity_source("2026-09-08")),
+            ("2026-09-02", valid_daily_source("2026-09-02")),
+            ("2026-09-03", valid_curiosity_source("2026-09-03")),
+            (
+                "2026-09-04-automation",
+                valid_automation_source("2026-09-04"),
+            ),
+            ("2026-09-05-project", future_project_source("2026-09-05")),
+        ]
+
+        for draft_id, source in cases:
+            with self.subTest(draft_id=draft_id):
+                identity = resolve_draft_identity(draft_id, source)
+                self.assertNotIn(
+                    "quality_weekly_visual",
+                    source_quality_reasons(source, identity),
+                )
+
+                source["visual"].pop("weekday_profile")
+
+                self.assertIn(
+                    "quality_weekly_visual",
+                    source_quality_reasons(source, identity),
+                )
+
+    def test_weekday_visual_role_and_image_mirror_must_agree(self):
+        source = valid_curiosity_source("2026-09-08")
+        identity = resolve_draft_identity("2026-09-08", source)
+
+        source["visual"]["assets"][0]["teaching_role"] = "decision_map"
+        self.assertIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+        source = valid_curiosity_source("2026-09-08")
+        source["visual"]["assets"][0]["logic_type"] = "timeline"
+        self.assertIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_weekday_visual_rejects_off_topic_descriptions_with_valid_role_tags(self):
+        source = valid_curiosity_source("2026-09-08")
+        identity = resolve_draft_identity("2026-09-08", source)
+        teaching_claim = "파이썬 패키지를 설치하고 가상 환경을 고르는 순서를 보여 준다"
+        brief = source["visual"]["assets"][0]
+        brief.update(
+            {
+                "label": "파이썬 패키지 설치 화면",
+                "steps": "가상 환경 생성 → 패키지 설치 → 버전 확인",
+                "curiosity_hook": "어떤 패키지 버전을 먼저 골라야 할까?",
+                "teaching_claim": teaching_claim,
+                "generation_prompt": "Use case: infographic-diagram. 파이썬 패키지 설치와 가상 환경 선택 장면.",
+            }
+        )
+        image = source["images"]["visual_1"]
+        image.update(
+            {
+                "alt": "파이썬 패키지 설치와 가상 환경 선택을 비교한 설명 이미지",
+                "teaching_claim": teaching_claim,
+                "generation_prompt": brief["generation_prompt"],
+            }
+        )
+        visual_block = next(
+            block
+            for block in source["news"][0]["content"]
+            if block.get("image") == "visual_1"
+        )
+        visual_block["caption"] = teaching_claim
+
+        self.assertIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+        source = valid_curiosity_source("2026-09-08")
+        source["images"]["visual_1"]["teaching_role"] = "one_minute_check"
+        self.assertIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_friday_source_evidence_requires_a_real_capture_origin(self):
+        source = valid_automation_source("2026-09-04")
+        identity = resolve_draft_identity("2026-09-04-automation", source)
+
+        source["visual"]["assets"][0]["origin"] = "imagegen"
+
+        self.assertIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_weekday_visual_profile_does_not_fix_one_render_style(self):
+        source = valid_daily_source("2026-09-07")
+        identity = resolve_draft_identity("2026-09-07", source)
+        source["visual"]["cover"]["render_family"] = "flat_illustration"
+        source["images"]["cover"]["render_family"] = "flat_illustration"
+
+        self.assertNotIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_weekday_visual_policy_preserves_september_first(self):
+        source = json.loads(
+            (ROOT / "data/days/2026-09-01.json").read_text(encoding="utf-8")
+        )
+        source["visual"].pop("weekday_profile", None)
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        self.assertNotIn(
+            "quality_weekly_visual",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_tuesday_toon_contract_accepts_the_locked_male_haru_sheet(self):
+        source = valid_curiosity_source("2026-09-08")
+        identity = resolve_draft_identity("2026-09-08", source)
+
+        reasons = source_quality_reasons(source, identity)
+
+        self.assertEqual(reasons, [])
+        self.assertEqual(source["visual"]["toon"]["character_name"], "하루")
+        self.assertEqual(
+            source["visual"]["toon"]["reference_sha256"],
+            HARU_REFERENCE_SHA256,
+        )
+
+    def test_tuesday_toon_contract_preserves_pre_policy_articles(self):
+        source = valid_curiosity_source("2026-09-01")
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        self.assertNotIn(
+            "quality_toon_contract",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_direct_research_selection_evaluation_is_required_and_recomputed(self):
+        cases = [
+            ("2026-09-08", valid_curiosity_source("2026-09-08")),
+            ("2026-09-03", valid_curiosity_source("2026-09-03")),
+            (
+                "2026-09-05-project",
+                future_project_source("2026-09-05"),
+            ),
+        ]
+        for draft_id, source in cases:
+            with self.subTest(draft_id=draft_id):
+                identity = resolve_draft_identity(draft_id, source)
+                self.assertNotIn(
+                    "quality_selection_evaluation",
+                    source_quality_reasons(source, identity),
+                )
+
+                missing = copy.deepcopy(source)
+                missing["editorial"].pop("selection_evaluation")
+                self.assertIn(
+                    "quality_selection_evaluation",
+                    source_quality_reasons(missing, identity),
+                )
+
+                wrong_total = copy.deepcopy(source)
+                wrong_total["editorial"]["selection_evaluation"]["total"] -= 1
+                self.assertIn(
+                    "quality_selection_evaluation",
+                    source_quality_reasons(wrong_total, identity),
+                )
+
+                open_gate = copy.deepcopy(source)
+                first_gate = next(
+                    iter(
+                        open_gate["editorial"]["selection_evaluation"][
+                            "hard_gates"
+                        ]
+                    )
+                )
+                open_gate["editorial"]["selection_evaluation"]["hard_gates"][
+                    first_gate
+                ] = False
+                self.assertIn(
+                    "quality_selection_evaluation",
+                    source_quality_reasons(open_gate, identity),
+                )
+
+    def test_selection_evaluation_policy_preserves_september_first(self):
+        source = valid_curiosity_source("2026-09-01")
+        source["editorial"].pop("selection_evaluation", None)
+        identity = resolve_draft_identity("2026-09-01", source)
+
+        self.assertNotIn(
+            "quality_selection_evaluation",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_toon_metadata_is_rejected_outside_the_tuesday_lane(self):
+        source = valid_curiosity_source("2026-09-10")
+        source["visual"]["toon"] = copy.deepcopy(
+            valid_curiosity_source("2026-09-08")["visual"]["toon"]
+        )
+        identity = resolve_draft_identity("2026-09-10", source)
+
+        self.assertIn(
+            "quality_toon_contract",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_toon_rendering_fields_are_rejected_outside_the_tuesday_lane(self):
+        source = valid_curiosity_source("2026-09-10")
+        block = next(
+            item
+            for item in source["news"][0]["content"]
+            if item.get("t") == "visual"
+        )
+        block.update(
+            {
+                "toon_panel": 1,
+                "dialogue": [
+                    {"speaker": "하루", "text": "목요일에는 나오면 안 되는 대사예요."}
+                ],
+            }
+        )
+        identity = resolve_draft_identity("2026-09-10", source)
+
+        self.assertIn(
+            "quality_toon_contract",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_tuesday_toon_rejects_reversed_visible_panel_order(self):
+        source = valid_curiosity_source("2026-09-08")
+        content = source["news"][0]["content"]
+        positions = [
+            index for index, block in enumerate(content) if block.get("t") == "visual"
+        ]
+        panels = [content[index] for index in positions]
+        for index, panel in zip(positions, reversed(panels)):
+            content[index] = panel
+        identity = resolve_draft_identity("2026-09-08", source)
+
+        self.assertIn(
+            "quality_toon_contract",
+            source_quality_reasons(source, identity),
+        )
+
+    def test_tuesday_toon_rejects_identity_panel_prompt_and_dialogue_drift(self):
+        mutations = (
+            lambda source: source["images"]["visual_2"].update(
+                {"character_id": "different-character"}
+            ),
+            lambda source: source["visual"]["assets"][2].update(
+                {"toon_panel": 2}
+            ),
+            lambda source: source["visual"]["assets"][0].update(
+                {"toon_beat": "hidden_mechanism"}
+            ),
+            lambda source: source["images"]["visual_1"].update(
+                {"generation_prompt": "QR코드 원리를 설명하는 일반 이미지"}
+            ),
+            lambda source: source["visual"]["cover"].update(
+                {"korean_labels": ["QR코드"]}
+            ),
+            lambda source: source["images"]["visual_2"].update(
+                {"korean_labels": ["오류 정정"]}
+            ),
+            lambda source: source["visual"]["toon"].update(
+                {"character_version": True}
+            ),
+            lambda source: source["visual"]["toon"].update(
+                {"panel_count": True}
+            ),
+            lambda source: source["visual"]["assets"][0].update(
+                {"toon_panel": True}
+            ),
+            lambda source: source["images"]["visual_1"].update(
+                {"character_version": True}
+            ),
+            lambda source: next(
+                block
+                for block in source["news"][0]["content"]
+                if block.get("image") == "visual_4"
+            ).update(
+                {"dialogue": [{"speaker": "하루", "text": "짧아"}]}
+            ),
+        )
+
+        for mutate in mutations:
+            with self.subTest(mutate=mutate):
+                source = valid_curiosity_source("2026-09-08")
+                mutate(source)
+                identity = resolve_draft_identity("2026-09-08", source)
+                self.assertIn(
+                    "quality_toon_contract",
+                    source_quality_reasons(source, identity),
+                )
+
+    def test_future_project_story_requires_its_mixed_reader_path(self):
+        source = future_project_source("2026-09-05")
+        identity = resolve_draft_identity("2026-09-05-project", source)
+
+        self.assertGreaterEqual(
+            project_reader_scores(source, identity)["general_reader_understanding"],
+            8.5,
+        )
+        self.assertNotIn("quality_reader_path", source_quality_reasons(source, identity))
+
+        source["editorial"].pop("reader_path")
+
+        self.assertLess(
+            project_reader_scores(source, identity)["general_reader_understanding"],
+            8.5,
+        )
+        self.assertIn("quality_reader_path", source_quality_reasons(source, identity))
+
+    def test_curiosity_depth_prefers_a_short_list_over_a_forced_table(self):
+        policy = depth_policy_for(resolve_draft_identity("2026-09-03"))
+
+        self.assertEqual(policy["required_block_types"], {"ul"})
+        self.assertEqual(policy["maximum_minutes"], 10)
+
+    def test_curiosity_reader_path_is_required_before_the_deep_dive(self):
+        source = valid_curiosity_source("2026-09-03")
+        identity = resolve_draft_identity("2026-09-03", source)
+
+        self.assertNotIn("quality_reader_path", source_quality_reasons(source, identity))
+        source["editorial"].pop("reader_path")
+
+        scores = reader_access_scores(source, identity)
+        reasons = source_quality_reasons(source, identity)
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertIn("quality_reader_path", reasons)
+        self.assertIn("quality_reader_access", reasons)
+
+    def test_curiosity_reader_path_rejects_an_early_wall_of_technical_terms(self):
+        source = valid_curiosity_source("2026-09-03")
+        source["news"][0]["content"].insert(
+            4,
+            {
+                "t": "p",
+                "text": "HTTP CSS JavaScript ETag Cache-Control IndexedDB CDN API를 먼저 비교한다.",
+            },
+        )
+        identity = resolve_draft_identity("2026-09-03", source)
+
+        scores = reader_access_scores(source, identity)
+        reasons = source_quality_reasons(source, identity)
+
+        self.assertLess(scores["general_reader_understanding"], 8.5)
+        self.assertIn("quality_reader_path", reasons)
+
+    def test_curiosity_reader_path_rejects_lowercase_technical_terms(self):
+        source = valid_curiosity_source("2026-09-03")
+        source["news"][0]["content"].insert(
+            4,
+            {
+                "t": "p",
+                "text": (
+                    "http css javascript etag api cdn indexeddb websocket oauth를 "
+                    "먼저 비교한다."
+                ),
+            },
+        )
+        identity = resolve_draft_identity("2026-09-03", source)
+
+        self.assertLess(
+            reader_access_scores(source, identity)["general_reader_understanding"],
+            8.5,
+        )
+        self.assertIn("quality_reader_path", source_quality_reasons(source, identity))
+
+    def test_reader_path_actions_must_match_one_visible_early_list(self):
+        source = valid_curiosity_source("2026-09-03")
+        source["editorial"]["reader_path"]["action_steps"] = [
+            "화면에 표시된 날씨와 시간을 먼저 확인한다.",
+            "인쇄 메뉴에서 종이 방향과 여백을 다시 고른다.",
+        ]
+        identity = resolve_draft_identity("2026-09-03", source)
+
+        self.assertLess(
+            reader_access_scores(source, identity)["general_reader_understanding"],
+            8.5,
+        )
+        self.assertIn("quality_reader_path", source_quality_reasons(source, identity))
+
+    def test_reader_path_policy_preserves_september_first_and_starts_next_day(self):
+        historical = json.loads(
+            (ROOT / "data/days/2026-09-01.json").read_text(encoding="utf-8")
+        )
+        historical["editorial"].pop("reader_path", None)
+        historical_identity = resolve_draft_identity("2026-09-01", historical)
+
+        self.assertNotIn(
+            "quality_reader_path",
+            source_quality_reasons(historical, historical_identity),
+        )
+
+        future = valid_daily_source("2026-09-02")
+        future["editorial"].pop("reader_path")
+        future_identity = resolve_draft_identity("2026-09-02", future)
+
+        self.assertIn(
+            "quality_reader_path",
+            source_quality_reasons(future, future_identity),
+        )
 
     def test_new_weekday_article_rewrites_long_mobile_paragraphs(self):
         source = valid_curiosity_source("2026-09-01")
@@ -842,7 +1729,7 @@ class EditorialQualityTests(unittest.TestCase):
         source = valid_curiosity_source("2026-09-01")
         source["news"][0]["content"][1:1] = [
             {"t": "p", "text": f"이어지는 설명 문단 {index}"}
-            for index in range(3)
+            for index in range(4)
         ]
         identity = resolve_draft_identity("2026-09-01", source)
 

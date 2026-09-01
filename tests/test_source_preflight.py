@@ -6,7 +6,11 @@ from pathlib import Path
 from blog_pipeline.publishing.daily_guard import inspect_source_state
 from blog_pipeline.publishing.draft_identity import resolve_draft_identity
 from blog_pipeline.publishing.editorial_quality import source_authoring_reasons
-from tests.test_editorial_quality import valid_daily_source, valid_guide_source
+from tests.test_editorial_quality import (
+    valid_curiosity_source,
+    valid_daily_source,
+    valid_guide_source,
+)
 
 
 class SourcePreflightTests(unittest.TestCase):
@@ -36,6 +40,34 @@ class SourcePreflightTests(unittest.TestCase):
         identity = resolve_draft_identity(source["draft_id"], source)
 
         self.assertEqual(source_authoring_reasons(source, identity), [])
+
+    def test_future_weekday_preflight_checks_briefs_without_image_records(self):
+        day = "2026-09-08"
+        source = valid_curiosity_source(day)
+        source.pop("images")
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "data" / "days" / f"{day}.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                json.dumps(source, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
+            result = inspect_source_state(day, root=root)
+
+        self.assertEqual(result["status"], "READY")
+        self.assertNotIn("quality_weekly_visual", result["reasons"])
+        self.assertNotIn("quality_toon_contract", result["reasons"])
+
+        source["visual"]["assets"][0]["teaching_role"] = "decision_map"
+        identity = resolve_draft_identity(day, source)
+
+        self.assertIn(
+            "quality_weekly_visual",
+            source_authoring_reasons(source, identity),
+        )
 
     def test_preflight_reports_actionable_identity_editorial_and_brief_failures(self):
         day = "2026-07-21"

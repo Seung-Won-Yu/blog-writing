@@ -2,6 +2,12 @@
 
 원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
 사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용합니다.
+먼저 `agent/WEEKLY_PIPELINE.md`에서 06:30 전용 수집·09:00 제작·사용자 수동
+발행 경계와 금요일 100점 선정표를 확인합니다.
+이어서 `agent/WEEKLY_READER_PROMISES.md`를 읽고 공통 디자인 골격과 금요일의
+개발자 독자 약속을 적용합니다. 새 원고의 `editorial.reader_path`는 선택 사항이 아닙니다.
+이미지를 만들기 전 `agent/WEEKLY_VISUAL_PROMISES.md`를 읽고 금요일의
+`developer_decision` 역할을 실제 브리프와 이미지 메타데이터에 적용합니다.
 
 이 문서는 매주 금요일 09:00 KST에 실행되는 Codex 작업의 유일한 계약입니다. 예약 실행은 한 번만 수행하며 자동 재실행 슬롯을 두지 않습니다. 월·수 실전 IT 아티클, 화·목 궁금한 IT 원리, 토요일 프로젝트 개발일지와 원본·이미지·HTML·가드를 완전히 분리합니다. 2026-08-28부터 금요일은 `developer_insight` 역할로 GitHub·공식 문서·공개 저장소·연구를 읽고 개발자가 저장해 두고 다시 볼 만한 개발·AI 인사이트를 만듭니다. 단순 소식 요약이나 억지 따라하기로 발행 횟수를 채우지 않습니다. Codex가 원고·이미지·검증·도우미까지 1차 완료하고, 티스토리 붙여넣기와 발행은 사용자가 최종 확인 뒤 직접 합니다. 이전 토요일의 `executed_experiment` 자동화 글은 역사 자료로 그대로 유지합니다.
 
@@ -110,6 +116,7 @@
 - 실행형에서 첫 코드보다 앞에 준비물 목록을 둡니다. 코드가 있다면 저장할 파일명, 실행 위치, 운영체제별 차이를 함께 설명합니다.
 - 20줄을 넘는 전체 코드는 기본으로 접어 두고 구체적인 용도를 적습니다. 본문에는 선택 기준, 짧은 실행 명령, 예상 결과를 먼저 보여 주며 긴 코드가 화면 대부분을 차지하게 만들지 않습니다.
 - 도입은 320자, 본문 한 문단은 220자를 넘기지 않습니다. 2026-09-01 이후 내보내기가 계산하는 `reader_scores.general_reader_understanding`과 `reader_scores.public_readability`는 둘 다 8.5 이상이어야 합니다. `quality_reader_access`가 나오면 도입·긴 문단·연속 블록·넓은 표·펼쳐진 긴 코드를 같은 실행에서 다시 편집하고 재검사합니다.
+- `editorial.reader_path.reader_level`은 `developer`입니다. 개발 용어를 억지로 없애지 않되 도구명·API 목록보다 `어디에 쓰는가`, `무엇과 다른가`, `언제 쓰지 말아야 하는가`를 먼저 답합니다. `action_steps`와 연결되는 선택·확인 목록을 본문 앞 절반 안에 둡니다.
 - 실행형 단계는 설치·입력 준비·실행·성공 확인이 끊기지 않게 이어져야 합니다. 연구·지도형은 출처 선택·분류·비교·판단이 끊기지 않게 이어져야 합니다.
 - 성공 여부를 독자가 눈으로 확인할 파일·화면·개수 중 하나로 설명하고, 실패 시 원본이 남는지와 다시 시작할 위치를 바로 뒤에 적습니다.
 - 커밋 해시·SHA-256·종료 코드·테스트용 글꼴 오류 같은 검증 세부값을 실행 단계 앞에 두지 않습니다. 필요한 값은 마지막 `개발 기록`에 모읍니다.
@@ -135,6 +142,8 @@
 대표 이미지 1장과 본문 시각물 3~6개를 기본으로 합니다. 장수를 채우는 장식 이미지는 만들지 않습니다. 각 시각물은 본문의 특정 질문 하나를 답해야 합니다.
 
 생성 전에 대표 브리프를 `visual.cover`, 본문 브리프를 `visual.assets`에 기록합니다. 대표는 `content_role: hook`, 본문은 `content_role: explanation`을 사용합니다. 모든 `label`은 서로 다른 질문이어야 하며 대표에서 보여 준 문제·결과를 본문 이미지가 같은 구도로 반복하면 실패로 처리합니다.
+
+2026-09-02 이후 금요일은 `visual.weekday_profile: developer_decision`, 대표 `weekday_role: tool_choice_scene`, 본문 필수 `teaching_role: source_evidence`, `decision_map`을 사용합니다. 프로필과 대표 역할은 `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응 `images.visual_N`에 같은 값으로 기록합니다. `source_evidence`는 실제 캡처·주석 캡처·실측 차트만 허용하며 생성 이미지로 대체하지 않습니다. 추가 이미지는 공통 이미지 약속의 `mechanism_map` 또는 `use_case` 역할과 허용 `logic_type`을 사용합니다.
 
 우선순위는 다음과 같습니다.
 
@@ -188,6 +197,8 @@
 `scheduled_at`은 Codex 제작 시작 기준이며 티스토리 예약 발행 시각이 아닙니다. 도우미가 1차 검수 완료 상태가 된 뒤 사용자가 티스토리에서 직접 발행합니다.
 
 `editorial.weekly_lane`은 `developer_insight`로 기록합니다. `editorial.reader_hook`에는 독자가 궁금해할 구체적인 장면 `scene`, 잘못 판단할 때의 `stakes`, 독자가 가져갈 지도·비교·기준 `payoff`, 근거로 답할 `open_question`을 각각 20~180자로 기록하고 실제 도입에 이어지게 합니다.
+
+`editorial.reader_path`에는 `reader_level: developer`, 실제 첫 소제목과 같은 `entry_heading`, 먼저 답할 `immediate_answer`, 본문 앞 절반의 목록과 연결되는 `action_steps` 2~5개, 독자가 선택을 끝냈는지 확인할 `completion_check`를 기록합니다.
 
 `editorial.reader_walkthrough`는 `hands_on_test`와 `troubleshooting`에서만 사용합니다. 이때 `reader_level`, `prerequisites`, `steps`, `success_check`, `recovery`, `easiest_method_considered`, `code_needed_when`을 기록하고 첫 코드보다 앞에 준비물 목록을 둡니다. 20줄을 넘는 전체 코드 블록은 접습니다. 연구·지도형은 이를 억지로 만들지 않고 마지막에 `근거와 한계`를 둡니다.
 

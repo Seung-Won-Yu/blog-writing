@@ -652,6 +652,13 @@ def score_weekly_lane_candidate(candidate, lane):
         + metric("shallow_penalty")
         + metric("announcement_penalty")
     )
+    change_signal = bool(
+        candidate.get("announcement_matches")
+        or (candidate.get("editorial_angle") or {}).get("intent") == "change"
+        or int((candidate.get("raw_lane_scores") or {}).get("reader_consequence", 0))
+        > 0
+    )
+    candidate["change_signal"] = change_signal
     if lane == "evergreen_problem":
         components = {
             "durable_problem": metric("durable_problem") * 3,
@@ -671,7 +678,7 @@ def score_weekly_lane_candidate(candidate, lane):
             "known_search_demand": metric("known_search_demand") * 2,
             "durable_problem": metric("durable_problem"),
             "lasting_value": min(3, metric("lasting_value")),
-            "change_signal": 4 if candidate.get("announcement_matches") else 0,
+            "change_signal": 4 if change_signal else 0,
             "penalties": penalties,
         }
     else:

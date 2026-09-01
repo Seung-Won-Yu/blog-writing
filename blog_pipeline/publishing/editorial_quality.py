@@ -28,6 +28,10 @@ GUIDE_QUALITY_POLICY_START = date(2026, 7, 21)
 PROJECT_QUALITY_POLICY_START = date(2026, 8, 28)
 PROJECT_READER_ACCESS_POLICY_START = date(2026, 8, 25)
 COMMON_READER_ACCESS_POLICY_START = date(2026, 8, 31)
+READER_PATH_POLICY_START = date(2026, 9, 2)
+SELECTION_EVALUATION_POLICY_START = date(2026, 9, 2)
+WEEKLY_VISUAL_POLICY_START = date(2026, 9, 2)
+TUESDAY_TOON_POLICY_START = date(2026, 9, 8)
 VISUAL_ROLE_POLICY_START = date(2026, 7, 22)
 COVER_VARIETY_POLICY_START = date(2026, 7, 29)
 REVISIT_VALUE_POLICY_START = date(2026, 8, 4)
@@ -40,6 +44,35 @@ VISUAL_TREND_POLICY_START = date(2026, 8, 26)
 MOBILE_READABILITY_POLICY_START = date(2026, 8, 26)
 READER_HOOK_POLICY_START = date(2026, 8, 28)
 PUBLISH_GATE_START = DAILY_QUALITY_POLICY_START
+
+HARU_CHARACTER_ID = "haru-v1"
+HARU_CHARACTER_VERSION = 1
+HARU_CHARACTER_NAME = "하루"
+HARU_REFERENCE_ASSET = (
+    "editorial/curiosity/characters/haru-character-sheet-v1.png"
+)
+HARU_REFERENCE_SHA256 = (
+    "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da"
+)
+HARU_CHARACTER_ANCHOR = (
+    "same Haru: adult Korean man in his late 20s, short side-parted "
+    "charcoal-black hair, small deep-green clock-hand hairpin, round "
+    "deep-green glasses, warm ivory chore jacket over a charcoal shirt, "
+    "muted sage trousers, canvas notebook pouch, green-rim analog timer "
+    "showing one o'clock"
+)
+TOON_BEATS = (
+    "everyday_question",
+    "hidden_mechanism",
+    "one_minute_check",
+    "exception_boundary",
+)
+TOON_TEACHING_ROLES = (
+    "everyday_scene",
+    "mechanism_cutaway",
+    "one_minute_check",
+    "misconception_boundary",
+)
 
 PUBLISHABLE_ORIGINS = {
     "capture",
@@ -382,6 +415,207 @@ PROJECT_OPENING_JARGON = re.compile(
     re.IGNORECASE,
 )
 
+READER_PATH_PROFILES = {
+    "evergreen_problem": {
+        "reader_level": "practitioner",
+        "action_ratio": 0.50,
+    },
+    "change_explainer": {
+        "reader_level": "practitioner",
+        "action_ratio": 0.45,
+    },
+    "curiosity_mechanism": {
+        "reader_level": "general",
+        "action_ratio": 0.35,
+        "advanced_ratio": 0.25,
+        "maximum_early_technical_terms": 4,
+    },
+    "curiosity_myth_history": {
+        "reader_level": "general",
+        "action_ratio": 0.35,
+        "advanced_ratio": 0.25,
+        "maximum_early_technical_terms": 4,
+    },
+    "developer_insight": {
+        "reader_level": "developer",
+        "action_ratio": 0.50,
+    },
+    "project_story": {
+        "reader_level": "mixed",
+        "action_ratio": 1.00,
+    },
+}
+
+SELECTION_EVALUATION_POLICIES = {
+    "curiosity_mechanism": {
+        "policy": "curiosity_mechanism-v1",
+        "threshold": 75,
+        "criteria": {
+            "evergreen_question": 20,
+            "verifiable_sources": 20,
+            "simple_explanation": 10,
+            "cluster_depth": 10,
+            "everyday_scene": 15,
+            "surprising_mechanism": 15,
+            "one_minute_check": 10,
+        },
+        "role_criteria": {
+            "everyday_scene",
+            "surprising_mechanism",
+            "one_minute_check",
+        },
+        "hard_gates": {
+            "role_specific_nonzero",
+            "evidence_ready",
+            "duplicate_free",
+        },
+    },
+    "curiosity_myth_history": {
+        "policy": "curiosity_myth_history-v1",
+        "threshold": 75,
+        "criteria": {
+            "evergreen_question": 20,
+            "verifiable_sources": 20,
+            "simple_explanation": 10,
+            "cluster_depth": 10,
+            "belief_fact_boundary": 15,
+            "historical_evidence": 15,
+            "direct_check": 10,
+        },
+        "role_criteria": {
+            "belief_fact_boundary",
+            "historical_evidence",
+            "direct_check",
+        },
+        "hard_gates": {
+            "role_specific_nonzero",
+            "evidence_ready",
+            "duplicate_free",
+        },
+    },
+    "project_story": {
+        "policy": "project_story-v1",
+        "threshold": 80,
+        "criteria": {
+            "implementation_evidence": 30,
+            "episode_continuity": 15,
+            "decision_verdict": 15,
+            "transferable_value": 15,
+            "story_hook": 10,
+            "public_sources": 5,
+            "public_safety": 10,
+        },
+        "role_criteria": {
+            "implementation_evidence",
+            "decision_verdict",
+            "public_safety",
+        },
+        "hard_gates": {
+            "implementation_evidence",
+            "decision_verdict",
+            "public_safety",
+        },
+    },
+}
+
+WEEKLY_VISUAL_PROFILES = {
+    "evergreen_problem": {
+        "profile": "practical_diagnosis",
+        "cover_role": "problem_scene",
+        "required_roles": {"diagnosis_flow", "recovery_boundary"},
+        "role_logic": {
+            "diagnosis_flow": {"flow", "conditional", "evidence"},
+            "recovery_boundary": {"conditional", "before_after", "comparison"},
+            "real_evidence": {"evidence", "comparison"},
+        },
+    },
+    "curiosity_mechanism": {
+        "profile": "everyday_mechanism",
+        "cover_role": "surprising_everyday_result",
+        "required_roles": {"mechanism_cutaway", "one_minute_check"},
+        "role_logic": {
+            "everyday_scene": {"comparison", "before_after", "flow"},
+            "mechanism_cutaway": {"flow", "architecture"},
+            "one_minute_check": {"evidence", "comparison", "conditional", "before_after"},
+            "misconception_boundary": {"comparison", "conditional"},
+        },
+    },
+    "change_explainer": {
+        "profile": "change_impact",
+        "cover_role": "changed_condition_scene",
+        "required_roles": {"before_after_change", "action_check"},
+        "role_logic": {
+            "before_after_change": {"before_after", "comparison", "timeline"},
+            "action_check": {"flow", "conditional", "evidence"},
+            "source_evidence": {"evidence", "comparison"},
+        },
+    },
+    "curiosity_myth_history": {
+        "profile": "myth_evidence",
+        "cover_role": "belief_result_conflict",
+        "required_roles": {"myth_fact_boundary", "history_or_direct_check"},
+        "role_logic": {
+            "myth_fact_boundary": {"comparison", "conditional", "before_after"},
+            "history_or_direct_check": {"timeline", "evidence", "flow"},
+            "mechanism_context": {"flow", "architecture"},
+        },
+    },
+    "developer_insight": {
+        "profile": "developer_decision",
+        "cover_role": "tool_choice_scene",
+        "required_roles": {"source_evidence", "decision_map"},
+        "role_logic": {
+            "source_evidence": {"evidence"},
+            "decision_map": {"comparison", "architecture", "conditional", "flow"},
+            "mechanism_map": {"flow", "architecture"},
+            "use_case": {"evidence", "comparison", "flow"},
+        },
+        "role_origins": {
+            "source_evidence": {"capture", "annotated_capture", "measured_chart"},
+        },
+    },
+    "project_story": {
+        "profile": "project_evidence_story",
+        "cover_role": "episode_conflict",
+        "required_roles": {"implementation_evidence", "decision_result"},
+        "role_logic": {
+            "implementation_evidence": {"flow", "architecture", "evidence"},
+            "decision_result": {"comparison", "before_after", "conditional", "evidence"},
+            "next_question": {"flow", "conditional"},
+        },
+    },
+}
+
+GENERIC_VISUAL_SUBJECT_TERMS = {
+    "개발",
+    "결과",
+    "기능",
+    "기술",
+    "도구",
+    "방법",
+    "문제",
+    "비교",
+    "사용",
+    "설정",
+    "실제",
+    "원리",
+    "조건",
+    "프로젝트",
+    "확인",
+}
+
+TECHNICAL_TOKEN_RE = re.compile(
+    r"(?<![A-Za-z0-9])(?:[A-Z]{2,}[A-Za-z0-9]*|"
+    r"[A-Z][a-z]+[A-Z][A-Za-z0-9]*|[A-Za-z]+(?:-[A-Za-z0-9]+)+|"
+    r"[A-Za-z]+\d+[A-Za-z0-9]*|[1-5]\d{2})(?![A-Za-z0-9])"
+)
+
+KNOWN_TECHNICAL_TERM_RE = re.compile(
+    r"(?<![A-Za-z0-9])(?:api|cdn|css|dns|etag|html|https?|indexeddb|"
+    r"javascript|oauth|sdk|sql|tls|url|websocket)(?![A-Za-z0-9])",
+    re.IGNORECASE,
+)
+
 
 def depth_policy_for(identity, article_shape=""):
     """Return a copy so a concise change alert is not padded into a report."""
@@ -389,12 +623,13 @@ def depth_policy_for(identity, article_shape=""):
     if editorial_lane_for_identity(identity) in CURIOSITY_LANES:
         policy.update(
             minimum_headings=4,
-            maximum_headings=7,
+            maximum_headings=6,
             minimum_visuals=2,
-            maximum_visuals=5,
-            minimum_minutes=6,
-            maximum_minutes=12,
-            minimum_blocks=13,
+            maximum_visuals=4,
+            minimum_minutes=5,
+            maximum_minutes=10,
+            minimum_blocks=11,
+            required_block_types={"ul"},
         )
     if identity.content_type == "daily_news" and plain(article_shape) == "change_impact":
         policy.update(minimum_minutes=6, maximum_minutes=12)
@@ -633,6 +868,24 @@ def _schema_reasons(source, identity, *, require_images=True):
         elif kind == "visual":
             invalid |= not _strict_text(block.get("image"))
             invalid |= not _strict_text(block.get("caption"))
+            if "toon_panel" in block:
+                toon_panel = block.get("toon_panel")
+                invalid |= (
+                    not isinstance(toon_panel, int)
+                    or isinstance(toon_panel, bool)
+                    or toon_panel < 1
+                )
+            if "dialogue" in block:
+                dialogue = block.get("dialogue")
+                if not isinstance(dialogue, list) or not dialogue:
+                    invalid = True
+                else:
+                    invalid |= any(
+                        not isinstance(line, dict)
+                        or not _strict_text(line.get("speaker"))
+                        or not _strict_text(line.get("text"))
+                        for line in dialogue
+                    )
         elif kind == "ul":
             invalid |= not _strict_text_list(block.get("items"), minimum=1)
         elif kind == "table":
@@ -697,9 +950,12 @@ def _schema_reasons(source, identity, *, require_images=True):
                 not _strict_text(brief.get(key))
                 for key in ("generation_prompt", "generation_model")
             )
-            invalid |= not _strict_text_list(
-                brief.get("korean_labels"), minimum=2
-            )
+            if "toon_panel" in brief:
+                invalid |= brief.get("korean_labels") != []
+            else:
+                invalid |= not _strict_text_list(
+                    brief.get("korean_labels"), minimum=2
+                )
         elif origin in {"capture", "annotated_capture"}:
             invalid |= any(
                 not _strict_text(brief.get(key))
@@ -1707,6 +1963,273 @@ def _maximum_same_reader_block_run(content):
     return maximum
 
 
+def _reader_profile_key(identity):
+    lane = editorial_lane_for_identity(identity)
+    if lane in READER_PATH_PROFILES:
+        return lane
+    if identity.content_type == "project_log":
+        return "project_story"
+    return ""
+
+
+def _selection_evaluation_reasons(source, identity):
+    """Verify that direct-research lanes record the score that selected them."""
+    if (
+        date.fromisoformat(identity.publish_date)
+        < SELECTION_EVALUATION_POLICY_START
+    ):
+        return []
+    policy = SELECTION_EVALUATION_POLICIES.get(_reader_profile_key(identity))
+    if not policy:
+        return []
+
+    editorial = (
+        source.get("editorial")
+        if isinstance(source.get("editorial"), dict)
+        else {}
+    )
+    evaluation = editorial.get("selection_evaluation")
+    if not isinstance(evaluation, dict):
+        return ["quality_selection_evaluation"]
+    if set(evaluation) != {
+        "policy",
+        "criteria",
+        "total",
+        "threshold",
+        "hard_gates",
+        "decision",
+        "rejected_reasons",
+    }:
+        return ["quality_selection_evaluation"]
+
+    criteria = evaluation.get("criteria")
+    expected_criteria = policy["criteria"]
+    if not isinstance(criteria, dict) or set(criteria) != set(expected_criteria):
+        return ["quality_selection_evaluation"]
+    scores = list(criteria.values())
+    if any(
+        not isinstance(score, (int, float))
+        or isinstance(score, bool)
+        or not math.isfinite(float(score))
+        or score < 0
+        or score > expected_criteria[key]
+        for key, score in criteria.items()
+    ):
+        return ["quality_selection_evaluation"]
+
+    total = evaluation.get("total")
+    threshold = policy["threshold"]
+    hard_gates = evaluation.get("hard_gates")
+    if (
+        evaluation.get("policy") != policy["policy"]
+        or not isinstance(total, (int, float))
+        or isinstance(total, bool)
+        or not math.isfinite(float(total))
+        or not math.isclose(float(total), float(sum(scores)))
+        or evaluation.get("threshold") != threshold
+        or total < threshold
+        or not isinstance(hard_gates, dict)
+        or set(hard_gates) != policy["hard_gates"]
+        or any(value is not True for value in hard_gates.values())
+        or any(criteria[key] <= 0 for key in policy["role_criteria"])
+        or evaluation.get("decision") != "selected"
+        or evaluation.get("rejected_reasons") != []
+    ):
+        return ["quality_selection_evaluation"]
+    return []
+
+
+def _block_reader_text(block):
+    if not isinstance(block, dict):
+        return ""
+    values = [block.get("text"), block.get("caption")]
+    if isinstance(block.get("items"), list):
+        values.extend(block["items"])
+    if isinstance(block.get("headers"), list):
+        values.extend(block["headers"])
+    for row in block.get("rows") if isinstance(block.get("rows"), list) else []:
+        if isinstance(row, list):
+            values.extend(row)
+    return " ".join(plain(value) for value in values if plain(value))
+
+
+def _normalized_reader_phrase(value):
+    return re.sub(r"[^0-9A-Za-z가-힣]+", "", plain(value).casefold())
+
+
+def _reader_phrase_is_visible(value, candidates):
+    needle = _normalized_reader_phrase(value)
+    if not needle:
+        return False
+    return any(
+        needle in _normalized_reader_phrase(candidate)
+        for candidate in candidates
+        if plain(candidate)
+    )
+
+
+def _technical_terms(value, source=None):
+    text = str(value or "")
+    terms = {
+        match.casefold()
+        for pattern in (TECHNICAL_TOKEN_RE, KNOWN_TECHNICAL_TERM_RE)
+        for match in pattern.findall(text)
+    }
+    if not isinstance(source, dict):
+        return terms
+
+    declared_terms = []
+    access = source.get("reader_access")
+    if isinstance(access, dict) and isinstance(access.get("glossary"), list):
+        declared_terms.extend(
+            item.get("term")
+            for item in access["glossary"]
+            if isinstance(item, dict)
+        )
+    editorial = source.get("editorial")
+    if isinstance(editorial, dict) and isinstance(editorial.get("entities"), list):
+        declared_terms.extend(editorial["entities"])
+
+    text_normalized = _normalized_reader_phrase(text)
+    for declared in declared_terms:
+        normalized = _normalized_reader_phrase(declared)
+        if len(normalized) >= 2 and normalized in text_normalized:
+            terms.add(normalized)
+    return terms
+
+
+def _reader_path_issues(source, identity):
+    """Validate the visible route promised to the weekday's actual reader."""
+    if date.fromisoformat(identity.publish_date) < READER_PATH_POLICY_START:
+        return set()
+    profile_key = _reader_profile_key(identity)
+    profile = READER_PATH_PROFILES.get(profile_key)
+    if not profile:
+        return set()
+
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    path = editorial.get("reader_path") if isinstance(editorial.get("reader_path"), dict) else {}
+    issues = set()
+    entry_heading = plain(path.get("entry_heading"))
+    immediate_answer = plain(path.get("immediate_answer"))
+    completion_check = plain(path.get("completion_check"))
+    action_steps = path.get("action_steps") if isinstance(path.get("action_steps"), list) else []
+    action_steps = [plain(value) for value in action_steps if plain(value)]
+    if (
+        plain(path.get("reader_level")) != profile["reader_level"]
+        or not 4 <= len(entry_heading) <= 80
+        or not 30 <= len(immediate_answer) <= 220
+        or not 2 <= len(action_steps) <= 5
+        or any(not 12 <= len(value) <= 140 for value in action_steps)
+        or any(not _normalized_reader_phrase(value) for value in action_steps)
+        or len({_normalized_reader_phrase(value) for value in action_steps})
+        != len(action_steps)
+        or not 30 <= len(completion_check) <= 220
+    ):
+        issues.add("metadata")
+
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    blocks = _meaningful_blocks(content)
+    headings = [
+        (index, plain(block.get("text")))
+        for index, block in enumerate(blocks)
+        if block.get("t") == "h"
+    ]
+    if not headings or headings[0][1] != entry_heading:
+        issues.add("entry")
+
+    quick_summary = (
+        source.get("reader_access", {}).get("quick_summary", [])
+        if isinstance(source.get("reader_access"), dict)
+        else []
+    )
+    early_limit = max(1, math.ceil(len(blocks) * profile["action_ratio"]))
+    early_blocks = blocks[:early_limit]
+    early_candidates = [
+        plain(editorial.get("opening")),
+        *(
+            [plain(value) for value in quick_summary if plain(value)]
+            if isinstance(quick_summary, list)
+            else []
+        ),
+        *[_block_reader_text(block) for block in early_blocks],
+    ]
+    if not _reader_phrase_is_visible(immediate_answer, early_candidates):
+        issues.add("entry")
+
+    early_lists = [
+        (index, block)
+        for index, block in enumerate(early_blocks)
+        if block.get("t") == "ul"
+    ]
+    action_index = early_lists[0][0] if early_lists else -1
+    normalized_actions = {
+        _normalized_reader_phrase(value) for value in action_steps
+    }
+    action_group_matches = any(
+        normalized_actions.issubset(
+            {
+                _normalized_reader_phrase(value)
+                for value in block.get("items", [])
+                if plain(value)
+            }
+        )
+        for _, block in early_lists
+    )
+    if action_index < 0 or not action_group_matches:
+        issues.add("action")
+
+    tail_start = max(0, math.floor(len(blocks) * 0.70))
+    completion_candidates = [
+        plain(editorial.get("closing")),
+        plain(editorial.get("action")),
+        *[_block_reader_text(block) for block in blocks[tail_start:]],
+    ]
+    if not _reader_phrase_is_visible(completion_check, completion_candidates):
+        issues.add("completion")
+
+    maximum_terms = profile.get("maximum_early_technical_terms")
+    if maximum_terms is not None:
+        advanced_heading = plain(path.get("advanced_heading"))
+        advanced_indexes = [
+            index for index, heading in headings if heading == advanced_heading
+        ]
+        advanced_index = advanced_indexes[0] if advanced_indexes else -1
+        minimum_advanced_index = math.ceil(
+            len(blocks) * profile.get("advanced_ratio", 0.0)
+        )
+        if (
+            not advanced_heading
+            or advanced_index < minimum_advanced_index
+            or advanced_index <= action_index
+        ):
+            issues.add("advanced")
+        else:
+            early_technical = _technical_terms(
+                " ".join(_block_reader_text(block) for block in blocks[:advanced_index]),
+                source,
+            )
+            early_technical.difference_update(
+                _technical_terms(source.get("primary_query"), source)
+            )
+            if (
+                len(early_technical) > maximum_terms
+                or len(
+                    _technical_terms(immediate_answer, source)
+                    - _technical_terms(source.get("primary_query"), source)
+                )
+                > 2
+            ):
+                issues.add("early_jargon")
+    return issues
+
+
+def _reader_path_reasons(source, identity):
+    return ["quality_reader_path"] if _reader_path_issues(source, identity) else []
+
+
 def project_reader_scores(source, identity):
     """Score the observable project-story traits that a general reader sees."""
     if (
@@ -1780,6 +2303,9 @@ def project_reader_scores(source, identity):
     ):
         readability -= 2.0
 
+    if _reader_path_issues(source, identity):
+        understanding -= 2.0
+
     if any(
         block.get("t") == "code"
         and len(str(block.get("text") or "").splitlines()) > 12
@@ -1829,6 +2355,8 @@ def reader_access_scores(source, identity):
     if _reader_hook_reasons(source, identity):
         understanding -= 2.0
     if not 100 <= len(opening) <= 320:
+        understanding -= 2.0
+    if _reader_path_issues(source, identity):
         understanding -= 2.0
 
     news = source.get("news") if isinstance(source.get("news"), list) else []
@@ -2011,12 +2539,28 @@ def _visual_reasons(source, identity):
             labels = brief.get("korean_labels")
             prompt = plain(brief.get("generation_prompt"))
             model = plain(brief.get("generation_model"))
+            text_free_toon_panel = (
+                _reader_profile_key(identity) == "curiosity_mechanism"
+                and date.fromisoformat(identity.publish_date)
+                >= TUESDAY_TOON_POLICY_START
+                and type(brief.get("toon_panel")) is int
+            )
+            labels_are_valid = (
+                labels == []
+                if text_free_toon_panel
+                else (
+                    isinstance(labels, list)
+                    and 2 <= len(labels) <= 6
+                    and all(
+                        re.search(r"[가-힣]", plain(label))
+                        for label in labels
+                    )
+                )
+            )
             if not (
                 len(prompt) >= 30
                 and model
-                and isinstance(labels, list)
-                and 2 <= len(labels) <= 6
-                and all(re.search(r"[가-힣]", plain(label)) for label in labels)
+                and labels_are_valid
                 and len(plain(image.get("generation_prompt"))) >= 30
                 and plain(image.get("generation_prompt")) == prompt
                 and plain(image.get("generation_model")) == model
@@ -2125,7 +2669,326 @@ def _visual_reasons(source, identity):
     return reasons
 
 
-def _visual_role_reasons(source, identity):
+def _weekly_visual_reasons(source, identity, *, require_images=True):
+    """Keep common image quality while giving each weekday a distinct job."""
+    if date.fromisoformat(identity.publish_date) < WEEKLY_VISUAL_POLICY_START:
+        return []
+    policy = WEEKLY_VISUAL_PROFILES.get(_reader_profile_key(identity))
+    if not policy:
+        return []
+
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    cover = visual.get("cover") if isinstance(visual.get("cover"), dict) else {}
+    briefs = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
+    profile = policy["profile"]
+    cover_role = policy["cover_role"]
+    subject_terms = (
+        visual.get("subject_terms")
+        if isinstance(visual.get("subject_terms"), list)
+        else []
+    )
+    subject_terms = [plain(value) for value in subject_terms if plain(value)]
+    normalized_terms = [_normalized_reader_phrase(value) for value in subject_terms]
+    editorial = source.get("editorial") if isinstance(source.get("editorial"), dict) else {}
+    entities = editorial.get("entities") if isinstance(editorial.get("entities"), list) else []
+    topic_corpus = " ".join(
+        [
+            plain(source.get("primary_query")),
+            plain(editorial.get("headline")),
+            plain(editorial.get("reader_question")),
+            *[plain(value) for value in entities],
+        ]
+    )
+
+    def contains_subject(*values):
+        normalized = _normalized_reader_phrase(" ".join(plain(value) for value in values))
+        return any(term and term in normalized for term in normalized_terms)
+
+    def provenance_text(record):
+        if not isinstance(record, dict):
+            return ""
+        origin = plain(record.get("origin"))
+        if origin == "imagegen":
+            return plain(record.get("generation_prompt"))
+        if origin in {"capture", "annotated_capture"}:
+            return plain(record.get("capture_target"))
+        if origin == "measured_chart":
+            return plain(record.get("measurement_source"))
+        return ""
+
+    if (
+        not 2 <= len(subject_terms) <= 5
+        or len(set(normalized_terms)) != len(normalized_terms)
+        or any(not 2 <= len(term) <= 40 for term in normalized_terms)
+        or any(term in GENERIC_VISUAL_SUBJECT_TERMS for term in normalized_terms)
+        or any(
+            term not in _normalized_reader_phrase(topic_corpus)
+            for term in normalized_terms
+        )
+    ):
+        return ["quality_weekly_visual"]
+
+    cover_claim = plain(cover.get("visual_claim"))
+    if (
+        plain(visual.get("weekday_profile")) != profile
+        or plain(cover.get("weekday_profile")) != profile
+        or plain(cover.get("weekday_role")) != cover_role
+        or not 15 <= len(cover_claim) <= 160
+        or not contains_subject(
+            cover.get("label"), cover.get("steps"), cover.get("curiosity_hook")
+        )
+    ):
+        return ["quality_weekly_visual"]
+    if require_images:
+        cover_image_claim = plain(cover_image.get("visual_claim"))
+        cover_alt = plain(cover_image.get("alt"))
+        if (
+            plain(cover_image.get("weekday_profile")) != profile
+            or plain(cover_image.get("weekday_role")) != cover_role
+            or cover_image_claim != cover_claim
+            or _normalized_reader_phrase(cover_claim)
+            not in _normalized_reader_phrase(cover_alt)
+            or not contains_subject(cover_alt)
+            or not contains_subject(provenance_text(cover_image))
+        ):
+            return ["quality_weekly_visual"]
+
+    captions = {}
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    for block in content:
+        if isinstance(block, dict) and block.get("t") == "visual":
+            image_key = plain(block.get("image"))
+            if image_key:
+                captions.setdefault(image_key, []).append(plain(block.get("caption")))
+
+    roles = []
+    role_logic = policy["role_logic"]
+    role_origins = policy.get("role_origins", {})
+    for index, brief in enumerate(briefs, 1):
+        if not isinstance(brief, dict):
+            return ["quality_weekly_visual"]
+        image = images.get(f"visual_{index}")
+        image = image if isinstance(image, dict) else {}
+        role = plain(brief.get("teaching_role"))
+        logic_type = plain(brief.get("logic_type"))
+        origin = plain(brief.get("origin"))
+        teaching_claim = plain(brief.get("teaching_claim"))
+        caption_values = captions.get(f"visual_{index}", [])
+        if (
+            role not in role_logic
+            or logic_type not in role_logic[role]
+            or (role in role_origins and origin not in role_origins[role])
+            or not 15 <= len(teaching_claim) <= 180
+            or not any(
+                _normalized_reader_phrase(teaching_claim)
+                in _normalized_reader_phrase(caption)
+                for caption in caption_values
+            )
+            or not contains_subject(
+                brief.get("label"),
+                brief.get("steps"),
+                brief.get("curiosity_hook"),
+            )
+            or not contains_subject(teaching_claim)
+        ):
+            return ["quality_weekly_visual"]
+        if require_images:
+            image_claim = plain(image.get("teaching_claim"))
+            if (
+                plain(image.get("teaching_role")) != role
+                or image_claim != teaching_claim
+                or not contains_subject(image.get("alt"))
+                or not contains_subject(
+                    provenance_text(brief), provenance_text(image)
+                )
+            ):
+                return ["quality_weekly_visual"]
+        roles.append(role)
+
+    if not policy["required_roles"].issubset(set(roles)):
+        return ["quality_weekly_visual"]
+    return []
+
+
+def _toon_reasons(source, identity, *, require_images=True):
+    """Lock the Tuesday comic to one character and accessible HTML dialogue."""
+    publish_day = date.fromisoformat(identity.publish_date)
+    if publish_day < TUESDAY_TOON_POLICY_START:
+        return []
+
+    visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
+    toon = visual.get("toon")
+    briefs = visual.get("assets") if isinstance(visual.get("assets"), list) else []
+    images = source.get("images") if isinstance(source.get("images"), dict) else {}
+    cover = visual.get("cover") if isinstance(visual.get("cover"), dict) else {}
+    cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
+    news = source.get("news") if isinstance(source.get("news"), list) else []
+    item = news[0] if len(news) == 1 and isinstance(news[0], dict) else {}
+    content = item.get("content") if isinstance(item.get("content"), list) else []
+    visual_blocks = [
+        block
+        for block in content
+        if isinstance(block, dict) and block.get("t") == "visual"
+    ]
+    lane = _reader_profile_key(identity)
+    if lane != "curiosity_mechanism":
+        toon_fields = {
+            "toon_panel",
+            "toon_beat",
+            "character_presence",
+            "character_id",
+            "character_version",
+            "character_reference_sha256",
+        }
+        records = [cover, cover_image, *briefs]
+        records.extend(
+            image for image in images.values() if isinstance(image, dict)
+        )
+        has_toon_artifact = (
+            toon is not None
+            or any(
+                "toon_panel" in block or "dialogue" in block
+                for block in visual_blocks
+            )
+            or any(
+                any(field in record for field in toon_fields)
+                for record in records
+                if isinstance(record, dict)
+            )
+        )
+        return ["quality_toon_contract"] if has_toon_artifact else []
+    if not isinstance(toon, dict):
+        return ["quality_toon_contract"]
+
+    expected_toon = {
+        "format": "it_explainer_comic",
+        "series": "하루의 IT 원리툰",
+        "character_id": HARU_CHARACTER_ID,
+        "character_version": HARU_CHARACTER_VERSION,
+        "character_name": HARU_CHARACTER_NAME,
+        "character_anchor": HARU_CHARACTER_ANCHOR,
+        "reference_asset": HARU_REFERENCE_ASSET,
+        "reference_sha256": HARU_REFERENCE_SHA256,
+        "panel_count": 4,
+        "dialogue_mode": "html_bubbles",
+    }
+    if (
+        any(toon.get(key) != value for key, value in expected_toon.items())
+        or type(toon.get("character_version")) is not int
+        or type(toon.get("panel_count")) is not int
+    ):
+        return ["quality_toon_contract"]
+
+    identity_fields = {
+        "character_id": HARU_CHARACTER_ID,
+        "character_version": HARU_CHARACTER_VERSION,
+        "character_reference_sha256": HARU_REFERENCE_SHA256,
+    }
+
+    def identity_matches(record):
+        return (
+            isinstance(record, dict)
+            and type(record.get("character_version")) is int
+            and all(
+                record.get(key) == value for key, value in identity_fields.items()
+            )
+        )
+
+    def prompt_is_safe(record):
+        prompt = plain(record.get("generation_prompt"))
+        lowered = prompt.casefold()
+        return (
+            HARU_CHARACTER_ANCHOR.casefold() in lowered
+            and "no text" in lowered
+            and "no letters" in lowered
+            and "no labels" in lowered
+            and "no speech bubbles" in lowered
+        )
+
+    if (
+        len(briefs) != 4
+        or not identity_matches(cover)
+        or cover.get("korean_labels") != []
+    ):
+        return ["quality_toon_contract"]
+    if require_images and (
+        not identity_matches(cover_image)
+        or cover_image.get("korean_labels") != []
+        or plain(cover_image.get("origin")) != "imagegen"
+        or not prompt_is_safe(cover_image)
+    ):
+        return ["quality_toon_contract"]
+
+    blocks_by_image = {}
+    for block in visual_blocks:
+        blocks_by_image.setdefault(plain(block.get("image")), []).append(block)
+    expected_image_order = [f"visual_{index}" for index in range(1, 5)]
+    if (
+        len(visual_blocks) != 4
+        or [plain(block.get("image")) for block in visual_blocks]
+        != expected_image_order
+    ):
+        return ["quality_toon_contract"]
+
+    dialogue_count = 0
+    for index, (brief, beat, teaching_role) in enumerate(
+        zip(briefs, TOON_BEATS, TOON_TEACHING_ROLES), 1
+    ):
+        image_key = f"visual_{index}"
+        image = images.get(image_key)
+        blocks = blocks_by_image.get(image_key, [])
+        if (
+            not isinstance(brief, dict)
+            or len(blocks) != 1
+            or type(brief.get("toon_panel")) is not int
+            or brief.get("toon_panel") != index
+            or brief.get("toon_beat") != beat
+            or brief.get("teaching_role") != teaching_role
+            or brief.get("character_presence") != "haru"
+            or brief.get("origin") != "imagegen"
+            or brief.get("korean_labels") != []
+            or not identity_matches(brief)
+            or not prompt_is_safe(brief)
+        ):
+            return ["quality_toon_contract"]
+        if require_images and (
+            not isinstance(image, dict)
+            or image.get("korean_labels") != []
+            or not identity_matches(image)
+            or image.get("origin") != "imagegen"
+            or not prompt_is_safe(image)
+        ):
+            return ["quality_toon_contract"]
+
+        block = blocks[0]
+        dialogue = block.get("dialogue")
+        if (
+            type(block.get("toon_panel")) is not int
+            or block.get("toon_panel") != index
+            or not isinstance(dialogue, list)
+        ):
+            return ["quality_toon_contract"]
+        if not 1 <= len(dialogue) <= 2:
+            return ["quality_toon_contract"]
+        for line in dialogue:
+            if (
+                not isinstance(line, dict)
+                or line.get("speaker") != HARU_CHARACTER_NAME
+                or not 6 <= len(plain(line.get("text"))) <= 55
+            ):
+                return ["quality_toon_contract"]
+        dialogue_count += len(dialogue)
+
+    if dialogue_count > 8:
+        return ["quality_toon_contract"]
+    return []
+
+
+def _visual_role_reasons(source, identity, *, require_images=True):
     if date.fromisoformat(identity.publish_date) < VISUAL_ROLE_POLICY_START:
         return []
     visual = source.get("visual") if isinstance(source.get("visual"), dict) else {}
@@ -2164,39 +3027,43 @@ def _visual_role_reasons(source, identity):
         images = source.get("images") if isinstance(source.get("images"), dict) else {}
         cover_image = images.get("cover") if isinstance(images.get("cover"), dict) else {}
         style_keys = ("art_direction", "composition_type", "palette_family")
-        cover_prompt = plain(cover_image.get("generation_prompt")).casefold()
         cover_kind = plain(cover.get("cover_kind")).casefold()
-        image_cover_kind = plain(cover_image.get("cover_kind")).casefold()
         project_infographic_cover = (
             identity.content_type == "project_log"
             and date.fromisoformat(identity.publish_date)
             >= PROJECT_READER_ACCESS_POLICY_START
             and cover_kind == "infographic_diagram"
         )
-        prompt_matches_kind = (
-            cover_kind == REQUIRED_COVER_KIND
-            and cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIXES)
-            and REQUIRED_COVER_PROMPT_TOKEN in cover_prompt
-        ) or (
-            project_infographic_cover
-            and cover_prompt.startswith("use case: infographic-diagram")
-            and "asset type:" in cover_prompt
-            and "blog cover" in cover_prompt
-        )
         if (
             any(not _strict_text(cover.get(key)) for key in style_keys)
-            or any(not _strict_text(cover_image.get(key)) for key in style_keys)
-            or any(
-                plain(cover.get(key)) != plain(cover_image.get(key))
-                for key in style_keys
-            )
             or plain(cover.get("composition_type")).casefold()
             in BANNED_COVER_COMPOSITIONS
-            or cover_kind != image_cover_kind
             or (cover_kind != REQUIRED_COVER_KIND and not project_infographic_cover)
-            or not prompt_matches_kind
         ):
             return ["quality_visual_variety"]
+        if require_images:
+            cover_prompt = plain(cover_image.get("generation_prompt")).casefold()
+            image_cover_kind = plain(cover_image.get("cover_kind")).casefold()
+            prompt_matches_kind = (
+                cover_kind == REQUIRED_COVER_KIND
+                and cover_prompt.startswith(REQUIRED_COVER_PROMPT_PREFIXES)
+                and REQUIRED_COVER_PROMPT_TOKEN in cover_prompt
+            ) or (
+                project_infographic_cover
+                and cover_prompt.startswith("use case: infographic-diagram")
+                and "asset type:" in cover_prompt
+                and "blog cover" in cover_prompt
+            )
+            if (
+                any(not _strict_text(cover_image.get(key)) for key in style_keys)
+                or any(
+                    plain(cover.get(key)) != plain(cover_image.get(key))
+                    for key in style_keys
+                )
+                or cover_kind != image_cover_kind
+                or not prompt_matches_kind
+            ):
+                return ["quality_visual_variety"]
         if date.fromisoformat(identity.publish_date) >= REVISIT_VALUE_POLICY_START:
             render_family = plain(cover.get("render_family"))
             raw_cover_labels = cover.get("korean_labels", [])
@@ -2207,7 +3074,6 @@ def _visual_role_reasons(source, identity):
             )
             if (
                 render_family not in RENDER_FAMILIES
-                or render_family != plain(cover_image.get("render_family"))
                 or not isinstance(raw_cover_labels, list)
                 or len(cover_labels) > 3
                 or len({label.casefold() for label in cover_labels})
@@ -2216,6 +3082,10 @@ def _visual_role_reasons(source, identity):
                     not re.search(r"[가-힣]", label) or len(label) > 12
                     for label in cover_labels
                 )
+            ):
+                return ["quality_visual_variety"]
+            if require_images and render_family != plain(
+                cover_image.get("render_family")
             ):
                 return ["quality_visual_variety"]
     return []
@@ -2469,15 +3339,19 @@ def source_authoring_reasons(source, identity):
         lambda: _revisit_value_reasons(source, identity),
         lambda: _original_value_reasons(source, identity),
         lambda: _weekly_lane_reasons(source, identity),
+        lambda: _selection_evaluation_reasons(source, identity),
         lambda: _automation_walkthrough_reasons(source, identity),
         lambda: _reader_hook_reasons(source, identity),
         lambda: _korean_content_reasons(source),
         lambda: _reference_reasons(source),
         lambda: _source_freshness_reasons(source, identity),
         lambda: _depth_reasons(source, identity),
+        lambda: _reader_path_reasons(source, identity),
         lambda: _reader_access_reasons(source, identity),
         lambda: _prose_reasons(source, identity),
-        lambda: _visual_role_reasons(source, identity),
+        lambda: _visual_role_reasons(source, identity, require_images=False),
+        lambda: _weekly_visual_reasons(source, identity, require_images=False),
+        lambda: _toon_reasons(source, identity, require_images=False),
         lambda: _visual_trend_reasons(source, identity),
     )
     reasons = _run_quality_validators(validators)
@@ -2493,6 +3367,9 @@ def source_quality_reasons(source, identity):
     validators = (
         lambda: _schema_reasons(source, identity),
         lambda: _visual_reasons(source, identity),
+        lambda: _visual_role_reasons(source, identity),
+        lambda: _weekly_visual_reasons(source, identity),
+        lambda: _toon_reasons(source, identity),
         lambda: _visual_trend_reasons(source, identity, require_image=True),
         lambda: _experiment_reasons(source, identity),
     )

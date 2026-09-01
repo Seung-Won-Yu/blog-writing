@@ -558,6 +558,24 @@ def load_search_opportunities(path, *, now=None, max_age_days=30):
     return [item for item in opportunities if isinstance(item, dict)]
 
 
+def selection_policy_for_lane(config, editorial_lane):
+    """Return the effective selection policy for one weekday editorial lane."""
+    selection = dict(config.get("selection", {}))
+    lane_policies = selection.pop("by_editorial_lane", {})
+    lane_override = (
+        lane_policies.get(editorial_lane, {})
+        if isinstance(lane_policies, dict)
+        else {}
+    )
+    if isinstance(lane_override, dict):
+        selection.update(lane_override)
+    selection["editorial_lane"] = editorial_lane
+    selection["policy_source"] = (
+        "weekday_override" if lane_override else "shared_default"
+    )
+    return selection
+
+
 def build_inbox(
     config,
     fetch_text,
@@ -720,8 +738,7 @@ def build_inbox(
             search_cannibalization_excluded += 1
         else:
             eligible_candidates.append(candidate)
-    selection = dict(config.get("selection", {}))
-    selection["editorial_lane"] = editorial_lane
+    selection = selection_policy_for_lane(config, editorial_lane)
     selection["recently_selected_excluded"] = len(candidates) - len(eligible_candidates)
     selection["recent_url_excluded"] = recent_url_excluded
     selection["recent_publisher_excluded"] = recent_publisher_excluded
@@ -761,8 +778,15 @@ def build_inbox(
                 "fallback_min_durable_problem_score", minimum_durable_problem
             )
         )
+        minimum_freshness = int(selection.get("min_freshness", 0))
+        fallback_freshness = int(
+            selection.get("fallback_min_freshness", minimum_freshness)
+        )
+        require_change_signal = bool(selection.get("require_change_signal", False))
 
-        def select_with_thresholds(relevance, evergreen_fit, durable_problem):
+        def select_with_thresholds(
+            relevance, evergreen_fit, durable_problem, freshness
+        ):
             lead_pool = [
                 candidate
                 for candidate in eligible_candidates
@@ -782,6 +806,16 @@ def build_inbox(
                 >= evergreen_fit
                 and int(candidate.get("durable_problem_score", 0))
                 >= durable_problem
+                and int(
+                    candidate.get("lead_score_breakdown", {}).get(
+                        "freshness", 0
+                    )
+                )
+                >= freshness
+                and (
+                    not require_change_signal
+                    or bool(candidate.get("change_signal"))
+                )
             ]
             return select_lead_shortlist(
                 lead_pool,
@@ -798,6 +832,7 @@ def build_inbox(
             minimum_reader_relevance,
             minimum_evergreen_fit,
             minimum_durable_problem,
+            minimum_freshness,
         )
         required_selected = int(
             config.get("collection_quality", {}).get("min_selected", 1)
@@ -811,6 +846,7 @@ def build_inbox(
                 fallback_reader_relevance,
                 minimum_evergreen_fit,
                 minimum_durable_problem,
+                minimum_freshness,
             )
         evergreen_fallback_applied = (
             len(selected) < required_selected
@@ -823,6 +859,7 @@ def build_inbox(
                 else minimum_reader_relevance,
                 fallback_evergreen_fit,
                 minimum_durable_problem,
+                minimum_freshness,
             )
         durable_fallback_applied = (
             len(selected) < required_selected
@@ -837,6 +874,24 @@ def build_inbox(
                 if evergreen_fallback_applied
                 else minimum_evergreen_fit,
                 fallback_durable_problem,
+                minimum_freshness,
+            )
+        freshness_fallback_applied = (
+            len(selected) < required_selected
+            and fallback_freshness < minimum_freshness
+        )
+        if freshness_fallback_applied:
+            selected = select_with_thresholds(
+                fallback_reader_relevance
+                if fallback_applied
+                else minimum_reader_relevance,
+                fallback_evergreen_fit
+                if evergreen_fallback_applied
+                else minimum_evergreen_fit,
+                fallback_durable_problem
+                if durable_fallback_applied
+                else minimum_durable_problem,
+                fallback_freshness,
             )
         selection["reader_relevance_fallback_applied"] = fallback_applied
         selection["effective_min_reader_relevance"] = (
@@ -857,6 +912,12 @@ def build_inbox(
             fallback_durable_problem
             if durable_fallback_applied
             else minimum_durable_problem
+        )
+        selection["freshness_fallback_applied"] = freshness_fallback_applied
+        selection["effective_min_freshness"] = (
+            fallback_freshness
+            if freshness_fallback_applied
+            else minimum_freshness
         )
     else:
         selected = select_candidates(

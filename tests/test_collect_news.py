@@ -20,6 +20,7 @@ from blog_pipeline.collection.collect_news import (
     parse_github_trending,
     parse_html_links,
     render_inbox_html,
+    selection_policy_for_lane,
     main as collect_news_main,
 )
 
@@ -494,6 +495,142 @@ class InboxTests(unittest.TestCase):
                 "Gmail",
             }.issubset(broad_keywords)
         )
+
+    def test_weekday_selection_policy_separates_durable_and_change_gates(self):
+        config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+
+        monday = selection_policy_for_lane(config, "evergreen_problem")
+        wednesday = selection_policy_for_lane(config, "change_explainer")
+
+        self.assertEqual(monday["policy_source"], "weekday_override")
+        self.assertEqual(wednesday["policy_source"], "weekday_override")
+        self.assertGreater(
+            monday["min_durable_problem_score"],
+            wednesday["min_durable_problem_score"],
+        )
+        self.assertGreater(
+            monday["min_evergreen_fit"],
+            wednesday["min_evergreen_fit"],
+        )
+        self.assertEqual(monday["min_freshness"], 0)
+        self.assertGreaterEqual(wednesday["min_freshness"], 1)
+        self.assertEqual(
+            wednesday["fallback_min_freshness"],
+            wednesday["min_freshness"],
+        )
+        self.assertFalse(monday["require_change_signal"])
+        self.assertTrue(wednesday["require_change_signal"])
+
+    def test_weekday_hard_gates_select_different_candidates_from_same_feed(self):
+        config = {
+            "selection": {
+                "mode": "lead_shortlist",
+                "max_items": 1,
+                "max_per_source": 1,
+                "min_lead_score": 0,
+                "min_reader_relevance": 0,
+                "by_editorial_lane": {
+                    "evergreen_problem": {
+                        "min_evergreen_fit": 4,
+                        "min_durable_problem_score": 3,
+                        "min_freshness": 0,
+                        "require_change_signal": False,
+                    },
+                    "change_explainer": {
+                        "min_evergreen_fit": 1,
+                        "min_durable_problem_score": 0,
+                        "min_freshness": 1,
+                        "require_change_signal": True,
+                    },
+                },
+            },
+            "collection_quality": {"min_selected": 1},
+            "sources": [
+                {
+                    "id": "official",
+                    "name": "Official",
+                    "group": "official",
+                    "type": "rss",
+                    "url": "https://official.example/feed",
+                    "enabled": True,
+                }
+            ],
+        }
+
+        def score_as(*, evergreen, durable, freshness, change_signal=False):
+            def assign(candidate):
+                candidate["lead_score"] = 20
+                candidate["durable_problem_score"] = durable
+                candidate["announcement_matches"] = (
+                    ["update"] if change_signal else []
+                )
+                candidate["editorial_angle"] = {"intent": "explanation"}
+                candidate["raw_lane_scores"] = {"reader_consequence": 0}
+                candidate["lead_score_breakdown"] = {
+                    "reader_relevance": 2,
+                    "evergreen_fit": evergreen,
+                    "durable_problem": durable,
+                    "freshness": freshness,
+                }
+                return candidate
+
+            return assign
+
+        with patch(
+            "blog_pipeline.collection.collect_news.score_lead_candidate",
+            side_effect=score_as(evergreen=4, durable=3, freshness=0),
+        ):
+            monday = build_inbox(
+                config,
+                fetch_text=lambda _url: RSS_XML,
+                now=NOW,
+                day_id="2026-07-13",
+            )
+            wednesday_rejects_stale = build_inbox(
+                config,
+                fetch_text=lambda _url: RSS_XML,
+                now=NOW,
+                day_id="2026-07-15",
+            )
+
+        with patch(
+            "blog_pipeline.collection.collect_news.score_lead_candidate",
+            side_effect=score_as(evergreen=1, durable=0, freshness=3),
+        ):
+            monday_rejects_fresh_nonchange = build_inbox(
+                config,
+                fetch_text=lambda _url: RSS_XML,
+                now=NOW,
+                day_id="2026-07-13",
+            )
+            wednesday_rejects_fresh_nonchange = build_inbox(
+                config,
+                fetch_text=lambda _url: RSS_XML,
+                now=NOW,
+                day_id="2026-07-15",
+            )
+
+        with patch(
+            "blog_pipeline.collection.collect_news.score_lead_candidate",
+            side_effect=score_as(
+                evergreen=1,
+                durable=0,
+                freshness=3,
+                change_signal=True,
+            ),
+        ):
+            wednesday = build_inbox(
+                config,
+                fetch_text=lambda _url: RSS_XML,
+                now=NOW,
+                day_id="2026-07-15",
+            )
+
+        self.assertEqual(len(monday["selected"]), 1)
+        self.assertEqual(wednesday_rejects_stale["selected"], [])
+        self.assertEqual(monday_rejects_fresh_nonchange["selected"], [])
+        self.assertEqual(wednesday_rejects_fresh_nonchange["selected"], [])
+        self.assertEqual(len(wednesday["selected"]), 1)
 
     def test_collection_quality_requires_candidates_from_multiple_sources(self):
         config = {

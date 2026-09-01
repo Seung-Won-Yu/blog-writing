@@ -95,6 +95,8 @@ class WeeklyEditorialLaneTests(unittest.TestCase):
 
         self.assertGreater(monday_durable["weekly_lane_score"], monday_change["weekly_lane_score"])
         self.assertGreater(wednesday_change["weekly_lane_score"], wednesday_durable["weekly_lane_score"])
+        self.assertFalse(wednesday_durable["change_signal"])
+        self.assertTrue(wednesday_change["change_signal"])
 
     def test_rejects_non_web_and_hostless_urls(self):
         for unsafe in (

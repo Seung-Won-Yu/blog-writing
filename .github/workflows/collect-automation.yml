@@ -2,9 +2,9 @@ name: Collect Friday developer insight candidates
 
 on:
   schedule:
-    # 07:17 KST Friday. Leaves a 103-minute buffer before the 09:00 editor,
-    # matching the Monday/Wednesday delay allowance.
-    - cron: '17 22 * * 4'
+    # 06:30 KST Friday. GitHub schedules may start late, so the collector gets
+    # a 150-minute buffer before the 09:00 editor handoff.
+    - cron: '30 21 * * 4'
   workflow_dispatch:
     inputs:
       target_day:
