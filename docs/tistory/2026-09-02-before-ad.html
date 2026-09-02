@@ -1,0 +1,23 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">앱 목록은 열리는데 설치 버튼을 누르면 화면에 <code>&amp;$Server busy</code>라는 문구가 뜨며 멈춘다는 공개 이슈가 등록됐다. 낯선 <code>&amp;$</code>도 실제 오류 화면에 함께 표시된 문자다. 8월 31일 Nightly에서도 익명 계정 설치 실패가 확인됐지만, Google이 GrapheneOS를 차단했다는 결론은 아직 근거가 부족하다. 지금 필요한 일은 휴대전화를 초기화하는 것이 아니라 멈춘 구간과 업데이트 긴급도를 가르는 것이다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-02/Aurora-Store-설치-오류-대표.webp" alt="Aurora Store 익명 설치가 Server busy에서 멈춘 장면을 보여 준다. 익명 계정 앱 상자가 닫힌 서버 셔터 앞에 놓여 있다." width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">IT 트렌드 해설</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>Aurora Store 익명 계정의 Server busy 설치 실패는 확인됐지만 Google의 의도적 차단과 정확한 원인은 아직 확인되지 않았다.</li><li>설치·업데이트 단계와 계정 유형을 기록한 뒤 급한 앱만 공식 배포처나 GrapheneOS의 샌드박스 Play로 옮긴다.</li><li>9월 30일 Android 개발자 검증은 아직 시작 전이고 초기 적용 스토어도 제한돼 이번 오류의 직접 원인으로 볼 수 없다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>익명 계정</dt><dd>Aurora Store 서비스가 제공하는 공유 Google 계정 자격 증명으로, 사용자의 개인 계정 대신 Google Play에 접근하는 방식이다.</dd></div><div><dt>상류 API</dt><dd>Aurora Store가 앱 정보와 파일을 가져올 때 의존하는 Google Play 쪽 비공개 연결 규칙을 뜻한다.</dd></div><div><dt>샌드박스 Play</dt><dd>GrapheneOS에서 Google Play를 특별 권한 없이 일반 앱과 같은 격리 공간에 설치하는 공식 호환 방식이다.</dd></div><div><dt>서명 연속성</dt><dd>다른 배포처에서 받은 업데이트도 기존 앱과 같은 개발자 서명으로 확인돼 정상 업그레이드되는 조건이다.</dd></div></dl></div>
+</section>
+
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">핵심 해설 · Aurora OSS GitLab · 2026. 8. 31</p>
+    <h3>Aurora Store 익명 계정 설치에서 Server busy 오류 보고</h3>
+    <p class="digest-blurb">Aurora Store 4.8.4와 8월 31일 Nightly에서 익명 계정으로 앱을 설치할 때 Server busy 오류가 반복된다는 이슈가 등록됐다. 원 작성자는 VPN·캐시 삭제·계정 새로고침·재시작으로 해결되지 않았다고 기록했지만 정확한 원인은 확인되지 않았다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">먼저 답: 설치 실패는 확인됐지만 Google 차단은 미확정이다</h4><p>Aurora OSS 공개 이슈에는 Aurora Store 4.8.4와 8월 31일 Nightly에서 익명 계정 설치가 멈춘 환경이 기록돼 있다. 화면에는 <code>&amp;$Server busy</code>라고 표시되며 <code>&amp;$</code>도 오류 문구의 일부다. <code>Server busy</code> 오류로 줄여 부른다. 원 작성자는 VPN 전환, 캐시 삭제, 계정 새로고침, 앱 종료, 기기 재시작 후에도 오류가 남았다고 밝혔다.</p><p>여기서 확인된 것은 설치 요청 실패다. Google의 의도적 차단, GrapheneOS 전용 차단, Aurora Store 앱 전체의 영구 종료는 확인되지 않았다. 원 보고 환경도 GrapheneOS가 아니라 Android 16을 쓰는 CalyxOS의 Fairphone 5였다.</p><ul class="digest-bullet-list"><li>검색이 아니라 설치·업데이트 단계에서 Server busy가 나는지 기록한다.</li><li>Aurora Store 버전과 익명 계정 사용 여부를 확인한다.</li><li>앱 업데이트가 지금 꼭 필요한지와 공식 배포처가 있는지 가른다.</li><li>개인 계정을 Aurora Store에 넣기 전에 계정 차단 위험과 대체 경로를 비교한다.</li></ul><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-02/Aurora-Store-Server-busy-원문증거.webp" alt="Aurora OSS GitLab 이슈 1566에서 익명 계정 설치의 Server busy 오류와 재시도 조건을 기록한 화면" width="1200" height="630" loading="lazy"><figcaption>Aurora OSS 이슈의 Expected Behaviour와 Actual Behaviour는 정상 설치에서 Server busy 실패로 달라진 지점을 보여 준다. 이 캡처는 실패 지점은 보여 주지만 근본 원인을 확정하지 않는다.</figcaption></figure><h4 class="digest-subheading">Aurora Store는 앱을 보관하는 독립 창고가 아니다</h4><p>프로젝트 README는 Aurora Store를 Google Play의 앱 정보와 APK를 직접 가져오는 비공식 클라이언트라고 설명한다. 자체 앱 파일을 보관해 나눠 주는 별도 스토어가 아니라 Google Play로 들어가는 다른 문에 가깝다.</p><p>익명 로그인도 계정이 없는 구조는 아니다. GrapheneOS 사용 안내에 따르면 Aurora Store 서비스가 공유 계정 자격 증명을 가져와 대신 로그인한다. 이 계정 풀이나 Google Play 쪽 상류 API의 비공개 요청 형식이 달라지면 Aurora Store 코드를 바꾸지 않았어도 설치가 멈출 수 있다.</p><div class="digest-table-wrap" role="region" aria-label="Server busy에서 확인된 범위와 아직 확인되지 않은 주장" tabindex="0"><table class="digest-data-table"><caption>Server busy에서 확인된 범위와 아직 확인되지 않은 주장</caption><thead><tr><th scope="col">구분</th><th scope="col">현재 근거</th><th scope="col">지금 판단</th></tr></thead><tbody><tr><td>설치 실패</td><td>익명 계정과 8월 31일 Nightly에서 재현 보고</td><td>확인됨</td></tr><tr><td>GrapheneOS만 차단</td><td>최초 이슈 환경은 CalyxOS</td><td>근거 부족</td></tr><tr><td>Google의 의도적 차단</td><td>Aurora OSS·Google의 원인 발표 없음</td><td>미확정</td></tr><tr><td>9월 개발자 검증 때문</td><td>시행일은 9월 30일이고 초기 스토어가 따로 정해짐</td><td>시점 불일치</td></tr></tbody></table></div><h4 class="digest-subheading">멈춘 곳은 설치 요청이고 기존 앱이 지워진 것은 아니다</h4><p>이슈의 재현 순서는 앱 검색, 상세 결과 선택, 설치 누르기다. 따라서 적어도 최초 보고만으로는 기기에 이미 설치된 앱이 원격으로 비활성화됐다거나 Android가 대체 스토어 자체를 막았다고 말할 수 없다.</p><p>다만 보안 업데이트가 필요한 앱은 기다림의 비용이 커진다. 오류가 반복되면 앱 이름, 현재 버전, 필요한 새 버전, 마지막 정상 설치 시각을 적는다. 그래야 상류 장애와 특정 앱 호환 문제를 분리할 수 있다.</p></div>
+  </div>
+</section>
+</article>

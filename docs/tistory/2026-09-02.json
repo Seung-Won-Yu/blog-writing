@@ -1,0 +1,87 @@
+{
+  "title": "Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서",
+  "title_candidates": [
+    "Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서",
+    "Aurora Store 익명 계정 설치에서 Server busy 오류 보고",
+    "Aurora Store 익명 설치 요청이 Server busy 장벽 앞에서 멈추고 안전한 대체 경로를 고르는 장면: 앱은…"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-09-02",
+  "publish_date": "2026-09-02",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-02T09:00:00+09:00",
+  "tags": [
+    "Aurora Store",
+    "Aurora Store 설치 오류",
+    "Server busy",
+    "GrapheneOS",
+    "안드로이드 앱 설치",
+    "익명 계정",
+    "대체 앱스토어"
+  ],
+  "meta_description": "앱 목록은 열리는데 설치 버튼을 누르면 화면에 `&$Server busy`라는 문구가 뜨며 멈춘다는 공개 이슈가 등록됐다. 낯선 `&$`도 실제 오류 화면에 함께 표시된 문자다. 8월 31일 Nigh… Aurora Store 4.8.4와 8월 31일 Nightly에서 익명 계정으로 앱…",
+  "key_summary": [
+    "1. Aurora Store 익명 계정 설치에서 Server busy 오류 보고",
+    "직접 얻는 결과: 확인된 실패 범위와 미확정 원인을 분리하고, 업데이트가 급한 앱만 공식 배포처·GrapheneOS 샌드박스 Play·대기 중 안전한 경로로 나눌 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-02.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-02.html",
+  "before_ad_html": "docs/tistory/2026-09-02-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-02-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-02-adfit.html",
+  "source_sha256": "fe7b320bbd4e5ca4f9a25ceb505c00bd8b560bcb8a0b7f4a12f2286787a7fadc",
+  "html_sha256": "40b4d9a2ea544fb45efe3e8889175830f65c290db8be6288e055a1943e8e840f",
+  "adfit_sha256": "c22554b8a87f50b9e750d3e93129142a9a3e2b17d2d85f0613e5f0bf53c2df98",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-02/Aurora-Store-설치-오류-대표.webp",
+      "path": "docs/tistory/assets/2026-09-02/Aurora-Store-설치-오류-대표.webp",
+      "original_url": "",
+      "alt": "Aurora Store 익명 설치가 Server busy에서 멈춘 장면을 보여 준다. 익명 계정 앱 상자가 닫힌 서버 셔터 앞에 놓여 있다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-02/Aurora-Store-Server-busy-원문증거.webp",
+      "path": "docs/tistory/assets/2026-09-02/Aurora-Store-Server-busy-원문증거.webp",
+      "original_url": "",
+      "alt": "Aurora OSS GitLab 이슈 1566에서 익명 계정 설치의 Server busy 오류와 재시도 조건을 기록한 화면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-02/Aurora-Store-대체설치-선택흐름.webp",
+      "path": "docs/tistory/assets/2026-09-02/Aurora-Store-대체설치-선택흐름.webp",
+      "original_url": "",
+      "alt": "Aurora Store 설치 오류 뒤 업데이트 긴급도와 공식 배포처를 확인하는 선택 흐름",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
