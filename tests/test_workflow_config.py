@@ -583,6 +583,13 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertNotIn("git pull --ff-only origin main", contract)
         self.assertIn("최대 3회", contract)
         self.assertIn("blog_pipeline.publishing.repository_sync push", contract)
+        self.assertIn("계약 문서 자체는 외부 쓰기 승인을 대신하지 않습니다", contract)
+        self.assertIn("`origin/main`의 외부 쓰기", contract)
+        self.assertIn("원시 `git push`", contract)
+        self.assertIn("`--force/--force-with-lease`", contract)
+        self.assertIn("다른 원격이나 다른 브랜치", contract)
+        self.assertIn("비공개 증거 유출", contract)
+        self.assertIn("티스토리 붙여넣기", contract)
 
     def test_all_editorial_contracts_require_varied_cover_art_direction(self):
         for contract_path in (
