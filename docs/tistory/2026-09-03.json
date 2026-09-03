@@ -1,0 +1,87 @@
+{
+  "title": "시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법",
+  "title_candidates": [
+    "시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법",
+    "시크릿 모드가 지우는 기록과 남기는 흔적의 경계",
+    "시크릿 모드 창 안의 임시 기록은 정리되지만 창 밖의 접속 기록 장부는 남는 장면: 검은 창을 닫았는데 웹사이트와 네트워…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-03",
+  "publish_date": "2026-09-03",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-03T09:00:00+09:00",
+  "tags": [
+    "시크릿 모드",
+    "비공개 브라우징",
+    "방문 기록",
+    "쿠키 삭제",
+    "브라우저 추적",
+    "온라인 익명성",
+    "개인정보 보호"
+  ],
+  "meta_description": "가족과 함께 쓰는 컴퓨터에서 선물을 검색할 때 시크릿 모드를 켜곤 한다. 검은 창을 닫으면 흔적이 모두 사라진다고 생각하기 쉽다. 실제로 방문 기록과 쿠키는 세션이 끝난 뒤 기기에 남지 않는다. 하지… 비공개 브라우징은 세션 종료 뒤 기기의 방문 기록과 임시 사이트 데이터를 정리하지만…",
+  "key_summary": [
+    "1. 시크릿 모드가 지우는 기록과 남기는 흔적의 경계",
+    "직접 얻는 결과: 시크릿 모드가 지우는 기기 내부 데이터와 남는 파일·북마크·외부 관찰 범위를 구분하고, 1분 확인으로 기능의 경계를 직접 검증할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-03.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-03.html",
+  "before_ad_html": "docs/tistory/2026-09-03-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-03-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-03-adfit.html",
+  "source_sha256": "9bfde1e53dc13bf78e5ab21a2c57d9c73dc480f866c957c9b2465e479195ad17",
+  "html_sha256": "f93b32a8b8aa6b18be2d49d078996681408c8b085338c888d7d00bed7fe97641",
+  "adfit_sha256": "08f191f468a228288756030870ce6d442b4c1ab51f49c5f266b8609c1ee42658",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-기록-경계-대표.webp",
+      "path": "docs/tistory/assets/2026-09-03/시크릿-모드-기록-경계-대표.webp",
+      "original_url": "",
+      "alt": "시크릿 모드는 기기의 방문 기록은 정리하지만 웹사이트와 네트워크의 접속 기록까지 지우지는 않는다. 검은 창 안 종이는 파쇄되고 창 밖 접속 기록 장부는 남은 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-남는-기록-경계.webp",
+      "path": "docs/tistory/assets/2026-09-03/시크릿-모드-남는-기록-경계.webp",
+      "original_url": "",
+      "alt": "시크릿 모드 방문 기록과 쿠키는 임시 서랍에서 삭제되고 파일·북마크와 외부 접속 기록은 남는 경계도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-1분-확인.webp",
+      "path": "docs/tistory/assets/2026-09-03/시크릿-모드-1분-확인.webp",
+      "original_url": "",
+      "alt": "시크릿 모드에서 고유 주소와 북마크를 만든 뒤 모든 창을 닫아 방문 기록 없음과 북마크 남음을 비교하는 1분 확인",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

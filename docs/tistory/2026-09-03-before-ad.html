@@ -1,0 +1,22 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">가족과 함께 쓰는 컴퓨터에서 선물을 검색할 때 시크릿 모드를 켜곤 한다. 검은 창을 닫으면 흔적이 모두 사라진다고 생각하기 쉽다. 실제로 방문 기록과 쿠키는 세션이 끝난 뒤 기기에 남지 않는다. 하지만 다운로드한 파일과 북마크는 남고, 웹사이트와 네트워크의 관찰까지 멈추는 것은 아니다. 그렇다면 시크릿 모드는 누구에게서 무엇을 숨겨 주는 기능일까?</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-기록-경계-대표.webp" alt="시크릿 모드는 기기의 방문 기록은 정리하지만 웹사이트와 네트워크의 접속 기록까지 지우지는 않는다. 검은 창 안 종이는 파쇄되고 창 밖 접속 기록 장부는 남은 장면" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">궁금한 IT 원리</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>시크릿 모드는 모든 비공개 창을 닫으면 방문 기록·쿠키·사이트 데이터를 기기에 남기지 않는다.</li><li>공유 기기의 다음 사용자에게 흔적을 덜 남길 때 유용하지만, 다운로드·북마크와 온라인 접속 기록은 별도다.</li><li>웹사이트·로그인 계정·회사나 학교 네트워크에서 익명으로 보이게 하는 기능은 아니다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>시크릿 모드</dt><dd>평소 창과 분리된 임시 브라우징 세션을 만들고, 모든 비공개 창을 닫을 때 그 세션의 로컬 기록을 정리하는 기능이다.</dd></div><div><dt>쿠키</dt><dd>웹사이트가 로그인 상태나 장바구니처럼 방문 사이에 이어 쓸 작은 값을 브라우저에 저장하는 방식이다.</dd></div><div><dt>브라우저 지문</dt><dd>화면 크기·브라우저 설정처럼 여러 특징을 조합해 같은 브라우저인지 추정하는 추적 단서다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-blurb">비공개 브라우징은 세션 종료 뒤 기기의 방문 기록과 임시 사이트 데이터를 정리하지만 다운로드·북마크와 외부 관찰 기록까지 지우지는 않는다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">시크릿 모드는 기록 삭제 기능이지 투명 망토가 아니다</h4><p>시크릿 모드는 모든 비공개 창을 닫은 뒤 방문 기록·쿠키·사이트 데이터를 기기에 남기지 않지만, 파일·북마크와 웹사이트·네트워크 쪽 기록까지 없애지는 않는다. ‘아무 기록도 남지 않는다’는 믿음은 절반만 맞다. 주요 브라우저의 비공개 창은 같은 기기의 다음 사용자에게 방문 흔적을 덜 남기는 데 초점이 있다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-남는-기록-경계.webp" alt="시크릿 모드 방문 기록과 쿠키는 임시 서랍에서 삭제되고 파일·북마크와 외부 접속 기록은 남는 경계도" width="1200" height="630" loading="lazy"><figcaption>시크릿 모드의 방문 기록과 쿠키는 세션 뒤 삭제되지만 파일·북마크와 외부 접속 기록은 별도다. 가운데 임시 서랍은 모든 비공개 창을 닫을 때 비워지고, 사용자가 저장한 항목과 창 밖 관찰자는 다른 저장 위치에 남는다.</figcaption></figure><h4 class="digest-subheading">1분이면 남는 것과 지워지는 것을 가를 수 있다</h4><p>민감한 검색어 대신 설명용 사이트 example.com을 쓰면 안전하게 확인할 수 있다. 브라우저마다 메뉴 이름은 조금 다르지만 핵심은 고유 주소와 북마크를 같은 세션에서 만들고, 비공개 창을 전부 닫은 뒤 두 저장 위치를 비교하는 것이다.</p><ul class="digest-bullet-list"><li>시크릿 모드에서 https://example.com/?private-check=0903 주소를 연다.</li><li>페이지를 ‘비공개 확인 0903’이라는 이름으로 북마크한다.</li><li>열려 있는 시크릿 모드 창을 모두 닫는다.</li><li>방문 기록과 북마크 목록에서 private-check와 비공개 확인 0903을 각각 찾는다.</li></ul><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-03/시크릿-모드-1분-확인.webp" alt="시크릿 모드에서 고유 주소와 북마크를 만든 뒤 모든 창을 닫아 방문 기록 없음과 북마크 남음을 비교하는 1분 확인" width="1200" height="630" loading="lazy"><figcaption>시크릿 모드에서 고유 주소를 열고 북마크한 뒤 모든 창을 닫으면 방문 기록은 없고 북마크는 남는다. 이 확인은 기기 안 저장 범위만 보여 주며 웹사이트나 네트워크의 로그가 없다는 뜻은 아니다.</figcaption></figure><p>예상 결과는 방문 기록 검색에서 고유 주소가 나오지 않고 북마크는 그대로 보이는 것이다. 파일을 하나 내려받아도 파일 자체는 다운로드 폴더에 남는다. 실험을 마친 뒤 만든 북마크와 파일은 직접 지워야 한다.</p><h4 class="digest-subheading">닫기 전에는 임시 기록이 살아 있다</h4><p>시크릿 모드는 방문하는 순간마다 모든 것을 즉시 지우지 않는다. 로그인과 장바구니가 탭을 옮겨도 이어져야 하므로 세션 동안에는 쿠키와 사이트 데이터가 임시로 작동한다. 새 시크릿 창을 하나 더 열어도 같은 비공개 세션을 공유할 수 있다.</p><p>그래서 첫 창만 닫고 다른 시크릿 창을 남겨 두면 세션은 끝나지 않는다. Chrome도 모든 시크릿 창을 닫아야 세션이 종료된다고 안내한다. 공용 컴퓨터에서 창 하나가 뒤에 숨어 있지 않은지 확인해야 하는 이유다.</p></div>
+  </div>
+</section>
+</article>
