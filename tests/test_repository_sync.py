@@ -1,8 +1,13 @@
+import os
 import subprocess
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 from blog_pipeline.publishing.repository_sync import (
     PushStatus,
+    _run_git_push,
     is_transient_git_error,
     push_with_retry,
 )
@@ -18,6 +23,47 @@ def completed(returncode, stderr="", stdout=""):
 
 
 class RepositorySyncTests(unittest.TestCase):
+    def test_git_push_drops_stale_github_token_overrides(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            capture_path = root / "push-env.txt"
+            fake_git = bin_dir / "git"
+            fake_git.write_text(
+                "#!/bin/sh\n"
+                "{\n"
+                "  printf 'GH_TOKEN=%s\\n' \"${GH_TOKEN-unset}\"\n"
+                "  printf 'GITHUB_TOKEN=%s\\n' \"${GITHUB_TOKEN-unset}\"\n"
+                "  printf 'SYNC_SENTINEL=%s\\n' \"${SYNC_SENTINEL-unset}\"\n"
+                "} > \"$SYNC_CAPTURE_FILE\"\n",
+                encoding="utf-8",
+            )
+            fake_git.chmod(0o755)
+            test_environment = {
+                "GH_TOKEN": "expired-gh-token",
+                "GITHUB_TOKEN": "expired-github-token",
+                "SYNC_SENTINEL": "preserved",
+                "SYNC_CAPTURE_FILE": str(capture_path),
+                "PATH": f"{bin_dir}{os.pathsep}{os.environ.get('PATH', '')}",
+            }
+
+            with patch.dict(os.environ, test_environment, clear=False):
+                result = _run_git_push(
+                    ["git", "push", "origin", "main"],
+                    root,
+                )
+
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(
+                capture_path.read_text(encoding="utf-8").splitlines(),
+                [
+                    "GH_TOKEN=unset",
+                    "GITHUB_TOKEN=unset",
+                    "SYNC_SENTINEL=preserved",
+                ],
+            )
+
     def test_transient_network_errors_are_classified_for_retry(self):
         for message in (
             "fatal: unable to access: Could not resolve host: github.com",
@@ -64,6 +110,22 @@ class RepositorySyncTests(unittest.TestCase):
         self.assertEqual(result.attempts, 2)
         self.assertEqual(delays, [2])
         self.assertEqual(commands, [["git", "push", "origin", "main"]] * 2)
+
+    def test_default_retry_window_recovers_a_longer_dns_outage(self):
+        results = iter(
+            [completed(128, "Could not resolve host: github.com")] * 4
+            + [completed(0, stdout="main -> main")]
+        )
+        delays = []
+
+        result = push_with_retry(
+            runner=lambda command, cwd: next(results),
+            sleep=delays.append,
+        )
+
+        self.assertEqual(result.status, PushStatus.PUSHED)
+        self.assertEqual(result.attempts, 5)
+        self.assertEqual(delays, [3.0, 6.0, 12.0, 24.0])
 
     def test_auth_failure_stops_without_retry(self):
         calls = []

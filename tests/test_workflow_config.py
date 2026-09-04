@@ -38,6 +38,18 @@ class WorkflowConfigTests(unittest.TestCase):
             self.assertNotIn("09:25", contract)
             self.assertNotIn("14:25", contract)
 
+    def test_editor_contracts_share_the_bounded_push_retry_budget(self):
+        for contract_path in (
+            EDITOR_CONTRACT,
+            SATURDAY_CONTRACT,
+            GUIDE_CONTRACT,
+            CURIOSITY_CONTRACT,
+        ):
+            contract = contract_path.read_text(encoding="utf-8")
+            with self.subTest(contract=contract_path.name):
+                self.assertIn("최대 5회 재시도", contract)
+                self.assertNotIn("최대 3회 재시도", contract)
+
     def test_daily_contract_does_not_backfill_or_block_on_missed_days(self):
         contract = EDITOR_CONTRACT.read_text(encoding="utf-8")
 
@@ -581,7 +593,8 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("REMOTE_PUSHED_VERIFY_PENDING", contract)
         self.assertIn("실제 분기", contract)
         self.assertNotIn("git pull --ff-only origin main", contract)
-        self.assertIn("최대 3회", contract)
+        self.assertIn("최대 5회", contract)
+        self.assertIn("백오프 대기 합계는 45초", contract)
         self.assertIn("blog_pipeline.publishing.repository_sync push", contract)
         self.assertIn("계약 문서 자체는 외부 쓰기 승인을 대신하지 않습니다", contract)
         self.assertIn("`origin/main`의 외부 쓰기", contract)
@@ -590,6 +603,10 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("다른 원격이나 다른 브랜치", contract)
         self.assertIn("비공개 증거 유출", contract)
         self.assertIn("티스토리 붙여넣기", contract)
+        self.assertIn("`GH_TOKEN`·`GITHUB_TOKEN`", contract)
+        self.assertIn("Git credential helper", contract)
+        self.assertIn("`gh auth status` 결과만으로 토큰 만료", contract)
+        self.assertIn("승인 거절은 인증 실패가 아니므로 `LOCAL_COMPLETE`", contract)
 
     def test_all_editorial_contracts_require_varied_cover_art_direction(self):
         for contract_path in (

@@ -64,10 +64,23 @@ GitHub Pages 배포를 직접 승인하고, 아래 범위를 함께 고정한 �
    python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main
    ```
 
-   이 명령은 DNS·연결 실패·timeout·HTTP 5xx만 3초, 6초 간격으로 최대 3회 재시도합니다. 실행 환경이 GitHub 네트워크를 제한하면 같은 명령을 승인된 외부 네트워크 권한으로 실행합니다. 원시 `git push`를 제한된 환경에서 반복하지 않습니다.
+   이 명령은 예약 실행에 주입된 `GH_TOKEN`·`GITHUB_TOKEN`을 push subprocess에서
+   제거하고, 저장소에 설정된 Git credential helper를 사용합니다. 만료된 환경 토큰이
+   macOS 키체인 또는 `gh auth git-credential`의 정상 로그인을 가리는 일을 막습니다.
+
+   DNS·연결 실패·timeout·HTTP 5xx만 3초, 6초, 12초, 24초 간격으로 최대 5회
+   재시도합니다. 백오프 대기 합계는 45초입니다.
+   실행 환경이 GitHub 네트워크를 제한하면 같은 명령을 승인된 외부 네트워크 권한으로
+   한 번 요청합니다. 원시 `git push`를 제한된 환경에서 반복하지 않습니다.
+
+   샌드박스 안에서 DNS가 막힌 뒤 실행한 `gh auth status` 결과만으로 토큰 만료를
+   판정하지 않습니다. 이 상태에서는 GitHub API 검증도 같은 네트워크 제한을 받기
+   때문입니다. 승인 거절은 인증 실패가 아니므로 `LOCAL_COMPLETE`로 보고하고,
+   정리된 환경으로 실행한 실제 push가 `Authentication failed` 또는 권한 오류를
+   반환한 경우에만 인증·권한 `BLOCKED`로 분류합니다.
 
    - 성공: 해당 커밋의 GitHub Actions와 공개 Pages를 확인합니다. `Publish reviewed drafts`는 배포 뒤 `pages_smoke`로 공개 발행 도우미와 CI의 `docs/index.html` SHA-256이 같은지 제한 재시도합니다. 둘 다 확인된 경우만 `COMPLETE`입니다.
-   - 최대 3회 뒤에도 DNS·5xx·timeout: 커밋과 깨끗한 작업 트리를 보존하고 `LOCAL_COMPLETE`로 보고합니다. 다음 예약 실행은 시작 단계에서 이 커밋을 감지해 새 작업과 함께 다시 push합니다.
+   - 최대 5회 뒤에도 DNS·5xx·timeout: 커밋과 깨끗한 작업 트리를 보존하고 `LOCAL_COMPLETE`로 보고합니다. 다음 예약 실행은 시작 단계에서 이 커밋을 감지해 새 작업과 함께 다시 push합니다.
    - 인증·권한·non-fast-forward: 재시도하지 않고 `BLOCKED`로 보고합니다. 강제 push, rebase, reset은 하지 않습니다.
 
 3. GitHub Actions API가 일시적으로 열리지 않거나 Pages 전파 지연으로 `pages_smoke`가 일치하지 않지만 push와 배포가 성공했다면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 배포를 반복하거나 새 원고를 다시 만들지 않습니다.

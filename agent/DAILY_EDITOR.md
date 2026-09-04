@@ -167,7 +167,7 @@
 
    `publish_bundle`은 원고 JSON, 메타, 본문·광고 분할본, AdFit 결합본, 미리보기, 이미지, 루트 발행 도우미를 한 묶음으로 취급합니다. `READY`가 아니면 커밋하거나 완료로 보고하지 않습니다. 로컬에만 남은 파일을 저장소 정책상 제외 파일이라고 추측하지 않습니다.
 
-10. 모든 기준을 통과하고 실제 diff가 있을 때 하나의 로컬 커밋으로 확정한 뒤 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`을 한 번 실행합니다. 이 명령 내부의 일시적 네트워크 최대 3회 재시도까지 실패하면 커밋을 보존하고 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 푸시와 `Publish reviewed drafts`, 공개 Pages의 실제 조립·복사 흐름이 모두 확인된 경우만 `COMPLETE`입니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. 티스토리에는 자동 발행하지 않습니다.
+10. 모든 기준을 통과하고 실제 diff가 있을 때 하나의 로컬 커밋으로 확정한 뒤 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`을 한 번 실행합니다. 이 명령 내부의 일시적 네트워크 최대 5회 재시도까지 실패하면 커밋을 보존하고 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. 푸시와 `Publish reviewed drafts`, 공개 Pages의 실제 조립·복사 흐름이 모두 확인된 경우만 `COMPLETE`입니다. 사용자 인계 지점은 GitHub Pages 루트의 `오늘 글 발행 준비` 페이지 하나입니다. 새 결과를 별도 페이지로만 남기지 말고 반드시 이 페이지의 당일 카드에 제목·카테고리·태그·대표 이미지·광고 조립·미리보기·최종 HTML이 모두 연결됐는지 확인합니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 단일 실행과 토큰 원칙
 

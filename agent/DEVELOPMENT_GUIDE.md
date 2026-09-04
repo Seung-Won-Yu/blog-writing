@@ -171,7 +171,7 @@ python3 -m blog_pipeline.publishing.publish_bundle --draft-id YYYY-MM-DD-guide -
 git diff --cached --check
 ```
 
-데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 실제 분기가 없고 `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이며 staged diff가 있을 때 하나의 로컬 커밋으로 확정합니다. 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`이 일시적 네트워크 최대 3회 재시도 뒤에도 실패하면 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. `Publish reviewed drafts`와 공개 GitHub Pages 연결까지 확인된 경우만 `COMPLETE`입니다. 티스토리에는 자동 발행하지 않습니다.
+데스크톱과 모바일 미리보기에서 제목, 표·코드 가로 스크롤, 이미지 글자, 캡션, 광고 위치, 본문 여백을 확인합니다. 실제 분기가 없고 `daily_guard`가 `COMPLETE`, `publish_bundle`이 `READY`이며 staged diff가 있을 때 하나의 로컬 커밋으로 확정합니다. 공통 계약의 `python3 -m blog_pipeline.publishing.repository_sync push --remote origin --ref main`이 일시적 네트워크 최대 5회 재시도 뒤에도 실패하면 `LOCAL_COMPLETE`, push 성공 뒤 API 확인만 실패하면 `REMOTE_PUSHED_VERIFY_PENDING`으로 보고합니다. `Publish reviewed drafts`와 공개 GitHub Pages 연결까지 확인된 경우만 `COMPLETE`입니다. 티스토리에는 자동 발행하지 않습니다.
 
 ## 발행 전 체크
 
