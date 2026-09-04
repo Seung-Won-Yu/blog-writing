@@ -1,0 +1,94 @@
+{
+  "title": "AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래",
+  "title_candidates": [
+    "AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래",
+    "코딩 에이전트의 입력에서 오래된 자료를 덜어 내고 필요한 근거만 남기는 작업: 더 긴 프롬프트가 아니라 정보의 자리를 바…"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-09-04-automation",
+  "publish_date": "2026-09-04",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-04T09:00:00+09:00",
+  "tags": [
+    "AI 코딩 에이전트",
+    "컨텍스트 설계",
+    "Context engineering",
+    "에이전트",
+    "프롬프트"
+  ],
+  "meta_description": "같은 저장소에서 오래 대화한 AI 코딩 에이전트가 방금 바꾼 요구보다 예전 지시를 따르거나, 이미 끝난 조사 결과를 계속 끌고 오는 순간이 있다. 이때 지시를 더 붙이면 입력은 길어지지만 우선순위는… 코딩 에이전트의 입력을 고정·찾기·기록·분리로 나눠, 오래된 지시와 큰 도구 결과가…",
+  "key_summary": [
+    "1. AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래",
+    "직접 얻는 결과: 독자는 정보를 고정·찾기·기록·분리하는 네 갈래 선택표와 바로 적용할 축소 실험을 얻는다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-09-04.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-04-automation.html",
+  "before_ad_html": "docs/tistory/2026-09-04-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-04-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-04-automation-adfit.html",
+  "source_sha256": "6e02839c627291c14c0ee430639562abe5e92bd3a5626b976cf6c9abf7e2fd12",
+  "html_sha256": "d921817d9d85efec547cf714ecc9c1d20baf6e283db73b458a60a7bebb51f3f3",
+  "adfit_sha256": "52b33b66595ec63e82dcfef4a950228896267a599badef31098e84e25fd02d92",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/컨텍스트-잡음-덜어내기-대표.webp",
+      "path": "docs/tistory/assets/2026-09-04-automation/컨텍스트-잡음-덜어내기-대표.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내 현재 작업과 검증 근거를 드러낸다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/Anthropic-효과적인-컨텍스트-원칙-주석.webp",
+      "path": "docs/tistory/assets/2026-09-04-automation/Anthropic-효과적인-컨텍스트-원칙-주석.webp",
+      "original_url": "",
+      "alt": "Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/코딩-에이전트-컨텍스트-선택지도.webp",
+      "path": "docs/tistory/assets/2026-09-04-automation/코딩-에이전트-컨텍스트-선택지도.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/GitHub-컨텍스트-가볍게-유지하기.webp",
+      "path": "docs/tistory/assets/2026-09-04-automation/GitHub-컨텍스트-가볍게-유지하기.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,662 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-04-automation",
+  "publish_date": "2026-09-04",
+  "date_label": "2026. 9. 4",
+  "weekday": "금",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-04T09:00:00+09:00",
+  "primary_query": "AI 코딩 에이전트 컨텍스트 설계",
+  "tags": [
+    "AI 코딩 에이전트",
+    "컨텍스트 설계",
+    "Context engineering",
+    "에이전트",
+    "프롬프트"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "AI 코딩 에이전트가 엇나가면 지시를 더 붙이기보다 고정·찾기·기록·분리 중 알맞은 컨텍스트 위치를 먼저 고른다.",
+      "늘 지킬 규칙은 고정하고, 큰 자료는 필요할 때 찾으며, 긴 작업의 결정은 짧게 기록하고, 독립 조사는 분리한다.",
+      "컨텍스트를 줄인 뒤 같은 작업을 다시 평가해야 무엇을 빼도 되는지 안전하게 판단할 수 있다."
+    ],
+    "glossary": [
+      {
+        "term": "컨텍스트",
+        "meaning": "에이전트가 현재 답이나 행동을 정할 때 참고하는 지시, 대화, 코드, 도구 결과의 묶음이다."
+      },
+      {
+        "term": "컨텍스트 설계",
+        "meaning": "필요한 정보를 알맞은 시점과 위치에 제공하고 오래된 정보는 정리하는 작업이다."
+      },
+      {
+        "term": "점진적 공개",
+        "meaning": "모든 자료를 처음부터 넣지 않고 필요해진 순간에 관련 정보만 여는 방식이다."
+      },
+      {
+        "term": "압축",
+        "meaning": "긴 대화에서 결정과 남은 일만 남기고 중복된 세부 내용을 줄이는 과정이다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래",
+    "opening": "같은 저장소에서 오래 대화한 AI 코딩 에이전트가 방금 바꾼 요구보다 예전 지시를 따르거나, 이미 끝난 조사 결과를 계속 끌고 오는 순간이 있다. 이때 지시를 더 붙이면 입력은 길어지지만 우선순위는 오히려 흐려질 수 있다. 문제는 정보의 양보다 어떤 정보를 언제 어디에 둘지다.",
+    "closing": "좋은 컨텍스트는 가장 긴 입력이 아니라 지금 결정에 필요한 근거가 잘 보이는 입력이다. 고정·찾기·기록·분리 중 한 위치를 고르고, 같은 작업을 다시 평가해 결과가 유지되는지 확인하면 된다. 한 번에 완벽한 규칙을 만들기보다 잡음 하나를 덜어 내는 반복이 더 안전하다.",
+    "action": "현재 에이전트 대화에서 오래된 로그 하나를 빼고, 남은 결정 세 줄을 기록한 뒤 같은 검증 작업을 다시 실행한다.",
+    "audience_problem": "개발자가 AI 코딩 에이전트에 자료와 지시를 계속 추가하지만 오래된 정보와 중복 규칙 때문에 결과가 엇나간다.",
+    "reader_takeaway": "독자는 정보를 고정·찾기·기록·분리하는 네 갈래 선택표와 바로 적용할 축소 실험을 얻는다.",
+    "why_now": "코딩 에이전트가 긴 작업과 여러 도구를 맡으면서 컨텍스트 길이보다 관련성, 최신성, 위치를 관리하는 일이 실무 품질을 좌우한다.",
+    "topic_key": "coding-agent-context-engineering-four-way-guide",
+    "reader_question": "AI 코딩 에이전트가 엉뚱한 방향으로 갈 때 어떤 정보를 고정하고 찾고 기록하고 분리해야 할까?",
+    "entities": [
+      "AI 코딩 에이전트",
+      "컨텍스트 설계",
+      "Context engineering",
+      "OpenAI",
+      "GitHub",
+      "Anthropic"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "judgment"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "decision_guide",
+    "search_intent": {
+      "query": "AI 코딩 에이전트",
+      "reader_need": "코딩 에이전트가 오래된 지시나 관련 없는 자료에 끌려갈 때 컨텍스트를 정리하는 기준이 필요하다.",
+      "answer_format": "고정·찾기·기록·분리 선택표와 단계별 축소 실험"
+    },
+    "reader_hook": {
+      "scene": "긴 코딩 세션에서 에이전트가 최신 요구보다 오래된 로그와 예전 지시를 따라가는 장면",
+      "stakes": "정보를 계속 더하면 핵심 지시가 묻혀 잘못된 수정과 재작업이 커질 수 있다.",
+      "payoff": "정보마다 알맞은 자리를 고르는 네 갈래 지도로 컨텍스트를 줄이고 결과를 다시 검증한다.",
+      "open_question": "지금 입력에 남길 정보와 필요할 때만 꺼낼 정보를 어떻게 나눌까?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "먼저 답하면, 더 넣기 전에 정보의 자리를 바꾼다",
+      "immediate_answer": "AI 코딩 에이전트가 엇나가면 지시를 더 붙이기보다 고정·찾기·기록·분리 중 알맞은 컨텍스트 위치를 먼저 고른다.",
+      "action_steps": [
+        "늘 지켜야 할 규칙과 이번 작업의 요청을 분리한다.",
+        "큰 문서와 로그는 처음부터 넣지 말고 필요할 때 찾게 한다.",
+        "결정과 남은 일만 세 줄로 기록한 뒤 같은 검증을 다시 실행한다."
+      ],
+      "completion_check": "현재 에이전트 대화에서 오래된 로그 하나를 빼고, 남은 결정 세 줄을 기록한 뒤 같은 검증 작업을 다시 실행한다."
+    },
+    "revisit": {
+      "quick_answer": "반복 규칙은 고정하고 큰 자료는 찾게 하며 긴 세션의 결정은 기록하고 독립적인 조사는 분리한다.",
+      "reuse_case": "코딩 에이전트가 긴 작업, 큰 저장소, 여러 도구 결과를 함께 다룰 때 정보가 들어갈 위치를 고르는 기준으로 쓴다.",
+      "failure_case": "모든 문서와 로그를 처음부터 넣거나 서로 충돌하는 지시를 반복하면 중요한 정보가 묻힐 수 있다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "모델 컨텍스트 지침 변경",
+        "에이전트 메모리 기능 변경",
+        "도구 검색 방식 변경"
+      ]
+    },
+    "original_value": {
+      "durable_question": "코딩 에이전트의 컨텍스트를 정보의 역할과 수명에 따라 어떻게 배치해야 하는가?",
+      "source_gap": "공식 문서는 간결한 프롬프트, 대화 압축, 필요할 때 자료 찾기, 독립 작업 분리를 따로 설명해 한 작업에서 고르는 순서는 보여 주지 않는다.",
+      "contribution": "OpenAI·GitHub·Anthropic의 현재 지침과 장문 입력 연구를 고정·찾기·기록·분리라는 네 가지 선택으로 재구성했다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 지금 컨텍스트에서 뺄 정보 하나와 옮길 위치를 고르고 축소 전후 결과를 비교할 수 있다.",
+      "limits": "장문 입력 연구는 이전 세대 모델을 대상으로 하며 현재 코딩 에이전트의 성능을 직접 측정한 벤치마크는 아니다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 93,
+      "criteria": {
+        "search_durability": 20,
+        "developer_relevance": 25,
+        "source_authority": 18,
+        "original_contribution": 15,
+        "curiosity": 15
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "AI 코딩 에이전트",
+      "컨텍스트 설계",
+      "Context engineering"
+    ],
+    "subject": "코딩 에이전트의 입력에서 오래된 자료를 덜어 내고 필요한 근거만 남기는 작업",
+    "hook": "더 긴 프롬프트가 아니라 정보의 자리를 바꾸면 결과가 달라질까?",
+    "motif": "작업 트레이, 저장소 지도, 현재 요청, 검증 체크리스트",
+    "cover": {
+      "label": "AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내는 장면",
+      "scene_label": [
+        "오래된 자료 제거",
+        "현재 요청",
+        "검증 근거"
+      ],
+      "steps": "AI 코딩 에이전트의 컨텍스트 잡음을 덜어 내고 현재 작업과 검증 근거를 드러낸다.",
+      "curiosity_hook": "컨텍스트 설계에서 무엇을 더 넣기보다 무엇을 걷어 내야 할까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내 현재 작업과 검증 근거를 드러낸다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "context_noise_removal",
+      "composition_type": "documentary_closeup",
+      "palette_family": "navy_amber_paper",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "문서 더미를 들어 올리자 저장소 지도와 현재 작업 카드가 드러나는 손",
+      "texture_cue": "무광 종이와 금속 트레이, 연필 표시",
+      "authenticity_cue": "접힌 모서리와 실제 업무 흔적",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\nAsset type: Korean technology magazine blog cover, 1200x630 landscape\nPrimary request: A developer's hand lifts a stack of irrelevant old documents from a metal work tray, revealing a repository map, current task card, and test checklist for AI coding-agent context engineering.\nStyle: documentary closeup, navy and warm amber accents, realistic matte paper.\nConstraints: no readable text, no logos, no robots, no glowing AI symbols.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "Context engineering을 작고 신호 높은 정보로 설명한 공식 근거",
+        "scene_label": [
+          "공식 정의",
+          "작은 정보",
+          "높은 신호"
+        ],
+        "steps": "Anthropic 공식 글에서 컨텍스트 설계의 핵심 정의를 직접 확인한다.",
+        "curiosity_hook": "컨텍스트 설계는 정보를 최대한 많이 넣는 일일까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다",
+        "capture_tool": "browser",
+        "capture_target": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "captured_at": "2026-09-04T09:14:00+09:00",
+        "capture_note": "공식 글의 핵심 문장을 직접 캡처하고 해당 문단을 표시했다.",
+        "source_url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "AI 코딩 에이전트 컨텍스트 설계의 고정·찾기·기록·분리 선택 지도",
+        "scene_label": [
+          "고정",
+          "찾기",
+          "기록",
+          "분리"
+        ],
+        "steps": "정보의 반복성·크기·수명·독립성을 보고 고정·찾기·기록·분리 중 하나를 고른다.",
+        "curiosity_hook": "지금 가진 정보는 어느 자리에 두어야 코딩 에이전트가 덜 엇나갈까?",
+        "evidence_type": "diagram",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "teaching_claim": "AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다",
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Korean editorial decision map, 1200x630, for AI coding-agent context engineering. Four large physical trays labeled exactly 고정, 찾기, 기록, 분리. Show a rule card, a searchable document box, a compact decision note, and an independent research branch. Clean navy and warm ivory palette, large readable Korean labels, no other text, no logos, no robot.",
+        "korean_labels": [
+          "고정",
+          "찾기",
+          "기록",
+          "분리"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "GitHub가 권하는 AI 코딩 에이전트 컨텍스트 가볍게 유지하기",
+        "scene_label": [
+          "새 대화",
+          "세션 압축",
+          "도구 축소"
+        ],
+        "steps": "새 문제는 새 대화로 나누고 긴 세션은 압축하며 필요한 도구만 남기는 공식 지침을 확인한다.",
+        "curiosity_hook": "긴 코딩 세션을 계속 이어 가는 것이 정말 유리할까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "capture",
+        "teaching_role": "use_case",
+        "teaching_claim": "AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다",
+        "capture_tool": "browser",
+        "capture_target": "Context engineering guidance for AI coding agent screenshot from https://docs.github.com/en/copilot/tutorials/optimize-ai-usage",
+        "captured_at": "2026-09-04T09:16:00+09:00",
+        "capture_note": "GitHub 공식 문서의 Keep your context lean 구간을 직접 캡처했다.",
+        "source_url": "https://docs.github.com/en/copilot/tutorials/optimize-ai-usage",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내 현재 작업과 검증 근거를 드러낸다",
+      "path": "docs/tistory/assets/2026-09-04-automation/컨텍스트-잡음-덜어내기-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/컨텍스트-잡음-덜어내기-대표.webp",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내 현재 작업과 검증 근거를 드러낸다",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\nAsset type: Korean technology magazine blog cover, 1200x630 landscape\nPrimary request: A developer's hand lifts a stack of irrelevant old documents from a metal work tray, revealing a repository map, current task card, and test checklist for AI coding-agent context engineering.\nStyle: documentary closeup, navy and warm amber accents, realistic matte paper.\nConstraints: no readable text, no logos, no robots, no glowing AI symbols.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "context_noise_removal",
+      "composition_type": "documentary_closeup",
+      "palette_family": "navy_amber_paper",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "문서 더미를 들어 올리자 저장소 지도와 현재 작업 카드가 드러나는 손",
+      "texture_cue": "무광 종이와 금속 트레이, 연필 표시",
+      "authenticity_cue": "접힌 모서리와 실제 업무 흔적",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 92892,
+      "quality": 82,
+      "sha256": "6770da86baf99b7e8412ace3bef1d85d13fce5e1c15afedaea4b853996e39d0a"
+    },
+    "visual_1": {
+      "origin": "annotated_capture",
+      "alt": "Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다",
+      "path": "docs/tistory/assets/2026-09-04-automation/Anthropic-효과적인-컨텍스트-원칙-주석.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/Anthropic-효과적인-컨텍스트-원칙-주석.webp",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다",
+      "capture_tool": "browser",
+      "capture_target": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "captured_at": "2026-09-04T09:14:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 76716,
+      "quality": 82,
+      "sha256": "065e07833974d8adb44cd92838e3e783958f695551012fabce698aec8f26b798",
+      "capture_sha256": "065e07833974d8adb44cd92838e3e783958f695551012fabce698aec8f26b798"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다",
+      "path": "docs/tistory/assets/2026-09-04-automation/코딩-에이전트-컨텍스트-선택지도.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/코딩-에이전트-컨텍스트-선택지도.webp",
+      "teaching_role": "decision_map",
+      "teaching_claim": "AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Korean editorial decision map, 1200x630, for AI coding-agent context engineering. Four large physical trays labeled exactly 고정, 찾기, 기록, 분리. Show a rule card, a searchable document box, a compact decision note, and an independent research branch. Clean navy and warm ivory palette, large readable Korean labels, no other text, no logos, no robot.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 52566,
+      "quality": 82,
+      "sha256": "93537a2a2d3d3f98fc7c1e4787ea828d02fb5377cb1d2a6aad0f49c424263afc"
+    },
+    "visual_3": {
+      "origin": "capture",
+      "alt": "AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다",
+      "path": "docs/tistory/assets/2026-09-04-automation/GitHub-컨텍스트-가볍게-유지하기.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-04-automation/GitHub-컨텍스트-가볍게-유지하기.webp",
+      "teaching_role": "use_case",
+      "teaching_claim": "AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다",
+      "capture_tool": "browser",
+      "capture_target": "Context engineering guidance for AI coding agent screenshot from https://docs.github.com/en/copilot/tutorials/optimize-ai-usage",
+      "captured_at": "2026-09-04T09:16:00+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 65264,
+      "quality": 82,
+      "sha256": "6341313a463cc00e44d8378879a453a5d918a6754071296976c14aea13e7a7d3",
+      "capture_sha256": "6341313a463cc00e44d8378879a453a5d918a6754071296976c14aea13e7a7d3"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래",
+      "source": "OpenAI · GitHub Docs · Anthropic · Lost in the Middle",
+      "url": "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-5.6",
+      "published_at": "2026-09-04T00:00:00+09:00",
+      "blurb_kr": "코딩 에이전트의 입력을 고정·찾기·기록·분리로 나눠, 오래된 지시와 큰 도구 결과가 현재 판단을 가리는 문제를 줄인다.",
+      "references": [
+        {
+          "title": "Using GPT-5.6",
+          "url": "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-5.6",
+          "kind": "official"
+        },
+        {
+          "title": "Optimize AI usage with Copilot",
+          "url": "https://docs.github.com/en/copilot/tutorials/optimize-ai-usage",
+          "kind": "official"
+        },
+        {
+          "title": "Effective context engineering for AI agents",
+          "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+          "kind": "official"
+        },
+        {
+          "title": "Lost in the Middle",
+          "url": "https://arxiv.org/abs/2307.03172",
+          "kind": "research"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "먼저 답하면, 더 넣기 전에 정보의 자리를 바꾼다"
+        },
+        {
+          "t": "p",
+          "text": "에이전트가 엇나갈 때 첫 반응은 대개 설명을 더 붙이는 것이다. 하지만 늘 지킬 규칙, 이번 작업의 목표, 오래된 대화, 전체 문서, 도구 출력이 한 입력에 섞이면 중요한 문장도 다른 정보와 같은 경쟁을 한다. 먼저 각 정보가 머물 자리를 나눠야 한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "늘 지켜야 할 규칙과 이번 작업의 요청을 분리한다.",
+            "큰 문서와 로그는 처음부터 넣지 말고 필요할 때 찾게 한다.",
+            "결정과 남은 일만 세 줄로 기록한 뒤 같은 검증을 다시 실행한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "이 글의 네 갈래는 고정·찾기·기록·분리다. 반복해서 적용할 짧은 규칙은 고정하고, 큰 자료는 검색으로 찾고, 긴 세션의 결정은 짧게 기록하며, 독립적인 조사는 별도 작업으로 분리한다. 한 방식이 정답인 것이 아니라 정보의 수명과 역할이 선택 기준이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다. 반복성·크기·수명·독립성을 차례로 본다."
+        },
+        {
+          "t": "table",
+          "caption": "컨텍스트 정보가 머물 네 자리",
+          "headers": [
+            "자리",
+            "넣을 정보",
+            "판단 질문",
+            "피할 것"
+          ],
+          "rows": [
+            [
+              "고정",
+              "짧고 반복되는 규칙",
+              "매 작업에 필요한가",
+              "이번 작업의 임시 세부사항"
+            ],
+            [
+              "찾기",
+              "큰 문서·코드·로그",
+              "필요한 부분만 꺼낼 수 있는가",
+              "전체 파일 무조건 첨부"
+            ],
+            [
+              "기록",
+              "결정·진행·남은 일",
+              "다음 단계가 이 요약으로 이어지는가",
+              "원문 대화 복사"
+            ],
+            [
+              "분리",
+              "독립 조사·검증",
+              "다른 축과 병렬로 끝낼 수 있는가",
+              "서로 의존하는 수정 쪼개기"
+            ]
+          ],
+          "reuse_label": "컨텍스트 4갈래 선택표"
+        },
+        {
+          "t": "h",
+          "text": "왜 긴 입력이 곧 좋은 기억은 아닌가"
+        },
+        {
+          "t": "p",
+          "text": "컨텍스트 창이 커졌다는 말은 많은 정보를 넣을 수 있다는 뜻이지, 모든 정보가 같은 주목을 받는다는 보장은 아니다. Lost in the Middle 연구는 관련 정보의 위치에 따라 장문 입력 과제의 성능이 달라질 수 있음을 보였다. 다만 이 연구는 이전 세대 모델을 대상으로 했으므로 현재 코딩 에이전트의 직접 벤치마크로 읽으면 안 된다."
+        },
+        {
+          "t": "p",
+          "text": "실무에서 중요한 결론은 단순하다. 용량을 모두 채우는 대신 현재 결정에 필요한 근거가 잘 보이게 만든다. 서로 모순되는 규칙을 하나로 정리하고, 완료된 작업의 원문 로그는 결과와 이유만 남긴다. 파일 전체보다 지금 수정할 함수와 연결된 테스트를 먼저 보여 준다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다. 표시한 문장은 정보량보다 신호 밀도를 강조한다."
+        },
+        {
+          "t": "quote",
+          "text": "컨텍스트 설계의 목표는 빈 창을 만드는 것이 아니라, 다음 결정을 방해하는 잡음을 줄이는 것이다."
+        },
+        {
+          "t": "p",
+          "text": "Anthropic은 효과적인 컨텍스트 설계를 가능한 가장 작은 고신호 정보 집합을 찾는 일로 설명한다. 이 관점은 무조건 짧게 쓰라는 뜻이 아니다. 목표, 제약, 실패 조건처럼 판단을 바꾸는 정보는 남기고, 이미 끝난 탐색 과정과 반복된 문장은 줄이라는 뜻에 가깝다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "고정: 매번 필요한 규칙만 짧게 둔다"
+        },
+        {
+          "t": "p",
+          "text": "저장소의 언어, 테스트 명령, 편집 금지 경로, 완료 기준처럼 대부분의 작업에 반복되는 규칙은 고정 지침에 둔다. 반대로 이번 버그의 재현 로그나 임시 파일 이름은 고정하지 않는다. 영구 규칙과 일회성 요청을 섞으면 오래된 예외가 다음 작업까지 따라온다."
+        },
+        {
+          "t": "p",
+          "text": "OpenAI의 현재 모델 지침도 반복되는 지시와 예시를 줄이고 각 지시를 한 번만 명확하게 말하라고 권한다. 같은 뜻을 여러 표현으로 겹치면 강조가 아니라 충돌 가능성이 생긴다. 고정 규칙을 추가할 때는 기존 문장과 합칠 수 있는지부터 확인한다."
+        },
+        {
+          "t": "code",
+          "language": "text",
+          "text": "목표: 로그인 실패를 재현하고 원인만 보고한다.\n범위: auth 모듈과 관련 테스트를 읽는다.\n중단: 운영 데이터 변경이나 외부 전송이 필요하면 멈춘다.\n완료: 재현 명령, 관찰 결과, 가장 유력한 원인을 남긴다."
+        },
+        {
+          "t": "h",
+          "text": "찾기: 큰 자료는 필요한 순간에만 연다"
+        },
+        {
+          "t": "p",
+          "text": "설계 문서 수십 개, 저장소 전체, 긴 CI 로그를 처음부터 붙이지 말고 어디에서 찾을지를 알려 준다. 에이전트는 파일 목록이나 검색 결과로 범위를 좁힌 뒤 관련 구간만 읽을 수 있다. 이 점진적 공개 방식은 필요한 근거를 버리지 않으면서 초기 입력의 잡음을 줄인다."
+        },
+        {
+          "t": "p",
+          "text": "검색이 잘 되려면 자료의 이름과 경계가 보여야 한다. 예를 들어 인증 정책은 한 문서, 배포 절차는 다른 문서로 나누고, 저장소 지도에 각 위치와 용도를 적는다. 반대로 여러 주제가 한 거대한 파일에 섞여 있으면 필요할 때 찾는 비용이 다시 커진다."
+        },
+        {
+          "t": "h",
+          "text": "기록: 긴 대화는 결정과 남은 일로 압축한다"
+        },
+        {
+          "t": "p",
+          "text": "세션이 길어지면 원문을 모두 보존하는 대신 무엇을 결정했고, 어떤 근거를 썼으며, 무엇이 남았는지를 구조화해 기록한다. GitHub는 긴 대화를 압축하고 문제를 바꿀 때 새 대화를 시작해 컨텍스트를 가볍게 유지하라고 안내한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다. GitHub 공식 문서의 해당 구간을 직접 캡처했다."
+        },
+        {
+          "t": "table",
+          "caption": "세션을 이어 갈지 새로 시작할지 판단하는 신호",
+          "headers": [
+            "상태",
+            "권장 행동",
+            "남길 정보"
+          ],
+          "rows": [
+            [
+              "같은 목표를 수정 중",
+              "현재 세션 유지",
+              "최신 요구와 실패 결과"
+            ],
+            [
+              "문제가 다른 축으로 전환",
+              "새 대화 시작",
+              "필요한 배경 링크"
+            ],
+            [
+              "대화가 길고 반복이 많음",
+              "결정 기록 후 압축",
+              "선택 이유와 남은 일"
+            ],
+            [
+              "독립 자료 조사가 필요",
+              "별도 작업으로 분리",
+              "질문과 반환 형식"
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "text": "분리: 독립적인 조사만 별도 작업으로 보낸다"
+        },
+        {
+          "t": "p",
+          "text": "라이브러리 비교, 로그 분석, 문서 조사처럼 서로 기다리지 않고 끝낼 수 있는 축은 분리하면 각 작업의 컨텍스트가 작아진다. 별도 작업에는 질문 하나, 참고할 경로, 기대하는 근거 묶음을 준다. 결과로는 결론과 출처, 불확실성만 받아 현재 작업에 합친다."
+        },
+        {
+          "t": "p",
+          "text": "분리는 의존성을 숨기는 수단이 아니다. 같은 파일을 동시에 고쳐야 하거나 첫 결과가 있어야 다음 판단을 할 수 있다면 순차로 진행한다. 작업을 너무 잘게 나누면 설명과 통합 비용이 절약한 컨텍스트보다 커질 수 있다. 독립성과 반환 형식이 분명할 때만 쓴다."
+        },
+        {
+          "t": "h",
+          "text": "무엇을 뺄지는 같은 작업으로 검증한다"
+        },
+        {
+          "t": "p",
+          "text": "컨텍스트를 정리한 뒤에는 느낌으로 성공을 판단하지 않는다. 이전과 같은 대표 작업을 다시 실행해 정답성, 수정 범위, 테스트 결과를 비교한다. OpenAI 지침도 지시 묶음을 하나씩 제거하고 평가를 다시 돌리는 방식을 권한다. 이 절차가 있어야 중요한 근거를 실수로 지우지 않는다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "대표 작업 하나와 기대 결과를 고정한다.",
+            "중복 지시나 오래된 로그 한 묶음만 제거한다.",
+            "같은 모델·도구·입력으로 다시 실행한다.",
+            "정답성, 수정 파일, 테스트 결과를 이전 실행과 비교한다.",
+            "품질이 떨어지면 제거한 근거를 더 짧고 명확한 형태로 되돌린다."
+          ],
+          "reusable": true,
+          "reuse_label": "컨텍스트 축소 평가 체크리스트"
+        },
+        {
+          "t": "p",
+          "text": "도구 목록도 같은 방식으로 줄인다. 현재 작업에서 쓰지 않을 브라우저, 데이터베이스, 배포 도구가 노출돼 있으면 선택지가 늘고 호출 설명도 입력을 차지한다. 필요한 도구만 남긴 뒤 동일한 작업을 실행해 성공률과 불필요한 호출이 줄었는지 확인한다."
+        },
+        {
+          "t": "h",
+          "text": "오늘 할 일: 잡음 하나만 덜어 낸다"
+        },
+        {
+          "t": "p",
+          "text": "현재 대화에서 이미 끝난 조사 로그 하나를 고른다. 원문 대신 결정, 근거, 남은 일을 세 줄로 적고 로그를 제외한다. 그런 다음 같은 테스트나 검증 명령을 다시 실행해 결과가 유지되는지 본다. 이 작은 전후 비교가 팀의 컨텍스트 규칙을 만드는 첫 근거가 된다."
+        },
+        {
+          "t": "p",
+          "text": "결과가 같다면 다음에는 큰 문서를 검색 대상으로 옮기고, 서로 충돌하는 고정 규칙을 하나로 합친다. 결과가 나빠졌다면 빠진 근거가 무엇인지 기록해 더 짧은 형태로 되돌린다. 목표는 입력 길이 자체가 아니라 현재 판단에 필요한 신호를 선명하게 만드는 것이다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "컨텍스트를 정리한 다음 외부 도구와 권한의 안전 경계를 점검하는 단계로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+      "url": "https://won0322.tistory.com/190",
+      "reason": "외부 문서를 필요할 때 찾는 과정에서 숨은 지시와 출처를 검토하는 기준으로 이어진다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-09-04T09:18:00+09:00",
+    "source_count": 4,
+    "source_urls": [
+      "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-5.6",
+      "https://docs.github.com/en/copilot/tutorials/optimize-ai-usage",
+      "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "https://arxiv.org/abs/2307.03172"
+    ],
+    "scope": "OpenAI·GitHub·Anthropic의 현재 공식 지침과 장문 입력 위치 효과 연구를 대상으로 코딩 에이전트 컨텍스트의 선택 기준을 조사했다.",
+    "method": "간결한 지시, 필요 시 검색, 세션 압축, 독립 작업 분리 원칙을 출처별로 대조하고 고정·찾기·기록·분리 선택표로 재구성했다.",
+    "selection_rule": "현재 공식 제품 문서를 우선하고 장문 입력의 한계를 설명할 때만 원 논문을 사용했다.",
+    "limitations": "장문 입력 연구는 이전 세대 모델을 대상으로 하며 현재 코딩 에이전트 성능을 직접 측정하지 않는다.",
+    "evidence_files": [
+      "visual_1"
+    ],
+    "problem_lane": "AI 코딩 에이전트 컨텍스트 설계",
+    "tool_brand": "OpenAI·GitHub·Anthropic"
+  }
+}

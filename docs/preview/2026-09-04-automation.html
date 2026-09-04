@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">AI·개발 도구</span>
+              <h1>AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래</h1>
+              <span class="meta"><span class="date">2026-09-04 · 개발·AI 인사이트</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 9. 4 (금) · 약 10분</p>
+    <p class="digest-lead">같은 저장소에서 오래 대화한 AI 코딩 에이전트가 방금 바꾼 요구보다 예전 지시를 따르거나, 이미 끝난 조사 결과를 계속 끌고 오는 순간이 있다. 이때 지시를 더 붙이면 입력은 길어지지만 우선순위는 오히려 흐려질 수 있다. 문제는 정보의 양보다 어떤 정보를 언제 어디에 둘지다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-09-04-automation/컨텍스트-잡음-덜어내기-대표.webp" alt="AI 코딩 에이전트 컨텍스트에서 오래된 자료를 걷어 내 현재 작업과 검증 근거를 드러낸다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>AI 코딩 에이전트가 엇나가면 지시를 더 붙이기보다 고정·찾기·기록·분리 중 알맞은 컨텍스트 위치를 먼저 고른다.</li><li>늘 지킬 규칙은 고정하고, 큰 자료는 필요할 때 찾으며, 긴 작업의 결정은 짧게 기록하고, 독립 조사는 분리한다.</li><li>컨텍스트를 줄인 뒤 같은 작업을 다시 평가해야 무엇을 빼도 되는지 안전하게 판단할 수 있다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>컨텍스트</dt><dd>에이전트가 현재 답이나 행동을 정할 때 참고하는 지시, 대화, 코드, 도구 결과의 묶음이다.</dd></div><div><dt>컨텍스트 설계</dt><dd>필요한 정보를 알맞은 시점과 위치에 제공하고 오래된 정보는 정리하는 작업이다.</dd></div><div><dt>점진적 공개</dt><dd>모든 자료를 처음부터 넣지 않고 필요해진 순간에 관련 정보만 여는 방식이다.</dd></div><div><dt>압축</dt><dd>긴 대화에서 결정과 남은 일만 남기고 중복된 세부 내용을 줄이는 과정이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · OpenAI · GitHub Docs · Anthropic · Lost in the Middle · 2026. 9. 4</p>
+    <h3>AI 코딩 에이전트가 자꾸 엇나갈 때: 컨텍스트 선택 기준 4갈래</h3>
+    <p class="digest-blurb">코딩 에이전트의 입력을 고정·찾기·기록·분리로 나눠, 오래된 지시와 큰 도구 결과가 현재 판단을 가리는 문제를 줄인다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">먼저 답하면, 더 넣기 전에 정보의 자리를 바꾼다</h4><p>에이전트가 엇나갈 때 첫 반응은 대개 설명을 더 붙이는 것이다. 하지만 늘 지킬 규칙, 이번 작업의 목표, 오래된 대화, 전체 문서, 도구 출력이 한 입력에 섞이면 중요한 문장도 다른 정보와 같은 경쟁을 한다. 먼저 각 정보가 머물 자리를 나눠야 한다.</p><ul class="digest-bullet-list"><li>늘 지켜야 할 규칙과 이번 작업의 요청을 분리한다.</li><li>큰 문서와 로그는 처음부터 넣지 말고 필요할 때 찾게 한다.</li><li>결정과 남은 일만 세 줄로 기록한 뒤 같은 검증을 다시 실행한다.</li></ul><p>이 글의 네 갈래는 고정·찾기·기록·분리다. 반복해서 적용할 짧은 규칙은 고정하고, 큰 자료는 검색으로 찾고, 긴 세션의 결정은 짧게 기록하며, 독립적인 조사는 별도 작업으로 분리한다. 한 방식이 정답인 것이 아니라 정보의 수명과 역할이 선택 기준이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-04-automation/코딩-에이전트-컨텍스트-선택지도.webp" alt="AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다" width="1200" height="630" loading="lazy"><figcaption>AI 코딩 에이전트의 컨텍스트를 정보 성격에 따라 고정·찾기·기록·분리하는 선택 기준을 보여 준다. 반복성·크기·수명·독립성을 차례로 본다.</figcaption></figure><div class="digest-table-wrap" role="region" aria-label="컨텍스트 정보가 머물 네 자리" tabindex="0"><table class="digest-data-table"><caption>컨텍스트 정보가 머물 네 자리</caption><thead><tr><th scope="col">자리</th><th scope="col">넣을 정보</th><th scope="col">판단 질문</th><th scope="col">피할 것</th></tr></thead><tbody><tr><td>고정</td><td>짧고 반복되는 규칙</td><td>매 작업에 필요한가</td><td>이번 작업의 임시 세부사항</td></tr><tr><td>찾기</td><td>큰 문서·코드·로그</td><td>필요한 부분만 꺼낼 수 있는가</td><td>전체 파일 무조건 첨부</td></tr><tr><td>기록</td><td>결정·진행·남은 일</td><td>다음 단계가 이 요약으로 이어지는가</td><td>원문 대화 복사</td></tr><tr><td>분리</td><td>독립 조사·검증</td><td>다른 축과 병렬로 끝낼 수 있는가</td><td>서로 의존하는 수정 쪼개기</td></tr></tbody></table></div><h4 class="digest-subheading">왜 긴 입력이 곧 좋은 기억은 아닌가</h4><p>컨텍스트 창이 커졌다는 말은 많은 정보를 넣을 수 있다는 뜻이지, 모든 정보가 같은 주목을 받는다는 보장은 아니다. Lost in the Middle 연구는 관련 정보의 위치에 따라 장문 입력 과제의 성능이 달라질 수 있음을 보였다. 다만 이 연구는 이전 세대 모델을 대상으로 했으므로 현재 코딩 에이전트의 직접 벤치마크로 읽으면 안 된다.</p><p>실무에서 중요한 결론은 단순하다. 용량을 모두 채우는 대신 현재 결정에 필요한 근거가 잘 보이게 만든다. 서로 모순되는 규칙을 하나로 정리하고, 완료된 작업의 원문 로그는 결과와 이유만 남긴다. 파일 전체보다 지금 수정할 함수와 연결된 테스트를 먼저 보여 준다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-04-automation/Anthropic-효과적인-컨텍스트-원칙-주석.webp" alt="Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다" width="1200" height="630" loading="lazy"><figcaption>Context engineering은 가능한 가장 작은 고신호 정보 집합을 찾는 일임을 공식 근거로 확인한다. 표시한 문장은 정보량보다 신호 밀도를 강조한다.</figcaption></figure><blockquote class="digest-evidence-quote">컨텍스트 설계의 목표는 빈 창을 만드는 것이 아니라, 다음 결정을 방해하는 잡음을 줄이는 것이다.</blockquote><p>Anthropic은 효과적인 컨텍스트 설계를 가능한 가장 작은 고신호 정보 집합을 찾는 일로 설명한다. 이 관점은 무조건 짧게 쓰라는 뜻이 아니다. 목표, 제약, 실패 조건처럼 판단을 바꾸는 정보는 남기고, 이미 끝난 탐색 과정과 반복된 문장은 줄이라는 뜻에 가깝다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">고정: 매번 필요한 규칙만 짧게 둔다</h4><p>저장소의 언어, 테스트 명령, 편집 금지 경로, 완료 기준처럼 대부분의 작업에 반복되는 규칙은 고정 지침에 둔다. 반대로 이번 버그의 재현 로그나 임시 파일 이름은 고정하지 않는다. 영구 규칙과 일회성 요청을 섞으면 오래된 예외가 다음 작업까지 따라온다.</p><p>OpenAI의 현재 모델 지침도 반복되는 지시와 예시를 줄이고 각 지시를 한 번만 명확하게 말하라고 권한다. 같은 뜻을 여러 표현으로 겹치면 강조가 아니라 충돌 가능성이 생긴다. 고정 규칙을 추가할 때는 기존 문장과 합칠 수 있는지부터 확인한다.</p><pre class="digest-code-block language-text"><code>목표: 로그인 실패를 재현하고 원인만 보고한다.
+범위: auth 모듈과 관련 테스트를 읽는다.
+중단: 운영 데이터 변경이나 외부 전송이 필요하면 멈춘다.
+완료: 재현 명령, 관찰 결과, 가장 유력한 원인을 남긴다.</code></pre><h4 class="digest-subheading">찾기: 큰 자료는 필요한 순간에만 연다</h4><p>설계 문서 수십 개, 저장소 전체, 긴 CI 로그를 처음부터 붙이지 말고 어디에서 찾을지를 알려 준다. 에이전트는 파일 목록이나 검색 결과로 범위를 좁힌 뒤 관련 구간만 읽을 수 있다. 이 점진적 공개 방식은 필요한 근거를 버리지 않으면서 초기 입력의 잡음을 줄인다.</p><p>검색이 잘 되려면 자료의 이름과 경계가 보여야 한다. 예를 들어 인증 정책은 한 문서, 배포 절차는 다른 문서로 나누고, 저장소 지도에 각 위치와 용도를 적는다. 반대로 여러 주제가 한 거대한 파일에 섞여 있으면 필요할 때 찾는 비용이 다시 커진다.</p><h4 class="digest-subheading">기록: 긴 대화는 결정과 남은 일로 압축한다</h4><p>세션이 길어지면 원문을 모두 보존하는 대신 무엇을 결정했고, 어떤 근거를 썼으며, 무엇이 남았는지를 구조화해 기록한다. GitHub는 긴 대화를 압축하고 문제를 바꿀 때 새 대화를 시작해 컨텍스트를 가볍게 유지하라고 안내한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-04-automation/GitHub-컨텍스트-가볍게-유지하기.webp" alt="AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다" width="1200" height="630" loading="lazy"><figcaption>AI 코딩 에이전트 컨텍스트를 새 대화·압축·도구 축소로 가볍게 유지하는 실천 항목을 확인한다. GitHub 공식 문서의 해당 구간을 직접 캡처했다.</figcaption></figure><div class="digest-table-wrap" role="region" aria-label="세션을 이어 갈지 새로 시작할지 판단하는 신호" tabindex="0"><table class="digest-data-table"><caption>세션을 이어 갈지 새로 시작할지 판단하는 신호</caption><thead><tr><th scope="col">상태</th><th scope="col">권장 행동</th><th scope="col">남길 정보</th></tr></thead><tbody><tr><td>같은 목표를 수정 중</td><td>현재 세션 유지</td><td>최신 요구와 실패 결과</td></tr><tr><td>문제가 다른 축으로 전환</td><td>새 대화 시작</td><td>필요한 배경 링크</td></tr><tr><td>대화가 길고 반복이 많음</td><td>결정 기록 후 압축</td><td>선택 이유와 남은 일</td></tr><tr><td>독립 자료 조사가 필요</td><td>별도 작업으로 분리</td><td>질문과 반환 형식</td></tr></tbody></table></div><h4 class="digest-subheading">분리: 독립적인 조사만 별도 작업으로 보낸다</h4><p>라이브러리 비교, 로그 분석, 문서 조사처럼 서로 기다리지 않고 끝낼 수 있는 축은 분리하면 각 작업의 컨텍스트가 작아진다. 별도 작업에는 질문 하나, 참고할 경로, 기대하는 근거 묶음을 준다. 결과로는 결론과 출처, 불확실성만 받아 현재 작업에 합친다.</p><p>분리는 의존성을 숨기는 수단이 아니다. 같은 파일을 동시에 고쳐야 하거나 첫 결과가 있어야 다음 판단을 할 수 있다면 순차로 진행한다. 작업을 너무 잘게 나누면 설명과 통합 비용이 절약한 컨텍스트보다 커질 수 있다. 독립성과 반환 형식이 분명할 때만 쓴다.</p><h4 class="digest-subheading">무엇을 뺄지는 같은 작업으로 검증한다</h4><p>컨텍스트를 정리한 뒤에는 느낌으로 성공을 판단하지 않는다. 이전과 같은 대표 작업을 다시 실행해 정답성, 수정 범위, 테스트 결과를 비교한다. OpenAI 지침도 지시 묶음을 하나씩 제거하고 평가를 다시 돌리는 방식을 권한다. 이 절차가 있어야 중요한 근거를 실수로 지우지 않는다.</p><ul class="digest-bullet-list"><li>대표 작업 하나와 기대 결과를 고정한다.</li><li>중복 지시나 오래된 로그 한 묶음만 제거한다.</li><li>같은 모델·도구·입력으로 다시 실행한다.</li><li>정답성, 수정 파일, 테스트 결과를 이전 실행과 비교한다.</li><li>품질이 떨어지면 제거한 근거를 더 짧고 명확한 형태로 되돌린다.</li></ul><p>도구 목록도 같은 방식으로 줄인다. 현재 작업에서 쓰지 않을 브라우저, 데이터베이스, 배포 도구가 노출돼 있으면 선택지가 늘고 호출 설명도 입력을 차지한다. 필요한 도구만 남긴 뒤 동일한 작업을 실행해 성공률과 불필요한 호출이 줄었는지 확인한다.</p><h4 class="digest-subheading">오늘 할 일: 잡음 하나만 덜어 낸다</h4><p>현재 대화에서 이미 끝난 조사 로그 하나를 고른다. 원문 대신 결정, 근거, 남은 일을 세 줄로 적고 로그를 제외한다. 그런 다음 같은 테스트나 검증 명령을 다시 실행해 결과가 유지되는지 본다. 이 작은 전후 비교가 팀의 컨텍스트 규칙을 만드는 첫 근거가 된다.</p><p>결과가 같다면 다음에는 큰 문서를 검색 대상으로 옮기고, 서로 충돌하는 고정 규칙을 하나로 합친다. 결과가 나빠졌다면 빠진 근거가 무엇인지 기록해 더 짧은 형태로 되돌린다. 목표는 입력 길이 자체가 아니라 현재 판단에 필요한 신호를 선명하게 만드는 것이다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://developers.openai.com/api/docs/guides/latest-model?model=gpt-5.6" target="_blank" rel="noopener">Using GPT-5.6</a><span>공식</span></li><li><a href="https://docs.github.com/en/copilot/tutorials/optimize-ai-usage" target="_blank" rel="noopener">Optimize AI usage with Copilot</a><span>공식</span></li><li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective context engineering for AI agents</a><span>공식</span></li><li><a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener">Lost in the Middle</a><span>연구</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/198"><b>AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지</b><span>컨텍스트를 정리한 다음 외부 도구와 권한의 안전 경계를 점검하는 단계로 이어진다.</span></a></li><li><a href="https://won0322.tistory.com/190"><b>Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준</b><span>외부 문서를 필요할 때 찾는 과정에서 숨은 지시와 출처를 검토하는 기준으로 이어진다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">좋은 컨텍스트는 가장 긴 입력이 아니라 지금 결정에 필요한 근거가 잘 보이는 입력이다. 고정·찾기·기록·분리 중 한 위치를 고르고, 같은 작업을 다시 평가해 결과가 유지되는지 확인하면 된다. 한 번에 완벽한 규칙을 만들기보다 잡음 하나를 덜어 내는 반복이 더 안전하다. 현재 에이전트 대화에서 오래된 로그 하나를 빼고, 남은 결정 세 줄을 기록한 뒤 같은 검증 작업을 다시 실행한다.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>
