@@ -1,0 +1,86 @@
+{
+  "title": "Python 멀티프로세싱 오류: fork·spawn·forkserver 진단 순서",
+  "title_candidates": [
+    "Python 멀티프로세싱 오류: fork·spawn·forkserver 진단 순서",
+    "부모 프로세스의 잠긴 톱니를 복제한 작업 캡슐이 시작 레일에서 멈춘 장면: 작업 코드가 끝났는데 부모가 돌아오지 않는다면…"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-09-07",
+  "publish_date": "2026-09-07",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-07T09:00:00+09:00",
+  "tags": [
+    "Python 멀티프로세싱 오류",
+    "Python 멀티프로세싱",
+    "fork spawn 차이",
+    "forkserver",
+    "Airflow 작업 멈춤",
+    "프로세스 교착",
+    "ProcessPoolExecutor"
+  ],
+  "meta_description": "배치 작업의 함수는 끝난 것처럼 보이는데 부모 프로세스가 돌아오지 않거나, 시작 방식을 바꾼 뒤 갑자기 `pickle` 오류가 날 때가 있다. 같은 멀티프로세싱 문제처럼 보여도 전자는 부모의 잠금과… Airflow 3 도입 PoC에서 드러난 fork의 성능과 격리 한계를 출발점으로,…",
+  "key_summary": [
+    "1. Python 멀티프로세싱 오류: fork·spawn·forkserver 진단 순서",
+    "직접 얻는 결과: fork·spawn·forkserver가 무엇을 상속하고 다시 만드는지 구분한 뒤, 멈춤·직렬화 실패·메모리 증가를 서로 다른 증거와 되돌림 기준으로 진단할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Python 멀티프로세싱 오류: fork·spawn·forkserver 진단 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-07.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-07.html",
+  "before_ad_html": "docs/tistory/2026-09-07-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-07-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-07-adfit.html",
+  "source_sha256": "f4a84336506c920e6b58e91988a6d2039796e8b8c13aebdf203ad7eea328531c",
+  "html_sha256": "bcacc39732284def50c29722eb8083547739b0fd43b45e80543b084e46d59443",
+  "adfit_sha256": "eb31db14e261764a4f3c4d174cd14fc3511e4231e3630ab6543cf320de3901e4",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-07/Python-멀티프로세싱-오류-대표.webp",
+      "path": "docs/tistory/assets/2026-09-07/Python-멀티프로세싱-오류-대표.webp",
+      "original_url": "",
+      "alt": "Python 멀티프로세싱 멈춤을 시작 방식 선택 장면으로 보여 준다. 상속된 잠금 톱니 때문에 작업 캡슐이 시작 레일에서 멈춰 있다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-07/Python-멀티프로세싱-오류-진단흐름.webp",
+      "path": "docs/tistory/assets/2026-09-07/Python-멀티프로세싱-오류-진단흐름.webp",
+      "original_url": "",
+      "alt": "Python 멀티프로세싱 오류에서 기본 방식과 부모 스레드, 직렬화, 종료 상태를 차례로 확인하는 진단 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-07/fork-spawn-forkserver-되돌림-경계.webp",
+      "path": "docs/tistory/assets/2026-09-07/fork-spawn-forkserver-되돌림-경계.webp",
+      "original_url": "",
+      "alt": "다중 스레드에서는 fork를 피하고, 직렬화 가능 여부에 따라 새 방식 시험 또는 코드 수정으로 나뉘며 성능 저하 시 되돌리는 흐름",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
