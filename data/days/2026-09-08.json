@@ -1,0 +1,717 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-08",
+  "publish_date": "2026-09-08",
+  "date_label": "2026. 9. 8",
+  "weekday": "화",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-08T09:00:00+09:00",
+  "primary_query": "QR코드 오류 정정 원리",
+  "tags": [
+    "QR코드 인식",
+    "QR코드 오류 정정",
+    "리드 솔로몬",
+    "위치 표시 무늬",
+    "QR코드 손상",
+    "스마트폰 카메라",
+    "1분 실험"
+  ],
+  "visual": {
+    "subject": "찢어지고 얼룩진 QR코드를 휴대폰으로 읽어 내는 하루",
+    "hook": "검은 칸 몇 개가 사라졌는데도 휴대폰은 어떻게 같은 주소를 알아볼까?",
+    "motif": "낡은 카페 QR 안내판, 빠진 정사각형 조각, 여분 복구 타일, 모서리 위치 표시",
+    "weekday_profile": "everyday_mechanism",
+    "subject_terms": [
+      "QR코드",
+      "Haru"
+    ],
+    "toon": {
+      "format": "it_explainer_comic",
+      "series": "하루의 IT 원리툰",
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_name": "하루",
+      "character_anchor": "same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock",
+      "reference_asset": "editorial/curiosity/characters/haru-character-sheet-v1.png",
+      "reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "panel_count": 4,
+      "dialogue_mode": "html_bubbles"
+    },
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "QR코드는 일부가 찢어져도 오류 정정용 여분 정보가 남으면 원래 내용을 복원해 인식할 수 있다",
+      "label": "찢어진 카페 QR코드를 휴대폰이 여전히 인식하는 순간",
+      "scene_label": [
+        "찢어진 QR코드",
+        "인식 성공"
+      ],
+      "steps": "QR코드 일부 손상 → 남은 칸과 오류 정정 정보 판독 → 같은 내용 복원",
+      "curiosity_hook": "QR코드 검은 칸이 사라졌는데 왜 같은 주소가 열릴까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "damaged_qr_cafe_discovery",
+      "composition_type": "cafe-table-qr-closeup",
+      "palette_family": "cafe_amber_deep_green_ivory",
+      "render_family": "flat_illustration",
+      "editorial_treatment": "local_workplace",
+      "focal_subject": "찢어지고 얼룩진 종이 QR 안내판과 이를 읽는 하루의 휴대폰",
+      "texture_cue": "낡은 종이, 나무 테이블, 잉크 선과 무광 채색",
+      "authenticity_cue": "생활 흔적이 남은 동네 카페 안내판과 실제 손상 자국",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da"
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "teaching_role": "everyday_scene",
+        "teaching_claim": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽을 수 있다",
+        "label": "카페에서 찢어진 QR코드가 읽히는 일상 질문",
+        "scene_label": [
+          "찢어진 종이",
+          "휴대폰 인식"
+        ],
+        "steps": "카페 QR코드 가장자리 손상 → 휴대폰 카메라로 비춤 → 남은 무늬에서 내용 판독",
+        "curiosity_hook": "찢어진 QR코드에서 휴대폰은 무엇을 먼저 찾을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [],
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1, everyday question. Primary request: Haru at a neighborhood café notices that the lower edge of a printed QR code on a receipt holder is torn away, aims his phone at it, and reacts with curious surprise as it still scans. Make the torn QR paper the dominant object; show the analog timer at one o'clock on the table. Composition/framing: medium close shot, lived-in café details, no diagrams. Palette: terracotta, cream, deep green. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 1,
+        "toon_beat": "everyday_question",
+        "character_presence": "haru"
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "architecture",
+        "teaching_role": "mechanism_cutaway",
+        "teaching_claim": "QR코드는 데이터 코드워드와 오류 정정 코드워드를 함께 넣어 빠진 조각을 계산으로 복원한다",
+        "label": "QR코드 데이터 조각과 오류 정정용 여분 조각의 단면",
+        "scene_label": [
+          "데이터 조각",
+          "여분 복구 조각"
+        ],
+        "steps": "주소를 코드워드로 나눔 → 오류 정정 코드워드 추가 → 일부 손상 뒤 남은 관계로 복원",
+        "curiosity_hook": "QR코드에는 원래 내용 말고 어떤 여분 정보가 함께 들어갈까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [],
+        "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 2, hidden mechanism. Primary request: imaginative physical cutaway of a QR code as a tray of black-and-white square tiles; several tiles are missing, while duplicated pale-green correction tiles around the data tiles let Haru reconstruct the missing pattern like fitting puzzle pieces. Clearly distinguish ordinary data tiles from extra recovery tiles by color and grouping without any text. Composition/framing: top-down three-quarter cutaway; QR tile tray fills most of frame, Haru actively restores one gap; visually explain redundancy, not magic. Palette: charcoal, ivory, pale green, muted coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 2,
+        "toon_beat": "hidden_mechanism",
+        "character_presence": "haru"
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "evidence",
+        "teaching_role": "one_minute_check",
+        "teaching_claim": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남기면 오류 정정의 작동 범위를 안전하게 확인할 수 있다",
+        "label": "테스트 QR코드 중앙을 조금씩 가리는 1분 확인",
+        "scene_label": [
+          "중앙 일부 가림",
+          "세 모서리 유지"
+        ],
+        "steps": "무해한 테스트 QR코드 생성 → 원본 인식 확인 → 중앙 몇 칸만 가림 → 다시 인식 확인",
+        "curiosity_hook": "내 QR코드는 어느 정도 가렸을 때까지 읽힐까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [],
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3, one-minute check. Primary request: safe home experiment using only a freshly printed test QR code; Haru places a very small removable blank paper strip over a few center modules while keeping all three large corner locator squares uncovered, then aims a phone at it. Show only the back of the phone; the screen must be completely invisible. The green-rim analog timer shows one o'clock. Composition/framing: clear high over-shoulder tabletop view, the test paper and three intact corner squares are large and readable, no payment or login context. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Palette: daylight blue-gray, ivory, sage, deep green. Character anchor: same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve the exact character identity and outfit from the reference sheet. Constraints: back of phone only; no visible display; no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 3,
+        "toon_beat": "one_minute_check",
+        "character_presence": "haru"
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "teaching_role": "misconception_boundary",
+        "teaching_claim": "QR코드 위치 표시 무늬가 가려지거나 복원 한도를 넘으면 손상 면적이 작아도 인식에 실패할 수 있다",
+        "condition": "위치 표시 무늬가 가려지거나 오류 정정 수준별 복원 가능한 코드워드 수를 넘긴 경우",
+        "label": "중앙 손상과 모서리 위치 표시 손상의 실패 경계",
+        "scene_label": [
+          "중앙 일부 손상",
+          "모서리 표시 가림"
+        ],
+        "steps": "중앙의 분산 손상은 복원 가능 → 모서리 위치 표시 가림은 코드 찾기 실패 → 큰 연속 손상은 복원 한도 초과",
+        "curiosity_hook": "QR코드는 넓이보다 손상 위치가 더 중요할 때가 있을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [],
+        "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 4, exception boundary. Primary request: show two physical QR papers on a desk: one has small scattered center damage and is recoverable, the other has one large corner locator square completely covered and cannot be located. Haru points at the covered corner with a cautious expression while holding the phone lowered. Use composition and lighting only to contrast the outcomes, with no symbols or UI. Composition/framing: diagonal tabletop comparison, damaged corner square is the focal point, generous whitespace. Palette: cool gray, ivory, deep green, warning coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 4,
+        "toon_beat": "exception_boundary",
+        "character_presence": "haru"
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "QR코드 오류 정정 원리: 일부가 찢어져도 왜 인식될까?",
+    "opening": "카페 테이블의 QR코드가 찢어지고 커피 얼룩까지 묻었는데도 메뉴가 열릴 때가 있다. 검은 칸 하나하나가 주소라면 일부가 사라진 순간 읽지 못해야 할 것 같다. QR코드는 원래 데이터와 함께 복구용 여분 정보를 넣어 두기 때문에 제한된 손상은 계산으로 되살릴 수 있다. 독자는 새 테스트 QR코드로 이 범위를 1분 안에 확인할 수 있다. 그렇다면 왜 작은 모서리 손상은 큰 중앙 얼룩보다 더 치명적일 수 있을까?",
+    "closing": "QR코드는 검은 칸을 눈대중으로 짐작하지 않는다. 위치 표시로 격자를 잡고, 남은 코드워드와 오류 정정 코드워드의 관계를 계산해 빠진 값을 복원한다. 다만 수준별 복원률은 손상 면적 보증서가 아니다. 새 테스트 QR코드 중앙은 읽히지만 모서리 위치 표시를 가리면 실패할 수 있다고 설명하면 원리를 제대로 구분한 것이다.",
+    "action": "새 테스트 QR코드 하나를 원본 상태와 중앙 일부 가림 상태로 차례로 읽고, 세 모서리 위치 표시는 건드리지 않은 채 결과를 비교한다.",
+    "audience_problem": "QR코드 일부가 훼손돼도 읽히는 장면을 보지만, 검은 칸이 반복 저장된 것인지 카메라가 내용을 추측하는 것인지 구분하기 어렵다.",
+    "reader_takeaway": "QR코드가 데이터와 오류 정정용 여분 정보를 함께 저장하는 원리, 위치 표시 무늬의 역할, 복원률을 손상 면적으로 오해하면 안 되는 이유를 이해한다.",
+    "why_now": "식당 메뉴·택배 반품·공공 안내처럼 종이와 화면의 QR코드를 매일 쓰면서도, 얼룩·접힘·로고 삽입이 인식에 미치는 경계는 잘 설명되지 않는다.",
+    "topic_key": "qr-code-damage-error-correction-finder-pattern",
+    "reader_question": "QR코드는 검은 칸 일부가 찢어지거나 가려져도 어떻게 원래 주소를 복원하고, 어떤 위치가 손상되면 인식에 실패할까?",
+    "entities": [
+      "QR코드",
+      "오류 정정",
+      "리드 솔로몬 코드",
+      "위치 표시 무늬",
+      "코드워드",
+      "Haru"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "research_interpretation",
+    "weekly_lane": "curiosity_mechanism",
+    "selection_evaluation": {
+      "policy": "curiosity_mechanism-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 8,
+        "everyday_scene": 15,
+        "surprising_mechanism": 15,
+        "one_minute_check": 9
+      },
+      "total": 97,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    },
+    "reader_hook": {
+      "scene": "카페의 종이 QR코드 가장자리가 찢어지고 얼룩졌는데도 휴대폰을 비추자 메뉴가 정상으로 열린다.",
+      "stakes": "복원률을 손상 면적으로 오해하면 중요한 위치 표시를 로고나 스티커로 가려 작은 손상에도 인식을 망칠 수 있다.",
+      "payoff": "데이터 조각과 복구 조각의 관계를 쉬운 그림으로 이해하고 새 테스트 QR코드로 안전하게 직접 확인한다.",
+      "open_question": "같은 크기의 손상인데 중앙 얼룩은 읽히고 모서리 손상은 실패하는 이유는 무엇일까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "QR코드는 손상된 칸을 추측하지 않고 계산해 복원한다",
+      "immediate_answer": "QR코드는 원래 내용을 담은 코드워드와 오류 정정용 코드워드를 함께 저장한다. 일부가 손상돼도 남은 값의 관계를 계산해 빠진 값을 되살릴 수 있다.",
+      "action_steps": [
+        "개인정보나 결제가 아닌 짧은 문구로 새 테스트 QR코드를 만든다.",
+        "아무것도 가리지 않은 원본이 먼저 읽히는지 확인한다.",
+        "세 모서리의 큰 위치 표시를 남기고 중앙 몇 칸만 작은 종이로 가린다.",
+        "다시 스캔한 뒤 가린 위치와 크기를 바꿔 결과를 비교한다."
+      ],
+      "completion_check": "새 테스트 QR코드 중앙은 읽힐 수 있지만 모서리 위치 표시나 복원 한도를 넘는 손상은 실패할 수 있다고 설명하면 확인이 끝났다.",
+      "advanced_heading": "더 깊게 보면 오류 정정은 여분 답안을 만든다"
+    },
+    "revisit": {
+      "quick_answer": "QR코드는 데이터 코드워드에 오류 정정 코드워드를 더해 두므로 제한된 오염과 손상을 계산으로 복원할 수 있다.",
+      "reuse_case": "메뉴판·포스터·택배 안내의 QR코드가 접히거나 얼룩졌을 때 다시 만들지, 위치와 대비를 먼저 고칠지 판단할 때 쓴다.",
+      "failure_case": "모서리 위치 표시, 주변의 흰 여백, 인쇄 대비가 무너지거나 선택한 오류 정정 수준의 복원 한도를 넘으면 작은 손상도 실패할 수 있다.",
+      "artifact_type": "experiment_fixture",
+      "update_triggers": [
+        "ISO/IEC 18004 QR코드 규격 개정",
+        "스마트폰 QR 판독기 동작 변경",
+        "새 QR코드 계열의 오류 정정 방식 도입"
+      ]
+    },
+    "search_intent": {
+      "query": "QR코드 오류 정정 원리",
+      "reader_need": "QR코드 일부가 찢어지거나 가려져도 왜 인식되는지, 어느 정도 손상까지 가능한지 알고 싶다.",
+      "answer_format": "하루의 네 컷 원리툰, 1분 가림 실험, 오류 정정 수준과 실패 위치 비교표로 보여 준다."
+    },
+    "original_value": {
+      "durable_question": "QR코드는 손상된 검은 칸을 어떤 정보로 복원하며, 같은 넓이의 손상도 위치에 따라 결과가 다른 이유는 무엇일까?",
+      "source_gap": "공식 설명은 오류 정정 수준과 복원률을 제시하지만, 일반 독자가 해 볼 안전한 확인과 위치 표시 손상의 예외를 한 흐름으로 연결하지 않는다.",
+      "contribution": "원본과 복구용 코드워드를 여분 답안 상자로 비유하고, 중앙 가림 실험과 모서리 위치 표시 실패를 네 컷으로 나란히 연결한다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 QR코드 손상을 면적 숫자 하나로 판단하지 않고 위치 표시·흰 여백·대비·오류 정정 수준을 함께 확인할 수 있다.",
+      "limits": "공식 복원률은 코드워드 기준의 대략값이며 실제 인식은 QR 크기·가림 위치·인쇄 품질·카메라·조명에 따라 달라진다."
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "QR코드는 데이터와 오류 정정용 여분 정보를 함께 담아 일부 손상을 계산으로 복원한다.",
+      "새 테스트 QR코드 중앙을 조금 가리면 복원이 작동하는 장면을 1분 안에 확인할 수 있다.",
+      "최대 30%라는 수치는 임의의 면적 보증이 아니며 모서리 위치 표시 손상은 더 빨리 실패한다."
+    ],
+    "glossary": [
+      {
+        "term": "모듈",
+        "meaning": "QR코드를 이루는 검은색 또는 흰색 정사각형 한 칸이다."
+      },
+      {
+        "term": "코드워드",
+        "meaning": "QR코드가 데이터와 복구 정보를 다룰 때 사용하는 8비트짜리 묶음이다."
+      },
+      {
+        "term": "오류 정정",
+        "meaning": "읽은 값 일부가 틀리거나 사라져도 여분 정보의 관계로 원래 값을 되살리는 방법이다."
+      },
+      {
+        "term": "위치 표시 무늬",
+        "meaning": "QR코드 세 모서리의 큰 네모로, 카메라가 코드의 위치와 방향을 찾는 기준이다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "QR코드는 일부가 찢어져도 오류 정정용 여분 정보가 남으면 원래 내용을 복원해 인식할 수 있다. 카페에서 하루가 손상된 QR코드를 읽는 장면",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-손상-인식-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-손상-인식-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Korean IT curiosity article cover. Asset intent: editorial-scene. Primary request: a single café-table discovery scene where Haru points his phone camera at a visibly torn and smudged printed QR code on a small paper table tent, yet a subtle non-UI success pulse around the phone shows it still scanned. The damaged code and surprising successful result coexist clearly. Composition/framing: close asymmetrical over-table angle; the QR paper occupies about half the frame, Haru's surprised face and green-rim analog timer are visible; not a collage or infographic. Palette: warm café amber, deep green, ivory, muted sage. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "damaged_qr_cafe_discovery",
+      "composition_type": "cafe-table-qr-closeup",
+      "palette_family": "cafe_amber_deep_green_ivory",
+      "render_family": "flat_illustration",
+      "editorial_treatment": "local_workplace",
+      "focal_subject": "찢어지고 얼룩진 종이 QR 안내판과 이를 읽는 하루의 휴대폰",
+      "texture_cue": "낡은 종이, 나무 테이블, 잉크 선과 무광 채색",
+      "authenticity_cue": "생활 흔적이 남은 동네 카페 안내판과 실제 손상 자국",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "QR코드는 일부가 찢어져도 오류 정정용 여분 정보가 남으면 원래 내용을 복원해 인식할 수 있다",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 138766,
+      "quality": 82,
+      "sha256": "772b18d4b48a133f10a9c03781be5b7399391b4939ae00a31428c98649786f8e"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽는 하루의 일상 장면",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1, everyday question. Primary request: Haru at a neighborhood café notices that the lower edge of a printed QR code on a receipt holder is torn away, aims his phone at it, and reacts with curious surprise as it still scans. Make the torn QR paper the dominant object; show the analog timer at one o'clock on the table. Composition/framing: medium close shot, lived-in café details, no diagrams. Palette: terracotta, cream, deep green. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "teaching_role": "everyday_scene",
+      "teaching_claim": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽을 수 있다",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 121176,
+      "quality": 82,
+      "sha256": "3aa561faa8fc7efabbdbf183881ab1ee04bec08923b74e2601edcdda63580eb7"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "QR코드 데이터 코드워드와 오류 정정 코드워드를 타일처럼 맞춰 빠진 조각을 복원하는 하루",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 2, hidden mechanism. Primary request: imaginative physical cutaway of a QR code as a tray of black-and-white square tiles; several tiles are missing, while duplicated pale-green correction tiles around the data tiles let Haru reconstruct the missing pattern like fitting puzzle pieces. Clearly distinguish ordinary data tiles from extra recovery tiles by color and grouping without any text. Composition/framing: top-down three-quarter cutaway; QR tile tray fills most of frame, Haru actively restores one gap; visually explain redundancy, not magic. Palette: charcoal, ivory, pale green, muted coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "teaching_role": "mechanism_cutaway",
+      "teaching_claim": "QR코드는 데이터 코드워드와 오류 정정 코드워드를 함께 넣어 빠진 조각을 계산으로 복원한다",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 151834,
+      "quality": 82,
+      "sha256": "781713ec23d792262f1bb6e5a8a8fd821a3c814765edbc0f354fa6f312673106"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남겨 오류 정정을 확인하는 하루",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3, one-minute check. Primary request: safe home experiment using only a freshly printed test QR code; Haru places a very small removable blank paper strip over a few center modules while keeping all three large corner locator squares uncovered, then aims a phone at it. Show only the back of the phone; the screen must be completely invisible. The green-rim analog timer shows one o'clock. Composition/framing: clear high over-shoulder tabletop view, the test paper and three intact corner squares are large and readable, no payment or login context. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Palette: daylight blue-gray, ivory, sage, deep green. Character anchor: same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve the exact character identity and outfit from the reference sheet. Constraints: back of phone only; no visible display; no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "teaching_role": "one_minute_check",
+      "teaching_claim": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남기면 오류 정정의 작동 범위를 안전하게 확인할 수 있다",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 114652,
+      "quality": 82,
+      "sha256": "945dbd8ebbbb60d08a893c8ccd5e6a9d7269e23c6719ebae414f9c9190d413b8"
+    },
+    "visual_4": {
+      "origin": "imagegen",
+      "alt": "QR코드 위치 표시 무늬가 가려지면 중앙 손상보다 작은 손상도 인식에 실패할 수 있음을 가리키는 하루",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 4, exception boundary. Primary request: show two physical QR papers on a desk: one has small scattered center damage and is recoverable, the other has one large corner locator square completely covered and cannot be located. Haru points at the covered corner with a cautious expression while holding the phone lowered. Use composition and lighting only to contrast the outcomes, with no symbols or UI. Composition/framing: diagonal tabletop comparison, damaged corner square is the focal point, generous whitespace. Palette: cool gray, ivory, deep green, warning coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "teaching_role": "misconception_boundary",
+      "teaching_claim": "QR코드 위치 표시 무늬가 가려지거나 복원 한도를 넘으면 손상 면적이 작아도 인식에 실패할 수 있다",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 94228,
+      "quality": 82,
+      "sha256": "2ec2c1a8a8d495dfc4e54c0167c5e5b466b246b730df430ea9921f80e807b7b1"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "Java 자릿수와 진법 변환: 숫자 합·10진수·2진수 원리",
+      "url": "https://won0322.tistory.com/181",
+      "reason": "QR코드의 검은 칸이 결국 0과 1의 묶음으로 읽히는 배경을 이진수 원리부터 이어서 이해할 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 산업안전 관제 프로젝트 설계 회고: YOLO·FastAPI·개인정보 보호까지",
+      "url": "https://won0322.tistory.com/166",
+      "reason": "QR 판독 다음 단계로 카메라 인식도 조명·가림·각도와 실패 조건을 함께 검증해야 하는 이유를 확장해 볼 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "QR코드가 손상된 칸을 복원하고 위치를 찾는 원리",
+      "source": "ISO 규격, DENSO WAVE 공식 설명, 공개 디코더와 독립 교육 자료",
+      "url": "https://www.qrcode.com/en/about/",
+      "published_at": "2024-08-01T00:00:00+00:00",
+      "blurb_kr": "QR코드는 데이터 코드워드에 오류 정정 코드워드를 더하고 세 모서리의 위치 표시 무늬로 격자를 찾아 제한된 오염과 손상에서도 원래 내용을 복원한다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "ISO/IEC 18004:2024 QR code bar code symbology specification",
+          "url": "https://www.iso.org/standard/83389.html"
+        },
+        {
+          "kind": "official",
+          "title": "What is a QR Code? - DENSO WAVE",
+          "url": "https://www.qrcode.com/en/about/"
+        },
+        {
+          "kind": "official",
+          "title": "QR Code Standardization and Outline Specification - DENSO WAVE",
+          "url": "https://www.qrcode.com/en/about/standards.html"
+        },
+        {
+          "kind": "documentation",
+          "title": "ZXing QR Decoder and Reed-Solomon error correction implementation",
+          "url": "https://github.com/zxing/zxing/blob/master/core/src/main/java/com/google/zxing/qrcode/decoder/Decoder.java"
+        },
+        {
+          "kind": "independent",
+          "title": "Error Correction Coding - Thonky QR Code Tutorial",
+          "url": "https://www.thonky.com/qr-code-tutorial/error-correction-coding"
+        },
+        {
+          "kind": "reference",
+          "title": "Module Placement in Matrix - Thonky QR Code Tutorial",
+          "url": "https://www.thonky.com/qr-code-tutorial/module-placement-matrix"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "QR코드는 손상된 칸을 추측하지 않고 계산해 복원한다"
+        },
+        {
+          "t": "p",
+          "text": "QR코드는 원래 내용을 담은 코드워드와 오류 정정용 코드워드를 함께 저장한다. 일부가 손상돼도 남은 값의 관계를 계산해 빠진 값을 되살릴 수 있다. 휴대폰이 주소를 문맥으로 추측하거나 비슷한 QR코드를 인터넷에서 찾는 방식은 아니다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽을 수 있다. 하루가 카페의 손상된 안내판을 비추며 첫 질문을 발견한다.",
+          "toon_panel": 1,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "분명 종이가 찢어졌는데, 왜 메뉴가 열리지?"
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "검은 칸에는 내용과 여분 답안이 함께 들어간다"
+        },
+        {
+          "t": "p",
+          "text": "검은색과 흰색 한 칸은 모듈이라고 부른다. QR코드는 글자와 주소를 비트로 바꾸고, 이를 8비트짜리 코드워드 묶음으로 만든다. 여기에 원래 내용에서 계산한 오류 정정 코드워드를 더해 같은 격자에 섞어 놓는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "QR코드는 데이터 코드워드와 오류 정정 코드워드를 함께 넣어 빠진 조각을 계산으로 복원한다. 녹색 타일은 단순 복사본이 아니라 빠진 값을 다시 계산하게 돕는 여분 답안이다.",
+          "toon_panel": 2,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "같은 주소를 두 번 넣은 건 아니구나."
+            },
+            {
+              "speaker": "하루",
+              "text": "여분 답안으로 빠진 조각을 다시 계산해요."
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "1분 확인은 새 테스트 QR코드로만 한다"
+        },
+        {
+          "t": "p",
+          "text": "식당 결제판이나 출입증을 훼손해서 시험하면 안 된다. 개인정보·로그인·결제와 무관한 짧은 문구로 새 테스트 QR코드를 만들고, 인쇄한 종이 위에 떼기 쉬운 작은 메모지를 올리면 된다. 이미지 속 QR 무늬는 설명용이라 실제 실험에는 쓰지 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남기면 오류 정정의 작동 범위를 안전하게 확인할 수 있다. 원본이 먼저 읽혀야 가림 전후 차이를 비교할 수 있다.",
+          "toon_panel": 3,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "세 모서리는 남기고 중앙만 조금 가려 볼게요."
+            }
+          ]
+        },
+        {
+          "t": "ul",
+          "items": [
+            "개인정보나 결제가 아닌 짧은 문구로 새 테스트 QR코드를 만든다.",
+            "아무것도 가리지 않은 원본이 먼저 읽히는지 확인한다.",
+            "세 모서리의 큰 위치 표시를 남기고 중앙 몇 칸만 작은 종이로 가린다.",
+            "다시 스캔한 뒤 가린 위치와 크기를 바꿔 결과를 비교한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "작게 가린 상태가 읽히면 종이를 조금 옮겨 다시 시험한다. 어느 순간 실패하더라도 그 비율을 모든 QR코드의 한계로 일반화하면 안 된다. QR 버전과 오류 정정 수준, 데이터 길이, 손상 위치, 인쇄 대비, 빛 반사, 카메라 초점이 모두 결과에 영향을 준다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "모서리 세 곳은 복원보다 먼저 길을 찾는다"
+        },
+        {
+          "t": "p",
+          "text": "QR코드 세 모서리의 큰 네모는 위치 표시 무늬다. 휴대폰은 이 모양을 찾아 코드가 화면 어디에 있고 얼마나 기울었는지 판단한다. 그다음 작은 칸의 격자를 맞춰 데이터를 읽는다. 출발점을 못 찾으면 복구 계산에 넣을 칸 자체를 안정적으로 모으기 어렵다."
+        },
+        {
+          "t": "p",
+          "text": "코드 둘레의 흰 여백도 배경과 QR코드를 나누는 데 중요하다. 어두운 무늬를 바짝 붙이거나 투명 테이프가 빛을 반사하면 검은 칸이 온전히 남아도 인식이 느려질 수 있다. 손상 면적만 재지 말고 모서리·여백·대비를 먼저 봐야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_4",
+          "caption": "QR코드 위치 표시 무늬가 가려지거나 복원 한도를 넘으면 손상 면적이 작아도 인식에 실패할 수 있다. 중앙의 분산 손상과 모서리 한 곳의 집중 손상은 같은 결과를 보장하지 않는다.",
+          "toon_panel": 4,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "작게 가려도 모서리면 먼저 길을 잃을 수 있네."
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "더 깊게 보면 오류 정정은 여분 답안을 만든다"
+        },
+        {
+          "t": "p",
+          "text": "여분 정보는 원문을 통째로 한 번 더 넣은 복사본이 아니다. 여러 원래 값 사이의 계산 관계를 담은 답안에 가깝다. 몇 조각이 틀려도 남은 데이터와 여분 답안이 충분하면 판독기는 어떤 값이 어긋났는지 찾고 원래 코드워드를 복원한다."
+        },
+        {
+          "t": "p",
+          "text": "QR코드 규격은 오류 정정 수준을 L·M·Q·H 네 단계로 둔다. 높은 수준은 복구용 코드워드를 더 많이 넣는 대신 같은 크기에 담을 수 있는 데이터가 줄어든다. 그래서 작은 QR코드에 긴 주소와 높은 복원력을 동시에 요구하면 칸이 더 촘촘해지거나 코드 크기가 커진다."
+        },
+        {
+          "t": "p",
+          "text": "QR코드는 리드 솔로몬이라는 오류 정정 방식을 쓴다. 생성할 때 데이터 코드워드로 여분 코드워드를 계산한다. 읽을 때는 남은 값에서 불일치 신호를 구하고, 틀린 코드워드의 위치와 값을 찾아 고친다. 공개 디코더 ZXing도 데이터 블록마다 이 복원 단계를 수행한다."
+        },
+        {
+          "t": "p",
+          "text": "DENSO WAVE의 규격 요약은 L·M·Q·H 수준에서 대략 7%·15%·25%·30%의 코드워드를 복원할 수 있다고 설명한다. 여기서 중요한 단어는 코드워드다. 사진에서 보이는 검은 면적을 자로 재어 같은 비율만큼 마음대로 가려도 된다는 뜻이 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "QR코드 오류 정정 수준별 대략적인 코드워드 복원 능력과 대가",
+          "headers": [
+            "수준",
+            "복원 가능한 코드워드 대략값",
+            "같은 크기에서의 대가"
+          ],
+          "rows": [
+            [
+              "L",
+              "약 7%",
+              "데이터를 더 많이 담기 쉬움"
+            ],
+            [
+              "M",
+              "약 15%",
+              "일반적인 균형"
+            ],
+            [
+              "Q",
+              "약 25%",
+              "복구 정보가 늘어남"
+            ],
+            [
+              "H",
+              "약 30%",
+              "데이터 공간이 가장 많이 줄어듦"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "QR코드 오류 정정 수준 선택표"
+        },
+        {
+          "t": "p",
+          "text": "복원력이 필요하면 높은 수준을 고르되, 로고를 크게 덮어도 안전하다고 생각해서는 안 된다. 생성 뒤 실제 인쇄 크기와 조명, 여러 휴대폰에서 읽어 보고 원본 주소도 눈으로 확인한다. 중요한 결제·출입 링크라면 손상에 기대지 말고 깨끗한 코드를 다시 제공하는 편이 안전하다."
+        },
+        {
+          "t": "h",
+          "text": "읽히는 QR코드는 네 가지를 함께 지킨다"
+        },
+        {
+          "t": "p",
+          "text": "첫째, 세 모서리의 위치 표시를 가리지 않는다. 둘째, 코드 둘레의 흰 여백을 남긴다. 셋째, 배경과 검은 칸의 대비를 높이고 반사를 피한다. 넷째, 내용 길이와 사용 환경에 맞는 오류 정정 수준을 선택한 뒤 실제 크기로 시험한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "인쇄물이 접혔다면 먼저 세 모서리 위치 표시와 흰 여백을 편다.",
+            "카메라가 흐리면 거리를 바꾸고 반사광이 없는 각도로 다시 비춘다.",
+            "중요한 링크는 QR코드만 믿지 않고 사람이 읽을 짧은 주소도 함께 둔다.",
+            "새로 만들 때는 목표 오류 정정 수준을 정하고 실제 기기 여러 대로 시험한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "새 테스트 QR코드 중앙은 읽힐 수 있지만 모서리 위치 표시나 복원 한도를 넘는 손상은 실패할 수 있다고 설명하면 확인이 끝났다. QR코드의 끈기는 카메라의 추측이 아니라, 처음부터 함께 심어 둔 여분 답안과 위치 기준에서 나온다."
+        },
+        {
+          "t": "quote",
+          "text": "QR코드는 사라진 그림을 상상하지 않는다. 남은 코드워드와 여분 답안으로 빠진 값을 계산한다."
+        }
+      ]
+    }
+  ]
+}

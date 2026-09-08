@@ -112,6 +112,38 @@ class DailyGuardTests(unittest.TestCase):
 
         self.assertEqual(duplicates[0]["reason"], "recent_all_imagegen")
 
+    def test_mandatory_tuesday_toon_is_not_rejected_as_generated_only(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = self.rotation_source(
+                "첫 글", "https://example.com/a", "change_impact",
+                "ink_drawing", ["comparison"],
+            )
+            second = self.rotation_source(
+                "둘째 글", "https://example.com/b", "hands_on_test",
+                "tactile_paper", ["flow"],
+            )
+            current = self.rotation_source(
+                "현재 글", "https://example.net/c", "research_interpretation",
+                "flat_illustration", ["before_after", "architecture", "evidence", "conditional"],
+            )
+            current["weekday"] = "화"
+            current["editorial"]["weekly_lane"] = "curiosity_mechanism"
+            current["visual"]["toon"] = {
+                "format": "it_explainer_comic",
+                "panel_count": 4,
+            }
+            self.write_json(root / "data/days/2026-09-06.json", first)
+            self.write_json(root / "data/days/2026-09-07.json", second)
+
+            duplicates = find_recent_draft_duplicates(
+                "2026-09-08", current, root=root
+            )
+
+        self.assertNotIn(
+            "recent_all_imagegen", {item["reason"] for item in duplicates}
+        )
+
     def test_recent_cover_style_signature_must_change(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

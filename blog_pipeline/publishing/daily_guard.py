@@ -135,6 +135,25 @@ def _all_body_images_are_generated(day):
     return bool(origins) and all(origin == "imagegen" for origin in origins)
 
 
+def _requires_generated_tuesday_toon(day, publish_day):
+    """Do not demand capture evidence from the contract-mandated Haru comic."""
+    if publish_day < date(2026, 9, 8):
+        return False
+    editorial = day.get("editorial") if isinstance(day, dict) else {}
+    editorial = editorial if isinstance(editorial, dict) else {}
+    visual = day.get("visual") if isinstance(day, dict) else {}
+    visual = visual if isinstance(visual, dict) else {}
+    toon = visual.get("toon") if isinstance(visual.get("toon"), dict) else {}
+    return (
+        str(day.get("weekday") or "").strip() == "화"
+        and str(editorial.get("weekly_lane") or "").strip().casefold()
+        == "curiosity_mechanism"
+        and str(toon.get("format") or "").strip().casefold()
+        == "it_explainer_comic"
+        and toon.get("panel_count") == 4
+    )
+
+
 def canonical_url(value):
     text = str(value or "").strip()
     if not text:
@@ -535,7 +554,10 @@ def find_recent_draft_duplicates(
     current_article_shape = str(
         current_editorial.get("article_shape") or ""
     ).strip().casefold()
-    current_all_imagegen = _all_body_images_are_generated(current_day)
+    current_all_imagegen = (
+        _all_body_images_are_generated(current_day)
+        and not _requires_generated_tuesday_toon(current_day, current_date)
+    )
     if identity.content_type == "automation_case":
         from blog_pipeline.collection.collect_automation import (
             _automation_source_fingerprint,

@@ -1,0 +1,107 @@
+{
+  "title": "QR코드 오류 정정 원리: 일부가 찢어져도 왜 인식될까?",
+  "title_candidates": [
+    "QR코드 오류 정정 원리: 일부가 찢어져도 왜 인식될까?",
+    "QR코드가 손상된 칸을 복원하고 위치를 찾는 원리",
+    "찢어지고 얼룩진 QR코드를 휴대폰으로 읽어 내는 하루: 검은 칸 몇 개가 사라졌는데도 휴대폰은 어떻게 같은 주소를 알아볼…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-08",
+  "publish_date": "2026-09-08",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-08T09:00:00+09:00",
+  "tags": [
+    "QR코드 인식",
+    "QR코드 오류 정정",
+    "리드 솔로몬",
+    "위치 표시 무늬",
+    "QR코드 손상",
+    "스마트폰 카메라",
+    "1분 실험"
+  ],
+  "meta_description": "카페 테이블의 QR코드가 찢어지고 커피 얼룩까지 묻었는데도 메뉴가 열릴 때가 있다. 검은 칸 하나하나가 주소라면 일부가 사라진 순간 읽지 못해야 할 것 같다. QR코드는 원래 데이터와 함께 복구용 여… QR코드는 데이터 코드워드에 오류 정정 코드워드를 더하고 세 모서리의 위치 표시 무…",
+  "key_summary": [
+    "1. QR코드가 손상된 칸을 복원하고 위치를 찾는 원리",
+    "직접 얻는 결과: QR코드가 데이터와 오류 정정용 여분 정보를 함께 저장하는 원리, 위치 표시 무늬의 역할, 복원률을 손상 면적으로 오해하면 안 되는 이유를 이해한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: QR코드 오류 정정 원리: 일부가 찢어져도 왜 인식될까?"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-08.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-08.html",
+  "before_ad_html": "docs/tistory/2026-09-08-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-08-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-08-adfit.html",
+  "source_sha256": "50a492dca80243400299301ee8319b5dac60d36958aa49baa4648ce279ea8843",
+  "html_sha256": "bb4d43089e54a9ae5e64c576ea3eaf2c89480234dafae572efe0593b8202c393",
+  "adfit_sha256": "ae8d2ccabfd97338beca9224de1650a53d2bad0ce9b6ef5013ad718a67b26a15",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-손상-인식-대표.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-손상-인식-대표.webp",
+      "original_url": "",
+      "alt": "QR코드는 일부가 찢어져도 오류 정정용 여분 정보가 남으면 원래 내용을 복원해 인식할 수 있다. 카페에서 하루가 손상된 QR코드를 읽는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "original_url": "",
+      "alt": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽는 하루의 일상 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "original_url": "",
+      "alt": "QR코드 데이터 코드워드와 오류 정정 코드워드를 타일처럼 맞춰 빠진 조각을 복원하는 하루",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "original_url": "",
+      "alt": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남겨 오류 정정을 확인하는 하루",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_4",
+      "title": "본문 이해 이미지 4",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "original_url": "",
+      "alt": "QR코드 위치 표시 무늬가 가려지면 중앙 손상보다 작은 손상도 인식에 실패할 수 있음을 가리키는 하루",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
