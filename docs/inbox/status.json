@@ -1,17 +1,21 @@
 {
   "schema_version": 1,
   "kind": "news",
-  "target_day": "2026-09-07",
-  "editorial_lane": "evergreen_problem",
-  "generated_at": "2026-09-06T23:01:32.064844+00:00",
-  "state": "READY",
-  "reasons": [],
+  "target_day": "2026-09-09",
+  "editorial_lane": "change_explainer",
+  "generated_at": "2026-09-08T23:34:34.666725+00:00",
+  "state": "PARTIAL",
+  "reasons": [
+    "insufficient_selected_candidates"
+  ],
   "quality": {
-    "ok": true,
-    "reasons": [],
+    "ok": false,
+    "reasons": [
+      "insufficient_selected_candidates"
+    ],
     "successful_sources": 30,
     "candidate_sources": 25,
-    "candidates": 122,
-    "selected": 3
+    "candidates": 125,
+    "selected": 0
   }
 }
