@@ -53,8 +53,12 @@
 
 하루는 모든 컷에 같은 얼굴·복장·소품으로 등장한다. 대표 이미지는 네 칸을
 한꺼번에 넣지 않고 질문과 의외의 결과가 보이는 단일 장면으로 만든다. 그림
-안에는 한글·영문·대사·말풍선을 생성하지 않는다. 대사는 티스토리 HTML로
-이미지 아래에 렌더링하므로 모바일에서도 선명하게 읽힌다.
+안에 본문 대사를 흰 말풍선과 함께 생성한다. 대표 이미지는 무문자 장면을 유지한다.
+본문은 `dialogue_mode: image_bubbles`로 기록하고 이미지 아래에 대사를 중복 출력하지
+않는다. 대사 원문은 `visual.dialogue`에 보존하고 이미지 대체 텍스트에 포함한다.
+한 컷에 짧은 대사 1개를 우선하며 2개를 넘기지 않는다. 1200px 이미지에서 글자
+높이 48px 이상을 목표로 390px 화면에서도 확대 없이 읽히게 한다. 얼굴·손·원리
+단서를 가리지 않으며 말풍선 꼬리는 하루를 향한다. 아래 설명은 쉬운 1~2문장이다.
 
 ## 이미지 생성 절차
 
@@ -63,10 +67,16 @@
 
    `same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock`
 
-3. 프롬프트에 `no text; no letters; no labels; no speech bubbles`를 명시한다.
+3. 대표에만 `no text; no letters; no labels; no speech bubbles`를 명시한다.
+   본문에는 `speech balloon`과 정확한 한국어 대사를 넣는다. 기존 컷 편집은 해당
+   컷을 참조하고 `Preserve the same adult male character`로 정체성을 유지한다.
+   `korean_labels`는 `visual.dialogue`의 대사와 일치시킨다.
 4. 얼굴·머리·안경·복장·타이머가 기준 시트와 다르면 해당 컷만 다시 만든다.
 5. 컷마다 실제 사물과 원리 단서를 크게 두고, 캐릭터가 화면을 차지하기만 하는
    일반적인 포즈 그림은 통과시키지 않는다.
+6. 최종 WebP의 대사 오탈자·잘림·꼬리 방향과 390px 가독성을 직접 확인한 뒤에만
+   `dialogue_text_verified`, `dialogue_mobile_verified`를 true로 기록한다.
+   실패한 컷은 대사 축약·구도 수정 후 다시 생성하며 HTML 대사로 대체하지 않는다.
 
 깊은 초록·아이보리·세이지의 캐릭터 팔레트는 정체성으로 유지하되, 배경·사물·
 구도·카메라 거리·원리 표현 방식은 주제마다 바꾼다. 네온 사이버펑크, 로봇,

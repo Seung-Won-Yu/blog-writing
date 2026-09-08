@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-08-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-08-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-08-adfit.html",
-  "source_sha256": "50a492dca80243400299301ee8319b5dac60d36958aa49baa4648ce279ea8843",
-  "html_sha256": "bb4d43089e54a9ae5e64c576ea3eaf2c89480234dafae572efe0593b8202c393",
-  "adfit_sha256": "ae8d2ccabfd97338beca9224de1650a53d2bad0ce9b6ef5013ad718a67b26a15",
+  "source_sha256": "c6df43a3f12c068a70f17abb5d9c6905e975a9d09add35ef2d7c3532561767ac",
+  "html_sha256": "b604d5bb676fa884ca6d78e95a844f622633cbf5dbc53a66517c3ce7adf9fb9e",
+  "adfit_sha256": "b5c186a32e4f2bbcba16d5dc12225b56353fdd0309c0547a6b794292671f249f",
   "image_assets": [
     {
       "kind": "cover",
@@ -66,8 +66,8 @@
     {
       "kind": "visual_1",
       "title": "본문 이해 이미지 1",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문-말풍선.webp",
       "original_url": "",
       "alt": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽는 하루의 일상 장면",
       "width": 1200,
@@ -76,8 +76,8 @@
     {
       "kind": "visual_2",
       "title": "본문 이해 이미지 2",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리-말풍선.webp",
       "original_url": "",
       "alt": "QR코드 데이터 코드워드와 오류 정정 코드워드를 타일처럼 맞춰 빠진 조각을 복원하는 하루",
       "width": 1200,
@@ -86,8 +86,8 @@
     {
       "kind": "visual_3",
       "title": "본문 이해 이미지 3",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인-말풍선.webp",
       "original_url": "",
       "alt": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남겨 오류 정정을 확인하는 하루",
       "width": 1200,
@@ -96,8 +96,8 @@
     {
       "kind": "visual_4",
       "title": "본문 이해 이미지 4",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계-말풍선.webp",
       "original_url": "",
       "alt": "QR코드 위치 표시 무늬가 가려지면 중앙 손상보다 작은 손상도 인식에 실패할 수 있음을 가리키는 하루",
       "width": 1200,

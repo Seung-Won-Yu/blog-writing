@@ -85,7 +85,7 @@
 - `character_id`: `haru-v1`, `character_version`: `1`, `character_name`: `하루`
 - `reference_asset`: `editorial/curiosity/characters/haru-character-sheet-v1.png`
 - `reference_sha256`: 캐릭터 바이블에 기록된 기준 시트 해시
-- `panel_count`: `4`, `dialogue_mode`: `html_bubbles`
+- `panel_count`: `4`, `dialogue_mode`: `image_bubbles`
 
 대표와 모든 `images.visual_N`에는 캐릭터 ID·버전·기준 해시를 똑같이 기록한다.
 네 개의 `visual.assets`는 1부터 연속된 `toon_panel`과 아래 `toon_beat`를 차례로
@@ -98,7 +98,11 @@
 
 각 본문 `visual` 블록은 같은 `toon_panel`과 하루의 대사 1~2개를 가진다. 대사는
 한 개당 6~55자, 전체 8개 이하로 제한한다. 생성 프롬프트에는 캐릭터 바이블의
-영문 앵커를 그대로 넣고 `no text; no letters; no labels; no speech bubbles`를
-명시한다. 그림 안 대사를 생성하지 않으며 내보내기가 이미지 아래에 접근 가능한
-HTML 말풍선으로 붙인다. 대표는 4분할 콜라주가 아니라 하루가 질문과 의외의
+영문 앵커를 그대로 넣고 본문에는 `speech balloon`과 정확한 한국어 대사를
+명시한다. 기존 컷 편집은 원본을 참조하며 외형을 유지한다. 대사는 이미지 안에
+넣고 `korean_labels`와 본문 `dialogue`를 일치시킨다. 내보내기는 대사를 이미지
+대체 텍스트에 보존하고 그림 아래 글머리표를 중복 출력하지 않는다.
+최종 WebP의 오탈자·잘림과 390px 가독성을 확인하고 이미지에
+`dialogue_text_verified: true`, `dialogue_mobile_verified: true`를 기록한다.
+대표만 무문자이며 4분할 콜라주가 아니라 하루가 질문과 의외의
 결과를 발견하는 단일 장면으로 만든다.

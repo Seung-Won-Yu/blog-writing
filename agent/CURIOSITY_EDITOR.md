@@ -108,7 +108,7 @@
 ## 이미지와 HTML
 
 - 2026-09-02 이후 화요일은 `visual.weekday_profile: everyday_mechanism`, 대표 `weekday_role: surprising_everyday_result`, 본문 필수 `teaching_role: mechanism_cutaway`, `one_minute_check`를 사용합니다. 목요일은 `visual.weekday_profile: myth_evidence`, 대표 `weekday_role: belief_result_conflict`, 본문 필수 `teaching_role: myth_fact_boundary`, `history_or_direct_check`를 사용합니다. 프로필과 대표 역할은 `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응 `images.visual_N`에 똑같이 기록하고 허용 `logic_type`은 공통 이미지 약속을 따릅니다.
-- 2026-09-08 이후 화요일은 `하루의 IT 원리툰` 네 컷으로 고정합니다. `일상 질문 → 숨은 원리 → 1분 확인 → 예외 경계`를 각각 한 컷에 하나씩 맡기고, 모든 컷은 실제 `imagegen`에서 기준 시트를 참조합니다. 그림 안에는 글자나 말풍선을 만들지 않고 짧은 대사는 본문 `visual` 블록에 기록해 HTML 말풍선으로 출력합니다. 제목에는 `[AI툰]` 같은 접두어를 붙이지 않고 독자가 검색할 질문을 그대로 앞세웁니다.
+- 2026-09-08 이후 화요일은 `하루의 IT 원리툰` 네 컷으로 고정합니다. `일상 질문 → 숨은 원리 → 1분 확인 → 예외 경계`를 각각 한 컷에 하나씩 맡기고, 모든 컷은 실제 `imagegen`에서 기준 시트를 참조합니다. 본문 대사는 이미지 안의 말풍선으로 생성합니다(`image_bubbles`). 짧은 대사 원문은 `visual.dialogue`에 기록하고 이미지 아래 중복 대사 대신 쉬운 설명 1~2문장만 둡니다. 최종 이미지의 오탈자와 390px 가독성을 직접 검수합니다. 제목에는 `[AI툰]` 같은 접두어를 붙이지 않고 독자가 검색할 질문을 그대로 앞세웁니다.
 - 대표는 문제·결과가 한 장면에 보이는 `cover_kind: editorial_scene`으로 만듭니다. `art_direction`, `composition_type`, `palette_family`, `render_family`, `editorial_treatment`, `focal_subject`, `texture_cue`, `authenticity_cue`를 주제에 맞게 기록합니다. 생성 프롬프트에는 `Asset intent: editorial-scene`을 넣습니다.
 - 최근 7개 대표 이미지와 구도를 비교합니다. `three_column_cards`, `four_step_cards`, `linear_flow`, `comparison_grid`, `timeline_cards`, `split_panel_infographic`, `dashboard`, `title_slide`를 대표 이미지 구성으로 반복하지 않습니다. 대표 이미지에는 단계 화살표나 작은 설명 카드를 빽빽하게 넣지 않습니다.
 - 대표 이미지의 한국어 라벨은 1~3개로 제한합니다. 화면의 45~70%는 핵심 사물·장면이 차지해야 하며 `노트북 앞 사람` 같은 포괄적인 AI 장면을 피합니다. `images.cover.alt`는 핵심 검색어와 실제 장면을 포함한 15~160자로 씁니다.

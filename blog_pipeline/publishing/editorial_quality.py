@@ -951,7 +951,7 @@ def _schema_reasons(source, identity, *, require_images=True):
                 for key in ("generation_prompt", "generation_model")
             )
             if "toon_panel" in brief:
-                invalid |= brief.get("korean_labels") != []
+                invalid |= not _strict_text_list(brief.get("korean_labels"), minimum=1)
             else:
                 invalid |= not _strict_text_list(
                     brief.get("korean_labels"), minimum=2
@@ -2539,15 +2539,16 @@ def _visual_reasons(source, identity):
             labels = brief.get("korean_labels")
             prompt = plain(brief.get("generation_prompt"))
             model = plain(brief.get("generation_model"))
-            text_free_toon_panel = (
+            toon_panel = (
                 _reader_profile_key(identity) == "curiosity_mechanism"
                 and date.fromisoformat(identity.publish_date)
                 >= TUESDAY_TOON_POLICY_START
                 and type(brief.get("toon_panel")) is int
             )
             labels_are_valid = (
-                labels == []
-                if text_free_toon_panel
+                (isinstance(labels, list) and 1 <= len(labels) <= 2
+                 and all(re.search(r"[가-힣]", plain(label)) for label in labels))
+                if toon_panel
                 else (
                     isinstance(labels, list)
                     and 2 <= len(labels) <= 6
@@ -2815,7 +2816,7 @@ def _weekly_visual_reasons(source, identity, *, require_images=True):
 
 
 def _toon_reasons(source, identity, *, require_images=True):
-    """Lock the Tuesday comic to one character and accessible HTML dialogue."""
+    """Require reviewed in-image dialogue for the Tuesday Haru comic."""
     publish_day = date.fromisoformat(identity.publish_date)
     if publish_day < TUESDAY_TOON_POLICY_START:
         return []
@@ -2874,7 +2875,7 @@ def _toon_reasons(source, identity, *, require_images=True):
         "reference_asset": HARU_REFERENCE_ASSET,
         "reference_sha256": HARU_REFERENCE_SHA256,
         "panel_count": 4,
-        "dialogue_mode": "html_bubbles",
+        "dialogue_mode": "image_bubbles",
     }
     if (
         any(toon.get(key) != value for key, value in expected_toon.items())
@@ -2898,9 +2899,16 @@ def _toon_reasons(source, identity, *, require_images=True):
             )
         )
 
-    def prompt_is_safe(record):
+    def prompt_is_safe(record, *, panel=False):
         prompt = plain(record.get("generation_prompt"))
         lowered = prompt.casefold()
+        if panel:
+            return (
+                (HARU_CHARACTER_ANCHOR.casefold() in lowered
+                 or "preserve the same adult male character" in lowered)
+                and "speech balloon" in lowered
+                and not any(term in lowered for term in ("no text", "no letters", "no speech bubbles"))
+            )
         return (
             HARU_CHARACTER_ANCHOR.casefold() in lowered
             and "no text" in lowered
@@ -2950,17 +2958,15 @@ def _toon_reasons(source, identity, *, require_images=True):
             or brief.get("teaching_role") != teaching_role
             or brief.get("character_presence") != "haru"
             or brief.get("origin") != "imagegen"
-            or brief.get("korean_labels") != []
             or not identity_matches(brief)
-            or not prompt_is_safe(brief)
+            or not prompt_is_safe(brief, panel=True)
         ):
             return ["quality_toon_contract"]
         if require_images and (
             not isinstance(image, dict)
-            or image.get("korean_labels") != []
             or not identity_matches(image)
             or image.get("origin") != "imagegen"
-            or not prompt_is_safe(image)
+            or not prompt_is_safe(image, panel=True)
         ):
             return ["quality_toon_contract"]
 
@@ -2973,6 +2979,20 @@ def _toon_reasons(source, identity, *, require_images=True):
         ):
             return ["quality_toon_contract"]
         if not 1 <= len(dialogue) <= 2:
+            return ["quality_toon_contract"]
+        lines = [plain(line.get("text")) for line in dialogue if isinstance(line, dict)]
+        records = [brief, image] if require_images else [brief]
+        for record in records:
+            if (
+                record.get("dialogue_mode") != "image_bubbles"
+                or record.get("korean_labels") != lines
+                or any(text not in plain(record.get("generation_prompt")) for text in lines)
+            ):
+                return ["quality_toon_contract"]
+        if require_images and any(
+            image.get(flag) is not True
+            for flag in ("dialogue_text_verified", "dialogue_mobile_verified")
+        ):
             return ["quality_toon_contract"]
         for line in dialogue:
             if (

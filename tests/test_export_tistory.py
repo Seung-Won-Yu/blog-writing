@@ -713,6 +713,17 @@ class EditorialReadingFlowTests(unittest.TestCase):
         self.assertNotIn("digest-toon-panel", html)
         self.assertNotIn("digest-toon-dialogue", html)
 
+    def test_embedded_bubbles_keep_accessible_dialogue_without_duplicate_list(self):
+        day = copy.deepcopy(LEAD_DAY)
+        day["images"]["visual_1"]["dialogue_mode"] = "image_bubbles"
+        block = next(item for item in day["news"][0]["content"] if item.get("image") == "visual_1")
+        block.update(toon_panel=1, dialogue=[{"speaker": "하루", "text": "왜 읽히지? <script>"}])
+        html = render_post("2026-07-17", day)
+        self.assertIn("digest-toon-panel", html)
+        self.assertIn("대사: 하루: 왜 읽히지? &lt;script&gt;", html)
+        self.assertNotIn('class="digest-toon-dialogue"', html)
+        self.assertNotIn("<script>", html)
+
     def test_long_optional_code_can_render_collapsed(self):
         day = copy.deepcopy(LEAD_DAY)
         code = next(

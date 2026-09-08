@@ -39,7 +39,7 @@
       "reference_asset": "editorial/curiosity/characters/haru-character-sheet-v1.png",
       "reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
       "panel_count": 4,
-      "dialogue_mode": "html_bubbles"
+      "dialogue_mode": "image_bubbles"
     },
     "cover": {
       "content_role": "hook",
@@ -87,8 +87,10 @@
         "curiosity_hook": "찢어진 QR코드에서 휴대폰은 무엇을 먼저 찾을까?",
         "evidence_type": "diagram",
         "generation_model": "gpt-image-2",
-        "korean_labels": [],
-        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1, everyday question. Primary request: Haru at a neighborhood café notices that the lower edge of a printed QR code on a receipt holder is torn away, aims his phone at it, and reacts with curious surprise as it still scans. Make the torn QR paper the dominant object; show the analog timer at one o'clock on the table. Composition/framing: medium close shot, lived-in café details, no diagrams. Palette: terracotta, cream, deep green. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "korean_labels": [
+          "찢어졌는데… 왜 읽히지?"
+        ],
+        "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"찢어졌는데…\n왜 읽히지?\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep torn QR and surprised face fully visible. Put bubble in upper left wall space, tail toward Haru. No captions outside image, no extra text, no logos.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -101,7 +103,8 @@
         "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
         "toon_panel": 1,
         "toon_beat": "everyday_question",
-        "character_presence": "haru"
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles"
       },
       {
         "content_role": "explanation",
@@ -118,8 +121,10 @@
         "curiosity_hook": "QR코드에는 원래 내용 말고 어떤 여분 정보가 함께 들어갈까?",
         "evidence_type": "diagram",
         "generation_model": "gpt-image-2",
-        "korean_labels": [],
-        "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 2, hidden mechanism. Primary request: imaginative physical cutaway of a QR code as a tray of black-and-white square tiles; several tiles are missing, while duplicated pale-green correction tiles around the data tiles let Haru reconstruct the missing pattern like fitting puzzle pieces. Clearly distinguish ordinary data tiles from extra recovery tiles by color and grouping without any text. Composition/framing: top-down three-quarter cutaway; QR tile tray fills most of frame, Haru actively restores one gap; visually explain redundancy, not magic. Palette: charcoal, ivory, pale green, muted coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "korean_labels": [
+          "남은 정보로 빠진 값을 계산해요!"
+        ],
+        "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"남은 정보로\n빠진 값을 계산해요!\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep tile tray and restoring hand visible. Recompose slightly to reserve upper left space for the bubble. Do not imply identical backup copies. No captions outside image, no extra text, no logos.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -132,7 +137,8 @@
         "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
         "toon_panel": 2,
         "toon_beat": "hidden_mechanism",
-        "character_presence": "haru"
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles"
       },
       {
         "content_role": "explanation",
@@ -149,8 +155,10 @@
         "curiosity_hook": "내 QR코드는 어느 정도 가렸을 때까지 읽힐까?",
         "evidence_type": "diagram",
         "generation_model": "gpt-image-2",
-        "korean_labels": [],
-        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3, one-minute check. Primary request: safe home experiment using only a freshly printed test QR code; Haru places a very small removable blank paper strip over a few center modules while keeping all three large corner locator squares uncovered, then aims a phone at it. Show only the back of the phone; the screen must be completely invisible. The green-rim analog timer shows one o'clock. Composition/framing: clear high over-shoulder tabletop view, the test paper and three intact corner squares are large and readable, no payment or login context. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Palette: daylight blue-gray, ivory, sage, deep green. Character anchor: same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve the exact character identity and outfit from the reference sheet. Constraints: back of phone only; no visible display; no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "korean_labels": [
+          "모서리는 남기고, 가운데만 조금!"
+        ],
+        "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"모서리는 남기고,\n가운데만 조금!\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep three QR locator squares visible and phone back only. Reduce paper strip to a genuinely small patch over a few central modules. Place bubble at upper left with tail toward Haru, timer still visible. No captions outside image, no extra text, no logos.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -163,7 +171,8 @@
         "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
         "toon_panel": 3,
         "toon_beat": "one_minute_check",
-        "character_presence": "haru"
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles"
       },
       {
         "content_role": "explanation",
@@ -181,8 +190,10 @@
         "curiosity_hook": "QR코드는 넓이보다 손상 위치가 더 중요할 때가 있을까?",
         "evidence_type": "diagram",
         "generation_model": "gpt-image-2",
-        "korean_labels": [],
-        "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 4, exception boundary. Primary request: show two physical QR papers on a desk: one has small scattered center damage and is recoverable, the other has one large corner locator square completely covered and cannot be located. Haru points at the covered corner with a cautious expression while holding the phone lowered. Use composition and lighting only to contrast the outcomes, with no symbols or UI. Composition/framing: diagonal tabletop comparison, damaged corner square is the focal point, generous whitespace. Palette: cool gray, ivory, deep green, warning coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+        "korean_labels": [
+          "모서리가 가려지면 못 읽을 수도 있어요."
+        ],
+        "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"모서리가 가려지면\n못 읽을 수도 있어요.\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Use generous upper left blank space, tail toward Haru. Keep damaged QR corner visible. No captions outside image, no extra text, no logos.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -195,7 +206,8 @@
         "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
         "toon_panel": 4,
         "toon_beat": "exception_boundary",
-        "character_presence": "haru"
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles"
       }
     ]
   },
@@ -365,13 +377,15 @@
     "visual_1": {
       "origin": "imagegen",
       "alt": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽는 하루의 일상 장면",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-찢어져도-읽히는-질문-말풍선.webp",
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1, everyday question. Primary request: Haru at a neighborhood café notices that the lower edge of a printed QR code on a receipt holder is torn away, aims his phone at it, and reacts with curious surprise as it still scans. Make the torn QR paper the dominant object; show the analog timer at one o'clock on the table. Composition/framing: medium close shot, lived-in café details, no diagrams. Palette: terracotta, cream, deep green. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"찢어졌는데…\n왜 읽히지?\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep torn QR and surprised face fully visible. Put bubble in upper left wall space, tail toward Haru. No captions outside image, no extra text, no logos.",
       "teaching_role": "everyday_scene",
       "teaching_claim": "찢어진 QR코드도 핵심 위치 무늬와 충분한 코드워드가 남으면 휴대폰이 내용을 읽을 수 있다",
-      "korean_labels": [],
+      "korean_labels": [
+        "찢어졌는데… 왜 읽히지?"
+      ],
       "character_id": "haru-v1",
       "character_version": 1,
       "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
@@ -385,20 +399,25 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 121176,
+      "bytes": 125318,
       "quality": 82,
-      "sha256": "3aa561faa8fc7efabbdbf183881ab1ee04bec08923b74e2601edcdda63580eb7"
+      "sha256": "e10e94a5735ccde511be02858fbd6fee6aea823a51caac085d334212108ed048",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true
     },
     "visual_2": {
       "origin": "imagegen",
       "alt": "QR코드 데이터 코드워드와 오류 정정 코드워드를 타일처럼 맞춰 빠진 조각을 복원하는 하루",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-오류정정-원리-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-오류정정-원리-말풍선.webp",
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 2, hidden mechanism. Primary request: imaginative physical cutaway of a QR code as a tray of black-and-white square tiles; several tiles are missing, while duplicated pale-green correction tiles around the data tiles let Haru reconstruct the missing pattern like fitting puzzle pieces. Clearly distinguish ordinary data tiles from extra recovery tiles by color and grouping without any text. Composition/framing: top-down three-quarter cutaway; QR tile tray fills most of frame, Haru actively restores one gap; visually explain redundancy, not magic. Palette: charcoal, ivory, pale green, muted coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"남은 정보로\n빠진 값을 계산해요!\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep tile tray and restoring hand visible. Recompose slightly to reserve upper left space for the bubble. Do not imply identical backup copies. No captions outside image, no extra text, no logos.",
       "teaching_role": "mechanism_cutaway",
       "teaching_claim": "QR코드는 데이터 코드워드와 오류 정정 코드워드를 함께 넣어 빠진 조각을 계산으로 복원한다",
-      "korean_labels": [],
+      "korean_labels": [
+        "남은 정보로 빠진 값을 계산해요!"
+      ],
       "character_id": "haru-v1",
       "character_version": 1,
       "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
@@ -412,20 +431,25 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 151834,
+      "bytes": 121072,
       "quality": 82,
-      "sha256": "781713ec23d792262f1bb6e5a8a8fd821a3c814765edbc0f354fa6f312673106"
+      "sha256": "b067824d3a7cb399f9dc026b3de698e83660207f9a6d2b32a02eb607b6b4e0a4",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true
     },
     "visual_3": {
       "origin": "imagegen",
       "alt": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남겨 오류 정정을 확인하는 하루",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-1분-확인-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-1분-확인-말풍선.webp",
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3, one-minute check. Primary request: safe home experiment using only a freshly printed test QR code; Haru places a very small removable blank paper strip over a few center modules while keeping all three large corner locator squares uncovered, then aims a phone at it. Show only the back of the phone; the screen must be completely invisible. The green-rim analog timer shows one o'clock. Composition/framing: clear high over-shoulder tabletop view, the test paper and three intact corner squares are large and readable, no payment or login context. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Palette: daylight blue-gray, ivory, sage, deep green. Character anchor: same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve the exact character identity and outfit from the reference sheet. Constraints: back of phone only; no visible display; no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"모서리는 남기고,\n가운데만 조금!\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Keep three QR locator squares visible and phone back only. Reduce paper strip to a genuinely small patch over a few central modules. Place bubble at upper left with tail toward Haru, timer still visible. No captions outside image, no extra text, no logos.",
       "teaching_role": "one_minute_check",
       "teaching_claim": "새 테스트 QR코드 중앙을 작은 종이로 가리고 세 모서리를 남기면 오류 정정의 작동 범위를 안전하게 확인할 수 있다",
-      "korean_labels": [],
+      "korean_labels": [
+        "모서리는 남기고, 가운데만 조금!"
+      ],
       "character_id": "haru-v1",
       "character_version": 1,
       "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
@@ -439,20 +463,25 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 114652,
+      "bytes": 115772,
       "quality": 82,
-      "sha256": "945dbd8ebbbb60d08a893c8ccd5e6a9d7269e23c6719ebae414f9c9190d413b8"
+      "sha256": "2ea96d6b4a0fe023434af4c410ce654fd1e9586a417daa00ec0c15f788b29877",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true
     },
     "visual_4": {
       "origin": "imagegen",
       "alt": "QR코드 위치 표시 무늬가 가려지면 중앙 손상보다 작은 손상도 인식에 실패할 수 있음을 가리키는 하루",
-      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계.webp",
+      "path": "docs/tistory/assets/2026-09-08/qr코드-인식-실패-경계-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-08/qr코드-인식-실패-경계-말풍선.webp",
       "generation_model": "gpt-image-2",
-      "generation_prompt": "Use case: scientific-educational. Asset type: Haru IT explainer comic panel 4, exception boundary. Primary request: show two physical QR papers on a desk: one has small scattered center damage and is recoverable, the other has one large corner locator square completely covered and cannot be located. Haru points at the covered corner with a cautious expression while holding the phone lowered. Use composition and lighting only to contrast the outcomes, with no symbols or UI. Composition/framing: diagonal tabletop comparison, damaged corner square is the focal point, generous whitespace. Palette: cool gray, ivory, deep green, warning coral. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish, clean silhouette. Landscape blog art, compose for a 1200x630 crop. Preserve the exact character identity and outfit from the reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake product UI.",
+      "generation_prompt": "Use case: precise-object-edit. Edit target: existing Haru comic panel. Preserve the same adult male character, face, glasses, hairpin, ivory jacket, analog timer, hand-inked matte editorial webtoon style and explanatory scene. Add one LARGE white speech balloon INSIDE the illustration with a clean dark outline and tail clearly pointing toward Haru. Exact Korean text, no added words: \"모서리가 가려지면\n못 읽을 수도 있어요.\". Typography: bold crisp Korean, at least equivalent to 48px on a 1200px-wide output, legible at 390px phone width. Keep generous padding. Landscape approximately 1200:630 composition, no cropped text. Use generous upper left blank space, tail toward Haru. Keep damaged QR corner visible. No captions outside image, no extra text, no logos.",
       "teaching_role": "misconception_boundary",
       "teaching_claim": "QR코드 위치 표시 무늬가 가려지거나 복원 한도를 넘으면 손상 면적이 작아도 인식에 실패할 수 있다",
-      "korean_labels": [],
+      "korean_labels": [
+        "모서리가 가려지면 못 읽을 수도 있어요."
+      ],
       "character_id": "haru-v1",
       "character_version": 1,
       "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
@@ -466,9 +495,12 @@
       "width": 1200,
       "height": 630,
       "format": "webp",
-      "bytes": 94228,
+      "bytes": 98366,
       "quality": 82,
-      "sha256": "2ec2c1a8a8d495dfc4e54c0167c5e5b466b246b730df430ea9921f80e807b7b1"
+      "sha256": "a2bfbc1747be0b70348f4f0048c67a0c4d0ef2fc3a73444aeed27cfed88ebe50",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true
     }
   },
   "related_posts": [
@@ -541,7 +573,7 @@
           "dialogue": [
             {
               "speaker": "하루",
-              "text": "분명 종이가 찢어졌는데, 왜 메뉴가 열리지?"
+              "text": "찢어졌는데… 왜 읽히지?"
             }
           ]
         },
@@ -561,11 +593,7 @@
           "dialogue": [
             {
               "speaker": "하루",
-              "text": "같은 주소를 두 번 넣은 건 아니구나."
-            },
-            {
-              "speaker": "하루",
-              "text": "여분 답안으로 빠진 조각을 다시 계산해요."
+              "text": "남은 정보로 빠진 값을 계산해요!"
             }
           ]
         },
@@ -585,7 +613,7 @@
           "dialogue": [
             {
               "speaker": "하루",
-              "text": "세 모서리는 남기고 중앙만 조금 가려 볼게요."
+              "text": "모서리는 남기고, 가운데만 조금!"
             }
           ]
         },
@@ -625,7 +653,7 @@
           "dialogue": [
             {
               "speaker": "하루",
-              "text": "작게 가려도 모서리면 먼저 길을 잃을 수 있네."
+              "text": "모서리가 가려지면 못 읽을 수도 있어요."
             }
           ]
         },

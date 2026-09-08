@@ -583,10 +583,18 @@ def build_content_visual(asset, caption="", dialogue=None, toon_panel=None):
                 f'<p>{inline_markup(text)}</p></li>'
             )
     is_toon = bool(dialogue_rows)
+    embedded = asset.get("dialogue_mode") == "image_bubbles"
+    alt_text = plain(asset.get("alt"))
+    if embedded and isinstance(dialogue, list):
+        transcript = " ".join(
+            f'{plain(line.get("speaker"))}: {plain(line.get("text"))}'
+            for line in dialogue if isinstance(line, dict)
+        )
+        alt_text = f"{alt_text} 대사: {transcript}"
     dialogue_html = (
         '<ul class="digest-toon-dialogue" aria-label="하루의 대화">'
         f'{"".join(dialogue_rows)}</ul>'
-        if is_toon
+        if is_toon and not embedded
         else ""
     )
     figure_class = "digest-content-figure"
@@ -598,7 +606,7 @@ def build_content_visual(asset, caption="", dialogue=None, toon_panel=None):
     return (
         f'<figure class="{figure_class}"{panel_attr}>'
         f'<img class="digest-content-image" src="{esc(asset.get("url"))}" '
-        f'alt="{esc(asset.get("alt"))}" width="{width}" height="{height}" loading="lazy">'
+        f'alt="{esc(alt_text)}" width="{width}" height="{height}" loading="lazy">'
         f"{dialogue_html}{caption_html}</figure>"
     )
 

@@ -255,7 +255,7 @@ def apply_toon_profile(source):
         "reference_asset": HARU_REFERENCE_ASSET,
         "reference_sha256": HARU_REFERENCE_SHA256,
         "panel_count": 4,
-        "dialogue_mode": "html_bubbles",
+        "dialogue_mode": "image_bubbles",
     }
     identity_fields = {
         "character_id": HARU_CHARACTER_ID,
@@ -298,10 +298,16 @@ def apply_toon_profile(source):
                 "korean_labels": [],
             }
         )
-        brief["generation_prompt"] += safe_prompt
+        panel_prompt = f' {HARU_CHARACTER_ANCHOR}. speech balloon: "{line}"'
+        brief["generation_prompt"] += panel_prompt
+        brief["korean_labels"] = [line]
+        brief["dialogue_mode"] = "image_bubbles"
         image.update(identity_fields)
-        image["korean_labels"] = []
-        image["generation_prompt"] += safe_prompt
+        image["korean_labels"] = [line]
+        image["generation_prompt"] += panel_prompt
+        image["dialogue_mode"] = "image_bubbles"
+        image["dialogue_text_verified"] = True
+        image["dialogue_mobile_verified"] = True
         block = next(
             item
             for item in content
@@ -1402,6 +1408,17 @@ class EditorialQualityTests(unittest.TestCase):
             "quality_toon_contract",
             source_quality_reasons(source, identity),
         )
+
+    def test_tuesday_bubbles_require_matching_text_and_mobile_review(self):
+        for field, value in (("dialogue_mobile_verified", False),
+                             ("dialogue_text_verified", False),
+                             ("korean_labels", ["원고와 다른 대사"]),
+                             ("dialogue_mode", "html_bubbles")):
+            with self.subTest(field=field):
+                source = valid_curiosity_source("2026-09-08")
+                source["images"]["visual_1"][field] = value
+                identity = resolve_draft_identity("2026-09-08", source)
+                self.assertIn("quality_toon_contract", source_quality_reasons(source, identity))
 
     def test_direct_research_selection_evaluation_is_required_and_recomputed(self):
         cases = [
