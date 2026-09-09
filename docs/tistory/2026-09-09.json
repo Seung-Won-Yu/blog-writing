@@ -1,0 +1,87 @@
+{
+  "title": "Dependabot 비공개 패키지: PAT 없이 읽는 권한 설정",
+  "title_candidates": [
+    "Dependabot 비공개 패키지: PAT 없이 읽는 권한 설정",
+    "Dependabot, 비공개 GitHub Packages에 자동 읽기 권한 지원",
+    "만료된 PAT 열쇠 대신 저장소 읽기 권한표로 GitHub Packages 문이 열리는 Dependabot 변화: 어제까…"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-09-09",
+  "publish_date": "2026-09-09",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-09T09:00:00+09:00",
+  "tags": [
+    "Dependabot",
+    "Dependabot 비공개 패키지",
+    "GitHub Packages",
+    "GITHUB_TOKEN",
+    "Personal Access Token",
+    "의존성 업데이트",
+    "패키지 권한"
+  ],
+  "meta_description": "비공개 패키지 업데이트가 갑자기 `401`로 멈추면 만료된 PAT부터 의심하게 된다. GitHub는 9월 8일 Dependabot이 비공개 GitHub Packages와 GHCR을 읽을 때 작업별 `… GitHub는 Dependabot이 `*.pkg.github.com`과 `ghcr.…",
+  "key_summary": [
+    "1. Dependabot, 비공개 GitHub Packages에 자동 읽기 권한 지원",
+    "직접 얻는 결과: 새 자동 인증이 적용되는 범위와 우선순위를 구분하고, 패키지별 Read 접근을 준 뒤 실제 업데이트 성공을 확인해 GitHub Packages용 PAT만 안전하게 걷어낼…"
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Dependabot 비공개 패키지: PAT 없이 읽는 권한 설정"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-09.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-09.html",
+  "before_ad_html": "docs/tistory/2026-09-09-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-09-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-09-adfit.html",
+  "source_sha256": "000c050d14d0d151abdcd289139ae665e5a1d9ec98d44eeddc122721f7bfe284",
+  "html_sha256": "e76f05082e8517347c1980c2a623eba129606adb3cb7b13c4be4261feaac7d58",
+  "adfit_sha256": "80d754e1819a6cfaff1479b982540992424792c216b287f450e14407ba569233",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-09/Dependabot-비공개-패키지-PAT-대체-대표.webp",
+      "path": "docs/tistory/assets/2026-09-09/Dependabot-비공개-패키지-PAT-대체-대표.webp",
+      "original_url": "",
+      "alt": "Dependabot 비공개 패키지는 만료되는 PAT 대신 저장소 읽기 권한으로 열릴 수 있다. 만료된 열쇠 옆 패키지 보관함에 읽기 권한표가 꽂혀 있다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-09/Dependabot-자동토큰-공식변경.webp",
+      "path": "docs/tistory/assets/2026-09-09/Dependabot-자동토큰-공식변경.webp",
+      "original_url": "",
+      "alt": "GitHub 공식 변경 기록에서 Dependabot GITHUB_TOKEN의 packages: read와 패키지별 Manage Actions access 설정을 안내한 화면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-09/Dependabot-PAT-삭제-확인분기.webp",
+      "path": "docs/tistory/assets/2026-09-09/Dependabot-PAT-삭제-확인분기.webp",
+      "original_url": "",
+      "alt": "Dependabot에서 PAT를 삭제하기 전에 GitHub-hosted 패키지와 저장소 Read 접근, 업데이트 성공을 확인하는 조건 분기",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
