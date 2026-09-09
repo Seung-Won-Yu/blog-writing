@@ -429,7 +429,7 @@ class CopyPageTests(unittest.TestCase):
         self.assertIn("오늘 글 발행 준비", html)
         self.assertIn("월·수 실전 IT", html)
         self.assertIn("화·목 궁금한 IT 원리", html)
-        self.assertIn("금요일 자동화", html)
+        self.assertIn("금요일 개발·AI 인사이트", html)
         self.assertIn("토요일 프로젝트 글", html)
         self.assertNotIn("수요일 개발 가이드", html)
         self.assertIn("HTML 모드에 한 번 붙여넣고", html)

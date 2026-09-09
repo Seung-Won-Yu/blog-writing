@@ -768,7 +768,7 @@ def render(drafts, skin_contract=None):
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">월·수 실전 IT, 화·목 궁금한 IT 원리, 금요일 자동화, 토요일 프로젝트 글의 발행 준비물을 확인합니다.</p>
+      <p class="lead">월·수 실전 IT, 화·목 궁금한 IT 원리, 금요일 개발·AI 인사이트, 토요일 프로젝트 글의 발행 준비물을 확인합니다.</p>
       {skin_status}
     </header>
 

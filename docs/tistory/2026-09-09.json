@@ -21,7 +21,7 @@
     "의존성 업데이트",
     "패키지 권한"
   ],
-  "meta_description": "비공개 패키지 업데이트가 갑자기 `401`로 멈추면 만료된 PAT부터 의심하게 된다. GitHub는 9월 8일 Dependabot이 비공개 GitHub Packages와 GHCR을 읽을 때 작업별 `… GitHub는 Dependabot이 `*.pkg.github.com`과 `ghcr.…",
+  "meta_description": "자동 업데이트가 멈췄는데, 코드가 아니라 만료된 접근 열쇠를 갈아줘야 한다면 번거롭다. GitHub에서 라이브러리 업데이트를 제안하는 Dependabot도 회사 내부 패키지를 가져올 때 이런 문제를… GitHub는 Dependabot이 `*.pkg.github.com`과 `ghcr.i…",
   "key_summary": [
     "1. Dependabot, 비공개 GitHub Packages에 자동 읽기 권한 지원",
     "직접 얻는 결과: 새 자동 인증이 적용되는 범위와 우선순위를 구분하고, 패키지별 Read 접근을 준 뒤 실제 업데이트 성공을 확인해 GitHub Packages용 PAT만 안전하게 걷어낼…"
@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-09-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-09-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-09-adfit.html",
-  "source_sha256": "000c050d14d0d151abdcd289139ae665e5a1d9ec98d44eeddc122721f7bfe284",
-  "html_sha256": "e76f05082e8517347c1980c2a623eba129606adb3cb7b13c4be4261feaac7d58",
-  "adfit_sha256": "80d754e1819a6cfaff1479b982540992424792c216b287f450e14407ba569233",
+  "source_sha256": "f8c958edd7afc31dbeeff9e106d6f551a79cc4f81ab1e088bbdfaa95ddfc5a96",
+  "html_sha256": "7db061e5ae0e017e4d241070f0eed8e49e11e507103a28bfb6e80dbbedefc885",
+  "adfit_sha256": "7f7399d40add1d2b49642402dce05b4d4c3f2bb6ed68f1cf5108415d273f0528",
   "image_assets": [
     {
       "kind": "cover",

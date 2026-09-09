@@ -137,7 +137,7 @@
   },
   "editorial": {
     "headline": "Dependabot 비공개 패키지: PAT 없이 읽는 권한 설정",
-    "opening": "비공개 패키지 업데이트가 갑자기 `401`로 멈추면 만료된 PAT부터 의심하게 된다. GitHub는 9월 8일 Dependabot이 비공개 GitHub Packages와 GHCR을 읽을 때 작업별 `GITHUB_TOKEN`으로 `packages: read`를 요청하도록 바꿨다. 패키지 설정에서 업데이트 저장소에 Read 접근을 줬다면 PAT 없이도 동작한다. 다만 외부 레지스트리와 명시한 인증 설정까지 사라진 것은 아니다.",
+    "opening": "자동 업데이트가 멈췄는데, 코드가 아니라 만료된 접근 열쇠를 갈아줘야 한다면 번거롭다. GitHub에서 라이브러리 업데이트를 제안하는 Dependabot도 회사 내부 패키지를 가져올 때 이런 문제를 겪을 수 있었다. 9월 8일 변경으로, GitHub에 보관한 비공개 패키지는 저장소에 읽기 접근을 허용하면 사람이 발급한 토큰(PAT) 없이 가져올 수 있게 됐다. 이 글은 비공개 패키지를 관리하는 개발자를 위한 변경 해설이다. 어디까지 적용되고, 기존 토큰 없이도 작동하는지 어떻게 확인할지 살펴본다.",
     "closing": "이 변화의 가치는 YAML 몇 줄을 줄이는 데 있지 않다. 사람이 만든 장기 PAT를 Dependabot secret에 보관하고 만료일을 추적하던 일을, 작업마다 발급되는 토큰과 패키지별 저장소 권한으로 바꾼 데 있다. 자동 인증은 GitHub-hosted registry에서만 fallback으로 동작하므로, 패키지의 Read 접근과 실제 업데이트 성공을 먼저 확인한 뒤 PAT를 제거해야 한다.",
     "action": "다음 Dependabot 실행에서 비공개 패키지 다운로드가 성공하고 명시한 외부 registry가 그대로 선택되는지 확인한 뒤 GitHub Packages용 PAT 항목만 제거한다.",
     "audience_problem": "비공개 GitHub Packages를 쓰는 저장소가 Dependabot 업데이트마다 장기 PAT를 보관·회전하고, 만료나 권한 누락 때 401 오류를 뒤늦게 발견한다.",
@@ -177,7 +177,7 @@
         "Dependabot이 읽는 주소가 `*.pkg.github.com` 또는 `ghcr.io`인지 확인한다.",
         "패키지 Settings의 Manage Actions access에서 소비 저장소에 Read를 부여한다.",
         "기존 PAT 항목을 남긴 채 Dependabot 업데이트를 한 번 재실행한다.",
-        "패키지 다운로드와 registry 선택이 모두 맞으면 GitHub Packages용 PAT만 제거한다."
+        "GitHub Packages용 PAT 설정을 제거한 뒤 다시 실행해, PAT 없이도 같은 패키지를 읽는지 확인한다."
       ],
       "completion_check": "장기 PAT 없이 Dependabot 업데이트가 같은 비공개 패키지를 내려받고 외부 registry 설정은 그대로 동작하면 전환이 끝났다."
     },
@@ -210,7 +210,7 @@
   "reader_access": {
     "quick_summary": [
       "비공개 GitHub Packages가 저장소에 Read 접근을 주면 Dependabot은 PAT 대신 작업별 자동 토큰으로 패키지를 읽는다.",
-      "기존 PAT를 먼저 지우지 말고 패키지 접근 권한과 실제 업데이트 성공을 확인한 뒤 GitHub-hosted registry 항목만 제거한다.",
+      "Read 접근을 준비한 뒤 해당 PAT 설정을 제거하고 재실행한다. 기존 PAT를 남긴 상태의 성공만으로는 전환을 확인할 수 없다.",
       "외부 레지스트리, 사설망, 명시한 registry 경로와 자격 증명은 이번 변경의 대체 대상이 아니다."
     ],
     "glossary": [
@@ -258,7 +258,7 @@
             "Dependabot이 읽는 주소가 `*.pkg.github.com` 또는 `ghcr.io`인지 확인한다.",
             "패키지 Settings의 Manage Actions access에서 소비 저장소에 Read를 부여한다.",
             "기존 PAT 항목을 남긴 채 Dependabot 업데이트를 한 번 재실행한다.",
-            "패키지 다운로드와 registry 선택이 모두 맞으면 GitHub Packages용 PAT만 제거한다."
+            "GitHub Packages용 PAT 설정을 제거한 뒤 다시 실행해, PAT 없이도 같은 패키지를 읽는지 확인한다."
           ]
         },
         {
@@ -272,7 +272,7 @@
         },
         {
           "t": "p",
-          "text": "새 경로는 GitHub가 호스팅하는 모든 GitHub Packages 생태계와 Container registry인 GHCR에 적용된다. npm, Maven, NuGet처럼 패키지 형식이 무엇인지보다 실제 registry 호스트가 GitHub인지가 첫 기준이다. 회사의 Artifactory, Cloudsmith, 사설 npm registry에는 같은 자동 토큰이 전달되지 않는다."
+        "text": "새 경로는 Dependabot이 지원하는 GitHub Packages 생태계에 적용되며, 컨테이너 이미지를 보관하는 GHCR도 포함한다. npm, Maven, NuGet처럼 패키지 형식이 무엇인지보다 실제 보관소(registry) 주소가 GitHub인지가 첫 기준이다. 회사의 Artifactory, Cloudsmith, 사설 npm registry에는 같은 자동 토큰이 전달되지 않는다."
         },
         {
           "t": "table",
@@ -337,11 +337,11 @@
         },
         {
           "t": "p",
-          "text": "가장 안전한 전환은 새 권한과 옛 PAT가 잠시 겹치는 방식이다. 먼저 패키지에 소비 저장소 Read를 주고 Dependabot의 수동 업데이트나 다음 예약 작업을 실행한다. 로그에서 비공개 패키지 다운로드와 버전 해석이 성공했는지 확인한 뒤 GitHub Packages를 위한 registry 항목과 secret만 제거한다."
+        "text": "먼저 패키지에 소비 저장소 Read를 주고 Dependabot 업데이트를 실행해 기존 동작을 확인한다. 단, PAT를 남긴 상태의 성공은 자동 토큰이 작동했다는 증거가 아니다. 명시한 인증 설정이 우선하므로 기존 PAT로 성공했을 수 있다. 변경할 설정을 복원할 수 있게 준비한 뒤, 해당 GitHub Packages용 PAT 기반 registry 설정을 한 항목씩 제거한다."
         },
         {
           "t": "p",
-          "text": "삭제 뒤에는 같은 업데이트를 다시 실행해 PAT가 없어도 성공하는지 확인한다. 여러 생태계나 디렉터리를 한 파일에서 관리한다면 한 번에 모든 secret을 지우지 않는다. 어떤 업데이트 블록이 어느 registry를 쓰는지 표시해 두면 외부 자격 증명을 잘못 제거하는 일을 피할 수 있다."
+        "text": "설정 제거 뒤 같은 업데이트를 다시 실행해 PAT 없이 패키지 다운로드와 버전 해석이 성공하는지 확인한다. 이 두 번째 성공이 전환 완료 기준이다. 실패하면 변경한 설정을 복원하고 접근 목록을 점검한다. secret 자체는 다른 업데이트나 작업이 참조하지 않는지 확인한 뒤 정리한다. 여러 생태계를 관리한다면 외부 registry용 인증은 그대로 남긴다."
         },
         {
           "t": "h",
