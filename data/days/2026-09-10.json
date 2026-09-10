@@ -1,0 +1,599 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-10",
+  "publish_date": "2026-09-10",
+  "date_label": "2026. 9. 10",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "weekday": "목",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-10T09:00:00+09:00",
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "primary_query": "비밀번호 특수문자",
+  "tags": [
+    "비밀번호 특수문자",
+    "비밀번호 길이",
+    "비밀번호 관리자",
+    "유출 비밀번호",
+    "다중 인증",
+    "NIST 비밀번호 지침",
+    "계정 보안"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "특수문자 하나를 넣었다는 사실만으로 비밀번호가 안전해지지는 않는다.",
+      "길고 고유한 비밀번호를 쓰고, 흔하거나 유출된 값은 피하며, 비밀번호 관리자로 계정마다 다르게 만드는 편이 중요하다.",
+      "피싱이나 비밀번호 유출에는 복잡한 문자 조합만으로 부족하므로 다중 인증이나 패스키를 함께 써야 한다."
+    ],
+    "glossary": [
+      {
+        "term": "문자 조합 규칙",
+        "meaning": "대문자·소문자·숫자·특수문자를 각각 하나 이상 넣으라고 요구하는 비밀번호 생성 규칙이다."
+      },
+      {
+        "term": "차단 목록",
+        "meaning": "자주 쓰이거나 이미 유출돼 공격자가 먼저 시도할 가능성이 큰 비밀번호 목록이다."
+      },
+      {
+        "term": "비밀번호 재사용",
+        "meaning": "한 비밀번호를 여러 계정에 반복해서 써서 한 곳의 유출이 다른 계정 침해로 이어질 수 있는 상태다."
+      },
+      {
+        "term": "다중 인증",
+        "meaning": "비밀번호 외에 인증 앱·보안 키처럼 서로 다른 확인 수단을 하나 더 요구하는 방식이다."
+      }
+    ]
+  },
+  "related_posts": [
+    {
+      "title": "Hugging Face 보안 공지 뒤 해야 할 일: 토큰 회전과 최소 권한 점검 순서",
+      "url": "https://won0322.tistory.com/136",
+      "reason": "비밀번호가 유출됐거나 재사용됐을 때 계정 자격 증명을 바꾸고 권한을 줄이는 대응 순서로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Windows 로그인에 FIDO2 보안 키를 더한 Google Workspace, 바뀌는 지점과 준비 순서",
+      "url": "https://won0322.tistory.com/138",
+      "reason": "문자 조합만 강화하는 대신 비밀번호 뒤에 보안 키를 더하는 인증 경계를 구체적으로 볼 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "editorial": {
+    "headline": "비밀번호 특수문자, 왜 넣어도 무조건 안전하지 않을까?",
+    "opening": "회원가입 화면이 ‘특수문자 1개’를 요구하면 느낌표 하나를 끝에 붙이곤 한다. 규칙을 통과했으니 갑자기 강한 비밀번호가 됐다고 생각하기 쉽다. 하지만 공격자는 이런 습관까지 예상해 먼저 시험한다. 최신 보안 지침도 문자 종류 강제를 금지하고 길이·유출 차단·시도 제한을 함께 보라고 한다. 그렇다면 특수문자는 언제 도움이 되고, 무엇을 대신하지 못할까?",
+    "closing": "특수문자는 무작위 비밀번호의 가능한 문자를 늘릴 수 있지만, 끝에 느낌표 하나를 붙인 예측 가능한 패턴을 안전하게 바꾸는 마법은 아니다. 계정마다 다른 긴 비밀번호를 비밀번호 관리자로 만들고, 흔하거나 유출된 값은 피하며, 다중 인증이나 패스키를 함께 써야 한다. 이제 비밀번호 입력칸에서 ‘특수문자 포함’ 표시만 보지 말고 길이·고유성·유출 여부·추가 인증을 함께 설명할 수 있으면 점검이 끝났다.",
+    "action": "오늘 중요한 계정 하나에서 실제 비밀번호를 외부 검사 사이트에 입력하지 말고, 비밀번호 관리자·유출 경고·다중 인증 설정만 확인한다.",
+    "audience_problem": "특수문자 하나를 추가하면 짧거나 재사용한 비밀번호도 충분히 강해진다고 믿어, 공격자가 예상하는 패턴과 유출·피싱 위험을 놓친다.",
+    "reader_takeaway": "문자 종류 강제와 실제 비밀번호 강도를 구분하고, 길이·고유성·유출 차단·다중 인증을 1분 점검으로 확인할 수 있다.",
+    "why_now": "2025년 최종 NIST SP 800-63B-4는 문자 종류 강제를 ‘하지 말아야 한다’는 권고보다 강한 금지 요구로 정리했지만 많은 가입 화면에는 예전 규칙이 남아 있다.",
+    "topic_key": "password-special-character-composition-rule-length-uniqueness",
+    "reader_question": "비밀번호에 느낌표 같은 특수문자를 하나 넣으면 짧거나 재사용한 비밀번호도 안전해질까?",
+    "entities": [
+      "비밀번호 특수문자",
+      "문자 조합 규칙",
+      "NIST SP 800-63B-4",
+      "차단 목록",
+      "비밀번호 관리자",
+      "다중 인증"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "research_interpretation",
+    "weekly_lane": "curiosity_myth_history",
+    "selection_evaluation": {
+      "policy": "curiosity_myth_history-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 9,
+        "belief_fact_boundary": 15,
+        "historical_evidence": 15,
+        "direct_check": 9
+      },
+      "total": 98,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    },
+    "reader_hook": {
+      "scene": "회원가입 화면의 빨간 경고를 없애려고 익숙한 비밀번호 끝에 느낌표 하나를 붙인다.",
+      "stakes": "규칙 통과를 실제 안전성과 혼동하면 짧고 재사용된 비밀번호가 공격자의 우선 추측 목록에 그대로 남는다.",
+      "payoff": "특수문자가 도움이 되는 조건과 대신하지 못하는 위험을 가르고 중요한 계정 하나를 1분 안에 점검한다.",
+      "open_question": "특수문자 하나보다 길이·고유성·유출 여부가 더 중요하다면 가입 화면은 왜 아직 문자 종류를 요구할까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "특수문자 하나는 안전을 보장하는 도장이 아니다",
+      "immediate_answer": "특수문자는 무작위 비밀번호의 선택지를 늘릴 수 있지만, 익숙한 단어 끝에 느낌표 하나를 붙인 예측 가능한 패턴이나 비밀번호 재사용·유출·피싱까지 막지는 못한다.",
+      "action_steps": [
+        "중요한 계정 하나를 고르되 현재 비밀번호를 메모하거나 외부 사이트에 입력하지 않는다.",
+        "비밀번호 관리자의 보안 점검에서 재사용·유출 경고가 있는지만 확인한다.",
+        "새로 바꾼다면 관리자가 만든 15자 이상 고유 비밀번호나 충분히 긴 임의 문구를 쓴다.",
+        "다중 인증이나 패스키를 켜고 복구 수단도 함께 확인한다."
+      ],
+      "completion_check": "‘특수문자 포함’만 보지 않고 길이·고유성·유출 여부·추가 인증을 함께 설명하면 점검이 끝났다.",
+      "advanced_heading": "NIST 기준은 권고에서 금지로 더 분명해졌다"
+    },
+    "revisit": {
+      "quick_answer": "특수문자 자체는 선택 공간을 넓힐 수 있지만, 사람이 반복하는 위치와 치환은 공격자가 예상하므로 한 글자 추가만으로 강한 비밀번호가 되지 않는다.",
+      "reuse_case": "새 계정을 만들거나 회사의 비밀번호 정책을 검토할 때 문자 종류 체크보다 길이·고유성·차단 목록·시도 제한·다중 인증을 우선 확인한다.",
+      "failure_case": "같은 비밀번호를 여러 곳에 쓰거나 실제 값을 피싱 화면에 입력했다면 길고 복잡해도 다른 계정 침해나 탈취를 막지 못한다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "NIST SP 800-63B 비밀번호 요구사항 개정",
+        "OWASP 인증 지침의 길이·차단 목록 권고 변경",
+        "주요 비밀번호 관리자 유출 점검 방식 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "비밀번호 특수문자",
+      "reader_need": "특수문자를 넣으면 비밀번호가 얼마나 안전해지는지와 실제로 무엇을 더 확인해야 하는지 알고 싶다.",
+      "answer_format": "오해와 사실 경계도, NIST 지침 원문, 계정 하나를 위한 1분 점검표로 보여 준다."
+    },
+    "original_value": {
+      "durable_question": "문자 종류 규칙을 통과한 비밀번호와 실제 공격에 버티는 비밀번호는 무엇이 다를까?",
+      "source_gap": "표준과 보안 가이드는 서비스 운영자의 정책을 설명하지만, 일반 사용자가 가입 화면의 초록 체크와 실제 계정 위험을 구분할 짧은 점검 순서를 함께 보여 주지는 않는다.",
+      "contribution": "‘특수문자 포함’ 체크를 길이·고유성·유출 여부·추가 인증의 네 경계로 분해하고 2011년 사용자 연구부터 2025년 NIST 최종 지침까지 한 흐름으로 연결한다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "실제 비밀번호를 공개하지 않고도 중요한 계정 하나의 재사용·유출 경고와 추가 인증을 확인하고 다음 변경 기준을 고를 수 있다.",
+      "limits": "특정 비밀번호의 정확한 추측 시간은 공격자의 장비·저장 방식·시도 제한에 따라 달라지므로 고정된 ‘몇 년’ 수치로 단정하지 않는다."
+    }
+  },
+  "visual": {
+    "subject": "느낌표 스티커 하나를 붙인 짧은 비밀번호 종이와 공격자의 예상 패턴 카드 더미",
+    "hook": "특수문자 한 글자가 공격자의 예상 순서를 정말 바꿀까?",
+    "motif": "회원가입 도장, 느낌표 스티커, 예상 패턴 카드, 길고 서로 다른 열쇠 띠",
+    "weekday_profile": "myth_evidence",
+    "subject_terms": [
+      "비밀번호 특수문자",
+      "문자 조합 규칙",
+      "비밀번호 관리자",
+      "다중 인증"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "비밀번호 특수문자 한 글자는 예측 가능한 짧은 패턴을 안전하게 바꾸지 못한다",
+      "label": "느낌표 하나를 붙인 짧은 비밀번호와 공격자의 예상 패턴",
+      "scene_label": [
+        "특수문자 1개",
+        "예측 패턴"
+      ],
+      "steps": "짧은 익숙한 단어 → 끝에 느낌표 추가 → 규칙 통과 → 공격자의 예상 카드에는 그대로 존재",
+      "curiosity_hook": "비밀번호 특수문자 체크가 초록색인데 왜 여전히 먼저 추측될까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "predictable_symbol_sticker_trap",
+      "composition_type": "macro-rubber-stamp-and-guess-cards",
+      "palette_family": "ink_red_cream_cobalt",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "느낌표 스티커가 붙은 짧은 종이 띠와 바로 뒤의 예상 패턴 카드",
+      "texture_cue": "거친 종이, 고무 도장 잉크, 금속 키링, 접힌 카드 모서리",
+      "authenticity_cue": "사람이 규칙을 겨우 통과시키는 손동작과 공격자가 미리 준비한 카드 더미",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "특수문자 1개",
+        "예측 패턴"
+      ],
+      "generation_prompt": "Use case: stylized-concept. Asset type: Korean IT curiosity article cover. Primary request: A tactile macro editorial scene about the myth that one special character automatically makes a password safe. Scene/backdrop: cream paper worktable, close view. Subject: a human hand places one red exclamation-mark sticker onto a short password paper strip represented only by neutral blank circles. A nearby metal ring holds a thick stack of prediction slips, showing the attacker already expects the ending pattern. Style/medium: polished stop-motion editorial realism, rough paper, rubber stamp texture, metal keyring. Composition/framing: wide landscape, one unified close-up scene, two main objects fill 60%, no panels, no grid. Text (verbatim): 특수문자 1개, 예측 패턴. Lesson: 비밀번호 특수문자 한 글자는 예측 가능한 패턴을 지우지 않는다. Constraints: Asset intent: editorial-scene. Render exactly these two Korean phrases and absolutely no other letters, words, numbers, stamps, UI labels, or readable password characters anywhere. Large mobile-readable labels. Avoid: any text besides the two specified phrases, signup-complete text, checkmark text, dashboard, infographic cards, split panel, lock shield, binary rain, logos, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "teaching_role": "myth_fact_boundary",
+        "teaching_claim": "비밀번호 특수문자는 선택지를 늘릴 수 있지만 길이·고유성·유출 여부·추가 인증을 대신하지 못한다",
+        "label": "비밀번호 특수문자의 도움과 대신하지 못하는 네 가지 경계",
+        "scene_label": [
+          "도움: 선택지 증가",
+          "대신 못함: 재사용",
+          "대신 못함: 유출",
+          "대신 못함: 피싱"
+        ],
+        "steps": "무작위 문자열에 특수문자 포함 → 가능한 조합 증가 / 예측 가능한 끝자리·재사용·유출·피싱 → 그대로 남음",
+        "curiosity_hook": "비밀번호 특수문자는 어디까지 돕고 어디서 멈출까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "선택지 증가",
+          "재사용",
+          "유출",
+          "피싱"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Asset type: body explainer for a Korean general-reader IT article. A 1200x630 clean physical-metaphor diagram showing the boundary of 비밀번호 특수문자: a wider bowl of random character tiles under the label 선택지 증가, but three separate intact hazards labelled 재사용, 유출, 피싱 that the extra symbol does not remove. The lesson is not that symbols are bad; they help only when random and part of a longer unique password. Exact Korean labels: 선택지 증가, 재사용, 유출, 피싱. High mobile readability, spacious composition, no example password, no fake UI, no lock shield, no logos, no watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "logic_type": "evidence",
+        "teaching_role": "history_or_direct_check",
+        "teaching_claim": "2025년 NIST SP 800-63B-4는 단일 인증 비밀번호 15자 이상과 문자 조합 규칙 강제 금지를 함께 요구한다",
+        "label": "NIST SP 800-63B-4의 길이와 문자 조합 규칙 원문",
+        "scene_label": [
+          "15자 이상",
+          "문자 종류 강제 금지"
+        ],
+        "steps": "NIST 최종 지침 열기 → Password Verifiers 1번 길이 확인 → 5번 문자 조합 규칙 금지 확인",
+        "curiosity_hook": "NIST는 비밀번호 특수문자를 더 요구했을까, 오히려 강제를 막았을까?",
+        "evidence_type": "screenshot",
+        "source_url": "https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver",
+        "capture_tool": "playwright",
+        "capture_target": "비밀번호 특수문자 관련 NIST SP 800-63B-4 Password Verifiers의 1번·5번 요구사항",
+        "captured_at": "2026-09-10T09:18:30+09:00",
+        "capture_note": "NIST 공식 원문의 15자 최소 요구와 문자 종류 조합 규칙 금지 문장을 확대하고 파란색·빨간색 테두리만 더했다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "teaching_role": "history_or_direct_check",
+        "teaching_claim": "비밀번호 관리자에서는 실제 비밀번호를 외부에 입력하지 않고도 재사용·유출 경고·길이·추가 인증을 차례로 확인할 수 있다",
+        "label": "실제 비밀번호를 노출하지 않는 중요한 계정 1분 점검",
+        "scene_label": [
+          "재사용 경고",
+          "유출 경고",
+          "15자 이상",
+          "추가 인증"
+        ],
+        "steps": "계정 하나 선택 → 관리자 보안 점검 → 새 값은 15자 이상 고유 생성 → 다중 인증 또는 패스키 확인",
+        "curiosity_hook": "비밀번호를 검사 사이트에 보내지 않고도 무엇을 확인할 수 있을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "재사용 경고",
+          "유출 경고",
+          "15자 이상",
+          "추가 인증"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Asset type: direct-check body visual for a Korean general-reader IT article. Primary request: A safe one-minute password security check without exposing a real password. Scene/backdrop: clean top-down tabletop. Subject: four large physical checkpoints connected by arrows: duplicate document warning, breach alert symbol, a long strip made only of blank circles, and a hardware authenticator key. Style/medium: polished tactile educational flow, calm trustworthy colors. Composition/framing: wide landscape, four large checkpoints, generous spacing, no bottom banner, no notebook, no extra caption. Text (verbatim): 재사용 경고, 유출 경고, 15자 이상, 추가 인증. Lesson: 비밀번호 관리자 안에서 재사용·유출 경고와 추가 인증을 확인한다. Constraints: Render exactly these four Korean phrases and absolutely no other letters, words, numbers, UI text, or readable password characters anywhere. Large mobile-readable type. Avoid: any text besides the four specified phrases, branded UI, logos, watermark, tiny copy, fake values, bottom explanatory sentence.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "비밀번호 특수문자 한 글자는 예측 가능한 짧은 패턴을 안전하게 바꾸지 못한다",
+      "alt": "비밀번호 특수문자 한 글자는 예측 가능한 짧은 패턴을 안전하게 바꾸지 못한다. 느낌표를 붙이는 손과 같은 끝자리를 미리 적은 예상 카드 더미",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-특수문자-예측패턴-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-특수문자-예측패턴-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset type: Korean IT curiosity article cover. Primary request: A tactile macro editorial scene about the myth that one special character automatically makes a password safe. Scene/backdrop: cream paper worktable, close view. Subject: a human hand places one red exclamation-mark sticker onto a short password paper strip represented only by neutral blank circles. A nearby metal ring holds a thick stack of prediction slips, showing the attacker already expects the ending pattern. Style/medium: polished stop-motion editorial realism, rough paper, rubber stamp texture, metal keyring. Composition/framing: wide landscape, one unified close-up scene, two main objects fill 60%, no panels, no grid. Text (verbatim): 특수문자 1개, 예측 패턴. Lesson: 비밀번호 특수문자 한 글자는 예측 가능한 패턴을 지우지 않는다. Constraints: Asset intent: editorial-scene. Render exactly these two Korean phrases and absolutely no other letters, words, numbers, stamps, UI labels, or readable password characters anywhere. Large mobile-readable labels. Avoid: any text besides the two specified phrases, signup-complete text, checkmark text, dashboard, infographic cards, split panel, lock shield, binary rain, logos, watermark.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "predictable_symbol_sticker_trap",
+      "composition_type": "macro-rubber-stamp-and-guess-cards",
+      "palette_family": "ink_red_cream_cobalt",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "느낌표 스티커가 붙은 짧은 종이 띠와 바로 뒤의 예상 패턴 카드",
+      "texture_cue": "거친 종이, 고무 도장 잉크, 금속 키링, 접힌 카드 모서리",
+      "authenticity_cue": "사람이 규칙을 겨우 통과시키는 손동작과 공격자가 미리 준비한 카드 더미",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 64380,
+      "quality": 82,
+      "sha256": "14b1cf70b1105602388466274d7eb0d25feec10922ce0a11ec4bbe87008291a8"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "teaching_role": "myth_fact_boundary",
+      "teaching_claim": "비밀번호 특수문자는 선택지를 늘릴 수 있지만 길이·고유성·유출 여부·추가 인증을 대신하지 못한다",
+      "alt": "비밀번호 특수문자는 선택지를 늘리지만 재사용·유출·피싱 위험은 남는다는 사실 경계도",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-특수문자-도움-경계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-특수문자-도움-경계.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: body explainer for a Korean general-reader IT article. A 1200x630 clean physical-metaphor diagram showing the boundary of 비밀번호 특수문자: a wider bowl of random character tiles under the label 선택지 증가, but three separate intact hazards labelled 재사용, 유출, 피싱 that the extra symbol does not remove. The lesson is not that symbols are bad; they help only when random and part of a longer unique password. Exact Korean labels: 선택지 증가, 재사용, 유출, 피싱. High mobile readability, spacious composition, no example password, no fake UI, no lock shield, no logos, no watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 63448,
+      "quality": 82,
+      "sha256": "266efb009f65e244cd03594d7481d6cdecc71fb8ebe3e53fe0f20ca485e97e59"
+    },
+    "visual_2": {
+      "origin": "annotated_capture",
+      "teaching_role": "history_or_direct_check",
+      "teaching_claim": "2025년 NIST SP 800-63B-4는 단일 인증 비밀번호 15자 이상과 문자 조합 규칙 강제 금지를 함께 요구한다",
+      "alt": "비밀번호 특수문자 강제 금지와 단일 인증 비밀번호 15자 이상을 함께 명시한 NIST SP 800-63B-4 원문",
+      "path": "docs/tistory/assets/2026-09-10/NIST-비밀번호-길이-문자규칙-원문.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/NIST-비밀번호-길이-문자규칙-원문.webp",
+      "capture_tool": "playwright",
+      "capture_target": "비밀번호 특수문자 관련 NIST SP 800-63B-4 Password Verifiers의 1번·5번 요구사항",
+      "captured_at": "2026-09-10T09:18:30+09:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 50852,
+      "quality": 82,
+      "sha256": "f0dbd1b0bef518bb2062b7fda4fb62dddd8c7f3524028bdd56b10b0b8a47f64c",
+      "capture_sha256": "f0dbd1b0bef518bb2062b7fda4fb62dddd8c7f3524028bdd56b10b0b8a47f64c"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "teaching_role": "history_or_direct_check",
+      "teaching_claim": "비밀번호 관리자에서는 실제 비밀번호를 외부에 입력하지 않고도 재사용·유출 경고·길이·추가 인증을 차례로 확인할 수 있다",
+      "alt": "비밀번호 관리자에서 재사용과 유출 경고를 보고 15자 이상 고유 값과 추가 인증을 확인하는 순서",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-안전-1분점검.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-안전-1분점검.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: direct-check body visual for a Korean general-reader IT article. Primary request: A safe one-minute password security check without exposing a real password. Scene/backdrop: clean top-down tabletop. Subject: four large physical checkpoints connected by arrows: duplicate document warning, breach alert symbol, a long strip made only of blank circles, and a hardware authenticator key. Style/medium: polished tactile educational flow, calm trustworthy colors. Composition/framing: wide landscape, four large checkpoints, generous spacing, no bottom banner, no notebook, no extra caption. Text (verbatim): 재사용 경고, 유출 경고, 15자 이상, 추가 인증. Lesson: 비밀번호 관리자 안에서 재사용·유출 경고와 추가 인증을 확인한다. Constraints: Render exactly these four Korean phrases and absolutely no other letters, words, numbers, UI text, or readable password characters anywhere. Large mobile-readable type. Avoid: any text besides the four specified phrases, branded UI, logos, watermark, tiny copy, fake values, bottom explanatory sentence.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 50016,
+      "quality": 82,
+      "sha256": "783bee3669e37aa64d608c840c71cb54754029515497090edaaf3bfbd0edd32b"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "특수문자 하나와 실제 비밀번호 강도의 경계",
+      "source": "NIST 최종 지침과 사용자 비밀번호 연구",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver",
+      "published_at": "2026-09-10T00:00:00+00:00",
+      "blurb_kr": "특수문자는 무작위 비밀번호의 선택지를 늘릴 수 있지만, 예측 가능한 치환·재사용·유출·피싱을 없애지 않는다. 최신 NIST 지침은 문자 종류 강제를 금지하고 길이·차단 목록·시도 제한을 함께 요구한다.",
+      "references": [
+        {
+          "kind": "standard",
+          "title": "NIST SP 800-63B-4: Password Verifiers",
+          "url": "https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver"
+        },
+        {
+          "kind": "standard",
+          "title": "NIST SP 800-63B-4: Strength of Passwords",
+          "url": "https://pages.nist.gov/800-63-4/sp800-63b/passwords/"
+        },
+        {
+          "kind": "historical",
+          "title": "NIST SP 800-63B (2017, superseded)",
+          "url": "https://pages.nist.gov/800-63-3/sp800-63b.html"
+        },
+        {
+          "kind": "independent",
+          "title": "OWASP Authentication Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+        },
+        {
+          "kind": "research",
+          "title": "Of Passwords and People: Measuring the Effect of Password-Composition Policies",
+          "url": "https://www.ece.cmu.edu/~lbauer/papers/2011/chi2011-passwords.pdf"
+        },
+        {
+          "kind": "official",
+          "title": "CISA: Require Multifactor Authentication",
+          "url": "https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "특수문자 하나는 안전을 보장하는 도장이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "특수문자는 무작위 비밀번호의 선택지를 늘릴 수 있지만, 익숙한 단어 끝에 느낌표 하나를 붙인 예측 가능한 패턴이나 비밀번호 재사용·유출·피싱까지 막지는 못한다. ‘특수문자가 있으면 안전하다’는 믿음은 조건을 빼면 틀리다. 중요한 것은 공격자가 다음에 무엇을 추측할지 어렵게 만드는 전체 방식이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "비밀번호 특수문자는 선택지를 늘릴 수 있지만 길이·고유성·유출 여부·추가 인증을 대신하지 못한다. 무작위로 고른 긴 값에 포함될 때는 도움이 되지만 익숙한 값의 끝자리만 바꾸면 경계 밖 위험은 남는다."
+        },
+        {
+          "t": "h",
+          "text": "1분 점검은 실제 비밀번호를 밖에 보내지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "특정 비밀번호가 몇 초 만에 깨진다는 외부 검사표에 현재 비밀번호를 입력할 필요는 없다. 그런 시간표는 공격 장비와 서버 저장 방식 같은 가정에 따라 크게 달라진다. 대신 비밀번호 관리자와 계정의 공식 보안 설정에서 아래 네 가지만 확인한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "중요한 계정 하나를 고르되 현재 비밀번호를 메모하거나 외부 사이트에 입력하지 않는다.",
+            "비밀번호 관리자의 보안 점검에서 재사용·유출 경고가 있는지만 확인한다.",
+            "새로 바꾼다면 관리자가 만든 15자 이상 고유 비밀번호나 충분히 긴 임의 문구를 쓴다.",
+            "다중 인증이나 패스키를 켜고 복구 수단도 함께 확인한다."
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "비밀번호 관리자에서는 실제 비밀번호를 외부에 입력하지 않고도 재사용·유출 경고·길이·추가 인증을 차례로 확인할 수 있다. 한 계정에서 네 항목을 확인하면 특수문자 체크 하나보다 실제 위험에 가까운 점검이 된다."
+        },
+        {
+          "t": "p",
+          "text": "15자는 NIST가 단일 인증 비밀번호를 받는 서비스에 요구하는 최소 길이다. 사용자가 모든 비밀번호를 직접 외울 필요는 없다. 비밀번호 관리자가 계정마다 다른 값을 만들고 저장하게 하면 재사용을 줄이면서 길이를 늘리기 쉽다. 서비스가 더 짧은 값만 받거나 붙여넣기를 막는다면 사용자보다 서비스 설계의 한계도 함께 봐야 한다."
+        },
+        {
+          "t": "h",
+          "text": "규칙을 통과하는 습관도 공격자는 알고 있다"
+        },
+        {
+          "t": "p",
+          "text": "문자 종류 규칙의 생각은 단순하다. 사용할 수 있는 문자가 늘면 가능한 조합도 늘어난다. 컴퓨터가 길고 무작위인 값을 만든다면 맞는 설명이다. 그러나 사람이 규칙을 맞출 때는 대문자를 앞에 두고 숫자와 느낌표를 끝에 붙이는 식으로 선택이 몰린다."
+        },
+        {
+          "t": "p",
+          "text": "2011년 비밀번호 조합 정책을 비교한 연구는 엄격한 규칙이 더 강한 결과를 만들 수 있는 조건과 함께 기억 부담과 사용자 행동을 측정했다. 이후 유출 비밀번호 분석과 연구가 쌓이면서 NIST는 익숙한 단어의 첫 글자와 끝자리만 바꾸는 뻔한 변형을 대표적인 실패 예로 들었다. 공격 도구도 모든 문자를 무작정 같은 순서로 돌기보다 실제 유출 목록과 사람이 자주 쓰는 치환을 먼저 시험한다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "NIST 기준은 권고에서 금지로 더 분명해졌다"
+        },
+        {
+          "t": "p",
+          "text": "2017년 NIST SP 800-63B는 대문자·숫자·특수문자를 섞으라는 추가 규칙을 두지 말라고 권고했다. 2025년 최종 SP 800-63B-4는 표현을 더 강하게 바꿨다. 중앙 서버가 확인하는 비밀번호에 문자 종류 조합 규칙을 강제해서는 안 된다고 요구한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "2025년 NIST SP 800-63B-4는 단일 인증 비밀번호 15자 이상과 문자 조합 규칙 강제 금지를 함께 요구한다. 원문의 1번과 5번 항목을 같이 보면 ‘길이는 늘리고 특정 문자 체크는 강제하지 않는다’는 정책 방향이 보인다."
+        },
+        {
+          "t": "p",
+          "text": "같은 지침은 흔하거나 이미 유출된 비밀번호를 차단 목록과 비교하고, 로그인 실패 횟수를 제한하며, 비밀번호 관리자와 붙여넣기를 허용하라고 요구한다. 특수문자를 금지하라는 뜻도 아니다. 모든 문자를 허용하되 특정 종류를 하나씩 넣게 하는 체크박스를 안전의 핵심으로 삼지 말라는 뜻이다."
+        },
+        {
+          "t": "table",
+          "caption": "비밀번호 특수문자 오해와 실제 판단 기준",
+          "headers": [
+            "보이는 조건",
+            "도움이 되는 때",
+            "놓치는 위험"
+          ],
+          "rows": [
+            [
+              "특수문자 포함",
+              "길고 무작위인 고유 비밀번호의 선택 공간을 넓힐 때",
+              "끝자리 느낌표처럼 예측 가능한 패턴"
+            ],
+            [
+              "15자 이상",
+              "짧은 값보다 추측 후보를 크게 늘릴 때",
+              "유출된 긴 값이나 다른 계정과의 재사용"
+            ],
+            [
+              "유출 경고 없음",
+              "알려진 유출 목록의 흔한 값을 피할 때",
+              "새로운 피싱·악성코드·서비스 쪽 유출"
+            ],
+            [
+              "다중 인증 켜짐",
+              "비밀번호 하나가 노출돼도 추가 확인을 요구할 때",
+              "피싱에 약한 방식과 승인 알림을 무심코 누르는 행동"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "비밀번호 표시별 도움과 실패 경계표"
+        },
+        {
+          "t": "h",
+          "text": "길고 복잡해도 재사용하면 함께 무너진다"
+        },
+        {
+          "t": "p",
+          "text": "한 서비스가 침해돼 비밀번호가 드러났을 때 공격자는 같은 조합을 다른 사이트에도 넣어 본다. 이때 특수문자 개수나 길이는 이미 알려진 값을 다시 쓰는 공격을 막지 못한다. 계정마다 다른 비밀번호가 필요한 이유다. 비밀번호 관리자의 유출 경고가 뜨면 해당 계정부터 바꾸고 같은 값을 쓴 다른 계정도 찾아야 한다."
+        },
+        {
+          "t": "p",
+          "text": "피싱도 비슷하다. 사용자가 가짜 로그인 화면에 완성된 비밀번호를 직접 입력하면 복잡한 문자열 그대로 공격자에게 넘어갈 수 있다. CISA가 비밀번호만으로 충분하지 않다며 다중 인증을 요구하는 이유다. 가능하다면 피싱에 강한 보안 키나 패스키를 우선하고, 인증 앱을 쓸 때도 갑자기 온 승인 요청을 누르지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "공격자는 모든 조합보다 사람이 고른 순서를 먼저 돈다"
+        },
+        {
+          "t": "p",
+          "text": "심화해서 보면 비밀번호 강도는 ‘가능한 문자 수의 몇 제곱’만으로 계산되지 않는다. 그 계산은 각 문자를 완전히 무작위로 골랐다는 전제가 있어야 한다. 사람이 고른 단어, 생일, 키보드 배열, 흔한 치환에는 같은 확률을 줄 수 없다. 그래서 NIST도 사용자가 고른 비밀번호의 정확한 정보량을 추정하기 어렵다고 설명한다."
+        },
+        {
+          "t": "p",
+          "text": "서비스 쪽 방어도 함께 작동한다. 온라인 로그인은 실패 횟수 제한이 추측 속도를 늦춘다. 반대로 공격자가 유출된 비밀번호 해시를 가져가 자기 장비에서 시험하면 이런 제한이 없어 저장 방식과 계산 비용이 중요해진다. 사용자가 할 일은 추측 시간 숫자를 외우는 것이 아니라 긴 고유 비밀번호와 추가 인증을 쓰는 것이다. 서비스 운영자는 차단 목록·시도 제한·안전한 해시 저장을 책임져야 한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "문자 종류를 직접 맞추기보다 비밀번호 관리자가 만든 긴 고유 값을 사용한다.",
+            "기억해야 한다면 서로 무관한 단어로 충분히 긴 문구를 만들고 다른 계정에 재사용하지 않는다.",
+            "유출 경고가 뜨거나 침해 증거가 있을 때 바꾸고, 날짜만 보고 주기적으로 한 글자씩 돌려 쓰지 않는다.",
+            "중요 계정에는 다중 인증이나 패스키를 켜고 복구 코드를 안전하게 보관한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "특수문자는 무작위 비밀번호의 선택지를 늘릴 수 있지만, 끝에 느낌표 하나를 붙인 예측 가능한 패턴을 안전하게 바꾸는 마법은 아니다. ‘특수문자 포함’만 보지 않고 길이·고유성·유출 여부·추가 인증을 함께 설명하면 점검이 끝났다."
+        },
+        {
+          "t": "quote",
+          "text": "초록색 ‘특수문자 포함’ 표시는 입력 규칙을 통과했다는 뜻이지, 계정 전체가 안전하다는 보증서는 아니다."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "title": "비밀번호 특수문자, 왜 넣어도 무조건 안전하지 않을까?",
+  "title_candidates": [
+    "비밀번호 특수문자, 왜 넣어도 무조건 안전하지 않을까?",
+    "특수문자 하나와 실제 비밀번호 강도의 경계",
+    "느낌표 스티커 하나를 붙인 짧은 비밀번호 종이와 공격자의 예상 패턴 카드 더미: 특수문자 한 글자가 공격자의 예상 순서를…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-10",
+  "publish_date": "2026-09-10",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-10T09:00:00+09:00",
+  "tags": [
+    "비밀번호 특수문자",
+    "비밀번호 길이",
+    "비밀번호 관리자",
+    "유출 비밀번호",
+    "다중 인증",
+    "NIST 비밀번호 지침",
+    "계정 보안"
+  ],
+  "meta_description": "회원가입 화면이 ‘특수문자 1개’를 요구하면 느낌표 하나를 끝에 붙이곤 한다. 규칙을 통과했으니 갑자기 강한 비밀번호가 됐다고 생각하기 쉽다. 하지만 공격자는 이런 습관까지 예상해 먼저 시험한다. 최… 특수문자는 무작위 비밀번호의 선택지를 늘릴 수 있지만, 예측 가능한 치환·재사용·유…",
+  "key_summary": [
+    "1. 특수문자 하나와 실제 비밀번호 강도의 경계",
+    "직접 얻는 결과: 문자 종류 강제와 실제 비밀번호 강도를 구분하고, 길이·고유성·유출 차단·다중 인증을 1분 점검으로 확인할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 비밀번호 특수문자, 왜 넣어도 무조건 안전하지 않을까?"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-10.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-10.html",
+  "before_ad_html": "docs/tistory/2026-09-10-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-10-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-10-adfit.html",
+  "source_sha256": "193c5dde10439eff12b1fa012823c0775da511dd78a989798b6eb69a36b1963b",
+  "html_sha256": "b208999aa982e7498a6e8975499004ee2867c296bbd1e95002f0edaea39ea60d",
+  "adfit_sha256": "f73cb4cc3d06062068d345bf90f3e9215ab190cd55f0db50f51265d4ff115695",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-특수문자-예측패턴-대표.webp",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-특수문자-예측패턴-대표.webp",
+      "original_url": "",
+      "alt": "비밀번호 특수문자 한 글자는 예측 가능한 짧은 패턴을 안전하게 바꾸지 못한다. 느낌표를 붙이는 손과 같은 끝자리를 미리 적은 예상 카드 더미",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-특수문자-도움-경계.webp",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-특수문자-도움-경계.webp",
+      "original_url": "",
+      "alt": "비밀번호 특수문자는 선택지를 늘리지만 재사용·유출·피싱 위험은 남는다는 사실 경계도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/NIST-비밀번호-길이-문자규칙-원문.webp",
+      "path": "docs/tistory/assets/2026-09-10/NIST-비밀번호-길이-문자규칙-원문.webp",
+      "original_url": "",
+      "alt": "비밀번호 특수문자 강제 금지와 단일 인증 비밀번호 15자 이상을 함께 명시한 NIST SP 800-63B-4 원문",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-10/비밀번호-안전-1분점검.webp",
+      "path": "docs/tistory/assets/2026-09-10/비밀번호-안전-1분점검.webp",
+      "original_url": "",
+      "alt": "비밀번호 관리자에서 재사용과 유출 경고를 보고 15자 이상 고유 값과 추가 인증을 확인하는 순서",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
