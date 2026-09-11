@@ -1,0 +1,95 @@
+{
+  "title": "AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+  "title_candidates": [
+    "AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+    "테스트 통과 보고와 실제 사용자 결과 사이에서 완료 증거를 대조하는 개발 작업: 초록색 테스트 결과만으로 에이전트 작업을…"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-09-11-automation",
+  "publish_date": "2026-09-11",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-11T09:00:00+09:00",
+  "tags": [
+    "AI 코딩 에이전트",
+    "소프트웨어 테스트",
+    "에이전트 평가",
+    "코드 리뷰",
+    "검증 자동화",
+    "개발 워크플로"
+  ],
+  "meta_description": "AI 코딩 에이전트가 수십 개 테스트를 통과했다고 보고하면 작업이 끝난 듯 보인다. 하지만 테스트는 누군가 적어 둔 사례만 확인한다. 요청한 제품이 실제로 완성됐는지, 경계 밖에서 망가지지 않는지는… 코딩 에이전트의 완료 문장 대신 행동·실제 상태·테스트 밖 경계·사람 검토의 서로 다…",
+  "key_summary": [
+    "1. AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+    "직접 얻는 결과: 독자는 변경 위험에 맞춰 행동·상태·경계·사람 검토를 조합하는 검증 사다리와 재사용 체크리스트를 얻는다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-09-11.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-11-automation.html",
+  "before_ad_html": "docs/tistory/2026-09-11-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-11-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-11-automation-adfit.html",
+  "source_sha256": "40a6a8c45ae7837a3661ca754f2e3b593cef9edd71aa0f416ec015a159c39f68",
+  "html_sha256": "d8a20959f6453eb2d323020d52680495455e73b0b37193d839a4d60a80bfcfcb",
+  "adfit_sha256": "beb37dea99791e2c5795a86159ed87689c44e81f820a8a9f4aa212083ac73e37",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/테스트-통과와-실제-결과-대표.webp",
+      "path": "docs/tistory/assets/2026-09-11-automation/테스트-통과와-실제-결과-대표.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트의 테스트 통과 보고 뒤에 남은 실제 사용자 결과를 대조한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/Anthropic-에이전트-평가-근거.webp",
+      "path": "docs/tistory/assets/2026-09-11-automation/Anthropic-에이전트-평가-근거.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트 평가는 테스트·상태 검사·사람 검토처럼 서로 다른 신호를 조합해야 한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/코딩-에이전트-검증-사다리.webp",
+      "path": "docs/tistory/assets/2026-09-11-automation/코딩-에이전트-검증-사다리.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트 검증을 행동·상태·경계·사람 검토의 네 층으로 선택한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/Vero-저장소-전체-검증-근거.webp",
+      "path": "docs/tistory/assets/2026-09-11-automation/Vero-저장소-전체-검증-근거.webp",
+      "original_url": "",
+      "alt": "AI 코딩 에이전트의 형식 검증도 저장소 전체가 빌드되고 모든 명세가 닫힐 때만 완료 신호가 된다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

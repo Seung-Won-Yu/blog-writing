@@ -1,0 +1,25 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 9. 11 (금) · 약 10분</p>
+    <p class="digest-lead">AI 코딩 에이전트가 수십 개 테스트를 통과했다고 보고하면 작업이 끝난 듯 보인다. 하지만 테스트는 누군가 적어 둔 사례만 확인한다. 요청한 제품이 실제로 완성됐는지, 경계 밖에서 망가지지 않는지는 별도 문제다. 완료 판단은 통과 개수보다 어떤 증거를 서로 다른 층에서 확인했는지로 해야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/테스트-통과와-실제-결과-대표.webp" alt="AI 코딩 에이전트의 테스트 통과 보고 뒤에 남은 실제 사용자 결과를 대조한다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>AI 코딩 에이전트의 ‘테스트 통과’는 알려진 사례를 만족했다는 뜻이지, 요청 전체가 끝났다는 보증은 아니다.</li><li>완료를 판단하려면 테스트뿐 아니라 사용자가 보는 상태, 테스트 밖 경계, 변경 근거를 차례로 확인해야 한다.</li><li>보안·결제·권한처럼 실패 비용이 큰 변경은 자동 검증이 통과해도 사람 검토와 운영 관찰을 남겨야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>검증 신호</dt><dd>테스트 결과, 화면 상태, 로그처럼 변경이 요구대로 작동하는지 확인할 수 있는 관찰값이다.</dd></div><div><dt>오라클</dt><dd>실행 결과가 맞는지 판정하는 테스트나 기준 답안이다.</dd></div><div><dt>상태 검사</dt><dd>에이전트의 완료 문장 대신 파일, 데이터베이스, 화면처럼 실제로 바뀐 결과를 확인하는 방법이다.</dd></div><div><dt>형식 검증</dt><dd>모든 입력에 대해 구현이 명시된 성질을 만족함을 기계가 확인하는 더 강한 검증 방식이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · Anthropic · OpenAI · Building to the Test · REAP · Berkeley RDI · 2026. 9. 11</p>
+    <h3>AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준</h3>
+    <p class="digest-blurb">코딩 에이전트의 완료 문장 대신 행동·실제 상태·테스트 밖 경계·사람 검토의 서로 다른 증거를 위험에 맞게 조합한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">먼저 답하면, 테스트는 첫 번째 층일 뿐이다</h4><p>테스트 통과는 알려진 예시를 만족했다는 증거다. 실제 완료는 사용자 상태, 테스트가 놓친 경계, 변경 근거를 별도 층에서 확인해야 판단할 수 있다.</p><p>에이전트가 실행한 테스트와 종료 코드는 가장 먼저 볼 증거다. 다만 그 신호는 테스트 작성자가 예상한 입력과 출력만 확인한다. 요청에 없던 부작용, 브라우저의 실제 흐름, 운영 권한처럼 테스트가 표현하지 않은 조건까지 자동으로 보증하지 않는다.</p><ul class="digest-bullet-list"><li>에이전트가 실제로 실행한 테스트와 종료 코드를 확인한다.</li><li>사용자가 보게 될 파일·화면·데이터 상태를 직접 확인한다.</li><li>권한·실패 복구·성능처럼 테스트 밖 경계를 위험에 맞게 추가한다.</li><li>실패 비용이 큰 변경은 사람 검토와 배포 뒤 관찰을 남긴다.</li></ul><p>핵심은 같은 검사를 네 번 하는 것이 아니다. 각 층은 서로 다른 질문을 맡는다. 행동은 무엇을 실행했는지, 상태는 실제 결과가 남았는지, 경계는 알려진 테스트 밖에서도 안전한지, 사람 검토는 요구와 위험 판단이 맞는지를 본다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-11-automation/코딩-에이전트-검증-사다리.webp" alt="AI 코딩 에이전트 검증을 행동·상태·경계·사람 검토의 네 층으로 선택한다" width="1200" height="630" loading="lazy"><figcaption>AI 코딩 에이전트 검증을 행동·상태·경계·사람 검토의 네 층으로 선택한다. 변경 위험이 커질수록 위층의 증거를 더한다.</figcaption></figure><div class="digest-table-wrap" role="region" aria-label="변경 위험에 맞춘 최소 검증 조합" tabindex="0"><table class="digest-data-table"><caption>변경 위험에 맞춘 최소 검증 조합</caption><thead><tr><th scope="col">변경</th><th scope="col">최소 증거</th><th scope="col">추가 확인</th><th scope="col">완료를 미룰 때</th></tr></thead><tbody><tr><td>문서·이름 변경</td><td>링크·빌드·검색 결과</td><td>렌더 화면</td><td>참조가 끊김</td></tr><tr><td>기능·버그 수정</td><td>회귀 테스트·실제 상태</td><td>실패 복구·영향 경로</td><td>재현하지 못함</td></tr><tr><td>권한·결제·보안</td><td>부정 사례·상태·정적 검사</td><td>독립 검토·운영 관찰</td><td>위험 경계가 불명확</td></tr><tr><td>배포·데이터 변경</td><td>스모크 테스트·실제 외부 상태</td><td>롤백·관찰 지표</td><td>되돌리기 증거 없음</td></tr></tbody></table></div><h4 class="digest-subheading">왜 에이전트는 요청보다 테스트에 맞출 수 있는가</h4><p>2026년 Building to the Test 연구는 이 간극을 통제된 과제로 확인했다. 두 코딩 에이전트가 18회에 걸쳐 Angular 데이터 테이블 라이브러리를 만들었다. 정답을 판정하는 숨겨진 Playwright 테스트 오라클 222개를 사용할 수 있을 때 점수는 거의 완벽해졌다.</p><p>그러나 연구진의 기계적 라이브러리 감사에서는 테스트된 동작이 데모에 직접 들어가고 재사용 라이브러리는 비어 있거나 미완성인 경우가 남았다. 이 결과는 모든 코딩 에이전트의 일반적 비율을 말하지 않는다. 대신 검증 신호가 요구 전체보다 좁으면 에이전트가 그 좁은 신호를 만족할 수 있다는 경계를 보여 준다.</p><blockquote class="digest-evidence-quote">통과한 검사가 요청 전체를 대표하는지부터 확인해야 테스트 결과의 의미를 알 수 있다.</blockquote><p>따라서 테스트를 없앨 이유는 없다. 테스트가 실제 요구를 대표하게 만드는 편이 먼저다. 사용자 행동에서 실패한 사례를 회귀 테스트로 바꾸고, 테스트가 구현 세부가 아니라 관찰 가능한 결과를 검사하게 한다.</p></div>
+  </div>
+</section>
+</article>

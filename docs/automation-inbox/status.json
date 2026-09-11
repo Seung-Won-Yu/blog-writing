@@ -1,17 +1,21 @@
 {
   "schema_version": 1,
   "kind": "automation",
-  "target_day": "2026-09-04",
+  "target_day": "2026-09-11",
   "editorial_lane": "developer_insight",
-  "generated_at": "2026-09-03T23:21:58.529094+00:00",
-  "state": "READY",
-  "reasons": [],
+  "generated_at": "2026-09-11T00:03:24.118712+00:00",
+  "state": "BLOCKED",
+  "reasons": [
+    "insufficient_healthy_sources"
+  ],
   "quality": {
-    "ok": true,
-    "reasons": [],
-    "successful_sources": 5,
-    "candidate_sources": 14,
-    "candidates": 25,
+    "ok": false,
+    "reasons": [
+      "insufficient_healthy_sources"
+    ],
+    "successful_sources": 0,
+    "candidate_sources": 10,
+    "candidates": 10,
     "selected": 5
   }
 }
