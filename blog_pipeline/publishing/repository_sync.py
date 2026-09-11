@@ -151,17 +151,64 @@ def push_with_retry(
     )
 
 
+def preflight(*, cwd=None, runner=None):
+    """Refresh the exact deployment target before trusting cached tracking refs.
+
+    Never merge, publish, change credentials, or relax execution permissions.
+    """
+    cwd = Path(cwd or Path.cwd())
+    runner = runner or _run_git_push
+
+    def run(*args):
+        return runner(["git", *args], cwd)
+
+    def blocked(reason, detail=""):
+        return {"status": "BLOCKED", "reason": reason, "detail": detail}
+
+    try:
+        state = run("status", "--porcelain")
+        if state.returncode or state.stdout.strip():
+            return blocked("WORKTREE_NOT_CLEAN", state.stderr)
+        branch = run("symbolic-ref", "--short", "HEAD")
+        if branch.returncode or branch.stdout.strip() != "main":
+            return blocked("WRONG_BRANCH")
+        allowed = "https://github.com/Seung-Won-Yu/blog-writing.git"
+        for flag in ([], ["--push"]):
+            target = run("remote", "get-url", *flag, "--all", "origin")
+            if target.returncode or target.stdout.strip() != allowed:
+                return blocked("UNEXPECTED_REMOTE")
+        fetched = run("fetch", "origin", "main")
+        if fetched.returncode:
+            reason = "NETWORK_UNAVAILABLE" if is_transient_git_error(fetched.stderr) else "FETCH_FAILED"
+            return blocked(reason, fetched.stderr)
+        counts = run("rev-list", "--left-right", "--count", "HEAD...refs/remotes/origin/main")
+        if counts.returncode:
+            return blocked("COMPARE_FAILED", counts.stderr)
+        local, remote = map(int, counts.stdout.split())
+        status = "DIVERGED" if local and remote else "REMOTE_AHEAD" if remote else "READY"
+        return {"status": status, "local_only": local, "remote_only": remote,
+                "fresh_remote": True}
+    except (OSError, ValueError) as error:
+        return blocked("PREFLIGHT_FAILED", str(error))
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         description="Push a verified commit with bounded transient-network retries."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers.add_parser("preflight", help="Verify clean main, exact target and fresh remote state without merging or pushing.")
     push_parser = subparsers.add_parser("push")
     push_parser.add_argument("--remote", default="origin")
     push_parser.add_argument("--ref", dest="refspec", default="main")
     push_parser.add_argument("--max-attempts", type=int, default=5)
     push_parser.add_argument("--base-delay", type=float, default=3.0)
     args = parser.parse_args(argv)
+
+    if args.command == "preflight":
+        result = preflight()
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["status"] == "READY" else 1
 
     result = push_with_retry(
         remote=args.remote,
