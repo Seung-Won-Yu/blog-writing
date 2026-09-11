@@ -3,19 +3,15 @@
   "kind": "automation",
   "target_day": "2026-09-11",
   "editorial_lane": "developer_insight",
-  "generated_at": "2026-09-11T00:03:24.118712+00:00",
-  "state": "BLOCKED",
-  "reasons": [
-    "insufficient_healthy_sources"
-  ],
+  "generated_at": "2026-09-10T23:15:46.718764+00:00",
+  "state": "READY",
+  "reasons": [],
   "quality": {
-    "ok": false,
-    "reasons": [
-      "insufficient_healthy_sources"
-    ],
-    "successful_sources": 0,
-    "candidate_sources": 10,
-    "candidates": 10,
+    "ok": true,
+    "reasons": [],
+    "successful_sources": 5,
+    "candidate_sources": 15,
+    "candidates": 25,
     "selected": 5
   }
 }
