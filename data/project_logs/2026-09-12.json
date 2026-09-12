@@ -1,0 +1,568 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-12-project",
+  "publish_date": "2026-09-12",
+  "date_label": "2026. 9. 12",
+  "weekday": "토",
+  "content_type": "project_log",
+  "content_label": "프로젝트 제작기",
+  "category": "프로젝트·회고",
+  "scheduled_at": "2026-09-12T09:00:00+09:00",
+  "publication_mode": "manual_review",
+  "series": "모의투자부터 시작한 주식 앱 제작기",
+  "episode": 4,
+  "reader_access": {
+    "quick_summary": [
+      "주식 전략 분리는 보유기간이 다른 개별주 스윙·상장지수펀드 추세·월간 전략을 한 모의계좌에 섞지 않는 문제였다.",
+      "개별주 스윙·상장지수펀드 추세·월간 전략에 보유 시계와 전략별 모의계좌를 주는 설계를 채택했다.",
+      "주식 전략 분리에 쓴 40거래일·20거래일·월 1회는 현재 앱의 운영 경계이며 미래 수익이나 전략의 우열을 뜻하지 않는다."
+    ],
+    "glossary": [
+      {
+        "term": "개별주",
+        "meaning": "펀드가 아니라 한 회사의 지분을 나타내는 주식 한 종목을 뜻한다."
+      },
+      {
+        "term": "상장지수펀드",
+        "meaning": "여러 자산을 묶어 거래소에서 주식처럼 사고팔 수 있게 만든 펀드다."
+      },
+      {
+        "term": "스윙",
+        "meaning": "하루 안에 끝내지 않고 며칠 이상 가격 흐름을 따라가는 매매 방식을 뜻한다."
+      },
+      {
+        "term": "리밸런싱",
+        "meaning": "정해 둔 주기에 맞춰 보유 종목과 비중을 다시 맞추는 작업이다."
+      },
+      {
+        "term": "모의계좌",
+        "meaning": "실제 주문 없이 정해진 체결 규칙과 자금 한도로 성과를 따로 기록하는 시험 장부다."
+      }
+    ]
+  },
+  "primary_query": "주식 전략 분리",
+  "tags": [
+    "주식 전략 분리",
+    "개별주 스윙",
+    "ETF 추세",
+    "월간 모멘텀",
+    "모의투자 계좌",
+    "알고리즘 트레이딩",
+    "주식 앱 제작기"
+  ],
+  "editorial": {
+    "headline": "주식 전략 분리: 개별주·ETF·월간 전략을 따로 설계한 이유",
+    "opening": "실패 기준을 정한 뒤에는 모든 전략을 한 계좌에 넣는 편이 공정해 보였다. 같은 돈과 같은 시장에서 겨루면 누가 나은지 빨리 알 수 있을 것 같았다. 하지만 며칠을 기다리는 개별주, 더 짧게 추세를 보는 펀드, 한 달에 한 번 바꾸는 포트폴리오가 자본을 다투는 순간 비교 자체가 흐려졌다.",
+    "closing": "이번 결론은 채택이다. 세 전략은 같은 비용·체결·심사 원칙을 쓰되 각자 보유 시계와 독립 모의계좌를 유지한다. 분리는 승자를 미리 정하기 위한 장치가 아니라 누구의 선택이 어떤 결과를 냈는지 보존하기 위한 장치다. 다음 편에서는 좋은 전략을 고르기 전에 판단 기록부터 만든 이유를 묻는다.",
+    "action": "신호 주기, 자본 사용 시간, 결과 귀속 장부가 다른 전략을 같은 계좌에 섞지 않을 기준을 설명할 수 있다.",
+    "audience_problem": "보유기간과 리밸런싱 주기가 다른 전략을 한 계좌에서 운용하면 한 전략이 자본을 오래 묶어 다른 전략의 기회를 막고 성과 귀속도 흐려질 수 있다.",
+    "reader_takeaway": "세 전략의 서로 다른 시계와 계좌 목적을 실제 구현·테스트로 확인하고, 무엇을 공유하고 무엇을 분리해야 공정한 모의투자가 되는지 판단한다.",
+    "why_now": "세 전략의 후보 규칙, 최대 보유 경계, 월간 실행기, 전략별 계좌 라우팅, 현재 운영 기록과 관련 테스트를 한 회차에서 대조할 수 있게 됐다.",
+    "topic_key": "edgelab-separate-strategy-clocks-and-accounts",
+    "reader_question": "개별주·ETF·월간 전략은 왜 같은 계좌에서 경쟁시키지 않고 따로 설계해야 할까?",
+    "entities": [
+      "개별주 스윙",
+      "상장지수펀드 추세",
+      "월간 전략",
+      "보유기간",
+      "전략별 모의계좌"
+    ],
+    "coverage": [
+      "motivation",
+      "architecture",
+      "evidence",
+      "decision",
+      "safety",
+      "limits",
+      "next_step"
+    ],
+    "article_shape": "incident_trace",
+    "reader_path": {
+      "reader_level": "mixed",
+      "entry_heading": "같은 계좌가 오히려 불공정했던 이유",
+      "immediate_answer": "신호 주기와 자본을 묶는 시간이 다른 전략을 한 계좌에 넣으면 기회와 성과가 서로 섞이므로, 공통 규칙은 공유하되 시계와 장부는 분리해야 했다.",
+      "action_steps": [
+        "기회: 오래 보유한 전략이 현금을 묶으면 다른 전략은 자리가 와도 시험하지 못한다.",
+        "위험: 한 전략의 열린 손실과 노출이 다른 전략의 배분 한도를 줄인다.",
+        "성과: 같은 장부에 체결이 섞이면 어떤 규칙의 선택이 결과를 만들었는지 설명하기 어려워진다."
+      ],
+      "completion_check": "신호 주기, 자본 사용 시간, 결과 귀속 장부가 다른 전략을 같은 계좌에 섞지 않을 기준을 설명할 수 있다."
+    },
+    "selection_evaluation": {
+      "policy": "project_story-v1",
+      "threshold": 80,
+      "decision": "selected",
+      "rejected_reasons": [],
+      "criteria": {
+        "implementation_evidence": 30,
+        "episode_continuity": 15,
+        "decision_verdict": 15,
+        "transferable_value": 14,
+        "story_hook": 9,
+        "public_sources": 5,
+        "public_safety": 10
+      },
+      "total": 98,
+      "hard_gates": {
+        "implementation_evidence": true,
+        "decision_verdict": true,
+        "public_safety": true
+      }
+    },
+    "revisit": {
+      "quick_answer": "전략마다 신호 주기와 자본 점유 시간이 다르면 공통 실행 원칙만 공유하고 계좌와 성과 귀속은 분리해야 비교가 흐려지지 않는다.",
+      "reuse_case": "주기가 다른 자동매매 규칙, 추천 모델, 배치 작업을 같은 자원 풀에서 비교할 때 재사용한다.",
+      "failure_case": "계좌를 나눴다는 사실만으로 위험이 줄거나 전략이 유효해지는 것은 아니며 같은 비용·체결·심사 기준이 함께 유지돼야 한다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "전략 보유기간 변경",
+        "리밸런싱 주기 변경",
+        "계좌 라우팅 변경",
+        "공통 비용·체결 규칙 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "주식 전략 분리",
+      "reader_need": "보유기간이 다른 주식 전략을 왜 별도 계좌와 장부로 시험해야 하는지 실제 프로젝트 기준으로 알고 싶다.",
+      "answer_format": "한 계좌 가설, 세 전략의 시계, 구현·테스트 증거, 분리 판정, 재사용 체크리스트로 설명한다."
+    },
+    "original_value": {
+      "durable_question": "주기가 다른 전략을 비교할 때 무엇은 공유하고 무엇은 분리해야 할까?",
+      "source_gap": "전략 설명은 각 신호를 따로 소개해도 보유기간 차이가 공유 계좌의 자본 경쟁과 성과 귀속을 어떻게 흐리는지 구현 관점에서 잘 보여 주지 않는다.",
+      "contribution": "비공개 프로젝트의 세 전략 규칙, 보유 경계, 월간 실행기, 독립 계좌 라우팅, 변경 이력과 집중 테스트를 대조해 시계와 장부를 분리한 이유를 공개용 도식으로 재구성했다.",
+      "proof_method": "executed_test",
+      "reader_outcome": "독자는 자신의 프로젝트에서 신호 주기, 자본 점유, 결과 귀속을 기준으로 공유층과 분리층을 나눌 수 있다.",
+      "limits": "확인한 보유기간과 실행 주기는 현재 앱의 설계값이며 외부 연구가 정해 준 보편적 정답이나 미래 성과 보장이 아니다."
+    }
+  },
+  "visual": {
+    "weekday_profile": "project_evidence_story",
+    "subject_terms": [
+      "주식 전략 분리",
+      "개별주 스윙",
+      "상장지수펀드 추세",
+      "월간 전략",
+      "전략별 모의계좌"
+    ],
+    "subject": "서로 다른 시계를 가진 세 주식 전략과 독립 모의계좌",
+    "hook": "같은 계좌가 왜 세 전략의 공정한 비교를 방해했을까?",
+    "motif": "엉킨 시계, 세 개의 보유 시계, 분리된 장부 트레이",
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "conflict",
+      "weekday_profile": "project_evidence_story",
+      "weekday_role": "episode_conflict",
+      "visual_claim": "서로 다른 시계의 주식 전략을 한 계좌에 섞지 않고 독립된 세 장부로 분리한다",
+      "label": "엉킨 공용 시계와 분리된 세 전략 장부가 맞서는 주식 전략 분리 장면",
+      "scene_label": [
+        "한 계좌의 충돌",
+        "세 전략의 분리"
+      ],
+      "steps": "개별주 스윙, ETF 추세, 월간 전략이 한 계좌에서 충돌한 뒤 각자 시계와 장부로 분리된다.",
+      "curiosity_hook": "같은 돈으로 겨루게 하는 것이 왜 오히려 불공정할까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "tangled_clock_to_separate_strategy_lanes",
+      "composition_type": "single_conflict_resolution_scene",
+      "palette_family": "warm_ivory_indigo_teal_rust_brass",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "엉킨 공용 시계와 나란히 분리된 세 시간 장치",
+      "texture_cue": "종이 장부, 반투명 칸막이, 무광 금속 시계, 나무 작업대",
+      "authenticity_cue": "실제 투자 화면이나 성과 차트가 아닌 모의투자 계좌 설계 갈등을 보여 주는 장면",
+      "generation_model": "gpt-image",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: Korean technology blog cover, wide landscape 1.91:1. Primary request: Show the design conflict of forcing three investment strategies with different time horizons into one shared paper-trading account, versus separating them into three independent lanes. Scene/backdrop: Abstract research workbench, not a real brokerage screen. Subject: One central tangled mechanical clock with three incompatible hands and three asset trays jamming together; beside it, three clean parallel lanes with distinct timing devices: a medium-horizon stock swing lane, a shorter ETF trend lane, and a monthly calendar portfolio lane. Style/medium: polished tactile editorial 3D illustration with restrained realism. Constraints: no people, logos, tickers, account data, currency, percentages, stock-price charts, text, letters, labels, fake app UI, profit promise, or watermark.",
+      "korean_labels": []
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "measured_chart",
+        "logic_type": "architecture",
+        "teaching_role": "implementation_evidence",
+        "teaching_claim": "개별주 스윙은 40거래일, ETF 추세는 20거래일, 월간 전략은 월 1회라는 서로 다른 보유 시계를 구현한다",
+        "label": "개별주 스윙·ETF 추세·월간 전략의 서로 다른 보유 시계",
+        "scene_label": [
+          "개별주 스윙 40거래일",
+          "ETF 추세 20거래일",
+          "월간 전략 월 1회"
+        ],
+        "steps": "세 전략을 고르는 대상과 실행 주기에 따라 나누고 각 전략의 시간 경계를 따로 둔다.",
+        "curiosity_hook": "같은 추세를 보더라도 왜 기다리는 시간은 달라야 할까?",
+        "evidence_type": "chart",
+        "measurement_source": "개별주 스윙·상장지수펀드 추세의 보유 경계와 월간 전략 실행 주기를 확인한 집중 테스트",
+        "unit": "각 행에 표시한 운영 주기",
+        "sample_count": 3,
+        "measurement_environment": "읽기 전용 비공개 저장소의 Python 3.11 집중 단위 테스트",
+        "data_points": [
+          {
+            "label": "개별주 스윙 최대 거래일",
+            "value": 40
+          },
+          {
+            "label": "ETF 추세 최대 거래일",
+            "value": 20
+          },
+          {
+            "label": "월간 전략 월별 실행 횟수",
+            "value": 1
+          }
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "teaching_role": "decision_result",
+        "teaching_claim": "한 계좌에서 자본과 성과가 뒤섞이는 구조를 버리고 전략별 모의계좌로 나눠 같은 기준에서 비교하는 설계를 채택했다",
+        "label": "한 계좌 혼합과 전략별 모의계좌 분리의 판정 비교",
+        "scene_label": [
+          "한 계좌 혼합",
+          "성과 뒤섞임",
+          "전략별 분리",
+          "같은 기준 비교"
+        ],
+        "steps": "공유 계좌의 자본 경쟁과 성과 혼합을 확인한 뒤 전략별 모의계좌와 공통 심사 구조로 바꾼다.",
+        "curiosity_hook": "계좌를 나누면 어떤 결과가 누구의 선택인지 더 선명해질까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image",
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technology blog body decision-result image, landscape 1.91:1. Primary request: Show why multiple paper-trading strategies were kept in separate accounts instead of sharing one account. Topic focus: 전략별 모의계좌. Text (verbatim): 한 계좌 혼합, 성과 뒤섞임, 전략별 분리, 같은 기준 비교. Constraints: each label exactly once; no other text; no numbers, returns, tickers, account data, private identifiers, logos, watermark, or profit promise.",
+        "korean_labels": [
+          "한 계좌 혼합",
+          "성과 뒤섞임",
+          "전략별 분리",
+          "같은 기준 비교"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "주식 전략 분리 장면에서 서로 다른 시계의 주식 전략을 한 계좌에 섞지 않고 독립된 세 장부로 분리한다. 엉킨 공용 시계와 나란히 놓인 세 전략 장부",
+      "path": "docs/tistory/assets/2026-09-12-project/전략-분리-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-12-project/전략-분리-대표.webp",
+      "generation_model": "gpt-image",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Asset type: Korean technology blog cover, wide landscape 1.91:1. Primary request: Show the design conflict of forcing three investment strategies with different time horizons into one shared paper-trading account, versus separating them into three independent lanes. Topic focus: 주식 전략 분리, 개별주 스윙, 상장지수펀드 추세, 월간 전략, 전략별 모의계좌. Constraints: no private data, text, logos, stock chart, or profit promise.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "tangled_clock_to_separate_strategy_lanes",
+      "composition_type": "single_conflict_resolution_scene",
+      "palette_family": "warm_ivory_indigo_teal_rust_brass",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "엉킨 공용 시계와 나란히 분리된 세 시간 장치",
+      "texture_cue": "종이 장부, 반투명 칸막이, 무광 금속 시계, 나무 작업대",
+      "authenticity_cue": "실제 투자 화면이나 성과 차트가 아닌 모의투자 계좌 설계 갈등을 보여 주는 장면",
+      "weekday_profile": "project_evidence_story",
+      "weekday_role": "episode_conflict",
+      "visual_claim": "서로 다른 시계의 주식 전략을 한 계좌에 섞지 않고 독립된 세 장부로 분리한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 96760,
+      "quality": 82,
+      "sha256": "920649869470a8d92c3f02fb3e70fef4086f52feaea782d597c2c82b4fa97096"
+    },
+    "visual_1": {
+      "origin": "measured_chart",
+      "alt": "개별주 스윙 40거래일, ETF 추세 20거래일, 월간 전략 월 1회로 나뉜 세 전략의 보유 시계",
+      "path": "docs/tistory/assets/2026-09-12-project/세-전략-보유-시계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-12-project/세-전략-보유-시계.webp",
+      "measurement_sha256": "c5e00a74deada51269c3b80aa8a9c87474f213eecd2c507c70ac8ce7dc9e59e4",
+      "teaching_role": "implementation_evidence",
+      "teaching_claim": "개별주 스윙은 40거래일, ETF 추세는 20거래일, 월간 전략은 월 1회라는 서로 다른 보유 시계를 구현한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 24956,
+      "quality": 82,
+      "sha256": "69889cadc0640c5ef307dd61c063cacba70eadbe972a1ad9da869c174cf4f3b8"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "한 계좌에서 자본과 성과가 뒤섞이는 구조를 버리고 전략별 모의계좌로 나눠 같은 기준에서 비교하는 판정 지도",
+      "path": "docs/tistory/assets/2026-09-12-project/전략별-계좌-분리.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-12-project/전략별-계좌-분리.webp",
+      "generation_model": "gpt-image",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technology blog body decision-result image, landscape 1.91:1. Primary request: Show why multiple paper-trading strategies were kept in separate accounts instead of sharing one account. Topic focus: 전략별 모의계좌. Text (verbatim): 한 계좌 혼합, 성과 뒤섞임, 전략별 분리, 같은 기준 비교. Constraints: each label exactly once; no other text; no numbers, returns, tickers, account data, private identifiers, logos, watermark, or profit promise.",
+      "teaching_role": "decision_result",
+      "teaching_claim": "한 계좌에서 자본과 성과가 뒤섞이는 구조를 버리고 전략별 모의계좌로 나눠 같은 기준에서 비교하는 설계를 채택했다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 43868,
+      "quality": 82,
+      "sha256": "4c6e6ebfd588e1c289e2e4c3f9f4d16159982792e2cfb711f94de5c7b616f8c8"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "주식 전략 분리: 개별주·ETF·월간 전략을 따로 설계한 이유",
+      "source": "개인 프로젝트 기록 · 공개 자료 참고",
+      "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24",
+      "published_at": "2026-09-12T09:00:00+09:00",
+      "blurb_kr": "서로 다른 보유 시계와 자본 목적을 가진 세 전략을 독립 모의계좌로 분리한 실제 설계와 테스트 기록이다.",
+      "content": [
+        {
+          "t": "h",
+          "text": "같은 계좌가 오히려 불공정했던 이유"
+        },
+        {
+          "t": "p",
+          "text": "지난 편에서 수익률보다 실패 기준을 먼저 정했다. 이제 모든 전략을 같은 계좌에 넣고 겨루면 공정할 것 같았다. 같은 돈과 같은 시장을 쓰면 결과를 바로 비교할 수 있다고 생각했다."
+        },
+        {
+          "t": "p",
+          "text": "하지만 전략마다 기다리는 시간이 달랐다. 며칠 이상 보유하는 개별주와 더 짧게 추세를 보는 펀드, 한 달에 한 번만 종목을 바꾸는 포트폴리오가 같은 현금을 다투면 기회 자체가 같지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "신호 주기와 자본을 묶는 시간이 다른 전략을 한 계좌에 넣으면 기회와 성과가 서로 섞이므로, 공통 규칙은 공유하되 시계와 장부는 분리해야 했다."
+        },
+        {
+          "t": "quote",
+          "text": "개별주·ETF·월간 전략은 왜 같은 계좌에서 경쟁시키지 않고 따로 설계해야 할까?"
+        },
+        {
+          "t": "h",
+          "text": "세 전략이 보는 시간부터 달랐다"
+        },
+        {
+          "t": "p",
+          "text": "첫 번째 전략은 유동성이 충분한 개별주에서 가격선의 정렬과 눌림을 본다. 현재 구현은 자리가 살아 있으면 최대 40거래일까지 기다리되 구조가 무너지면 먼저 끝낸다."
+        },
+        {
+          "t": "p",
+          "text": "두 번째 전략은 상장지수펀드(ETF)의 추세가 새로 만들어진 순간을 본다. 이미 오래 이어진 정렬은 새 신호로 보지 않고 최대 보유 경계는 20거래일이다."
+        },
+        {
+          "t": "p",
+          "text": "세 번째 전략은 하루의 진입 신호가 아니라 월간 포트폴리오다. 과거 여러 달의 흐름과 변동성을 함께 보고 월 1회 종목과 비중을 다시 맞추는 리밸런싱을 한다. 중간의 일중 청산 경로도 이 계좌를 건드리지 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "개별주 스윙은 40거래일, ETF 추세는 20거래일, 월간 전략은 월 1회라는 서로 다른 보유 시계를 구현한다. 비공개 코드는 노출하지 않고 테스트로 확인한 시간 경계만 다시 그렸다."
+        },
+        {
+          "t": "h",
+          "text": "같은 추세라는 말이 같은 전략은 아니다"
+        },
+        {
+          "t": "p",
+          "text": "세 전략은 모두 과거 가격을 참고하지만 질문이 다르다. 개별주 전략은 한 종목의 현재 구조와 되돌림을 보고, 펀드 전략은 자신의 추세가 막 생겼는지 본다. 월간 전략은 여러 종목의 상대적인 흐름과 흔들림을 함께 순위로 만든다."
+        },
+        {
+          "t": "p",
+          "text": "Brock·Lakonishok·LeBaron은 이동평균 규칙을 오래된 지수 자료에서 시험했다. Jegadeesh·Titman은 과거 3~12개월 성과를 이용한 상대강도 전략을 연구했다. Moskowitz·Ooi·Pedersen은 한 자산 자신의 1~12개월 흐름을 보는 시계열 모멘텀을 다뤘다."
+        },
+        {
+          "t": "p",
+          "text": "이 연구들이 현재 앱의 40일·20일·월 1회를 정해 준 것은 아니다. 서로 다른 신호 정의와 지평이 존재한다는 배경일 뿐이다. 앱의 숫자는 내부 리플레이와 경계 테스트에서 따로 정했고 이번 회차에서는 그 결과를 우열표로 쓰지 않는다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "한 계좌에서 실제로 섞이는 세 가지"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "기회: 오래 보유한 전략이 현금을 묶으면 다른 전략은 자리가 와도 시험하지 못한다.",
+            "위험: 한 전략의 열린 손실과 노출이 다른 전략의 배분 한도를 줄인다.",
+            "성과: 같은 장부에 체결이 섞이면 어떤 규칙의 선택이 결과를 만들었는지 설명하기 어려워진다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "처음에는 한 계좌가 더 엄격한 경쟁이라고 생각했다. 예상 밖 결과는 반대였다. 보유 시계가 다르면 같은 계좌는 전략 실력뿐 아니라 먼저 자본을 차지한 순서까지 함께 재는 장치가 된다."
+        },
+        {
+          "t": "p",
+          "text": "ETF는 여러 자산을 묶은 펀드이고 거래소에서 장중 시장가격으로 거래된다. Investor.gov도 펀드의 구조와 시장가격이 개별주와 같지 않으며, 좁은 분야의 ETF는 그 자체로 충분히 분산됐다고 볼 수 없다고 설명한다."
+        },
+        {
+          "t": "p",
+          "text": "따라서 종목의 껍데기만 다르게 부르는 것으로는 부족했다. 고르는 대상, 신호가 생기는 순간, 자본을 쓰는 시간, 끝내는 조건까지 하나의 전략 책임으로 묶어야 했다."
+        },
+        {
+          "t": "h",
+          "text": "공통층은 남기고 장부만 나눴다"
+        },
+        {
+          "t": "p",
+          "text": "계좌를 분리했다고 모든 것을 복제하지는 않았다. 거래비용 계산, 손익비 관문, 보수적인 모의체결, 실제 주문 금지, 최소 표본과 통계 심사는 같은 공통층을 지난다."
+        },
+        {
+          "t": "p",
+          "text": "달라지는 것은 자본과 기록의 소유자다. 각 전략은 독립된 모의계좌에서 현금, 보유, 손익을 끝까지 책임진다. 체결 결과에 붙은 전략 이름이 모르는 계좌를 가리키면 시스템은 추정하지 않고 거절한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "한 계좌에서 자본과 성과가 뒤섞이는 구조를 버리고 전략별 모의계좌로 나눠 같은 기준에서 비교하는 설계를 채택했다. 분리는 성과를 좋게 만드는 장치가 아니라 귀속을 선명하게 만드는 장치다."
+        },
+        {
+          "t": "h",
+          "text": "테스트가 확인한 것과 아직 모르는 것"
+        },
+        {
+          "t": "table",
+          "caption": "4편의 전략 분리 근거와 한계",
+          "headers": [
+            "전략",
+            "확인한 시계",
+            "계좌 목적",
+            "아직 말할 수 없는 것"
+          ],
+          "rows": [
+            [
+              "개별주 스윙",
+              "최대 40거래일",
+              "개별 종목의 구조 실험",
+              "미래 수익"
+            ],
+            [
+              "ETF 추세",
+              "최대 20거래일",
+              "펀드 추세 신호 실험",
+              "개별주보다 우월한지"
+            ],
+            [
+              "월간 전략",
+              "월 1회 교체",
+              "포트폴리오 비중 실험",
+              "짧은 표본의 우열"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "주기가 다른 전략 분리표"
+        },
+        {
+          "t": "p",
+          "text": "이번 집중 테스트 99개는 두 일간 전략의 보유 경계, 월간 후보와 비중 계산, 전략별 계좌 라우팅, 공통 심사 연결을 확인했다. 테스트 통과는 설계가 코드에서 유지된다는 증거이지 수익성의 증거가 아니다."
+        },
+        {
+          "t": "p",
+          "text": "현재 운영 기록도 느린 전략은 같은 거래 건수 기준으로 빨리 판정할 수 없다는 한계를 보여 준다. 특히 월간 전략은 관찰 기회 자체가 적다. 그래서 계좌를 나눈 뒤에도 짧은 기간의 숫자로 승자를 선언하지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "내 프로젝트에 옮길 분리 기준 세 줄"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "시계 기준: 신호 주기와 최대 대기 시간이 다르면 실행 상태를 나눈다.",
+            "자본 기준: 한 규칙의 보유가 다른 규칙의 기회를 막으면 예산과 한도를 나눈다.",
+            "귀속 기준: 결과를 어느 규칙의 선택으로 설명할지 불명확하면 장부를 나눈다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "판정은 채택이다. 개별주·ETF·월간 전략은 같은 비용·체결·심사 원칙을 쓰되 각자 보유 시계와 독립 모의계좌를 유지한다. 계좌 분리는 위험을 없애거나 수익을 보장하지 않지만 비교가 다른 전략의 자본 점유에 오염되는 일은 막는다."
+        },
+        {
+          "t": "p",
+          "text": "신호 주기, 자본 사용 시간, 결과 귀속 장부가 다른 전략을 같은 계좌에 섞지 않을 기준을 설명할 수 있다. 이제 세 전략의 자리는 생겼다. 다음 편에서는 성과표보다 먼저 왜 삭제하지 않는 판단 기록과 규칙 세대를 만들었는지 묻는다."
+        },
+        {
+          "t": "quote",
+          "text": "이 글은 실주문 경로가 없는 미국주식 모의투자 소프트웨어의 제작 기록이며 투자 자문이나 종목 추천이 아니다. 모의투자와 테스트 결과는 실제 투자 성과를 보장하지 않는다."
+        }
+      ],
+      "references": [
+        {
+          "title": "이전 글 — 좋은 주식은 어떻게 고를까?",
+          "url": "https://won0322.tistory.com/213",
+          "kind": "reference"
+        },
+        {
+          "title": "ETF의 구조·시장가격·위험 — Investor.gov",
+          "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24",
+          "kind": "official"
+        },
+        {
+          "title": "자산 배분과 분산투자 — Investor.gov",
+          "url": "https://www.investor.gov/introduction-investing/getting-started/asset-allocation",
+          "kind": "official"
+        },
+        {
+          "title": "이동평균 규칙의 장기 자료 검정 — Brock·Lakonishok·LeBaron",
+          "url": "https://doi.org/10.1111/j.1540-6261.1992.tb04681.x",
+          "kind": "research"
+        },
+        {
+          "title": "3~12개월 상대강도 모멘텀 — Jegadeesh·Titman",
+          "url": "https://doi.org/10.1111/j.1540-6261.1993.tb04702.x",
+          "kind": "research"
+        },
+        {
+          "title": "1~12개월 시계열 모멘텀 — Moskowitz·Ooi·Pedersen",
+          "url": "https://doi.org/10.1016/j.jfineco.2011.11.003",
+          "kind": "research"
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "좋은 주식은 어떻게 고를까? 내가 미국주식 선정 알고리즘을 만든 이유",
+      "url": "https://won0322.tistory.com/213",
+      "reason": "후보를 모은 이유와 실주문 금지 경계를 소개한 1편에서 세 전략의 분리 설계로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+      "url": "https://won0322.tistory.com/208",
+      "reason": "서로 다른 실행 경로를 같은 기준으로 비교하되 결과 귀속을 분리하는 판단 방식을 다른 프로젝트와 함께 볼 수 있다.",
+      "role": "next_step"
+    }
+  ]
+}
