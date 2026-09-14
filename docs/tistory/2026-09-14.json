@@ -1,0 +1,86 @@
+{
+  "title": "App Router 전환 기준: Pages Router를 유지할지 가르는 4가지 조건",
+  "title_candidates": [
+    "App Router 전환 기준: Pages Router를 유지할지 가르는 4가지 조건",
+    "Next.js 두 라우터를 섞는 중 경로 접두부가 중복된 종이 표찰: 점진 전환에서도 기존 화면의 주소가 404로 갈 수…"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-09-14",
+  "publish_date": "2026-09-14",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-14T09:00:00+09:00",
+  "tags": [
+    "App Router 전환",
+    "Pages Router",
+    "basePath 오류",
+    "점진적 마이그레이션",
+    "웹뷰 렌더링",
+    "usePathname",
+    "React Server Components"
+  ],
+  "meta_description": "기존 Pages 화면은 그대로 두고 새 화면 하나만 App Router로 옮겼다. 그런데 사용자는 옮기지 않은 화면에서 404를 본다. 두 라우터가 함께 있는 동안에도 주소 이동 방식이 달라질 수 있… 토스뱅크의 점진 전환 실패 조건을 출발점으로 Next.js 공식 문서와 비교해 경로…",
+  "key_summary": [
+    "1. App Router 전환 기준: Pages Router를 유지할지 가르는 4가지 조건",
+    "직접 얻는 결과: 두 라우터 공존 조건에서 경로, 화면 표시, 서버와 브라우저 경계, 운영 로깅을 순서대로 시험하고 전환·보류·되돌림의 기준을 정한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: App Router 전환 기준: Pages Router를 유지할지 가르는 4가지 조건"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-14.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-14.html",
+  "before_ad_html": "docs/tistory/2026-09-14-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-14-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-14-adfit.html",
+  "source_sha256": "557838e5a50ac141403144d3576502aea34580941ea56e58263d6509911442df",
+  "html_sha256": "454ae03583446a024200c9cdac9fd24b040af4d6aa479dda57c4e8b2722803ab",
+  "adfit_sha256": "b604549be5dd68602c5430169a4d4b5f516045178afe219978497ad7f81067c2",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-App-Router-경로중복-대표.webp",
+      "path": "docs/tistory/assets/2026-09-14/Next-js-App-Router-경로중복-대표.webp",
+      "original_url": "",
+      "alt": "Pages Router와 App Router를 섞는 동안 basePath와 경로 패턴이 기존 운영을 깨뜨릴 수 있다 종이 경로 표찰에 접두부가 두 번 붙어 404 문 앞에서 멈춰 있다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-App-Router-전환진단-흐름.webp",
+      "path": "docs/tistory/assets/2026-09-14/Next-js-App-Router-전환진단-흐름.webp",
+      "original_url": "",
+      "alt": "Next.js App Router 전환 전에 경로 이동, 화면 표시, 서버 경계, 로깅을 순서대로 확인하는 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-Pages-App-전환보류-경계.webp",
+      "path": "docs/tistory/assets/2026-09-14/Next-js-Pages-App-전환보류-경계.webp",
+      "original_url": "",
+      "alt": "Next.js App Router와 Pages Router 혼용에서 기존 경로가 정상 이동하면 확장하고 basePath 중복이면 보류하는 분기",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

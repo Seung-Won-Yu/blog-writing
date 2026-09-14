@@ -1,0 +1,23 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">기존 Pages 화면은 그대로 두고 새 화면 하나만 App Router로 옮겼다. 그런데 사용자는 옮기지 않은 화면에서 404를 본다. 두 라우터가 함께 있는 동안에도 주소 이동 방식이 달라질 수 있어서다. 전환을 결정하기 전에 기존 경로, 실제 브라우저 표시, 서버 코드 경계, 운영 로그를 같은 시험에서 확인해야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-App-Router-경로중복-대표.webp" alt="Pages Router와 App Router를 섞는 동안 basePath와 경로 패턴이 기존 운영을 깨뜨릴 수 있다 종이 경로 표찰에 접두부가 두 번 붙어 404 문 앞에서 멈춰 있다." width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발 가이드</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>App Router로 일부 화면만 옮겨도 기존 Pages 화면의 주소 이동이 깨질 수 있다.</li><li>경로, 실기기 첫 표시, 서버 경계, 운영 로그 네 조건을 작은 화면에서 함께 시험한다.</li><li>토스뱅크의 실패와 수치는 특정 구성의 사례이므로 서비스별로 다시 재야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>Pages Router</dt><dd>Next.js에서 pages 폴더의 파일로 주소와 화면을 연결하는 기존 방식.</dd></div><div><dt>App Router</dt><dd>app 폴더에서 화면과 공통 배치, 서버 컴포넌트를 구성하는 새 라우팅 방식.</dd></div><div><dt>basePath</dt><dd>서비스 주소 앞에 자동으로 붙는 공통 경로 접두부.</dd></div><div><dt>웹뷰</dt><dd>모바일 앱 안에서 웹페이지를 표시하는 브라우저 영역.</dd></div></dl></div>
+</section>
+
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">실전 가이드 · 토스뱅크 기술 블로그 · 2026. 9. 9</p>
+    <h3>App Router 전환 기준: Pages Router를 유지할지 가르는 4가지 조건</h3>
+    <p class="digest-blurb">토스뱅크의 점진 전환 실패 조건을 출발점으로 Next.js 공식 문서와 비교해 경로·화면·서버 경계·로그 네 항목의 전환 판단표를 만들었다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">기존 화면이 먼저 깨지는지 작은 경로부터 본다</h4><p>App Router를 일부 화면에만 적용하면 기존 Pages 화면은 그대로일 것 같지만, 두 라우터가 공존하는 동안의 이동도 시험해야 한다. 토스뱅크 사례에서는 <code>basePath</code>가 있는 서비스에서 Pages 화면끼리 이동하던 주소에 접두부가 두 번 붙어 404가 났다. 이 현상은 모든 Next.js 앱의 결함이라는 뜻이 아니라, 그 팀이 사용한 경로 구성에서 확인된 실패다.</p><ul class="digest-bullet-list"><li>현재 Next.js 버전과 <code>basePath</code>, 동적 경로를 기록하고 대표 Pages 화면 하나를 고른다.</li><li>Pages→Pages, Pages→App, App→Pages 이동을 각각 직접 주소 입력·링크 클릭·뒤로 가기로 나눠 확인한다.</li><li>첫 화면 표시와 레이아웃 이동을 실제 사용자 브라우저·웹뷰에서 비교한다.</li><li>서버 전용 코드와 경로별 로깅이 기존과 같은 의미로 동작하는지 확인한다.</li></ul><p>최소 재현 경로를 먼저 만들면 새 기능의 장점과 기존 운영의 손실을 같은 범위에서 비교할 수 있다. 토스뱅크는 App Router의 동적 경로가 기존 주소 앞부분과 겹치는 조건에서 중복 접두부를 추적했다. 우리 서비스는 라우트 표가 다르므로 해당 조건을 그대로 일반화하면 안 된다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-App-Router-전환진단-흐름.webp" alt="Next.js App Router 전환 전에 경로 이동, 화면 표시, 서버 경계, 로깅을 순서대로 확인하는 흐름" width="1200" height="630" loading="lazy"><figcaption>Next.js App Router 전환은 경로 이동, 화면 표시, 서버 경계, 로깅을 한 화면에서 차례로 검증한다. 404나 웹뷰 지연은 해당 조건에서만 분기로 확인한다.</figcaption></figure><h4 class="digest-subheading">두 라우터의 공존은 이동 방식까지 보장하지 않는다</h4><p>Next.js 공식 가이드는 <code>pages</code>와 <code>app</code> 디렉터리를 동시에 두고 페이지별로 옮기는 방식을 지원한다. 동시에 두 라우터 사이를 이동할 때는 hard navigation이 일어나고 자동 링크 미리 가져오기도 이어지지 않는다고 설명한다. 공존 지원과 기존 탐색 경험의 동일성은 다른 약속이다.</p><p><code>basePath</code>는 링크에 자동 적용된다. 따라서 호출 코드가 이미 접두부를 붙이는지, 라우터 전환 과정에서 다시 붙는지 실제 생성 URL을 봐야 한다. 예를 들어 <code>/docs</code>가 설정된 앱에서 <code>router.push(&quot;/guide&quot;)</code>의 기대 주소는 <code>/docs/guide</code>다. <code>/docs/docs/guide</code>나 404가 보이면 링크 작성과 라우터 혼용 조건을 분리해 재현한다.</p><p>기존 Pages의 <code>router.pathname</code>은 <code>/post/[id]</code> 같은 패턴을 제공했지만, App의 <code>usePathname()</code>은 <code>/post/42</code> 같은 현재 주소를 반환한다. 화면별 집계가 패턴에 의존한다면, 단순 함수 교체로 로그 의미를 보존할 수 없다. 새 패턴 매핑을 만들거나 분석 기준을 바꾸는 비용도 전환 비용에 넣어야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-14/Next-js-Pages-App-전환보류-경계.webp" alt="Next.js App Router와 Pages Router 혼용에서 기존 경로가 정상 이동하면 확장하고 basePath 중복이면 보류하는 분기" width="1200" height="630" loading="lazy"><figcaption>Next.js App Router와 Pages Router 혼용에서는 기존 이동이 정상일 때만 다음 화면을 옮기고, basePath 중복이면 전환을 보류한다. 토스뱅크 사례는 이 중 경로 중복 분기를 보여 준다.</figcaption></figure><p>공식 문서에는 Pages와 App의 혼용, 라우팅 훅 변경, 라우터 간 이동의 제약이 각각 적혀 있다. 토스뱅크의 중복 <code>basePath</code>는 별도 실서비스 사례다. 둘을 혼동해 공식 문서가 같은 버그를 보증한다고 읽어서는 안 된다.</p></div>
+  </div>
+</section>
+</article>
