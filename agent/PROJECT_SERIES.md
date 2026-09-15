@@ -1,5 +1,7 @@
 # 토요일 주식 앱 제작기 편집 계약
 
+시작 시 `agent/BROWSER_QA.md`를 읽고 제작 전 검수 환경 확인과 누락 QA 재개 규칙을 우선 적용한다.
+
 원고를 쓰기 전에 `agent/READER_QUALITY_LOOP.md`를 함께 읽고, 8.5 미달을
 사용자 재실행 요청으로 넘기지 않는 공통 자동 복구 계약을 적용한다.
 먼저 `agent/WEEKLY_PIPELINE.md`에서 09:00 제작·사용자 수동 발행 경계와

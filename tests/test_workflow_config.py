@@ -25,6 +25,20 @@ HARU_SHA256 = "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da"
 
 
 class WorkflowConfigTests(unittest.TestCase):
+    def test_active_editors_require_browser_preflight(self):
+        for path in (EDITOR_CONTRACT, CURIOSITY_CONTRACT, SATURDAY_CONTRACT,
+                     PROJECT_CONTRACT, WEEKLY_PIPELINE_CONTRACT):
+            with self.subTest(contract=path.name):
+                self.assertIn("agent/BROWSER_QA.md", path.read_text(encoding="utf-8"))
+
+    def test_browser_contract_keeps_readiness_and_final_qa_separate(self):
+        contract = (ROOT / "agent/BROWSER_QA.md").read_text(encoding="utf-8")
+        for required in ("리서치·새 원고·이미지 생성 전에", "QA_ENV_READY",
+                         "QA_ENV_BLOCKED", "QA_BLOCKED", "390px",
+                         "당일 글의 최종 QA 통과는 아니다", "누락된 QA부터",
+                         "우회하지 않는다", "실화면 QA를 대신하지 않는다"):
+            self.assertIn(required, contract)
+
     def test_editor_contracts_use_one_scheduled_run_without_retry_slots(self):
         for contract_path in (
             EDITOR_CONTRACT,
