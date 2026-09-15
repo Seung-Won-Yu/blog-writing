@@ -1,0 +1,750 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-15",
+  "publish_date": "2026-09-15",
+  "date_label": "2026. 9. 15",
+  "weekday": "화",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-15T09:00:00+09:00",
+  "primary_query": "GPS 인터넷 없이 위치 찾는 원리",
+  "tags": [
+    "GPS 원리",
+    "인터넷 없이 위치 찾기",
+    "오프라인 지도",
+    "위성 신호",
+    "스마트폰 위치",
+    "비행기 모드",
+    "1분 확인"
+  ],
+  "visual": {
+    "subject": "인터넷이 끊긴 산길에서도 위성 신호로 위치를 찾는 하루",
+    "hook": "데이터 표시가 사라졌는데도 지도 위 파란 점은 왜 움직일까?",
+    "motif": "산길, 끊긴 이동통신 신호, 네 위성의 시간 신호, 오프라인 지도, 실내 반사",
+    "weekday_profile": "everyday_mechanism",
+    "subject_terms": [
+      "GPS",
+      "오프라인 지도",
+      "위성"
+    ],
+    "toon": {
+      "format": "it_explainer_comic",
+      "series": "하루의 IT 원리툰",
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_name": "하루",
+      "character_anchor": "same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock",
+      "reference_asset": "editorial/curiosity/characters/haru-character-sheet-v1.png",
+      "reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "panel_count": 4,
+      "dialogue_mode": "image_bubbles"
+    },
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "스마트폰은 인터넷이 끊겨도 여러 위성의 시간 신호로 현재 위치를 계산할 수 있다",
+      "label": "인터넷이 끊긴 산길에서 위치 점을 확인하는 하루",
+      "scene_label": [
+        "인터넷 끊김",
+        "위성 위치 계산"
+      ],
+      "steps": "위성의 일방향 신호 수신 → 이동 시간으로 거리 계산 → 현재 좌표 산출",
+      "curiosity_hook": "인터넷 연결 없이 휴대폰은 자기 위치를 누구에게 물어볼까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "offline_gps_trail_discovery",
+      "composition_type": "satellite-sky-phone-closeup",
+      "palette_family": "twilight_blue_deep_green_ivory",
+      "render_family": "flat_illustration",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "통신이 끊긴 휴대폰의 위치 점과 하늘의 GPS 위성 신호",
+      "texture_cue": "산길 흙, 종이 지도 질감, 잉크 선과 무광 채색",
+      "authenticity_cue": "이동통신 음영 지역의 산책로와 저장된 오프라인 지도",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "generation_prompt": "Use case: illustration-story. Asset type: Korean IT curiosity article cover. Asset intent: editorial-scene. Primary request: one clear mountain-trail scene where Haru holds a smartphone showing only a simple unlabeled blue location dot while the cellular signal bars are visibly absent, and four GPS satellites send subtle radio arcs toward the phone. The surprising successful location result and missing internet coexist in one scene. Composition/framing: close three-quarter view, phone and sky dominate 55 percent, Haru's surprised face and green-rim timer visible, asymmetric editorial composition, not a collage or infographic. Palette: twilight blue, deep green, warm ivory, muted sage. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish. Landscape blog art, compose for 1200x630 crop. Preserve exact character identity and outfit from reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake map UI; no dashboard; no title slide.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "teaching_role": "everyday_scene",
+        "teaching_claim": "스마트폰은 인터넷이 끊겨도 하늘의 위성 신호로 현재 좌표를 계산할 수 있다",
+        "label": "산길에서 데이터가 끊겼는데 위치 점은 남는 일상 질문",
+        "scene_label": [
+          "모바일 데이터 끊김",
+          "위성 신호 수신",
+          "현재 좌표 계산"
+        ],
+        "steps": "모바일 데이터 끊김 → 위성 신호 수신 → 현재 좌표 계산",
+        "curiosity_hook": "인터넷 표시가 사라졌는데 위치 점은 왜 남아 있을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "인터넷이 없는데 위치는 왜 보여요?"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 1,
+        "toon_beat": "everyday_question",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1 of 4. Scene: Haru on a wooded trail checks a phone after cellular service disappears; the phone shows a simple map texture and a blue position dot, while faint GPS satellite arcs remain overhead. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit from reference sheet. Sophisticated adult Korean editorial webtoon, hand-inked outlines, matte flat color, landscape 1200x630. Add one large white speech balloon inside the illustration, tail toward Haru. Exact Korean text only: \"인터넷이 없는데 위치는 왜 보여요?\" Bold crisp Korean equivalent to at least 48px on 1200px, generous padding, readable at 390px. Keep phone, sky, face and timer visible. No extra text, labels, logos, watermark, fake branded UI."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "architecture",
+        "teaching_role": "mechanism_cutaway",
+        "teaching_claim": "수신기는 여러 위성이 보낸 시각과 위치를 듣고 신호의 이동 시간으로 거리를 구해 자신의 위치와 시계 오차를 함께 계산한다",
+        "label": "네 위성의 거리 구가 하루의 위치에서 만나는 원리",
+        "scene_label": [
+          "위성 송신 시각",
+          "신호 이동 거리",
+          "위치와 시계 오차"
+        ],
+        "steps": "위치·시각 수신 → 이동 시간으로 거리 계산 → 네 측정값을 함께 풂",
+        "curiosity_hook": "휴대폰 시계가 원자시계가 아닌데 어떻게 정확한 거리를 잴까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "네 위성의 시간을 함께 맞춰 봐요!"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 2,
+        "toon_beat": "hidden_mechanism",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 2 of 4. Scene: explanatory cutaway in open sky, Haru stands at the meeting point of four large translucent distance spheres cast from four clearly separate GPS satellites; small clock-wave motifs show signal travel time without numbers or formulas. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"네 위성의 시간을 함께 맞춰 봐요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. No extra text, labels, equations, logos, watermark, dashboard or card grid."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "evidence",
+        "teaching_role": "one_minute_check",
+        "teaching_claim": "오프라인 지도를 미리 저장한 뒤 연결을 끊어도 야외에서는 위성으로 계산한 위치 점이 움직일 수 있다",
+        "label": "오프라인 지도와 비행기 모드로 확인하는 1분 실험",
+        "scene_label": [
+          "오프라인 지도 저장",
+          "비행기 모드",
+          "위치 점 관찰"
+        ],
+        "steps": "현재 지역 지도 저장 → 야외에서 위치 확인 → 연결을 끊고 위치 점 관찰",
+        "curiosity_hook": "지도 데이터와 GPS 위치 계산이 정말 따로 움직일까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "지도는 미리 받고, 위치는 위성으로!"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 3,
+        "toon_beat": "one_minute_check",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3 of 4. Scene: safe one-minute check outdoors beside a window or balcony, Haru has already stored an offline map, turns on airplane mode, then watches a simple blue position dot move; show the map as an unbranded paper-like map and a separate satellite signal beam. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"지도는 미리 받고, 위치는 위성으로!\" Bold crisp Korean at least 48px equivalent, generous padding, readable at 390px. No extra text, labels, logos, watermark, fake branded UI."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "teaching_role": "misconception_boundary",
+        "teaching_claim": "실내·고층 건물 사이에서는 위성 신호가 막히거나 반사되고 인터넷 보조 정보가 없으면 첫 위치 계산이 늦거나 부정확할 수 있다",
+        "label": "실내에서 위성 신호가 막히고 지도 타일도 비는 실패 경계",
+        "scene_label": [
+          "신호 차단·반사",
+          "첫 위치 지연",
+          "미저장 지도"
+        ],
+        "steps": "건물에 위성 신호 차단·반사 → 첫 위치 지연·흔들림 → 미저장 지도와 실시간 정보도 비어 보임",
+        "curiosity_hook": "인터넷 없이 된다는 말이 왜 실내와 빈 지도에서는 실패할까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "실내에선 늦거나 못 잡을 수도 있어요."
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 4,
+        "toon_beat": "exception_boundary",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "condition": "위성 시야가 좁거나 오프라인 지도 데이터가 없고 보조 정보를 받지 못한 경우",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 4 of 4. Scene: exception boundary inside a concrete building lobby between tall walls; weak GPS waves are blocked and reflected at windows, Haru's phone shows only a vague gray location circle over a blank unbranded map area. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"실내에선 늦거나 못 잡을 수도 있어요.\" Bold crisp Korean at least 48px equivalent, generous padding, readable at 390px. No extra text, labels, logos, watermark, dashboard."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "GPS는 인터넷 없이 어떻게 위치를 찾을까? 위성 신호와 오프라인 지도의 원리",
+    "opening": "산길에서 휴대폰의 데이터 표시가 사라졌는데도 지도 위 파란 점이 따라올 때가 있다. 인터넷이 없으면 위치도 모를 것 같지만 GPS 수신기는 위성의 일방향 전파만으로 좌표를 계산한다. 이 글은 오프라인 지도와 위치 계산을 나눠 1분 확인까지 보여 준다. 그렇다면 실내에서는 왜 파란 점이 늦거나 엉뚱한 곳으로 튈까?",
+    "closing": "GPS 수신기는 인터넷에 현재 위치를 물어보지 않는다. 여러 위성이 보낸 위치와 시각을 듣고, 신호가 도착하는 데 걸린 시간으로 거리를 구해 좌표와 휴대폰 시계 오차를 함께 푼다. 다만 파란 점 아래의 지도와 교통 정보는 별도 데이터다. 오프라인 지도를 미리 저장한 야외에서는 위치 점이 움직일 수 있지만, 실내에서는 신호 차단과 반사 때문에 늦거나 흔들릴 수 있다고 설명하면 확인이 끝났다.",
+    "action": "현재 지역의 오프라인 지도를 먼저 저장하고 야외의 안전한 장소에서 비행기 모드로 바꾼 뒤, 위치 점이 갱신되는지 1분 동안 관찰한다.",
+    "audience_problem": "통신이 끊기면 지도와 위치가 함께 멈춘다고 생각해 여행·등산 전에 무엇을 저장해야 하는지 구분하기 어렵다.",
+    "reader_takeaway": "GPS 좌표 계산이 위성의 시간 신호로 작동하는 원리, 네 번째 위성이 필요한 이유, 지도·경로·교통 정보가 인터넷 데이터인 경계를 이해한다.",
+    "why_now": "휴대폰 내비게이션과 위치 공유를 매일 쓰지만, 데이터 음영 지역에서 GPS와 지도 앱이 각각 무엇을 할 수 있는지는 자주 섞여 설명된다.",
+    "topic_key": "gps-without-internet-satellite-timing-offline-map",
+    "reader_question": "스마트폰 GPS는 인터넷 없이 어떻게 현재 위치를 계산하고, 왜 지도나 길 안내는 보이지 않을 수 있을까?",
+    "entities": [
+      "GPS",
+      "GNSS",
+      "위성 신호",
+      "삼변측량",
+      "오프라인 지도",
+      "Haru"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "research_interpretation",
+    "weekly_lane": "curiosity_mechanism",
+    "selection_evaluation": {
+      "policy": "curiosity_mechanism-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 8,
+        "everyday_scene": 15,
+        "surprising_mechanism": 14,
+        "one_minute_check": 9
+      },
+      "total": 96,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    },
+    "reader_hook": {
+      "scene": "산길에서 모바일 데이터 표시가 사라졌는데도 저장된 지도 위 파란 위치 점은 계속 따라온다.",
+      "stakes": "GPS와 지도를 같은 기능으로 알면 데이터가 끊긴 여행지에서 지도·경로·교통 정보가 준비되지 않아 길을 확인하지 못할 수 있다.",
+      "payoff": "위성 신호로 좌표를 구하는 과정을 네 컷으로 이해하고 오프라인 지도와 비행기 모드로 안전하게 확인한다.",
+      "open_question": "인터넷 없이 위치는 잡히는데 빈 지도나 느린 첫 위치가 나타나는 이유는 무엇일까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "GPS는 인터넷에 묻지 않고 위성 시간을 듣는다",
+      "immediate_answer": "GPS 수신기는 여러 위성이 방송하는 위치와 정확한 시각을 받고, 전파가 이동한 시간으로 위성까지의 거리를 구해 현재 좌표를 계산한다. 인터넷 연결은 이 기본 계산의 필수 조건이 아니다.",
+      "action_steps": [
+        "현재 지역의 오프라인 지도를 미리 저장한다.",
+        "위치 권한을 켜고 야외의 안전한 곳에서 현재 점이 맞는지 확인한다.",
+        "비행기 모드로 바꾼 뒤 지도 앱을 다시 보고 위치 점이 갱신되는지 살핀다.",
+        "빈 지도·느린 첫 위치·교통 정보 없음은 서로 다른 결과로 기록한다."
+      ],
+      "completion_check": "오프라인 지도를 미리 저장한 야외에서는 위치 점이 움직일 수 있지만, 실내에서는 신호 차단과 반사 때문에 늦거나 흔들릴 수 있다고 설명하면 확인이 끝났다.",
+      "advanced_heading": "더 깊게 보면 네 번째 위성은 휴대폰 시계도 맞춘다"
+    },
+    "revisit": {
+      "quick_answer": "GPS는 위성이 방송한 위치와 시각을 받아 신호 이동 시간으로 현재 좌표를 계산하므로 기본 위치 계산에 인터넷이 필수는 아니다.",
+      "reuse_case": "여행·등산·해외 로밍 전에 오프라인 지도와 위치 기능 중 무엇을 미리 준비할지 판단할 때 쓴다.",
+      "failure_case": "실내·터널·고층 건물 사이에서는 신호가 막히거나 반사되고, 미저장 지도·실시간 교통·대중교통 경로는 인터넷 없이는 표시되지 않을 수 있다.",
+      "artifact_type": "experiment_fixture",
+      "update_triggers": [
+        "GPS 또는 GNSS 민간 신호 규격 변경",
+        "Android·iOS 위치 공급자 동작 변경",
+        "지도 앱의 오프라인 기능 범위 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "GPS는 인터넷 없이",
+      "reader_need": "데이터나 와이파이가 없어도 휴대폰이 현재 위치를 찾는지, 지도와 길 안내까지 가능한지 알고 싶다.",
+      "answer_format": "하루의 네 컷 원리툰, 비행기 모드 1분 확인, 위치·지도·경로·교통 정보 경계표로 보여 준다."
+    },
+    "original_value": {
+      "durable_question": "스마트폰은 인터넷 없이 무엇을 받아 위치를 계산하며, 위치 점과 지도 화면은 왜 따로 성공하거나 실패할까?",
+      "source_gap": "공식 자료는 GPS 신호와 오프라인 지도 기능을 각각 설명하지만 일반 독자가 좌표 계산·지도 타일·경로·실시간 정보를 한눈에 구분하기 어렵다.",
+      "contribution": "위성 시각으로 구한 좌표와 미리 저장한 지도 레이어를 네 컷과 기능 경계표로 연결하고, 비행기 모드 확인의 실패 조건까지 제시한다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 인터넷이 없어도 가능한 위치 계산과 미리 저장해야 하는 지도 데이터를 구분해 이동 전에 준비할 수 있다.",
+      "limits": "기기·운영체제·지도 앱·지역별 오프라인 지원이 다르고 실내 수신 결과는 위성 시야와 건물 구조에 따라 달라진다."
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "GPS 수신기는 인터넷 서버가 아니라 여러 위성이 방송한 위치와 시각으로 현재 좌표를 계산한다.",
+      "오프라인 지도를 먼저 저장하면 비행기 모드에서도 야외의 위치 점이 움직이는지 1분 안에 확인할 수 있다.",
+      "좌표와 지도·경로·교통 정보는 별도이며 실내에서는 신호 차단과 반사로 느리거나 부정확할 수 있다."
+    ],
+    "glossary": [
+      {
+        "term": "GPS",
+        "meaning": "미국이 운영하는 위성항법 시스템으로, 위성이 방송하는 위치·시각 신호를 수신기가 이용한다."
+      },
+      {
+        "term": "GNSS",
+        "meaning": "GPS를 포함해 여러 나라의 위성항법 시스템을 묶어 부르는 말이다."
+      },
+      {
+        "term": "삼변측량",
+        "meaning": "알려진 여러 점까지의 거리를 이용해 내 위치를 구하는 방법이다."
+      },
+      {
+        "term": "의사거리",
+        "meaning": "위성 신호의 이동 시간으로 잰 거리로, 수신기 시계 오차가 섞여 있어 여러 위성과 함께 보정한다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "스마트폰은 인터넷이 끊겨도 여러 위성의 시간 신호로 현재 위치를 계산할 수 있다. 산길에서 휴대폰 위치 점을 보는 하루",
+      "path": "docs/tistory/assets/2026-09-15/gps-인터넷없이-위치-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-인터넷없이-위치-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Korean IT curiosity article cover. Asset intent: editorial-scene. Primary request: one clear mountain-trail scene where Haru holds a smartphone showing only a simple unlabeled blue location dot while the cellular signal bars are visibly absent, and four GPS satellites send subtle radio arcs toward the phone. The surprising successful location result and missing internet coexist in one scene. Composition/framing: close three-quarter view, phone and sky dominate 55 percent, Haru's surprised face and green-rim timer visible, asymmetric editorial composition, not a collage or infographic. Palette: twilight blue, deep green, warm ivory, muted sage. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon illustration for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture, expressive but not childish. Landscape blog art, compose for 1200x630 crop. Preserve exact character identity and outfit from reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no brand logos; no fake map UI; no dashboard; no title slide.",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "cover_kind": "editorial_scene",
+      "art_direction": "offline_gps_trail_discovery",
+      "composition_type": "satellite-sky-phone-closeup",
+      "palette_family": "twilight_blue_deep_green_ivory",
+      "render_family": "flat_illustration",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "통신이 끊긴 휴대폰의 위치 점과 하늘의 GPS 위성 신호",
+      "texture_cue": "산길 흙, 종이 지도 질감, 잉크 선과 무광 채색",
+      "authenticity_cue": "이동통신 음영 지역의 산책로와 저장된 오프라인 지도",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "스마트폰은 인터넷이 끊겨도 여러 위성의 시간 신호로 현재 위치를 계산할 수 있다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 124286,
+      "quality": 82,
+      "sha256": "fd56a0de8df0ba80e9a6bd37f1068db12b74deb732c889c6f6bc02e69c4350d2"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "모바일 데이터가 끊긴 산길에서 위성 신호로 남은 휴대폰 위치 점을 보고 놀라는 하루",
+      "path": "docs/tistory/assets/2026-09-15/gps-오프라인-일상질문-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-오프라인-일상질문-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1 of 4. Scene: Haru on a wooded trail checks a phone after cellular service disappears; the phone shows a simple map texture and a blue position dot, while faint GPS satellite arcs remain overhead. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit from reference sheet. Sophisticated adult Korean editorial webtoon, hand-inked outlines, matte flat color, landscape 1200x630. Add one large white speech balloon inside the illustration, tail toward Haru. Exact Korean text only: \"인터넷이 없는데 위치는 왜 보여요?\" Bold crisp Korean equivalent to at least 48px on 1200px, generous padding, readable at 390px. Keep phone, sky, face and timer visible. No extra text, labels, logos, watermark, fake branded UI.",
+      "korean_labels": [
+        "인터넷이 없는데 위치는 왜 보여요?"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "everyday_scene",
+      "teaching_claim": "스마트폰은 인터넷이 끊겨도 하늘의 위성 신호로 현재 좌표를 계산할 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 156828,
+      "quality": 82,
+      "sha256": "cbb554faba3db15c1a970654eedd3b133048d25ab04226f3306f2822e9774d0a"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "네 GPS 위성의 신호 이동 시간으로 거리와 휴대폰 시계 오차를 함께 계산하는 하루",
+      "path": "docs/tistory/assets/2026-09-15/gps-네위성-거리계산-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-네위성-거리계산-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 2 of 4. Scene: explanatory cutaway in open sky, Haru stands at the meeting point of four large translucent distance spheres cast from four clearly separate GPS satellites; small clock-wave motifs show signal travel time without numbers or formulas. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"네 위성의 시간을 함께 맞춰 봐요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. No extra text, labels, equations, logos, watermark, dashboard or card grid.",
+      "korean_labels": [
+        "네 위성의 시간을 함께 맞춰 봐요!"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "mechanism_cutaway",
+      "teaching_claim": "수신기는 여러 위성이 보낸 시각과 위치를 듣고 신호의 이동 시간으로 거리를 구해 자신의 위치와 시계 오차를 함께 계산한다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 93410,
+      "quality": 82,
+      "sha256": "ffa56c3b26af19568fb30d298c6267df9d3b8cc4dcc2541c9c22fc857dac38e2"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "오프라인 지도를 저장하고 비행기 모드에서 GPS 위치 점을 확인하는 하루",
+      "path": "docs/tistory/assets/2026-09-15/gps-오프라인지도-1분확인-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-오프라인지도-1분확인-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3 of 4. Scene: safe one-minute check outdoors beside a window or balcony, Haru has already stored an offline map, turns on airplane mode, then watches a simple blue position dot move; show the map as an unbranded paper-like map and a separate satellite signal beam. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"지도는 미리 받고, 위치는 위성으로!\" Bold crisp Korean at least 48px equivalent, generous padding, readable at 390px. No extra text, labels, logos, watermark, fake branded UI.",
+      "korean_labels": [
+        "지도는 미리 받고, 위치는 위성으로!"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "one_minute_check",
+      "teaching_claim": "오프라인 지도를 미리 저장한 뒤 연결을 끊어도 야외에서는 위성으로 계산한 위치 점이 움직일 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 136572,
+      "quality": 82,
+      "sha256": "9d675a04c3018207d5f1724add9694799bd03acb8c99f1e668d04e02f83923d1"
+    },
+    "visual_4": {
+      "origin": "imagegen",
+      "alt": "실내와 높은 벽 사이에서 GPS 신호가 막히고 반사돼 위치가 늦거나 흔들리는 경계를 설명하는 하루",
+      "path": "docs/tistory/assets/2026-09-15/gps-실내수신-실패경계-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-실내수신-실패경계-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 4 of 4. Scene: exception boundary inside a concrete building lobby between tall walls; weak GPS waves are blocked and reflected at windows, Haru's phone shows only a vague gray location circle over a blank unbranded map area. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"실내에선 늦거나 못 잡을 수도 있어요.\" Bold crisp Korean at least 48px equivalent, generous padding, readable at 390px. No extra text, labels, logos, watermark, dashboard.",
+      "korean_labels": [
+        "실내에선 늦거나 못 잡을 수도 있어요."
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "misconception_boundary",
+      "teaching_claim": "실내·고층 건물 사이에서는 위성 신호가 막히거나 반사되고 인터넷 보조 정보가 없으면 첫 위치 계산이 늦거나 부정확할 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 99252,
+      "quality": 82,
+      "sha256": "d14e8fbaecfaf8cf9588651c85d0316724cddff616b0711eb36ff4908991cbf8"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "Java 자릿수와 진법 변환: 숫자 합·10진수·2진수 원리",
+      "url": "https://won0322.tistory.com/181",
+      "reason": "GPS 수신기가 시간과 좌표를 숫자로 바꾸고 계산하는 배경을 이진수와 자릿값 원리부터 이어서 이해할 수 있다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Cloudflare 캐시가 대륙을 우회하는 이유: Smart Tiered Cache 리전 힌트 설정법",
+      "url": "https://won0322.tistory.com/126",
+      "reason": "위성에서 직접 받는 위치 신호와 달리 지도·교통 데이터가 인터넷의 여러 경로를 거쳐 오는 방식을 다음 단계로 비교할 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "GPS가 위성 시간으로 위치를 계산하고 오프라인 지도와 결합하는 원리",
+      "source": "GPS.gov, 미국 해안경비대 GPS 표준, Android 위치 문서, Google Maps 도움말, 독립 위치 연구",
+      "url": "https://www.gps.gov/trilateration",
+      "published_at": "2020-04-01T00:00:00+00:00",
+      "blurb_kr": "GPS 수신기는 여러 위성의 위치와 송신 시각으로 거리와 시계 오차를 풀어 좌표를 계산하며, 지도·경로·교통 정보는 별도로 저장하거나 인터넷에서 받아야 한다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "Trilateration - GPS.gov",
+          "url": "https://www.gps.gov/trilateration"
+        },
+        {
+          "kind": "official",
+          "title": "GPS Frequently Asked Questions - U.S. Coast Guard Navigation Center",
+          "url": "https://www.navcen.uscg.gov/gps-frequently-asked-questions"
+        },
+        {
+          "kind": "standard",
+          "title": "GPS Standard Positioning Service Performance Standard, 5th Edition",
+          "url": "https://www.navcen.uscg.gov/sites/default/files/pdf/gps/geninfo/2020SPSPerformanceStandardFINAL.pdf"
+        },
+        {
+          "kind": "documentation",
+          "title": "Request location updates - Android Developers",
+          "url": "https://developer.android.com/develop/sensors-and-location/location/request-updates"
+        },
+        {
+          "kind": "official",
+          "title": "Download areas and navigate offline in Google Maps",
+          "url": "https://support.google.com/maps/answer/6291838?hl=en-IE"
+        },
+        {
+          "kind": "independent",
+          "title": "Positioning Methods and the Use of Location and Activity Data in Forests",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10174273/"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "GPS는 인터넷에 묻지 않고 위성 시간을 듣는다"
+        },
+        {
+          "t": "p",
+          "text": "GPS 수신기는 여러 위성이 방송하는 위치와 정확한 시각을 받고, 전파가 이동한 시간으로 위성까지의 거리를 구해 현재 좌표를 계산한다. 인터넷 연결은 이 기본 계산의 필수 조건이 아니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "현재 지역의 오프라인 지도를 미리 저장한다.",
+            "위치 권한을 켜고 야외의 안전한 곳에서 현재 점이 맞는지 확인한다.",
+            "비행기 모드로 바꾼 뒤 지도 앱을 다시 보고 위치 점이 갱신되는지 살핀다.",
+            "빈 지도·느린 첫 위치·교통 정보 없음은 서로 다른 결과로 기록한다."
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "스마트폰은 인터넷이 끊겨도 하늘의 위성 신호로 현재 좌표를 계산할 수 있다 하루는 산길에서 위치 점이 남는 장면으로 첫 질문을 발견한다.",
+          "toon_panel": 1,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "인터넷이 없는데 위치는 왜 보여요?"
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "여러 거리와 시계 오차를 한꺼번에 푼다"
+        },
+        {
+          "t": "p",
+          "text": "위성 하나와의 거리만 알면 가능한 위치는 그 위성을 둘러싼 거대한 구 전체다. 여러 위성에서 잰 거리 구가 겹치는 곳을 찾으면 후보가 줄어든다. GPS.gov 교육 자료는 이 생각을 삼변측량으로 설명한다. 실제 3차원 위치에는 위도·경도·고도에 더해 수신기 시계 오차라는 미지수가 있다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "수신기는 여러 위성이 보낸 시각과 위치를 듣고 신호의 이동 시간으로 거리를 구해 자신의 위치와 시계 오차를 함께 계산한다 그림의 거리 구는 원리를 쉽게 보인 표현이다.",
+          "toon_panel": 2,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "네 위성의 시간을 함께 맞춰 봐요!"
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "위성에는 매우 정확한 원자시계가 있지만 휴대폰에는 그런 시계가 없다. 빛은 1마이크로초 동안 약 300미터를 가므로 작은 시계 오차도 큰 거리 오차가 된다. 그래서 일반적인 3차원 해는 네 개 이상의 위성 측정을 사용해 위치 세 값과 수신기 시계 오차를 함께 맞춘다. 더 많은 위성이 보이면 수신기는 위성 배치와 신호 상태를 고려해 해를 다듬을 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "더 깊게 보면 네 번째 위성은 휴대폰 시계도 맞춘다"
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "오프라인 지도를 미리 저장한 뒤 연결을 끊어도 야외에서는 위성으로 계산한 위치 점이 움직일 수 있다 지도 바탕은 저장 데이터이고 좌표는 위성 신호에서 올 수 있다.",
+          "toon_panel": 3,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "지도는 미리 받고, 위치는 위성으로!"
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "시험은 길을 건너거나 운전하면서 하지 말고, 창가나 야외의 안전한 고정 장소에서 한다. 기종과 앱에 따라 비행기 모드가 GNSS 수신 동작에 영향을 줄 수 있으므로 결과가 안 나온다고 GPS 원리가 틀렸다고 단정하지 않는다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "파란 점과 그 아래 지도는 서로 다른 데이터다"
+        },
+        {
+          "t": "p",
+          "text": "GPS가 주는 핵심 결과는 위도·경도·고도와 시간 같은 좌표 정보다. 도로 이름, 건물 모양, 검색 결과는 지도 사업자가 만든 데이터다. 내비게이션 경로도 도로망과 규칙을 계산해야 하며, 사고·정체·운행 정보는 최신 서버 데이터가 필요하다. 따라서 “GPS가 된다”와 “지도 앱의 모든 기능이 된다”는 같은 말이 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "인터넷이 없을 때 위치와 지도 기능을 나눠 보는 기준",
+          "headers": [
+            "기능",
+            "인터넷 없이 가능한 조건",
+            "막히기 쉬운 지점"
+          ],
+          "rows": [
+            [
+              "현재 좌표",
+              "위성 신호를 충분히 받고 기기 GNSS가 동작할 때",
+              "실내·터널·고층 건물 사이"
+            ],
+            [
+              "지도 바탕",
+              "해당 지역을 미리 저장했을 때",
+              "미저장 지역·오프라인 미지원"
+            ],
+            [
+              "자동차 경로",
+              "앱이 오프라인 경로 계산을 지원하고 전체 경로가 저장 범위 안일 때",
+              "범위 밖 이탈·앱별 제한"
+            ],
+            [
+              "교통·대중교통 정보",
+              "대개 최신 서버 연결이 필요함",
+              "연결이 없으면 갱신 불가"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "GPS와 오프라인 지도 기능 경계표"
+        },
+        {
+          "t": "visual",
+          "image": "visual_4",
+          "caption": "실내·고층 건물 사이에서는 위성 신호가 막히거나 반사되고 인터넷 보조 정보가 없으면 첫 위치 계산이 늦거나 부정확할 수 있다 빈 지도와 겹치면 같은 실패처럼 보인다.",
+          "toon_panel": 4,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "실내에선 늦거나 못 잡을 수도 있어요."
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "인터넷은 GPS를 만들지 않지만 더 빨리 돕는다"
+        },
+        {
+          "t": "p",
+          "text": "스마트폰 위치 시스템은 GPS만 고집하지 않는다. Android 문서는 앱이 Wi-Fi와 GPS 같은 현재 가능한 공급자에서 위치를 받을 수 있다고 설명한다. 네트워크는 위성 궤도·시간 보조 정보와 Wi-Fi·기지국 위치를 써 첫 위치를 단축할 수 있다. 오래 오프라인이면 첫 계산이 느려질 수도 있다."
+        },
+        {
+          "t": "p",
+          "text": "GPS 위성은 휴대폰을 향해 질문을 보내지 않는다. 위성은 위치와 시각 신호를 일방향으로 방송하고, 수신기가 자기 안에서 계산한다. GPS.gov도 위성군이 지상의 기기를 추적하는 데 필요한 정보를 받지 않는다고 설명한다. 다만 지도 앱이나 운영체제가 계산된 위치를 서버에 보내는지는 별도의 위치 권한·앱 설정·개인정보 처리 문제다."
+        },
+        {
+          "t": "p",
+          "text": "“세 점이면 위치를 찾는다”는 평면 그림은 개념을 배우기 좋지만 휴대폰의 실제 계산을 다 담지는 못한다. 수신기는 위성 신호의 도착 시각을 완벽한 공통 시계로 재지 못하므로 거리는 정확한 실거리라기보다 시계 오차가 섞인 의사거리다. 네 번째 측정은 이 공통 오차를 미지수로 넣어 세 좌표와 함께 풀 수 있게 한다."
+        },
+        {
+          "t": "p",
+          "text": "정확도도 인터넷 연결 유무 하나로 결정되지 않는다. GPS.gov는 위성 배치, 신호 차단, 대기 상태, 수신기 설계를 주요 요인으로 든다. 건물 유리와 벽에 반사된 신호는 더 긴 길을 온 것처럼 보여 위치를 흔들 수 있다. 야외에서 성공한 1분 확인을 실내의 안전 보장이나 모든 기기의 성능 수치로 일반화하면 안 된다."
+        },
+        {
+          "t": "h",
+          "text": "위치·지도·실시간 정보를 따로 준비한다"
+        },
+        {
+          "t": "p",
+          "text": "데이터 음영 지역에 가기 전에는 목적지 주변 지도와 필요한 자동차 경로를 미리 저장하고, 앱이 해당 지역의 오프라인 탐색을 지원하는지 확인한다. 배터리와 위치 권한도 함께 본다. 교통 상황, 대중교통, 새 장소 검색은 연결이 끊기면 제한될 수 있으므로 중요한 이동이라면 종이 주소나 비상 연락 방법도 남긴다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "야외에서 위치 점이 보이는가: 위성 기반 좌표 계산 확인",
+            "저장한 도로와 지명이 보이는가: 오프라인 지도 확인",
+            "전체 경로가 저장 범위 안인가: 오프라인 길 안내 확인",
+            "교통·대중교통이 최신인가: 인터넷 실시간 데이터 확인"
+          ]
+        },
+        {
+          "t": "p",
+          "text": "인터넷 없이 파란 점이 움직이면 GPS가 위성 시간을 듣고 있다는 뜻이다. 빈 지도나 느린 첫 위치는 같은 실패가 아니다. 좌표를 만드는 신호, 좌표를 얹을 지도, 지금 막 바뀐 교통 정보를 세 층으로 나누면 오프라인에서 무엇을 믿고 무엇을 미리 준비할지가 분명해진다."
+        },
+        {
+          "t": "quote",
+          "text": "GPS는 위치를 계산하고, 오프라인 지도는 그 좌표가 놓일 길과 지명을 보여 준다. 둘을 미리 분리해 준비하면 연결이 끊겨도 무엇이 남는지 알 수 있다."
+        }
+      ]
+    }
+  ]
+}

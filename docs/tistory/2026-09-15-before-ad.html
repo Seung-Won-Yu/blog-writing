@@ -1,0 +1,22 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">산길에서 휴대폰의 데이터 표시가 사라졌는데도 지도 위 파란 점이 따라올 때가 있다. 인터넷이 없으면 위치도 모를 것 같지만 GPS 수신기는 위성의 일방향 전파만으로 좌표를 계산한다. 이 글은 오프라인 지도와 위치 계산을 나눠 1분 확인까지 보여 준다. 그렇다면 실내에서는 왜 파란 점이 늦거나 엉뚱한 곳으로 튈까?</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-인터넷없이-위치-대표.webp" alt="스마트폰은 인터넷이 끊겨도 여러 위성의 시간 신호로 현재 위치를 계산할 수 있다. 산길에서 휴대폰 위치 점을 보는 하루" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">궁금한 IT 원리</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>GPS 수신기는 인터넷 서버가 아니라 여러 위성이 방송한 위치와 시각으로 현재 좌표를 계산한다.</li><li>오프라인 지도를 먼저 저장하면 비행기 모드에서도 야외의 위치 점이 움직이는지 1분 안에 확인할 수 있다.</li><li>좌표와 지도·경로·교통 정보는 별도이며 실내에서는 신호 차단과 반사로 느리거나 부정확할 수 있다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>GPS</dt><dd>미국이 운영하는 위성항법 시스템으로, 위성이 방송하는 위치·시각 신호를 수신기가 이용한다.</dd></div><div><dt>GNSS</dt><dd>GPS를 포함해 여러 나라의 위성항법 시스템을 묶어 부르는 말이다.</dd></div><div><dt>삼변측량</dt><dd>알려진 여러 점까지의 거리를 이용해 내 위치를 구하는 방법이다.</dd></div><div><dt>의사거리</dt><dd>위성 신호의 이동 시간으로 잰 거리로, 수신기 시계 오차가 섞여 있어 여러 위성과 함께 보정한다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-blurb">GPS 수신기는 여러 위성의 위치와 송신 시각으로 거리와 시계 오차를 풀어 좌표를 계산하며, 지도·경로·교통 정보는 별도로 저장하거나 인터넷에서 받아야 한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">GPS는 인터넷에 묻지 않고 위성 시간을 듣는다</h4><p>GPS 수신기는 여러 위성이 방송하는 위치와 정확한 시각을 받고, 전파가 이동한 시간으로 위성까지의 거리를 구해 현재 좌표를 계산한다. 인터넷 연결은 이 기본 계산의 필수 조건이 아니다.</p><ul class="digest-bullet-list"><li>현재 지역의 오프라인 지도를 미리 저장한다.</li><li>위치 권한을 켜고 야외의 안전한 곳에서 현재 점이 맞는지 확인한다.</li><li>비행기 모드로 바꾼 뒤 지도 앱을 다시 보고 위치 점이 갱신되는지 살핀다.</li><li>빈 지도·느린 첫 위치·교통 정보 없음은 서로 다른 결과로 기록한다.</li></ul><figure class="digest-content-figure digest-toon-panel" data-toon-panel="1"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-오프라인-일상질문-말풍선.webp" alt="모바일 데이터가 끊긴 산길에서 위성 신호로 남은 휴대폰 위치 점을 보고 놀라는 하루 대사: 하루: 인터넷이 없는데 위치는 왜 보여요?" width="1200" height="630" loading="lazy"><figcaption>스마트폰은 인터넷이 끊겨도 하늘의 위성 신호로 현재 좌표를 계산할 수 있다 하루는 산길에서 위치 점이 남는 장면으로 첫 질문을 발견한다.</figcaption></figure><h4 class="digest-subheading">여러 거리와 시계 오차를 한꺼번에 푼다</h4><p>위성 하나와의 거리만 알면 가능한 위치는 그 위성을 둘러싼 거대한 구 전체다. 여러 위성에서 잰 거리 구가 겹치는 곳을 찾으면 후보가 줄어든다. GPS.gov 교육 자료는 이 생각을 삼변측량으로 설명한다. 실제 3차원 위치에는 위도·경도·고도에 더해 수신기 시계 오차라는 미지수가 있다.</p><figure class="digest-content-figure digest-toon-panel" data-toon-panel="2"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-네위성-거리계산-말풍선.webp" alt="네 GPS 위성의 신호 이동 시간으로 거리와 휴대폰 시계 오차를 함께 계산하는 하루 대사: 하루: 네 위성의 시간을 함께 맞춰 봐요!" width="1200" height="630" loading="lazy"><figcaption>수신기는 여러 위성이 보낸 시각과 위치를 듣고 신호의 이동 시간으로 거리를 구해 자신의 위치와 시계 오차를 함께 계산한다 그림의 거리 구는 원리를 쉽게 보인 표현이다.</figcaption></figure><p>위성에는 매우 정확한 원자시계가 있지만 휴대폰에는 그런 시계가 없다. 빛은 1마이크로초 동안 약 300미터를 가므로 작은 시계 오차도 큰 거리 오차가 된다. 그래서 일반적인 3차원 해는 네 개 이상의 위성 측정을 사용해 위치 세 값과 수신기 시계 오차를 함께 맞춘다. 더 많은 위성이 보이면 수신기는 위성 배치와 신호 상태를 고려해 해를 다듬을 수 있다.</p><h4 class="digest-subheading">더 깊게 보면 네 번째 위성은 휴대폰 시계도 맞춘다</h4><figure class="digest-content-figure digest-toon-panel" data-toon-panel="3"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-15/gps-오프라인지도-1분확인-말풍선.webp" alt="오프라인 지도를 저장하고 비행기 모드에서 GPS 위치 점을 확인하는 하루 대사: 하루: 지도는 미리 받고, 위치는 위성으로!" width="1200" height="630" loading="lazy"><figcaption>오프라인 지도를 미리 저장한 뒤 연결을 끊어도 야외에서는 위성으로 계산한 위치 점이 움직일 수 있다 지도 바탕은 저장 데이터이고 좌표는 위성 신호에서 올 수 있다.</figcaption></figure><p>시험은 길을 건너거나 운전하면서 하지 말고, 창가나 야외의 안전한 고정 장소에서 한다. 기종과 앱에 따라 비행기 모드가 GNSS 수신 동작에 영향을 줄 수 있으므로 결과가 안 나온다고 GPS 원리가 틀렸다고 단정하지 않는다.</p></div>
+  </div>
+</section>
+</article>
