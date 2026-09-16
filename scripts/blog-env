@@ -1,0 +1,12 @@
+#!/bin/sh
+# Scope runtime selection to this command; never change host Xcode settings.
+set -eu
+if [ "$(uname -s)" = Darwin ] && [ -x /opt/homebrew/bin/git ] && [ -x /opt/homebrew/bin/python3 ]; then
+    PATH="/opt/homebrew/bin:$PATH"
+    export PATH
+fi
+if [ "$#" -eq 0 ]; then
+    echo 'Usage: sh scripts/blog-env COMMAND [ARG ...]' >&2
+    exit 2
+fi
+exec "$@"
