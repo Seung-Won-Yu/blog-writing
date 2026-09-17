@@ -52,6 +52,14 @@ class WorkflowConfigTests(unittest.TestCase):
             self.assertNotIn("09:25", contract)
             self.assertNotIn("14:25", contract)
 
+    def test_qa_unavailable_preserves_draft_without_publishing(self):
+        contract = (ROOT / "agent/BROWSER_QA.md").read_text(encoding="utf-8")
+        self.assertIn("텍스트 집필까지 중단하지 않는다", contract)
+        self.assertIn("DRAFT_QA_PENDING", contract)
+        self.assertIn("Git 추적·Pages·발행 도우미 입력에서 제외", contract)
+        self.assertIn("공개 배포는 보류", WEEKLY_PIPELINE_CONTRACT.read_text(encoding="utf-8"))
+        self.assertIn("/.local-drafts/", (ROOT / ".gitignore").read_text(encoding="utf-8"))
+
     def test_editor_contracts_share_the_bounded_push_retry_budget(self):
         for contract_path in (
             EDITOR_CONTRACT,

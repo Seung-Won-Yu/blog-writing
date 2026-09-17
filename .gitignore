@@ -5,3 +5,4 @@ Thumbs.db
 dist/
 data/_*.json
 /.playwright-cli/
+/.local-drafts/
