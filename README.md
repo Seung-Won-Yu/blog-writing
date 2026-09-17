@@ -1,5 +1,28 @@
 # Blog Editorial Pipeline
 
+## 로컬 제작·검수 실행 환경
+
+Git·Python 명령은 저장소 루트에서 `sh scripts/blog-env ...`로 실행합니다.
+래퍼는 저장소 전용 `.venv`와 macOS Homebrew 도구를 우선하며 시스템 Xcode 설정은 바꾸지 않습니다.
+새 환경은 `python3 -m venv .venv`와 `.venv/bin/python3 -m pip install -r requirements-images.txt`로
+이미지 의존성을 준비하고, 제작 전에 `sh scripts/blog-env python3 -c 'import PIL'`로 확인합니다.
+
+허용된 로컬 검수 환경에서는 다음 명령으로 지정한 글의 HTML·이미지·CSS만 제공합니다.
+
+```bash
+sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-id 2026-09-17
+```
+
+인앱 브라우저에서 `http://127.0.0.1:8765/preview/2026-09-17.html`을 확인한 뒤 서버를 종료합니다.
+저장소 전체나 비공개 원고는 제공하지 않으며, 이전 보안 거절을 해제하는 명령이 아닙니다.
+자세한 승인·검수·초안 보존 구분은 [화면 검수 계약](agent/BROWSER_QA.md)을 따릅니다.
+
+예약은 한국시간 09:00에 월·수, 화·목, 금, 토의 독립 작업으로 시작합니다.
+삭제된 채팅이 아니라 저장소 계약과 날짜별 산출물을 읽습니다. QA가 막히면 공개자료 기반
+텍스트만 `.local-drafts/`에 보존하고, 화면 검수를 통과한 완성본만 GitHub Pages 발행 도우미에 배포합니다.
+티스토리 최종 발행은 사용자 담당입니다. 앱의 `missing source rollout` 오류는 작업 시작 이전의
+대화 이력 문제이므로 이 저장소의 검증 통과와 별도로 앱 진단이 필요합니다.
+
 [![Collect Monday Wednesday news candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
 [![Collect Friday developer insight candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml)
 

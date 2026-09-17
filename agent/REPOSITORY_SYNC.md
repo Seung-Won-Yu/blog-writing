@@ -16,6 +16,12 @@ Homebrew Git/Python을 함께 우선해 Apple 기본 도구의 Xcode 약관 오�
 설정은 변경하지 않는다. 이 실행 경로 선택은 네트워크·쓰기 승인이나 브라우저
 보안 거절을 우회하는 허가가 아니다. 아래 명령에도 동일한 래퍼를 적용한다.
 
+이미지 제작 전에 `sh scripts/blog-env python3 -c 'import PIL; print(PIL.__version__)'`
+로 의존성도 확인한다. 래퍼는 저장소 `.venv/bin`을 우선하고 Git은 Homebrew를 사용한다.
+`.venv`는 Git 추적에서 제외한다. 새 환경에서 Pillow가 없다면 저장소 전용 가상환경에
+`requirements-images.txt`의 고정 버전을 설치한다. 시스템 Python에 패키지를 설치하거나
+Xcode 약관을 대신 수락하지 않는다. 의존성 오류와 네트워크·인증 오류를 구분한다.
+
 ### 2026-09-11 추가: 최신 원격 확인과 승인 근거
 
 아래 사전점검은 기존 캐시 비교보다 우선한다. 작업 시작의 깨끗한 트리와 최종

@@ -5,6 +5,11 @@ if [ "$(uname -s)" = Darwin ] && [ -x /opt/homebrew/bin/git ] && [ -x /opt/homeb
     PATH="/opt/homebrew/bin:$PATH"
     export PATH
 fi
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if [ -x "$repo_root/.venv/bin/python3" ]; then
+    PATH="$repo_root/.venv/bin:$PATH"
+    export PATH
+fi
 if [ "$#" -eq 0 ]; then
     echo 'Usage: sh scripts/blog-env COMMAND [ARG ...]' >&2
     exit 2

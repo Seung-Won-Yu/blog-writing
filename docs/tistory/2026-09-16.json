@@ -1,0 +1,86 @@
+{
+  "title": "Copilot Auto는 비싼 모델만 고를까? 새 3단계를 쓰는 기준",
+  "title_candidates": [
+    "Copilot Auto는 비싼 모델만 고를까? 새 3단계를 쓰는 기준",
+    "선택 기준과 실제 결과의 차이",
+    "Copilot Auto의 작은 작업에 맞는 드라이버: Copilot Auto 무엇을 먼저 확인할까?"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-09-16",
+  "publish_date": "2026-09-16",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-16T09:00:00+09:00",
+  "tags": [
+    "Copilot Auto",
+    "Copilot 모델 선택",
+    "AI 사용량",
+    "작업 검증",
+    "모델 라우팅",
+    "개발 도구"
+  ],
+  "meta_description": "함수 설명 한 줄을 부탁할 때도, 원인을 모르는 오류를 찾을 때도 같은 AI 모델을 쓰고 있나요? 매번 가장 강한 모델을 고르자니 비용이 신경 쓰이고, 가벼운 모델을 고르자니 다시 시킬 일이 걱정됩니… 비싼 모델 고정과 품질 우선 설정을 구분하고 작은 작업의 완료 기준부터 확인합니다.",
+  "key_summary": [
+    "1. 선택 기준과 실제 결과의 차이",
+    "직접 얻는 결과: Copilot Auto의 세 단계는 비용·품질·응답 시간의 우선순위다. Intelligence에서도 간단한 일에는 작은 모델이 선택될 수 있으며 실제 선택된 모델에 따라…"
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Copilot Auto는 비싼 모델만 고를까? 새 3단계를 쓰는 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-16.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-16.html",
+  "before_ad_html": "docs/tistory/2026-09-16-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-16-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-16-adfit.html",
+  "source_sha256": "63845e3344f8ff0833081a4bd18935f1bf37d5a5e2f9e816a6f55509fefc184a",
+  "html_sha256": "db6afcc48f09eaef5cc173c7c9f7fa91029fd99f26543922c61bdc64e6223b31",
+  "adfit_sha256": "45e85b78bcbcd3f2220ef13647878f132a239dc9410911744dcc27e1d3b3ae75",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-16/%EC%BD%94%ED%8C%8C%EC%9D%BC%EB%9F%BF-%EC%9E%91%EC%9D%80%EC%9E%91%EC%97%85-%EB%8F%84%EA%B5%AC.webp",
+      "path": "docs/tistory/assets/2026-09-16/코파일럿-작은작업-도구.webp",
+      "original_url": "",
+      "alt": "Copilot Auto는 작업 난이도에 맞춰 모델을 고르므로 큰 도구가 항상 필요한 것은 아니다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-16/%EC%BD%94%ED%8C%8C%EC%9D%BC%EB%9F%BF-%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84.webp",
+      "path": "docs/tistory/assets/2026-09-16/코파일럿-우선순위.webp",
+      "original_url": "",
+      "alt": "Copilot Auto는 모델을 고정하는 대신 비용·균형·품질 중 선택 우선순위를 조정한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-16/%EC%BD%94%ED%8C%8C%EC%9D%BC%EB%9F%BF-%EA%B3%B5%EC%8B%9D%EA%B7%BC%EA%B1%B0.webp",
+      "path": "docs/tistory/assets/2026-09-16/코파일럿-공식근거.webp",
+      "original_url": "",
+      "alt": "Copilot Auto의 실제 모델 선택과 과금 기준은 단계 이름과 구분해서 확인해야 한다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

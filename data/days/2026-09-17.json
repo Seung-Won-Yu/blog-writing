@@ -1,0 +1,549 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-17",
+  "publish_date": "2026-09-17",
+  "date_label": "2026. 9. 17",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "weekday": "목",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-17T09:00:00+09:00",
+  "generation": {
+    "provider": "codex-agent",
+    "model": "codex-current-session",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "primary_query": "USB 그냥 뽑아도",
+  "tags": [
+    "USB 그냥 뽑아도",
+    "USB 안전 제거",
+    "쓰기 캐시",
+    "빠른 제거",
+    "외장 저장장치",
+    "파일 보호"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+      "다음에 USB를 뽑을 때는 저장 완료와 꺼내기 결과부터 확인하고, 중요한 파일은 다른 곳에도 사본을 남기세요.",
+      "파일 손상 실험은 수행하지 않았으며 운영체제와 제조사 문서를 비교했다. 장치 정책과 운영체제 버전에 따라 실제 메뉴와 동작 조건이 달라질 수 있다."
+    ],
+    "glossary": [
+      {
+        "term": "쓰기 캐시",
+        "meaning": "저장할 데이터를 잠시 보관해 실제 쓰기 시점을 조절하는 공간이다."
+      },
+      {
+        "term": "빠른 제거",
+        "meaning": "Windows가 쓰기 캐시를 사용하지 않도록 관리하는 장치 정책이다."
+      },
+      {
+        "term": "꺼내기",
+        "meaning": "장치를 분리하기 전에 운영체제에 연결 종료를 요청하는 절차이다."
+      }
+    ]
+  },
+  "related_posts": [
+    {
+      "title": "브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?",
+      "url": "https://won0322.tistory.com/219",
+      "role": "foundation",
+      "reason": "USB 쓰기 캐시와는 다른 용도의 캐시를 비교하며 임시 보관이 하는 일을 이해할 수 있습니다."
+    },
+    {
+      "title": "Cloudflare Cache Response Rules: 원본 응답 뒤 캐시를 고치는 법",
+      "url": "https://won0322.tistory.com/147",
+      "role": "next_step",
+      "reason": "개발자용 심화 읽기입니다. 저장장치가 아닌 웹 응답 캐시에서 정책이 결과를 바꾸는 사례를 다룹니다."
+    }
+  ],
+  "editorial": {
+    "headline": "USB 그냥 뽑아도 될까? 안전하게 제거가 필요한 이유",
+    "opening": "발표 자료를 USB에 복사했습니다. 창도 닫혔고 바쁘기도 해서 그냥 뽑으려는데, 예전에 들은 말이 떠오릅니다. “그러다 파일 다 날아간다.” 그런데 주변 사람들은 늘 그냥 뽑고도 멀쩡합니다. 둘 중 누구 말이 맞을까요? 그냥 뽑았다고 반드시 파일이 망가지는 것은 아닙니다. 하지만 파일을 쓰는 도중에 빼도 된다는 뜻은 아닙니다. 이 차이를 알면 ‘안전하게 제거’ 버튼이 무슨 일을 하는지도 이해할 수 있습니다.",
+    "closing": "결국 오늘 기억할 것은 “버튼을 눌렀냐”라는 의식보다 쓰기가 끝났는지 확인하고, 중요한 파일은 다른 곳에도 남기는 것입니다. USB를 그냥 뽑아도 멀쩡했던 경험은 있을 수 있습니다. 그 경험이 다음 저장 작업까지 보장해 주지는 않습니다. 복사와 저장이 끝났고 운영체제의 꺼내기 완료까지 확인했다면 USB 분리 점검이 끝났습니다.",
+    "action": "다음에 USB를 뽑을 때는 저장 완료와 꺼내기 결과부터 확인하고, 중요한 파일은 다른 곳에도 사본을 남기세요.",
+    "audience_problem": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+    "reader_takeaway": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+    "why_now": "Windows 기본 정책이 바뀐 뒤에도 무조건 그냥 뽑아도 된다는 설명이 남아 있어, 정책과 진행 중인 저장 작업의 차이를 공식 문서로 확인한다.",
+    "topic_key": "usb-quick-removal-write-cache-boundary",
+    "reader_question": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+    "entities": [
+      "USB",
+      "빠른 제거",
+      "쓰기 캐시"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "decision_guide",
+    "weekly_lane": "curiosity_myth_history",
+    "reader_hook": {
+      "scene": "발표 자료를 USB에 복사했습니다. 창도 닫혔고 바쁘기도 해서 그냥 뽑으려는데, 예전에 들은 말이 떠오릅니다. “그러다 파일 다 날아간다.” 그런데 주변 사람들은 늘 그냥 뽑고도 멀쩡합니다.",
+      "stakes": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+      "payoff": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+      "open_question": "그냥 뽑아도 멀쩡했다면 안전하게 제거 버튼은 언제 필요한 것일까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "지금 빼야 한다면, 이것부터 하세요",
+      "immediate_answer": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+      "action_steps": [
+        "USB로 복사하거나 저장하는 작업이 끝났는지 확인합니다.",
+        "USB에서 열어 둔 문서는 저장하고 관련 프로그램을 닫습니다.",
+        "운영체제의 꺼내기를 실행하고 제거 가능 상태를 확인한 뒤 분리합니다."
+      ],
+      "completion_check": "복사와 저장이 끝났고 운영체제의 꺼내기 완료까지 확인했다면 USB 분리 점검이 끝났습니다.",
+      "advanced_heading": "‘캐시’는 파일을 보내기 전의 대기 공간입니다"
+    },
+    "revisit": {
+      "quick_answer": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+      "reuse_case": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+      "failure_case": "파일 손상 실험은 수행하지 않았으며 운영체제와 제조사 문서를 비교했다. 장치 정책과 운영체제 버전에 따라 실제 메뉴와 동작 조건이 달라질 수 있다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "공식 정책 또는 선택 방식 변경",
+        "제품 메뉴와 지원 범위 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "USB 그냥 뽑아도",
+      "reader_need": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+      "answer_format": "공식 근거와 구체적 작업 예시, 단계별 확인 목록으로 판단한다."
+    },
+    "original_value": {
+      "durable_question": "USB를 그냥 뽑아도 된다는 말과 안전하게 제거하라는 안내가 달라 혼란스러운 일반 독자가 자료를 잃지 않을 판단 기준을 원한다.",
+      "source_gap": "공식 자료가 따로 설명하는 기능 조건과 결과 확인 절차를 독자가 겪는 장면에서 함께 판단하기는 어렵다.",
+      "contribution": "빠른 제거와 진행 중 저장을 분리하고, 안전한 꺼내기부터 정책 읽기까지 위험한 실험 없이 확인할 수 있는 순서를 제공한다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다.",
+      "limits": "파일 손상 실험은 수행하지 않았으며 운영체제와 제조사 문서를 비교했다. 장치 정책과 운영체제 버전에 따라 실제 메뉴와 동작 조건이 달라질 수 있다."
+    },
+    "selection_evaluation": {
+      "policy": "curiosity_myth_history-v1",
+      "criteria": {
+        "evergreen_question": 19,
+        "verifiable_sources": 19,
+        "simple_explanation": 9,
+        "cluster_depth": 7,
+        "belief_fact_boundary": 14,
+        "historical_evidence": 13,
+        "direct_check": 9
+      },
+      "total": 90,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    }
+  },
+  "visual": {
+    "subject": "USB 포트에서 멈춘 손과 저장 표시등",
+    "hook": "USB 그냥 뽑아도 무엇을 먼저 확인할까?",
+    "motif": "USB 연결, 저장 완료",
+    "weekday_profile": "myth_evidence",
+    "subject_terms": [
+      "USB",
+      "빠른 제거"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "label": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "scene_label": [
+        "USB 연결",
+        "저장 완료"
+      ],
+      "steps": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "curiosity_hook": "USB 그냥 뽑아도 무엇을 먼저 확인할까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "usb_hand_pause",
+      "composition_type": "port_macro_paused_hand",
+      "palette_family": "silver_plum_amber",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "USB 포트에서 멈춘 손과 저장 표시등",
+      "texture_cue": "금속 포트와 사용 흔적",
+      "authenticity_cue": "실제 연결된 장치와 대기하는 손",
+      "generation_model": "imagegen",
+      "korean_labels": [
+        "저장 중"
+      ],
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Wide 1200x630 macro editorial photograph of a real USB flash drive still fully inserted in a laptop side port, a human hand paused just short of pulling it, tiny amber activity light. USB 그냥 뽑아도 되는가 is the visual question. Main USB object fills 55 percent, brushed metal and lightly worn casing, daylight, muted plum and silver. Exact Korean label on a small physical tag: 저장 중. No fake screen, no chart, no logo, no extra text.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "teaching_role": "myth_fact_boundary",
+        "teaching_claim": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+        "label": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+        "scene_label": [
+          "저장 완료",
+          "복사 중"
+        ],
+        "steps": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+        "curiosity_hook": "USB 그냥 뽑아도 선택과 결과는 어떻게 다를까?",
+        "evidence_type": "diagram",
+        "generation_model": "imagegen",
+        "generation_prompt": "Use case: scientific-educational. Wide 1200x630 Korean educational comparison about USB removal. Two spacious scenes: USB with a completed file and a check mark labelled 저장 완료; USB with half-transferred document and warning labelled 복사 중. Bottom short label: 설정과 진행 상태는 별개. Teal and coral with white background, large Korean type readable at 390px, no fake operating-system UI, no logo, no extra text. Explain that quick removal does not make unplugging during writes safe.",
+        "korean_labels": [
+          "저장 완료",
+          "복사 중",
+          "설정과 진행 상태는 별개"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "capture",
+        "logic_type": "evidence",
+        "teaching_role": "history_or_direct_check",
+        "teaching_claim": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+        "label": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+        "scene_label": [
+          "공식 문서",
+          "적용 조건"
+        ],
+        "steps": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+        "curiosity_hook": "USB 그냥 뽑아도 공식 근거에서 무엇을 확인할까?",
+        "evidence_type": "screenshot",
+        "capture_tool": "browser",
+        "capture_target": "USB 그냥 뽑아도 공식 문서의 조건 설명",
+        "captured_at": "2026-09-17T01:07:16.895Z",
+        "source_url": "https://learn.microsoft.com/en-us/windows/client-management/client-tools/change-default-removal-policy-external-storage-media",
+        "capture_note": "공개 공식 문서 본문 일부. 계정·개인정보 없음.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "images": {
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "label": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "scene_label": [
+        "USB 연결",
+        "저장 완료"
+      ],
+      "steps": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "curiosity_hook": "USB 그냥 뽑아도 무엇을 먼저 확인할까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "usb_hand_pause",
+      "composition_type": "port_macro_paused_hand",
+      "palette_family": "silver_plum_amber",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "USB 포트에서 멈춘 손과 저장 표시등",
+      "texture_cue": "금속 포트와 사용 흔적",
+      "authenticity_cue": "실제 연결된 장치와 대기하는 손",
+      "generation_model": "imagegen",
+      "korean_labels": [
+        "저장 중"
+      ],
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Wide 1200x630 macro editorial photograph of a real USB flash drive still fully inserted in a laptop side port, a human hand paused just short of pulling it, tiny amber activity light. USB 그냥 뽑아도 되는가 is the visual question. Main USB object fills 55 percent, brushed metal and lightly worn casing, daylight, muted plum and silver. Exact Korean label on a small physical tag: 저장 중. No fake screen, no chart, no logo, no extra text.",
+      "path": "docs/tistory/assets/2026-09-17/USB-저장중-분리주의.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%80%EC%9E%A5%EC%A4%91-%EB%B6%84%EB%A6%AC%EC%A3%BC%EC%9D%98.webp",
+      "alt": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 63026,
+      "quality": 82,
+      "sha256": "9ddd6af9d94909b0f5e610a04b3642d71db8a43b2fd19d68b1c93be73a575427",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "visual_1": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "teaching_role": "myth_fact_boundary",
+      "teaching_claim": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+      "label": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+      "scene_label": [
+        "저장 완료",
+        "복사 중"
+      ],
+      "steps": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+      "curiosity_hook": "USB 그냥 뽑아도 선택과 결과는 어떻게 다를까?",
+      "evidence_type": "diagram",
+      "generation_model": "imagegen",
+      "generation_prompt": "Use case: scientific-educational. Wide 1200x630 Korean educational comparison about USB removal. Two spacious scenes: USB with a completed file and a check mark labelled 저장 완료; USB with half-transferred document and warning labelled 복사 중. Bottom short label: 설정과 진행 상태는 별개. Teal and coral with white background, large Korean type readable at 390px, no fake operating-system UI, no logo, no extra text. Explain that quick removal does not make unplugging during writes safe.",
+      "korean_labels": [
+        "저장 완료",
+        "복사 중",
+        "설정과 진행 상태는 별개"
+      ],
+      "path": "docs/tistory/assets/2026-09-17/USB-저장완료-복사중.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%80%EC%9E%A5%EC%99%84%EB%A3%8C-%EB%B3%B5%EC%82%AC%EC%A4%91.webp",
+      "alt": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 44586,
+      "quality": 82,
+      "sha256": "85eeb93e7c3e54394c7c67bd3200e5562b11c2f0a1c87614be7048188493598f",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "visual_2": {
+      "content_role": "explanation",
+      "origin": "capture",
+      "logic_type": "evidence",
+      "teaching_role": "history_or_direct_check",
+      "teaching_claim": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+      "label": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+      "scene_label": [
+        "공식 문서",
+        "적용 조건"
+      ],
+      "steps": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+      "curiosity_hook": "USB 그냥 뽑아도 공식 근거에서 무엇을 확인할까?",
+      "evidence_type": "screenshot",
+      "capture_tool": "browser",
+      "capture_target": "USB 그냥 뽑아도 공식 문서의 조건 설명",
+      "captured_at": "2026-09-17T01:07:16.895Z",
+      "source_url": "https://learn.microsoft.com/en-us/windows/client-management/client-tools/change-default-removal-policy-external-storage-media",
+      "capture_note": "공개 공식 문서 본문 일부. 계정·개인정보 없음.",
+      "path": "docs/tistory/assets/2026-09-17/USB-제거정책-공식근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%9C%EA%B1%B0%EC%A0%95%EC%B1%85-%EA%B3%B5%EC%8B%9D%EA%B7%BC%EA%B1%B0.webp",
+      "alt": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 40342,
+      "quality": 82,
+      "sha256": "86c179f9f876bd1923a1bda9367acfeddaeab89c02f5424b5eb0e9147586435d",
+      "capture_sha256": "86c179f9f876bd1923a1bda9367acfeddaeab89c02f5424b5eb0e9147586435d",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    }
+  },
+  "news": [
+    {
+      "title_kr": "USB 제거 정책과 저장 진행 상태의 경계",
+      "source": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows/client-management/client-tools/change-default-removal-policy-external-storage-media",
+      "published_at": "2025-08-18T00:00:00+00:00",
+      "blurb_kr": "USB 제거 정책과 진행 중인 저장을 구분하면 위험한 실험 없이 분리 시점을 판단할 수 있습니다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "Microsoft: 외부 저장장치 제거 정책",
+          "url": "https://learn.microsoft.com/en-us/windows/client-management/client-tools/change-default-removal-policy-external-storage-media"
+        },
+        {
+          "kind": "documentation",
+          "title": "Microsoft: 안전하게 제거하는 절차",
+          "url": "https://support.microsoft.com/en-us/windows/hardware/safely-remove-hardware-in-windows"
+        },
+        {
+          "kind": "independent",
+          "title": "Kingston: 플래시 메모리 관리",
+          "url": "https://www.kingston.com/en/usb-flash-drives/caring-for-your-flash-memory"
+        },
+        {
+          "kind": "documentation",
+          "title": "Apple: 디스크를 꺼낼 수 없을 때",
+          "url": "https://support.apple.com/en-mide/guide/mac-help/mchlp1285/mac"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "지금 빼야 한다면, 이것부터 하세요"
+        },
+        {
+          "t": "p",
+          "text": "USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "원리를 다 읽을 시간이 없다면 세 가지만 기억하면 됩니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "USB로 복사하거나 저장하는 작업이 끝났는지 확인합니다.",
+            "USB에서 열어 둔 문서는 저장하고 관련 프로그램을 닫습니다.",
+            "운영체제의 꺼내기를 실행하고 제거 가능 상태를 확인한 뒤 분리합니다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "Windows에서는 작업 표시줄의 ‘하드웨어 안전하게 제거 및 미디어 꺼내기’ 메뉴에서 해당 장치를 선택합니다. 숨겨진 아이콘 안에 있을 수 있습니다. Microsoft는 제거 가능 알림이 표시되고 해당 장치가 메뉴에서 사라진 뒤 분리하도록 안내합니다. Windows 제거 안내"
+        },
+        {
+          "t": "p",
+          "text": "Mac은 Finder에 표시되는 외장 장치 옆 꺼내기 버튼을 이용할 수 있습니다. 제조사 Kingston도 운영체제로 연결을 종료한 뒤 분리하는 방법을 안내합니다. Kingston 저장장치 관리 안내"
+        },
+        {
+          "t": "p",
+          "text": "여기서 완료 기준은 “복사 창을 내가 닫았다”가 아닙니다. 복사와 저장을 마쳤고, 운영체제에서도 꺼내기를 완료했는가입니다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다 — 생성한 개념도이며 실제 제품 화면이 아니다."
+        },
+        {
+          "t": "h",
+          "text": "왜 ‘요즘은 그냥 뽑아도 된다’는 말이 나왔을까"
+        },
+        {
+          "t": "p",
+          "text": "완전히 근거 없는 말은 아닙니다. Microsoft는 Windows 10 버전 1809부터 외부 저장장치의 기본 정책을 ‘빠른 제거’로 바꿨다고 설명합니다. 이전 기본 정책은 ‘향상된 성능’이었습니다. Microsoft 정책 설명"
+        },
+        {
+          "t": "p",
+          "text": "‘빠른 제거’는 Windows가 쓰기 작업을 캐시에 모아 두지 않는 방식으로, 별도 안전 제거 절차 없이 장치를 분리할 수 있도록 합니다. 반면 ‘향상된 성능’에서는 쓰기 캐시를 사용할 수 있어 안전 제거 절차가 필요합니다."
+        },
+        {
+          "t": "p",
+          "text": "그러니 같은 Windows라도 장치의 설정이 무엇인지가 중요합니다. “새 컴퓨터니까 무조건 괜찮다”나 “USB는 무조건 꺼내기 버튼을 눌러야 작동이 끝난다”처럼 한 문장으로 모든 경우를 설명하기 어렵습니다."
+        },
+        {
+          "t": "p",
+          "text": "단, 빠른 제거는 진행 중인 파일 복사까지 순간적으로 끝내 주는 기능이 아닙니다. 그 설정을 믿고 복사 도중 케이블을 빼는 실험을 할 필요는 없습니다. 정책의 차이를 알고 싶다는 이유로 중요한 자료를 위험에 걸 이유도 없습니다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "‘캐시’는 파일을 보내기 전의 대기 공간입니다"
+        },
+        {
+          "t": "p",
+          "text": "쓰기 캐시라는 말은 어렵지만, 책상 위 발송 대기함을 떠올리면 쉽습니다. 보낼 서류를 잠깐 모았다가 전달하는 것처럼, 저장할 데이터를 잠시 보관하고 실제 장치에 쓰는 시점을 조절하는 방식입니다."
+        },
+        {
+          "t": "p",
+          "text": "책상에서 서류를 처리했다고 상대방에게 이미 도착한 것은 아니듯, 저장을 요청한 것과 모든 쓰기가 끝난 것은 구분해야 합니다. 안전하게 제거는 필요한 쓰기 작업을 끝내고 분리할 수 있도록 하는 절차입니다."
+        },
+        {
+          "t": "p",
+          "text": "물론 이 비유가 모든 USB 내부 동작을 설명하지는 않습니다. 중요한 점은 ‘버튼을 안 누르면 즉시 고장’이 아니라, 아직 해야 할 저장 작업이 남아 있을 때 연결을 끊는 것이 문제라는 사실입니다."
+        },
+        {
+          "t": "p",
+          "text": "Kingston 역시 컴퓨터가 데이터를 임시 보관해 USB 쓰기가 늦어질 수 있음을 설명합니다. 또한 중요한 정보는 USB 한 곳에만 보관하지 말라고 권합니다. 안전 제거와 백업은 서로 대신할 수 없는 습관입니다. 제조사 권고"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "안전 제거: 현재 저장 작업을 마치고 장치를 분리하는 절차입니다.",
+            "백업: 장치가 고장 나거나 파일을 잃어도 다른 사본으로 되찾기 위한 대비입니다."
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다 — Microsoft Learn 공식 정책 문서 원문 캡처."
+        },
+        {
+          "t": "h",
+          "text": "내 USB는 어떤 설정인지 확인만 해 보세요"
+        },
+        {
+          "t": "p",
+          "text": "Windows에서 궁금하다면 설정을 바꾸지 않고 확인할 수 있습니다."
+        },
+        {
+          "t": "p",
+          "text": "시작 버튼을 마우스 오른쪽으로 눌러 ‘디스크 관리’를 열고, 용량과 드라이브 문자를 대조해 USB가 맞는지 먼저 확인합니다. 해당 장치의 속성에서 ‘정책’을 찾아 빠른 제거인지 향상된 성능인지 읽습니다."
+        },
+        {
+          "t": "p",
+          "text": "Windows 버전에 따라 탭 배치가 달라질 수 있습니다. Microsoft는 정책 탭이 없다면 ‘하드웨어’에서 해당 이동식 드라이브를 선택하고 속성을 확인하도록 안내합니다. 이름을 확실히 식별하지 못하겠다면 여기서 멈추세요."
+        },
+        {
+          "t": "quote",
+          "text": "이 확인에는 포맷·파티션 삭제·성능 설정 변경이 필요하지 않습니다. 목적은 빠르게 만드는 것이 아니라, 내 장치가 어떤 조건으로 동작하는지 아는 것입니다."
+        },
+        {
+          "t": "p",
+          "text": "확인 결과가 빠른 제거여도 저장 중에는 기다립니다. 향상된 성능이거나 설정이 확실하지 않다면 꺼내기를 완료한 뒤 분리하는 습관을 유지하면 됩니다."
+        },
+        {
+          "t": "h",
+          "text": "‘사용 중’이라고 나오면 세게 뽑지 마세요"
+        },
+        {
+          "t": "p",
+          "text": "꺼내기 버튼을 눌렀는데 장치가 사용 중이라는 메시지가 나오면 답답합니다. 이때는 먼저 진행 중인 복사가 있는지, USB 문서를 열어 둔 앱이 있는지 확인하세요. 저장하지 않은 작업부터 보호하는 것이 순서입니다."
+        },
+        {
+          "t": "p",
+          "text": "Mac에서 계속 꺼낼 수 없다면 Apple은 로그아웃 후 다시 시도하고, 그래도 안 되면 컴퓨터를 종료한 뒤 장치를 분리하는 절차를 안내합니다. 종료 전에는 다른 작업도 저장해야 합니다. Apple 문제 해결 안내"
+        },
+        {
+          "t": "p",
+          "text": "정해진 몇 초만 기다리면 무조건 안전하다는 식의 요령은 내 장치가 실제로 무엇을 하는지 알려 주지 못합니다. 경고를 없애려고 포맷하거나 작업을 강제로 종료하는 것도 이 글에서 권하는 해결법은 아닙니다."
+        }
+      ]
+    }
+  ],
+  "backfill": {
+    "created_at": "2026-09-17T10:20:09.546+09:00",
+    "reason": "사용자가 요청한 수요일·목요일 누락 원고의 완성 및 공개 발행 도우미 배포 작업"
+  }
+}

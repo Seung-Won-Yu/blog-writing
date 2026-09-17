@@ -256,9 +256,10 @@ def render_content_blocks(blocks, images=None):
                 continue
             caption_html = f"<caption>{esc(caption)}</caption>" if caption else ""
             aria = f' aria-label="{esc(caption)}"' if caption else ""
+            table_class = "digest-compact-table" if len(headers) <= 2 else "digest-data-table"
             rows.append(
                 f'<div class="digest-table-wrap" role="region"{aria} tabindex="0">'
-                f'<table class="digest-data-table">{caption_html}'
+                f'<table class="{table_class}">{caption_html}'
                 f"<thead><tr>{head_html}</tr></thead><tbody>{body_html}</tbody></table></div>"
             )
             continue

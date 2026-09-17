@@ -1,0 +1,86 @@
+{
+  "title": "USB 그냥 뽑아도 될까? 안전하게 제거가 필요한 이유",
+  "title_candidates": [
+    "USB 그냥 뽑아도 될까? 안전하게 제거가 필요한 이유",
+    "USB 제거 정책과 저장 진행 상태의 경계",
+    "USB 포트에서 멈춘 손과 저장 표시등: USB 그냥 뽑아도 무엇을 먼저 확인할까?"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-17",
+  "publish_date": "2026-09-17",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-17T09:00:00+09:00",
+  "tags": [
+    "USB 그냥 뽑아도",
+    "USB 안전 제거",
+    "쓰기 캐시",
+    "빠른 제거",
+    "외장 저장장치",
+    "파일 보호"
+  ],
+  "meta_description": "발표 자료를 USB에 복사했습니다. 창도 닫혔고 바쁘기도 해서 그냥 뽑으려는데, 예전에 들은 말이 떠오릅니다. “그러다 파일 다 날아간다.” 그런데 주변 사람들은 늘 그냥 뽑고도 멀쩡합니다. 둘 중… USB 제거 정책과 진행 중인 저장을 구분하면 위험한 실험 없이 분리 시점을 판단할…",
+  "key_summary": [
+    "1. USB 제거 정책과 저장 진행 상태의 경계",
+    "직접 얻는 결과: USB를 그냥 뽑았다고 항상 파일이 망가지는 것은 아니다. 하지만 쓰는 도중 분리하면 자료를 잃을 수 있으므로 복사와 저장을 끝내고 꺼내기 완료를 확인한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: USB 그냥 뽑아도 될까? 안전하게 제거가 필요한 이유"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-17.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-17.html",
+  "before_ad_html": "docs/tistory/2026-09-17-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-17-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-17-adfit.html",
+  "source_sha256": "d48079452eeb9f4fa507aaa47c452ce370bca4d7fed50972795b0631c3ebd440",
+  "html_sha256": "5a1e8911906a47bfa08bbe6cad0ee4d9c06f7576dff0ec7a97fa2a38e29ae01f",
+  "adfit_sha256": "94f390ebb8189174ce0b99a4f70045b24889e22fb248f15f2702f5bbe5841e83",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%80%EC%9E%A5%EC%A4%91-%EB%B6%84%EB%A6%AC%EC%A3%BC%EC%9D%98.webp",
+      "path": "docs/tistory/assets/2026-09-17/USB-저장중-분리주의.webp",
+      "original_url": "",
+      "alt": "USB를 분리하기 전에는 손보다 저장 완료 확인이 먼저다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%80%EC%9E%A5%EC%99%84%EB%A3%8C-%EB%B3%B5%EC%82%AC%EC%A4%91.webp",
+      "path": "docs/tistory/assets/2026-09-17/USB-저장완료-복사중.webp",
+      "original_url": "",
+      "alt": "USB 빠른 제거 설정도 진행 중인 복사와 저장을 끝내 주지는 않는다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-17/USB-%EC%A0%9C%EA%B1%B0%EC%A0%95%EC%B1%85-%EA%B3%B5%EC%8B%9D%EA%B7%BC%EA%B1%B0.webp",
+      "path": "docs/tistory/assets/2026-09-17/USB-제거정책-공식근거.webp",
+      "original_url": "",
+      "alt": "USB 빠른 제거는 Windows 10 버전 1809부터 기본 정책이지만 장치별 설정을 확인해야 한다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
