@@ -1,0 +1,96 @@
+{
+  "title": "Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준",
+  "title_candidates": [
+    "Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준",
+    "AI 앱의 모델 실행·요청 관문·추적 도구를 구분하는 선택: 같은 AI 앱 목록에 오른 네 도구가 정말 경쟁할까?"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-09-18-automation",
+  "publish_date": "2026-09-18",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-18T09:00:00+09:00",
+  "tags": [
+    "AI 앱 개발",
+    "Ollama",
+    "vLLM",
+    "LiteLLM",
+    "Langfuse",
+    "모델 서빙",
+    "LLM 관측성"
+  ],
+  "meta_description": "AI 앱을 만들 때 Ollama, vLLM, LiteLLM, Langfuse를 한 줄에 놓고 ‘무엇이 더 좋나’ 묻기 쉽다. 먼저 답하면 넷은 같은 자리를 두고 겨루는 도구가 아니다. 모델을 어디서… AI 앱 도구 네 가지를 모델 실행·요청 관문·실행 추적의 책임으로 나누고, 필요한…",
+  "key_summary": [
+    "1. Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준",
+    "직접 얻는 결과: 모델 실행, 요청 관문, 실행 추적의 역할 지도와 상황별 도입 순서를 얻는다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-09-18.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-18-automation.html",
+  "before_ad_html": "docs/tistory/2026-09-18-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-18-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-18-automation-adfit.html",
+  "source_sha256": "e1101e81ce7747fe5a695eb004e1bcf1dd91fcf605738f0665cae680d6a24b7d",
+  "html_sha256": "8e7919524c1179bb80ccf8496cb16b85a92e787d5fda12ed82d29994e5dde2aa",
+  "adfit_sha256": "f0a25bc2a0d6062682679e96091964866b36866d8adaa46af47bd03058a1ea6c",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/로컬과-서버-선택-대표.webp",
+      "path": "docs/tistory/assets/2026-09-18-automation/로컬과-서버-선택-대표.webp",
+      "original_url": "",
+      "alt": "AI 앱 요청을 로컬 모델과 공유 서버 중 어디서 처리할지 결정한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/Ollama-로컬-API-근거.webp",
+      "path": "docs/tistory/assets/2026-09-18-automation/Ollama-로컬-API-근거.webp",
+      "original_url": "",
+      "alt": "Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/AI-모델-도구-역할-지도.webp",
+      "path": "docs/tistory/assets/2026-09-18-automation/AI-모델-도구-역할-지도.webp",
+      "original_url": "",
+      "alt": "AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/Langfuse-추적-근거.webp",
+      "path": "docs/tistory/assets/2026-09-18-automation/Langfuse-추적-근거.webp",
+      "original_url": "",
+      "alt": "Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

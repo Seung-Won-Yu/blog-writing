@@ -1,0 +1,647 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-18-automation",
+  "publish_date": "2026-09-18",
+  "date_label": "2026. 9. 18",
+  "weekday": "금",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-18T09:00:00+09:00",
+  "primary_query": "Ollama vLLM LiteLLM Langfuse",
+  "tags": [
+    "AI 앱 개발",
+    "Ollama",
+    "vLLM",
+    "LiteLLM",
+    "Langfuse",
+    "모델 서빙",
+    "LLM 관측성"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "Ollama와 vLLM은 모델을 실행하는 층에 있고, LiteLLM은 요청을 여러 모델로 보내는 관문이며, Langfuse는 실행 경로를 추적한다.",
+      "먼저 모델을 직접 운영할지 정한 다음 공유 호출·권한 관리가 필요할 때 관문을, 실패 원인을 따라가야 할 때 추적을 붙인다.",
+      "이 글은 공식 문서의 역할을 분류한 판단표이며 성능·비용 우열을 직접 측정한 결과는 아니다."
+    ],
+    "glossary": [
+      {
+        "term": "모델 서빙",
+        "meaning": "모델을 메모리에 올려 앱의 요청에 응답하도록 실행하는 일이다."
+      },
+      {
+        "term": "추론",
+        "meaning": "학습된 모델이 새 입력에 대해 답을 생성하는 과정이다."
+      },
+      {
+        "term": "게이트웨이",
+        "meaning": "앱과 여러 모델 API 사이에서 요청을 받아 라우팅하고 접근을 통제하는 관문이다."
+      },
+      {
+        "term": "트레이스",
+        "meaning": "요청 하나가 모델 호출과 도구 사용을 거친 순서를 묶어 남긴 기록이다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준",
+    "opening": "AI 앱을 만들 때 Ollama, vLLM, LiteLLM, Langfuse를 한 줄에 놓고 ‘무엇이 더 좋나’ 묻기 쉽다. 먼저 답하면 넷은 같은 자리를 두고 겨루는 도구가 아니다. 모델을 어디서 실행할지, 여러 요청을 누가 통제할지, 실패를 어디서 추적할지로 나누면 필요한 도구만 고를 수 있다.",
+    "closing": "네 도구를 한 번에 설치할 이유는 없다. 우선 모델을 직접 실행할지와 예상 사용자를 정한다. 호출 경로가 늘어나면 관문을 붙이고, 결과를 설명할 수 없을 때 추적을 더한다. 운영 부담도 각 층마다 함께 늘어난다.",
+    "action": "지금 만드는 AI 앱에서 먼저 해결할 문제가 모델 실행, 요청 통제, 실패 추적 중 무엇인지 한 문장으로 적고 그 층의 공식 문서부터 읽는다.",
+    "audience_problem": "개발자가 AI 도구 목록을 한 종류의 제품 비교로 읽어 불필요한 서버와 운영 부담을 먼저 도입한다.",
+    "reader_takeaway": "모델 실행, 요청 관문, 실행 추적의 역할 지도와 상황별 도입 순서를 얻는다.",
+    "why_now": "오픈소스 AI 도구의 이름은 함께 등장하지만 API 호환성만으로 운영 역할과 책임이 같아지지 않는다.",
+    "topic_key": "ai-app-inference-gateway-observability-map",
+    "reader_question": "Ollama, vLLM, LiteLLM, Langfuse를 각각 언제 선택하고 언제 생략해야 할까?",
+    "entities": [
+      "Ollama",
+      "vLLM",
+      "LiteLLM",
+      "Langfuse",
+      "모델 서빙",
+      "AI 앱"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "classification",
+      "comparison",
+      "application",
+      "limits",
+      "judgment",
+      "mechanism"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "ecosystem_map",
+    "search_intent": {
+      "query": "Ollama",
+      "reader_need": "AI 앱을 만들 때 네 도구가 같은 역할인지, 어느 문제에 어떤 층이 필요한지 판단하고 싶다.",
+      "answer_format": "역할 지도와 생략 조건이 있는 선택표"
+    },
+    "reader_hook": {
+      "scene": "AI 앱 설계 회의에서 Ollama, vLLM, LiteLLM, Langfuse가 모두 후보 목록에 올라 설치 순서를 정하지 못하는 장면",
+      "stakes": "역할을 구분하지 않으면 작은 실험에도 서버·게이트웨이·추적 인프라를 모두 운영하게 된다.",
+      "payoff": "모델 실행·요청 통제·실행 추적을 분리한 지도와 생략 기준을 얻는다.",
+      "open_question": "내 앱의 현재 병목은 모델을 돌리는 일인가, 요청을 통제하는 일인가, 실패를 설명하는 일인가?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "먼저 나눌 질문은 ‘어디서 실행하나’다",
+      "immediate_answer": "Ollama와 vLLM은 모델을 직접 실행하는 층에 있다. LiteLLM은 모델 앞에서 요청을 받는 관문이고, Langfuse는 앱이 무엇을 했는지 기록한다. 네 이름은 같은 비교표에 있어도 답하는 질문이 다르다.",
+      "action_steps": [
+        "내 앱이 모델을 직접 운영할지 먼저 정한다.",
+        "로컬 실험이면 Ollama, 공유 추론이면 vLLM의 운영 조건을 확인한다.",
+        "여러 모델·사용자·키 관리가 필요할 때만 LiteLLM 관문을 검토한다.",
+        "실패 원인을 요청 단위로 따라가야 하면 Langfuse 추적을 검토한다."
+      ],
+      "completion_check": "지금 만드는 AI 앱에서 먼저 해결할 문제가 모델 실행, 요청 통제, 실패 추적 중 무엇인지 한 문장으로 적고 그 층의 공식 문서부터 읽는다."
+    },
+    "revisit": {
+      "quick_answer": "Ollama·vLLM은 실행, LiteLLM은 관문, Langfuse는 추적이다. 하나의 제품 순위로 고르지 않는다.",
+      "reuse_case": "AI 앱의 첫 배포나 사용자가 늘어날 때 필요한 층을 하나씩 결정한다.",
+      "failure_case": "API가 비슷하다는 이유로 모든 도구를 동시에 설치하면 운영 비용만 늘 수 있다.",
+      "artifact_type": "source_map",
+      "update_triggers": [
+        "각 프로젝트의 공식 API·운영 문서 변경",
+        "앱의 동시 사용자·모델 공급자 증가",
+        "추적 데이터 보존 정책 변경"
+      ]
+    },
+    "original_value": {
+      "durable_question": "AI 앱에서 모델 실행, 요청 관문, 추적 도구는 어떤 문제에 각각 답하는가?",
+      "source_gap": "각 저장소는 자기 제품의 기능을 설명하지만 작은 실험부터 다중 사용자 운영까지 어느 층을 생략할지 함께 판단하는 순서는 제공하지 않는다.",
+      "contribution": "네 공식 저장소를 모델 실행·요청 관문·실행 추적 세 책임으로 재분류하고 상황별 선행 질문과 생략 조건을 만들었다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 현재 병목을 분류하고 설치할 도구와 아직 필요 없는 층을 구분한다.",
+      "limits": "설치·부하 실험은 하지 않았다. 하드웨어별 처리량, 비용, 품질, 보안 우열을 주장하지 않는다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 92,
+      "criteria": {
+        "search_durability": 19,
+        "developer_relevance": 25,
+        "source_authority": 18,
+        "original_contribution": 18,
+        "curiosity": 12
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "AI",
+      "Ollama",
+      "vLLM",
+      "Langfuse"
+    ],
+    "subject": "AI 앱의 모델 실행·요청 관문·추적 도구를 구분하는 선택",
+    "hook": "같은 AI 앱 목록에 오른 네 도구가 정말 경쟁할까?",
+    "motif": "요청 종이, 로컬 컴퓨터, 서버, 관문, 추적 노트",
+    "cover": {
+      "label": "AI 앱 요청을 로컬 컴퓨터와 공유 서버 중 어디에 둘지 고르는 장면",
+      "scene_label": [
+        "로컬 컴퓨터",
+        "공유 서버"
+      ],
+      "steps": "개발자의 손이 AI 앱 요청 종이를 로컬 컴퓨터 쪽으로 옮기는 순간을 보여 준다.",
+      "curiosity_hook": "Ollama와 vLLM 중 AI 앱 모델은 어디에서 실행해야 할까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "AI 앱 요청을 로컬 모델과 공유 서버 중 어디서 처리할지 결정한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "inference_location_choice",
+      "composition_type": "documentary_workbench",
+      "palette_family": "plum_copper_cream",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "로컬 컴퓨터와 서버 사이에서 이동하는 요청 종이",
+      "texture_cue": "종이 결, 금속 서버, 실제 케이블",
+      "authenticity_cue": "손으로 든 빈 요청 종이와 사용 중인 작업대",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\nAsset type: landscape Korean developer magazine cover, 1200:630 ratio.\nPrimary request: A close-up still life of a developer's hands holding one plain paper API request ticket between a small desk-sized computer and a larger rack server in a real engineering workshop. The ticket is physically moving toward the small computer. It should show the practical choice between a local model and shared model serving through physical scale only.\nComposition: one cinematic moment, objects occupy the center 60%, no cards or panels, no diagram or arrows. Side-lit documentary closeup, restrained plum and copper accents, authentic cables and paper texture.\nText: no text anywhere.\nStrict avoid: human face, brain, robot, chip icon, dashboards, glowing effects, logo, watermark, charts, fake UI, labels, infographic.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "Ollama 공식 README의 로컬 모델 REST API 근거",
+        "scene_label": [
+          "Ollama",
+          "REST API"
+        ],
+        "steps": "Ollama README의 localhost:11434 API 예시를 화면에서 확인한다.",
+        "curiosity_hook": "Ollama는 AI 앱의 어느 요청을 직접 받는가?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다",
+        "capture_tool": "playwright",
+        "capture_target": "Ollama 공식 README REST API: https://github.com/ollama/ollama#rest-api",
+        "captured_at": "2026-09-18T13:34:19+09:00",
+        "capture_note": "공개 README의 REST API 근거 문장을 브라우저에서 강조 표시해 직접 캡처했다.",
+        "source_url": "https://github.com/ollama/ollama#rest-api",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "AI 앱 모델 실행·요청 관문·실행 추적의 역할 지도",
+        "scene_label": [
+          "로컬 실행",
+          "서버 추론",
+          "요청 관문",
+          "실행 추적"
+        ],
+        "steps": "AI 앱 요청은 관문에서 로컬 또는 서버 모델로 가고 추적은 실행을 기록한다.",
+        "curiosity_hook": "LiteLLM과 Langfuse는 Ollama·vLLM을 대신할까?",
+        "evidence_type": "diagram",
+        "logic_type": "architecture",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "teaching_claim": "AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다",
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: stylized-concept\nAsset type: Korean technology blog body explanation image, wide 1200:630 ratio.\nPrimary request: An editorial paper-cut architecture map for an AI application. A user request enters a central gateway, then reaches one of two model-serving endpoints: a small local computer on the left and a rack GPU server on the right. A separate observation notebook below records the request path. The four objects are visibly different roles, not four equivalent competing tools.\nComposition: clear left-to-right flow with a separate bottom observation branch; lots of whitespace; broad lines connecting real objects. Designed to remain legible at 390px width.\nText (verbatim), exactly four large Korean labels: \"로컬 실행\", \"서버 추론\", \"요청 관문\", \"실행 추적\". No other text.\nStyle: high-contrast editorial cut-paper diagram on warm off-white with deep plum and copper accents. Honest conceptual illustration, not an actual product UI.\nAvoid: charts, scores, numeric metrics, logos, fake screenshots, generic robot or brain, decorative card grid, tiny labels, watermark.",
+        "korean_labels": [
+          "로컬 실행",
+          "서버 추론",
+          "요청 관문",
+          "실행 추적"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "Langfuse 공식 README의 모델 호출 추적 근거",
+        "scene_label": [
+          "Langfuse",
+          "추적"
+        ],
+        "steps": "Langfuse README의 관측성 설명과 트레이스 적용 범위를 읽는다.",
+        "curiosity_hook": "모델 응답이 나빠졌을 때 어느 단계에서 원인을 찾을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "capture",
+        "teaching_role": "use_case",
+        "teaching_claim": "Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다",
+        "capture_tool": "playwright",
+        "capture_target": "Langfuse 공식 README Core Features: https://github.com/langfuse/langfuse#-core-features",
+        "captured_at": "2026-09-18T13:19:27+09:00",
+        "capture_note": "공개 README의 Core Features와 LLM Application Observability 설명을 실제 캡처했다.",
+        "source_url": "https://github.com/langfuse/langfuse#-core-features",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "AI 앱 요청을 로컬 모델과 공유 서버 중 어디서 처리할지 결정한다",
+      "path": "docs/tistory/assets/2026-09-18-automation/로컬과-서버-선택-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/로컬과-서버-선택-대표.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "AI 앱 요청을 로컬 모델과 공유 서버 중 어디서 처리할지 결정한다",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\nAsset type: landscape Korean developer magazine cover, 1200:630 ratio.\nPrimary request: A close-up still life of a developer's hands holding one plain paper API request ticket between a small desk-sized computer and a larger rack server in a real engineering workshop. The ticket is physically moving toward the small computer. It should show the practical choice between a local model and shared model serving through physical scale only.\nComposition: one cinematic moment, objects occupy the center 60%, no cards or panels, no diagram or arrows. Side-lit documentary closeup, restrained plum and copper accents, authentic cables and paper texture.\nText: no text anywhere.\nStrict avoid: human face, brain, robot, chip icon, dashboards, glowing effects, logo, watermark, charts, fake UI, labels, infographic.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "inference_location_choice",
+      "composition_type": "documentary_workbench",
+      "palette_family": "plum_copper_cream",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "로컬 컴퓨터와 서버 사이에서 이동하는 요청 종이",
+      "texture_cue": "종이 결, 금속 서버, 실제 케이블",
+      "authenticity_cue": "손으로 든 빈 요청 종이와 사용 중인 작업대",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 73486,
+      "quality": 82,
+      "sha256": "6682321ac0bc80c8607dcd44c2a734fdee19f6907341a10fc77e3a2744ca60f6"
+    },
+    "visual_1": {
+      "origin": "annotated_capture",
+      "alt": "Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다",
+      "path": "docs/tistory/assets/2026-09-18-automation/Ollama-로컬-API-근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/Ollama-로컬-API-근거.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "source_evidence",
+      "teaching_claim": "Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다",
+      "capture_tool": "playwright",
+      "capture_target": "Ollama 공식 README REST API: https://github.com/ollama/ollama#rest-api",
+      "captured_at": "2026-09-18T13:34:19+09:00",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 32564,
+      "quality": 82,
+      "sha256": "0f3956d68a13354883023841e2d3ce9e07d55fc3af3595b7bd331a5c1c514732",
+      "capture_sha256": "0f3956d68a13354883023841e2d3ce9e07d55fc3af3595b7bd331a5c1c514732"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다",
+      "path": "docs/tistory/assets/2026-09-18-automation/AI-모델-도구-역할-지도.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/AI-모델-도구-역할-지도.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "decision_map",
+      "teaching_claim": "AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\nAsset type: Korean technology blog body explanation image, wide 1200:630 ratio.\nPrimary request: An editorial paper-cut architecture map for an AI application. A user request enters a central gateway, then reaches one of two model-serving endpoints: a small local computer on the left and a rack GPU server on the right. A separate observation notebook below records the request path. The four objects are visibly different roles, not four equivalent competing tools.\nComposition: clear left-to-right flow with a separate bottom observation branch; lots of whitespace; broad lines connecting real objects. Designed to remain legible at 390px width.\nText (verbatim), exactly four large Korean labels: \"로컬 실행\", \"서버 추론\", \"요청 관문\", \"실행 추적\". No other text.\nStyle: high-contrast editorial cut-paper diagram on warm off-white with deep plum and copper accents. Honest conceptual illustration, not an actual product UI.\nAvoid: charts, scores, numeric metrics, logos, fake screenshots, generic robot or brain, decorative card grid, tiny labels, watermark.",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 58116,
+      "quality": 82,
+      "sha256": "de9e2a9db75c511235930f37b36416b8f1d47668af7020d4da4e7d2a33bc6b60"
+    },
+    "visual_3": {
+      "origin": "capture",
+      "alt": "Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다",
+      "path": "docs/tistory/assets/2026-09-18-automation/Langfuse-추적-근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-18-automation/Langfuse-추적-근거.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "use_case",
+      "teaching_claim": "Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다",
+      "capture_tool": "playwright",
+      "capture_target": "Langfuse 공식 README Core Features: https://github.com/langfuse/langfuse#-core-features",
+      "captured_at": "2026-09-18T13:19:27+09:00",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 50196,
+      "quality": 82,
+      "sha256": "8d13a0cdfa1511c32a66a774798ca66d9c9085375af8b234f021c5b64b33103a",
+      "capture_sha256": "8d13a0cdfa1511c32a66a774798ca66d9c9085375af8b234f021c5b64b33103a"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준",
+      "source": "Ollama · vLLM · LiteLLM · Langfuse · PagedAttention",
+      "url": "https://github.com/ollama/ollama",
+      "published_at": "2026-09-18T00:00:00+09:00",
+      "blurb_kr": "AI 앱 도구 네 가지를 모델 실행·요청 관문·실행 추적의 책임으로 나누고, 필요한 층과 생략할 층을 고른다.",
+      "references": [
+        {
+          "title": "Ollama official repository",
+          "url": "https://github.com/ollama/ollama",
+          "kind": "official"
+        },
+        {
+          "title": "vLLM official repository",
+          "url": "https://github.com/vllm-project/vllm",
+          "kind": "official"
+        },
+        {
+          "title": "LiteLLM official repository",
+          "url": "https://github.com/BerriAI/litellm",
+          "kind": "official"
+        },
+        {
+          "title": "Langfuse official repository",
+          "url": "https://github.com/langfuse/langfuse",
+          "kind": "official"
+        },
+        {
+          "title": "PagedAttention original paper",
+          "url": "https://arxiv.org/abs/2309.06180",
+          "kind": "research"
+        },
+        {
+          "title": "Independent deployment stack analysis",
+          "url": "https://wz-it.com/en/knowledge/ki/open-source-llm-stack/",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "먼저 나눌 질문은 ‘어디서 실행하나’다"
+        },
+        {
+          "t": "p",
+          "text": "Ollama와 vLLM은 모델을 직접 실행하는 층에 있다. LiteLLM은 모델 앞에서 요청을 받는 관문이고, Langfuse는 앱이 무엇을 했는지 기록한다. 네 이름은 같은 비교표에 있어도 답하는 질문이 다르다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "내 앱이 모델을 직접 운영할지 먼저 정한다.",
+            "로컬 실험이면 Ollama, 공유 추론이면 vLLM의 운영 조건을 확인한다.",
+            "여러 모델·사용자·키 관리가 필요할 때만 LiteLLM 관문을 검토한다.",
+            "실패 원인을 요청 단위로 따라가야 하면 Langfuse 추적을 검토한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "모델을 직접 운영하지 않고 외부 API 하나만 부르는 작은 앱이라면, 처음부터 로컬 추론 서버가 필요하지 않을 수도 있다. 반대로 자체 모델이 필요하다면 먼저 하드웨어, 동시 요청, 운영 인력을 확인해야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다 관문과 추적은 필요가 생길 때 추가한다."
+        },
+        {
+          "t": "h",
+          "text": "Ollama와 vLLM은 같은 층에서 무엇이 다른가"
+        },
+        {
+          "t": "p",
+          "text": "Ollama의 공개 README는 모델을 내려받아 실행하고 로컬 REST API로 호출하는 흐름을 보여 준다. 개인 개발 환경이나 작은 실험에서 모델을 손에 잡히게 다루는 출발점이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다 공식 예시의 localhost 주소는 로컬 모델 호출을 설명하며 이 글의 실행 결과는 아니다."
+        },
+        {
+          "t": "p",
+          "text": "첫 선택은 기능 목록보다 운영 조건에서 갈린다. 개발자 한 명의 반복 실험과 사내 여러 서비스의 동시 호출은 필요한 메모리와 장애 대응이 다르다. 모델 파일을 보관할 위치, GPU를 누가 관리할지, 요청이 늘 때 누가 병목을 볼지도 함께 정해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "vLLM은 모델 서빙의 처리 효율에 초점을 둔다. 공식 저장소는 연속 배치, 메모리 관리, OpenAI 호환 API 서버를 설명한다. 원 논문의 PagedAttention 결과는 연구 당시 비교 조건의 처리량 결과다. 지금 내 GPU에서 같은 배수가 나온다는 뜻은 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "모델 실행 위치를 고르는 첫 질문",
+          "headers": [
+            "상황",
+            "먼저 볼 도구",
+            "확인할 조건",
+            "아직 보류할 것"
+          ],
+          "rows": [
+            [
+              "개인 PC의 모델 실험",
+              "Ollama",
+              "모델 크기·메모리·로컬 API",
+              "공유 서버와 관문"
+            ],
+            [
+              "여러 사용자의 자체 모델 호출",
+              "vLLM",
+              "GPU·동시 요청·배포 운영",
+              "논문 수치를 내 성능으로 가정"
+            ],
+            [
+              "외부 제공 모델 API만 사용",
+              "둘 다 필수 아님",
+              "제공자 약관·키·비용",
+              "자체 추론 인프라"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "AI 앱 모델 실행 위치 선택표"
+        },
+        {
+          "t": "p",
+          "text": "Ollama와 vLLM의 실제 속도 우열은 이 표에서 판정하지 않는다. 동일 모델·하드웨어·입력 길이·동시 요청으로 측정해야 비교할 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "LiteLLM은 왜 모델 대신 관문에 서는가"
+        },
+        {
+          "t": "p",
+          "text": "관문을 도입해도 공급자별 API 차이가 전부 사라지지는 않는다. 모델 이름과 파라미터, 스트리밍·도구 호출 지원을 앱의 실제 요청으로 확인해야 한다. 가상 키를 발급한다면 보관과 회수 책임도 새로 생긴다."
+        },
+        {
+          "t": "p",
+          "text": "LiteLLM은 여러 모델 제공자를 같은 호출 경로 뒤에 두고 가상 키, 라우팅, 비용·사용량 통제를 다루는 게이트웨이다. 이미 응답하는 모델이나 제공자 API가 있어야 의미가 있다. 모델을 직접 추론하는 엔진의 대체품으로 고르면 문제가 어긋난다."
+        },
+        {
+          "t": "p",
+          "text": "한 제공자와 한 앱만 연결했다면 코드의 기본 API 클라이언트로 충분할 수 있다. 모델 제공자가 늘거나 팀별 키·예산·실패 시 경로를 통제해야 할 때 게이트웨이의 운영 비용을 검토한다."
+        },
+        {
+          "t": "h",
+          "text": "Langfuse는 어느 질문에 답하나"
+        },
+        {
+          "t": "p",
+          "text": "요청은 성공했는데 답이 나빠졌다면 HTTP 상태 코드만으로 원인을 찾기 어렵다. Langfuse는 모델 호출, 검색, 에이전트 동작을 한 요청의 트레이스로 묶어 살펴보는 관측성 도구다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다 화면에 나온 기능 목록은 제품 설명이며 실제 앱의 추적 품질은 계측 범위에 달려 있다."
+        },
+        {
+          "t": "p",
+          "text": "추적을 붙일 때는 한 번의 모델 호출만 기록해도 원인 분석이 끝나는지 확인한다. 검색 결과, 프롬프트 조립, 외부 도구 호출까지 이어진 앱이라면 각 단계의 관계가 남아야 실패 지점을 찾을 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "추적을 켜면 입력과 출력이 기록될 수 있다. 고객 문서나 민감한 프롬프트를 다루는 앱은 보존 기간, 비식별화, 접근 권한을 먼저 정해야 한다. 한두 번의 로컬 실험에는 간단한 로그가 더 나을 수 있다."
+        },
+        {
+          "t": "h",
+          "text": "작은 앱에서 시작해도 네 도구를 모두 켜야 할까"
+        },
+        {
+          "t": "table",
+          "caption": "병목에서 출발하는 도입 순서",
+          "headers": [
+            "현재 질문",
+            "고를 층",
+            "생략해도 되는 때"
+          ],
+          "rows": [
+            [
+              "내 컴퓨터에서 모델을 돌릴 수 있나",
+              "Ollama 같은 로컬 실행",
+              "외부 API만 쓰면 생략"
+            ],
+            [
+              "자체 모델에 동시 요청을 받나",
+              "vLLM 같은 서버 추론",
+              "공유 서비스가 없으면 생략"
+            ],
+            [
+              "모델·제공자·사용자별 호출을 통제하나",
+              "LiteLLM 같은 관문",
+              "경로와 키가 하나면 보류"
+            ],
+            [
+              "답이 나빠진 단계를 찾아야 하나",
+              "Langfuse 같은 추적",
+              "간단한 로그로 충분하면 보류"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 개인 프로토타입은 Ollama 하나와 앱 로그만으로 출발할 수 있다. 팀 서비스에서 자체 모델을 공유한다면 vLLM의 배포 조건을 먼저 보고, 여러 공급자와 권한 정책이 생기면 관문을 검토한다."
+        },
+        {
+          "t": "p",
+          "text": "독립 실전 자료도 실행·게이트웨이·관측성을 별도 층으로 다룬다. 여기서 더한 판단은 ‘모든 층을 조립하라’가 아니라 현재 병목이 없는 층은 생략하라는 순서다."
+        },
+        {
+          "t": "h",
+          "text": "근거와 한계: API 호환은 운영 호환이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "네 저장소의 README와 원 논문은 각 제품의 주 역할을 확인하는 출발점이다. OpenAI 호환 엔드포인트가 있어도 모델 품질, 토큰화, 동시성, 인증, 로그 보존 방식까지 같다는 보장은 없다."
+        },
+        {
+          "t": "p",
+          "text": "이 글은 소스 조사에 따른 구조 분석이다. 직접 설치하거나 부하 시험을 하지 않았다. 특정 하드웨어의 처리량, 총비용, 장애 복구 능력은 이 근거만으로 순위를 매길 수 없다."
+        },
+        {
+          "t": "p",
+          "text": "공식 문서가 바뀌거나 앱의 사용자 수·모델 공급자·데이터 정책이 달라지면 선택표를 다시 읽어야 한다. 먼저 해결할 문제를 모델 실행, 요청 통제, 실패 추적 중 하나로 명시하면 필요한 도구가 좁혀진다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "모델 관문과 추적 도입 전에 권한·비밀키 경계를 점검하는 기반 글이다.",
+      "role": "foundation"
+    },
+    {
+      "title": "Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준",
+      "url": "https://won0322.tistory.com/190",
+      "reason": "추적할 입력에 외부 문서가 들어올 때 신뢰 경계를 검토하는 다음 사례다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-09-18T13:21:00+09:00",
+    "scope": "Ollama·vLLM·LiteLLM·Langfuse 공식 공개 저장소, vLLM 원 논문, 독립 배포 사례",
+    "method": "각 공식 README에서 실행·관문·추적의 주 기능을 직접 확인하고 원 논문에서 vLLM의 메모리 관리 목적을 확인했다. 독립 실전 자료는 층 구분의 현장 사례로만 참고했다.",
+    "selection_rule": "금요일 100점표 92점, 공식·원출처 포함 6곳, 180일 이내 비중복, 새 역할 지도와 생략 기준을 요구했다.",
+    "limitations": "설치·처리량·비용을 직접 측정하지 않았다. 문서 설명과 현재 앱의 운영 조건을 대조하는 가이드이지 성능 순위가 아니다. vLLM 논문의 원래 결과를 현재 모든 모델·하드웨어에 일반화하지 않는다.",
+    "source_urls": [
+      "https://github.com/ollama/ollama",
+      "https://github.com/vllm-project/vllm",
+      "https://github.com/BerriAI/litellm",
+      "https://github.com/langfuse/langfuse",
+      "https://arxiv.org/abs/2309.06180",
+      "https://wz-it.com/en/knowledge/ki/open-source-llm-stack/"
+    ],
+    "source_count": 6,
+    "evidence_files": [
+      "visual_1"
+    ],
+    "problem_lane": "AI 앱 인프라 역할 선택",
+    "tool_brand": "Ollama·vLLM·LiteLLM·Langfuse"
+  }
+}

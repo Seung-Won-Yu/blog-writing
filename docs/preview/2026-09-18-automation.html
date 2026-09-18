@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">AI·개발 도구</span>
+              <h1>Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준</h1>
+              <span class="meta"><span class="date">2026-09-18 · 개발·AI 인사이트</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 9. 18 (금) · 약 8분</p>
+    <p class="digest-lead">AI 앱을 만들 때 Ollama, vLLM, LiteLLM, Langfuse를 한 줄에 놓고 ‘무엇이 더 좋나’ 묻기 쉽다. 먼저 답하면 넷은 같은 자리를 두고 겨루는 도구가 아니다. 모델을 어디서 실행할지, 여러 요청을 누가 통제할지, 실패를 어디서 추적할지로 나누면 필요한 도구만 고를 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-09-18-automation/로컬과-서버-선택-대표.webp" alt="AI 앱 요청을 로컬 모델과 공유 서버 중 어디서 처리할지 결정한다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>Ollama와 vLLM은 모델을 실행하는 층에 있고, LiteLLM은 요청을 여러 모델로 보내는 관문이며, Langfuse는 실행 경로를 추적한다.</li><li>먼저 모델을 직접 운영할지 정한 다음 공유 호출·권한 관리가 필요할 때 관문을, 실패 원인을 따라가야 할 때 추적을 붙인다.</li><li>이 글은 공식 문서의 역할을 분류한 판단표이며 성능·비용 우열을 직접 측정한 결과는 아니다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>모델 서빙</dt><dd>모델을 메모리에 올려 앱의 요청에 응답하도록 실행하는 일이다.</dd></div><div><dt>추론</dt><dd>학습된 모델이 새 입력에 대해 답을 생성하는 과정이다.</dd></div><div><dt>게이트웨이</dt><dd>앱과 여러 모델 API 사이에서 요청을 받아 라우팅하고 접근을 통제하는 관문이다.</dd></div><div><dt>트레이스</dt><dd>요청 하나가 모델 호출과 도구 사용을 거친 순서를 묶어 남긴 기록이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · Ollama · vLLM · LiteLLM · Langfuse · PagedAttention · 2026. 9. 18</p>
+    <h3>Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준</h3>
+    <p class="digest-blurb">AI 앱 도구 네 가지를 모델 실행·요청 관문·실행 추적의 책임으로 나누고, 필요한 층과 생략할 층을 고른다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">먼저 나눌 질문은 ‘어디서 실행하나’다</h4><p>Ollama와 vLLM은 모델을 직접 실행하는 층에 있다. LiteLLM은 모델 앞에서 요청을 받는 관문이고, Langfuse는 앱이 무엇을 했는지 기록한다. 네 이름은 같은 비교표에 있어도 답하는 질문이 다르다.</p><ul class="digest-bullet-list"><li>내 앱이 모델을 직접 운영할지 먼저 정한다.</li><li>로컬 실험이면 Ollama, 공유 추론이면 vLLM의 운영 조건을 확인한다.</li><li>여러 모델·사용자·키 관리가 필요할 때만 LiteLLM 관문을 검토한다.</li><li>실패 원인을 요청 단위로 따라가야 하면 Langfuse 추적을 검토한다.</li></ul><p>모델을 직접 운영하지 않고 외부 API 하나만 부르는 작은 앱이라면, 처음부터 로컬 추론 서버가 필요하지 않을 수도 있다. 반대로 자체 모델이 필요하다면 먼저 하드웨어, 동시 요청, 운영 인력을 확인해야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-18-automation/AI-모델-도구-역할-지도.webp" alt="AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다" width="1200" height="630" loading="lazy"><figcaption>AI 앱 도구는 모델 실행·요청 관문·실행 추적이라는 서로 다른 문제를 맡는다 관문과 추적은 필요가 생길 때 추가한다.</figcaption></figure><h4 class="digest-subheading">Ollama와 vLLM은 같은 층에서 무엇이 다른가</h4><p>Ollama의 공개 README는 모델을 내려받아 실행하고 로컬 REST API로 호출하는 흐름을 보여 준다. 개인 개발 환경이나 작은 실험에서 모델을 손에 잡히게 다루는 출발점이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-18-automation/Ollama-로컬-API-근거.webp" alt="Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다" width="1200" height="630" loading="lazy"><figcaption>Ollama의 공식 README는 로컬 모델 실행과 관리에 쓰는 REST API를 보여 준다 공식 예시의 localhost 주소는 로컬 모델 호출을 설명하며 이 글의 실행 결과는 아니다.</figcaption></figure><p>첫 선택은 기능 목록보다 운영 조건에서 갈린다. 개발자 한 명의 반복 실험과 사내 여러 서비스의 동시 호출은 필요한 메모리와 장애 대응이 다르다. 모델 파일을 보관할 위치, GPU를 누가 관리할지, 요청이 늘 때 누가 병목을 볼지도 함께 정해야 한다.</p><p>vLLM은 모델 서빙의 처리 효율에 초점을 둔다. 공식 저장소는 연속 배치, 메모리 관리, OpenAI 호환 API 서버를 설명한다. 원 논문의 PagedAttention 결과는 연구 당시 비교 조건의 처리량 결과다. 지금 내 GPU에서 같은 배수가 나온다는 뜻은 아니다.</p><div class="digest-table-wrap" role="region" aria-label="모델 실행 위치를 고르는 첫 질문" tabindex="0"><table class="digest-data-table"><caption>모델 실행 위치를 고르는 첫 질문</caption><thead><tr><th scope="col">상황</th><th scope="col">먼저 볼 도구</th><th scope="col">확인할 조건</th><th scope="col">아직 보류할 것</th></tr></thead><tbody><tr><td>개인 PC의 모델 실험</td><td>Ollama</td><td>모델 크기·메모리·로컬 API</td><td>공유 서버와 관문</td></tr><tr><td>여러 사용자의 자체 모델 호출</td><td>vLLM</td><td>GPU·동시 요청·배포 운영</td><td>논문 수치를 내 성능으로 가정</td></tr><tr><td>외부 제공 모델 API만 사용</td><td>둘 다 필수 아님</td><td>제공자 약관·키·비용</td><td>자체 추론 인프라</td></tr></tbody></table></div><p>Ollama와 vLLM의 실제 속도 우열은 이 표에서 판정하지 않는다. 동일 모델·하드웨어·입력 길이·동시 요청으로 측정해야 비교할 수 있다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">LiteLLM은 왜 모델 대신 관문에 서는가</h4><p>관문을 도입해도 공급자별 API 차이가 전부 사라지지는 않는다. 모델 이름과 파라미터, 스트리밍·도구 호출 지원을 앱의 실제 요청으로 확인해야 한다. 가상 키를 발급한다면 보관과 회수 책임도 새로 생긴다.</p><p>LiteLLM은 여러 모델 제공자를 같은 호출 경로 뒤에 두고 가상 키, 라우팅, 비용·사용량 통제를 다루는 게이트웨이다. 이미 응답하는 모델이나 제공자 API가 있어야 의미가 있다. 모델을 직접 추론하는 엔진의 대체품으로 고르면 문제가 어긋난다.</p><p>한 제공자와 한 앱만 연결했다면 코드의 기본 API 클라이언트로 충분할 수 있다. 모델 제공자가 늘거나 팀별 키·예산·실패 시 경로를 통제해야 할 때 게이트웨이의 운영 비용을 검토한다.</p><h4 class="digest-subheading">Langfuse는 어느 질문에 답하나</h4><p>요청은 성공했는데 답이 나빠졌다면 HTTP 상태 코드만으로 원인을 찾기 어렵다. Langfuse는 모델 호출, 검색, 에이전트 동작을 한 요청의 트레이스로 묶어 살펴보는 관측성 도구다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-09-18-automation/Langfuse-추적-근거.webp" alt="Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다" width="1200" height="630" loading="lazy"><figcaption>Langfuse 공식 README는 모델 호출과 앱의 다른 단계를 추적으로 연결한다 화면에 나온 기능 목록은 제품 설명이며 실제 앱의 추적 품질은 계측 범위에 달려 있다.</figcaption></figure><p>추적을 붙일 때는 한 번의 모델 호출만 기록해도 원인 분석이 끝나는지 확인한다. 검색 결과, 프롬프트 조립, 외부 도구 호출까지 이어진 앱이라면 각 단계의 관계가 남아야 실패 지점을 찾을 수 있다.</p><p>추적을 켜면 입력과 출력이 기록될 수 있다. 고객 문서나 민감한 프롬프트를 다루는 앱은 보존 기간, 비식별화, 접근 권한을 먼저 정해야 한다. 한두 번의 로컬 실험에는 간단한 로그가 더 나을 수 있다.</p><h4 class="digest-subheading">작은 앱에서 시작해도 네 도구를 모두 켜야 할까</h4><div class="digest-table-wrap" role="region" aria-label="병목에서 출발하는 도입 순서" tabindex="0"><table class="digest-data-table"><caption>병목에서 출발하는 도입 순서</caption><thead><tr><th scope="col">현재 질문</th><th scope="col">고를 층</th><th scope="col">생략해도 되는 때</th></tr></thead><tbody><tr><td>내 컴퓨터에서 모델을 돌릴 수 있나</td><td>Ollama 같은 로컬 실행</td><td>외부 API만 쓰면 생략</td></tr><tr><td>자체 모델에 동시 요청을 받나</td><td>vLLM 같은 서버 추론</td><td>공유 서비스가 없으면 생략</td></tr><tr><td>모델·제공자·사용자별 호출을 통제하나</td><td>LiteLLM 같은 관문</td><td>경로와 키가 하나면 보류</td></tr><tr><td>답이 나빠진 단계를 찾아야 하나</td><td>Langfuse 같은 추적</td><td>간단한 로그로 충분하면 보류</td></tr></tbody></table></div><p>예를 들어 개인 프로토타입은 Ollama 하나와 앱 로그만으로 출발할 수 있다. 팀 서비스에서 자체 모델을 공유한다면 vLLM의 배포 조건을 먼저 보고, 여러 공급자와 권한 정책이 생기면 관문을 검토한다.</p><p>독립 실전 자료도 실행·게이트웨이·관측성을 별도 층으로 다룬다. 여기서 더한 판단은 ‘모든 층을 조립하라’가 아니라 현재 병목이 없는 층은 생략하라는 순서다.</p><h4 class="digest-subheading">근거와 한계: API 호환은 운영 호환이 아니다</h4><p>네 저장소의 README와 원 논문은 각 제품의 주 역할을 확인하는 출발점이다. OpenAI 호환 엔드포인트가 있어도 모델 품질, 토큰화, 동시성, 인증, 로그 보존 방식까지 같다는 보장은 없다.</p><p>이 글은 소스 조사에 따른 구조 분석이다. 직접 설치하거나 부하 시험을 하지 않았다. 특정 하드웨어의 처리량, 총비용, 장애 복구 능력은 이 근거만으로 순위를 매길 수 없다.</p><p>공식 문서가 바뀌거나 앱의 사용자 수·모델 공급자·데이터 정책이 달라지면 선택표를 다시 읽어야 한다. 먼저 해결할 문제를 모델 실행, 요청 통제, 실패 추적 중 하나로 명시하면 필요한 도구가 좁혀진다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">Ollama official repository</a><span>공식</span></li><li><a href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener">vLLM official repository</a><span>공식</span></li><li><a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener">LiteLLM official repository</a><span>공식</span></li><li><a href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener">Langfuse official repository</a><span>공식</span></li><li><a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener">PagedAttention original paper</a><span>연구</span></li><li><a href="https://wz-it.com/en/knowledge/ki/open-source-llm-stack/" target="_blank" rel="noopener">Independent deployment stack analysis</a><span>독립 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/198"><b>AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지</b><span>모델 관문과 추적 도입 전에 권한·비밀키 경계를 점검하는 기반 글이다.</span></a></li><li><a href="https://won0322.tistory.com/190"><b>Word Copilot의 숨은 명령 위험을 막는 4가지 문서 검토 기준</b><span>추적할 입력에 외부 문서가 들어올 때 신뢰 경계를 검토하는 다음 사례다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">네 도구를 한 번에 설치할 이유는 없다. 우선 모델을 직접 실행할지와 예상 사용자를 정한다. 호출 경로가 늘어나면 관문을 붙이고, 결과를 설명할 수 없을 때 추적을 더한다. 운영 부담도 각 층마다 함께 늘어난다. 지금 만드는 AI 앱에서 먼저 해결할 문제가 모델 실행, 요청 통제, 실패 추적 중 무엇인지 한 문장으로 적고 그 층의 공식 문서부터 읽는다.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>
