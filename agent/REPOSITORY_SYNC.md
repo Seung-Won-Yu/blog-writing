@@ -6,6 +6,17 @@
 
 ## 시작
 
+### 개인·회사 GitHub 계정 분리 (2026-09-22)
+
+이 Mac의 블로그 저장소는 로컬 credential 설정으로 `scripts/blog-credential`을
+사용한다. HTTPS의 정확한 `Seung-Won-Yu/blog-writing` 경로에만 저장된 개인
+계정 자격 증명을 제공하며 `credential.useHttpPath=true`가 필요하다.
+전역 `gh auth switch`는 하지 않는다. 회사 계정은 전역 활성 상태로 유지한다.
+토큰은 파일·로그·커밋에 기록하지 않는다. 개인 계정 로그인이 만료되면
+회사 계정으로 대체하지 말고 BLOCKED_AUTH로 보고한다.
+기존 예약의 repository_sync push 명령은 이 로컬 설정을 그대로 사용한다.
+새 clone/다른 Mac에는 로컬 설정이 복사되지 않으므로 별도로 설정·검증한다.
+
 ### macOS 실행 도구 (2026-09-16)
 
 저장소 루트에서 Git·Python 명령은 `sh scripts/blog-env git ...`,
