@@ -1,0 +1,22 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">소파에서 영상을 보려고 스마트폰을 옆으로 돌리면 화면도 잠시 뒤 가로로 바뀐다. 카메라가 방을 보는 것도, 안에 작은 수평계가 굴러다니는 것도 아니다. 휴대폰은 가속도 센서가 읽은 중력 방향으로 어느 옆면이 아래인지 판단하고 화면을 다시 그린다. 그런데 같은 휴대폰도 책상에 평평하게 놓으면 왜 바로 돌지 않을까?</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/스마트폰-자동회전-대표.webp" alt="스마트폰은 가속도 센서가 읽은 중력 방향을 기준으로 세로와 가로 화면을 선택한다. 소파에서 자동 회전을 확인하는 하루" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">궁금한 IT 원리</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>스마트폰은 가속도 센서가 읽은 중력 방향으로 어느 옆면이 아래인지 판단한다.</li><li>자동 회전 잠금을 켰다 끄고 천천히 90도 돌리면 센서와 사용자 설정의 역할을 1분 안에 나눠 볼 수 있다.</li><li>평평한 자세·빠른 흔들림·앱의 방향 고정에서는 센서가 정상이어도 화면 전환이 늦거나 일어나지 않을 수 있다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>가속도 센서</dt><dd>휴대폰의 세 방향에 걸리는 움직임과 중력의 효과를 전기 신호로 읽는 센서다.</dd></div><div><dt>MEMS</dt><dd>칩 안에 아주 작은 기계 구조와 전자 회로를 함께 만드는 기술이다.</dd></div><div><dt>세 축</dt><dd>휴대폰의 좌우·위아래·앞뒤 방향을 각각 숫자로 나타내는 기준이다.</dd></div><div><dt>센서 융합</dt><dd>가속도계와 자이로처럼 서로 다른 센서 값을 합쳐 자세를 더 안정적으로 추정하는 방법이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-blurb">가속도 센서는 세 축에서 중력과 움직임을 읽고, 운영체제는 안정된 아래 방향과 사용자·앱 설정을 함께 고려해 화면을 세로 또는 가로로 다시 배치한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">휴대폰은 중력을 기준으로 아래쪽을 찾는다</h4><p>스마트폰의 가속도 센서는 중력이 기기에서 어느 쪽으로 걸리는지 읽는다. 운영체제는 그 값으로 아래쪽을 판단해 화면을 세로 또는 가로로 다시 배치한다. 카메라로 방을 보거나 휴대폰 안에서 무언가가 크게 굴러가는 방식은 아니다.</p><ul class="digest-bullet-list"><li>자동 회전이 지원되는 영상이나 사진 화면을 연다.</li><li>자동 회전 잠금을 켠 뒤 휴대폰을 천천히 90도 돌려 화면이 유지되는지 본다.</li><li>잠금을 끄고 같은 방향으로 다시 돌려 화면이 바뀌는지 본다.</li><li>책상에 거의 평평하게 놓았을 때는 판정이 늦거나 유지될 수 있음을 따로 기록한다.</li></ul><figure class="digest-content-figure digest-toon-panel" data-toon-panel="1"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/자동회전-일상질문-말풍선.webp" alt="스마트폰 자동 회전으로 세로에서 가로 화면이 다시 배치되는 하루 대사: 하루: 내가 돌린 걸 어떻게 알았지? 대사: 하루: 내가 돌린 걸 어떻게 알았지?" width="1200" height="630" loading="lazy"><figcaption>스마트폰을 세로에서 가로로 돌리면 중력 방향 판정 뒤 화면 내용이 새 방향에 맞게 다시 배치된다. 하루는 소파에서 같은 장면을 발견한다.</figcaption></figure><h4 class="digest-subheading">칩 속 작은 추가 세 방향의 힘을 숫자로 바꾼다</h4><p>가속도 센서는 칩 안에 만든 아주 작은 기계 구조다. 가운데의 미세한 질량은 용수철 같은 구조에 매달려 있고, 휴대폰이 움직이거나 중력이 작용하면 한쪽으로 아주 조금 치우친다. 양쪽 고정판과의 간격이 달라지면 전기를 저장하는 정도가 바뀌고 회로가 그 차이를 가속도 값으로 바꾼다.</p><p>이 구조를 좌우·위아래·앞뒤 세 방향으로 두면 각 축의 값을 따로 얻을 수 있다. Android 문서는 가만히 놓인 기기에서도 가속도계가 약 9.81m/s² 크기의 중력 효과를 읽는다고 설명한다. Apple도 iPhone과 iPad가 가속도계를 이용해 지면에 대한 방향을 판단하고 세로·가로 변화를 감지한다고 밝힌다.</p><figure class="digest-content-figure digest-toon-panel" data-toon-panel="2"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/가속도센서-중력방향-말풍선.webp" alt="가속도 센서 안의 미세 질량이 중력 쪽으로 치우치는 단면을 가리키는 하루 대사: 하루: 작은 추가 아래쪽을 알려줘요! 대사: 하루: 작은 추가 아래쪽을 알려줘요!" width="1200" height="630" loading="lazy"><figcaption>가속도 센서 안의 미세한 질량이 중력 쪽으로 치우치며 세 축의 전기 신호가 달라져 아래 방향을 알려 준다.</figcaption></figure><p>운영체제는 한 번의 센서 값만 보고 화면을 뒤집지 않는다. 손을 돌리는 동안 섞인 흔들림이 가라앉고 아래 방향이 잠시 안정되면 그때 화면 전환을 결정한다.</p></div>
+  </div>
+</section>
+</article>

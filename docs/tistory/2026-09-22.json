@@ -1,0 +1,107 @@
+{
+  "title": "스마트폰 화면 자동 회전은 어떻게 방향을 알아챌까? 가속도 센서의 원리",
+  "title_candidates": [
+    "스마트폰 화면 자동 회전은 어떻게 방향을 알아챌까? 가속도 센서의 원리",
+    "스마트폰 가속도 센서가 중력 방향으로 화면 회전을 판단하는 원리",
+    "소파에서 스마트폰을 옆으로 돌렸는데 화면이 가로로 바뀌는 순간을 확인하는 하루: 카메라가 화면을 보는 것도 아닌데 휴대폰…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-22",
+  "publish_date": "2026-09-22",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-22T09:00:00+09:00",
+  "tags": [
+    "스마트폰 자동 회전",
+    "가속도 센서",
+    "중력 방향",
+    "화면 방향",
+    "MEMS 센서",
+    "세로 가로 전환",
+    "1분 확인"
+  ],
+  "meta_description": "소파에서 영상을 보려고 스마트폰을 옆으로 돌리면 화면도 잠시 뒤 가로로 바뀐다. 카메라가 방을 보는 것도, 안에 작은 수평계가 굴러다니는 것도 아니다. 휴대폰은 가속도 센서가 읽은 중력 방향으로 어느… 가속도 센서는 세 축에서 중력과 움직임을 읽고, 운영체제는 안정된 아래 방향과 사용…",
+  "key_summary": [
+    "1. 스마트폰 가속도 센서가 중력 방향으로 화면 회전을 판단하는 원리",
+    "직접 얻는 결과: 가속도 센서가 중력 방향을 세 축으로 읽는 원리, 운영체제가 흔들림을 걸러 화면을 다시 그리는 과정, 평평한 자세와 앱 설정이라는 실패 경계를 이해한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 스마트폰 화면 자동 회전은 어떻게 방향을 알아챌까? 가속도 센서의 원리"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-22.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-22.html",
+  "before_ad_html": "docs/tistory/2026-09-22-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-22-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-22-adfit.html",
+  "source_sha256": "3c677a798f140b802c62886351b2655f29da99d29a1d6a8778ef25d0fdf4bf61",
+  "html_sha256": "c0c37949a119d79db79db39c2c15c1bcd351a892356393b8ad44796469505342",
+  "adfit_sha256": "ebaf7a6f70fbd5a7f7f6dd751c0d6c316dcc54ee75aa5495ab76000a8d630596",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/스마트폰-자동회전-대표.webp",
+      "path": "docs/tistory/assets/2026-09-22/스마트폰-자동회전-대표.webp",
+      "original_url": "",
+      "alt": "스마트폰은 가속도 센서가 읽은 중력 방향을 기준으로 세로와 가로 화면을 선택한다. 소파에서 자동 회전을 확인하는 하루",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/자동회전-일상질문-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-22/자동회전-일상질문-말풍선.webp",
+      "original_url": "",
+      "alt": "스마트폰 자동 회전으로 세로에서 가로 화면이 다시 배치되는 하루 대사: 하루: 내가 돌린 걸 어떻게 알았지?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/가속도센서-중력방향-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-22/가속도센서-중력방향-말풍선.webp",
+      "original_url": "",
+      "alt": "가속도 센서 안의 미세 질량이 중력 쪽으로 치우치는 단면을 가리키는 하루 대사: 하루: 작은 추가 아래쪽을 알려줘요!",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/회전잠금-1분확인-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-22/회전잠금-1분확인-말풍선.webp",
+      "original_url": "",
+      "alt": "자동 회전 잠금을 끄고 스마트폰을 90도 돌려 확인하는 하루 대사: 하루: 잠금을 끄고 다시 돌려 볼게요!",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_4",
+      "title": "본문 이해 이미지 4",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/평평한자세-예외경계-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-22/평평한자세-예외경계-말풍선.webp",
+      "original_url": "",
+      "alt": "평평한 스마트폰은 자동 회전에서 어느 옆면이 아래인지 모호함을 설명하는 하루 대사: 하루: 평평하면 어느 옆이 아래인지 애매해요.",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

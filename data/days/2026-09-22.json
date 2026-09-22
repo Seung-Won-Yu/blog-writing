@@ -1,0 +1,746 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-22",
+  "publish_date": "2026-09-22",
+  "date_label": "2026. 9. 22",
+  "weekday": "화",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-22T09:00:00+09:00",
+  "primary_query": "스마트폰 화면 자동 회전 원리",
+  "tags": [
+    "스마트폰 자동 회전",
+    "가속도 센서",
+    "중력 방향",
+    "화면 방향",
+    "MEMS 센서",
+    "세로 가로 전환",
+    "1분 확인"
+  ],
+  "visual": {
+    "subject": "소파에서 스마트폰을 옆으로 돌렸는데 화면이 가로로 바뀌는 순간을 확인하는 하루",
+    "hook": "카메라가 화면을 보는 것도 아닌데 휴대폰은 어느 쪽이 아래인지 어떻게 알까?",
+    "motif": "스마트폰, 중력 화살표, 세 축 센서, 미세 추, 자동 회전 잠금",
+    "weekday_profile": "everyday_mechanism",
+    "subject_terms": [
+      "자동 회전",
+      "가속도 센서",
+      "중력"
+    ],
+    "toon": {
+      "format": "it_explainer_comic",
+      "series": "하루의 IT 원리툰",
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_name": "하루",
+      "character_anchor": "same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock",
+      "reference_asset": "editorial/curiosity/characters/haru-character-sheet-v1.png",
+      "reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "panel_count": 4,
+      "dialogue_mode": "image_bubbles"
+    },
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "스마트폰은 가속도 센서가 읽은 중력 방향을 기준으로 세로와 가로 화면을 선택한다",
+      "label": "스마트폰을 옆으로 돌리자 화면이 가로로 바뀌는 순간",
+      "scene_label": [
+        "휴대폰 회전",
+        "화면 다시 그리기"
+      ],
+      "steps": "세 축에서 중력 감지 → 아래 방향 판정 → 화면을 세로 또는 가로로 다시 그림",
+      "curiosity_hook": "휴대폰은 카메라 없이 어느 쪽이 바닥인지 어떻게 알아낼까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "living_room_gravity_orientation_discovery",
+      "composition_type": "over_shoulder_rotating_phone",
+      "palette_family": "warm_coral_deep_green_ivory",
+      "render_family": "isometric_model",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "옆으로 돌아간 스마트폰과 가로로 다시 그려지는 영상 화면",
+      "texture_cue": "패브릭 소파, 무광 휴대폰, 잉크 선과 종이 질감",
+      "authenticity_cue": "소파에 기대 휴대폰 영상을 보다 손목을 돌리는 일상 장면",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "generation_prompt": "Use case: illustration-story. Asset type: Korean IT curiosity article cover. Asset intent: editorial-scene. Primary request: one clear living-room scene where Haru rotates an unbranded smartphone from portrait toward landscape and the abstract video composition visibly reflows to landscape; a subtle downward gravity cue and a tiny cutaway hint of a suspended sensor mass make the surprising result legible without labels. Composition/framing: over-shoulder close three-quarter view, tilted phone fills about 55 percent, Haru's face, green-rim timer and hands visible, asymmetric single scene, not a collage or infographic. Palette: warm coral room light, deep green, warm ivory, muted sage. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Style/medium: sophisticated 2D editorial webtoon for adult general readers, confident hand-inked outlines, matte flat color, restrained paper texture. Landscape blog art, compose for 1200x630 crop. Preserve exact character identity and outfit from reference sheet. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no logos; no fake phone UI; no dashboard; no title slide.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "teaching_role": "everyday_scene",
+        "teaching_claim": "스마트폰을 세로에서 가로로 돌리면 중력 방향 판정 뒤 화면 내용이 새 방향에 맞게 다시 배치된다",
+        "label": "소파에서 스마트폰 자동 회전으로 영상 화면이 가로로 바뀌는 질문",
+        "scene_label": [
+          "세로 화면",
+          "손목 회전",
+          "가로 화면"
+        ],
+        "steps": "세로로 보기 → 휴대폰을 옆으로 돌림 → 화면이 가로로 다시 배치됨",
+        "curiosity_hook": "휴대폰은 내 손이 어느 쪽으로 돌았는지 어떻게 알까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "내가 돌린 걸 어떻게 알았지?"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 1,
+        "toon_beat": "everyday_question",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1 of 4. Scene: Haru reclines safely on a sofa and rotates an unbranded smartphone from portrait to landscape; an abstract video rectangle reflows to the new orientation. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit from reference sheet. Sophisticated adult Korean editorial webtoon, hand-inked outlines, matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"내가 돌린 걸 어떻게 알았지?\" Bold crisp Korean equivalent to at least 48px on 1200px, generous padding, readable at 390px. Keep phone, hands, face and timer visible. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or branded UI."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "architecture",
+        "teaching_role": "mechanism_cutaway",
+        "teaching_claim": "가속도 센서 안의 미세한 질량이 중력 쪽으로 치우치며 세 축의 전기 신호가 달라져 아래 방향을 알려 준다",
+        "label": "가속도 센서 속 미세 추와 세 축 중력 방향 단면",
+        "scene_label": [
+          "미세 질량",
+          "정전용량 변화",
+          "세 축 신호"
+        ],
+        "steps": "중력이 미세 질량을 당김 → 양쪽 간격과 전기값 변화 → 세 축 값으로 아래 방향 계산",
+        "curiosity_hook": "움직이지 않는 휴대폰도 중력을 왜 가속도로 읽을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "작은 추가 아래쪽을 알려줘요!"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 2,
+        "toon_beat": "hidden_mechanism",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 2 of 4. Scene: a large accurate but easy cutaway of a phone accelerometer beside Haru: one central microscopic proof mass suspended by springs between fixed plates, visibly shifted toward the downward gravity arrow; three clean axis cues around the phone, no equations or tiny labels. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"작은 추가 아래쪽을 알려줘요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, formulas, logos, watermark, dashboard or card grid."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "evidence",
+        "teaching_role": "one_minute_check",
+        "teaching_claim": "자동 회전 잠금을 켰다 끄고 같은 휴대폰을 천천히 90도 돌리면 센서 판정과 사용자 설정의 역할을 나눠 확인할 수 있다",
+        "label": "자동 회전 잠금 전후를 같은 자세에서 비교하는 1분 확인",
+        "scene_label": [
+          "잠금 켜기",
+          "90도 회전",
+          "잠금 끄기"
+        ],
+        "steps": "자동 회전 잠금 켬 → 90도 돌려 화면 유지 확인 → 잠금을 끄고 다시 돌려 전환 확인",
+        "curiosity_hook": "센서가 방향을 알아도 화면이 안 도는 때는 왜 생길까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "잠금을 끄고 다시 돌려 볼게요!"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 3,
+        "toon_beat": "one_minute_check",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3 of 4. Scene: one safe tabletop one-minute check shown as a single continuous action, not cards: Haru first sees the phone remain portrait with a simple padlock-rotation symbol active, then switches it off and gently rotates the same phone 90 degrees so the abstract content becomes landscape. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"잠금을 끄고 다시 돌려 볼게요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or fake branded UI."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "teaching_role": "misconception_boundary",
+        "teaching_claim": "휴대폰을 책상에 평평하게 눕히거나 급하게 흔들면 어느 옆면이 아래인지 모호해 자동 회전이 늦거나 보류될 수 있다",
+        "label": "평평한 책상과 빠른 흔들림에서 방향 판정이 모호한 경계",
+        "scene_label": [
+          "평평하게 놓임",
+          "빠른 움직임",
+          "회전 보류"
+        ],
+        "steps": "중력이 화면 앞뒤 축에 몰림 또는 움직임 신호가 섞임 → 옆면 기준 모호 → 화면 전환을 늦추거나 유지",
+        "curiosity_hook": "센서가 있는데도 눕힌 휴대폰은 왜 바로 돌지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "평평하면 어느 옆이 아래인지 애매해요."
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 4,
+        "toon_beat": "exception_boundary",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "condition": "휴대폰이 책상에 거의 평평하거나 빠른 움직임이 중력 신호와 섞이거나 앱이 특정 방향을 고정한 경우",
+        "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 4 of 4. Scene: exception boundary at a table; an unbranded phone lies nearly flat so the downward gravity arrow points through the screen instead of toward a clear side edge, while a faint second ghosted hand motion shows rapid shaking as a separate ambiguous cue. Haru waits and observes the unchanged portrait content. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"평평하면 어느 옆이 아래인지 애매해요.\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or dashboard."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "스마트폰 화면 자동 회전은 어떻게 방향을 알아챌까? 가속도 센서의 원리",
+    "opening": "소파에서 영상을 보려고 스마트폰을 옆으로 돌리면 화면도 잠시 뒤 가로로 바뀐다. 카메라가 방을 보는 것도, 안에 작은 수평계가 굴러다니는 것도 아니다. 휴대폰은 가속도 센서가 읽은 중력 방향으로 어느 옆면이 아래인지 판단하고 화면을 다시 그린다. 그런데 같은 휴대폰도 책상에 평평하게 놓으면 왜 바로 돌지 않을까?",
+    "closing": "자동 회전은 휴대폰 안의 미세 질량이 중력 쪽으로 치우치며 만든 세 축 신호에서 시작한다. 운영체제는 잠깐의 흔들림을 거르고 어느 옆면이 아래인지 충분히 분명할 때만 화면 방향을 바꾼다. 자동 회전 잠금을 켰다 끄고 천천히 90도 돌렸을 때 결과가 달라지며, 평평하게 놓으면 판정이 모호할 수 있다고 설명하면 확인이 끝났다.",
+    "action": "자동 회전이 지원되는 영상이나 사진 화면에서 회전 잠금을 켠 채 90도 돌린 결과와 잠금을 끈 뒤 같은 동작의 결과를 1분 동안 비교한다.",
+    "audience_problem": "스마트폰 화면이 뜻대로 돌지 않을 때 센서 고장, 자동 회전 잠금, 앱의 방향 고정을 구분하지 못해 같은 동작만 반복하기 쉽다.",
+    "reader_takeaway": "가속도 센서가 중력 방향을 세 축으로 읽는 원리, 운영체제가 흔들림을 걸러 화면을 다시 그리는 과정, 평평한 자세와 앱 설정이라는 실패 경계를 이해한다.",
+    "why_now": "영상·사진·지도에서 자동 회전을 매일 쓰지만, 가속도 센서가 움직임뿐 아니라 정지 상태의 중력도 읽는다는 핵심은 잘 드러나지 않는다.",
+    "topic_key": "smartphone-auto-rotate-accelerometer-gravity-orientation",
+    "reader_question": "스마트폰은 어느 쪽이 아래인지 어떻게 알아서 세로 화면과 가로 화면을 자동으로 바꿀까?",
+    "entities": [
+      "가속도 센서",
+      "중력",
+      "MEMS",
+      "자동 회전",
+      "센서 융합",
+      "Haru"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "research_interpretation",
+    "weekly_lane": "curiosity_mechanism",
+    "selection_evaluation": {
+      "policy": "curiosity_mechanism-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 8,
+        "everyday_scene": 15,
+        "surprising_mechanism": 14,
+        "one_minute_check": 9
+      },
+      "total": 96,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    },
+    "reader_hook": {
+      "scene": "소파에서 영상을 보려고 스마트폰을 옆으로 돌리자 화면도 잠시 뒤 세로에서 가로로 바뀐다.",
+      "stakes": "화면이 돌지 않는 원인을 센서 고장으로만 생각하면 자동 회전 잠금이나 앱의 방향 고정을 놓칠 수 있다.",
+      "payoff": "중력을 읽는 미세 센서의 원리를 네 컷으로 이해하고 회전 잠금 전후를 1분 안에 비교한다.",
+      "open_question": "같은 센서가 있는데도 책상에 평평하게 둔 휴대폰은 왜 방향을 바로 바꾸지 않을까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "휴대폰은 중력을 기준으로 아래쪽을 찾는다",
+      "immediate_answer": "스마트폰의 가속도 센서는 중력이 기기에서 어느 쪽으로 걸리는지 읽는다. 운영체제는 그 값으로 아래쪽을 판단해 화면을 세로 또는 가로로 다시 배치한다.",
+      "action_steps": [
+        "자동 회전이 지원되는 영상이나 사진 화면을 연다.",
+        "자동 회전 잠금을 켠 뒤 휴대폰을 천천히 90도 돌려 화면이 유지되는지 본다.",
+        "잠금을 끄고 같은 방향으로 다시 돌려 화면이 바뀌는지 본다.",
+        "책상에 거의 평평하게 놓았을 때는 판정이 늦거나 유지될 수 있음을 따로 기록한다."
+      ],
+      "completion_check": "자동 회전 잠금을 켰다 끄고 천천히 90도 돌렸을 때 결과가 달라지며, 평평하게 놓으면 판정이 모호할 수 있다고 설명하면 확인이 끝났다.",
+      "advanced_heading": "더 깊게 보면 가속도계와 자이로가 서로의 약점을 메운다"
+    },
+    "revisit": {
+      "quick_answer": "가속도 센서가 세 축에서 읽은 중력 방향으로 아래쪽을 찾고, 운영체제가 충분히 안정된 방향 변화만 골라 화면을 다시 그린다.",
+      "reuse_case": "영상·사진·지도 화면이 자동으로 돌지 않을 때 회전 잠금, 앱 지원, 자세, 센서 문제를 순서대로 구분할 때 쓴다.",
+      "failure_case": "휴대폰을 평평하게 놓거나 급히 흔들면 방향이 모호하고, 앱이 세로·가로를 고정했거나 자동 회전 잠금이 켜져 있으면 센서가 방향을 알아도 화면은 돌지 않는다.",
+      "artifact_type": "experiment_fixture",
+      "update_triggers": [
+        "Android·iOS 화면 방향 정책 변경",
+        "모바일 센서 융합 API 변경",
+        "접이식 기기의 자세 판정 방식 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "스마트폰 화면 자동 회전",
+      "reader_need": "휴대폰을 옆으로 돌렸을 때 화면이 바뀌는 이유와 안 바뀌는 조건을 알고 싶다.",
+      "answer_format": "하루의 네 컷 원리툰, 회전 잠금 1분 확인, 센서·설정·앱 경계표로 보여 준다."
+    },
+    "original_value": {
+      "durable_question": "스마트폰은 어느 쪽이 아래인지 무엇으로 판단하며, 센서가 정상이어도 화면이 돌지 않는 경우는 왜 생길까?",
+      "source_gap": "공식 문서는 센서 값과 API를 정확히 설명하지만 일반 독자가 미세 질량의 움직임부터 화면 재배치, 회전 잠금의 경계까지 한 흐름으로 보기 어렵다.",
+      "contribution": "미세 질량→세 축 중력값→안정 판정→화면 재배치를 네 컷으로 연결하고, 회전 잠금 전후를 비교해 센서와 설정을 분리하는 확인법을 제시한다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "독자는 자동 회전이 안 될 때 무작정 흔들지 않고 설정·앱·자세·센서 순서로 원인을 좁힐 수 있다.",
+      "limits": "제조사와 운영체제는 판정 임계값과 지연을 공개하지 않을 수 있고 앱이 특정 방향을 강제하면 기기 방향과 화면 방향이 다를 수 있다."
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "스마트폰은 가속도 센서가 읽은 중력 방향으로 어느 옆면이 아래인지 판단한다.",
+      "자동 회전 잠금을 켰다 끄고 천천히 90도 돌리면 센서와 사용자 설정의 역할을 1분 안에 나눠 볼 수 있다.",
+      "평평한 자세·빠른 흔들림·앱의 방향 고정에서는 센서가 정상이어도 화면 전환이 늦거나 일어나지 않을 수 있다."
+    ],
+    "glossary": [
+      {
+        "term": "가속도 센서",
+        "meaning": "휴대폰의 세 방향에 걸리는 움직임과 중력의 효과를 전기 신호로 읽는 센서다."
+      },
+      {
+        "term": "MEMS",
+        "meaning": "칩 안에 아주 작은 기계 구조와 전자 회로를 함께 만드는 기술이다."
+      },
+      {
+        "term": "세 축",
+        "meaning": "휴대폰의 좌우·위아래·앞뒤 방향을 각각 숫자로 나타내는 기준이다."
+      },
+      {
+        "term": "센서 융합",
+        "meaning": "가속도계와 자이로처럼 서로 다른 센서 값을 합쳐 자세를 더 안정적으로 추정하는 방법이다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "스마트폰은 가속도 센서가 읽은 중력 방향을 기준으로 세로와 가로 화면을 선택한다. 소파에서 자동 회전을 확인하는 하루",
+      "path": "docs/tistory/assets/2026-09-22/스마트폰-자동회전-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/스마트폰-자동회전-대표.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Korean IT curiosity article cover. Asset intent: editorial-scene. Primary request: one clear isometric living-room scene where Haru rotates an unbranded smartphone from portrait toward landscape and the abstract video composition visibly reflows to landscape; a subtle downward gravity cue and a tiny cutaway hint of a suspended sensor mass make the surprising result legible without labels. Composition: over-shoulder close three-quarter view, tilted phone fills about 55 percent, Haru's face, green-rim timer and hands visible, asymmetric single scene, not a collage or infographic. Palette: warm coral room light, deep green, warm ivory, muted sage. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Sophisticated adult editorial webtoon with subtle isometric room geometry, hand-inked outlines, matte color, restrained paper texture. Wide landscape composition for 1200x630 crop. Preserve exact character identity and outfit from reference sheet. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. Constraints: no text; no letters; no labels; no speech bubbles; no watermark; no logos; no fake phone UI; no dashboard; no title slide.",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "cover_kind": "editorial_scene",
+      "art_direction": "living_room_gravity_orientation_discovery",
+      "composition_type": "over_shoulder_rotating_phone",
+      "palette_family": "warm_coral_deep_green_ivory",
+      "render_family": "isometric_model",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "옆으로 돌아간 스마트폰과 가로로 다시 그려지는 영상 화면",
+      "texture_cue": "패브릭 소파, 무광 휴대폰, 잉크 선과 종이 질감",
+      "authenticity_cue": "소파에 기대 휴대폰 영상을 보다 손목을 돌리는 일상 장면",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "스마트폰은 가속도 센서가 읽은 중력 방향을 기준으로 세로와 가로 화면을 선택한다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 150522,
+      "quality": 82,
+      "sha256": "0b853a97bf099b91220c5b8b7a02cf2c4f62c530be5018569392f8aa0291aeea"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "스마트폰 자동 회전으로 세로에서 가로 화면이 다시 배치되는 하루 대사: 하루: 내가 돌린 걸 어떻게 알았지?",
+      "path": "docs/tistory/assets/2026-09-22/자동회전-일상질문-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/자동회전-일상질문-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 1 of 4. Scene: Haru reclines safely on a sofa and rotates an unbranded smartphone from portrait to landscape; an abstract video rectangle reflows to the new orientation. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit from reference sheet. Sophisticated adult Korean editorial webtoon, hand-inked outlines, matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"내가 돌린 걸 어떻게 알았지?\" Bold crisp Korean equivalent to at least 48px on 1200px, generous padding, readable at 390px. Keep phone, hands, face and timer visible. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or branded UI.",
+      "korean_labels": [
+        "내가 돌린 걸 어떻게 알았지?"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "everyday_scene",
+      "teaching_claim": "스마트폰을 세로에서 가로로 돌리면 중력 방향 판정 뒤 화면 내용이 새 방향에 맞게 다시 배치된다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 128612,
+      "quality": 82,
+      "sha256": "4c6edd7b878cbf97385945edfee75fc707f65dc2015fa9c2bc5eabab04945068"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "가속도 센서 안의 미세 질량이 중력 쪽으로 치우치는 단면을 가리키는 하루 대사: 하루: 작은 추가 아래쪽을 알려줘요!",
+      "path": "docs/tistory/assets/2026-09-22/가속도센서-중력방향-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/가속도센서-중력방향-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 2 of 4. Scene: a large accurate but easy cutaway of a phone accelerometer beside Haru: one central microscopic proof mass suspended by springs between fixed plates, visibly shifted toward the downward gravity arrow; three clean axis cues around the phone, no equations or tiny labels. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"작은 추가 아래쪽을 알려줘요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, formulas, logos, watermark, dashboard or card grid.",
+      "korean_labels": [
+        "작은 추가 아래쪽을 알려줘요!"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "mechanism_cutaway",
+      "teaching_claim": "가속도 센서 안의 미세한 질량이 중력 쪽으로 치우치며 세 축의 전기 신호가 달라져 아래 방향을 알려 준다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 109040,
+      "quality": 82,
+      "sha256": "e77ccc1ca61874ab7611c67a041ae6ea06881bc3b3e85d3b4f53c50e6839ad6d"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "자동 회전 잠금을 끄고 스마트폰을 90도 돌려 확인하는 하루 대사: 하루: 잠금을 끄고 다시 돌려 볼게요!",
+      "path": "docs/tistory/assets/2026-09-22/회전잠금-1분확인-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/회전잠금-1분확인-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 3 of 4. Scene: one safe tabletop one-minute check shown as a single continuous action, not cards: Haru first sees the phone remain portrait with a simple padlock-rotation symbol active, then switches it off and gently rotates the same phone 90 degrees so the abstract content becomes landscape. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"잠금을 끄고 다시 돌려 볼게요!\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or fake branded UI.",
+      "korean_labels": [
+        "잠금을 끄고 다시 돌려 볼게요!"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "one_minute_check",
+      "teaching_claim": "자동 회전 잠금을 켰다 끄고 같은 휴대폰을 천천히 90도 돌리면 센서 판정과 사용자 설정의 역할을 나눠 확인할 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 116906,
+      "quality": 82,
+      "sha256": "ed3167deaa9695b32eca5ad1fa25e9a2cc4cca12852b64d2a3d56c4ff33d117d"
+    },
+    "visual_4": {
+      "origin": "imagegen",
+      "alt": "평평한 스마트폰은 자동 회전에서 어느 옆면이 아래인지 모호함을 설명하는 하루 대사: 하루: 평평하면 어느 옆이 아래인지 애매해요.",
+      "path": "docs/tistory/assets/2026-09-22/평평한자세-예외경계-말풍선.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-22/평평한자세-예외경계-말풍선.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset type: Haru IT explainer comic panel 4 of 4. Scene: exception boundary at a table; an unbranded phone lies nearly flat so the downward gravity arrow points through the screen instead of toward a clear side edge, while a faint second ghosted hand motion shows rapid shaking as a separate ambiguous cue. Haru waits and observes the unchanged portrait content. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve exact identity and outfit. Sophisticated adult Korean editorial webtoon, hand-inked matte flat color, landscape 1200x630. Add one large white speech balloon, tail toward Haru. Exact Korean text only: \"평평하면 어느 옆이 아래인지 애매해요.\" Bold crisp Korean at least 48px equivalent, readable at 390px. Topic terms: 스마트폰 자동 회전, 가속도 센서, 중력. No extra text, labels, logos, watermark or dashboard.",
+      "korean_labels": [
+        "평평하면 어느 옆이 아래인지 애매해요."
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "misconception_boundary",
+      "teaching_claim": "휴대폰을 책상에 평평하게 눕히거나 급하게 흔들면 어느 옆면이 아래인지 모호해 자동 회전이 늦거나 보류될 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 84462,
+      "quality": 82,
+      "sha256": "3d01519fcf521dbd50783f671626677b923dc1461ccf05a3a4294087c007a8d8"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "GPS는 인터넷 없이 어떻게 위치를 찾을까? 위성 신호와 오프라인 지도의 원리",
+      "url": "https://won0322.tistory.com/231",
+      "reason": "가속도 센서가 중력으로 휴대폰 자세를 찾는 원리에서 위성 신호로 실제 위치를 찾는 다음 센서 이야기로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "QR코드 오류 정정 원리: 일부가 찢어져도 왜 인식될까?",
+      "url": "https://won0322.tistory.com/225",
+      "reason": "휴대폰이 센서 값을 해석해 화면 방향을 고르듯 카메라가 QR코드의 방향과 손상을 판정하는 과정을 비교할 수 있다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "스마트폰 가속도 센서가 중력 방향으로 화면 회전을 판단하는 원리",
+      "source": "Apple Device Sensors, Android Sensors, Google Science Journal, Penn State 교육 자료, 스마트폰 가속도계 원 논문",
+      "url": "https://developer.apple.com/documentation/technologyoverviews/device-sensors",
+      "published_at": "2026-09-22T00:00:00+09:00",
+      "blurb_kr": "가속도 센서는 세 축에서 중력과 움직임을 읽고, 운영체제는 안정된 아래 방향과 사용자·앱 설정을 함께 고려해 화면을 세로 또는 가로로 다시 배치한다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "Device sensors - Apple Developer",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/device-sensors"
+        },
+        {
+          "kind": "documentation",
+          "title": "Motion sensors - Android Developers",
+          "url": "https://developer.android.com/develop/sensors-and-location/sensors/sensors_motion"
+        },
+        {
+          "kind": "documentation",
+          "title": "CMMotionManager - Apple Developer",
+          "url": "https://developer.apple.com/documentation/coremotion/cmmotionmanager"
+        },
+        {
+          "kind": "official",
+          "title": "Sensors on your device - Science Journal Help",
+          "url": "https://support.google.com/sciencejournal/answer/9160299?hl=en"
+        },
+        {
+          "kind": "independent",
+          "title": "Screen Orientation - Penn State Center for Nanoscale Science",
+          "url": "https://testing.mri.psu.edu/content/screen-orientation"
+        },
+        {
+          "kind": "paper",
+          "title": "A mechanical model of the smartphone's accelerometer",
+          "url": "https://arxiv.org/abs/1507.02224"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "휴대폰은 중력을 기준으로 아래쪽을 찾는다"
+        },
+        {
+          "t": "p",
+          "text": "스마트폰의 가속도 센서는 중력이 기기에서 어느 쪽으로 걸리는지 읽는다. 운영체제는 그 값으로 아래쪽을 판단해 화면을 세로 또는 가로로 다시 배치한다. 카메라로 방을 보거나 휴대폰 안에서 무언가가 크게 굴러가는 방식은 아니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "자동 회전이 지원되는 영상이나 사진 화면을 연다.",
+            "자동 회전 잠금을 켠 뒤 휴대폰을 천천히 90도 돌려 화면이 유지되는지 본다.",
+            "잠금을 끄고 같은 방향으로 다시 돌려 화면이 바뀌는지 본다.",
+            "책상에 거의 평평하게 놓았을 때는 판정이 늦거나 유지될 수 있음을 따로 기록한다."
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "스마트폰을 세로에서 가로로 돌리면 중력 방향 판정 뒤 화면 내용이 새 방향에 맞게 다시 배치된다. 하루는 소파에서 같은 장면을 발견한다.",
+          "toon_panel": 1,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "내가 돌린 걸 어떻게 알았지?"
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "칩 속 작은 추가 세 방향의 힘을 숫자로 바꾼다"
+        },
+        {
+          "t": "p",
+          "text": "가속도 센서는 칩 안에 만든 아주 작은 기계 구조다. 가운데의 미세한 질량은 용수철 같은 구조에 매달려 있고, 휴대폰이 움직이거나 중력이 작용하면 한쪽으로 아주 조금 치우친다. 양쪽 고정판과의 간격이 달라지면 전기를 저장하는 정도가 바뀌고 회로가 그 차이를 가속도 값으로 바꾼다."
+        },
+        {
+          "t": "p",
+          "text": "이 구조를 좌우·위아래·앞뒤 세 방향으로 두면 각 축의 값을 따로 얻을 수 있다. Android 문서는 가만히 놓인 기기에서도 가속도계가 약 9.81m/s² 크기의 중력 효과를 읽는다고 설명한다. Apple도 iPhone과 iPad가 가속도계를 이용해 지면에 대한 방향을 판단하고 세로·가로 변화를 감지한다고 밝힌다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "가속도 센서 안의 미세한 질량이 중력 쪽으로 치우치며 세 축의 전기 신호가 달라져 아래 방향을 알려 준다.",
+          "toon_panel": 2,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "작은 추가 아래쪽을 알려줘요!"
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "운영체제는 한 번의 센서 값만 보고 화면을 뒤집지 않는다. 손을 돌리는 동안 섞인 흔들림이 가라앉고 아래 방향이 잠시 안정되면 그때 화면 전환을 결정한다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "더 깊게 보면 가속도계와 자이로가 서로의 약점을 메운다"
+        },
+        {
+          "t": "p",
+          "text": "가속도계는 오래 두어도 중력 방향을 다시 찾을 수 있지만 손으로 흔드는 순간에는 그 움직임이 중력과 섞인다. 자이로스코프는 각 축을 중심으로 얼마나 빠르게 도는지를 잘 읽지만 작은 오차가 시간에 따라 쌓일 수 있다. 운영체제는 기능과 기기에 따라 이런 센서 값을 합쳐 자세를 더 안정적으로 추정한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "자동 회전 잠금을 켰다 끄고 같은 휴대폰을 천천히 90도 돌리면 센서 판정과 사용자 설정의 역할을 나눠 확인할 수 있다.",
+          "toon_panel": 3,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "잠금을 끄고 다시 돌려 볼게요!"
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "실험은 걷거나 운전하면서 하지 말고 소파나 책상 앞에서 한다. 잠금이 켜진 상태에서도 센서는 계속 자세를 알 수 있지만 운영체제가 화면 변경을 막을 수 있다. 잠금을 껐는데도 특정 앱만 돌지 않는다면 그 앱이 세로 또는 가로 방향을 고정했는지 확인한다."
+        },
+        {
+          "t": "h",
+          "text": "센서가 방향을 알아도 화면은 바로 돌지 않을 수 있다"
+        },
+        {
+          "t": "p",
+          "text": "운영체제가 센서 값 하나만 보고 즉시 화면을 뒤집으면 걷다가 손이 흔들릴 때마다 화면이 출렁인다. 그래서 일정한 기울기가 잠시 유지되는지, 사용자가 회전을 잠갔는지, 현재 앱이 그 방향을 지원하는지를 함께 본다. 정확한 각도와 대기 시간은 제조사와 운영체제 구현에 따라 다를 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "자동 회전이 안 될 때 센서와 설정을 나눠 보는 기준",
+          "headers": [
+            "관찰",
+            "가능한 이유",
+            "먼저 확인할 것"
+          ],
+          "rows": [
+            [
+              "모든 앱이 계속 세로",
+              "자동 회전 잠금 또는 시스템 설정",
+              "빠른 설정의 회전 잠금"
+            ],
+            [
+              "한 앱만 세로",
+              "앱이 방향을 고정하거나 가로 모드를 지원하지 않음",
+              "사진·영상 등 다른 지원 앱"
+            ],
+            [
+              "평평하게 놓으면 늦음",
+              "어느 옆면이 아래인지 모호함",
+              "기기를 세워 천천히 90도 회전"
+            ],
+            [
+              "방향이 자주 튐",
+              "빠른 움직임·센서 잡음·보정 문제",
+              "기기를 안정시키고 재확인"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "스마트폰 자동 회전 원인 구분표"
+        },
+        {
+          "t": "visual",
+          "image": "visual_4",
+          "caption": "휴대폰을 책상에 평평하게 눕히거나 급하게 흔들면 어느 옆면이 아래인지 모호해 자동 회전이 늦거나 보류될 수 있다.",
+          "toon_panel": 4,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "평평하면 어느 옆이 아래인지 애매해요."
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "평평한 자세에서는 옆면 기준이 흐려진다"
+        },
+        {
+          "t": "p",
+          "text": "휴대폰을 세워 들면 중력이 왼쪽이나 오른쪽 축에 크게 나타나 어느 옆면이 아래인지 비교하기 쉽다. 반대로 화면이 천장을 향하도록 평평하게 두면 중력은 주로 화면 앞뒤 축에 걸린다. 세로의 아래쪽과 가로의 아래쪽을 고를 단서가 약해져 기존 방향을 유지하는 편이 자연스럽다."
+        },
+        {
+          "t": "p",
+          "text": "자동 회전은 센서가 화면 속 글자를 읽어 똑바로 만드는 기능도 아니다. 센서는 기기의 자세만 알려 주고, 앱과 운영체제가 그 자세에 맞는 레이아웃을 다시 계산한다. 그래서 회전 직후 동영상 크기, 버튼 위치, 키보드 모양이 새로 배치되며 앱이 준비하지 않은 방향은 그대로 남을 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "화면이 돌지 않으면 먼저 회전 잠금을 끄고 자동 회전을 지원하는 다른 앱에서 천천히 시험한다. 기기를 평평하게 두지 말고 화면을 정면으로 세운 상태에서 90도 돌린다. 여러 앱에서도 반응하지 않고 재시작 뒤에도 같다면 그때 센서 진단이나 제조사 지원 절차를 확인한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "잠금 표시가 켜졌는가: 사용자 설정 확인",
+            "다른 사진·영상 앱은 도는가: 앱의 방향 지원 확인",
+            "평평하지 않게 세워서 돌렸는가: 자세의 모호함 확인",
+            "여러 앱과 재시작 뒤에도 같은가: 센서 문제 가능성 확인"
+          ]
+        },
+        {
+          "t": "p",
+          "text": "자동 회전 잠금을 켰다 끄고 천천히 90도 돌렸을 때 결과가 달라지며, 평평하게 놓으면 판정이 모호할 수 있다고 설명하면 확인이 끝났다. 휴대폰은 화면을 눈으로 보는 대신 칩 속 미세 질량이 가리키는 중력 방향을 읽는다."
+        },
+        {
+          "t": "quote",
+          "text": "자동 회전은 휴대폰이 화면을 보는 일이 아니라, 중력이 어느 축으로 느껴지는지 읽고 화면을 다시 그리는 일이다."
+        }
+      ]
+    }
+  ]
+}
