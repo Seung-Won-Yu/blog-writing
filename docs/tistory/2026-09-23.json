@@ -1,0 +1,97 @@
+{
+  "title": "Copilot CLI C++ 인덱싱: 느린 코드 탐색 전 확인할 4가지",
+  "title_candidates": [
+    "Copilot CLI C++ 인덱싱: 느린 코드 탐색 전 확인할 4가지",
+    "GitHub Copilot CLI, C++ 전체 코드베이스 인덱싱 기본 활성화",
+    "C++ 헤더와 소스 파일 사이의 심볼 관계를 한 번 묶어 두고 반복 탐색에 다시 쓰는 Copilot CLI 변화: 매번…"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-09-23",
+  "publish_date": "2026-09-23",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-23T09:00:00+09:00",
+  "tags": [
+    "Copilot CLI C++ 인덱싱",
+    "GitHub Copilot CLI",
+    "C++ 코드 탐색",
+    "전체 코드베이스 인덱싱",
+    "Go to Definition",
+    "Find References",
+    "compile_commands.json"
+  ],
+  "meta_description": "수백 개 헤더가 얽힌 C++ 저장소에서 Copilot CLI에게 함수 정의를 찾아 달라고 했는데, 같은 관계를 다시 읽느라 답이 늦어진다. 9월 22일부터 C++ 언어 서버는 프로젝트 전체의 심볼 관… GitHub는 Copilot CLI의 Microsoft C++ Language Se…",
+  "key_summary": [
+    "1. GitHub Copilot CLI, C++ 전체 코드베이스 인덱싱 기본 활성화",
+    "직접 얻는 결과: WCI가 기본 활성화된 범위와 초기 비용을 구분하고, 로그·컴파일 데이터·재실행 결과를 확인한 뒤 유지할지 사용자 전역으로 끌지 결정할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Copilot CLI C++ 인덱싱: 느린 코드 탐색 전 확인할 4가지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-23.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-23.html",
+  "before_ad_html": "docs/tistory/2026-09-23-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-23-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-23-adfit.html",
+  "source_sha256": "9b520ff4b31b71072d09f38341e2839c5761e037d986e5b0ce43186d2b3c2336",
+  "html_sha256": "8342338268e80b8e8aa98f222851806bac5934d429b8efc1b02450c0c3c30735",
+  "adfit_sha256": "e7f597301c91c33276f36ce9cd499de657faa02856ca5de704b1a0587d6e56e8",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/Copilot-CLI-C%2B%2B-%EC%8B%AC%EB%B3%BC%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EB%8C%80%ED%91%9C.webp",
+      "path": "docs/tistory/assets/2026-09-23/Copilot-CLI-C++-심볼인덱스-대표.webp",
+      "original_url": "",
+      "alt": "Copilot CLI는 C++ 심볼 관계를 지속 인덱스로 만들어 반복 탐색에 다시 쓴다. 헤더 서랍 사이에 심볼 색인 카드가 놓인 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/C%2B%2B-%EC%BD%94%EB%93%9C%ED%83%90%EC%83%89-WCI-%EC%A0%84%ED%9B%84%EB%B9%84%EA%B5%90.webp",
+      "path": "docs/tistory/assets/2026-09-23/C++-코드탐색-WCI-전후비교.webp",
+      "original_url": "",
+      "alt": "WCI가 C++ 정의와 참조 요청마다 관계를 다시 찾는 대신 전체 심볼 인덱스를 만들어 재사용하는 전후 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/C%2B%2B-WCI-%EB%B9%84%ED%99%9C%EC%84%B1%ED%99%94%EC%A0%84-%ED%99%95%EC%9D%B8%EC%88%9C%EC%84%9C.webp",
+      "path": "docs/tistory/assets/2026-09-23/C++-WCI-비활성화전-확인순서.webp",
+      "original_url": "",
+      "alt": "WCI를 끄기 전에 색인 로그와 compile_commands.json, 완료 뒤 반복 탐색을 확인하는 네 단계 흐름",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/GitHub-C%2B%2B-WCI-%EA%B3%B5%EC%8B%9D%EB%B3%80%EA%B2%BD.webp",
+      "path": "docs/tistory/assets/2026-09-23/GitHub-C++-WCI-공식변경.webp",
+      "original_url": "",
+      "alt": "GitHub 공식 변경 화면에서 Copilot CLI C++ WCI 기본 활성화와 첫 색인의 추가 시간·메모리, 진행 확인 명령을 설명한 구간",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,565 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-23",
+  "publish_date": "2026-09-23",
+  "date_label": "2026. 9. 23",
+  "weekday": "수",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "category": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-23T09:00:00+09:00",
+  "primary_query": "Copilot CLI C++ 인덱싱",
+  "tags": [
+    "Copilot CLI C++ 인덱싱",
+    "GitHub Copilot CLI",
+    "C++ 코드 탐색",
+    "전체 코드베이스 인덱싱",
+    "Go to Definition",
+    "Find References",
+    "compile_commands.json"
+  ],
+  "editorial": {
+    "headline": "Copilot CLI C++ 인덱싱: 느린 코드 탐색 전 확인할 4가지",
+    "opening": "수백 개 헤더가 얽힌 C++ 저장소에서 Copilot CLI에게 함수 정의를 찾아 달라고 했는데, 같은 관계를 다시 읽느라 답이 늦어진다. 9월 22일부터 C++ 언어 서버는 프로젝트 전체의 심볼 관계를 한 번 색인해 다시 쓰는 WCI를 기본으로 켠다. 첫 색인에는 시간과 메모리가 더 들 수 있으므로, 무조건 끄기보다 진행 상태와 빌드 정보를 먼저 확인해야 한다.",
+    "closing": "이번 변경은 Copilot이 C++ 코드를 더 잘 추측한다는 약속이 아니라, 정의·참조·구현을 찾는 데 필요한 심볼 관계를 매번 다시 만들지 않도록 저장하는 변화다. 큰 저장소에서 첫 실행이 무거운 것은 실패와 다르며, `/lsp logs`의 진행 상태와 `compile_commands.json`의 경로를 먼저 봐야 한다. 인덱스를 꺼도 언어 서버와 주문형 파싱은 남지만 탐색이 다시 느려질 수 있다.",
+    "action": "같은 C++ 저장소에서 정의 찾기와 참조 찾기를 한 번씩 실행하고, `/lsp logs`의 색인 완료 여부와 재실행 때의 대기 차이를 기록한다.",
+    "audience_problem": "큰 C++ 저장소를 Copilot CLI로 탐색할 때 정의·참조 찾기가 늦거나 첫 실행의 CPU·메모리 증가를 오류로 오해해 인덱싱을 바로 끄기 쉽다.",
+    "reader_takeaway": "WCI가 기본 활성화된 범위와 초기 비용을 구분하고, 로그·컴파일 데이터·재실행 결과를 확인한 뒤 유지할지 사용자 전역으로 끌지 결정할 수 있다.",
+    "why_now": "GitHub가 2026년 9월 22일 Copilot CLI의 Microsoft C++ Language Server에 전체 코드베이스 인덱싱을 기본 활성화했다고 발표했다.",
+    "topic_key": "github-copilot-cli-cpp-whole-codebase-indexing",
+    "reader_question": "Copilot CLI의 C++ 전체 코드베이스 인덱싱은 무엇을 빨라지게 하고, 첫 실행이 무거울 때 어디부터 확인해야 할까?",
+    "entities": [
+      "GitHub Copilot CLI",
+      "Microsoft C++ Language Server",
+      "심볼 색인",
+      "WCI",
+      "compile_commands.json",
+      "Go to Definition"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "change_impact",
+    "weekly_lane": "change_explainer",
+    "reader_hook": {
+      "scene": "대형 C++ 저장소에서 Copilot CLI가 함수 정의와 참조를 찾을 때 같은 헤더 관계를 거듭 읽으며 대기 시간이 길어진다.",
+      "stakes": "첫 색인의 CPU·메모리 증가만 보고 WCI를 끄면 이후 정의·참조 찾기가 다시 주문형 분석에 의존해 느려질 수 있다.",
+      "payoff": "색인 진행, 컴파일 정보, 두 번째 탐색 속도를 차례로 확인해 WCI를 유지할지 끌지 근거 있게 결정한다.",
+      "open_question": "느린 첫 실행은 정상적인 초기 색인일까, 아니면 compile_commands.json과 탐색 범위를 고쳐야 하는 상태일까?"
+    },
+    "reader_path": {
+      "reader_level": "practitioner",
+      "entry_heading": "첫 실행이 느린 것은 재사용할 지도를 만드는 시간이다",
+      "immediate_answer": "WCI는 C++ 프로젝트의 심볼 관계를 지속 인덱스로 만들어 정의·참조·구현 찾기에 재사용한다. 첫 구축은 무거울 수 있지만 완료 뒤에는 다시 쓴다.",
+      "action_steps": [
+        "`/lsp logs`에서 전체 코드베이스 인덱싱이 진행 중인지 완료됐는지 확인한다.",
+        "언어 서버가 읽는 `compile_commands.json` 경로와 실제 빌드 구성이 맞는지 본다.",
+        "같은 정의 찾기와 참조 찾기를 첫 실행과 인덱스 완료 뒤에 각각 반복한다.",
+        "지속적인 자원 압박이 확인될 때만 사용자 전역 `state.json`에서 WCI를 끄고 세션을 재시작한다."
+      ],
+      "completion_check": "색인 완료 뒤 같은 심볼 탐색의 대기가 줄고 결과가 올바르면 WCI를 유지하며, 자원 부담이 계속될 때만 비활성화를 검토한다."
+    },
+    "revisit": {
+      "quick_answer": "Copilot CLI의 C++ WCI는 프로젝트 전체 심볼을 지속 색인해 정의·참조 찾기에 재사용하며, 첫 구축의 추가 시간과 메모리는 정상 비용일 수 있다.",
+      "reuse_case": "대형 C++ 저장소에서 Copilot CLI 코드 탐색이 느리거나 첫 세션의 자원 사용량이 커졌을 때 원인을 구분하는 점검표로 쓴다.",
+      "failure_case": "컴파일 명령이 없거나 잘못된 빌드 구성을 가리키면 타입·include 관계가 부정확할 수 있고, 인덱스를 꺼도 언어 서버 자체가 꺼지는 것은 아니다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "WCI 기본 활성화 정책 변경",
+        "`/lsp logs` 명령이나 상태 표시 변경",
+        "`use_symbol_index` 설정 위치 변경",
+        "C++ Language Server의 compile_commands 처리 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "Copilot CLI C++ 인덱싱",
+      "reader_need": "대형 C++ 저장소의 느린 코드 탐색과 첫 색인 자원 사용이 정상인지 확인하고 설정을 유지할지 결정하고 싶다.",
+      "answer_format": "인덱싱 전후 비교와 4단계 확인 순서"
+    },
+    "original_value": {
+      "durable_question": "대형 C++ 코드베이스에서 지속 심볼 인덱스의 초기 비용과 반복 탐색 이득을 어떻게 구분하고 운영할까?",
+      "source_gap": "공식 변경 안내는 WCI의 기본 활성화와 비활성화 링크를 설명하지만, 첫 실행 지연·컴파일 정보·반복 탐색을 어떤 순서로 확인할지는 한 흐름으로 묶지 않는다.",
+      "contribution": "GitHub 발표, Microsoft 언어 서버 설정, Meta의 대규모 C++ 인덱싱 사례와 독립적인 레거시 C++ 탐색 조언을 대조해 유지·진단·비활성화 기준을 4단계로 만든다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "독자는 초기 색인과 실제 실패를 구분하고, 컴파일 데이터와 두 번째 탐색 결과를 확인한 뒤 WCI 설정을 근거 있게 선택할 수 있다.",
+      "limits": "동일한 대형 비공개 C++ 저장소에서 시간을 직접 계측하지 않았으므로 성능 배수나 메모리 절감률을 단정하지 않는다."
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "Copilot CLI의 C++ WCI는 프로젝트 전체 심볼을 한 번 색인해 정의·참조·구현 찾기에 다시 쓴다.",
+      "첫 실행이 무거우면 `/lsp logs`, `compile_commands.json`, 인덱스 완료 뒤의 두 번째 탐색을 순서대로 확인한다.",
+      "WCI를 꺼도 언어 서버는 남지만 탐색은 다른 파싱 경로로 돌아가 느려질 수 있고, 설정은 프로젝트가 아닌 사용자 전역에 적용된다."
+    ],
+    "glossary": [
+      {
+        "term": "WCI",
+        "meaning": "Whole Codebase Indexing의 약자로, 열지 않은 파일까지 포함해 프로젝트 전체 심볼 관계를 저장하는 방식이다."
+      },
+      {
+        "term": "심볼",
+        "meaning": "함수·클래스·변수처럼 코드에서 이름으로 정의되고 참조되는 대상을 뜻한다."
+      },
+      {
+        "term": "compile_commands.json",
+        "meaning": "각 C++ 파일을 어떤 옵션과 include 경로로 컴파일하는지 기록한 데이터다. 언어 서버가 타입과 헤더 관계를 이해하는 데 쓴다."
+      },
+      {
+        "term": "주문형 파싱",
+        "meaning": "미리 만든 전체 인덱스 대신 요청이 들어온 파일과 주변 정보를 그때 분석하는 방식이다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6-sol",
+    "revision": 9,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "related_posts": [
+    {
+      "title": "GitHub Copilot AI Credits 사용량 확인법",
+      "url": "https://won0322.tistory.com/140",
+      "reason": "WCI의 자원 비용과 별개로 Copilot 사용량을 확인하는 기본 운영 기준으로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코드 마이그레이션 기준: 5년짜리 테스트 교체를 2주로 줄인 조건",
+      "url": "https://won0322.tistory.com/208",
+      "reason": "코드베이스 전체 관계를 파악한 뒤 에이전트에게 큰 변경을 맡길 때 작업 범위와 검증 단위를 나누는 다음 단계로 이어진다.",
+      "role": "next_step"
+    }
+  ],
+  "visual": {
+    "subject": "C++ 헤더와 소스 파일 사이의 심볼 관계를 한 번 묶어 두고 반복 탐색에 다시 쓰는 Copilot CLI 변화",
+    "hook": "매번 흩어진 C++ 파일을 다시 뒤지던 탐색이 지속 인덱스 카드로 바뀌는 순간",
+    "motif": "헤더 서랍, 심볼 색인 카드, 실로 이어진 함수 관계, 첫 구축 표시",
+    "weekday_profile": "change_impact",
+    "subject_terms": [
+      "심볼 색인",
+      "C++ 인덱싱",
+      "WCI",
+      "compile_commands.json"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "label": "흩어진 C++ 헤더 서랍 앞에 완성된 심볼 색인 카드가 놓이는 장면",
+      "scene_label": [
+        "C++ 헤더",
+        "심볼 색인",
+        "반복 탐색"
+      ],
+      "steps": "흩어진 헤더와 소스 파일을 매번 다시 찾던 작업대에 재사용 가능한 심볼 색인 카드가 놓인다.",
+      "curiosity_hook": "Copilot CLI WCI의 첫 색인이 끝나면 같은 정의 찾기는 얼마나 달라질까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "editorial_scenario",
+      "composition_type": "cpp-file-drawers-with-persistent-symbol-index-card",
+      "palette_family": "paper_cream_ink_black_copper_blue",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "C++ 헤더 서랍 사이에 놓인 재사용 심볼 색인 카드",
+      "texture_cue": "손때 묻은 종이 탭, 얇은 연결 실, 금속 카드 서랍",
+      "authenticity_cue": "정리 중인 실제 코드 보관함처럼 일부 탭이 삐뚤고 사용 흔적이 남은 장면",
+      "weekday_profile": "change_impact",
+      "weekday_role": "changed_condition_scene",
+      "visual_claim": "Copilot CLI는 C++ 심볼 관계를 지속 인덱스로 만들어 반복 탐색에 다시 쓴다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "심볼 색인"
+      ],
+      "generation_prompt": "Use case: stylized-concept. Asset type: Korean practical IT article cover. Asset intent: editorial-scene. Primary request: 1200x630 landscape tactile paper diorama of a compact metal card cabinet holding interconnected C++ header and source file tabs, with one persistent symbol index card newly placed at the center so repeated navigation no longer starts from scattered files. Scene/backdrop: quiet code-archive workbench, real paper fibers, copper clips, thin blue thread connecting declarations and references. Subject: one reusable symbol index card is the focal object, filling about 55 percent with the surrounding file drawers. Style/medium: tactile paper craft photographed naturally, not an infographic. Composition/framing: asymmetrical close view with depth, one scene, no panels or arrows. Lighting/mood: soft morning workshop light, calm and precise. Text (verbatim): C++, 심볼 색인. Render each label exactly once and no other letters, words, numbers, logos, or watermarks. Constraints: mobile thumbnail readable; article-specific; no computer screen. Avoid: developer at laptop, dashboard, flowchart, comparison grid, title slide, neon, generic AI imagery, fake UI, extra text.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "label": "요청마다 관계를 다시 찾던 C++ 탐색과 지속 인덱스를 재사용하는 탐색의 차이",
+        "scene_label": [
+          "이전: 다시 분석",
+          "이후: 색인 재사용",
+          "정의·참조"
+        ],
+        "steps": "이전에는 정의·참조 요청마다 주변 파일 관계를 다시 찾았지만, 이후에는 WCI가 전체 프로젝트 심볼을 먼저 만들고 같은 인덱스를 재사용한다.",
+        "curiosity_hook": "첫 구축 비용이 있더라도 두 번째 정의 찾기부터 기다림이 줄어드는 이유는 무엇일까?",
+        "evidence_type": "diagram",
+        "teaching_role": "before_after_change",
+        "teaching_claim": "WCI는 C++ 정의·참조 요청마다 관계를 다시 찾는 대신 전체 심볼 인덱스를 만들어 재사용한다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "매번 다시 분석",
+          "한 번 색인",
+          "정의 찾기",
+          "참조 찾기"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT article before-and-after diagram. Primary request: 1200x630 landscape showing how C++ code navigation changes with whole codebase indexing. Left: each Go to Definition or Find References request reopens scattered header and source files and rebuilds their relationships. Right: one persistent WCI symbol index is created once and reused by both requests. Style/medium: crisp editorial technical diagram on pale gray paper, large shapes and short labels. Composition/framing: two clearly separated halves with a strong visual contrast, mobile readable, no fake product UI. Text (verbatim): 매번 다시 분석, 한 번 색인, 정의 찾기, 참조 찾기. Render these four labels exactly once each and no other letters, words, numbers, symbols, logos, or watermarks. Constraints: show C++ file relationships, not generic cloud storage; before-after logic must be unambiguous. Avoid: tiny text, dense cards, terminal screenshot, people, laptop, neon, title banner, extra text.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "label": "C++ WCI를 끄기 전에 로그·컴파일 정보·반복 탐색을 확인하는 순서",
+        "scene_label": [
+          "색인 로그",
+          "컴파일 정보",
+          "두 번째 탐색",
+          "유지·비활성화"
+        ],
+        "steps": "`/lsp logs` 확인 → compile_commands.json 경로 확인 → 인덱스 완료 뒤 같은 탐색 반복 → 자원 부담이 계속될 때만 사용자 전역에서 비활성화",
+        "curiosity_hook": "첫 실행이 느리다는 이유만으로 WCI를 끄기 전에 무엇을 확인해야 할까?",
+        "evidence_type": "diagram",
+        "teaching_role": "action_check",
+        "teaching_claim": "WCI를 끄기 전에는 색인 로그, compile_commands.json, 인덱스 완료 뒤의 반복 탐색을 차례로 확인한다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "로그 확인",
+          "빌드 정보",
+          "다시 탐색",
+          "유지 또는 끄기"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT article action-check diagram. Primary request: 1200x630 landscape four-step C++ WCI decision flow: inspect indexing progress in logs, verify compile_commands build information, repeat the same symbol navigation after indexing completes, then decide whether to keep or disable the index only if resource pressure persists. Style/medium: clean technical workflow with physical index cards and a small resource gauge, high contrast, generous spacing. Composition/framing: one left-to-right flow with four large stations, mobile readable. Text (verbatim): 로그 확인, 빌드 정보, 다시 탐색, 유지 또는 끄기. Render these four labels exactly once each and no other letters, words, numbers, symbols, logos, or watermarks. Constraints: final decision must branch between keeping and disabling; disabling is not shown as the default. Avoid: fake terminal output, GitHub logo, dense dashboard, tiny text, people, laptop, neon, title banner, extra text.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "logic_type": "evidence",
+        "label": "GitHub가 밝힌 WCI 기본 활성화와 첫 색인 비용의 공식 근거",
+        "scene_label": [
+          "기본 활성화",
+          "색인 진행",
+          "초기 메모리",
+          "세션 재시작"
+        ],
+        "steps": "GitHub 공식 변경 화면에서 WCI 기본 활성화, `/lsp logs` 진행 확인, 첫 색인의 추가 시간·메모리, 설정 변경 뒤 재시작 조건을 확인한다.",
+        "curiosity_hook": "첫 실행의 메모리 증가가 공식적으로 예상된 초기 비용인지 어디에서 확인할 수 있을까?",
+        "evidence_type": "screenshot",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "GitHub 공식 변경 화면은 C++ WCI의 기본 활성화와 첫 색인의 추가 시간·메모리 조건을 명시한다",
+        "source_url": "https://github.blog/changelog/2026-09-22-faster-c-code-intelligence-with-whole-codebase-indexing/",
+        "capture_note": "Configure indexing 구간의 핵심 문장이 1200×630에서 읽히도록 브라우저 표시 배율을 135%로 확대해 캡처했다.",
+        "capture_tool": "playwright",
+        "capture_target": "GitHub Changelog의 Configure indexing 구간: WCI 기본 활성화, /lsp logs, 초기 시간·메모리, 비활성화 안내",
+        "captured_at": "2026-09-23T09:20:36+09:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "GitHub Copilot CLI, C++ 전체 코드베이스 인덱싱 기본 활성화",
+      "source": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-22-faster-c-code-intelligence-with-whole-codebase-indexing/",
+      "published_at": "2026-09-22T00:00:00-07:00",
+      "blurb_kr": "GitHub는 Copilot CLI의 Microsoft C++ Language Server가 전체 프로젝트 심볼을 지속 인덱스로 만들고 정의·참조·구현 찾기에 재사용하도록 WCI를 기본 활성화했다. 첫 구축은 시간과 메모리를 더 쓸 수 있으며 진행은 `/lsp logs`에서 확인한다.",
+      "references": [
+        {
+          "title": "Faster C++ code intelligence with whole codebase indexing",
+          "url": "https://github.blog/changelog/2026-09-22-faster-c-code-intelligence-with-whole-codebase-indexing/",
+          "kind": "official"
+        },
+        {
+          "title": "Microsoft C++ Language Server: Indexing",
+          "url": "https://github.com/microsoft/cpp-language-server/blob/main/docs/indexing.md",
+          "kind": "official"
+        },
+        {
+          "title": "Microsoft C++ Language Server: Compile commands",
+          "url": "https://github.com/microsoft/cpp-language-server/blob/main/docs/compile-commands.md",
+          "kind": "official"
+        },
+        {
+          "title": "Indexing code at scale with Glean",
+          "url": "https://engineering.fb.com/2024/12/19/developer-tools/glean-open-source-code-indexing/",
+          "kind": "independent"
+        },
+        {
+          "title": "How to Navigate a Large or Legacy C++ Codebase in Visual Studio",
+          "url": "https://www.wholetomato.com/blog/navigate-large-legacy-cpp-codebase/",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "첫 실행이 느린 것은 재사용할 지도를 만드는 시간이다"
+        },
+        {
+          "t": "p",
+          "text": "WCI는 C++ 프로젝트의 심볼 관계를 지속 인덱스로 만들어 정의·참조·구현 찾기에 재사용한다. 첫 구축은 무거울 수 있지만 완료 뒤에는 다시 쓴다. 열지 않은 파일까지 포함하므로 같은 관계를 요청마다 처음부터 찾는 일을 줄인다."
+        },
+        {
+          "t": "p",
+          "text": "첫 프로젝트를 열 때는 색인을 처음 구축하므로 시간이 더 걸리고 CPU와 메모리 사용이 잠시 늘 수 있다. 큰 저장소에서 이 구간만 보고 실패라고 판단하면 안 된다. GitHub는 초기 구축이 끝난 뒤 인덱스를 재사용하고 변경된 코드에 맞춰 갱신한다고 설명한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "GitHub 공식 변경 화면은 C++ WCI의 기본 활성화와 첫 색인의 추가 시간·메모리 조건을 명시한다. 진행 상태는 `/lsp logs`에서 확인하고 설정을 바꾸면 세션을 재시작한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "`/lsp logs`에서 전체 코드베이스 인덱싱이 진행 중인지 완료됐는지 확인한다.",
+            "언어 서버가 읽는 `compile_commands.json` 경로와 실제 빌드 구성이 맞는지 본다.",
+            "같은 정의 찾기와 참조 찾기를 첫 실행과 인덱스 완료 뒤에 각각 반복한다.",
+            "지속적인 자원 압박이 확인될 때만 사용자 전역 `state.json`에서 WCI를 끄고 세션을 재시작한다."
+          ],
+          "reusable": true,
+          "reuse_label": "Copilot CLI C++ WCI 확인 순서"
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "WCI는 C++ 정의·참조 요청마다 관계를 다시 찾는 대신 전체 심볼 인덱스를 만들어 재사용한다. 첫 구축이 끝난 뒤 같은 탐색이 어떤 경로를 쓰는지가 이번 변화의 핵심이다."
+        },
+        {
+          "t": "h",
+          "text": "빨라지는 것은 답변 전체가 아니라 심볼 탐색 경로다"
+        },
+        {
+          "t": "p",
+          "text": "이번 발표가 직접 가리키는 대상은 Go to Definition, Find References, 구현 찾기, 심볼 검색이다. Copilot의 모든 답변 속도나 코드 생성 품질이 같은 비율로 좋아진다는 뜻은 아니다. 성능 배수도 공식 발표에 제시되지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "큰 C++ 저장소에서는 한 이름을 정확히 해석하려고 include 그래프, 매크로, 템플릿, 빌드 옵션을 함께 봐야 한다. 독립 자료도 코드가 커지고 빌드가 불완전할수록 스마트 탐색이 느려지거나 잘못된 선언으로 갈 수 있다고 설명한다. WCI는 그 관계를 재사용해 반복 작업을 줄인다."
+        },
+        {
+          "t": "table",
+          "caption": "C++ 코드 탐색에서 WCI가 바꾸는 구간",
+          "headers": [
+            "확인 장면",
+            "WCI가 켜진 경우",
+            "여전히 따로 볼 것"
+          ],
+          "rows": [
+            [
+              "정의·참조 찾기",
+              "전체 심볼 인덱스 재사용",
+              "결과가 실제 빌드 구성과 맞는지"
+            ],
+            [
+              "첫 프로젝트 열기",
+              "초기 색인으로 자원 증가 가능",
+              "로그의 진행·완료 상태"
+            ],
+            [
+              "코드 변경 뒤",
+              "인덱스를 동적으로 갱신",
+              "헤더 변경의 영향 범위"
+            ],
+            [
+              "인덱스 비활성화",
+              "다른 파싱 경로로 탐색",
+              "언어 서버는 계속 실행됨"
+            ]
+          ]
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "compile_commands가 틀리면 빠른 색인도 엉뚱한 지도를 만든다"
+        },
+        {
+          "t": "p",
+          "text": "Microsoft C++ Language Server는 프로젝트의 컴파일 정보를 사용해 타입, 심볼, include와 파일 간 관계를 해석한다. 같은 소스라도 매크로와 include 경로, 표준 버전이 다르면 보이는 정의가 달라질 수 있으므로 `compile_commands.json`이 실제 빌드 구성을 가리키는지 먼저 봐야 한다."
+        },
+        {
+          "t": "p",
+          "text": "제외 설정도 경계를 구분해야 한다. 문서에 따르면 `cpp-lsp.json`의 `filesExclude`와 `searchExclude`는 추가 디렉터리 스캔을 조정하지만, `compile_commands.json`에 명시된 번역 단위를 지우지는 않는다. 색인 크기를 줄이려다 빌드 입력까지 빠졌다고 오해하지 않도록 설정의 역할을 나눠야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "WCI를 끄기 전에는 색인 로그, compile_commands.json, 인덱스 완료 뒤의 반복 탐색을 차례로 확인한다. 첫 실행의 일시적 비용만으로 비활성화를 결정하지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "두 번째 탐색이 판단 기준을 더 잘 보여 준다"
+        },
+        {
+          "t": "p",
+          "text": "첫 탐색과 같은 함수에서 정의 찾기와 참조 찾기를 다시 실행해 본다. 첫 번째는 인덱스를 만드는 시간과 요청 시간이 섞일 수 있지만, 두 번째는 재사용 효과를 확인하기 쉽다. 결과 파일과 참조 개수도 함께 비교해야 빠르지만 틀린 탐색을 성공으로 착각하지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "Meta의 대규모 코드 인덱싱 사례에서도 C++은 긴 컴파일 시간과 넓은 의존 관계 때문에 미리 색인하는 이점이 큰 언어로 꼽힌다. 동시에 헤더 하나가 바뀌면 그것을 포함하는 파일까지 다시 처리해야 해 갱신 비용이 생긴다. 지속 인덱스는 비용을 없애는 기능이 아니라, 같은 분석을 반복하지 않도록 위치를 바꾸는 기능이다."
+        },
+        {
+          "t": "h",
+          "text": "계속 무거울 때만 사용자 전역 설정을 바꾼다"
+        },
+        {
+          "t": "p",
+          "text": "초기 색인이 끝난 뒤에도 시스템이 계속 압박받거나 저장소 특성상 인덱스 이득이 작다면 WCI를 끌 수 있다. 설정은 프로젝트의 `cpp-lsp.json`이나 Copilot CLI의 `lsp.json`이 아니라 사용자별 `state.json`의 `use_symbol_index`에 둔다. 즉 한 저장소만의 선택이 아니라 그 사용자의 모든 저장소에 적용된다."
+        },
+        {
+          "t": "p",
+          "text": "파일에는 인증 데이터와 다른 사용자 설정이 함께 있을 수 있으므로 예제 JSON으로 통째로 덮어쓰거나 저장소에 커밋하면 안 된다. 기존 객체에서 해당 값만 바꾸고 실행 중인 Copilot CLI 세션을 닫은 뒤 다시 시작해야 적용된다. 다시 켤 때도 값을 `true`로 되돌리고 재시작한다."
+        },
+        {
+          "t": "h",
+          "text": "인덱스가 없어도 텍스트 검색은 마지막 안전망으로 남는다"
+        },
+        {
+          "t": "p",
+          "text": "빌드 정보가 깨졌거나 생성 헤더가 빠져 구조적 탐색이 모호하면 `rg` 같은 텍스트 검색과 Git 기록을 함께 쓴다. WCI를 끈 뒤의 주문형 파싱도 남지만, 텍스트 검색은 컴파일이 되지 않는 상태에서도 실제 문자열과 파일 위치를 보여 준다."
+        },
+        {
+          "t": "p",
+          "text": "따라서 선택은 WCI와 텍스트 검색 중 하나를 버리는 문제가 아니다. WCI로 정의와 참조 관계를 빠르게 좁히고, 결과가 의심스러울 때 텍스트 검색과 빌드 로그로 확인한다. 색인 완료 뒤 같은 탐색이 빨라지고 결과도 빌드 구성과 맞는다면 이번 변경을 제대로 활용한 것이다."
+        },
+        {
+          "t": "quote",
+          "text": "색인 완료 뒤 같은 심볼 탐색의 대기가 줄고 결과가 올바르면 WCI를 유지하며, 자원 부담이 계속될 때만 비활성화를 검토한다."
+        }
+      ]
+    }
+  ],
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "Copilot CLI는 C++ 심볼 관계를 지속 인덱스로 만들어 반복 탐색에 다시 쓴다. 헤더 서랍 사이에 심볼 색인 카드가 놓인 장면",
+      "path": "docs/tistory/assets/2026-09-23/Copilot-CLI-C++-심볼인덱스-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/Copilot-CLI-C%2B%2B-%EC%8B%AC%EB%B3%BC%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EB%8C%80%ED%91%9C.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset type: Korean practical IT article cover. Asset intent: editorial-scene. Primary request: 1200x630 landscape tactile paper diorama of a compact metal card cabinet holding interconnected C++ header and source file tabs, with one persistent symbol index card newly placed at the center so repeated navigation no longer starts from scattered files. Scene/backdrop: quiet code-archive workbench, real paper fibers, copper clips, thin blue thread connecting declarations and references. Subject: one reusable symbol index card is the focal object, filling about 55 percent with the surrounding file drawers. Style/medium: tactile paper craft photographed naturally, not an infographic. Composition/framing: asymmetrical close view with depth, one scene, no panels or arrows. Lighting/mood: soft morning workshop light, calm and precise. Text (verbatim): C++, 심볼 색인. Render each label exactly once and no other letters, words, numbers, logos, or watermarks. Constraints: mobile thumbnail readable; article-specific; no computer screen. Avoid: developer at laptop, dashboard, flowchart, comparison grid, title slide, neon, generic AI imagery, fake UI, extra text.",
+      "cover_kind": "editorial_scene",
+      "art_direction": "editorial_scenario",
+      "composition_type": "cpp-file-drawers-with-persistent-symbol-index-card",
+      "palette_family": "paper_cream_ink_black_copper_blue",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "C++ 헤더 서랍 사이에 놓인 재사용 심볼 색인 카드",
+      "texture_cue": "손때 묻은 종이 탭, 얇은 연결 실, 금속 카드 서랍",
+      "authenticity_cue": "정리 중인 실제 코드 보관함처럼 일부 탭이 삐뚤고 사용 흔적이 남은 장면",
+      "weekday_profile": "change_impact",
+      "weekday_role": "changed_condition_scene",
+      "visual_claim": "Copilot CLI는 C++ 심볼 관계를 지속 인덱스로 만들어 반복 탐색에 다시 쓴다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 86656,
+      "quality": 82,
+      "sha256": "97f5b439114b9efb00eee8a77a6f2eaeb27f4d83d6b233d4e7b9952708d0b231"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "WCI가 C++ 정의와 참조 요청마다 관계를 다시 찾는 대신 전체 심볼 인덱스를 만들어 재사용하는 전후 비교",
+      "path": "docs/tistory/assets/2026-09-23/C++-코드탐색-WCI-전후비교.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/C%2B%2B-%EC%BD%94%EB%93%9C%ED%83%90%EC%83%89-WCI-%EC%A0%84%ED%9B%84%EB%B9%84%EA%B5%90.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT article before-and-after diagram. Primary request: 1200x630 landscape showing how C++ code navigation changes with whole codebase indexing. Left: each Go to Definition or Find References request reopens scattered header and source files and rebuilds their relationships. Right: one persistent WCI symbol index is created once and reused by both requests. Style/medium: crisp editorial technical diagram on pale gray paper, large shapes and short labels. Composition/framing: two clearly separated halves with a strong visual contrast, mobile readable, no fake product UI. Text (verbatim): 매번 다시 분석, 한 번 색인, 정의 찾기, 참조 찾기. Render these four labels exactly once each and no other letters, words, numbers, symbols, logos, or watermarks. Constraints: show C++ file relationships, not generic cloud storage; before-after logic must be unambiguous. Avoid: tiny text, dense cards, terminal screenshot, people, laptop, neon, title banner, extra text.",
+      "teaching_role": "before_after_change",
+      "teaching_claim": "WCI는 C++ 정의·참조 요청마다 관계를 다시 찾는 대신 전체 심볼 인덱스를 만들어 재사용한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 35072,
+      "quality": 82,
+      "sha256": "8299117dfa3e238c31d290b94a3e8d7bed7f35fe887c77ac316924e7bc7e1b53"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "WCI를 끄기 전에 색인 로그와 compile_commands.json, 완료 뒤 반복 탐색을 확인하는 네 단계 흐름",
+      "path": "docs/tistory/assets/2026-09-23/C++-WCI-비활성화전-확인순서.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/C%2B%2B-WCI-%EB%B9%84%ED%99%9C%EC%84%B1%ED%99%94%EC%A0%84-%ED%99%95%EC%9D%B8%EC%88%9C%EC%84%9C.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT article action-check diagram. Primary request: 1200x630 landscape four-step C++ WCI decision flow: inspect indexing progress in logs, verify compile_commands build information, repeat the same symbol navigation after indexing completes, then decide whether to keep or disable the index only if resource pressure persists. Style/medium: clean technical workflow with physical index cards and a small resource gauge, high contrast, generous spacing. Composition/framing: one left-to-right flow with four large stations, mobile readable. Text (verbatim): 로그 확인, 빌드 정보, 다시 탐색, 유지 또는 끄기. Render these four labels exactly once each and no other letters, words, numbers, symbols, logos, or watermarks. Constraints: final decision must branch between keeping and disabling; disabling is not shown as the default. Avoid: fake terminal output, GitHub logo, dense dashboard, tiny text, people, laptop, neon, title banner, extra text.",
+      "teaching_role": "action_check",
+      "teaching_claim": "WCI를 끄기 전에는 색인 로그, compile_commands.json, 인덱스 완료 뒤의 반복 탐색을 차례로 확인한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 31114,
+      "quality": 82,
+      "sha256": "73856da81bc484c1430b6519dbe4d85c0c67c80f2b55c4d775f5e2467c870f3d"
+    },
+    "visual_3": {
+      "origin": "annotated_capture",
+      "alt": "GitHub 공식 변경 화면에서 Copilot CLI C++ WCI 기본 활성화와 첫 색인의 추가 시간·메모리, 진행 확인 명령을 설명한 구간",
+      "path": "docs/tistory/assets/2026-09-23/GitHub-C++-WCI-공식변경.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-23/GitHub-C%2B%2B-WCI-%EA%B3%B5%EC%8B%9D%EB%B3%80%EA%B2%BD.webp",
+      "capture_tool": "playwright",
+      "capture_target": "GitHub Changelog의 Configure indexing 구간: WCI 기본 활성화, /lsp logs, 초기 시간·메모리, 비활성화 안내",
+      "captured_at": "2026-09-23T09:20:36+09:00",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "GitHub 공식 변경 화면은 C++ WCI의 기본 활성화와 첫 색인의 추가 시간·메모리 조건을 명시한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 52806,
+      "quality": 82,
+      "sha256": "74c8185a39d60bf39c32edd709e019f2c8447e23891571c2d2069fbd4d913f8e",
+      "capture_sha256": "74c8185a39d60bf39c32edd709e019f2c8447e23891571c2d2069fbd4d913f8e"
+    }
+  }
+}
