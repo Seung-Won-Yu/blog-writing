@@ -9,6 +9,7 @@ import re
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from .reader_value import reader_value_reasons
 
 from .draft_identity import (
     EVERGREEN_DAILY_START,
@@ -3358,6 +3359,7 @@ def source_authoring_reasons(source, identity):
         lambda: _search_conversion_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
         lambda: _original_value_reasons(source, identity),
+        lambda: reader_value_reasons(source, identity),
         lambda: _weekly_lane_reasons(source, identity),
         lambda: _selection_evaluation_reasons(source, identity),
         lambda: _automation_walkthrough_reasons(source, identity),

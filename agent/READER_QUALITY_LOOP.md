@@ -9,6 +9,9 @@ Codex가 같은 실행 안에서 원고를 고치는 자동 재편집 신호다.
 
 ## 종료 불변 조건
 
+2026-09-29부터 `agent/READER_VALUE.md`의 본문·근거 연결 검사도 통과해야 한다.
+자동 점수는 독창성 또는 AdSense 승인 판정이 아니며, 값만 올려 이 검사를 대체하지 않는다.
+
 - `reader_scores.general_reader_understanding >= 8.5`
 - `reader_scores.public_readability >= 8.5`
 - `editorial.reader_path`가 요일별 독자·본문 순서와 일치
