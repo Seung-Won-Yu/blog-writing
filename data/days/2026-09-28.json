@@ -1,0 +1,555 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-09-28",
+  "publish_date": "2026-09-28",
+  "date_label": "2026. 9. 28",
+  "weekday": "월",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-28T09:00:00+09:00",
+  "primary_query": "SaaS 장애 복구 체크리스트",
+  "tags": [
+    "SaaS 장애 복구 체크리스트",
+    "Salesforce 장애",
+    "재시도 폭주",
+    "중복 트랜잭션",
+    "비동기 큐 복구",
+    "서킷 브레이커",
+    "데이터 정합성"
+  ],
+  "visual": {
+    "subject": "정상 표시가 켜진 뒤에도 밀린 작업 영수증이 남아 있는 운영 데스크",
+    "hook": "로그인은 돌아왔지만 큐와 예약 작업의 처리 여부는 아직 알 수 없는 복구 순간",
+    "motif": "초록 상태등, 밀린 작업 영수증, 중복 도장, 복구 검증 트레이",
+    "weekday_profile": "practical_diagnosis",
+    "subject_terms": [
+      "SaaS",
+      "비동기 큐",
+      "서킷 브레이커"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "conditional",
+      "condition": "SaaS 로그인 화면은 정상화됐지만 장애 시간대의 비동기 작업 처리가 검증되지 않은 경우",
+      "label": "SaaS 장애 복구 뒤에도 밀린 작업과 중복 처리 흔적이 남은 운영 데스크",
+      "scene_label": [
+        "정상 상태등",
+        "밀린 작업",
+        "중복 흔적"
+      ],
+      "steps": "SaaS 장애 복구를 알리는 초록 상태등과 달리 뒤쪽 트레이에는 미처리 작업 영수증과 중복 도장이 남아 있어 완료 판정을 멈춘다.",
+      "curiosity_hook": "로그인이 다시 되는데도 왜 장애가 끝났다고 말할 수 없을까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "recovery-desk-hidden-backlog",
+      "composition_type": "status-lamp-and-backlog-tray-closeup",
+      "palette_family": "charcoal_mint_rust",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "초록 정상 상태등 바로 뒤에 쌓인 미처리 작업 영수증 트레이",
+      "texture_cue": "긁힌 금속 트레이, 구겨진 감열지, 잉크가 번진 중복 도장",
+      "authenticity_cue": "야간 장애 대응 데스크의 사용 흔적과 시간 순서가 섞인 작업 영수증",
+      "weekday_profile": "practical_diagnosis",
+      "weekday_role": "problem_scene",
+      "visual_claim": "SaaS 로그인 정상화만으로는 장애 시간대의 큐·예약 작업·중복 처리가 복구됐다고 판단할 수 없다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "정상",
+        "처리 대기"
+      ],
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Asset type: Korean practical IT article cover, 1200x630 landscape. Documentary macro closeup of a worn operations desk after a SaaS outage. In front, one small green service-status lamp is lit. Directly behind it, a metal tray holds crumpled asynchronous job receipts, one receipt stamped twice, and one receipt out of order. The lamp and tray fill about 65 percent of the frame; the unresolved receipts are the visual conflict. Natural office light, charcoal metal, muted mint lamp, rust-red stamp ink, real paper texture. Text (verbatim): 정상, 처리 대기. Place 정상 once beside the green lamp and 처리 대기 once on the tray. No other letters or numbers. Visual claim: SaaS login recovery does not prove queued jobs, scheduled work, and duplicate transactions recovered. Avoid: laptop, generic dashboard, fake UI, cloud icons, flowchart, grid, people, robot, neon, glossy stock photo, watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "label": "SaaS 장애 복구 작업을 접수·대기·완료·다운스트림으로 추적하는 진단 흐름",
+        "scene_label": [
+          "접수 기록",
+          "큐 적체",
+          "처리 결과",
+          "다운스트림"
+        ],
+        "steps": "장애 시간대를 고정한 뒤 접수 기록과 큐 적체를 맞추고, 처리 결과의 누락·중복·순서를 확인한 다음 다운스트림 상태와 조정한다.",
+        "curiosity_hook": "로그인이 돌아온 뒤 어떤 기록부터 맞춰야 누락과 중복을 동시에 찾을 수 있을까?",
+        "evidence_type": "diagram",
+        "teaching_role": "diagnosis_flow",
+        "teaching_claim": "SaaS 장애 복구는 장애 시간대를 고정하고 접수 기록, 비동기 큐, 처리 결과, 다운스트림 상태를 같은 작업 식별자로 이어서 확인해야 한다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "접수 기록",
+          "큐 적체",
+          "처리 결과",
+          "다운스트림"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT diagnosis visual, 1200x630 landscape. Create one precise left-to-right evidence trail for SaaS outage recovery with exactly four large stations: an intake receipt with one job ID, a backed-up queue spool, a processing-result ledger showing one missing and one duplicate mark, and a downstream record tray. Connect the same physical job token through all stations with one clear line. Text (verbatim): 접수 기록, 큐 적체, 처리 결과, 다운스트림. Render each label exactly once, large and mobile-readable. No other text or numbers. The diagram must show that the same work identifier is reconciled across the incident window. Style: restrained technical cutaway, charcoal and pale mint with rust-red exception marks. Avoid: dashboard cards, fake product UI, tiny text, cloud logos, people, invented metrics, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "condition": "외부 SaaS가 응답하지 않거나 복구 직후 오류·지연이 기준을 넘는 경우",
+        "label": "SaaS 재시도 계속과 서킷 브레이커·대기열 전환을 가르는 복구 경계",
+        "scene_label": [
+          "제한 재시도",
+          "회로 열기",
+          "대기열 보존",
+          "시험 요청"
+        ],
+        "steps": "일시 오류에는 제한된 지수 백오프를 적용하되 실패가 이어지면 회로를 열어 호출을 멈추고 작업을 대기열에 보존한 뒤 소수 시험 요청으로 복구를 확인한다.",
+        "curiosity_hook": "복구 중인 SaaS에 재시도를 더 보내는 것이 언제 회복을 늦출까?",
+        "evidence_type": "diagram",
+        "teaching_role": "recovery_boundary",
+        "teaching_claim": "복구 중에는 무제한 재시도 대신 제한된 백오프, 서킷 브레이커, 보존된 대기열, 소수 시험 요청으로 재개 경계를 정해야 한다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "제한 재시도",
+          "회로 열기",
+          "대기열 보존",
+          "시험 요청"
+        ],
+        "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT recovery-boundary visual, 1200x630 landscape. Show a request conveyor reaching a conditional gate after a SaaS outage. A small upper lane represents limited retries with widening spacing; when failures persist, a visible breaker opens and work moves into a preserved queue. A separate thin probe lane sends only one test token toward recovery. This is a conditional boundary, not a mandatory sequence. Text (verbatim): 제한 재시도, 회로 열기, 대기열 보존, 시험 요청. Each label exactly once, no other text or numbers. Large Korean labels readable at 390px, clear separation of the retry lane and probe lane, no implied universal threshold. Style: physical relay-and-paper-queue cutaway, warm gray, mint, rust red. Avoid: fake dashboard, product UI, tiny text, generic cloud icons, people, laptop, percentages, watermark.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "SaaS 장애 복구 체크리스트: 로그인 정상 뒤 큐·중복 처리 확인법",
+    "opening": "업무용 SaaS 상태 페이지가 초록색으로 바뀌고 로그인도 다시 된다. 그런데 장애 중 접수된 주문 하나는 사라졌고, 다른 요청은 두 번 처리됐다. 화면이 열린 시점과 업무가 복구된 시점은 같지 않다. 장애 시간대를 고정하고 접수 기록·비동기 큐·처리 결과·다운스트림을 같은 작업 식별자로 맞춰야 복구 완료를 말할 수 있다.",
+    "closing": "SaaS 제공자의 상태 페이지는 외부 서비스가 응답한다는 신호이지, 우리 업무가 모두 처리됐다는 증명은 아니다. 복구의 끝은 장애 시간대에 기대했던 작업을 목록으로 만들고, 누락·중복·순서 역전·다운스트림 불일치를 조정한 뒤 새 요청이 정상 경로로 흐르는지 확인하는 지점이다. 평소에 작업 식별자와 대기열 보존, 제한 재시도, 수동 처리 경로를 준비해 두면 다음 장애에서 ‘로그인은 된다’와 ‘업무가 끝났다’를 구분할 수 있다.",
+    "action": "최근 사용하는 SaaS 통합 하나를 골라 장애 시간대·작업 식별자·큐 위치·다운스트림 대조 기준·재개 승인자를 한 줄씩 적는다.",
+    "audience_problem": "외부 SaaS가 복구된 뒤 로그인과 단건 API만 확인하고 업무 재개를 선언해, 장애 시간대의 비동기 작업 누락·중복·순서 역전이 나중에 발견된다.",
+    "reader_takeaway": "장애 시간대를 경계로 접수 기록, 큐, 처리 결과, 다운스트림 데이터를 조정하고 재시도 폭주를 막은 뒤 안전하게 업무를 재개하는 체크리스트를 만들 수 있다.",
+    "why_now": "Salesforce는 2026년 9월 16일 전 리전의 다수 인스턴스에서 지연·오류·접근 불가를 겪었고, 공식 기록은 내부 로그인 서비스 대기가 서버 자원을 소모했다고 밝혔다. 9월 22일 독립 분석은 복구 뒤 예약 작업·큐·다운스트림 정합성 검증이 남는다고 짚었다.",
+    "topic_key": "saas-outage-recovery-reconciliation",
+    "reader_question": "SaaS 상태와 로그인이 정상으로 돌아온 뒤 어떤 기록을 어떤 순서로 맞춰야 누락·중복 처리 없이 업무 복구를 선언할 수 있을까?",
+    "entities": [
+      "Salesforce",
+      "비동기 큐",
+      "멱등성 키",
+      "서킷 브레이커",
+      "지수 백오프",
+      "다운스트림 조정"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "decision_guide",
+    "weekly_lane": "evergreen_problem",
+    "reader_hook": {
+      "scene": "SaaS 상태 페이지와 로그인은 정상인데 장애 중 요청한 주문·지원 티켓·예약 작업의 결과가 서로 다르다.",
+      "stakes": "화면 복구만 보고 재개하면 밀린 큐의 재시도와 새 요청이 겹쳐 누락·중복·순서 역전이 커질 수 있다.",
+      "payoff": "같은 작업 식별자로 네 기록을 맞추고, 재시도 차단과 업무 재개 경계를 정하는 복구 체크리스트를 만든다.",
+      "open_question": "외부 서비스가 정상이라고 알린 뒤 우리 쪽에서 무엇을 증명해야 장애가 실제로 끝난 걸까?"
+    },
+    "reader_path": {
+      "reader_level": "practitioner",
+      "entry_heading": "로그인 복구 뒤 네 흔적부터 맞춘다",
+      "immediate_answer": "SaaS 복구 알림만 믿지 말고 장애 시간대를 고정한 뒤 접수 기록, 비동기 큐, 처리 결과, 다운스트림 상태를 같은 작업 식별자로 맞춘다. 네 흔적이 일치해야 업무 복구를 선언할 수 있다.",
+      "action_steps": [
+        "상태 페이지·내부 알림·오류 로그로 장애 시작과 복구 후보 시각을 고정한다.",
+        "장애 시간대의 요청 ID·멱등성 키·업무 키를 모아 기대 작업 목록을 만든다.",
+        "비동기 큐와 예약 작업에서 대기·실패·재시도·완료 상태를 대조한다.",
+        "다운스트림 레코드의 누락·중복·순서 역전을 조정한 뒤 새 요청을 단계적으로 재개한다."
+      ],
+      "completion_check": "장애 시간대의 기대 작업 수와 최종 처리 결과가 일치하고, 중복·순서 역전 조정과 제한된 재개 시험이 기록되면 복구 확인이 끝난 것이다."
+    },
+    "revisit": {
+      "quick_answer": "로그인 정상화 뒤 장애 시간대의 작업 식별자를 기준으로 접수·큐·처리·다운스트림을 조정하고, 새 요청은 제한된 시험 뒤 재개한다.",
+      "reuse_case": "CRM, 결제, 고객 지원, 전자서명, 메시징처럼 외부 SaaS와 비동기 작업을 주고받는 통합 장애 뒤 같은 순서를 다시 쓴다.",
+      "failure_case": "작업 식별자나 원본 접수 기록이 없으면 자동 재실행하지 말고 금액·고객·시간 범위로 후보를 좁혀 사람이 승인한 조정 절차로 전환한다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "SaaS 제공자의 재시도·레이트리밋 정책 변경",
+        "큐나 예약 작업 실행기 변경",
+        "멱등성 키 생성 규칙 변경",
+        "새 다운스트림 시스템 또는 수동 처리 경로 추가"
+      ]
+    },
+    "search_intent": {
+      "query": "SaaS 장애 복구 체크리스트",
+      "reader_need": "외부 SaaS가 정상화된 뒤 누락·중복 작업을 찾고 안전하게 업무를 재개하는 실무 순서가 필요하다.",
+      "answer_format": "복구 확인 4단계 목록, 작업 상태 대조표, 재시도·차단·시험 요청의 재개 경계"
+    },
+    "original_value": {
+      "durable_question": "외부 SaaS가 복구됐다는 알림 뒤 우리 시스템의 업무 처리가 실제로 끝났음을 어떻게 증명할까?",
+      "source_gap": "Salesforce 사고 기록은 서비스 측 완화 과정을, 신뢰성 문서와 SRE 자료는 회로 차단·백오프·점진적 성능 저하를 각각 설명하지만 고객 시스템이 장애 시간대의 작업을 네 기록으로 조정하는 최소 절차는 한 흐름으로 제시하지 않는다.",
+      "contribution": "접수 기록·비동기 큐·처리 결과·다운스트림을 같은 작업 식별자로 맞추는 상태표와, 제한 재시도에서 회로 차단·대기열 보존·시험 요청으로 넘어가는 복구 경계를 제시한다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "개발·운영팀은 SaaS 상태가 정상화된 직후 기대 작업 목록을 만들고 누락·중복·순서 역전을 조정한 뒤 단계적으로 업무를 재개할 수 있다.",
+      "limits": "Salesforce의 2026년 9월 사고는 글을 여는 사례이며 모든 SaaS 장애가 같은 원인으로 발생한다는 뜻이 아니다. 실제 재시도 횟수와 지연·재개 기준은 공급자 정책과 업무 손실 허용 범위에 맞춰야 한다."
+    },
+    "selection_evaluation": {
+      "search_durability": 34,
+      "problem_solving": 29,
+      "evidence_quality": 20,
+      "current_interest": 8,
+      "internal_connection": 3,
+      "total": 94,
+      "threshold": 75,
+      "weekly_lane_score": 62,
+      "durable_problem_score": 10,
+      "evergreen_fit": 5,
+      "passed": true
+    }
+  },
+  "news": [
+    {
+      "title_kr": "SaaS 장애 복구 체크리스트: 로그인 정상 뒤 큐·중복 처리 확인법",
+      "source": "Salesforce Trust",
+      "url": "https://www.itworld.co.kr/article/4224645/%EC%84%B8%EC%9D%BC%EC%A6%88%ED%8F%AC%EC%8A%A4-%EB%8C%80%EA%B7%9C%EB%AA%A8-%EC%9E%A5%EC%95%A0%EA%B0%80-%EB%93%9C%EB%9F%AC%EB%82%B8-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%9D%98%EC%A1%B4%EC%84%B1.html",
+      "published_at": "2026-09-22T03:33:07+00:00",
+      "blurb_kr": "Salesforce의 전 리전 장애에서 내부 로그인 서비스 대기가 서버 자원을 소모하고 복구가 리전별 배포와 수동 재시작까지 이어진 사례를 출발점으로, 외부 SaaS 정상화 뒤 우리 쪽 큐·예약 작업·중복·다운스트림 정합성을 확인하는 순서를 정리했다.",
+      "references": [
+        {
+          "title": "Salesforce Trust Incident 20004433",
+          "url": "https://status.salesforce.com/incidents/20004433",
+          "kind": "official"
+        },
+        {
+          "title": "Salesforce Well-Architected: Reliability",
+          "url": "https://architect.salesforce.com/docs/architect/well-architected/guide/reliability.html",
+          "kind": "official"
+        },
+        {
+          "title": "AWS Builders' Library: Static stability using Availability Zones",
+          "url": "https://aws.amazon.com/builders-library/static-stability-using-availability-zones/",
+          "kind": "official"
+        },
+        {
+          "title": "Google SRE: Addressing Cascading Failures",
+          "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+          "kind": "official"
+        },
+        {
+          "title": "세일즈포스 대규모 장애가 드러낸 클라우드 의존성의 맹점",
+          "url": "https://www.itworld.co.kr/article/4224645/%EC%84%B8%EC%9D%BC%EC%A6%88%ED%8F%AC%EC%8A%A4-%EB%8C%80%EA%B7%9C%EB%AA%A8-%EC%9E%A5%EC%95%A0%EA%B0%80-%EB%93%9C%EB%9F%AC%EB%82%B8-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%9D%98%EC%A1%B4%EC%84%B1.html",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "로그인 복구 뒤 네 흔적부터 맞춘다"
+        },
+        {
+          "t": "p",
+          "text": "SaaS 복구 알림만 믿지 말고 장애 시간대를 고정한 뒤 접수 기록, 비동기 큐, 처리 결과, 다운스트림 상태를 같은 작업 식별자로 맞춘다. 네 흔적이 일치해야 업무 복구를 선언할 수 있다. 화면이 열리는지 확인하는 일은 시작일 뿐이다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "상태 페이지·내부 알림·오류 로그로 장애 시작과 복구 후보 시각을 고정한다.",
+            "장애 시간대의 요청 ID·멱등성 키·업무 키를 모아 기대 작업 목록을 만든다.",
+            "비동기 큐와 예약 작업에서 대기·실패·재시도·완료 상태를 대조한다.",
+            "다운스트림 레코드의 누락·중복·순서 역전을 조정한 뒤 새 요청을 단계적으로 재개한다."
+          ],
+          "reusable": true,
+          "reuse_label": "SaaS 장애 복구 뒤 네 기록 대조 체크리스트"
+        },
+        {
+          "t": "p",
+          "text": "작업 식별자는 기술 ID 하나로 고정할 필요가 없다. 요청 ID가 없으면 주문 번호·고객 번호·예약 시각처럼 업무가 이미 가진 키를 조합한다. 다만 사람 이름이나 금액만으로 다시 실행하면 다른 요청을 중복 처리할 수 있으므로, 자동 조정과 수동 승인의 경계를 먼저 나눈다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "SaaS 장애 복구는 장애 시간대를 고정하고 접수 기록, 비동기 큐, 처리 결과, 다운스트림 상태를 같은 작업 식별자로 이어서 확인해야 한다. 어느 한 구간에서 식별자가 끊기면 그 지점부터 수동 조정 대상으로 남긴다."
+        },
+        {
+          "t": "h",
+          "text": "정상 화면과 완료된 업무는 같은 상태가 아니다"
+        },
+        {
+          "t": "p",
+          "text": "Salesforce의 2026년 9월 16일 공식 사고 기록은 내부 로그인 서비스의 응답을 기다리는 요청이 사용 가능한 서버 자원을 소모했다고 설명한다. 일부 고객은 심한 지연과 간헐적 오류뿐 아니라 지원 케이스 생성 불가도 겪었다. 복구는 시험 인스턴스 검증, 전 리전 배포, 추가 모니터링으로 이어졌다."
+        },
+        {
+          "t": "p",
+          "text": "ITWorld의 후속 분석은 로그인 이후를 더 구체적으로 짚었다. 장애 중의 API 호출, 통합, 예약 작업, 큐와 워크플로는 늦게 실행되거나 실패하거나 순서가 바뀔 수 있다. 기저 데이터가 남아 있어도 직원이 최신 고객 이력과 처리 상태를 보지 못하면 업무 기준으로는 복구가 끝난 것이 아니다."
+        },
+        {
+          "t": "p",
+          "text": "그래서 복구 후보 시각을 한 점으로 믿지 않고 구간으로 다룬다. 제공자가 정상화를 알린 시각, 우리 오류율이 평소 범위로 돌아온 시각, 큐 적체가 줄기 시작한 시각을 따로 기록한다. 조정 대상은 이 구간 앞뒤에 여유를 둔 작업 목록에서 찾는다."
+        },
+        {
+          "t": "h",
+          "text": "작업은 네 가지 실패 상태로 나눠야 보인다"
+        },
+        {
+          "t": "p",
+          "text": "장애 중 작업을 성공과 실패 두 칸으로만 나누면 재시도 결과가 숨는다. 접수 자체가 안 된 작업, 접수됐지만 대기 중인 작업, 한 번 완료된 작업, 두 번 이상 완료된 작업을 분리한다. 이벤트 순서가 중요한 업무라면 완료 시각과 원래 발생 시각도 함께 비교한다."
+        },
+        {
+          "t": "table",
+          "caption": "SaaS 장애 시간대 작업을 조정하는 최소 상태표",
+          "headers": [
+            "상태",
+            "찾을 흔적",
+            "조치",
+            "자동 재실행"
+          ],
+          "rows": [
+            [
+              "미접수",
+              "원본 요청은 있으나 SaaS 접수 ID 없음",
+              "업무 유효성 확인 뒤 새 요청",
+              "조건부"
+            ],
+            [
+              "대기·실패",
+              "큐·예약 작업에 미완료 상태",
+              "원인 제거 뒤 제한 재시도",
+              "가능"
+            ],
+            [
+              "완료",
+              "SaaS와 다운스트림 결과 일치",
+              "재실행하지 않고 기록",
+              "금지"
+            ],
+            [
+              "중복·순서 역전",
+              "같은 업무 키의 복수 결과·시간 불일치",
+              "취소·병합·수동 조정",
+              "금지"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "멱등성 키가 있으면 같은 요청의 재처리를 구분하기 쉬워진다. 그렇다고 키만 있으면 안전한 것은 아니다. 공급자가 키를 얼마 동안 보존하는지, 응답을 받기 전에 연결이 끊겼을 때 처리 여부를 다시 조회할 수 있는지, 다운스트림도 같은 키를 이어받는지 확인해야 한다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "무제한 재시도는 복구 중인 서비스를 다시 누른다"
+        },
+        {
+          "t": "p",
+          "text": "Google SRE는 여러 계층이 각각 재시도하면 한 번의 사용자 동작이 아래 계층에서 기하급수적으로 늘어날 수 있다고 경고한다. 각 계층이 최초 요청 뒤 세 번씩 더 시도하는 구조라면 세 계층만 거쳐도 최하단에는 최대 64번의 시도가 생긴다. 실패한 SaaS가 회복 중일 때 이런 증폭은 큐 적체와 타임아웃을 더 키운다."
+        },
+        {
+          "t": "p",
+          "text": "일시적인 네트워크 오류와 5xx에는 무작위 지연을 섞은 지수 백오프와 횟수 제한을 쓴다. 잘못된 요청을 뜻하는 일반 4xx는 같은 내용으로 반복하지 않는다. 429는 공급자가 보낸 Retry-After나 레이트리밋 재설정 시각을 따른다. 재시도를 한 계층에 모으면 전체 시도량을 계산하기도 쉬워진다."
+        },
+        {
+          "t": "p",
+          "text": "Salesforce의 신뢰성 지침은 외부 통합 실패가 이어질 때 서킷 브레이커를 열어 느린 타임아웃이 자원을 계속 잡지 않게 하고, 회복 확인에는 소수 요청만 보내라고 설명한다. 실패 중인 기능이 핵심 경로가 아니라면 추천·분석 같은 부가 기능을 끄고 핵심 업무만 유지하는 점진적 성능 저하도 준비한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "복구 중에는 무제한 재시도 대신 제한된 백오프, 서킷 브레이커, 보존된 대기열, 소수 시험 요청으로 재개 경계를 정해야 한다. 공급자별 오류 코드와 재시도 정책이 다르면 이 분기를 먼저 수정한다."
+        },
+        {
+          "t": "h",
+          "text": "복구 경로가 장애 난 제어면을 다시 요구하면 늦어진다"
+        },
+        {
+          "t": "p",
+          "text": "AWS가 설명하는 정적 안정성의 핵심은 장애가 난 뒤 새 자원을 만들거나 설정을 바꾸는 제어 작업에 복구를 의존하지 않는 것이다. 외부 SaaS 통합에도 같은 질문을 적용할 수 있다. SaaS가 멈췄을 때 작업을 잃지 않고 보관할 대기열, 마지막으로 확인된 읽기 데이터, 수동 처리 경로가 이미 준비돼 있는지 본다."
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 주소 검증 서비스가 멈췄다고 주문 접수 전체를 막을 필요는 없다. 검증 대기 상태로 주문을 보존하고 수동 확인으로 넘길 수 있다면 하드 의존성을 소프트 의존성으로 바꾼다. 반대로 결제 승인처럼 추측한 기본값을 쓸 수 없는 기능은 명확히 멈추고 사용자에게 처리 보류 상태를 보여 줘야 한다."
+        },
+        {
+          "t": "p",
+          "text": "이 분류는 장애 중에 즉석에서 만들기 어렵다. 기능을 핵심·중요·지원·선택으로 나누고, 각 기능에 중단·대기열 보존·읽기 전용·수동 처리 중 한 경로를 미리 정한다. 복구 시에는 경로를 새로 설계하지 않고 준비된 모드가 실제로 작동했는지 확인한다."
+        },
+        {
+          "t": "h",
+          "text": "업무 재개는 작은 시험과 조정 완료로 나눈다"
+        },
+        {
+          "t": "p",
+          "text": "복구 후보가 보이면 새 요청을 한꺼번에 풀지 않는다. 읽기, 단건 쓰기, 비동기 작업, 대량 작업 순으로 작은 시험을 보내고 오류·지연·큐 깊이를 평소 기준과 비교한다. 시험 요청은 실제 업무 키로 추적할 수 있어야 하며, 끝난 뒤 다운스트림까지 같은 결과가 남았는지 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "그와 별개로 장애 시간대의 기존 작업을 조정한다. 기대 작업 목록과 최종 결과 수를 맞추고, 중복 처리는 취소나 병합 기록을 남기며, 순서 역전은 후속 계산과 알림에 미친 영향을 확인한다. 새 요청이 정상이라고 과거 적체를 완료 처리하지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "작업 식별자가 끊긴 구간은 자동화 범위 밖이다. 금액·고객·시간대가 비슷한 후보를 사람이 검토하고, 재실행 전에 이미 처리됐을 가능성을 확인한다. 완벽한 자동 복구보다 중복 결제나 중복 통지를 막는 보수적인 정지가 더 나은 업무도 있다."
+        },
+        {
+          "t": "h",
+          "text": "복구 완료는 상태 페이지가 아니라 증거 묶음으로 남긴다"
+        },
+        {
+          "t": "p",
+          "text": "완료 기록에는 장애 시간대, 기대 작업 수, 상태별 작업 수, 수동 조정 목록, 재시도 정책, 시험 요청 결과, 재개 승인자를 남긴다. 숫자는 공급자 상태 페이지의 전체 영향이 아니라 우리 시스템에서 관찰한 범위임을 구분한다. 나중에 공급자의 근본 원인 분석이 나오면 원인 문장과 재발 방지 항목을 보강한다."
+        },
+        {
+          "t": "p",
+          "text": "장애 시간대의 기대 작업 수와 최종 처리 결과가 일치하고, 중복·순서 역전 조정과 제한된 재개 시험이 기록되면 복구 확인이 끝난 것이다. 이 기록을 다음 훈련의 입력으로 쓰면 상태 페이지와 로그인만 보는 습관에서 벗어날 수 있다."
+        }
+      ]
+    }
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "SaaS 장애 복구는 로그인 확인으로 끝나지 않으며 접수 기록·비동기 큐·처리 결과·다운스트림을 같은 작업 식별자로 맞춰야 한다.",
+      "재시도는 오류 종류에 따라 제한하고 실패가 이어지면 회로를 열어 작업을 대기열에 보존한 뒤 소수 시험 요청으로 재개한다.",
+      "작업 식별자가 없거나 중복·순서 역전의 업무 영향이 불명확하면 자동 재실행하지 말고 사람이 승인한 조정 절차로 전환한다."
+    ],
+    "glossary": [
+      {
+        "term": "멱등성 키",
+        "meaning": "같은 업무 요청을 다시 보내도 한 번만 처리되도록 중복 여부를 구분하는 식별자다."
+      },
+      {
+        "term": "비동기 큐",
+        "meaning": "요청을 즉시 끝내지 않고 대기열에 보관했다가 작업자가 나중에 처리하는 구조다."
+      },
+      {
+        "term": "서킷 브레이커",
+        "meaning": "외부 서비스 실패가 이어질 때 호출을 잠시 멈춰 타임아웃과 부하가 번지는 일을 막는 장치다."
+      },
+      {
+        "term": "다운스트림",
+        "meaning": "현재 시스템의 처리 결과를 받아 저장·계산·알림하는 다음 시스템을 뜻한다."
+      },
+      {
+        "term": "정적 안정성",
+        "meaning": "장애가 난 뒤 새 자원 생성이나 설정 변경에 기대지 않아도 준비된 용량과 경로로 계속 동작하는 성질이다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-5.6-sol",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "cover_kind": "editorial_scene",
+      "art_direction": "recovery-desk-hidden-backlog",
+      "composition_type": "status-lamp-and-backlog-tray-closeup",
+      "palette_family": "charcoal_mint_rust",
+      "render_family": "macro_object",
+      "editorial_treatment": "documentary_closeup",
+      "focal_subject": "초록 정상 상태등 바로 뒤에 쌓인 미처리 작업 영수증 트레이",
+      "texture_cue": "긁힌 금속 트레이, 구겨진 감열지, 잉크가 번진 중복 도장",
+      "authenticity_cue": "야간 장애 대응 데스크의 사용 흔적과 시간 순서가 섞인 작업 영수증",
+      "weekday_profile": "practical_diagnosis",
+      "weekday_role": "problem_scene",
+      "visual_claim": "SaaS 로그인 정상화만으로는 장애 시간대의 큐·예약 작업·중복 처리가 복구됐다고 판단할 수 없다",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural. Asset intent: editorial-scene. Asset type: Korean practical IT article cover, 1200x630 landscape. Documentary macro closeup of a worn operations desk after a SaaS outage. In front, one small green service-status lamp is lit. Directly behind it, a metal tray holds crumpled asynchronous job receipts, one receipt stamped twice, and one receipt out of order. The lamp and tray fill about 65 percent of the frame; the unresolved receipts are the visual conflict. Natural office light, charcoal metal, muted mint lamp, rust-red stamp ink, real paper texture. Text (verbatim): 정상, 처리 대기. Place 정상 once beside the green lamp and 처리 대기 once on the tray. No other letters or numbers. Visual claim: SaaS login recovery does not prove queued jobs, scheduled work, and duplicate transactions recovered. Avoid: laptop, generic dashboard, fake UI, cloud icons, flowchart, grid, people, robot, neon, glossy stock photo, watermark.",
+      "alt": "SaaS 로그인 정상화만으로는 장애 시간대의 큐·예약 작업·중복 처리가 복구됐다고 판단할 수 없다 — 정상 상태등 뒤의 처리 대기 트레이",
+      "path": "docs/tistory/assets/2026-09-28/SaaS-장애복구-처리대기-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-28/SaaS-%EC%9E%A5%EC%95%A0%EB%B3%B5%EA%B5%AC-%EC%B2%98%EB%A6%AC%EB%8C%80%EA%B8%B0-%EB%8C%80%ED%91%9C.webp",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 80302,
+      "quality": 82,
+      "sha256": "18894dffa979edcdf5ec23bbcaa46217a981d376698652aa47929b7155370882"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "SaaS 장애 복구에서 접수 기록과 비동기 큐, 처리 결과, 다운스트림을 같은 작업 식별자로 이어 확인하는 진단 흐름",
+      "path": "docs/tistory/assets/2026-09-28/SaaS-복구-네기록-진단흐름.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-28/SaaS-%EB%B3%B5%EA%B5%AC-%EB%84%A4%EA%B8%B0%EB%A1%9D-%EC%A7%84%EB%8B%A8%ED%9D%90%EB%A6%84.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. Asset type: Korean practical IT diagnosis visual, 1200x630 landscape. Create one precise left-to-right evidence trail for SaaS outage recovery with exactly four large stations: an intake receipt with one job ID, a backed-up queue spool, a processing-result ledger showing one missing and one duplicate mark, and a downstream record tray. Connect the same physical job token through all stations with one clear line. Text (verbatim): 접수 기록, 큐 적체, 처리 결과, 다운스트림. Render each label exactly once, large and mobile-readable. No other text or numbers. The diagram must show that the same work identifier is reconciled across the incident window. Style: restrained technical cutaway, charcoal and pale mint with rust-red exception marks. Avoid: dashboard cards, fake product UI, tiny text, cloud logos, people, invented metrics, watermark.",
+      "teaching_role": "diagnosis_flow",
+      "teaching_claim": "SaaS 장애 복구는 장애 시간대를 고정하고 접수 기록, 비동기 큐, 처리 결과, 다운스트림 상태를 같은 작업 식별자로 이어서 확인해야 한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 41358,
+      "quality": 82,
+      "sha256": "7e71422c95c82719f5296ad419f0d09f1e94e4c1eb22e3ca2ccaca33e6f7411a"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "SaaS 장애 복구 중 제한 재시도에서 회로 차단과 대기열 보존, 소수 시험 요청으로 전환하는 복구 경계",
+      "path": "docs/tistory/assets/2026-09-28/SaaS-재시도-회로차단-복구경계.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-28/SaaS-%EC%9E%AC%EC%8B%9C%EB%8F%84-%ED%9A%8C%EB%A1%9C%EC%B0%A8%EB%8B%A8-%EB%B3%B5%EA%B5%AC%EA%B2%BD%EA%B3%84.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: infographic-diagram. Asset type: Korean practical IT recovery-boundary visual, 1200x630 landscape. Show a request conveyor reaching a conditional gate after a SaaS outage. A small upper lane represents limited retries with widening spacing; when failures persist, a visible breaker opens and work moves into a preserved queue. A separate thin probe lane sends only one test token toward recovery. This is a conditional boundary, not a mandatory sequence. Text (verbatim): 제한 재시도, 회로 열기, 대기열 보존, 시험 요청. Each label exactly once, no other text or numbers. Large Korean labels readable at 390px, clear separation of the retry lane and probe lane, no implied universal threshold. Style: physical relay-and-paper-queue cutaway, warm gray, mint, rust red. Avoid: fake dashboard, product UI, tiny text, generic cloud icons, people, laptop, percentages, watermark.",
+      "teaching_role": "recovery_boundary",
+      "teaching_claim": "복구 중에는 무제한 재시도 대신 제한된 백오프, 서킷 브레이커, 보존된 대기열, 소수 시험 요청으로 재개 경계를 정해야 한다",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 85624,
+      "quality": 82,
+      "sha256": "dacbf8566013fe465eed9c803ef224f68b15f77dc5e3c104867251706abe70bb"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "GitHub Actions 러너 업데이트: 큐 대기 전에 확인할 5곳",
+      "url": "https://won0322.tistory.com/217",
+      "reason": "외부 SaaS 복구 뒤에도 자동화 작업이 큐에서 멈출 때 러너 상태·버전·로그를 분리해 확인하는 운영 진단으로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "GitHub Actions 권한 최소화: GITHUB_TOKEN과 pull_request_target을 분리해야 하는 이유",
+      "url": "https://won0322.tistory.com/139",
+      "reason": "복구용 재처리 작업이 과도한 쓰기 권한으로 피해를 넓히지 않도록 자동화 권한 경계를 점검하는 다음 단계로 이어진다.",
+      "role": "next_step"
+    }
+  ]
+}
