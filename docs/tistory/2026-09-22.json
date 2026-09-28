@@ -21,7 +21,7 @@
     "세로 가로 전환",
     "1분 확인"
   ],
-  "meta_description": "소파에서 영상을 보려고 스마트폰을 옆으로 돌리면 화면도 잠시 뒤 가로로 바뀐다. 카메라가 방을 보는 것도, 안에 작은 수평계가 굴러다니는 것도 아니다. 휴대폰은 가속도 센서가 읽은 중력 방향으로 어느… 가속도 센서는 세 축에서 중력과 움직임을 읽고, 운영체제는 안정된 아래 방향과 사용…",
+  "meta_description": "스마트폰을 옆으로 돌렸는데 화면은 그대로다. 고장일까? 꼭 그렇지는 않다. 휴대폰이 방향을 알아내는 일과 앱이 화면을 돌리는 일은 별개다. 그 차이를 알면 회전 잠금을 먼저 볼지, 앱을 바꿔 볼지 판… 가속도 센서는 세 축에서 중력과 움직임을 읽고, 운영체제는 안정된 아래 방향과 사용…",
   "key_summary": [
     "1. 스마트폰 가속도 센서가 중력 방향으로 화면 회전을 판단하는 원리",
     "직접 얻는 결과: 가속도 센서가 중력 방향을 세 축으로 읽는 원리, 운영체제가 흔들림을 걸러 화면을 다시 그리는 과정, 평평한 자세와 앱 설정이라는 실패 경계를 이해한다."
@@ -36,7 +36,7 @@
     "추천 제목: 스마트폰 화면 자동 회전은 어떻게 방향을 알아챌까? 가속도 센서의 원리"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 8,
+  "estimated_read_minutes": 7,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -44,14 +44,14 @@
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-09-22.json",
-  "source_page": null,
+  "source_page": "https://won0322.tistory.com/236",
   "html": "docs/tistory/2026-09-22.html",
   "before_ad_html": "docs/tistory/2026-09-22-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-22-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-22-adfit.html",
-  "source_sha256": "3c677a798f140b802c62886351b2655f29da99d29a1d6a8778ef25d0fdf4bf61",
-  "html_sha256": "c0c37949a119d79db79db39c2c15c1bcd351a892356393b8ad44796469505342",
-  "adfit_sha256": "ebaf7a6f70fbd5a7f7f6dd751c0d6c316dcc54ee75aa5495ab76000a8d630596",
+  "source_sha256": "65bd758ae40d183113fddb7a2d437e69d6a92ecf0f97517c2443ec91149457a1",
+  "html_sha256": "541d9f7e315c5c8e1d81232c7098c3b86cb20a3dc786407e521f56b7b6d65abc",
+  "adfit_sha256": "4f56357161f02b7caf12c53c0aa5ee7bf3f5d8436cc9ac0b4dd2298d08810ef2",
   "image_assets": [
     {
       "kind": "cover",

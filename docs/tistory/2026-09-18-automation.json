@@ -35,7 +35,7 @@
     "추천 제목: Ollama·vLLM·LiteLLM·Langfuse 차이: AI 앱 역할별 선택 기준"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 8,
+  "estimated_read_minutes": 10,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -43,14 +43,14 @@
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/automation_cases/2026-09-18.json",
-  "source_page": null,
+  "source_page": "https://won0322.tistory.com/234",
   "html": "docs/tistory/2026-09-18-automation.html",
   "before_ad_html": "docs/tistory/2026-09-18-automation-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-18-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-18-automation-adfit.html",
-  "source_sha256": "e1101e81ce7747fe5a695eb004e1bcf1dd91fcf605738f0665cae680d6a24b7d",
-  "html_sha256": "8e7919524c1179bb80ccf8496cb16b85a92e787d5fda12ed82d29994e5dde2aa",
-  "adfit_sha256": "f0a25bc2a0d6062682679e96091964866b36866d8adaa46af47bd03058a1ea6c",
+  "source_sha256": "131fddb520a75cfa38e8783f4a5d121c071d0dedafaa69caf6ceb3ceb3149ea2",
+  "html_sha256": "7c712964ba6efb70247444c0c35b13a8b2f62e55c86a907e37bc0f8161e1d151",
+  "adfit_sha256": "a4e769df692b91e8cbfd36052672e6c9c1b6da7408d1df3344d8b09abfe55006",
   "image_assets": [
     {
       "kind": "cover",

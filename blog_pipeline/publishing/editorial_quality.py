@@ -1802,7 +1802,8 @@ def _valid_reader_summary(access):
 
 def _valid_reader_glossary(access):
     glossary = access.get("glossary")
-    if not isinstance(glossary, list) or not 3 <= len(glossary) <= 5:
+    # Do not force a third jargon term into an otherwise simple explanation.
+    if not isinstance(glossary, list) or not 2 <= len(glossary) <= 5:
         return False
     terms = []
     for item in glossary:
