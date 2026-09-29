@@ -1,0 +1,107 @@
+{
+  "title": "압축 파일은 어떻게 작아졌다가 원본으로 돌아올까? ZIP 원리",
+  "title_candidates": [
+    "압축 파일은 어떻게 작아졌다가 원본으로 돌아올까? ZIP 원리",
+    "ZIP이 반복을 짧게 적고 같은 바이트를 되살리는 원리",
+    "첨부할 문서 폴더를 ZIP으로 묶자 작아지고 다시 풀면 같은 문서가 나오는 장면을 확인하는 하루: 파일을 버리지도 않았는…"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-09-29",
+  "publish_date": "2026-09-29",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-29T09:00:00+09:00",
+  "tags": [
+    "압축 파일 원리",
+    "ZIP 파일",
+    "무손실 압축",
+    "DEFLATE",
+    "파일 용량",
+    "압축 풀기",
+    "JPEG 재압축"
+  ],
+  "meta_description": "여러 문서를 ZIP으로 묶었더니 용량이 줄었다. 그런데 압축을 풀면 글자 하나까지 다시 돌아온다. 원본을 잠깐 버렸다가 추측하는 것이 아니라, 반복된 바이트를 짧은 참조와 코드로 바꿔 적어 둔 덕분이… ZIP에서 널리 쓰이는 DEFLATE는 반복된 바이트를 거리와 길이 참조로 바꾸고…",
+  "key_summary": [
+    "1. ZIP이 반복을 짧게 적고 같은 바이트를 되살리는 원리",
+    "직접 얻는 결과: 반복 구간을 참조로 바꾸고 자주 나오는 값을 짧게 기록하는 무손실 압축 원리, 역복원 과정, JPEG 재압축의 한계를 이해한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 압축 파일은 어떻게 작아졌다가 원본으로 돌아올까? ZIP 원리"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-29.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-29.html",
+  "before_ad_html": "docs/tistory/2026-09-29-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-29-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-29-adfit.html",
+  "source_sha256": "b81cb8a3ed366b0f0c93783f9ac626032856e1a4efe8ed4dee36967ba9165bc8",
+  "html_sha256": "3f5654f1791bba794f3c82930318cfd74b76a8e840b0782ed654063a1fe10c63",
+  "adfit_sha256": "e69967233debfe13444bc6de01f78dab42bce029672916725764dc3e26748bbb",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-29/압축파일-ZIP-원본복원-대표.webp",
+      "path": "docs/tistory/assets/2026-09-29/압축파일-ZIP-원본복원-대표.webp",
+      "original_url": "",
+      "alt": "ZIP은 반복된 바이트를 짧은 참조와 코드로 바꿔 용량을 줄이고 그 기록을 역으로 따라 원본을 복원한다 — 문서 폴더와 ZIP을 확인하는 하루",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-29/압축파일-일상질문-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-29/압축파일-일상질문-말풍선.webp",
+      "original_url": "",
+      "alt": "같은 문서 폴더를 ZIP으로 묶자 작아진 것을 확인하는 하루 대사: 하루: 같은 파일인데 왜 더 작아졌지?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-29/ZIP-반복참조-원리-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-29/ZIP-반복참조-원리-말풍선.webp",
+      "original_url": "",
+      "alt": "ZIP이 반복 구간을 뒤쪽 참조와 짧은 코드로 바꾸는 원리를 가리키는 하루 대사: 하루: 반복을 한 번만 적는 거구나!",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-29/텍스트-JPEG-압축비교-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-29/텍스트-JPEG-압축비교-말풍선.webp",
+      "original_url": "",
+      "alt": "반복 문서와 JPEG 사진을 따로 ZIP으로 묶어 비교하는 하루 대사: 하루: 텍스트와 사진을 따로 묶어 볼게요!",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_4",
+      "title": "본문 이해 이미지 4",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-29/JPEG-재압축-예외경계-말풍선.webp",
+      "path": "docs/tistory/assets/2026-09-29/JPEG-재압축-예외경계-말풍선.webp",
+      "original_url": "",
+      "alt": "JPEG 사진은 ZIP으로 다시 묶어도 거의 줄지 않는 경계를 설명하는 하루 대사: 하루: 사진은 이미 많이 줄어 있었어요.",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
