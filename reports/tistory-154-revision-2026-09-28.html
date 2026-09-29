@@ -1,0 +1,281 @@
+<style>
+.detection-post {
+  --dt-ink: #192538;
+  --dt-muted: #626d79;
+  --dt-line: #dce2e7;
+  --dt-accent: #b45309;
+  --dt-soft: #fff4e5;
+  --dt-cool: #edf7f5;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 26px;
+  color: var(--dt-ink);
+  font-size: 18px;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.detection-post * { box-sizing: border-box; }
+.detection-post p { margin: 0 0 1.15em; }
+.detection-post h2 { margin: 2.7em 0 0.85em; padding-bottom: 0.38em; border-bottom: 2px solid var(--dt-ink); font-size: 1.5em; line-height: 1.4; }
+.detection-post h3 { margin: 2em 0 0.65em; color: var(--dt-accent); font-size: 1.17em; }
+.detection-post strong { color: #7c3606; }
+.detection-post .dt-lead { font-size: 1.08em; line-height: 1.9; }
+.detection-post .dt-key,
+.detection-post .dt-note { width: 100%; margin: 1.45em 0; border-left: 5px solid var(--dt-accent); background: var(--dt-soft); }
+.detection-post .dt-note { border: 1px solid #bcded8; border-left-width: 5px; border-left-color: #0f766e; background: var(--dt-cool); }
+.detection-post .dt-key p,
+.detection-post .dt-note p { margin: 0; padding: 15px 18px; }
+.detection-post .dt-toc { margin: 1.7em 0 2.2em; border: 1px solid var(--dt-line); background: #fff; }
+.detection-post .dt-toc strong { display: block; padding: 16px 18px 5px; }
+.detection-post .dt-toc ol { margin: 0; padding: 4px 18px 17px 40px; }
+.detection-post li { margin: 0.38em 0; }
+.detection-post .dt-visual { margin: 2em 0 2.3em; }
+.detection-post .dt-visual figure { margin: 0 !important; }
+.detection-post .dt-visual img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.detection-post .dt-caption { margin: 10px 0 0; color: var(--dt-muted); font-size: 0.83em; line-height: 1.6; text-align: center; }
+.detection-post .dt-code { max-width: 100%; margin: 1.25em 0 1.7em; overflow-x: auto; -webkit-overflow-scrolling: touch; background: #111827; }
+.detection-post .dt-code pre { min-width: max-content; margin: 0; padding: 18px 20px; color: #e5edf7; font: 15px/1.7 SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+.detection-post code:not(pre code) { padding: 0.12em 0.38em; background: #eef2f6; color: #9b3f20; font-size: 0.92em; }
+.detection-post .dt-table { max-width: 100%; margin: 1.3em 0 1.8em; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.detection-post table { width: 100%; min-width: 650px; border-collapse: collapse; font-size: 0.92em; }
+.detection-post th,
+.detection-post td { padding: 11px 13px; border: 1px solid var(--dt-line); text-align: left; vertical-align: top; }
+.detection-post th { background: #faf5ed; white-space: nowrap; }
+.detection-post .dt-summary { margin-top: 2.3em; border-top: 3px solid var(--dt-accent); background: #fbf9f5; }
+.detection-post .dt-summary-inner { padding: 18px 20px; }
+.detection-post .dt-summary h2 { margin: 0 0 0.6em; padding: 0; border: 0; font-size: 1.28em; }
+@media (max-width: 640px) {
+  .detection-post { padding: 0 19px; font-size: 17px; line-height: 1.82; }
+  .detection-post h2 { margin-top: 2.35em; font-size: 1.35em; }
+  .detection-post h3 { font-size: 1.1em; }
+  .detection-post .dt-code pre { padding: 16px; font-size: 14px; }
+}
+</style>
+
+<article class="detection-post">
+  <p class="dt-lead">카메라로 택배 상자를 세고 싶다고 해 보자. 상자의 테두리에 선을 긋는 것, 사진 속 물체가 상자라고 알아보는 것, 움직이는 상자를 두 번 세지 않는 것은 서로 다른 일이다. 이 차이를 알면 OpenCV로 충분한 문제와 학습 모델·추적기가 필요한 문제를 구분할 수 있다.</p>
+
+  <div class="dt-key"><p><strong>처음 읽는다면:</strong> 1절에서 선 찾기·물체 찾기·이동 추적을 구분한 뒤 7절의 사진 한 장 실습으로 넘어가자. 모델 비교가 필요할 때 3~6절을 읽으면 된다. 실습에는 Python 기초와 이미지 파일이 필요하며, 이 글에서는 YOLO 학습이나 추적기 구현까지 수행하지 않는다.</p></div>
+
+  <div class="dt-visual">
+    <p>[##_Image|kage@O9kcZ/dJMcaiEd44D/AAAAAAAAAAAAAAAAAAAAAMFfRSbDbrLoxYtY6-KZakgD0vMVCDkoZNCCZtgKMxtw/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=CAUWsDDF%2FYtOMUscBcKOuxmS2Ik%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"1번-객체검출-중복박스-추적-대표이미지.png"}_##]</p>
+    <p class="dt-caption">중복 박스 제거와 추적 ID 연결을 설명하는 개념 그림. 실제 현장 측정 결과가 아니다.</p>
+  </div>
+
+  <nav class="dt-toc" aria-label="목차">
+    <strong>목차</strong>
+    <ol>
+      <li><a href="#dt-terms">이미지 처리·검출·추적 차이</a></li>
+      <li><a href="#dt-classic">OpenCV 전통 기법의 역할</a></li>
+      <li><a href="#dt-output">학습 기반 검출 모델의 출력</a></li>
+      <li><a href="#dt-metrics">IoU·NMS·정밀도·재현율</a></li>
+      <li><a href="#dt-models">1단계와 2단계 검출 모델</a></li>
+      <li><a href="#dt-tracking">검출 결과를 추적으로 연결하기</a></li>
+      <li><a href="#dt-practice">OpenCV 에지·직선 검출 예제</a></li>
+      <li><a href="#dt-choice">모델 선택과 흔한 실수</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="dt-terms">1. 검출과 추적은 답하는 질문이 다르다</h2>
+
+  <div class="dt-table">
+    <table>
+      <thead><tr><th>단계</th><th>답하는 질문</th><th>출력 예시</th></tr></thead>
+      <tbody>
+        <tr><td>이미지 처리</td><td>경계·색·모양은 어디에 있나?</td><td>에지 맵, 이진 이미지, 외곽선</td></tr>
+        <tr><td>객체 검출</td><td>무엇이 어디에 있나?</td><td>클래스, 신뢰도, 바운딩 박스</td></tr>
+        <tr><td>객체 추적</td><td>이전 프레임의 객체와 같은가?</td><td>객체별 고유 ID와 이동 경로</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>얼굴 검출기는 매 프레임 얼굴 위치를 찾지만, 그 얼굴이 앞 프레임의 누구와 같은지는 알지 못한다. 추적기는 위치와 특징을 이용해 프레임 사이의 객체를 연결하고 ID를 유지한다. 따라서 “얼굴을 찾았다”만으로 객체 추적이 완성되지는 않는다.</p>
+
+  <div class="dt-visual">
+    <p>[##_Image|kage@cKMZ7L/dJMcacRsp6h/AAAAAAAAAAAAAAAAAAAAACUHpFxMgJnOMFSX094VVkQiCV4E4q2MXuwrXNUYSpGP/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=g5eU%2FYzB%2B0qRCysk0AZLolffV78%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"2번-객체검출-추적-전체파이프라인.png"}_##]</p>
+    <p class="dt-caption">프레임 입력에서 검출·중복 제거·추적 ID·이벤트 기록으로 이어지는 영상 처리 흐름</p>
+  </div>
+
+  <h2 id="dt-classic">2. OpenCV 전통 기법은 조건이 명확할 때 강하다</h2>
+
+  <h3>Sobel과 Canny: 밝기 변화로 경계 찾기</h3>
+
+  <p>Sobel은 가로·세로 방향의 밝기 변화량을 계산한다. Canny는 블러, 기울기 계산, 비최대 억제, 이중 임계값 연결을 거쳐 얇고 이어진 에지를 만든다. 조명과 배경이 일정한 문서, 차선, 부품 윤곽을 찾을 때 유용하다.</p>
+
+  <h3>Hough 변환: 에지 점에서 선과 원 찾기</h3>
+
+  <p>Hough Line은 여러 에지 점이 지지하는 직선 매개변수를 찾고, Hough Circle은 중심과 반지름 후보를 누적한다. 영수증 테두리나 계기판 원처럼 기하 형태가 분명한 문제에 적합하다.</p>
+
+  <h3>Template Matching: 같은 모양의 위치 찾기</h3>
+
+  <p>작은 템플릿을 이미지 위에서 이동하며 유사도를 계산한다. 크기와 회전, 조명이 크게 바뀌지 않는 아이콘이나 고정 UI 검사에 단순하고 빠르다. <code>TM_CCOEFF_NORMED</code>를 포함한 어떤 비교 방식도 항상 최선은 아니다. 실제 영상 조건에서 임계값과 오탐을 확인한다.</p>
+
+  <h3>Haar와 HOG: 사람이 설계한 특징</h3>
+
+  <p>Haar Cascade는 밝고 어두운 사각 패턴을 단계적으로 검사하고, HOG는 셀 단위 기울기 방향 분포를 특징으로 만든다. 가벼운 고정 환경에서는 쓸 수 있지만 자세·가림·배경 변화가 크면 학습 기반 검출 모델이 더 안정적인 경우가 많다.</p>
+
+  <div class="dt-note"><p><strong>선택 기준:</strong> 규칙이 명확하고 환경을 통제할 수 있으면 전통 기법이 빠르고 설명하기 쉽다. 대상의 모양과 배경 변화가 크면 라벨 데이터로 학습한 검출 모델을 검토한다.</p></div>
+
+  <h2 id="dt-output">3. 객체 검출 모델은 박스·클래스·신뢰도를 낸다</h2>
+
+  <p>학습 기반 검출 모델은 이미지 한 장에서 여러 객체를 동시에 찾는다. 각 후보는 보통 <code>(x1, y1, x2, y2)</code> 박스 좌표, 클래스, 신뢰도 점수로 표현된다. 신뢰도 임계값을 높이면 오탐이 줄지만 놓치는 객체가 늘 수 있다.</p>
+
+  <p>모델의 출력 좌표가 원본 이미지 기준인지, 입력 크기로 정규화된 값인지 확인해야 한다. 모델 입력에 레터박스 패딩을 적용했다면 원본 화면에 그릴 때 스케일과 패딩을 되돌린다.</p>
+
+  <figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+
+  <h2 id="dt-metrics">4. IoU와 NMS가 중복 박스를 정리한다</h2>
+
+  <p>IoU는 두 박스가 겹치는 면적을 합집합 면적으로 나눈 값이다. 예측 박스와 정답 박스가 얼마나 잘 맞는지 평가하고, 여러 예측이 같은 객체를 가리키는지 판단하는 데 사용한다.</p>
+  <p>예를 들어 면적이 각각 100인 두 박스가 50만큼 겹치면, 합집합은 <code>100 + 100 - 50 = 150</code>이다. IoU는 <code>50 / 150 ≈ 0.33</code>이다. 완전히 같은 박스는 1, 겹치지 않는 박스는 0이다. IoU는 겹침 정도이며 물체가 무엇인지 알려 주는 점수는 아니다.</p>
+
+  <ol>
+    <li>클래스별 후보를 신뢰도 순으로 정렬한다.</li>
+    <li>가장 높은 후보를 남긴다.</li>
+    <li>남긴 후보와 IoU가 임계값보다 큰 중복 후보를 제거한다.</li>
+    <li>남은 후보에 같은 과정을 반복한다.</li>
+  </ol>
+
+  <p>이 과정이 일반적인 클래스별 NMS다. 임계값이 너무 낮으면 가까이 붙은 서로 다른 객체까지 지울 수 있고, 너무 높으면 한 객체에 여러 박스가 남는다. 클래스 구분 없이 적용하는 방식도 있으므로 실제 구현의 설정을 확인한다. Canny 내부의 비최대 억제는 에지를 얇게 만드는 단계이고, 여기서 설명하는 NMS는 검출 박스를 정리하는 단계다.</p>
+
+  <div class="dt-table">
+    <table>
+      <thead><tr><th>지표</th><th>의미</th><th>확인할 점</th></tr></thead>
+      <tbody>
+        <tr><td>정밀도</td><td>검출했다고 한 것 중 실제 객체 비율</td><td>오탐이 얼마나 적은가</td></tr>
+        <tr><td>재현율</td><td>실제 객체 중 찾아낸 비율</td><td>미탐이 얼마나 적은가</td></tr>
+        <tr><td>AP</td><td>한 클래스의 정밀도-재현율 곡선 요약</td><td>IoU 기준을 함께 표기</td></tr>
+        <tr><td>mAP</td><td>여러 클래스 AP의 평균</td><td>데이터셋·IoU 범위·입력 크기를 함께 비교</td></tr>
+        <tr><td>지연 시간</td><td>입력 한 건을 처리하는 시간</td><td>목표 하드웨어에서 직접 측정</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="dt-models">5. 1단계와 2단계 모델은 후보 처리 방식이 다르다</h2>
+
+  <div class="dt-visual">
+    <p>[##_Image|kage@bcKKgJ/dJMcaiEd44F/AAAAAAAAAAAAAAAAAAAAABaDM5FrwRzFZ8pdT-c5R03_GdkcBBB5S115iIknzOSr/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=F3BciA6SVZb3qv1rP1dLo8mPRAM%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"3번-1단계-2단계-검출모델-비교.png"}_##]</p>
+    <p class="dt-caption">1단계 검출과 2단계 검출이 후보 영역을 처리하는 방식 비교</p>
+  </div>
+
+  <h3>2단계 검출: 후보 영역을 찾고 다시 분류</h3>
+
+  <p>Faster R-CNN 계열은 특징 맵에서 객체 후보 영역을 만들고, 각 후보를 분류하며 박스를 보정한다. 후보별 처리가 분리되어 분석하기 좋지만 계산량과 지연 시간이 커질 수 있다.</p>
+
+  <h3>1단계 검출: 한 흐름에서 클래스와 박스를 예측</h3>
+
+  <p>YOLO·SSD 계열은 촘촘한 위치에서 클래스와 박스를 직접 예측한다. 실시간 처리가 중요한 영상에서 자주 사용한다. 다만 “1단계는 빠르지만 항상 부정확하다”는 식의 구분은 현재 모델들을 설명하기에 부족하다. 모델 크기, 입력 해상도, 데이터, 후처리, 하드웨어를 같은 조건에서 측정해야 한다.</p>
+
+  <div class="dt-table">
+    <table>
+      <thead><tr><th>조건</th><th>먼저 볼 선택지</th><th>검증 항목</th></tr></thead>
+      <tbody>
+        <tr><td>카메라 실시간 처리</td><td>작은 1단계 모델</td><td>목표 장치의 프레임 지연, 작은 객체 재현율</td></tr>
+        <tr><td>정밀한 분석·오프라인 처리</td><td>2단계 또는 큰 1단계 모델</td><td>클래스별 AP와 오류 사례</td></tr>
+        <tr><td>고정 배경·단순 도형</td><td>OpenCV 전통 기법</td><td>조명·크기 변화의 임계값 안정성</td></tr>
+        <tr><td>도메인 고유 객체</td><td>전이 학습한 검출 모델</td><td>라벨 품질, 데이터 분포, 현장 오탐</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="dt-tracking">6. 영상에서는 검출 뒤 추적기를 연결한다</h2>
+
+  <p>실전 영상 파이프라인은 각 프레임을 독립적으로 검출한 뒤, 추적기가 현재 박스와 기존 트랙을 연결하는 구조다. 위치 변화는 모션 모델로 예측하고, IoU나 시각 특징으로 후보를 매칭한다.</p>
+
+  <div class="dt-key"><p><strong>처리 순서:</strong> 프레임 읽기 → 크기 조절·정규화 → 객체 검출 → NMS → 추적 ID 연결 → 관심 영역 통과 판단 → 화면 표시·로그 저장</p></div>
+
+  <p>추적기는 잠시 가려진 객체를 몇 프레임 유지할 수 있지만 검출 오류를 완전히 고치지는 못한다. 사람이 겹치는 장면에서는 ID가 바뀔 수 있다. 현장에서는 “몇 프레임까지 미검출을 허용할지”, “관심 영역 경계를 언제 통과한 것으로 볼지”를 업무 규칙으로 정한다.</p>
+
+  <h2 id="dt-practice">7. OpenCV로 에지와 직선을 찾는 최소 예제</h2>
+
+  <p>먼저 종이 테두리나 직선이 분명한 사진 한 장을 준비한다. 아래 코드는 밝기가 변하는 경계를 찾고, 그중 직선 후보를 초록색으로 그린다. 초록 선이 생겼다고 상자나 차선을 인식한 것은 아니다. 사람·자동차의 종류를 알아보는 객체 검출과 구분해서 결과를 읽자.</p>
+  <h3>준비하고 실행하기</h3>
+  <p>Python 3가 설치된 환경에서 새 연습 폴더를 만들고 사진을 <code>road.jpg</code>로 넣는다. 실제 JPEG 파일을 사용한다. 아래 코드는 <code>line_demo.py</code>에 저장한다. 다음은 macOS·Linux의 명령이며 Windows에서는 <code>python3</code> 대신 <code>py</code>, 가상환경의 Python 경로는 <code>.venv\Scripts\python.exe</code>로 바꾼다.</p>
+  <div class="dt-code"><pre><code>python3 -m venv .venv
+.venv/bin/python -m pip install opencv-python-headless numpy
+.venv/bin/python line_demo.py</code></pre></div>
+  <p>화면 창을 띄우지 않고 파일로 결과를 저장하므로 headless 패키지 하나면 충분하다. 같은 가상환경에 다른 OpenCV 패키지를 추가로 설치할 필요는 없다. 아래 출력 파일이 이미 있으면 오류로 멈추므로 이전 실험 결과는 이름을 바꾸거나 다른 폴더로 옮긴 뒤 다시 실행한다.</p>
+
+  <div class="dt-code"><pre><code>import cv2
+import numpy as np
+from pathlib import Path
+
+output_files = [Path("edges.png"), Path("detected_lines.jpg")]
+if any(path.exists() for path in output_files):
+    raise FileExistsError("출력 파일을 다른 이름으로 보관한 뒤 다시 실행하세요.")
+
+image = cv2.imread("road.jpg")
+if image is None:
+    raise FileNotFoundError("road.jpg")
+
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+edges = cv2.Canny(blurred, 60, 160)
+
+lines = cv2.HoughLinesP(
+    edges,
+    rho=1,
+    theta=np.pi / 180,
+    threshold=60,
+    minLineLength=50,
+    maxLineGap=15
+)
+
+result = image.copy()
+if lines is not None:
+    for x1, y1, x2, y2 in lines[:, 0]:
+        cv2.line(result, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+if not cv2.imwrite("edges.png", edges):
+    raise OSError("edges.png 저장 실패: 폴더 쓰기 권한을 확인하세요.")
+if not cv2.imwrite("detected_lines.jpg", result):
+    raise OSError("detected_lines.jpg 저장 실패: 폴더 쓰기 권한을 확인하세요.")
+print("검출 선분 수:", 0 if lines is None else len(lines))
+print("edges.png와 detected_lines.jpg를 열어 비교하세요.")</code></pre></div>
+
+  <p>에지가 너무 많으면 블러를 강화하거나 Canny 임계값을 높인다. 끊어진 선이 하나로 연결되지 않으면 <code>maxLineGap</code>을 조정한다. 검출 결과를 화면으로 확인하며 한 번에 한 매개변수만 바꾸면 원인을 추적하기 쉽다.</p>
+  <h3>결과는 이렇게 읽는다</h3>
+  <p><code>edges.png</code>는 검은 바탕 위에 경계가 흰 선으로 나타난다. <code>detected_lines.jpg</code>는 원래 사진 위에 검출 선분을 초록색으로 표시한다. 이 두 파일과 원본 사진을 나란히 비교하면 에지는 찾았는데 직선으로 연결하지 못한 부분을 구분할 수 있다. 선분 수는 사진과 OpenCV 버전·매개변수에 따라 달라지며, 선분 여러 개가 한 물체의 테두리일 수도 있다.</p>
+  <ul>
+    <li><strong>road.jpg 오류:</strong> 실행하는 폴더에 파일이 있는지 확인한다. 한글 파일명을 영어로 바꾸고 JPEG로 다시 저장해 볼 수 있다.</li>
+    <li><strong>cv2 모듈 오류:</strong> 설치에 쓴 가상환경의 Python으로 실행했는지 확인한다.</li>
+    <li><strong>선분 수가 0:</strong> 먼저 edges.png에 경계가 있는지 본다. 경계가 충분하다면 minLineLength나 threshold를 하나씩 낮춰 비교한다. 원하는 선만 남는지는 별도로 확인한다.</li>
+    <li><strong>엉뚱한 선이 많음:</strong> 바닥 무늬나 그림자도 밝기 경계다. 관심 영역을 좁히거나 입력 사진의 배경을 단순하게 바꿔 같은 설정으로 비교한다.</li>
+  </ul>
+  <p>이 예제의 목표는 선분 검출 과정을 관찰하는 것이다. 초록 선 개수로 상자 수를 세거나 실제 도로의 차선 인식 성능을 평가할 수는 없다. 더 안정적인 모델이 필요한지는 다양한 사진에서 놓친 대상과 잘못 잡은 대상을 기록한 뒤 판단하자.</p>
+  <p class="dt-caption">예제 확인: 2026-09-28, OpenCV 4.13.0·NumPy 2.0.2에서 320×240 검은 이미지에 흰 사각형을 그린 시험 입력은 선분 8개, 검은 빈 이미지는 0개를 반환했다. 입력 파일 누락과 출력 파일 중복 시 중단도 확인했다. 이는 합성 입력의 코드 동작 확인이며 실제 도로 사진의 정확도 측정은 아니다.</p>
+
+  <h2 id="dt-choice">8. 모델 선택과 실수 방지 체크리스트</h2>
+
+  <ul>
+    <li><strong>검출과 추적 혼동:</strong> 프레임별 박스만 있으면 검출이다. 같은 객체의 ID가 이어져야 추적이다.</li>
+    <li><strong>mAP 숫자만 비교:</strong> 데이터셋, IoU 기준, 입력 크기, 모델 크기가 다른 숫자는 직접 비교하지 않는다.</li>
+    <li><strong>데스크톱 FPS를 현장 성능으로 사용:</strong> 배포 장치에서 전처리와 후처리까지 포함해 지연 시간을 측정한다.</li>
+    <li><strong>신뢰도 임계값 고정:</strong> 오탐과 미탐 비용에 맞춰 클래스별 임계값을 검증한다.</li>
+    <li><strong>모든 문제에 딥러닝 적용:</strong> 환경이 고정되고 규칙이 명확하면 전통 기법이 더 단순하고 유지하기 쉽다.</li>
+    <li><strong>대표 이미지 몇 장만 평가:</strong> 야간, 역광, 가림, 작은 객체, 빈 화면을 포함한 오류 묶음으로 검증한다.</li>
+  </ul>
+
+  <h2 id="dt-sources">설명과 실습의 근거</h2>
+  <ul>
+    <li><a href="https://docs.opencv.org/4.x/da/d22/tutorial_py_canny.html" target="_blank" rel="noopener noreferrer">OpenCV Canny 공식 튜토리얼</a>: 에지 검출 단계와 두 임계값의 역할.</li>
+    <li><a href="https://docs.opencv.org/4.x/d9/db0/tutorial_hough_lines.html" target="_blank" rel="noopener noreferrer">OpenCV Hough Line 공식 튜토리얼</a>: 에지에서 직선을 찾는 과정과 HoughLinesP 예제.</li>
+    <li><a href="https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html" target="_blank" rel="noopener noreferrer">OpenCV Template Matching 공식 튜토리얼</a>: 템플릿을 이동하며 비교하는 방식.</li>
+    <li><a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="noopener noreferrer">Faster R-CNN 원 논문</a> · <a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="noopener noreferrer">YOLO 원 논문</a>: 후보 영역 생성 방식과 단일 네트워크 예측 방식의 출발점. 두 논문의 당시 성능 수치를 현재 모델의 성능으로 사용하지 않는다.</li>
+    <li><a href="https://pypi.org/project/opencv-python-headless/" target="_blank" rel="noopener noreferrer">OpenCV Python 패키지 설치 안내</a>: GUI를 사용하지 않는 환경의 패키지 선택과 동일 환경 내 중복 설치 주의.</li>
+  </ul>
+
+  <div class="dt-summary">
+    <div class="dt-summary-inner">
+      <h2>핵심 요약</h2>
+      <ul>
+        <li>Canny·Hough·템플릿 매칭은 형태와 환경이 명확한 문제에 적합하다.</li>
+        <li>객체 검출은 클래스·신뢰도·박스를, 추적은 프레임 사이의 ID를 만든다.</li>
+        <li>IoU는 박스 겹침을, NMS는 중복 예측 제거를 담당한다.</li>
+        <li>1단계·2단계라는 이름보다 목표 장치의 정확도와 지연 시간을 직접 비교한다.</li>
+        <li>실전 파이프라인은 검출 뒤 추적과 업무 이벤트 규칙까지 포함해야 완성된다.</li>
+      </ul>
+    </div>
+  </div>
+</article>

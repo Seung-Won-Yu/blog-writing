@@ -1,0 +1,270 @@
+<style>
+.ml-workflow-post {
+  --ml-ink: #16243a;
+  --ml-muted: #647080;
+  --ml-line: #dce3e7;
+  --ml-accent: #0f766e;
+  --ml-soft: #eaf7f4;
+  --ml-warm: #fff7e8;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 26px;
+  color: var(--ml-ink);
+  font-size: 18px;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.ml-workflow-post * { box-sizing: border-box; }
+.ml-workflow-post p { margin: 0 0 1.15em; }
+.ml-workflow-post h2 {
+  margin: 2.7em 0 0.85em;
+  padding-bottom: 0.38em;
+  border-bottom: 2px solid var(--ml-ink);
+  font-size: 1.5em;
+  line-height: 1.4;
+}
+.ml-workflow-post h3 { margin: 2em 0 0.65em; color: var(--ml-accent); font-size: 1.17em; }
+.ml-workflow-post strong { color: #0c3851; }
+.ml-workflow-post .ml-lead { font-size: 1.08em; line-height: 1.9; }
+.ml-workflow-post .ml-key,
+.ml-workflow-post .ml-note { width: 100%; margin: 1.45em 0; border-left: 5px solid var(--ml-accent); background: var(--ml-soft); }
+.ml-workflow-post .ml-note { border: 1px solid #ead5a6; border-left-width: 5px; background: var(--ml-warm); }
+.ml-workflow-post .ml-key p,
+.ml-workflow-post .ml-note p { margin: 0; padding: 15px 18px; }
+.ml-workflow-post .ml-toc { margin: 1.7em 0 2.2em; border: 1px solid var(--ml-line); background: #fff; }
+.ml-workflow-post .ml-toc strong { display: block; padding: 16px 18px 5px; }
+.ml-workflow-post .ml-toc ol { margin: 0; padding: 4px 18px 17px 40px; }
+.ml-workflow-post li { margin: 0.38em 0; }
+.ml-workflow-post .ml-visual { margin: 2em 0 2.3em; }
+.ml-workflow-post .ml-visual figure { margin: 0 !important; }
+.ml-workflow-post .ml-visual img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.ml-workflow-post .ml-caption { margin: 10px 0 0; color: var(--ml-muted); font-size: 0.83em; line-height: 1.6; text-align: center; }
+.ml-workflow-post .ml-code { max-width: 100%; margin: 1.25em 0 1.7em; overflow-x: auto; -webkit-overflow-scrolling: touch; background: #111827; }
+.ml-workflow-post .ml-code pre { min-width: max-content; margin: 0; padding: 18px 20px; color: #e5edf7; font: 15px/1.7 SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+.ml-workflow-post code:not(pre code) { padding: 0.12em 0.38em; background: #eef2f6; color: #9b3f20; font-size: 0.92em; }
+.ml-workflow-post .ml-table { max-width: 100%; margin: 1.3em 0 1.8em; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.ml-workflow-post table { width: 100%; min-width: 650px; border-collapse: collapse; font-size: 0.92em; }
+.ml-workflow-post th,
+.ml-workflow-post td { padding: 11px 13px; border: 1px solid var(--ml-line); text-align: left; vertical-align: top; }
+.ml-workflow-post th { background: #f1f7f6; white-space: nowrap; }
+.ml-workflow-post .ml-summary { margin-top: 2.3em; border-top: 3px solid var(--ml-accent); background: #f7faf9; }
+.ml-workflow-post .ml-summary-inner { padding: 18px 20px; }
+.ml-workflow-post .ml-summary h2 { margin: 0 0 0.6em; padding: 0; border: 0; font-size: 1.28em; }
+@media (max-width: 640px) {
+  .ml-workflow-post { padding: 0 19px; font-size: 17px; line-height: 1.82; }
+  .ml-workflow-post h2 { margin-top: 2.35em; font-size: 1.35em; }
+  .ml-workflow-post h3 { font-size: 1.1em; }
+  .ml-workflow-post .ml-code pre { padding: 16px; font-size: 14px; }
+}
+</style>
+
+<style>
+/* Tistory skin code rules must not override this article's code cards. */
+.ml-workflow-post > p { margin-bottom: 1.15em !important; line-height: 1.85 !important; }
+.ml-workflow-post .ml-code { padding: 0 !important; border: 1px solid #dce3e7 !important; background: #f5f7f9 !important; }
+.ml-workflow-post .ml-code pre { min-width: 100%; width: max-content; max-width: none !important; margin: 0 !important; padding: 18px 20px !important; border: 0 !important; background: #f5f7f9 !important; color: #16243a !important; white-space: pre !important; overflow-wrap: normal !important; word-break: normal !important; font: 15px/1.7 SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace !important; }
+.ml-workflow-post .ml-code pre code { display: block; margin: 0 !important; padding: 0 !important; border: 0 !important; background: transparent !important; color: inherit !important; font: inherit !important; white-space: inherit !important; overflow-wrap: normal !important; word-break: normal !important; }
+.ml-workflow-post .ml-code pre code span { background: transparent !important; color: inherit !important; }
+.ml-workflow-post summary { cursor: pointer; padding: 12px 0; line-height: 1.7; }
+@media (max-width: 640px) { .ml-workflow-post .ml-code pre { padding: 16px !important; font-size: 14px !important; } }
+</style>
+
+<article class="ml-workflow-post">
+  <p class="ml-lead">스팸 메일 2통, 일반 메일 98통이 있다고 해보자. 모든 메일을 ‘일반’이라고 답해도 정확도는 98%다. 숫자만 보면 훌륭하지만, <strong>정작 스팸은 한 통도 못 찾았다.</strong></p>
+  <p>머신러닝을 배울 때도 비슷한 함정이 있다. 프로그램이 돌아가고 점수가 높다고 해서 유용한 모델이 된 것은 아니다. 이 글에서는 꽃 150개의 길이·너비로 품종을 맞히는 작은 실습을 통해, 점수를 믿어도 되는지 확인하는 순서를 익힌다.</p>
+  <div class="ml-key"><p><strong>처음 읽는다면:</strong> 1·2·4절에서 원리를 먼저 이해하자. 코딩 없이 흐름을 보고 싶으면 Orange 경로, Python의 변수·함수·파일 실행에 익숙하면 3절의 실행 경로를 택하면 된다. 앙상블·군집화는 그다음에 읽는 선택 심화다.</p></div>
+
+  <div class="ml-visual">
+    <p>[##_Image|kage@OJSRj/dJMcag7p9rR/AAAAAAAAAAAAAAAAAAAAAP4nOmv5jMVxtbDSoWfbvtV9D4-ynq9zgUZhhKVbFe-w/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=Oo2D2pPlomeHgHsGzr0Ch70v%2FiA%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"1번-머신러닝-정확도-함정-대표이미지.png"}_##]</p>
+    <p class="ml-caption">정확도만 보면 놓치는 오류가 있다. 이해를 돕는 개념 그림이며 아래 꽃 실습의 측정 결과는 아니다.</p>
+  </div>
+  <nav class="ml-toc" aria-label="목차"><strong>필요한 부분부터 읽기</strong><ol>
+    <li><a href="#ml-problem">꽃을 분류하면서 용어 익히기</a></li>
+    <li><a href="#ml-orange">코딩 없이: Orange 연결 순서</a></li>
+    <li><a href="#ml-python">Python: 전체 코드와 실행 결과</a></li>
+    <li><a href="#ml-evaluation">98% 정확도와 평가의 함정</a></li>
+    <li><a href="#ml-cases">다른 데이터로 옮길 때 확인할 것</a></li>
+    <li><a href="#ml-models">첫 모델을 고르는 기준</a></li>
+    <li><a href="#ml-ensemble">선택 심화: 앙상블</a></li>
+    <li><a href="#ml-clustering">선택 심화: K-means 군집화</a></li>
+    <li><a href="#ml-mistakes">오류가 나면 확인할 순서</a></li>
+    <li><a href="#ml-practice">실습을 끝내는 세 가지 질문</a></li>
+  </ol></nav>
+
+  <h2 id="ml-problem">1. 꽃 이름을 맞히는 일부터 시작하자</h2>
+  <p>Iris는 붓꽃 150개의 측정값이 담긴 학습용 데이터다. 꽃마다 꽃받침 길이·너비, 꽃잎 길이·너비 네 값과 품종 이름이 있다. 네 측정값으로 품종을 맞히려는 것이 이번 목표다. 직접 사진을 모으거나 CSV를 내려받을 필요는 없다.</p>
+  <ul><li><strong>특성:</strong> 예측할 때 넣는 정보. 여기서는 네 측정값이다.</li><li><strong>정답:</strong> 맞히려는 값. 여기서는 setosa·versicolor·virginica 세 품종이다.</li><li><strong>학습:</strong> 정답을 보며 규칙을 익히는 과정이다.</li><li><strong>평가:</strong> 배우는 데 쓰지 않은 꽃을 얼마나 잘 맞히는지 확인하는 과정이다.</li></ul>
+  <p>품종처럼 종류를 고르면 <strong>분류</strong>, 가격처럼 숫자를 예상하면 <strong>회귀</strong>다. 정답 없이 비슷한 고객을 묶으면 <strong>군집화</strong>다. ‘AI를 써보자’보다 ‘무엇을 맞히거나 묶을 것인가’를 먼저 정하면 도구 선택이 쉬워진다.</p>
+  <div class="ml-key"><p><strong>Python 실습의 순서</strong><br>① 꽃 150개를 학습용 120개와 최종 평가용 30개로 분리<br>② 학습용 120개 안에서 전처리·학습·검증을 5번 나눠 반복<br>③ 같은 분할에서 세 모델을 비교하고 후보 하나 선택<br>④ 그 후보만 별도로 남긴 30개로 최종 평가</p></div>
+  <p>②가 <strong>교차 검증</strong>이다. 학습용 120개를 다섯 묶음으로 나누고, 네 묶음으로 배우고 남은 한 묶음으로 확인하는 역할을 번갈아 수행한다. 별도로 남긴 30개는 모델 선택이 끝날 때까지 보지 않는다.</p>
+
+  <h2 id="ml-orange">2. Orange에서는 ‘데이터’와 ‘처리 방법’을 따로 연결한다</h2>
+  <p>Orange는 분석 블록을 선으로 잇는 도구다. <a href="https://orangedatamining.com/widget-catalog/evaluate/testandscore/" target="_blank" rel="noopener noreferrer">공식 Test and Score 안내</a>를 기준으로 다음처럼 구성한다. 여기서는 교차 검증 흐름을 배우며, Python 경로와 동일한 점수가 나온다고 약속하는 실습은 아니다.</p>
+  <ol>
+    <li><strong>File:</strong> 내장 예제 목록에서 iris를 불러온다. Data Table에 연결해 측정값 네 열과 품종 열을 확인한다. Data Table은 내용을 보는 가지이며 필수 중간 처리 단계는 아니다.</li>
+    <li><strong>Select Columns:</strong> 측정값 네 열은 Features, 품종 열은 Target에 둔다. 나오는 Data를 Test and Score의 Data 입력에 연결한다.</li>
+    <li><strong>Logistic Regression·Tree:</strong> 각 모델의 Learner 출력을 Test and Score의 Learner 입력에 연결한다. 학습된 Model 출력과 혼동하지 않는다.</li>
+    <li><strong>Preprocess:</strong> 정규화를 추가하고, <em>Preprocessor 출력</em>을 Test and Score의 Preprocessor 입력에 연결한다. 이 예제의 Iris에는 결측치가 없으므로 대체 단계는 필수가 아니다.</li>
+    <li><strong>Test and Score:</strong> Cross validation을 5 folds로 설정하고 층화(Stratified)를 켠다. 표의 CA·F1 등과 함께 잘못 맞힌 종류를 살펴본다.</li>
+    <li><strong>Confusion Matrix:</strong> Test and Score의 Evaluation Results를 연결한다. 행·열의 실제/예측 표시를 읽고 어떤 품종끼리 혼동했는지 확인한다.</li>
+  </ol>
+  <div class="ml-note"><p><strong>가장 중요한 구분:</strong> Preprocess의 <em>Preprocessed Data</em>로 전체 데이터를 먼저 변환해서 평가기에 넣지 않는다. <em>Preprocessor</em>는 ‘처리 방법’이며, 평가기가 각 학습 묶음 안에서 그 방법을 학습하도록 전달해야 한다. 전체 데이터의 평균을 미리 쓰면 시험 문제의 정보를 먼저 본 셈이 된다.</p></div>
+  <p>이번 보완에서는 Orange 앱을 직접 실행해 측정하지 않았다. 위젯 연결은 공식 문서 대조 결과이며, 아래 수치는 Python 실행 결과다. Orange의 전체 클래스 요약 F1은 가중 평균이고 아래 코드는 품종마다 같은 비중을 주는 <code>macro F1</code>을 쓴다. 분할·기본 설정·집계 방식이 다르면 점수도 달라질 수 있다.</p>
+
+  <h2 id="ml-python">3. Python으로 세 모델을 같은 시험에 세워보자</h2>
+  <p>빈 작업 폴더를 만들고 아래 전체 코드를 <code>ml152_iris.py</code>로 저장한다. 숫자를 외우기보다, 아무것도 배우지 않는 기준 모델보다 나아졌는지와 최종 평가용 데이터가 별도로 남았는지를 확인하는 실습이다.</p>
+  <h3>설치와 실행</h3>
+  <p>Python 3.12에서 검증했다. 터미널이 어렵다면 앞의 Orange 경로까지만 따라가도 된다. 아래 명령은 새 가상환경에 라이브러리를 설치하며 기존 Python 환경을 바꾸지 않는다. 첫 설치에는 인터넷 연결이 필요하다.</p>
+  <div class="ml-code"><pre><code># Mac / Linux
+python3 -m venv .venv
+.venv/bin/python -m pip install scikit-learn==1.7.2
+.venv/bin/python ml152_iris.py</code></pre></div>
+  <div class="ml-code"><pre><code># Windows: PowerShell / 명령 프롬프트
+py -3.12 -m venv .venv
+.venv\Scripts\python.exe -m pip install scikit-learn==1.7.2
+.venv\Scripts\python.exe ml152_iris.py</code></pre></div>
+  <p><code>scikit-learn.py</code>나 <code>sklearn.py</code>라는 파일명은 피한다. 설치한 패키지와 이름이 겹쳐 가져오기 오류가 날 수 있다. 코드는 Iris 내장 자료를 읽으며 파일을 새로 쓰거나 원본 자료를 변경하지 않는다.</p>
+  <details><summary><strong>전체 실행 코드 펼치기 — ml152_iris.py</strong></summary>
+  <div class="ml-code"><pre><code>"""Train-only model selection, then one untouched Iris holdout evaluation."""
+import numpy as np
+import sklearn
+from sklearn.datasets import load_iris
+from sklearn.dummy import DummyClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
+from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+
+def run():
+    iris = load_iris()
+    train_ids, test_ids = train_test_split(
+        np.arange(len(iris.target)), test_size=0.2,
+        stratify=iris.target, random_state=42
+    )
+    X_train, y_train = iris.data[train_ids], iris.target[train_ids]
+    X_test, y_test = iris.data[test_ids], iris.target[test_ids]
+    folds = list(StratifiedKFold(
+        n_splits=5, shuffle=True, random_state=42
+    ).split(X_train, y_train))
+    models = {
+        "dummy": DummyClassifier(strategy="most_frequent"),
+        "logistic": make_pipeline(
+            StandardScaler(), LogisticRegression(max_iter=1000)
+        ),
+        "forest": RandomForestClassifier(
+            n_estimators=100, random_state=42, n_jobs=1
+        ),
+    }
+    print("scikit-learn:", sklearn.__version__)
+    print("train / test:", len(train_ids), len(test_ids))
+    print("train counts:", np.bincount(y_train).tolist())
+    print("test counts:", np.bincount(y_test).tolist())
+    results = {}
+    for name, model in models.items():
+        scores = cross_validate(
+            model, X_train, y_train, cv=folds,
+            scoring=["accuracy", "f1_macro", "recall_macro"]
+        )
+        results[name] = scores
+        print(name)
+        for metric in ("accuracy", "f1_macro", "recall_macro"):
+            values = scores["test_" + metric]
+            print(f"  {metric}: {values.mean():.3f} +/- {values.std():.3f}")
+    # Toy rule: highest mean macro F1; tied scores keep dictionary order.
+    chosen = max(results, key=lambda name: results[name]["test_f1_macro"].mean())
+    model = models[chosen]
+    model.fit(X_train, y_train)
+    pred = model.predict(X_test)
+    matrix = confusion_matrix(y_test, pred, labels=[0, 1, 2])
+    print("chosen:", chosen)
+    print(f"holdout accuracy: {accuracy_score(y_test, pred):.3f}")
+    print(f"holdout macro F1: {f1_score(y_test, pred, average='macro'):.3f}")
+    print("rows=actual, columns=predicted:", iris.target_names.tolist())
+    print(matrix)
+    return iris, train_ids, test_ids, folds, models, results, chosen, matrix
+
+
+if __name__ == "__main__":
+    run()</code></pre></div></details>
+  <h3>실행 결과를 이렇게 읽으면 된다</h3>
+  <p>검증 환경은 Python 3.12·scikit-learn 1.7.2·NumPy 2.5.3이다. 학습용은 품종마다 40개, 최종 평가용은 품종마다 10개였다. 아래 값은 이 데이터와 설정에서 얻은 결과이지, 모델의 보편적인 순위가 아니다. 의존 패키지나 환경이 달라지면 세부 수치가 달라질 수 있다.</p>
+  <div class="ml-table"><table><caption>학습용 120개 안의 5회 교차 검증 — 평균 ± 폴드 간 표준편차</caption><thead><tr><th>모델</th><th>정확도</th><th>macro F1</th><th>macro 재현율</th></tr></thead><tbody>
+    <tr><td>항상 같은 품종: dummy</td><td>0.333 ± 0.000</td><td>0.167 ± 0.000</td><td>0.333 ± 0.000</td></tr>
+    <tr><td>표준화 + 로지스틱 회귀</td><td>0.958 ± 0.026</td><td>0.958 ± 0.027</td><td>0.958 ± 0.026</td></tr>
+    <tr><td>랜덤 포레스트</td><td>0.950 ± 0.031</td><td>0.949 ± 0.032</td><td>0.950 ± 0.031</td></tr>
+  </tbody></table></div>
+  <p><strong>먼저 기준 모델:</strong> dummy는 꽃을 구별하지 않고 한 품종만 답한다. 세 품종이 똑같이 50개씩 있어서 정확도는 약 1/3이다. 비교할 출발선이 있어야 ‘좋아졌다’는 말에 의미가 생긴다.</p>
+  <p><strong>그다음 후보 선택:</strong> 이 학습용 예제는 교차 검증의 macro F1 평균이 가장 큰 로지스틱 회귀를 고른다. 작은 차이 하나로 실제 서비스의 우열을 단정하지 않는다. 표준편차는 다섯 묶음의 점수가 얼마나 흔들렸는지이며 신뢰구간은 아니다.</p>
+  <div class="ml-code"><pre><code>chosen: logistic
+holdout accuracy: 0.933
+holdout macro F1: 0.933
+rows=actual, columns=predicted: ['setosa', 'versicolor', 'virginica']
+[[10  0  0]
+ [ 0  9  1]
+ [ 0  1  9]]</code></pre></div>
+  <p>마지막 30개에서는 28개를 맞혔다. 행은 실제 품종, 열은 예측 품종이다. versicolor 하나를 virginica로, virginica 하나를 versicolor로 잘못 분류했다. ‘93.3%’라고 끝내지 않고 <strong>어느 품종끼리 틀렸는지</strong>까지 읽는 것이 이번 실습의 핵심이다.</p>
+  <div class="ml-note"><p><strong>시험 문제를 다시 공부 자료로 쓰지 않기:</strong> 최종 30개의 결과를 본 뒤 설정을 반복 조정하면 더 이상 손대지 않은 평가 자료가 아니다. 본문 코드는 후보 비교에 학습용 120개만 쓰고, 선택이 끝난 후보를 최종 30개로 한 번 평가한다. 이것만으로 미래 데이터 성능을 보장하지는 않는다.</p></div>
+
+  <figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+
+  <h2 id="ml-evaluation">4. 정확도 98%인데 쓸모없을 수 있는 이유</h2>
+  <p>앞의 가상 메일 100통으로 돌아가 보자. 모두 일반 메일이라고 답한 모델은 98통을 맞혔지만 실제 스팸 2통은 전부 놓쳤다. 이때 <strong>스팸 재현율은 0/2=0%</strong>다. 정확도와 ‘찾고 싶은 대상을 얼마나 찾았는가’는 다른 질문이다.</p>
+  <ul><li><strong>정밀도:</strong> 스팸이라고 표시한 메일 중 실제 스팸의 비율. 일반 메일을 잘못 막는 일이 많으면 낮아진다.</li><li><strong>재현율:</strong> 실제 스팸 중 잡아낸 비율. 스팸을 많이 놓치면 낮아진다.</li><li><strong>F1:</strong> 정밀도와 재현율의 조화평균. 두 지표를 함께 보려는 요약값이다.</li><li><strong>macro 평균:</strong> 종류마다 점수를 계산하고 동일한 비중으로 평균한다. 적게 등장하는 종류도 똑같이 한 표를 갖는다.</li></ul>
+  <p>스팸 예측이 0건이면 정밀도의 분모도 0이 된다. 라이브러리의 처리 규칙을 확인해야 하며 ‘정밀도가 완벽하다’고 읽으면 안 된다. 이번 Iris는 세 품종의 수가 같은 자료라서, 희귀 클래스 문제의 실증 자료로 쓰지는 않는다.</p>
+  <p><strong>데이터 누수</strong>는 시험에 쓰일 정보가 공부 과정으로 들어가는 문제다. 평균·표준편차·결측치 대체값도 자료에서 배운 정보다. Python의 <code>Pipeline</code>은 전처리와 모델을 묶어, 교차 검증 때 학습 묶음으로만 그 값을 계산하게 한다.</p>
+
+  <h2 id="ml-cases">5. 고객 데이터에 옮길 때는 ‘언제 알 수 있었나’를 묻자</h2>
+  <p>꽃 실습 다음에 고객 이탈을 예측하고 싶어졌다고 하자. 목표는 ‘지금 가진 정보로 앞으로 떠날 고객을 찾기’다. 해지 뒤에 생긴 상담 기록이나 최종 상태를 넣으면 점수가 높아도 실제 예측에는 쓸 수 없다.</p>
+  <p>‘월 계약 고객이 더 많이 떠날 것이다’는 <strong>검증할 가설</strong>이지, 이 글에서 측정한 결과가 아니다. 자료의 기준일·이탈 정의·사용 가능한 열을 먼저 정하고 확인해야 한다. 상관관계를 봤다고 원인이라고 단정할 수도 없다.</p>
+  <ul><li>타이타닉처럼 정답이 있는 과거 사건을 맞히는 연습과, 미래 고객을 예측하는 운영 문제는 목적이 다르다.</li><li>숫자 열은 결측치 처리·스케일링, 문자 열은 범주 변환이 필요할 수 있다. 실제 CSV의 자료형과 빈 값부터 확인한다.</li><li>새 범주를 처리할 수 있다고 해서 모든 입력 오류가 해결되지는 않는다. 열 누락·잘못된 숫자·누수 여부는 별도 검사한다.</li><li>시간이나 같은 고객의 반복 기록이 중요하면 무작위 분할만 쓰지 않는다. 과거/미래 또는 고객 그룹을 분리하는 평가가 필요할 수 있다.</li></ul>
+  <p>여기서는 고객·타이타닉 CSV의 학습 결과를 제공하지 않는다. 입력 자료 없이 코드 몇 줄만 실행하면 같은 결과를 얻는다는 오해를 피하기 위해, 실행 실습은 내장 Iris 자료 하나로 제한했다.</p>
+
+  <h2 id="ml-models">6. 첫 모델은 왜 단순한 것으로 시작할까?</h2>
+  <p>이번 실습의 로지스틱 회귀는 품종을 구분하는 단순한 기준 모델이다. 이름에 ‘회귀’가 있지만 여기서는 <strong>분류</strong>를 한다. 복잡한 모델과 비교할 기준이 있으면, 추가 비용에 비해 실제 개선이 있는지 판단하기 쉽다.</p>
+  <ul><li><strong>KNN:</strong> 가까운 자료의 정답을 참고한다. 길이와 금액처럼 단위가 다른 값을 함께 쓰면 거리 계산에 큰 단위가 과하게 영향을 줄 수 있다.</li><li><strong>결정 트리:</strong> 조건을 따라 가지를 나누는 방식이다. 규칙은 보기 쉽지만 너무 깊게 만들면 학습 자료의 예외까지 외울 수 있다.</li><li><strong>랜덤 포레스트:</strong> 여러 트리의 판단을 합친다. 이번 예제에서는 로지스틱 회귀보다 교차 검증 평균이 조금 낮았다. ‘앙상블이면 무조건 더 좋다’는 결론은 낼 수 없다.</li></ul>
+  <div class="ml-visual">
+    <p>[##_Image|kage@T0QXd/dJMcajbXXcj/AAAAAAAAAAAAAAAAAAAAAAikES32TclSmmizQ0wHyxsIm8LpVjx0hVoLRzKftnY1/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=DuanGiy%2B1OiNR%2B9OoKtfSBybCkc%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"3번-머신러닝-모델선택-앙상블-군집화.png"}_##]</p>
+    <p class="ml-caption">문제 유형과 여러 모델을 합치는 방법의 개념 지도. 실제 성능 순위를 뜻하지 않는다.</p>
+  </div>
+
+  <h2 id="ml-ensemble">7. 선택 심화: 앙상블은 여러 판단을 합친다</h2>
+  <p>앙상블은 여러 모델의 결과를 합치는 방법이다. 하나를 늘리는 것보다, 함께했을 때 틀리는 양상이 줄어드는지 보는 것이 중요하다.</p>
+  <ul><li><strong>배깅:</strong> 자료를 중복을 허용해 뽑은 여러 묶음으로 나눠 모델을 학습하고 합친다. 랜덤 포레스트는 여기에 분기마다 일부 특성 후보를 사용하는 무작위성도 더한다.</li><li><strong>부스팅:</strong> 앞 단계가 부족했던 부분을 보완하도록 다음 모델을 더한다. 설정에 따라 잡음까지 학습할 수 있어 검증이 필요하다.</li><li><strong>보팅:</strong> 여러 모델의 답을 다수결로 합치거나 확률을 평균한다. 예측 확률을 합칠 때는 그 확률이 얼마나 믿을 만한지도 확인한다.</li></ul>
+  <p>포레스트 비교 코드는 이미 3절에 포함되어 있다. 다른 모델을 더하더라도 <strong>동일한 학습용 자료·동일한 검증 묶음·동일한 지표</strong>로 비교한다. 최종 평가용 30개까지 합쳐 다시 교차 검증하지 않는다.</p>
+
+  <h2 id="ml-clustering">8. 선택 심화: 정답 없이 비슷한 꽃을 묶으면?</h2>
+  <p>K-means는 정답 이름을 보지 않고 가까운 자료끼리 묶는다. 각 자료를 가장 가까운 중심에 배정한 뒤, 그 묶음의 평균 위치로 중심을 옮기는 일을 반복한다. 묶음 수 <code>k</code>는 먼저 정한다.</p>
+  <details><summary><strong>별도 군집 실습 펼치기 — ml152_cluster.py</strong></summary>
+    <p>다음 코드는 앞 파일과 독립적으로 실행한다. 같은 가상환경에서 실행하며 꽃 150개 전체를 탐색하지만, 분류 모델의 학습·최종 평가에는 이 결과를 사용하지 않는다.</p>
+    <div class="ml-code"><pre><code>from sklearn.cluster import KMeans
+from sklearn.datasets import load_iris
+from sklearn.metrics import silhouette_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+X = load_iris().data  # 품종 정답은 쓰지 않는다.
+clusterer = make_pipeline(
+    StandardScaler(),
+    KMeans(n_clusters=3, n_init=10, random_state=42)
+)
+labels = clusterer.fit_predict(X)
+scaled_X = clusterer.named_steps["standardscaler"].transform(X)
+print(f"silhouette: {silhouette_score(scaled_X, labels):.3f}")</code></pre></div>
+    <p>3절의 가상환경 Python으로 <code>ml152_cluster.py</code>를 실행한 결과는 <code>silhouette: 0.460</code>이었다. 실루엣은 같은 묶음과 다른 묶음까지의 거리를 바탕으로 분리 정도를 요약하며 범위는 −1~1이다. <strong>정확도 46%라는 뜻이 아니다.</strong> 기본/선택 실습의 분리와 코드 실행을 확인했으나 실제 고객 군집의 유용성은 측정하지 않았다.</p>
+  </details>
+  <p>군집 번호 0·1·2는 품종 번호나 순위가 아니다. <code>k=3</code> 역시 이 연습의 설정일 뿐 최선의 묶음 수를 증명하지 않는다. 실루엣 점수와 함께 실제로 설명할 수 있는 묶음인지 확인해야 한다. 일부 Mac 환경에서는 CPU 수 확인 경고가 뜰 수 있는데, 이 검증에서는 계산 결과는 정상 출력됐다.</p>
+
+  <h2 id="ml-mistakes">9. 실행이 안 되거나 점수가 이상하면</h2>
+  <ul><li><strong>sklearn을 찾지 못함:</strong> 설치한 가상환경의 Python으로 실행했는지 확인한다. 위 명령의 Python 경로를 설치와 실행에 동일하게 사용한다.</li><li><strong>파일을 찾지 못함:</strong> 현재 폴더에 <code>ml152_iris.py</code>가 있는지, 확장자가 <code>.py.txt</code>가 되지 않았는지 확인한다.</li><li><strong>Windows에서 py 명령이 없음:</strong> Python 설치와 실행 경로부터 확인한다. 코드 문제와 실행 환경 문제를 구분한다.</li><li><strong>점수가 본문과 다름:</strong> 버전·데이터·랜덤 시드·폴드 수가 같은지 확인한다. 최종 테스트 점수와 교차 검증 평균을 같은 숫자로 기대하지 않는다.</li><li><strong>점수가 지나치게 높음:</strong> 정답 열이나 미래 정보가 입력에 들어갔는지, 전체 자료로 전처리를 먼저 학습했는지 검사한다.</li></ul>
+
+  <h2 id="ml-practice">10. 실습을 끝내는 세 가지 질문</h2>
+  <ol><li><strong>무엇을 맞혔나?</strong> 꽃의 네 측정값으로 세 품종 중 하나를 골랐다.</li><li><strong>공정하게 비교했나?</strong> 학습용 120개 안의 같은 검증 묶음으로 세 모델을 비교했고 전처리도 각 학습 묶음 안에서 배웠다.</li><li><strong>어디서 틀렸나?</strong> 별도 30개 중 두 개를 틀렸고, versicolor와 virginica가 하나씩 서로 바뀌었다.</li></ol>
+  <p>다음 연습에서는 <strong>학습용 자료의</strong> 교차 검증 오류를 먼저 살펴보자. 어떤 값이 겹쳐 보이는지 가설을 세우고, 한 가지 변경만 비교해 기록한다. 최종 평가 자료를 계속 들여다보며 설정을 맞추는 것은 피한다.</p>
+  <div class="ml-summary"><div class="ml-summary-inner"><h2>가져갈 것은 모델 이름보다 확인 순서다</h2><p>정답을 정하고, 평가 자료를 따로 남기고, 전처리와 학습을 묶어 비교한다. 그다음 점수뿐 아니라 틀린 종류를 읽는다. 이 순서를 이해했다면 알고리즘 이름을 모두 외우지 않아도 이번 입문 실습의 목표는 달성한 것이다.</p></div></div>
+  <h3>공식 참고 자료</h3>
+  <ul><li><a href="https://orangedatamining.com/widget-catalog/evaluate/testandscore/" target="_blank" rel="noopener noreferrer">Orange Test and Score</a> — 입력 연결·교차 검증·전처리와 F1 집계 방식</li><li><a href="https://scikit-learn.org/stable/common_pitfalls.html" target="_blank" rel="noopener noreferrer">scikit-learn: 흔한 실수와 데이터 누수</a> — 학습/평가 분리와 Pipeline</li><li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank" rel="noopener noreferrer">scikit-learn: 교차 검증</a> — 모델 선택과 별도 평가 자료</li><li><a href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener noreferrer">scikit-learn: 평가지표</a> — 정확도·정밀도·재현율·평균 방식</li><li><a href="https://scikit-learn.org/stable/modules/clustering.html#k-means" target="_blank" rel="noopener noreferrer">scikit-learn: K-means와 군집 평가</a> — 알고리즘 가정과 실루엣</li></ul>
+</article>

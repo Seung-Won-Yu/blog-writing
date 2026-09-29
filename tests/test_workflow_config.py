@@ -605,6 +605,15 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn(".daily-digest-post .digest-toon-dialogue", skin_css)
         self.assertIn(".daily-digest-post .digest-toon-bubble p", skin_css)
 
+    def test_manual_revisions_must_close_the_worktree_without_ignoring_reports(self):
+        contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")
+        self.assertIn("수동 글 수정 후 종료 정리", contract)
+        self.assertIn("명시적인 파일 목록", contract)
+        self.assertIn("별도 커밋", contract)
+        self.assertIn("`reports/` 전체를 무시하거나", contract)
+        self.assertIn("깨끗한 트리 조건을 약화", contract)
+        self.assertIn("중복 예약이나 새 채팅을 임의 생성하지 않는다", contract)
+
     def test_repository_sync_contract_allows_safe_offline_generation(self):
         contract = (ROOT / "agent" / "REPOSITORY_SYNC.md").read_text(encoding="utf-8")
 

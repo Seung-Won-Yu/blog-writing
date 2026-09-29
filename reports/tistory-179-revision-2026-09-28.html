@@ -1,0 +1,128 @@
+<div>
+<style>
+.java-acc-post{max-width:860px;margin:0 auto;padding:0 20px;color:#172338;font-size:18px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}.java-acc-post *{box-sizing:border-box}.java-acc-post h2{margin:2.5em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #172338;font-size:1.45em}.java-acc-post h3{margin:1.8em 0 .55em;color:#8a451c;font-size:1.12em}.java-acc-post p{margin:0 0 1.1em}.java-acc-post .lead{font-size:1.07em}.java-acc-post .key,.java-acc-post .summary{margin:1.5em 0;border-left:5px solid #d86425;background:#fff5e9}.java-acc-post .key p,.java-acc-post .summary-inner{padding:16px 18px;margin:0}.java-acc-post .toc{margin:1.6em 0 2em;padding:16px 18px;border:1px solid #dbe3ea;border-radius:12px}.java-acc-post .toc ol{margin:.5em 0 0;padding-left:1.4em}.java-acc-post .visual{margin:1.8em 0}.java-acc-post .visual figure{margin:0!important}.java-acc-post .visual img{display:block;width:100%;height:auto;border-radius:12px}.java-acc-post .caption{margin:.6em 0 0;color:#687386;font-size:.84em;text-align:center}.java-acc-post .code{max-width:100%;margin:1.2em 0 1.6em;overflow-x:auto;border-radius:10px;background:#111827}.java-acc-post .code pre{min-width:max-content;margin:0;padding:18px 20px;color:#e7eef8;font:15px/1.7 SFMono-Regular,Consolas,monospace}.java-acc-post code:not(pre code){padding:.1em .35em;border-radius:4px;background:#eef2f6;color:#9a3f1c}.java-acc-post table{width:100%;min-width:620px;border-collapse:collapse}.java-acc-post .table{overflow-x:auto;margin:1.2em 0}.java-acc-post th,.java-acc-post td{padding:11px 13px;border:1px solid #dbe3ea;text-align:left}.java-acc-post th{background:#f4f7fa}@media(max-width:640px){.java-acc-post{padding:0 19px;font-size:17px}.java-acc-post h2{font-size:1.32em}.java-acc-post .code pre{padding:16px;font-size:14px}}
+</style>
+</div>
+<article class="java-acc-post">
+<p class="lead" data-ke-size="size16"><b>Java 반복문 누적 계산</b>은 매번 나온 값을 한 변수에 더하거나 곱하는 문제다. 부호가 번갈아 바뀌는 합, 두 수가 반대 방향으로 움직이는 곱의 합, 증가 폭이 커지는 수열, 팩토리얼을 비교하면 초기값과 갱신식이 왜 중요한지 보인다.</p>
+<div class="key">
+<p data-ke-size="size16"><b>세 줄로 설계:</b> 누적값의 초기값 &rarr; 이번 반복에서 만들 값 &rarr; 다음 반복을 위한 상태 갱신.</p>
+</div>
+<div class="visual">[##_Image|kage@tYU2c/dJMcagsRUZH/AAAAAAAAAAAAAAAAAAAAAJ7fOOEBx2PTCteHKeqNnneLca8m3U06KRyxxb6QwXmp/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=EvnUF5GtqRRt1fDSlyTAzEVuNvc%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"1번-Java-누적계산-합수열팩토리얼.png"}_##]
+<p class="caption" data-ke-size="size16">덧셈 누적과 곱셈 누적, 증가 폭이 달라지는 수열을 한눈에 비교</p>
+</div>
+<nav class="toc" aria-label="목차"><b>목차</b>
+<ol style="list-style-type: decimal;" data-ke-list-type="decimal">
+<li><a href="#jal-init">합은 0, 곱은 1에서 시작</a></li>
+<li><a href="#jal-sign">1-2+3-4 누적 합</a></li>
+<li><a href="#jal-pair">77&times;1부터 1&times;77까지</a></li>
+<li><a href="#jal-sequence">증가 폭이 커지는 수열</a></li>
+<li><a href="#jal-factorial">팩토리얼과 오버플로</a></li>
+</ol>
+</nav>
+<h2 id="jal-init" data-ke-size="size26">1. 누적 연산에 맞는 항등값을 고른다</h2>
+<div class="table">
+<table data-ke-align="alignLeft">
+<thead>
+<tr>
+<th>연산</th>
+<th>초기값</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>합</td>
+<td><code>0</code></td>
+<td>어떤 수에 0을 더해도 값이 유지된다.</td>
+</tr>
+<tr>
+<td>곱</td>
+<td><code>1</code></td>
+<td>어떤 수에 1을 곱해도 값이 유지된다.</td>
+</tr>
+<tr>
+<td>최솟값</td>
+<td>첫 원소 또는 큰 값</td>
+<td>실제 값과 비교하며 줄여 간다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p data-ke-size="size16">팩토리얼을 <code>0</code>에서 시작하면 첫 곱셈부터 결과가 모두 0이 된다. 반대로 합을 1에서 시작하면 실제 답보다 1이 커진다.</p>
+<h2 id="jal-sign" data-ke-size="size26">2. 1-2+3-4+&hellip;+99-100 계산</h2>
+<div class="code">
+<pre class="angelscript"><code>int sum = 0;
+for (int i = 1; i &lt;= 100; i++) {
+    sum += (i % 2 == 1) ? i : -i;
+}
+System.out.println(sum); // -50</code></pre>
+</div>
+<p data-ke-size="size16">이 예제는 홀수는 더하고 짝수는 빼는 규칙이다. <code>sum = sum - i</code>와 <code>sum += -i</code>는 같은 뜻이지만, 부호가 바뀌는 항을 만든다고 생각하면 후자가 식과 더 닮았다.</p>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<h2 id="jal-pair" data-ke-size="size26">3. 두 값이 반대 방향으로 움직이는 곱의 합</h2>
+<div class="code">
+<pre class="excel"><code>long sum = 0;
+for (int right = 1; right &lt;= 77; right++) {
+    int left = 78 - right;
+    sum += (long) left * right;
+}</code></pre>
+</div>
+<p data-ke-size="size16"><code>77&times;1 + 76&times;2 + &hellip; + 1&times;77</code>은 한쪽은 감소하고 다른 쪽은 증가한다. 변수를 두 개 갱신해도 되지만 <code>left + right = 78</code> 관계를 식으로 만들면 상태가 하나 줄어든다.</p>
+<h2 id="jal-sequence" data-ke-size="size26">4. 1, 2, 4, 7, 11 수열</h2>
+<div class="code">
+<pre class="pgsql"><code>int n = 5; // 출력할 항의 개수
+int value = 1;
+for (int i = 1; i &lt;= n; i++) {
+    System.out.print(value + " ");
+    value += i;
+}</code></pre>
+</div>
+<p data-ke-size="size16">이 수열의 항 사이 차이는 1, 2, 3, 4처럼 증가한다. 현재 항을 먼저 출력한 뒤 <code>value += i</code>로 다음 항을 만든다. 출력과 갱신 순서가 바뀌면 첫 항부터 2가 나온다.</p>
+<h2 id="jal-factorial" data-ke-size="size26">5. N!은 1부터 곱한다</h2>
+<div class="code">
+<pre class="cpp"><code>static long factorial(int n) {
+    if (n &lt; 0 || n &gt; 20) {
+        throw new IllegalArgumentException("n은 0~20이어야 합니다.");
+    }
+    long result = 1;
+    for (int i = 2; i &lt;= n; i++) {
+        result *= i;
+    }
+    return result;
+}</code></pre>
+</div>
+<p data-ke-size="size16"><code>0! = 1</code>이므로 0도 처리한다. <code>long</code>은 20!까지 안전하고 21!부터 범위를 넘는다. 더 큰 값은 <code>BigInteger</code>를 사용해야 한다.</p>
+<p data-ke-size="size16">이 구현은 범위를 벗어나면 계산 전에 예외로 종료한다. 21!을 long으로 계속 곱하면 오류 메시지 없이 엉뚱한 값이 나올 수 있기 때문이다. factorial(0)은 1, factorial(5)는 120, factorial(20)은 2432902008176640000이다. -1과 21은 허용하지 않는다.</p>
+<h3>코드를 실행하는 위치</h3>
+<p data-ke-size="size16">2~4절은 main 메서드 안에 넣는 예제이며 각각 별도로 실행한다. 같은 main에 모두 붙이면 sum 변수가 중복 선언된다. 5절의 factorial 메서드는 main 바깥, 같은 클래스 안에 넣는다. 아래 틀의 주석 위치에 5절 메서드를 그대로 붙이고 FactorialExample.java로 저장한다.</p>
+<div class="code"><pre><code>public class FactorialExample {
+    public static void main(String[] args) {
+        System.out.println(factorial(0));
+        System.out.println(factorial(5));
+        System.out.println(factorial(20));
+    }
+    // 여기에 위의 factorial 메서드 전체를 붙여 넣는다.
+}</code></pre></div>
+<p data-ke-size="size16">JDK가 설치된 환경에서 파일이 있는 폴더의 터미널을 열어 다음 명령을 실행한다. 예상 출력은 차례로 1, 120, 2432902008176640000이다.</p>
+<div class="code"><pre><code>javac -encoding UTF-8 FactorialExample.java
+java FactorialExample</code></pre></div>
+<p data-ke-size="size16">다른 예제도 결과를 비교해 보자. 2절은 (1-2), (3-4)처럼 -1인 쌍이 50개라서 -50이다. 3절은 반복문 뒤에 System.out.println(sum);을 추가하면 79079가 나온다. 4절은 n=5일 때 1 2 4 7 11을 출력한다. 여기서 n은 마지막 값이 아니라 출력할 항의 개수다.</p>
+<h2 data-ke-size="size26">6. 실수하기 쉬운 부분</h2>
+<h3 data-ke-size="size23">출력과 갱신 순서를 바꾼다</h3>
+<p data-ke-size="size16">수열은 현재 값을 출력한 뒤 다음 값을 계산하는지 표로 한 번 추적한다.</p>
+<h3 data-ke-size="size23">int 범위를 넘긴다</h3>
+<p data-ke-size="size16">곱셈은 대입 전에 이미 <code>int</code>로 계산될 수 있다. 피연산자 하나를 <code>long</code>으로 바꾼다.</p>
+<h3 data-ke-size="size23">반복 경계를 한 칸 틀린다</h3>
+<p data-ke-size="size16">1부터 N까지면 <code>i &lt;= n</code>, N개 반복이면 보통 <code>i &lt; n</code>이다.</p>
+<div class="summary">
+<div class="summary-inner"><b>핵심 요약</b>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li>합은 0, 곱은 1에서 시작한다.</li>
+<li>현재 항과 다음 항을 만드는 갱신식을 분리한다.</li>
+<li>관계식으로 상태 변수 수를 줄일 수 있다.</li>
+<li>팩토리얼은 오버플로 범위를 확인한다.</li>
+</ul>
+</div>
+</div>
+</article>

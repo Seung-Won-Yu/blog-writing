@@ -1,0 +1,187 @@
+<div>
+<style>
+.java-grid-post{max-width:860px;margin:0 auto;padding:0 20px;color:#172338;font-size:18px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}.java-grid-post *{box-sizing:border-box}.java-grid-post h2{margin:2.5em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #172338;font-size:1.45em}.java-grid-post h3{margin:1.8em 0 .55em;color:#8a451c;font-size:1.12em}.java-grid-post p{margin:0 0 1.1em}.java-grid-post .lead{font-size:1.07em}.java-grid-post .key,.java-grid-post .summary{margin:1.5em 0;border-left:5px solid #d86425;background:#fff5e9}.java-grid-post .key p,.java-grid-post .summary-inner{padding:16px 18px;margin:0}.java-grid-post .toc{margin:1.6em 0 2em;padding:16px 18px;border:1px solid #dbe3ea;border-radius:12px}.java-grid-post .toc ol{margin:.5em 0 0;padding-left:1.4em}.java-grid-post .visual{margin:1.8em 0}.java-grid-post .visual figure{margin:0!important}.java-grid-post .visual img{display:block;width:100%;height:auto;border-radius:12px}.java-grid-post .caption{margin:.6em 0 0;color:#687386;font-size:.84em;text-align:center}.java-grid-post .code{max-width:100%;margin:1.2em 0 1.6em;overflow-x:auto;border-radius:10px;background:#111827}.java-grid-post .code pre{min-width:max-content;margin:0;padding:18px 20px;color:#e7eef8;font:15px/1.7 SFMono-Regular,Consolas,monospace}.java-grid-post code:not(pre code){padding:.1em .35em;border-radius:4px;background:#eef2f6;color:#9a3f1c}.java-grid-post table{width:100%;min-width:650px;border-collapse:collapse}.java-grid-post .table{overflow-x:auto;margin:1.2em 0}.java-grid-post th,.java-grid-post td{padding:11px 13px;border:1px solid #dbe3ea;text-align:left}.java-grid-post th{background:#f4f7fa}@media(max-width:640px){.java-grid-post{padding:0 19px;font-size:17px}.java-grid-post h2{font-size:1.32em}.java-grid-post .code pre{padding:16px;font-size:14px}}
+</style>
+</div>
+<article class="java-grid-post">
+<p class="lead" data-ke-size="size16"><b>Java 2차원 배열</b> 문제는 숫자를 외워 넣는 문제가 아니라 <b>행과 열 중 어느 방향을 먼저 움직이는지</b>를 설계하는 문제다. 세로 채우기, 지그재그 채우기, 왼쪽 90도 회전을 좌표 변화로 읽어 보자.</p>
+<div class="key">
+<p data-ke-size="size16"><b>먼저 적을 것:</b> 출력 좌표 <code>[row][col]</code>에 어떤 입력 좌표 또는 몇 번째 숫자가 들어가는가?</p>
+</div>
+<div class="visual">[##_Image|kage@Sehqa/dJMcadCMbiD/AAAAAAAAAAAAAAAAAAAAADeILruhyPo2QU5NeA_jEjqtIW3NNoKyLJqWNKHTHE_b/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=q7E3psFUtvnDNVqLcHeSpA6mL%2FA%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"1번-Java-2차원배열-채우기와회전.png"}_##]
+<p class="caption" data-ke-size="size16">5&times;5 격자를 세로&middot;지그재그로 채우고 왼쪽으로 90도 회전하는 좌표 변화</p>
+</div>
+<nav class="toc" aria-label="목차"><b>목차</b>
+<ol style="list-style-type: decimal;" data-ke-list-type="decimal">
+<li><a href="#jgp-coordinate">행&middot;열 좌표 읽기</a></li>
+<li><a href="#jgp-column">세로 방향 채우기</a></li>
+<li><a href="#jgp-snake">지그재그 채우기</a></li>
+<li><a href="#jgp-rotate">왼쪽 90도 회전</a></li>
+<li><a href="#jgp-errors">인덱스 실수 찾기</a></li>
+</ol>
+</nav>
+<h2 id="jgp-coordinate" data-ke-size="size26">1. arr[row][col]에서 바깥 반복문을 결정한다</h2>
+<div class="table">
+<table data-ke-align="alignLeft">
+<thead>
+<tr>
+<th>패턴</th>
+<th>먼저 움직이는 축</th>
+<th>핵심 좌표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가로 채우기</td>
+<td>행 고정, 열 증가</td>
+<td><code>arr[row][col]</code></td>
+</tr>
+<tr>
+<td>세로 채우기</td>
+<td>열 고정, 행 증가</td>
+<td><code>arr[row][col]</code></td>
+</tr>
+<tr>
+<td>회전</td>
+<td>출력 좌표 기준</td>
+<td>입력의 열&middot;행 교환</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p data-ke-size="size16">배열 저장 순서와 화면 출력 순서는 다를 수 있다. 채우기 코드는 패턴을 만들고, 출력 코드는 항상 행을 위에서 아래로 읽는다고 나눠 생각하면 덜 헷갈린다.</p>
+<h2 id="jgp-column" data-ke-size="size26">2. 숫자를 열 방향으로 채우기</h2>
+<div class="code">
+<pre class="excel"><code>static int[][] fillByColumn(int n) {
+    if (n &lt; 1 || n &gt; 20) {
+        throw new IllegalArgumentException("연습 크기는 1~20입니다.");
+    }
+    int[][] board = new int[n][n];
+    int value = 1;
+
+    for (int col = 0; col &lt; n; col++) {
+        for (int row = 0; row &lt; n; row++) {
+            board[row][col] = value++;
+        }
+    }
+    return board;
+}</code></pre>
+</div>
+<p data-ke-size="size16">열 하나를 고정하고 위에서 아래로 채운 다음 옆 열로 이동한다. <code>fillByColumn(3)</code>의 예상 결과는 아래와 같다. 크기를 20 이하로 제한한 것은 Java의 제한이 아니라 출력량을 줄이기 위한 이 글의 연습 조건이다.</p>
+<div class="code"><pre><code>1 4 7
+2 5 8
+3 6 9</code></pre></div>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<h2 id="jgp-snake" data-ke-size="size26">3. 짝수 행은 오른쪽, 홀수 행은 왼쪽</h2>
+<div class="code">
+<pre class="excel"><code>static int[][] fillSnake(int n) {
+    if (n &lt; 1 || n &gt; 20) {
+        throw new IllegalArgumentException("연습 크기는 1~20입니다.");
+    }
+    int[][] board = new int[n][n];
+    int value = 1;
+
+    for (int row = 0; row &lt; n; row++) {
+        if (row % 2 == 0) {
+            for (int col = 0; col &lt; n; col++) {
+                board[row][col] = value++;
+            }
+        } else {
+            for (int col = n - 1; col &gt;= 0; col--) {
+                board[row][col] = value++;
+            }
+        }
+    }
+    return board;
+}</code></pre>
+</div>
+<p data-ke-size="size16">여기서 짝수 행은 화면의 둘째 줄이 아니라 <strong>인덱스가 0, 2, 4인 행</strong>이다. 첫째 줄은 왼쪽부터, 둘째 줄은 오른쪽부터 채운다. 숫자는 계속 커지지만 출력할 때에는 각 행을 왼쪽부터 읽는다. <code>fillSnake(3)</code>의 예상 결과를 보면 둘째 줄만 감소하는 이유가 보인다.</p>
+<div class="code"><pre><code>1 2 3
+6 5 4
+7 8 9</code></pre></div>
+<h2 id="jgp-rotate" data-ke-size="size26">4. 왼쪽으로 90도 회전하기</h2>
+<div class="code">
+<pre class="pgsql"><code>static int[][] rotateLeft(int[][] source) {
+    if (source == null || source.length == 0
+            || source[0] == null || source[0].length == 0) {
+        throw new IllegalArgumentException("빈 배열은 회전하지 않습니다.");
+    }
+    int rows = source.length;
+    int cols = source[0].length;
+    for (int[] line : source) {
+        if (line == null || line.length != cols) {
+            throw new IllegalArgumentException("직사각형 배열이 필요합니다.");
+        }
+    }
+    int[][] rotated = new int[cols][rows];
+
+    for (int row = 0; row &lt; rows; row++) {
+        for (int col = 0; col &lt; cols; col++) {
+            rotated[cols - 1 - col][row] = source[row][col];
+        }
+    }
+    return rotated;
+}</code></pre>
+</div>
+<p data-ke-size="size16">이 메서드는 <strong>비어 있지 않고 각 행의 길이가 같은 직사각형 배열</strong>을 받는다. Java의 2차원 배열은 행마다 길이가 다를 수도 있으므로 먼저 검사한다. 새 배열을 만들어 반환하기 때문에 원본 값은 바꾸지 않는다.</p>
+<p data-ke-size="size16">다음 2행 3열 배열을 종이에 적고 왼쪽으로 돌려 보자. 오른쪽 위의 3은 왼쪽 위로, 왼쪽 위의 1은 왼쪽 아래로 간다. 결과 크기는 3행 2열이다.</p>
+<div class="code"><pre><code>회전 전       왼쪽 90도 회전 후
+1 2 3         3 6
+4 5 6         2 5
+              1 4</code></pre></div>
+<p data-ke-size="size16">숫자 3의 원래 좌표는 <code>[0][2]</code>다. 이를 <code>[cols - 1 - col][row]</code>에 넣으면 <code>[3 - 1 - 2][0] = [0][0]</code>이 된다. 모든 좌표를 외우기 전에 모서리 하나부터 대입해 보자.</p>
+<h2 id="jgp-run" data-ke-size="size26">실행해서 예상 결과와 비교하기</h2>
+<p data-ke-size="size16"><code>GridExamples.java</code> 파일을 만든다. 아래 클래스 안의 표시한 위치에 위 세 메서드 <code>fillByColumn</code>, <code>fillSnake</code>, <code>rotateLeft</code>를 넣는다. 메서드는 <code>main</code> 안이 아니라 같은 클래스 안에 나란히 둔다. JDK가 필요하며 외부 라이브러리는 쓰지 않는다.</p>
+<div class="code"><pre><code>public class GridExamples {
+    // 위의 세 메서드를 이 위치에 넣으세요.
+
+    static void print(int[][] board) {
+        for (int[] row : board) {
+            System.out.println(java.util.Arrays.toString(row));
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("[세로]");
+        print(fillByColumn(3));
+        System.out.println("[지그재그]");
+        print(fillSnake(3));
+        System.out.println("[왼쪽 회전]");
+        print(rotateLeft(new int[][] {{1, 2, 3}, {4, 5, 6}}));
+    }
+}</code></pre></div>
+<div class="code"><pre><code>javac -encoding UTF-8 GridExamples.java
+java GridExamples</code></pre></div>
+<p data-ke-size="size16">예상 출력은 아래와 같다. 이번 편집 환경에는 Java 런타임이 없어 컴파일·실행 검증은 하지 않았다.</p>
+<div class="code"><pre><code>[세로]
+[1, 4, 7]
+[2, 5, 8]
+[3, 6, 9]
+[지그재그]
+[1, 2, 3]
+[6, 5, 4]
+[7, 8, 9]
+[왼쪽 회전]
+[3, 6]
+[2, 5]
+[1, 4]</code></pre></div>
+<p data-ke-size="size16">다음에는 크기 1로 바꿔 보자. 두 채우기는 <code>[[1]]</code>, 한 칸 배열의 회전은 같은 값이 예상된다. <code>fillSnake(0)</code>이나 <code>rotateLeft(new int[][] {{1, 2}, {3}})</code>는 입력 오류를 알리는 예외가 예상된다. 예외를 잡지 않았으므로 잘못된 입력은 한 번에 하나씩 시험한다.</p>
+<p data-ke-size="size16">기본 개념의 근거는 <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" target="_blank" rel="noopener">Oracle Java 배열 튜토리얼</a>이다. JDK 8 기준 문서이며, 여기서는 0부터 시작하는 인덱스와 행별 길이가 다를 수 있다는 배열 구조를 참고했다.</p>
+<h2 id="jgp-errors" data-ke-size="size26">5. 실수하기 쉬운 부분</h2>
+<h3 data-ke-size="size23">모든 반복 조건에 arr.length를 쓴다</h3>
+<p data-ke-size="size16">직사각형 배열의 열 길이는 <code>arr[row].length</code>다. 행과 열 크기를 따로 저장한다.</p>
+<h3 data-ke-size="size23">채우기와 출력을 한 반복문에서 해결한다</h3>
+<p data-ke-size="size16">패턴이 복잡해지면 저장을 끝낸 뒤 별도 메서드로 출력하는 편이 좌표를 검증하기 쉽다.</p>
+<h3 data-ke-size="size23">회전 방향을 눈으로만 판단한다</h3>
+<p data-ke-size="size16">왼쪽 위, 오른쪽 위 같은 모서리 하나가 어디로 이동해야 하는지 좌표를 대입해 확인한다.</p>
+<div class="summary">
+<div class="summary-inner"><b>핵심 요약</b>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li>행과 열 중 어느 축을 먼저 움직일지 정한다.</li>
+<li>지그재그는 숫자보다 열 진행 방향만 바꾼다.</li>
+<li>왼쪽 회전 좌표는 <code>[cols-1-col][row]</code>다.</li>
+<li>직사각형 배열에서는 행&middot;열 길이를 구분한다.</li>
+</ul>
+</div>
+</div>
+</article>

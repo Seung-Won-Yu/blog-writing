@@ -1,0 +1,328 @@
+<style>
+.opencv-pipeline-post{max-width:860px;margin:0 auto;color:#28343d;font-size:17px;line-height:1.84;word-break:keep-all}
+.opencv-pipeline-post *{box-sizing:border-box}
+.opencv-pipeline-post h2{margin:2.8em 0 .75em;padding-bottom:.35em;border-bottom:2px solid #e4ded4;color:#16374a;font-size:1.52em;line-height:1.4}
+.opencv-pipeline-post h3{margin:2em 0 .6em;color:#166b6b;font-size:1.18em}
+.opencv-pipeline-post p{margin:.85em 0}
+.opencv-pipeline-post ul,.opencv-pipeline-post ol{margin:.8em 0;padding-left:1.45em}
+.opencv-pipeline-post li{margin:.35em 0}
+.opencv-pipeline-post .lead{font-size:1.08em;color:#41525c}
+.opencv-pipeline-post .toc,.opencv-pipeline-post .note,.opencv-pipeline-post .summary{margin:1.5em 0;padding:20px;border:1px solid #d9e1df;border-radius:12px;background:#f7faf8}
+.opencv-pipeline-post .note{border-left:5px solid #1b9992;background:#f1faf8}
+.opencv-pipeline-post .warn{border-left-color:#ee873a;background:#fff8f1}
+.opencv-pipeline-post .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:1.2em 0}
+.opencv-pipeline-post .pipeline span{padding:13px 8px;border:1px solid #ccdadd;border-radius:8px;background:#f3f7f7;text-align:center;font-weight:700;font-size:.9em}
+.opencv-pipeline-post .table-wrap,.opencv-pipeline-post .code-wrap{max-width:100%;margin:1em 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.opencv-pipeline-post table{width:100%;min-width:620px;border-collapse:collapse;font-size:.94em}
+.opencv-pipeline-post th,.opencv-pipeline-post td{padding:12px;border:1px solid #d8e1e2;text-align:left;vertical-align:top}
+.opencv-pipeline-post th{background:#eef5f4;color:#174b51}
+.opencv-pipeline-post pre{min-width:max-content;margin:0;padding:18px;border-radius:10px;background:#17242c;color:#eef5f4;font-size:.88em;line-height:1.65}
+.opencv-pipeline-post code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.opencv-pipeline-post .ad-slot{margin:2.2em 0}
+@media(max-width:640px){
+  .opencv-pipeline-post{padding:0 19px;font-size:17px;line-height:1.78;word-break:normal}
+  .opencv-pipeline-post h2{font-size:1.38em}
+  .opencv-pipeline-post .toc,.opencv-pipeline-post .note,.opencv-pipeline-post .summary{padding:17px}
+  .opencv-pipeline-post .pipeline{grid-template-columns:1fr}
+  .opencv-pipeline-post pre{font-size:.82em}
+}
+</style>
+
+<article class="opencv-pipeline-post">
+  <p class="lead">영수증 사진에서 종이 테두리만 찾고 싶은데, 코드가 사진 전체에 네모를 그린다면 무엇이 잘못됐을까? 이미지 처리에서는 ‘어느 쪽을 문서로 볼지’부터 정해야 한다. 어두운 배경 위 밝은 종이를 찾는 작은 실습으로, 읽기 → 흑백 변환 → 잡음 완화 → 흑백 마스크 → 외곽선 표시를 연결해보자.</p>
+<div class="note"><strong>먼저 실행하고, 필요한 원리만 읽자</strong><p>대상은 Python 기초를 아는 입문자다. Python 설치와 터미널 실행은 필요하지만, 실습용 사진은 없어도 된다. 7절의 전체 파일은 가상 종이 이미지를 만들고 결과 6장을 저장한다. 먼저 7절을 실행한 뒤, 실패한 단계에 맞춰 1~6절을 읽어도 된다.</p><p><b>범위:</b> 글자 읽기(OCR), 원근 보정, 모든 문서의 자동 인식은 하지 않는다. 종이가 배경보다 밝고, 화면 가장자리에 닿지 않으며, 한 장이 충분히 크게 보이는 경우의 <em>사각형 후보</em> 찾기다. 흰 책상·심한 그림자·여러 종이·잘린 문서는 별도 설계가 필요하다.</p></div>
+
+  <div class="pipeline" aria-label="이미지 처리 순서">
+    <span>1. 원본 확인</span><span>2. 명암 단순화</span><span>3. 잡음 제거</span><span>4. 이진화</span><span>5. 영역 검출</span>
+  </div>
+
+  <p>[##_Image|kage@W7p2f/dJMcag7p88P/AAAAAAAAAAAAAAAAAAAAAPEFkH5qbdlKKN386iA6OBca6ZkbDaHRZqt7RZc5JqD_/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=H1d%2BZbu5c1FE5f0B%2BTbZVqEWEiI%3D|CDM|1.3|{"originWidth":"1730","originHeight":"909","style":"alignCenter","filename":"1번-OpenCV-영수증-영역검출-대표이미지.png"}_##]</p>
+
+  <nav class="toc" aria-label="목차">
+    <strong>목차</strong>
+    <ol>
+      <li>설치와 이미지 로딩</li>
+      <li>픽셀·샘플링·양자화·히스토그램</li>
+      <li>색상·밝기·크기 다루기</li>
+      <li>필터 선택</li>
+      <li>기하 변환</li>
+      <li>이진화·모폴로지·에지·외곽선</li>
+      <li>문서 영역 검출 코드</li>
+      <li>실수하기 쉬운 부분과 요약</li>
+    </ol>
+  </nav>
+
+  <p>[##_Image|kage@bs87fC/dJMb99UMnvQ/AAAAAAAAAAAAAAAAAAAAAH_5IVLsi8AD_hNHzS5eC9pWveiurM2bOqhBeoPD9UTn/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=5nJjPo7AfAHtxICRrKgCv82Qrac%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"2번-OpenCV-이미지처리-전체파이프라인.png"}_##]</p>
+
+  <h2>1. 로딩 직후 shape와 dtype부터 확인한다</h2><p>아래 명령은 터미널에서 실행한다. Windows에서 python3가 없다면 <code>py -m pip install opencv-python numpy</code>를 쓴다. 설치와 실행에 같은 Python을 사용한다. 아래 짧은 코드들은 개념 설명용이며, 7절에는 처음부터 끝까지 실행할 수 있는 파일이 있다. <code>receipt.jpg</code> 조각을 따로 실행하려면 같은 폴더에 직접 준비한 사진이 필요하다.</p>
+  <div class="code-wrap"><pre><code>python3 -m pip install opencv-python numpy</code></pre></div>
+
+  <div class="code-wrap"><pre><code>from pathlib import Path
+import cv2
+import numpy as np
+
+image_path = Path("receipt.jpg")
+image = cv2.imread(str(image_path))
+
+if image is None:
+    raise FileNotFoundError(f"이미지를 읽을 수 없습니다: {image_path}")
+
+print(image.shape)  # (높이, 너비, 채널)
+print(image.dtype)  # 보통 uint8</code></pre></div>
+
+  <p><code>cv2.imread()</code>가 실패하면 예외 대신 <code>None</code>을 돌려준다. 따라서 경로와 파일 읽기 여부를 가장 먼저 검사해야 한다. 컬러 이미지는 일반적으로 <code>(height, width, 3)</code> 형태이며 픽셀 범위는 0~255다.</p>
+
+  <div class="note">
+    <strong>OpenCV의 기본 채널 순서는 BGR이다.</strong>
+    <p>Matplotlib처럼 RGB를 기대하는 도구로 표시할 때는 <code>cv2.cvtColor(image, cv2.COLOR_BGR2RGB)</code>로 변환한다. PNG라고 항상 4채널인 것도 아니다. 알파 채널이 있는 파일을 그대로 읽으려면 <code>cv2.IMREAD_UNCHANGED</code>를 사용하고 실제 shape를 확인한다.</p>
+  </div>
+
+  <h2>2. 디지털 이미지는 좌표와 밝기의 유한한 표다</h2>
+  <p>카메라가 연속적인 장면을 디지털 이미지로 바꿀 때 공간을 격자로 나누는 과정이 <strong>샘플링</strong>, 각 픽셀의 밝기나 색을 유한한 단계로 표현하는 과정이 <strong>양자화</strong>다. 해상도를 줄이면 공간 샘플 수가 감소하고, 비트 수를 줄이면 표현 가능한 밝기 단계가 감소한다. 둘은 모두 “화질 저하”로 보일 수 있지만 원인과 해결 방법이 다르다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>개념</th><th>줄였을 때 보이는 현상</th><th>실전 확인</th></tr></thead>
+      <tbody>
+        <tr><td>공간 샘플링</td><td>경계 계단, 작은 글자·얇은 선 소실</td><td>원본 해상도와 축소 보간법 기록</td></tr>
+        <tr><td>밝기 양자화</td><td>그라데이션이 띠처럼 끊기는 banding</td><td>dtype과 값 범위, 저장 포맷 확인</td></tr>
+        <tr><td>색상 채널</td><td>도구 사이에서 빨강·파랑 반전</td><td>BGR·RGB·GRAY 변환 경로 기록</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>히스토그램은 임계값을 고르는 출발점이다</h3>
+  <p>그레이스케일 히스토그램은 밝기별 픽셀 수를 보여 준다. 전경과 배경이 서로 다른 밝기 군집을 만들면 두 봉우리 사이에서 임계값 후보를 찾을 수 있다. 하지만 조명 그라데이션이나 그림자가 크면 한 개의 전역 임계값만으로 분리하기 어렵다.</p>
+
+  <div class="code-wrap"><pre><code>gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
+
+print("가장 많은 밝기:", int(hist.argmax()))
+equalized = cv2.equalizeHist(gray)</code></pre></div>
+
+  <div class="note">
+    <strong>히스토그램 평활화는 항상 개선이 아니다.</strong>
+    <p>명암을 넓히는 동시에 노이즈도 강조할 수 있다. 전체 영상보다 작은 구역별로 적용하는 CLAHE도 있지만, 전후 히스토그램과 다음 단계의 검출 결과를 함께 비교해야 한다.</p>
+  </div>
+
+  <h2>3. 밝기와 크기는 자료형·보간법까지 함께 본다</h2>
+  <h3>밝기 조절</h3>
+  <p><code>uint8</code> 배열에 NumPy 덧셈을 바로 적용하면 255를 넘는 값이 순환할 수 있다. OpenCV의 <code>cv2.add()</code>는 범위를 0~255로 잘라 주므로 밝기 조절에 안전하다.</p>
+
+  <div class="code-wrap"><pre><code>brighter = cv2.add(image, np.full_like(image, 35))
+darker = cv2.subtract(image, np.full_like(image, 35))</code></pre></div>
+
+  <h3>크기 조절</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>보간법</th><th>주요 용도</th><th>특징</th></tr></thead>
+      <tbody>
+        <tr><td><code>INTER_AREA</code></td><td>축소</td><td>영역 정보를 활용해 축소 시 깨짐이 적다.</td></tr>
+        <tr><td><code>INTER_LINEAR</code></td><td>일반적인 확대·축소</td><td>속도와 품질의 균형이 좋다.</td></tr>
+        <tr><td><code>INTER_CUBIC</code></td><td>품질을 중시한 확대</td><td>계산량은 늘지만 부드럽다.</td></tr>
+        <tr><td><code>INTER_NEAREST</code></td><td>마스크·라벨 이미지</td><td>새 중간값을 만들지 않아 클래스 번호를 보존한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-wrap"><pre><code>height, width = image.shape[:2]
+small = cv2.resize(
+    image,
+    (max(1, width // 2), max(1, height // 2)),
+    interpolation=cv2.INTER_AREA
+)</code></pre></div>
+
+  <h2>4. 필터는 무엇을 보존할지 정해서 고른다</h2>
+  <p>노이즈를 줄이는 목적은 다음 단계의 이진화나 외곽선 검출을 안정시키는 것이다. 강한 블러가 항상 좋은 것은 아니다. 글자 경계까지 사라지면 검출 성능이 오히려 낮아진다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>필터</th><th>강점</th><th>적합한 상황</th></tr></thead>
+      <tbody>
+        <tr><td>Gaussian Blur</td><td>전체 노이즈를 자연스럽게 완화</td><td>일반적인 전처리, 에지 검출 전</td></tr>
+        <tr><td>Median Blur</td><td>점 형태의 소금·후추 노이즈 제거</td><td>검고 흰 점이 튀는 이미지</td></tr>
+        <tr><td>Bilateral Filter</td><td>경계를 비교적 보존하면서 평탄화</td><td>경계 보존이 중요할 때, 다만 계산량이 큼</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-wrap"><pre><code>gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+median = cv2.medianBlur(gray, 5)
+bilateral = cv2.bilateralFilter(gray, 9, 75, 75)</code></pre></div>
+
+  <div class="ad-slot">
+    <figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+  </div>
+
+  <h2>5. 기하 변환은 기준점과 출력 크기가 중요하다</h2>
+  <p>회전은 이미지 중심을 기준으로 변환 행렬을 만들고, 결과 캔버스 크기를 지정한다. 원본과 같은 크기로 회전하면 모서리가 잘릴 수 있으므로 실제 작업에서는 여백이나 새 경계 크기를 계산해야 한다.</p>
+
+  <div class="code-wrap"><pre><code>height, width = image.shape[:2]
+center = (width / 2, height / 2)
+matrix = cv2.getRotationMatrix2D(center, 10, 1.0)
+
+rotated = cv2.warpAffine(
+    image,
+    matrix,
+    (width, height),
+    flags=cv2.INTER_LINEAR,
+    borderMode=cv2.BORDER_REPLICATE
+)</code></pre></div>
+
+  <h2>6. 이진화 뒤에는 영역을 수치로 검증한다</h2>
+  <p>이진화는 픽셀을 전경과 배경으로 나눈다. 조명이 일정하면 고정 임계값도 쓸 수 있지만, 촬영 환경이 달라지면 Otsu나 적응형 이진화가 유리하다. 임계값은 외워 넣는 숫자가 아니라 히스토그램과 결과 이미지를 보고 결정해야 한다.</p>
+
+  <div class="code-wrap"><pre><code># 밝은 종이는 흰색, 어두운 배경은 검은색으로 남긴다
+threshold_value, binary = cv2.threshold(
+    blurred,
+    0,
+    255,
+    cv2.THRESH_BINARY | cv2.THRESH_OTSU
+)
+print("선택된 임계값:", threshold_value)</code></pre></div>
+
+  <div class="note warn"><strong>문서 테두리를 찾는 것과 글자를 찾는 것은 다르다</strong><p>외곽선은 마스크에서 흰 영역의 경계를 찾는다. 이 예제는 밝은 종이를 흰색으로 남기는 <code>THRESH_BINARY</code>를 쓴다. 반대로 <code>THRESH_BINARY_INV</code>로 어두운 배경을 흰색으로 만들면 사진 전체의 테두리가 잡힐 수 있다. 어두운 글자를 추출하려는 단계에서는 반전이 유용할 수 있지만, 종이 영역 찾기에 무조건 쓰지는 않는다. Otsu가 고른 값도 문서 인식 성공을 보장하지 않는다.</p></div>
+  <h3>연결 요소와 외곽선의 역할</h3>
+  <ul>
+    <li><strong>연결 요소 분석:</strong> 붙어 있는 전경 픽셀을 객체 단위로 번호 매기고 면적·중심·바운딩 박스를 얻는다.</li>
+    <li><strong>외곽선 검출:</strong> 객체의 경계점을 얻어 둘레, 면적, 다각형 모양을 분석한다.</li>
+    <li><strong>모폴로지 연산:</strong> 끊어진 글자나 선을 잇거나 작은 점 노이즈를 제거한다.</li>
+  </ul>
+
+  <h3>에지와 특징점은 목적이 다르다</h3>
+  <p>Canny 에지는 밝기가 급격히 변하는 선을 찾는다. 외곽선은 이진 영상에서 연결된 경계점의 순서를 얻는다. Harris·Shi-Tomasi·ORB 같은 특징점은 회전이나 시점이 달라진 두 이미지의 대응 위치를 찾는 데 쓴다. 비슷해 보이지만 출력과 사용 목적이 다르므로 “윤곽을 찾는다”는 한 문장으로 섞지 않는다.</p>
+
+  <div class="code-wrap"><pre><code>edges = cv2.Canny(blurred, 60, 160)
+corners = cv2.goodFeaturesToTrack(
+    gray,
+    maxCorners=100,
+    qualityLevel=0.01,
+    minDistance=10
+)</code></pre></div>
+
+  <p>[##_Image|kage@qE57x/dJMcag7p88R/AAAAAAAAAAAAAAAAAAAAAMtFKhxN5Omy7rkCSPggnLnweopo-scpt2Aenf5mz6S1/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=jLJDY2QMNAUZHB%2FuLsN48LA2exc%3D|CDM|1.3|{"originWidth":"1672","originHeight":"941","style":"alignCenter","filename":"3번-OpenCV-문서영역-검출단계.png"}_##]</p>
+
+  <h2>7. 사진 없이 시작하는 전체 실습</h2>
+<p>아래 전체 코드를 <code>opencv150.py</code>로 저장한다. 먼저 <code>python3 opencv150.py</code>를 실행한다. Windows에서는 <code>py opencv150.py</code>로 실행한다. 가상 입력에서 초록 테두리가 종이 가장자리에 생기면 첫 실습은 성공이다. 파일 이름과 경로는 코드와 명령에서 같아야 한다.</p>
+<div class="note"><b>직접 준비한 사진에 적용하기</b><p><code>python3 opencv150.py --input "receipt.jpg" --out receipt-result</code>로 실행한다. 입력은 읽기만 하며 원본에 덮어쓰지 않는다. 결과 폴더가 이미 있으면 멈춘다. 다시 실행할 때는 <code>--out receipt-result-2</code>처럼 새 이름을 지정한다. 이 실습은 외부 서비스 업로드나 GUI 창 없이 로컬에서 처리한다.</p></div>
+<details><summary>전체 실행 코드 펼치기 — opencv150.py</summary><div class="code-wrap"><pre class="language-python"><code>"""Bright-paper candidate demo, not OCR or a production document scanner."""
+import argparse
+from pathlib import Path
+import cv2
+import numpy as np
+
+
+def sample_image():
+    image = np.full((480, 640, 3), 35, dtype=np.uint8)
+    cv2.rectangle(image, (180, 80), (460, 400), (235, 235, 235), -1)
+    for y in range(120, 350, 35):
+        cv2.line(image, (210, y), (420, y), (60, 60, 60), 2)
+    return image
+
+
+def detect(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    threshold, binary = cv2.threshold(
+        blurred, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
+    )
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+    closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
+    contours, _ = cv2.findContours(
+        closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
+    height, width = gray.shape
+    candidates = []
+    for contour in contours:
+        ratio = cv2.contourArea(contour) / (height * width)
+        x, y, w, h = cv2.boundingRect(contour)
+        touches_border = x == 0 or y == 0 or x + w &gt;= width or y + h &gt;= height
+        polygon = cv2.approxPolyDP(contour, 0.02 * cv2.arcLength(contour, True), True)
+        if 0.10 &lt;= ratio &lt;= 0.90 and not touches_border:
+            if len(polygon) == 4 and cv2.isContourConvex(polygon):
+                candidates.append((cv2.contourArea(contour), polygon))
+    result = image.copy()
+    if candidates:
+        _, polygon = max(candidates, key=lambda item: item[0])
+        cv2.polylines(result, [polygon], True, (0, 180, 0), 3)
+    return threshold, candidates, (gray, blurred, binary, closed, result)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", type=Path)
+    parser.add_argument("--out", type=Path, default=Path("opencv150-output"))
+    args = parser.parse_args()
+    image = sample_image()
+    if args.input is not None:
+        data = np.frombuffer(args.input.read_bytes(), dtype=np.uint8)
+        image = cv2.imdecode(data, cv2.IMREAD_COLOR) if data.size else None
+        if image is None:
+            raise ValueError(f"Cannot decode image: {args.input}")
+    threshold, candidates, steps = detect(image)
+    args.out.mkdir(parents=True, exist_ok=False)
+    names = ["01-gray", "02-blur", "03-binary", "04-closed", "05-result"]
+    for name, step in zip(["00-input"] + names, [image] + list(steps)):
+        ok, encoded = cv2.imencode(".png", step)
+        if not ok:
+            raise OSError(f"Encoding failed: {name}")
+        (args.out / f"{name}.png").write_bytes(encoded.tobytes())
+    print(f"shape={image.shape}, dtype={image.dtype}")
+    print(f"threshold={threshold:.1f}, candidates={len(candidates)}")
+    print("candidate found" if candidates else "NO CANDIDATE: inspect intermediate images")
+    print(f"saved 6 PNG files: {args.out.resolve()}")
+
+
+if __name__ == "__main__":
+    main()</code></pre></div></details>
+<p>밝은 영역을 찾은 뒤 전체 면적의 10~90%인 후보만 남기고, 화면 가장자리에 닿는 영역을 제외한다. 마지막으로 볼록한 네 꼭짓점 후보 중 면적이 가장 큰 것을 표시한다. 면적 비율·커널 7×7·근사 계수 0.02는 이 실습의 출발값이지 모든 사진의 정답은 아니다. 사각형이라는 사실만으로 문서임이 증명되지는 않는다.</p>
+<h3>실행 확인한 결과와 읽는 순서</h3>
+<div class="code-wrap"><pre class="language-text"><code>shape=(480, 640, 3), dtype=uint8
+threshold=130.0, candidates=1
+candidate found
+saved 6 PNG files: [실행 폴더]/opencv150-output</code></pre></div>
+<p>OpenCV 4.13.0·NumPy 2.0.2·Python 3.9에서 기본 가상 입력을 실행한 출력이다. 마지막 줄의 절대 경로는 컴퓨터마다 다르다. 내 사진의 크기·임계값·후보 수는 당연히 달라질 수 있다. 실제 영수증 사진의 검출 정확도를 측정한 결과는 아니다.</p>
+<div class="table-wrap"><table><thead><tr><th>저장 파일</th><th>볼 것</th></tr></thead><tbody>
+<tr><td>00-input.png</td><td>원본: 종이 주변에 어두운 여백이 있는가?</td></tr>
+<tr><td>01-gray.png · 02-blur.png</td><td>흑백 변환과 잡음 완화 후 종이 경계가 살아 있는가?</td></tr>
+<tr><td>03-binary.png · 04-closed.png</td><td>종이는 흰색, 배경은 검은색인가? 작은 끊김이 이어졌는가?</td></tr>
+<tr><td>05-result.png</td><td>초록 선이 사진 가장자리가 아니라 종이 테두리를 따라가는가?</td></tr>
+</tbody></table></div>
+<p><code>NO CANDIDATE</code>가 나오면 저장 자체는 끝났지만 검출은 실패한 것이다. 마스크 → 종이 면적 → 화면 가장자리 → 네 꼭짓점 순서로 확인한다. 잘린 종이는 이 예제에서 의도적으로 제외된다. <code>candidates=1</code>이어도 반드시 결과 이미지를 확인한다. 가상 입력과 밝기 반전·빈 화면 테스트는 했지만, 현실 사진 전반의 성공률은 검증하지 않았다.</p>
+
+  <div class="note warn">
+    <strong>화면이 뜨지 않을 때</strong>
+    <p><code>cv2.imshow()</code>와 <code>cv2.waitKey()</code>는 GUI 환경이 필요하다. 서버, Docker, 일부 주피터 환경에서는 창이 열리지 않는다. 이때는 <code>cv2.imwrite()</code>로 저장하고 노트북에서는 Matplotlib으로 표시한다.</p>
+  </div>
+
+  <h3>마우스·트랙바·그리기 함수</h3>
+  <p><code>cv2.line()</code>, <code>rectangle()</code>, <code>circle()</code>은 검출 결과를 설명하는 오버레이에 유용하다. 도형 함수의 <code>thickness=-1</code>은 내부를 채운다. 마우스 콜백과 트랙바는 임계값을 실시간 조정할 때 편하지만, 최종 파이프라인에는 선택된 값을 설정 파일이나 코드로 남겨 재현 가능하게 만든다.</p>
+
+  <h2>8. 실수하기 쉬운 부분</h2><div class="note warn"><strong>실행 오류는 먼저 환경부터 확인한다</strong><p><code>No module named cv2</code>는 설치한 Python과 실행한 Python이 다른지 확인한다. <code>FileExistsError</code>는 결과 폴더 이름을 새로 지정한다. 파일을 찾지 못하거나 <code>Cannot decode image</code>가 나오면 경로·접근 권한·손상 또는 지원하지 않는 형식을 확인한다. 긴 코드를 부분 복사했다면 7절 전체 파일로 다시 시작한다.</p></div>
+  <ul>
+    <li><code>imread()</code> 결과가 <code>None</code>인지 확인하지 않고 다음 함수를 호출한다.</li>
+    <li>BGR 이미지를 RGB로 가정해 파란색과 빨간색이 바뀐다.</li>
+    <li><code>uint8</code>에 NumPy 덧셈을 바로 적용해 값이 순환한다.</li>
+    <li>마스크를 선형 보간해 0과 1 사이에 존재하지 않던 클래스 값이 생긴다.</li>
+    <li>고정 임계값 하나를 모든 조명과 카메라에 그대로 사용한다.</li>
+    <li>검출 면적 기준을 픽셀 고정값으로만 두어 해상도가 바뀌면 결과가 달라진다.</li>
+    <li>중간 결과를 저장하지 않아 어느 단계에서 실패했는지 찾기 어렵다.</li>
+  </ul>
+
+  <div class="summary">
+    <strong>핵심 요약</strong>
+    <ol>
+      <li>이미지를 읽은 직후 <code>None</code>, shape, dtype, 채널 순서를 확인한다.</li>
+      <li>필터와 임계값은 다음 단계에서 보존해야 할 경계를 기준으로 선택한다.</li>
+      <li>샘플링·양자화·색상 채널을 구분하고 히스토그램으로 밝기 분포를 확인한다.</li>
+      <li>이진화 뒤에는 면적, 연결 요소, 에지, 외곽선으로 결과를 수치화한다.</li>
+      <li>전체 파이프라인의 중간 이미지를 저장하면 오류 원인을 훨씬 빨리 찾을 수 있다.</li>
+    </ol>
+  </div>
+<section class="note" aria-label="공식 참고 자료"><h3>동작을 확인할 공식 자료</h3><ul>
+<li><a href="https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html" target="_blank" rel="noopener">OpenCV: 이진화 방향·Otsu·적응형 임계값</a> — 조명과 흑백 마스크 선택을 확인한다.</li>
+<li><a href="https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html" target="_blank" rel="noopener">OpenCV: 외곽선 기초</a> — 흰 전경과 검은 배경의 경계를 다룬다.</li>
+<li><a href="https://docs.opencv.org/4.x/d4/da8/group__imgcodecs.html" target="_blank" rel="noopener">OpenCV: 이미지 읽기·디코딩·인코딩</a> — 읽기 실패와 결과 저장 함수를 확인한다.</li>
+</ul><p>위 삽화는 개념 설명용이다. 이번 실행에서 얻은 PNG를 대신하는 실제 검출 결과 사진으로 해석하지 않는다. 실행 검증 범위는 7절의 가상 입력과 제한된 실패 사례다.</p></section>
+</article>

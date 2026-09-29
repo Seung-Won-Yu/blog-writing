@@ -1,0 +1,471 @@
+<style>
+.java-oop-post {
+  --java-ink: #24312d;
+  --java-muted: #586660;
+  --java-accent: #247b63;
+  --java-accent-soft: #edf7f3;
+  --java-line: #d9e3de;
+  --java-code: #17201d;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 19px;
+  box-sizing: border-box;
+  color: var(--java-ink);
+  font-size: 17px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.java-oop-post * { box-sizing: border-box; }
+.java-oop-post p { margin: 0 0 18px; }
+.java-oop-post h2 {
+  margin: 52px 0 18px;
+  color: #17231f;
+  font-size: 28px;
+  line-height: 1.38;
+  letter-spacing: -0.025em;
+}
+.java-oop-post h3 {
+  margin: 34px 0 14px;
+  color: #1d2a26;
+  font-size: 21px;
+  line-height: 1.45;
+  letter-spacing: -0.018em;
+}
+.java-oop-post strong { color: #17231f; }
+.java-oop-post a { color: #176b55; text-underline-offset: 3px; }
+.java-oop-post figure {
+  width: 100%;
+  margin: 30px 0 12px;
+}
+.java-oop-post figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+.java-oop-post figcaption,
+.java-oop-post__caption {
+  margin-top: 10px;
+  color: var(--java-muted);
+  font-size: 14px;
+  line-height: 1.65;
+  text-align: center;
+}
+.java-oop-post__lead {
+  margin-top: 8px;
+  color: #2e3c37;
+  font-size: 19px;
+  line-height: 1.9;
+}
+.java-oop-post__muted { color: var(--java-muted); }
+.java-oop-post__toc,
+.java-oop-post__note,
+.java-oop-post__flow,
+.java-oop-post__summary {
+  width: 100%;
+  margin: 28px 0;
+  padding: 19px 21px;
+  border: 1px solid var(--java-line);
+  border-radius: 14px;
+  background: #f8faf9;
+}
+.java-oop-post__toc strong,
+.java-oop-post__note strong,
+.java-oop-post__summary strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.java-oop-post__toc ol,
+.java-oop-post__note ul,
+.java-oop-post__summary ul {
+  margin: 0;
+  padding-left: 22px;
+}
+.java-oop-post__toc li,
+.java-oop-post__note li,
+.java-oop-post__summary li { margin: 4px 0; }
+.java-oop-post__flow {
+  border-left: 4px solid var(--java-accent);
+  background: var(--java-accent-soft);
+}
+.java-oop-post__flow ol {
+  margin: 0;
+  padding-left: 23px;
+}
+.java-oop-post__flow li { margin: 7px 0; }
+.java-oop-post__formula {
+  margin: 20px 0;
+  padding: 16px 18px;
+  border-left: 3px solid var(--java-accent);
+  background: #f4f8f6;
+  color: #33413c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1.7;
+}
+.java-oop-post pre {
+  max-width: 100%;
+  margin: 20px 0 24px;
+  padding: 20px;
+  overflow-x: auto;
+  border-radius: 13px;
+  background: var(--java-code);
+  color: #edf5f1;
+  font-size: 14px;
+  line-height: 1.7;
+  tab-size: 4;
+  -webkit-overflow-scrolling: touch;
+}
+.java-oop-post pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre;
+}
+.java-oop-post__table-wrap {
+  width: 100%;
+  margin: 20px 0 26px;
+  overflow-x: auto;
+  border: 1px solid var(--java-line);
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.java-oop-post table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 15px;
+}
+.java-oop-post th,
+.java-oop-post td {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--java-line);
+  text-align: left;
+  vertical-align: top;
+}
+.java-oop-post th {
+  background: #f2f7f4;
+  color: #1f322b;
+  white-space: nowrap;
+}
+.java-oop-post tr:last-child td { border-bottom: 0; }
+.java-oop-post__ad {
+  width: 100%;
+  margin: 38px 0 42px;
+  padding: 8px 0;
+  overflow-x: auto;
+  text-align: center;
+  -webkit-overflow-scrolling: touch;
+}
+.java-oop-post__output {
+  margin: -8px 0 24px;
+  padding: 14px 17px;
+  border: 1px dashed #aebdb6;
+  border-radius: 10px;
+  background: #fbfcfb;
+  color: #3c4a45;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
+@media (max-width: 640px) {
+  .java-oop-post {
+    padding: 0 19px;
+    font-size: 16px;
+    line-height: 1.82;
+  }
+  .java-oop-post__lead { font-size: 18px; }
+  .java-oop-post h2 { margin-top: 44px; font-size: 24px; }
+  .java-oop-post h3 { font-size: 19px; }
+  .java-oop-post__toc,
+  .java-oop-post__note,
+  .java-oop-post__flow,
+  .java-oop-post__summary { padding: 17px 18px; }
+  .java-oop-post pre { padding: 17px; font-size: 13px; }
+}
+</style>
+
+<article class="java-oop-post">
+  <p class="java-oop-post__lead">아메리카노 2잔을 주문했는데 수량이 0이거나 메뉴 이름이 비어 있다면 어떻게 막을까요? Java에서는 주문 정보를 객체에 담고, 생성자에서 잘못된 값을 걸러 낸 뒤 메서드로 금액을 계산할 수 있습니다. <strong>카페 주문 하나를 읽고 실행하면서 객체지향이 왜 필요한지</strong> 연결해 보겠습니다.</p>
+  <p class="java-oop-post__muted">카페 주문 프로그램 하나를 끝까지 따라가며 메서드, 클래스, 객체, 생성자, 캡슐화, 상속, 추상화, 다형성이 어떤 순서로 이어지는지 살펴보겠습니다.</p>
+  <div class="java-oop-post__note"><strong>처음이라면 여기부터</strong><p>변수·조건문과 <code>main</code>을 읽을 수 있는 Java 입문자를 위한 글입니다. 아직 낯설다면 <a href="https://won0322.tistory.com/126">조건문·반복문·배열 입문</a>을 먼저 보세요. 처음에는 1번의 비유와 3번의 주문 예제만 읽고, 익숙해지면 4번의 음료 제조 예제로 넘어가도 됩니다.</p><p>실행에는 JDK가 필요합니다. 아래 두 전체 프로그램은 각각 <code>CafeApp.java</code>, <code>CafeMachine.java</code>에 저장합니다. 짧은 메서드 조각은 별도로 표시했습니다.</p></div>
+
+  <div class="java-oop-post__figure"><p>[##_Image|kage@uApdV/dJMcagsHG7e/AAAAAAAAAAAAAAAAAAAAAEKxXviNm8zrJueL_ZXBvzFUTnD7FEzTN4qAQa8fdSDQ/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=dQ4qGt%2FxPoIb3oS3qfa0nKmXRCg%3D|CDM|1.3|{"originWidth":"1672","originHeight":"941","style":"alignCenter","alt":"카페 주문서 양식은 클래스, 손님별 주문은 객체, 계산과 제조는 메서드임을 보여주는 일러스트","filename":"exec-d8fc6c48-ce0c-4898-83ef-dec48ea78671.png"}_##]</p><p class="java-oop-post__caption">주문서 양식(클래스)으로 손님별 주문(객체)을 만들고 계산·제조 동작(메서드)을 실행하는 관계</p></div>
+
+  <nav class="java-oop-post__toc" aria-label="목차">
+    <strong>목차</strong>
+    <ol>
+      <li><a href="#java-oop-relationship">클래스·객체·메서드의 관계</a></li>
+      <li><a href="#java-method-structure">메서드 구조와 접근제어자</a></li>
+      <li><a href="#java-object-flow">생성자부터 메서드 호출까지</a></li>
+      <li><a href="#java-oop-features">캡슐화·상속·추상화·다형성</a></li>
+      <li><a href="#java-overload-override">오버로딩과 오버라이딩</a></li>
+      <li><a href="#java-common-mistakes">실수하기 쉬운 부분</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="java-oop-relationship">1. 클래스·객체·메서드는 어떻게 연결될까?</h2>
+  <p>카페에서 사용하는 <strong>주문서 양식</strong>을 클래스라고 생각하면 쉽습니다. 양식에는 음료 이름과 수량을 적을 칸이 있고, 금액을 계산하거나 영수증을 출력하는 규칙도 들어 있습니다.</p>
+  <p>손님이 주문할 때마다 양식을 바탕으로 실제 주문서가 만들어집니다. 손님 A의 아메리카노 2잔 주문과 손님 B의 라테 1잔 주문은 서로 다른 값을 가진 <strong>객체</strong>입니다. 각 주문 객체가 금액을 계산하고 영수증을 출력할 때 사용하는 동작이 <strong>메서드</strong>입니다.</p>
+
+  <div class="java-oop-post__formula">
+    클래스 = 데이터(필드) + 동작(메서드)의 설계도<br>
+    객체 = 클래스를 바탕으로 메모리에 만들어진 실제 값<br>
+    생성자 = 객체의 첫 상태를 설정하는 특별한 코드<br>
+    인스턴스 메서드 = 개별 객체가 수행하는 동작
+  </div>
+
+  <p>메서드는 반복 코드를 줄이는 데도 유용하지만, 객체지향에서는 더 중요한 역할을 합니다. 객체 내부 데이터를 아무 코드에서나 직접 바꾸지 못하게 하고, 정해진 메서드를 통해서만 안전하게 다루도록 경계를 만듭니다.</p>
+  <p>모든 메서드가 개별 객체에 속하는 것은 아닙니다. <code>static</code> 메서드는 클래스에 속하므로 객체를 만들지 않고도 호출할 수 있습니다. 아래 <code>main</code>과 <code>prepare</code>가 그 예이고, 주문별 수량을 사용하는 <code>calculatePrice()</code>는 인스턴스 메서드입니다.</p>
+
+  <h2 id="java-method-structure">2. 메서드 구조와 접근제어자</h2>
+  <p>메서드 선언은 보통 다음 순서로 읽습니다. 아래는 <strong>클래스 안에 넣는 문법 설명용 조각</strong>이며, 단독 실행 프로그램은 아닙니다.</p>
+
+  <pre data-ke-type="codeblock" data-ke-language="java"><code class="language-java">public int calculatePrice(int unitPrice, int quantity) {
+    return unitPrice * quantity;
+}</code></pre>
+
+  <div class="java-oop-post__table-wrap">
+    <table>
+      <thead>
+        <tr><th>구성</th><th>예시</th><th>의미</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>접근제어자</td><td><code>public</code></td><td>어디에서 메서드를 호출할 수 있는지 정합니다.</td></tr>
+        <tr><td>반환 타입</td><td><code>int</code></td><td>실행 후 돌려줄 값의 자료형입니다. 값이 없으면 <code>void</code>를 씁니다.</td></tr>
+        <tr><td>메서드 이름</td><td><code>calculatePrice</code></td><td>동작이 드러나는 이름을 사용합니다.</td></tr>
+        <tr><td>매개변수</td><td><code>int unitPrice, int quantity</code></td><td>메서드가 작업에 사용할 입력값입니다.</td></tr>
+        <tr><td>메서드 본문</td><td><code>{ ... }</code></td><td>실제로 실행할 명령문입니다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>private과 public: 어느 코드에 문을 열어 줄까?</h3>
+  <p>접근제어자는 필드와 메서드를 사용할 수 있는 범위를 정합니다. 주문의 수량은 외부에서 직접 바꾸지 못하게 하고, 영수증 출력만 공개하는 식으로 구분합니다.</p>
+
+  <div class="java-oop-post__table-wrap">
+    <table>
+      <thead>
+        <tr><th>접근제어자</th><th>같은 클래스</th><th>같은 패키지</th><th>다른 패키지의 자식 클래스</th><th>전체</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>private</code></td><td>가능</td><td>불가</td><td>불가</td><td>불가</td></tr>
+        <tr><td>없음(package-private)</td><td>가능</td><td>가능</td><td>불가</td><td>불가</td></tr>
+        <tr><td><code>protected</code></td><td>가능</td><td>가능</td><td>상속을 통해 가능</td><td>불가</td></tr>
+        <tr><td><code>public</code></td><td>가능</td><td>가능</td><td>가능</td><td>가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="java-oop-post__note">
+    <strong>접근 범위를 외우는 기준</strong>
+    <ul>
+      <li><code>private</code>은 현재 클래스 내부에서만 접근할 수 있습니다.</li>
+      <li><code>public</code> 멤버는 그 멤버를 담은 클래스에도 접근할 수 있다는 전제에서 외부에 공개됩니다. 멤버만 public이어도 클래스가 비공개이면 어디서나 쓸 수 있는 것은 아닙니다.</li>
+      <li><code>protected</code>는 같은 패키지에서는 상속 여부와 무관하게 접근할 수 있고, 다른 패키지에서는 자식 클래스가 상속 관계를 통해 접근할 수 있습니다.</li>
+    </ul>
+  </div>
+
+  <div class="java-oop-post__ad">
+    <ins class="kakao_ad_area" style="display: none;" data-ad-unit="DAN-YaAyUOCSCMZJvv9i" data-ad-width="728px" data-ad-height="90px" id="kakao_ad_EFR1n1"></ins>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async="async"></script>
+  </div>
+
+  <h2 id="java-object-flow">3. 생성자부터 메서드 호출까지 실제 흐름</h2>
+  <p>이제 주문 객체를 직접 만들어 보겠습니다. 필드는 외부에서 마음대로 바꾸지 못하도록 <code>private</code>으로 숨기고, 생성자와 공개 메서드를 통해서만 값을 다룹니다.</p>
+  <p><strong>전체 코드를 CafeApp.java로 저장하세요.</strong> 아메리카노 4,500원·라테 5,000원, 수량 1~1,000잔은 학습용 가정입니다. 실제 주문 서비스의 가격이나 수량 정책을 뜻하지 않습니다. 생성자가 메뉴와 수량을 확인하므로 잘못된 주문은 계산 단계까지 넘어가지 않습니다.</p>
+
+  <pre data-ke-type="codeblock" data-ke-language="java"><code class="language-java">class CafeOrder {
+    private final String menu;
+    private final int quantity;
+
+    public CafeOrder(String menu, int quantity) {
+        if (!"아메리카노".equals(menu) &amp;&amp; !"라테".equals(menu)) {
+            throw new IllegalArgumentException("메뉴는 아메리카노 또는 라테여야 합니다.");
+        }
+        if (quantity &lt; 1 || quantity &gt; 1_000) {
+            throw new IllegalArgumentException("수량은 1~1000잔이어야 합니다.");
+        }
+        this.menu = menu;
+        this.quantity = quantity;
+    }
+
+    public int calculatePrice() {
+        return getUnitPrice() * quantity;
+    }
+
+    public void printReceipt() {
+        System.out.println(menu + " " + quantity + "잔");
+        System.out.println("결제 금액: " + calculatePrice() + "원");
+    }
+
+    private int getUnitPrice() {
+        if ("아메리카노".equals(menu)) {
+            return 4_500;
+        }
+        return 5_000; // 생성자에서 두 메뉴만 허용했으므로 남은 메뉴는 라테다.
+    }
+}
+
+public class CafeApp {
+    public static void main(String[] args) {
+        CafeOrder order = new CafeOrder("아메리카노", 2);
+        order.printReceipt();
+    }
+}</code></pre>
+
+  <p>파일이 있는 폴더에서 다음 명령을 실행합니다. IDE라면 <code>CafeApp</code>의 main을 실행하세요.</p>
+  <pre data-ke-type="codeblock" data-ke-language="bash"><code>javac -encoding UTF-8 CafeApp.java
+java CafeApp</code></pre>
+  <p><strong>예상 출력</strong> — 4,500원 × 2잔 = 9,000원입니다.</p>
+  <div class="java-oop-post__output">아메리카노 2잔<br>결제 금액: 9000원</div>
+  <div class="java-oop-post__note"><strong>직접 바꾸며 확인하기</strong><ul><li><code>new CafeOrder("라테", 1)</code>: 결제 금액은 5000원이 됩니다.</li><li>메뉴를 <code>"녹차"</code> 또는 <code>null</code>로 바꾸면 생성자에서 <code>IllegalArgumentException</code>으로 중단됩니다. 문자열 리터럴의 equals를 써서 null도 안전하게 비교합니다.</li><li>수량을 <code>0</code> 또는 <code>1001</code>로 바꾸면 수량 오류로 중단됩니다. 수정 후 다시 컴파일하세요.</li></ul><p>검사 없이 필드를 공개하면 잘못된 값이 들어간 뒤 나중에 실패할 수 있습니다. 이 예제는 생성 시 검사하고, <code>final</code>로 이후 재할당을 막습니다.</p></div>
+
+  <div class="java-oop-post__flow">
+    <ol>
+      <li><code>new CafeOrder(...)</code>가 객체를 만들 메모리 공간을 확보합니다.</li>
+      <li>생성자가 메뉴와 수량을 검사하고 필드의 첫 값을 설정합니다.</li>
+      <li>완성된 객체의 참조값이 <code>order</code> 변수에 저장됩니다.</li>
+      <li><code>order.printReceipt()</code>가 객체의 메서드를 호출합니다.</li>
+      <li><code>printReceipt()</code> 내부에서 <code>calculatePrice()</code>와 비공개 메서드 <code>getUnitPrice()</code>가 차례로 실행됩니다.</li>
+    </ol>
+  </div>
+
+  <p>생성자는 메서드와 비슷해 보이지만 반환 타입이 없고 이름이 클래스와 같습니다. 객체를 만들 때 자동으로 호출된다는 점도 일반 메서드와 다릅니다.</p>
+
+  <h2 id="java-oop-features">4. 캡슐화·상속·추상화·다형성을 하나의 코드로 보기</h2>
+  <p>객체지향의 네 특징은 서로 떨어진 암기 항목이 아닙니다. 주문 프로그램에 음료 제조 기능을 추가하면 한 흐름에서 모두 확인할 수 있습니다.</p>
+  <p>이번 예제는 <strong>별도 프로그램 CafeMachine.java</strong>로 저장합니다. 앞의 CafeApp.java에 이어 붙이지 마세요. 여기서는 주문 금액 대신 음료마다 다른 제조 동작을 비교합니다.</p>
+
+  <pre data-ke-type="codeblock" data-ke-language="java"><code class="language-java">abstract class Beverage {
+    private final String name;
+
+    protected Beverage(String name) {
+        this.name = name;
+    }
+
+    public final void serve() {
+        make();
+        System.out.println(name + " 준비 완료");
+    }
+
+    protected abstract void make();
+}
+
+class Americano extends Beverage {
+    public Americano() {
+        super("아메리카노");
+    }
+
+    @Override
+    protected void make() {
+        System.out.println("에스프레소에 물을 넣습니다.");
+    }
+}
+
+class Latte extends Beverage {
+    public Latte() {
+        super("라테");
+    }
+
+    @Override
+    protected void make() {
+        System.out.println("에스프레소에 우유를 넣습니다.");
+    }
+}
+
+public class CafeMachine {
+    public static void prepare(Beverage beverage) {
+        beverage.serve();
+    }
+
+    public static void main(String[] args) {
+        Beverage first = new Americano();
+        Beverage second = new Latte();
+
+        prepare(first);
+        prepare(second);
+    }
+}</code></pre>
+
+  <pre data-ke-type="codeblock" data-ke-language="bash"><code>javac -encoding UTF-8 CafeMachine.java
+java CafeMachine</code></pre>
+  <p>첫 번째 호출은 <code>prepare(first) → serve() → Americano.make()</code>, 두 번째는 <code>prepare(second) → serve() → Latte.make()</code> 순서입니다. serve는 공통 제공 순서를 지키고, make만 실제 음료에 맞춰 달라집니다.</p>
+  <h3>캡슐화: 데이터와 동작을 묶고 내부를 보호한다</h3>
+  <p><code>name</code> 필드는 <code>private</code>이므로 외부에서 직접 변경할 수 없습니다. 외부에는 <code>serve()</code>라는 필요한 동작만 공개합니다. 필드와 메서드를 한 클래스에 묶는 것뿐 아니라, <strong>객체의 유효한 상태를 지키는 것</strong>이 캡슐화의 핵심입니다.</p>
+
+  <h3>상속: 공통 코드를 물려받고 차이를 확장한다</h3>
+  <p><code>Americano</code>와 <code>Latte</code>는 <code>Beverage</code>를 <code>extends</code>합니다. 이름 저장과 제공 순서는 부모 클래스가 담당하고, 음료마다 다른 제조 방법만 자식 클래스가 작성합니다. 상속은 단순 복사가 아니라 <strong>공통 규칙을 재사용하면서 차이를 확장하는 관계</strong>입니다.</p>
+
+  <h3>추상화: 중요한 규칙만 드러낸다</h3>
+  <p><code>Beverage</code>는 모든 음료가 <code>make()</code> 동작을 가져야 한다는 규칙만 선언합니다. 실제 제조법은 자식 클래스에 맡깁니다. 복잡한 세부 구현보다 공통 역할과 필요한 인터페이스를 먼저 드러내는 것이 추상화입니다.</p>
+
+  <h3>다형성: 같은 호출이 객체에 따라 다르게 동작한다</h3>
+  <p><code>prepare(Beverage beverage)</code>는 구체적인 음료 종류를 몰라도 됩니다. 전달된 객체가 아메리카노면 물을 넣고, 라테면 우유를 넣습니다. 변수와 매개변수의 타입은 부모인 <code>Beverage</code>지만 실행되는 메서드는 실제 객체가 재정의한 버전입니다.</p>
+
+  <p><strong>예상 출력</strong> — 같은 prepare 호출을 두 번 사용해도 제조 설명은 달라집니다.</p>
+  <div class="java-oop-post__output">에스프레소에 물을 넣습니다.<br>아메리카노 준비 완료<br>에스프레소에 우유를 넣습니다.<br>라테 준비 완료</div>
+
+  <h2 id="java-overload-override">5. 오버로딩과 오버라이딩 차이</h2>
+  <p>이름이 비슷해 자주 헷갈리지만 적용 시점과 조건이 다릅니다.</p>
+
+  <div class="java-oop-post__table-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>오버로딩</th><th>오버라이딩</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>의미</td><td>같은 이름의 메서드를 여러 형태로 선언</td><td>상속받은 메서드를 자식 클래스에서 재정의</td></tr>
+        <tr><td>조건</td><td>매개변수 개수·타입·순서 중 하나가 달라야 함</td><td>메서드 이름과 매개변수 목록이 같아야 함</td></tr>
+        <tr><td>결정 시점</td><td>호출에 맞는 선언을 컴파일 시점에 선택</td><td>실제 객체의 메서드를 실행 시점에 선택</td></tr>
+        <tr><td>대표 목적</td><td>비슷한 동작에 일관된 이름 제공</td><td>상속 구조에서 객체별 동작 구현</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>아래는 두 메서드를 같은 클래스 안에 넣어 비교하는 <strong>문법 설명용 조각</strong>입니다. 위 주문 예제와는 별개이며, 유효한 양수 수량과 결제 금액 이하의 할인액을 가정합니다.</p>
+  <pre data-ke-type="codeblock" data-ke-language="java"><code class="language-java">// 오버로딩: 매개변수가 다르다.
+public int calculatePrice(int quantity) {
+    return 4_500 * quantity;
+}
+
+public int calculatePrice(int quantity, int discount) {
+    return 4_500 * quantity - discount;
+}
+
+// 반환 타입만 바꾸는 것은 오버로딩이 아니다.
+// public double calculatePrice(int quantity) { ... }  // 컴파일 오류</code></pre>
+  <p><code>calculatePrice(2)</code>는 첫 메서드를 골라 9000을, <code>calculatePrice(2, 1000)</code>은 두 번째를 골라 8000을 반환합니다. 오버라이딩은 매개변수가 같아야 할 뿐 아니라 반환 타입도 같거나 호환되어야 하고, 접근 범위를 더 좁힐 수 없습니다. static 메서드는 인스턴스 메서드처럼 오버라이딩되는 것이 아니라 숨김(hiding)으로 구분합니다.</p>
+
+  <h2 id="java-common-mistakes">6. 실수하기 쉬운 부분</h2>
+  <div class="java-oop-post__note">
+    <ul>
+      <li><strong>클래스와 멤버의 접근 범위 함께 보기:</strong> private은 내부 보호, public은 외부 공개에 사용하되 클래스 접근 가능 여부도 확인합니다.</li>
+      <li><strong>생성자에 반환 타입을 쓰지 않기:</strong> <code>void CafeOrder()</code>는 생성자가 아니라 일반 메서드입니다.</li>
+      <li><strong>반환 타입만 바꿔 오버로딩하지 않기:</strong> 매개변수 목록이 달라야 합니다.</li>
+      <li><strong>필드를 무조건 public으로 열지 않기:</strong> 잘못된 값이 들어가지 않도록 생성자와 메서드에서 검사합니다.</li>
+      <li><strong>상속을 코드 재사용만 보고 선택하지 않기:</strong> 자식이 부모의 한 종류인 <em>is-a</em> 관계일 때 적합합니다.</li>
+      <li><strong><code>@Override</code> 붙이기:</strong> 철자나 매개변수 실수로 재정의에 실패하면 컴파일러가 바로 알려줍니다.</li>
+      <li><strong>인스턴스 메서드와 static 메서드 구분하기:</strong> 객체의 필드를 사용한다면 보통 인스턴스 메서드가 자연스럽습니다.</li>
+    </ul>
+  </div>
+
+  <h2>7. 전체 흐름 요약</h2>
+  <div class="java-oop-post__summary">
+    <strong>코드를 읽을 때 이 순서만 기억하면 됩니다.</strong>
+    <ul>
+      <li>클래스가 객체의 데이터와 동작을 설계합니다.</li>
+      <li><code>new</code>와 생성자가 객체를 만들고 첫 상태를 설정합니다.</li>
+      <li>객체는 공개된 메서드를 통해 동작합니다.</li>
+      <li>캡슐화가 내부 상태를 보호합니다.</li>
+      <li>추상화가 공통 규칙을 뽑고, 상속이 그 규칙을 확장합니다.</li>
+      <li>다형성이 같은 메서드 호출을 실제 객체에 맞게 실행합니다.</li>
+    </ul>
+  </div>
+
+  <p>메서드는 객체지향과 별개의 문법이 아닙니다. 클래스가 설계한 역할을 객체가 수행하도록 만드는 핵심 수단입니다. 작은 클래스 하나를 직접 만들고 생성자 호출부터 메서드 실행까지 따라가 보면, 캡슐화·상속·추상화·다형성도 하나의 흐름으로 연결됩니다.</p>
+  <h2 id="java-oop-sources">8. 막힐 때 확인할 것과 공식 자료</h2>
+  <p><code>javac</code>를 찾지 못하면 JDK 설치와 PATH를 확인하세요. public 클래스 이름과 파일명이 다르면 컴파일되지 않습니다. 두 전체 프로그램을 한 파일에 합치거나, 짧은 메서드 조각을 클래스 밖에 붙여넣지 않았는지도 확인하세요.</p>
+  <p>검증 범위: 생성자·접근제어자·오버라이딩 규칙은 Oracle 문서와 대조했고 예상 금액과 호출 순서를 점검했습니다. 이 글을 보완한 환경에는 Java 실행 도구가 없어 실컴파일 검증은 하지 않았습니다. 위 출력은 실제 실행 로그가 아닌 예상 결과입니다.</p>
+  <ul><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/constructors.html" target="_blank" rel="noopener noreferrer">Oracle Java Tutorials — 생성자</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" target="_blank" rel="noopener noreferrer">Oracle Java Tutorials — 접근 범위</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/override.html" target="_blank" rel="noopener noreferrer">Oracle Java Tutorials — 오버라이딩과 메서드 숨김</a></li></ul>
+  <p class="java-oop-post__muted">위 튜토리얼은 JDK 8 기준의 기초 문서입니다. 이 글은 최신 버전의 새 문법이 아닌 기본적인 클래스·메서드 규칙을 다룹니다.</p>
+</article>

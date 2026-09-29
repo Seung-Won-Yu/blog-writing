@@ -1,0 +1,221 @@
+<div>
+<style>
+.deep-math-post{max-width:860px;margin:0 auto;color:#24313c;font-size:17px;line-height:1.85;word-break:keep-all}
+.deep-math-post *{box-sizing:border-box}
+.deep-math-post h2{margin:2.8em 0 .75em;padding-bottom:.35em;border-bottom:2px solid #d9e5e8;color:#122b3b;font-size:1.52em;line-height:1.4}
+.deep-math-post h3{margin:2em 0 .6em;color:#174f59;font-size:1.18em}
+.deep-math-post p{margin:.85em 0}
+.deep-math-post ul,.deep-math-post ol{margin:.8em 0;padding-left:1.45em}
+.deep-math-post li{margin:.35em 0}
+.deep-math-post .lead{font-size:1.08em;color:#344c56}
+.deep-math-post .toc,.deep-math-post .note,.deep-math-post .summary{margin:1.5em 0;padding:20px;border:1px solid #d7e1e4;border-radius:12px;background:#f7faf9}
+.deep-math-post .note{border-left:5px solid #21978c;background:#f2faf8}
+.deep-math-post .warn{border-left-color:#e2813f;background:#fff8f1}
+.deep-math-post .formula{margin:1em 0;padding:15px 18px;border-radius:9px;background:#eef5f6;color:#163d46;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;white-space:nowrap}
+.deep-math-post .table-wrap,.deep-math-post .code-wrap{max-width:100%;margin:1em 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.deep-math-post table{width:100%;min-width:620px;border-collapse:collapse;font-size:.94em}
+.deep-math-post th,.deep-math-post td{padding:12px;border:1px solid #d8e1e4;text-align:left;vertical-align:top}
+.deep-math-post th{background:#eef5f6;color:#153d47}
+.deep-math-post pre{min-width:max-content;margin:0;padding:18px;border-radius:10px;background:#17232c;color:#e9f2f4;font-size:.88em;line-height:1.65}
+.deep-math-post code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.deep-math-post .step{margin:1.25em 0;padding:18px;border-left:4px solid #5d8fa0;background:#f7f9fa}
+.deep-math-post .ad-slot{margin:2.2em 0}
+.deep-math-post .check strong{color:#0c756c}
+@media(max-width:640px){
+  .deep-math-post{padding:0 19px;font-size:17px;line-height:1.78;word-break:normal}
+  .deep-math-post h2{font-size:1.38em}
+  .deep-math-post .toc,.deep-math-post .note,.deep-math-post .summary{padding:17px}
+  .deep-math-post pre{font-size:.82em}
+}
+</style>
+</div>
+<article class="deep-math-post">
+<p class="lead" data-ke-size="size16">AI가 ‘합격 가능성 77.7%’라고 보여주면, 그 숫자는 어디에서 왔을까? 입력에 가중치를 곱하고 값을 0~1로 바꾼 것만으로 믿을 만한 확률이 되는 것은 아니다. 간단한 숫자 세 개로 행렬곱과 활성화 함수를 직접 계산하고, 스팸 메일 예제로 조건부 확률의 방향까지 구분해보자.</p>
+<div class="note"><b>이 글의 도착점</b><p>행렬곱의 모양을 확인하고, 1.25가 0.777로 바뀌는 계산을 재현한다. 사칙연산·백분율을 알면 설명을 따라갈 수 있다. 코드 실습에는 Python 3와 NumPy가 필요하다. PyTorch는 선택 심화이며 학습·성능 평가를 하는 예제는 아니다.</p></div>
+<div class="note"><b>먼저 전체 흐름</b>
+<p data-ke-size="size16">입력 <code>X</code> &rarr; 가중치와 행렬 곱 <code>XW</code> &rarr; 편향 <code>b</code> 더하기 &rarr; 활성화 함수 <code>f</code> 적용 &rarr; 분류 점수 또는 예측값</p>
+<p>위 흐름은 순전파 계산이다. 조건부 확률과 베이즈 규칙은 결과를 읽는 데 필요한 별도 개념이며, 모든 신경망이 마지막에 베이즈 공식을 직접 계산한다는 뜻은 아니다.</p>
+</div>
+[##_Image|kage@dBgEkA/dJMcai5cay2/AAAAAAAAAAAAAAAAAAAAADV5eLgzOJLEnUBzcxeeYyM0vKMKPu9xnfTafqXEJ3t8/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=%2Bv5XYgfXTYOR7MWXitvvfnejaLw%3D|CDM|1.3|{"originWidth":"1731","originHeight":"909","style":"alignCenter","filename":"1번-딥러닝-행렬곱-오류찾기-대표이미지.png"}_##]<nav class="toc" aria-label="목차"><b>목차</b>
+<ol style="list-style-type: decimal;" data-ke-list-type="decimal">
+<li>행렬이 필요한 이유</li>
+<li>뉴런 한 개의 실제 계산</li>
+<li>조건부 확률과 베이즈 규칙</li>
+<li>활성화 함수 선택 기준</li>
+<li>NumPy&middot;PyTorch로 흐름 확인하기</li>
+<li>실수하기 쉬운 부분과 요약</li>
+</ol>
+</nav><div class="table-wrap"><table><caption>검증한 계산: 임의 가중치 W=[0.4, 0.03], 편향 b=−3</caption><thead><tr><th scope="col">입력 [시간, 점수]</th><th scope="col">가중합 z</th><th scope="col">시그모이드 변환</th></tr></thead><tbody><tr><td>[2, 60]</td><td>2×0.4+60×0.03−3 = −0.4</td><td>0.401</td></tr><tr><td>[5, 75]</td><td>5×0.4+75×0.03−3 = 1.25</td><td>0.777</td></tr><tr><td>[8, 90]</td><td>8×0.4+90×0.03−3 = 2.9</td><td>0.948</td></tr></tbody></table></div><p>세 행이 세 사람, 두 열이 시간과 점수다. 다음 절의 코드도 이 숫자를 그대로 사용한다. 점수는 학습한 합격 확률이 아니라 고정 계산의 결과다.</p>
+<h2 data-ke-size="size26">1. 행렬은 여러 입력을 한 번에 계산하는 도구다</h2>
+<p data-ke-size="size16">공부 시간과 모의고사 점수를 숫자로 결합하는 가상 계산을 해보자. 합격 데이터를 학습한 실제 모델이 아니라 계산 원리를 보여주기 위한 예시다. 입력이 두 개라면 한 사람의 데이터는 <code>[공부 시간, 모의고사 점수]</code>처럼 표현할 수 있다. 사람이 100명이면 이 행이 100개 쌓여 행렬 <code>X</code>가 된다.</p>
+<div class="formula">X: (사람 수 &times; 입력 특성 수) &middot; W: (입력 특성 수 &times; 출력 수) &middot; XW: (사람 수 &times; 출력 수)</div>
+<p data-ke-size="size16">행렬 곱에서 가장 먼저 볼 것은 값보다 <b>모양(shape)</b>이다. <code>X</code>의 열 개수와 <code>W</code>의 행 개수가 같아야 곱할 수 있다. 이 규칙을 알면 딥러닝 코드에서 자주 만나는 차원 불일치 오류도 빠르게 찾을 수 있다.</p>
+<p>아래는 행렬곱만 보는 짧은 예제다. 전체 파일과 실행 명령은 5절에 있다. <code>@</code>는 행렬곱이고 <code>*</code>는 원소별 곱이므로 바꿔 쓰면 안 된다.</p>
+<div class="code-wrap">
+<pre class="language-python"><code>import numpy as np
+
+# 3명, 입력 특성 2개
+X = np.array([
+    [2.0, 60.0],
+    [5.0, 75.0],
+    [8.0, 90.0],
+])
+
+# 입력 2개를 출력 1개로 결합
+W = np.array([[0.4], [0.03]])
+b = np.array([-3.0])
+
+z = X @ W + b
+print(z.shape)   # (3, 1)
+print(z)</code></pre>
+</div>
+<p>계산 결과는 <code>z = [[-0.4], [1.25], [2.9]]</code>, 모양은 <code>(3, 1)</code>이다. 첫 행은 <code>2×0.4 + 60×0.03 − 3 = −0.4</code>로 손으로도 확인할 수 있다.</p>
+<h3 data-ke-size="size23">역행렬은 언제 존재할까?</h3>
+<p data-ke-size="size16">정사각행렬 <code>A</code>의 역행렬 <code>A⁻&sup1;</code>은 <code>AA⁻&sup1; = I</code>를 만족한다. 다만 모든 정사각행렬에 역행렬이 있는 것은 아니다. 행렬식 <code>det(A)</code>가 0이 아니어야 한다. 한 행이 다른 행의 배수처럼 정보가 중복되면 행렬식이 0이 되고 역행렬을 구할 수 없다.</p>
+<div class="note warn"><b>코드에서는 무조건 역행렬부터 구하지 않는다.</b>
+<p data-ke-size="size16"><code>Ax=b</code>의 해가 목적이라면 역행렬을 따로 만들기보다 <code>np.linalg.solve(A, b)</code>로 직접 푼다. A는 정사각·비특이행렬이어야 한다. 이 글의 <code>3×2</code> 입력 X에 역행렬을 구하려는 것은 다른 문제다. 행렬식이 아주 작거나 조건수가 크면 수치 오차에도 주의한다.</p>
+</div>
+<h2 data-ke-size="size26">2. 뉴런 한 개는 가중합과 활성화 함수로 움직인다</h2>
+<p data-ke-size="size16">뉴런은 입력마다 가중치를 곱하고 편향을 더해 <code>z</code>를 만든다. 그다음 활성화 함수가 이 값을 다음 층에 전달할 신호로 바꾼다.</p>
+<div class="formula">z = x₁w₁ + x₂w₂ + &hellip; + xₙwₙ + b = XW + b<br />a = f(z)</div>
+<div class="step"><b>예시</b>
+<p data-ke-size="size16">공부 시간 5시간, 모의고사 점수 75점에 가중치가 각각 0.4와 0.03이고 편향이 -3이라면 <code>z = 5&times;0.4 + 75&times;0.03 - 3 = 1.25</code>다. 이 값을 시그모이드에 넣으면 약 0.777이 나온다. 여기서 가중치 0.4·0.03과 편향 -3은 임의로 정한 값이다. 따라서 0.777은 변환된 숫자일 뿐 ‘실제 합격률 77.7%’가 아니다. 학습 데이터·평가·확률 보정을 따로 확인해야 한다. 실전에서는 특성 단위와 스케일도 점검한다.</p>
+</div>
+<p data-ke-size="size16">활성화 함수가 없다면 여러 선형 층을 쌓아도 결국 하나의 선형 계산과 같다. 곡선이나 복잡한 경계를 학습하려면 층 사이에 비선형성이 필요하다.</p>
+<div class="ad-slot">&nbsp;</div>
+<h2 data-ke-size="size26">3. 조건부 확률은 관측 후 판단을 갱신한다</h2>
+<p data-ke-size="size16"><code>P(B|A)</code>는 사건 A가 일어났다는 조건에서 B가 일어날 확률이다. 분모는 조건으로 주어진 사건의 확률이며, <code>P(A) &gt; 0</code>이어야 한다.</p>
+<div class="formula">P(B|A) = P(A &cap; B) / P(A)</div>
+<p data-ke-size="size16">예를 들어 전체 이메일 중 20%가 스팸이고, 스팸 메일의 70%에 &lsquo;무료&rsquo;라는 단어가 들어 있다고 하자. 이 두 수만으로 &ldquo;&lsquo;무료&rsquo;가 들어간 메일이 스팸일 확률&rdquo;을 바로 알 수는 없다. 정상 메일에도 &lsquo;무료&rsquo;가 얼마나 등장하는지 함께 알아야 한다.</p>
+<div class="formula">P(스팸|무료) = P(무료|스팸) &times; P(스팸) / P(무료)</div>
+<p data-ke-size="size16">이것이 베이즈 규칙의 핵심이다. 기존 믿음인 사전확률 <code>P(스팸)</code>을 새로운 관측 &lsquo;무료&rsquo;로 갱신해 사후확률 <code>P(스팸|무료)</code>을 얻는다. 머신러닝 분류 결과를 읽을 때도 &ldquo;모델 출력이 어떤 조건과 데이터 분포에서 나온 값인지&rdquo;를 함께 봐야 한다.</p>
+<div class="step"><b>1,000통으로 끝까지 계산해보자</b><p>추가로 정상 메일의 10%에 ‘무료’가 들어간다고 가정한다. 실측 자료가 아닌 가상 예제다.</p><ul><li>스팸 200통 중 ‘무료’ 포함: 200×0.7 = 140통</li><li>정상 800통 중 ‘무료’ 포함: 800×0.1 = 80통</li><li>‘무료’ 포함 메일은 총 220통, 그중 스팸은 140통</li></ul><p>따라서 <code>P(스팸|무료) = 140/220 ≈ 63.6%</code>다. <code>P(무료|스팸)=70%</code>와 같지 않다. 공식으로도 <code>0.7×0.2 / (0.7×0.2 + 0.1×0.8)</code>이다. 정상 메일에서의 등장률을 바꾸면 결과도 바뀐다.</p></div>
+<h2 data-ke-size="size26">4. 활성화 함수는 층의 역할에 맞춰 고른다</h2>
+<p data-ke-size="size16">활성화 함수는 &lsquo;최신 함수 하나가 항상 최고&rsquo;라는 식으로 고르기 어렵다. 은닉층인지 출력층인지, 분류인지 회귀인지에 따라 역할이 달라진다.</p>
+[##_Image|kage@cwNVzd/dJMcai5cay4/AAAAAAAAAAAAAAAAAAAAAH6FySZuDvI_4YnOCrJLXX-Q05sydoimMaXpQ6psURMr/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1790780399&allow_ip=&allow_referer=&signature=O4oW4JFwPb9xpGyeHArBL6%2BKLdQ%3D|CDM|1.3|{"originWidth":"1672","originHeight":"941","style":"alignCenter","filename":"3번-딥러닝-활성화함수-선택기준.png"}_##]
+<div class="table-wrap">
+<table data-ke-align="alignLeft">
+<thead>
+<tr>
+<th>함수</th>
+<th>주로 쓰는 곳</th>
+<th>특징과 주의점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ReLU</td>
+<td>일반적인 은닉층</td>
+<td>계산이 단순하고 양수 영역의 기울기가 유지된다. 음수 영역이 계속 0이면 뉴런이 학습하지 못할 수 있다.</td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td>ReLU의 음수 영역 보완</td>
+<td>음수에도 작은 기울기를 남긴다. 기울기 크기는 하이퍼파라미터다.</td>
+</tr>
+<tr>
+<td>GELU&middot;SiLU</td>
+<td>Transformer 등 여러 최신 구조의 은닉층</td>
+<td>입력을 부드럽게 통과시킨다. 모델 구조와 학습 비용을 함께 보고 선택한다.</td>
+</tr>
+<tr>
+<td>Sigmoid</td>
+<td>이진 분류 출력</td>
+<td>값을 0~1로 압축한다. 깊은 은닉층에서는 포화 구간의 기울기 소실에 주의한다.</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>서로 배타적인 다중 분류 출력</td>
+<td>클래스 점수 전체를 합이 1인 분포로 바꾼다.</td>
+</tr>
+<tr>
+<td>Linear</td>
+<td>회귀 출력</td>
+<td>출력 범위를 제한하지 않는다. 집값&middot;온도 같은 연속값 예측에 적합하다.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 data-ke-size="size23">Sigmoid와 Softmax의 차이</h3>
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li><b>Sigmoid:</b> 각 점수를 별도로 0~1로 바꾸며 전체 합을 1로 강제하지 않는다. 여러 태그를 동시에 고르는 다중 레이블에 쓸 수 있다. 출력 사건들이 통계적으로 독립임을 증명하는 것은 아니다.</li>
+<li><b>Softmax:</b> 여러 클래스가 하나의 확률을 나눠 갖는다. 고양이&middot;개&middot;새 중 하나를 고르는 문제에 맞다.</li>
+</ul>
+<h2 data-ke-size="size26">5. 코드로 입력부터 확률까지 연결하기</h2>
+<p>먼저 NumPy 예제만 실행하면 된다. 터미널에서 <code>python3 -m pip install numpy</code>로 준비한 뒤, 아래 전체 코드를 <code>math149_numpy.py</code>로 저장하고 <code>python3 math149_numpy.py</code>를 실행한다. Windows에서 python3 명령이 없다면 <code>py -m pip install numpy</code>와 <code>py math149_numpy.py</code>를 쓴다. 설치와 실행에 같은 Python 환경을 사용해야 한다.</p>
+<div class="code-wrap">
+<pre class="language-python"><code>"""Fixed, untrained forward-pass example. Not a real pass-probability model."""
+import numpy as np
+
+X = np.array([[2.0, 60.0], [5.0, 75.0], [8.0, 90.0]])
+W = np.array([[0.4], [0.03]])
+b = np.array([-3.0])
+z = X @ W + b
+
+# Stable sigmoid; also avoids overflow for large negative inputs.
+scores = np.exp(-np.logaddexp(0.0, -z))
+print("X, W, z shapes:", X.shape, W.shape, z.shape)
+print("z:", np.round(z.ravel(), 3))
+print("sigmoid:", np.round(scores.ravel(), 3))
+
+assert z.shape == (3, 1)
+assert np.allclose(z.ravel(), [-0.4, 1.25, 2.9])
+assert np.allclose(np.round(scores.ravel(), 3), [0.401, 0.777, 0.948])
+print("checks: PASS")</code></pre>
+</div>
+<p><b>실행 확인한 출력:</b></p><div class="code-wrap"><pre class="language-text"><code>X, W, z shapes: (3, 2) (2, 1) (3, 1)
+z: [-0.4   1.25  2.9 ]
+sigmoid: [0.401 0.777 0.948]
+checks: PASS</code></pre></div><p>이 확인은 고정된 숫자의 순전파 계산을 검증한 것이다. 학습이나 실제 합격 예측 정확도를 검증한 것이 아니다. 지수 계산이 크게 튀지 않도록 <code>logaddexp</code> 형태로 시그모이드를 계산했다.</p>
+<details><summary>선택 심화: PyTorch에서 출력층과 손실 함수 구분하기</summary><p>여기는 NumPy와 독립된 예제다. PyTorch는 OS·Python·CPU/GPU에 맞춰 <a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener">공식 설치 안내</a>를 사용한다. 아래를 <code>math149_torch.py</code>로 저장해 같은 환경의 Python으로 실행한다. 이번 보완에서는 PyTorch 실실행은 하지 않았다.</p>
+<p data-ke-size="size16">PyTorch에서는 손실 함수가 내부에서 더 안정적인 계산을 제공하는 경우가 많다. 이진 분류의 <code>BCEWithLogitsLoss</code>는 시그모이드와 손실을 결합하고, 다중 분류의 <code>CrossEntropyLoss</code>는 원시 점수인 logits를 받는다.</p>
+<div class="code-wrap">
+<pre class="language-python"><code>import torch
+import torch.nn as nn
+
+torch.manual_seed(0)
+model = nn.Sequential(
+    nn.Linear(2, 8),
+    nn.ReLU(),
+    nn.Linear(8, 3)   # 클래스 3개의 logits
+)
+
+model.eval()
+x = torch.tensor([[5.0, 75.0]])
+with torch.no_grad():
+    logits = model(x)
+    probabilities = torch.softmax(logits, dim=1)
+
+print(logits.shape)                   # torch.Size([1, 3])
+print(round(probabilities.sum().item(), 6))  # 1.0</code></pre>
+</div>
+<p>출력 모양은 <code>[1, 3]</code>, 세 점수의 합은 반올림하면 1.0이 된다. 하지만 무작위 초기화 모델이므로 클래스별 점수는 의미 있는 예측이 아니다. 훈련에서는 <code>CrossEntropyLoss(logits, target)</code>에 Softmax 전 점수를 넘기고, 화면에 분포를 표시할 때만 Softmax를 적용한다.</p></details>
+<h2 data-ke-size="size26">6. 실수하기 쉬운 부분</h2>
+<div class="check">
+<ul style="list-style-type: disc;" data-ke-list-type="disc">
+<li><b>ModuleNotFoundError:</b> NumPy를 설치한 Python과 실행한 Python이 같은지 확인한다. 노트북에서는 선택한 커널도 확인한다.</li>
+<li><b>앞 셀 변수 없음:</b> 짧은 코드 조각만 실행하면 X·z가 없다. 5절 전체 파일부터 실행한다.</li>
+<li><b>행렬 곱 오류:</b> 값보다 먼저 각 배열의 <code>shape</code>를 출력한다.</li>
+<li><b>역행렬 남용:</b> 연립방정식은 <code>solve</code>를 우선하고 특이행렬 여부를 확인한다.</li>
+<li><b>조건부 확률 방향:</b> <code>P(A|B)</code>와 <code>P(B|A)</code>는 일반적으로 같지 않다.</li>
+<li><b>출력층 혼동:</b> 이진 분류, 다중 분류, 다중 레이블, 회귀를 먼저 구분한다.</li>
+<li><b>Softmax 중복:</b> PyTorch <code>CrossEntropyLoss</code> 앞에 Softmax를 다시 넣지 않는다.</li>
+<li><b>확률 과신:</b> 출력값이 실제 확률처럼 잘 보정됐는지는 별도로 검증해야 한다.</li>
+</ul>
+</div>
+<div class="summary"><b>핵심 요약</b>
+<ol style="list-style-type: decimal;" data-ke-list-type="decimal">
+<li>행렬은 여러 샘플과 특성을 한 번에 계산하며, 곱셈 가능 여부는 shape로 판단한다.</li>
+<li>뉴런은 <code>XW+b</code>로 가중합을 만들고 활성화 함수로 비선형 신호를 만든다.</li>
+<li>조건부 확률은 관측 이후 판단을 갱신하는 규칙이며 조건의 방향을 구분해야 한다.</li>
+<li>은닉층과 출력층의 목적에 맞춰 ReLU 계열, Sigmoid, Softmax, Linear를 선택한다.</li>
+</ol>
+</div>
+<section class="note" aria-label="참고 자료"><h3>계산과 구현을 확인할 자료</h3><ul>
+<li><a href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html" target="_blank" rel="noopener">NumPy matmul: 행렬곱의 차원 규칙과 @ 연산자</a></li>
+<li><a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html" target="_blank" rel="noopener">NumPy solve: 연립방정식의 전제와 특이행렬 오류</a></li>
+<li><a href="https://www.deeplearningbook.org/contents/prob.html" target="_blank" rel="noopener">Deep Learning 3장: 조건부 확률·베이즈 규칙</a></li>
+<li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html" target="_blank" rel="noopener">PyTorch BCEWithLogitsLoss: 시그모이드와 손실의 결합</a></li>
+<li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html" target="_blank" rel="noopener">PyTorch CrossEntropyLoss: 원시 logits 입력</a></li>
+</ul><p>행렬 계산은 NumPy 2.3.5에서 실행 확인했다. 가상 합격·메일 예제는 설명용이며 실측 통계가 아니다. PyTorch 예제는 문서와 대조했지만 실행하지 않았다.</p></section>
+</article>
