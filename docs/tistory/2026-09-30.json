@@ -1,0 +1,97 @@
+{
+  "title": "Actions Node 20 종료: GitHub 워크플로 확인 순서",
+  "title_candidates": [
+    "Actions Node 20 종료: GitHub 워크플로 확인 순서",
+    "GitHub Actions 러너에서 Node 20 제거, JavaScript 액션은 Node 24로 전환",
+    "GitHub Actions 워크플로의 애플리케이션 Node와 JavaScript 액션 런타임을 분리하고 Node 24 전…"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-09-30",
+  "publish_date": "2026-09-30",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-09-30T09:00:00+09:00",
+  "tags": [
+    "GitHub Actions Node 20",
+    "GitHub Actions Node 24",
+    "JavaScript 액션",
+    "action.yml",
+    "셀프 호스티드 러너",
+    "Actions Runner Controller",
+    "CI 호환성"
+  ],
+  "meta_description": "어제까지 통과하던 GitHub Actions가 `node24` 실행 파일을 찾지 못하거나 오래된 JavaScript 액션에서 멈춘다. 9월 23일부터 러너는 Node 20 대신 Node 24로 Jav… GitHub는 Actions 러너에서 Node 20을 제거하고 JavaScript…",
+  "key_summary": [
+    "1. GitHub Actions 러너에서 Node 20 제거, JavaScript 액션은 Node 24로 전환",
+    "직접 얻는 결과: 액션 사용자·액션 제작자·셀프 호스티드 러너 운영자별 확인 지점을 나누고, 오류 경로와 메타데이터를 근거로 최소 변경 범위를 결정할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Actions Node 20 종료: GitHub 워크플로 확인 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-09-30.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-09-30.html",
+  "before_ad_html": "docs/tistory/2026-09-30-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-09-30-after-ad.html",
+  "adfit_html": "docs/tistory/2026-09-30-adfit.html",
+  "source_sha256": "b7cdc3b1ca4adb201e6c5a8761f981c275e9ce738514b9d119f7be5449b23773",
+  "html_sha256": "bb48d8b5deb3c3422a497dbe5ef17122db1a4edccf0991fa9c9778210fbd578e",
+  "adfit_sha256": "9887045e732495081721bc1c24b0157451d33c15e9464709a9595a733ca482d4",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-30/Actions-Node24-%EC%95%A1%EC%85%98%EB%9F%B0%ED%83%80%EC%9E%84-%EB%8C%80%ED%91%9C.webp",
+      "path": "docs/tistory/assets/2026-09-30/Actions-Node24-액션런타임-대표.webp",
+      "original_url": "",
+      "alt": "GitHub Actions는 JavaScript 액션 실행 런타임을 Node 20에서 Node 24로 바꿨다. 이전 런타임 카트리지 옆에 Node 24 액션 런타임을 장착하는 장면",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-30/Actions-Node20-Node24-%EC%A0%84%ED%9B%84%EB%B9%84%EA%B5%90.webp",
+      "path": "docs/tistory/assets/2026-09-30/Actions-Node20-Node24-전후비교.webp",
+      "original_url": "",
+      "alt": "Node 20 임시 우회가 사라진 뒤 Node 24 액션 버전과 러너 환경을 함께 확인하는 전후 비교",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-30/Actions-Node24-%EC%8B%A4%ED%8C%A8%EC%A7%84%EB%8B%A8-%EB%B6%84%EA%B8%B0.webp",
+      "path": "docs/tistory/assets/2026-09-30/Actions-Node24-실패진단-분기.webp",
+      "original_url": "",
+      "alt": "Node 24 전환 실패에서 액션 버전과 메타데이터·번들, 러너 환경을 나눠 확인하는 진단 분기",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-09-30/Actions-Runner-Node24-%ED%8F%AC%ED%95%A8%EC%97%AC%EB%B6%80-%EA%B7%BC%EA%B1%B0.webp",
+      "path": "docs/tistory/assets/2026-09-30/Actions-Runner-Node24-포함여부-근거.webp",
+      "original_url": "",
+      "alt": "actions-runner 2.336.0 릴리스 파일에는 Node 24가 있고 같은 버전의 ghcr.io 컨테이너 이미지에는 없었다는 공개 재현 비교",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
