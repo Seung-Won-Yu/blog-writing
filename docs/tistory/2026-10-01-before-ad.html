@@ -1,0 +1,22 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">1TB 저장장치를 연결했는데 용량 표시가 약 931이다. “나머지 공간은 어디 갔지?”라는 생각이 든다. 같은 바이트를 더 큰 단위로 세면 숫자가 작아지므로, 이것만으로 용량을 잃었다고 볼 수 없다. 다만 포맷이나 파일이 실제로 차지하는 공간까지 단위 탓으로 넘기면 안 된다. 화면의 숫자가 무엇을 센 것인지 확인하고, 1000과 1024가 왜 함께 쓰이게 됐는지 따라가 보자.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-01/1TB-용량-같은바이트.webp" alt="1TB 용량은 단위를 바꿔 작게 표시해도 같은 바이트를 가리킬 수 있다 — 한 저장장치의 1TB 용량과 931GiB 표시를 두 눈금으로 비교하는 설명용 정물" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">궁금한 IT 원리</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>1TB 용량이 약 931로 보이는 차이는 단위 환산일 수 있다. 같은 바이트를 더 큰 단위로 세면 숫자가 작아진다.</li><li>제품의 바이트 정의와 화면의 전체·남은 공간을 먼저 구분하고, 계산기로 1TB를 같은 단위에 맞춰 비교한다.</li><li>약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>바이트</dt><dd>파일과 저장장치 용량을 셀 때 쓰는 기본 단위다. 여기서는 8비트 묶음을 뜻한다.</dd></div><div><dt>GiB</dt><dd>기비바이트. 1GiB는 1,073,741,824바이트이며 10억 바이트인 1GB보다 큰 묶음이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-blurb">저장장치의 숫자는 바이트 수, 표시 단위, 실제 남은 공간을 나눠 읽어야 한다. 표준화 기록과 직접 계산 예시로 1TB와 약 931GiB가 함께 쓰이는 이유를 검증한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">먼저 판정: 숫자가 작아져도 바이트는 같을 수 있다</h4><p>1TB 용량이 약 931로 보이는 것은 같은 바이트 수를 더 큰 이진 단위로 나눠 표시하기 때문일 수 있다. 이 차이는 데이터 손실이 아니지만, 포맷·파일·예약 공간 때문에 실제 사용 가능한 공간이 줄어드는 일은 따로 확인해야 한다.</p><p>그릇 크기를 바꿔 같은 쌀을 담는 장면을 떠올려 보자. 작은 그릇으로 열 번 담던 양을 큰 그릇으로 재면 횟수가 줄어든다. 쌀을 버리지 않아도 숫자는 작아진다. 저장장치의 바이트 수를 큰 묶음 단위로 표시할 때도 비슷한 일이 생긴다.</p><ul class="digest-bullet-list"><li>제품 사양에서 1TB를 몇 바이트로 정의하는지 읽는다.</li><li>화면의 숫자가 전체 용량인지 남은 공간인지, 단위가 GB인지 GiB인지 확인한다.</li><li>계산기에 1,000,000,000,000 ÷ 1,073,741,824를 넣어 약 931.32인지 확인한다.</li></ul><p>이 확인에는 저장장치를 새로 포맷하거나 파일을 지울 필요가 없다. 제품 사양과 화면에 보이는 정보, 계산기만 읽는다. 장치가 없으면 계산 예시만 따라 해도 “숫자가 줄었다”와 “공간을 잃었다”가 같은 말인지 판단할 수 있다.</p><p>숫자 옆에 GB라고 적혀 있어도 모든 앱이 같은 묶음 크기를 쓴다고 단정하지 말자. 단위 설명이나 바이트 수가 함께 표시된다면 그 값을 기준으로 비교한다. 소수점 반올림만 다른 경우도 있으므로 마지막 몇 자리까지 같을 필요는 없다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-01/1TB-단위환산-공간사용.webp" alt="1TB 용량의 단위 환산과 포맷·파일 점유가 다른 질문임을 보여 주는 설명도" width="1200" height="630" loading="lazy"><figcaption>1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다 — 생성한 설명도이며 실제 장치 측정 화면이 아니다.</figcaption></figure><h4 class="digest-subheading">1000과 1024는 같은 이름을 나눠 쓰던 두 묶음이다</h4><p>킬로미터의 킬로는 1000을 뜻한다. 저장장치 사양의 1TB도 보통 1,000,000,000,000바이트를 뜻한다. 한편 컴퓨터 분야에서는 2를 열 번 곱한 1024가 1000과 가까워, 이 묶음을 킬로라고 부르는 관행이 생겼다. 미국 표준기술연구소가 보존한 역사 설명은 이 이름의 혼용을 짚는다.</p><p>둘 중 하나가 계산을 잘못해서 생긴 차이가 아니다. 같은 양을 무엇으로 나눠 세는지가 다르다. 1000씩 묶는 이름과 1024씩 묶는 이름을 분명히 나누면, 화면의 숫자가 달라도 같은 바이트를 가리킬 수 있다.</p><p>1000 묶음과 1024 묶음은 서로 다른 이름으로 적을 수 있다. 일상에서 보는 짧은 영문 표기만으로는 문서의 관행까지 확정하기 어렵다. “컴퓨터니까 무조건 1024”라는 암기보다 단위 정의를 읽는 편이 정확하다.</p></div>
+  </div>
+</section>
+</article>

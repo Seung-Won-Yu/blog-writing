@@ -1,0 +1,623 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-10-01",
+  "publish_date": "2026-10-01",
+  "date_label": "2026. 10. 1",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "weekday": "목",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-01T09:00:00+09:00",
+  "generation": {
+    "provider": "codex-agent",
+    "model": "codex-current-session",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "primary_query": "1TB 용량",
+  "tags": [
+    "1TB 용량",
+    "931GB",
+    "GB GiB 차이",
+    "킬로바이트",
+    "이진 접두어",
+    "저장장치 용량",
+    "디스크 공간"
+  ],
+  "editorial": {
+    "headline": "1TB 용량은 왜 931GB로 보일까? 사라진 공간의 오해",
+    "opening": "1TB 저장장치를 연결했는데 용량 표시가 약 931이다. “나머지 공간은 어디 갔지?”라는 생각이 든다. 같은 바이트를 더 큰 단위로 세면 숫자가 작아지므로, 이것만으로 용량을 잃었다고 볼 수 없다. 다만 포맷이나 파일이 실제로 차지하는 공간까지 단위 탓으로 넘기면 안 된다. 화면의 숫자가 무엇을 센 것인지 확인하고, 1000과 1024가 왜 함께 쓰이게 됐는지 따라가 보자.",
+    "closing": "새 장치를 샀을 때 필요한 것은 숫자 하나를 되찾는 작업보다 비교 기준을 맞추는 일이다. 단위를 맞춘 뒤에도 설명되지 않는 차이가 남으면 제품 사양과 장치의 전체 바이트 수, 파티션·예약 공간을 차례로 대조한다. 이 숫자가 단위 환산인지 실제 남은 공간인지 구분하고, 설명되지 않는 차이는 장치의 전체 바이트 수와 공간 사용 내역으로 확인할 수 있다면 판단이 끝났다.",
+    "action": "다음에 저장장치 용량을 비교할 때는 전체 용량과 남은 공간을 먼저 구분하고, 숫자 옆 단위와 제품의 바이트 정의를 함께 읽자.",
+    "audience_problem": "1TB 저장장치가 약 931로 표시돼 불량이나 용량 손실을 의심하는 일반 독자가 숫자를 비교할 기준을 원한다.",
+    "reader_takeaway": "1TB 용량이 약 931로 보이는 것은 같은 바이트 수를 더 큰 이진 단위로 나눠 표시하기 때문일 수 있다. 이 차이는 데이터 손실이 아니지만, 포맷·파일·예약 공간 때문에 실제 사용 가능한 공간이 줄어드는 일은 따로 확인해야 한다.",
+    "why_now": "저장장치 제품 사양과 앱의 표시 단위가 달라도 같은 물리적 용량일 수 있다는 오래가는 질문을 표준화 기록과 현재 공식 안내로 검증한다.",
+    "topic_key": "storage-capacity-decimal-binary-1tb-931gib-myth-history",
+    "reader_question": "1TB 용량이 약 931GB로 보이면 정말 공간이 사라진 걸까?",
+    "entities": [
+      "1TB 용량",
+      "GiB"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "research_interpretation",
+    "weekly_lane": "curiosity_myth_history",
+    "reader_hook": {
+      "scene": "1TB 저장장치를 연결했는데 용량 표시가 약 931이라 나머지 공간이 어디 갔는지 궁금하다.",
+      "stakes": "숫자의 차이를 모두 손실이나 포맷 탓으로 생각하면 정상 장치를 불량으로 보거나 실제 공간 부족을 놓칠 수 있다.",
+      "payoff": "전체 용량과 남은 공간을 구분하고 단위를 맞춰 숫자의 차이가 어디서 생겼는지 판단한다.",
+      "open_question": "컴퓨터의 용량 단위는 왜 1000과 1024라는 두 묶음으로 나뉘게 됐을까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "먼저 판정: 숫자가 작아져도 바이트는 같을 수 있다",
+      "immediate_answer": "1TB 용량이 약 931로 보이는 것은 같은 바이트 수를 더 큰 이진 단위로 나눠 표시하기 때문일 수 있다. 이 차이는 데이터 손실이 아니지만, 포맷·파일·예약 공간 때문에 실제 사용 가능한 공간이 줄어드는 일은 따로 확인해야 한다.",
+      "action_steps": [
+        "제품 사양에서 1TB를 몇 바이트로 정의하는지 읽는다.",
+        "화면의 숫자가 전체 용량인지 남은 공간인지, 단위가 GB인지 GiB인지 확인한다.",
+        "계산기에 1,000,000,000,000 ÷ 1,073,741,824를 넣어 약 931.32인지 확인한다."
+      ],
+      "completion_check": "이 숫자가 단위 환산인지 실제 남은 공간인지 구분하고, 설명되지 않는 차이는 장치의 전체 바이트 수와 공간 사용 내역으로 확인할 수 있다면 판단이 끝났다.",
+      "advanced_heading": "더 궁금하다면: 1TB를 직접 나눠 보자"
+    },
+    "revisit": {
+      "quick_answer": "1TB 용량이 약 931로 보이는 것은 같은 바이트 수를 더 큰 이진 단위로 나눠 표시하기 때문일 수 있다. 이 차이는 데이터 손실이 아니지만, 포맷·파일·예약 공간 때문에 실제 사용 가능한 공간이 줄어드는 일은 따로 확인해야 한다.",
+      "reuse_case": "저장장치 구입 후 사양과 운영체제 표시가 다른 이유를 비교할 때 사용한다.",
+      "failure_case": "약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "제품의 바이트 정의 변경",
+        "운영체제나 앱의 용량 표시 기준 변경",
+        "단위 표준 개정"
+      ]
+    },
+    "search_intent": {
+      "query": "1TB 용량",
+      "reader_need": "1TB가 약 931로 보이는 이유와 실제 용량 부족을 구분하고 싶다.",
+      "answer_format": "단위 환산 예시와 전체·남은 공간 비교표, 표준화 기록으로 오해를 검증한다."
+    },
+    "original_value": {
+      "durable_question": "1TB 용량이 약 931로 보일 때 무엇이 바뀌었고 무엇이 줄었는가?",
+      "source_gap": "단위 정의와 포맷 설명을 따로 읽으면 표시 숫자의 차이와 실제 사용 가능 공간을 혼동하기 쉽다.",
+      "contribution": "한 장치의 용량을 바이트 수, 표시 단위, 사용 가능 공간이라는 세 층으로 나눠 비교하는 판단표를 제공한다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "931이라는 숫자를 결손으로 단정하지 않고 단위와 공간 사용 내역을 구분한다.",
+      "limits": "약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다."
+    },
+    "value_review": {
+      "primary_reader": "1TB 외장 저장장치의 숫자를 보고 공간 손실을 의심하는 비개발자",
+      "reader_question": "1TB가 931로 보이면 정말 용량을 잃은 걸까?",
+      "source_gap": "표준 단위와 운영체제 공간 사용 설명이 흩어져 있어 같은 양의 다른 표시와 실제 점유를 구분하기 어렵다.",
+      "selection_reason": "원래 아이디어 뱅크의 1000·1024 질문을 구매 후 용량 비교 장면에 연결하고 역사 기록과 계산으로 직접 판단할 수 있다.",
+      "contributions": [
+        {
+          "basis": "documented",
+          "excerpt": "단위 환산은 같은 바이트를 다른 크기의 묶음으로 세는 일이고, 포맷·파일·예약 공간은 그중 사용할 수 있는 몫을 나누는 일이다. 두 단계를 분리해야 숫자의 차이를 모두 포맷 탓으로 돌리지 않는다.",
+          "limit_excerpt": "약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다.",
+          "source_urls": [
+            "https://physics.nist.gov/cuu/Units/binary.html",
+            "https://support.apple.com/en-us/102119"
+          ]
+        }
+      ]
+    },
+    "selection_evaluation": {
+      "policy": "curiosity_myth_history-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 8,
+        "belief_fact_boundary": 15,
+        "historical_evidence": 15,
+        "direct_check": 9
+      },
+      "total": 97,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "1TB 용량이 약 931로 보이는 차이는 단위 환산일 수 있다. 같은 바이트를 더 큰 단위로 세면 숫자가 작아진다.",
+      "제품의 바이트 정의와 화면의 전체·남은 공간을 먼저 구분하고, 계산기로 1TB를 같은 단위에 맞춰 비교한다.",
+      "약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다."
+    ],
+    "glossary": [
+      {
+        "term": "바이트",
+        "meaning": "파일과 저장장치 용량을 셀 때 쓰는 기본 단위다. 여기서는 8비트 묶음을 뜻한다."
+      },
+      {
+        "term": "GiB",
+        "meaning": "기비바이트. 1GiB는 1,073,741,824바이트이며 10억 바이트인 1GB보다 큰 묶음이다."
+      }
+    ]
+  },
+  "related_posts": [
+    {
+      "title": "Java 자릿수와 진법 변환: 숫자 합·10진수·2진수 원리",
+      "url": "https://won0322.tistory.com/181",
+      "role": "foundation",
+      "reason": "1000과 1024가 각각 10의 거듭제곱과 2의 거듭제곱에서 나오는 배경을 진법부터 이해할 수 있다."
+    },
+    {
+      "title": "압축 파일은 어떻게 작아졌다가 원본으로 돌아올까? ZIP 원리",
+      "url": "https://won0322.tistory.com/239",
+      "role": "next_step",
+      "reason": "단위만 바꿔 숫자가 작아지는 일과 압축으로 실제 파일 바이트 수를 줄이는 일이 어떻게 다른지 이어서 볼 수 있다."
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "1TB 용량 표시와 실제 사용 가능 공간의 경계",
+      "source": "NIST·Apple·당시 표준화 제안서",
+      "url": "https://physics.nist.gov/cuu/Units/binary.html",
+      "published_at": "1999-01-01T00:00:00+00:00",
+      "blurb_kr": "저장장치의 숫자는 바이트 수, 표시 단위, 실제 남은 공간을 나눠 읽어야 한다. 표준화 기록과 직접 계산 예시로 1TB와 약 931GiB가 함께 쓰이는 이유를 검증한다.",
+      "references": [
+        {
+          "kind": "institution",
+          "title": "NIST: Prefixes for binary multiples — 단위와 1998~1999년 표준화 기록",
+          "url": "https://physics.nist.gov/cuu/Units/binary.html"
+        },
+        {
+          "kind": "official",
+          "title": "Apple: How storage capacity is measured on Apple devices",
+          "url": "https://support.apple.com/en-us/102119"
+        },
+        {
+          "kind": "historical",
+          "title": "Markus Kuhn: Standardized units for use in information technology (1996, 1999 수정)",
+          "url": "https://www.cl.cam.ac.uk/~mgk25/information-units.txt"
+        },
+        {
+          "kind": "independent",
+          "title": "FOLDOC: binary prefix — 1000과 1024를 구분하는 설명",
+          "url": "https://foldoc.org/binary%2Bprefix"
+        },
+        {
+          "kind": "standard",
+          "title": "IEEE 1541-2021: Prefixes for Binary Multiples — 공개 범위 설명",
+          "url": "https://standards.ieee.org/ieee/1541/6867/"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "먼저 판정: 숫자가 작아져도 바이트는 같을 수 있다"
+        },
+        {
+          "t": "p",
+          "text": "1TB 용량이 약 931로 보이는 것은 같은 바이트 수를 더 큰 이진 단위로 나눠 표시하기 때문일 수 있다. 이 차이는 데이터 손실이 아니지만, 포맷·파일·예약 공간 때문에 실제 사용 가능한 공간이 줄어드는 일은 따로 확인해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "그릇 크기를 바꿔 같은 쌀을 담는 장면을 떠올려 보자. 작은 그릇으로 열 번 담던 양을 큰 그릇으로 재면 횟수가 줄어든다. 쌀을 버리지 않아도 숫자는 작아진다. 저장장치의 바이트 수를 큰 묶음 단위로 표시할 때도 비슷한 일이 생긴다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "제품 사양에서 1TB를 몇 바이트로 정의하는지 읽는다.",
+            "화면의 숫자가 전체 용량인지 남은 공간인지, 단위가 GB인지 GiB인지 확인한다.",
+            "계산기에 1,000,000,000,000 ÷ 1,073,741,824를 넣어 약 931.32인지 확인한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "이 확인에는 저장장치를 새로 포맷하거나 파일을 지울 필요가 없다. 제품 사양과 화면에 보이는 정보, 계산기만 읽는다. 장치가 없으면 계산 예시만 따라 해도 “숫자가 줄었다”와 “공간을 잃었다”가 같은 말인지 판단할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "숫자 옆에 GB라고 적혀 있어도 모든 앱이 같은 묶음 크기를 쓴다고 단정하지 말자. 단위 설명이나 바이트 수가 함께 표시된다면 그 값을 기준으로 비교한다. 소수점 반올림만 다른 경우도 있으므로 마지막 몇 자리까지 같을 필요는 없다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다 — 생성한 설명도이며 실제 장치 측정 화면이 아니다."
+        },
+        {
+          "t": "h",
+          "text": "1000과 1024는 같은 이름을 나눠 쓰던 두 묶음이다"
+        },
+        {
+          "t": "p",
+          "text": "킬로미터의 킬로는 1000을 뜻한다. 저장장치 사양의 1TB도 보통 1,000,000,000,000바이트를 뜻한다. 한편 컴퓨터 분야에서는 2를 열 번 곱한 1024가 1000과 가까워, 이 묶음을 킬로라고 부르는 관행이 생겼다. 미국 표준기술연구소가 보존한 역사 설명은 이 이름의 혼용을 짚는다."
+        },
+        {
+          "t": "p",
+          "text": "둘 중 하나가 계산을 잘못해서 생긴 차이가 아니다. 같은 양을 무엇으로 나눠 세는지가 다르다. 1000씩 묶는 이름과 1024씩 묶는 이름을 분명히 나누면, 화면의 숫자가 달라도 같은 바이트를 가리킬 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "1000 묶음과 1024 묶음은 서로 다른 이름으로 적을 수 있다. 일상에서 보는 짧은 영문 표기만으로는 문서의 관행까지 확정하기 어렵다. “컴퓨터니까 무조건 1024”라는 암기보다 단위 정의를 읽는 편이 정확하다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "1998년에는 계산법보다 이름을 구분했다"
+        },
+        {
+          "t": "p",
+          "text": "혼란은 새 저장장치가 나오면서 갑자기 생긴 일이 아니다. 케임브리지에 남아 있는 Markus Kuhn의 1996년 제안서는 단위 표기가 일관되지 않다고 지적하며 별도의 이진 이름을 제안했다. 현재 공개본은 1999년에 수정됐으므로, 그 안의 업데이트를 모두 1996년 주장으로 읽으면 안 된다."
+        },
+        {
+          "t": "p",
+          "text": "그 제안서가 처음 내놓은 이름은 지금의 키비·메비와 달랐다. 문서는 당시 다른 표기 제안과 국제 표준 논의를 함께 기록한다. 이는 “모든 컴퓨터가 처음부터 같은 단위 약속을 썼다”는 생각을 흔드는 당시의 근거다."
+        },
+        {
+          "t": "p",
+          "text": "미국 표준기술연구소 기록에 따르면 국제전기기술위원회는 1998년 12월 이진 접두어를 승인했고, 관련 개정 문서는 1999년 1월 발행됐다. 1024 묶음에는 Ki, 그 제곱에는 Mi, 세제곱에는 Gi라는 이름을 붙여 기존의 십진 이름과 구별했다."
+        },
+        {
+          "t": "h",
+          "text": "포맷 손실과 남은 공간은 그다음 질문이다"
+        },
+        {
+          "t": "p",
+          "text": "단위 환산은 같은 바이트를 다른 크기의 묶음으로 세는 일이고, 포맷·파일·예약 공간은 그중 사용할 수 있는 몫을 나누는 일이다. 두 단계를 분리해야 숫자의 차이를 모두 포맷 탓으로 돌리지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "Apple 공식 안내는 제품의 십진 용량과 일부 앱·운영체제의 이진 표시 차이를 설명하면서, 포맷과 운영체제가 공간을 사용한다는 사실을 별도로 안내한다. 따라서 “1TB가 931로 보이는 차이는 전부 포맷 때문”도, “부족한 공간은 전부 단위 문제”도 맞는 판단법이 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "같은 저장장치에서 먼저 구분할 세 숫자",
+          "headers": [
+            "보고 있는 것",
+            "숫자가 달라지는 이유",
+            "다음 확인"
+          ],
+          "rows": [
+            [
+              "제품의 전체 바이트 수",
+              "제품 사양과 장치가 보고한 원래 용량",
+              "바이트 정의·정확한 모델"
+            ],
+            [
+              "화면의 전체 용량",
+              "단위·반올림·선택한 볼륨 범위",
+              "같은 단위와 범위로 환산"
+            ],
+            [
+              "남은 공간",
+              "파일·포맷 정보·시스템·예약 공간",
+              "사용 내역과 파티션 구성"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 전체 용량과 남은 공간을 나란히 보고, 남은 공간이 더 작다는 이유로 제품 사양이 틀렸다고 판단하면 비교 대상을 섞은 셈이다. 반대로 장치 전체가 아닌 작은 파티션 하나를 보고 전체 저장장치가 작다고 결론 내릴 수도 있다. 이 둘은 단위 환산만으로 설명되지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "단위를 맞춰도 예상보다 크게 부족하다면 장치의 전체 바이트 수와 선택한 볼륨을 확인할 차례다. 사양과 전체 바이트 수 자체가 맞지 않으면 제조사 안내나 지원을 통해 확인한다. 숫자를 맞추려고 파티션을 지우거나 포맷부터 하는 것은 이 글의 확인 순서에 없다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "1TB 용량은 제품의 바이트 정의와 화면 단위를 확인한 뒤 같은 기준으로 계산한다 — 생성한 확인 순서도이며 실제 제품 화면이 아니다."
+        },
+        {
+          "t": "h",
+          "text": "더 궁금하다면: 1TB를 직접 나눠 보자"
+        },
+        {
+          "t": "table",
+          "caption": "이름을 맞추면 같은 바이트를 비교하기 쉽다",
+          "headers": [
+            "단위",
+            "1단위의 바이트 수",
+            "묶는 기준"
+          ],
+          "rows": [
+            [
+              "kB · 킬로바이트",
+              "1,000",
+              "1000"
+            ],
+            [
+              "KiB · 키비바이트",
+              "1,024",
+              "1024"
+            ],
+            [
+              "GB · 기가바이트",
+              "1,000,000,000",
+              "1000을 세 번 곱함"
+            ],
+            [
+              "GiB · 기비바이트",
+              "1,073,741,824",
+              "1024를 세 번 곱함"
+            ]
+          ]
+        },
+        {
+          "t": "ul",
+          "items": [
+            "출발값: 정확히 1,000,000,000,000바이트인 가상 장치를 놓는다.",
+            "십진 표시: 10억 바이트로 나누면 1000GB다.",
+            "이진 표시: 1,073,741,824바이트로 나누면 약 931.32GiB다. 두 결과는 같은 양이므로 차이를 잃어버린 바이트로 읽지 않는다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "약 931.32라는 계산은 정확히 1조 바이트를 GiB로 바꾼 예시다. 실제 장치의 보장 용량이나 포맷 후 사용 가능 공간을 측정한 결과는 아니다."
+        },
+        {
+          "t": "p",
+          "text": "비유의 한계도 여기 있다. 그릇 비유는 표시 단위를 설명할 뿐, 파일을 얼마나 넣을 수 있는지는 말해 주지 않는다. 실제 저장 가능한 몫을 알려면 포맷과 시스템이 차지하는 부분, 이미 저장한 파일을 같은 기준으로 따로 봐야 한다."
+        },
+        {
+          "t": "p",
+          "text": "IEEE 1541-2021의 공개 설명도 정보기술에서 쓰는 이진 배수의 이름과 기호를 다룬다. 여기서 확인한 것은 공개 범위 설명이며 유료 표준 본문 전체를 열람한 것은 아니다. 표준의 존재는 모든 앱이 같은 표기를 쓴다는 보장도 아니다."
+        },
+        {
+          "t": "p",
+          "text": "압축과도 구분해 보자. 용량 단위를 바꾸면 파일 내용과 바이트 수가 그대로인데, ZIP은 내용을 더 짧게 기록해 실제 파일 바이트 수를 줄일 수 있다. “숫자가 작다”는 겉모습은 비슷해도 한쪽은 표시 기준이고 다른 쪽은 데이터를 기록하는 방법이다."
+        }
+      ]
+    }
+  ],
+  "visual": {
+    "subject": "1TB 저장장치 용량의 단위와 공간 사용",
+    "hook": "1TB 용량은 왜 931로 보일까?",
+    "motif": "같은 저장장치, 서로 다른 단위 눈금",
+    "weekday_profile": "myth_evidence",
+    "subject_terms": [
+      "1TB 용량",
+      "GiB"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "1TB 용량은 단위를 바꿔 작게 표시해도 같은 바이트를 가리킬 수 있다",
+      "label": "1TB 용량과 931GiB의 같은 저장장치",
+      "scene_label": [
+        "1TB 용량",
+        "931GiB 표시"
+      ],
+      "steps": "1TB 용량의 같은 저장장치 옆에 크기가 다른 두 측정 눈금이 놓인 한 장면",
+      "curiosity_hook": "1TB 용량 숫자가 작아졌는데 저장장치는 왜 그대로일까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "capacity_dual_measuring_rulers",
+      "composition_type": "oblique_single_drive_dual_rulers",
+      "palette_family": "sage_ivory_copper",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "1TB 외장 저장장치와 단위가 다른 두 용량 눈금",
+      "texture_cue": "종이 태그와 황동 눈금, 질감 있는 녹색 저장장치",
+      "authenticity_cue": "제품 용량의 숫자를 대조하는 실제 구매 후 질문을 표현한 설명용 정물",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "1TB 용량",
+        "931GiB 표시"
+      ],
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Wide landscape Korean IT editorial cover, ratio 1200:630. A single sculpted external storage drive on an ivory tabletop, two curved brass measuring rulers wrap the same drive like two unit scales. One large physical paper tag reads exactly 1TB 용량 and the other exactly 931GiB 표시. They refer to the SAME drive, no missing fragment, no stolen space. Paper sculpture editorial still-life, sage green and copper, soft natural shadows, oblique view, main drive and rulers fill 60 percent. Theme: 1TB 용량 unit conversion. Exactly only these two texts, mobile readable. No computer UI, screen, people, grid, split panels, arrow flow, charts, extra labels, logos or watermark. Labels are rounded values for illustration, not measurement evidence.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "teaching_role": "myth_fact_boundary",
+        "teaching_claim": "1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다",
+        "label": "1TB 용량에서 단위 환산과 공간 사용 구분",
+        "scene_label": [
+          "단위 환산",
+          "같은 바이트",
+          "공간 사용",
+          "사용 가능 감소"
+        ],
+        "steps": "1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다",
+        "curiosity_hook": "1TB 용량은 단위와 실제 공간을 어떻게 구분할까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: scientific-educational. 1200:630 landscape conceptual teaching diagram about 1TB 용량. Two spacious horizontal rows, large Korean text. Top row one full storage container, two measuring scales around it, labelled exactly 단위 환산 and 같은 바이트; data pieces stay full. Bottom row storage container with a small clearly shaded occupied segment and unoccupied remaining segment, labelled exactly 공간 사용 and 사용 가능 감소. Draw simplified conceptual objects, charcoal line art with sage green and copper on ivory, extremely large clean Korean text for 390px. No numerical amounts or percentages in lower row. No OS UI, no fake measurements, no extra text or logo. Clearly separates unit conversion from occupied space.",
+        "korean_labels": [
+          "단위 환산",
+          "같은 바이트",
+          "공간 사용",
+          "사용 가능 감소"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "teaching_role": "history_or_direct_check",
+        "teaching_claim": "1TB 용량은 제품의 바이트 정의와 화면 단위를 확인한 뒤 같은 기준으로 계산한다",
+        "label": "1TB 용량을 같은 기준으로 확인하는 순서",
+        "scene_label": [
+          "제품 바이트",
+          "화면 단위",
+          "같은 기준"
+        ],
+        "steps": "1TB 용량은 제품의 바이트 정의와 화면 단위를 확인한 뒤 같은 기준으로 계산한다",
+        "curiosity_hook": "1TB 용량은 단위와 실제 공간을 어떻게 구분할까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: scientific-educational. 1200:630 landscape conceptual verification flow about 1TB 용량. Three large illustration stations along a gentle diagonal: product specification paper with a byte-count symbol, magnifying glass on unit tag, calculator with neutral blank display. Exact large Korean labels only 제품 바이트, 화면 단위, 같은 기준. Arrows connect product definition then display unit then same-unit comparison. Muted cobalt and apricot against cream, open spacious layout, ink and watercolor educational diagram. Korean letters very large readable at 390px. No fake OS UI, no digits or simulated measured result, no timeline dates, no logos, no extra text.",
+        "korean_labels": [
+          "제품 바이트",
+          "화면 단위",
+          "같은 기준"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "images": {
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "1TB 용량은 단위를 바꿔 작게 표시해도 같은 바이트를 가리킬 수 있다",
+      "label": "1TB 용량과 931GiB의 같은 저장장치",
+      "scene_label": [
+        "1TB 용량",
+        "931GiB 표시"
+      ],
+      "steps": "1TB 용량의 같은 저장장치 옆에 크기가 다른 두 측정 눈금이 놓인 한 장면",
+      "curiosity_hook": "1TB 용량 숫자가 작아졌는데 저장장치는 왜 그대로일까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "capacity_dual_measuring_rulers",
+      "composition_type": "oblique_single_drive_dual_rulers",
+      "palette_family": "sage_ivory_copper",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "1TB 외장 저장장치와 단위가 다른 두 용량 눈금",
+      "texture_cue": "종이 태그와 황동 눈금, 질감 있는 녹색 저장장치",
+      "authenticity_cue": "제품 용량의 숫자를 대조하는 실제 구매 후 질문을 표현한 설명용 정물",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "1TB 용량",
+        "931GiB 표시"
+      ],
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Wide landscape Korean IT editorial cover, ratio 1200:630. A single sculpted external storage drive on an ivory tabletop, two curved brass measuring rulers wrap the same drive like two unit scales. One large physical paper tag reads exactly 1TB 용량 and the other exactly 931GiB 표시. They refer to the SAME drive, no missing fragment, no stolen space. Paper sculpture editorial still-life, sage green and copper, soft natural shadows, oblique view, main drive and rulers fill 60 percent. Theme: 1TB 용량 unit conversion. Exactly only these two texts, mobile readable. No computer UI, screen, people, grid, split panels, arrow flow, charts, extra labels, logos or watermark. Labels are rounded values for illustration, not measurement evidence.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-01/1TB-용량-같은바이트.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-01/1TB-용량-같은바이트.webp",
+      "alt": "1TB 용량은 단위를 바꿔 작게 표시해도 같은 바이트를 가리킬 수 있다 — 한 저장장치의 1TB 용량과 931GiB 표시를 두 눈금으로 비교하는 설명용 정물",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 56236,
+      "quality": 82,
+      "sha256": "223a29fdc91e3bef18110b5c472d8e770ca6f493f3a795c6300379677af34dc5"
+    },
+    "visual_1": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "teaching_role": "myth_fact_boundary",
+      "teaching_claim": "1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다",
+      "label": "1TB 용량에서 단위 환산과 공간 사용 구분",
+      "scene_label": [
+        "단위 환산",
+        "같은 바이트",
+        "공간 사용",
+        "사용 가능 감소"
+      ],
+      "steps": "1TB 용량의 단위 환산은 바이트를 줄이지 않지만 포맷과 파일은 사용 가능한 공간에 영향을 준다",
+      "curiosity_hook": "1TB 용량은 단위와 실제 공간을 어떻게 구분할까?",
+      "evidence_type": "diagram",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. 1200:630 landscape conceptual teaching diagram about 1TB 용량. Two spacious horizontal rows, large Korean text. Top row one full storage container, two measuring scales around it, labelled exactly 단위 환산 and 같은 바이트; data pieces stay full. Bottom row storage container with a small clearly shaded occupied segment and unoccupied remaining segment, labelled exactly 공간 사용 and 사용 가능 감소. Draw simplified conceptual objects, charcoal line art with sage green and copper on ivory, extremely large clean Korean text for 390px. No numerical amounts or percentages in lower row. No OS UI, no fake measurements, no extra text or logo. Clearly separates unit conversion from occupied space.",
+      "korean_labels": [
+        "단위 환산",
+        "같은 바이트",
+        "공간 사용",
+        "사용 가능 감소"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-01/1TB-단위환산-공간사용.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-01/1TB-단위환산-공간사용.webp",
+      "alt": "1TB 용량의 단위 환산과 포맷·파일 점유가 다른 질문임을 보여 주는 설명도",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 34540,
+      "quality": 82,
+      "sha256": "47d5114f3fa0244e70994393dce85a86400b575566d90ba3c68144ab8090c89b"
+    },
+    "visual_2": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "flow",
+      "teaching_role": "history_or_direct_check",
+      "teaching_claim": "1TB 용량은 제품의 바이트 정의와 화면 단위를 확인한 뒤 같은 기준으로 계산한다",
+      "label": "1TB 용량을 같은 기준으로 확인하는 순서",
+      "scene_label": [
+        "제품 바이트",
+        "화면 단위",
+        "같은 기준"
+      ],
+      "steps": "1TB 용량은 제품의 바이트 정의와 화면 단위를 확인한 뒤 같은 기준으로 계산한다",
+      "curiosity_hook": "1TB 용량은 단위와 실제 공간을 어떻게 구분할까?",
+      "evidence_type": "diagram",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational. 1200:630 landscape conceptual verification flow about 1TB 용량. Three large illustration stations along a gentle diagonal: product specification paper with a byte-count symbol, magnifying glass on unit tag, calculator with neutral blank display. Exact large Korean labels only 제품 바이트, 화면 단위, 같은 기준. Arrows connect product definition then display unit then same-unit comparison. Muted cobalt and apricot against cream, open spacious layout, ink and watercolor educational diagram. Korean letters very large readable at 390px. No fake OS UI, no digits or simulated measured result, no timeline dates, no logos, no extra text.",
+      "korean_labels": [
+        "제품 바이트",
+        "화면 단위",
+        "같은 기준"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-01/1TB-용량-확인순서.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-01/1TB-용량-확인순서.webp",
+      "alt": "1TB 용량의 제품 바이트 정의와 화면 단위를 확인해 같은 기준으로 계산하는 순서도",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 62996,
+      "quality": 82,
+      "sha256": "2e6666af7f71e4c7d07bfadb8c0dced71b6de20207f2ac0b18c68858f4144289"
+    }
+  }
+}
