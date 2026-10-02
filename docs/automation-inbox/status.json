@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "kind": "automation",
-  "target_day": "2026-09-25",
+  "target_day": "2026-10-02",
   "editorial_lane": "developer_insight",
-  "generated_at": "2026-09-24T23:55:16.193444+00:00",
+  "generated_at": "2026-10-02T00:57:13.773369+00:00",
   "state": "READY",
   "reasons": [],
   "quality": {
     "ok": true,
     "reasons": [],
     "successful_sources": 5,
-    "candidate_sources": 14,
+    "candidate_sources": 15,
     "candidates": 25,
     "selected": 5
   }
