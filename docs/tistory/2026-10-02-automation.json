@@ -1,0 +1,96 @@
+{
+  "title": "구조화 출력은 어디까지 믿을까: JSON 스키마와 Pydantic 검증 선택 기준",
+  "title_candidates": [
+    "구조화 출력은 어디까지 믿을까: JSON 스키마와 Pydantic 검증 선택 기준",
+    "JSON 구조화 출력과 Pydantic 검사 경계: JSON을 읽을 수 있으면 내용도 맞을까?"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-10-02-automation",
+  "publish_date": "2026-10-02",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-02T09:00:00+09:00",
+  "tags": [
+    "구조화 출력",
+    "JSON 스키마",
+    "Pydantic",
+    "Outlines",
+    "LLM 데이터 추출",
+    "제약 디코딩",
+    "검증 기준"
+  ],
+  "meta_description": "AI가 문서에서 뽑은 값은 JSON으로 잘 열리는데, 날짜가 원문과 다르다. 구조화 출력은 이런 오류까지 막아 줄까? 짧은 답은 아니다. 생성할 모양을 제한하는 일과 값의 의미를 검사하는 일은 다르다… 문법·계약·원문 일치를 나눠 구조화 출력과 검증 도구의 쓰임·생략 조건을 고른다.",
+  "key_summary": [
+    "1. 구조화 출력은 어디까지 믿을까: JSON 스키마와 Pydantic 검증 선택 기준",
+    "직접 얻는 결과: 실패 위치에 따라 생성 제약·앱 검증·근거 대조를 선택하고 생략할 도구를 고른다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: 구조화 출력은 어디까지 믿을까: JSON 스키마와 Pydantic 검증 선택 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 13,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-10-02.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-02-automation.html",
+  "before_ad_html": "docs/tistory/2026-10-02-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-02-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-02-automation-adfit.html",
+  "source_sha256": "657640111ff0393fa4f6198af5f6c206eb64757e11a50e41f00694def4f3d257",
+  "html_sha256": "8a4ada9a60b02746c034b8ed210d6fac2cf6669778bc97537638911468c3883a",
+  "adfit_sha256": "4d3efb770e9db4685f43178950526387b6aa156666c32878968d08e23523ce14",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-02-automation/JSON-원문-빈칸-대표.webp",
+      "path": "docs/tistory/assets/2026-10-02-automation/JSON-원문-빈칸-대표.webp",
+      "original_url": "",
+      "alt": "JSON 양식이 맞아도 원문에 없는 날짜는 저장 전에 판단해야 한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-02-automation/JSON-생성-제약-공식-근거.webp",
+      "path": "docs/tistory/assets/2026-10-02-automation/JSON-생성-제약-공식-근거.webp",
+      "original_url": "",
+      "alt": "TGI의 JSON 제약 공식 문서는 문법에 맞지 않는 토큰을 생성 중 가리는 과정을 설명한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-02-automation/JSON-Pydantic-책임-비교.webp",
+      "path": "docs/tistory/assets/2026-10-02-automation/JSON-Pydantic-책임-비교.webp",
+      "original_url": "",
+      "alt": "구조화 출력은 생성할 모양을 제한하고 Pydantic은 받은 값을 검사한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-02-automation/Pydantic-타입-변환-공식-근거.webp",
+      "path": "docs/tistory/assets/2026-10-02-automation/Pydantic-타입-변환-공식-근거.webp",
+      "original_url": "",
+      "alt": "Pydantic 공식 문서는 기본 타입 변환과 엄격 모드의 차이를 보여 준다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
