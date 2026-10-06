@@ -1,0 +1,784 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-10-06",
+  "publish_date": "2026-10-06",
+  "date_label": "2026. 10. 6",
+  "weekday": "화",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-06T09:00:00+09:00",
+  "primary_query": "와이파이 인터넷 안됨",
+  "tags": [
+    "와이파이 연결",
+    "인터넷 안됨",
+    "공유기 원리",
+    "무선 네트워크",
+    "DNS",
+    "주소 자동 할당",
+    "공용 와이파이"
+  ],
+  "visual": {
+    "subject": "카페에서 와이파이는 연결됐지만 바깥 길이 막힌 이유를 찾는 하루",
+    "hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+    "motif": "무선 고리, 공유기, 집 안 복도, 바깥 문, 데이터 꾸러미",
+    "weekday_profile": "everyday_mechanism",
+    "subject_terms": [
+      "와이파이",
+      "공유기",
+      "인터넷",
+      "이름 조회"
+    ],
+    "toon": {
+      "format": "it_explainer_comic",
+      "series": "하루의 IT 원리툰",
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_name": "하루",
+      "character_anchor": "same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock",
+      "reference_asset": "editorial/curiosity/characters/haru-character-sheet-v1.png",
+      "reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "panel_count": 4,
+      "dialogue_mode": "image_bubbles"
+    },
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "before_after",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "와이파이 연결과 인터넷 연결은 서로 다른 구간이어서 따로 실패할 수 있다",
+      "label": "와이파이 공유기 주변의 무선 고리는 열려 있지만 바깥 문은 닫힌 카페 장면",
+      "scene_label": [
+        "와이파이",
+        "공유기",
+        "바깥 경로"
+      ],
+      "steps": "가까운 와이파이 접속 → 외부 경로 확인 → 웹 응답",
+      "curiosity_hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "cafe_doorway_wireless_reach",
+      "composition_type": "deep_perspective_open_local_closed_outer_door",
+      "palette_family": "apricot_teal_ivory",
+      "render_family": "ink_drawing",
+      "editorial_treatment": "playful_surrealism",
+      "focal_subject": "공유기 주변에 연결된 기기와 닫힌 외부 문을 관찰하는 하루",
+      "texture_cue": "카페 나무 바닥, 불투명 수채 질감, 잉크 윤곽",
+      "authenticity_cue": "카페에서 가까운 망과 외부 연결을 나눠 이해하는 설명용 장면",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. Wide landscape 1200x630. Deep perspective cafe scene, Haru kneels beside a Wi-Fi router whose radio arcs connect a phone locally, while the separate route to the outside city ends at a closed door. Clear surprising everyday result, objects occupy 60 percent, no diagram cards or collage panels. Soft gouache adult editorial comic, apricot and teal cafe backdrop. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Reference image is character identity only. Topic: 와이파이 공유기 인터넷. no text; no letters; no labels; no speech bubbles; no watermark; no fake UI.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "before_after",
+        "teaching_role": "everyday_scene",
+        "teaching_claim": "와이파이 신호가 강해도 외부 인터넷 경로가 막히면 웹페이지는 열리지 않을 수 있다",
+        "label": "와이파이 Cafe table: Haru sees strong abstract radio arcs between a phone and Wi-Fi router, but a parcel trying to leave through a distant closed outer doorway stops. One scene, no real software UI.",
+        "scene_label": [
+          "와이파이",
+          "공유기",
+          "인터넷"
+        ],
+        "steps": "무선 연결 확인 → 웹 요청 실패 구분",
+        "curiosity_hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "연결됐는데 왜 안 열리지?"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 1,
+        "toon_beat": "everyday_question",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 1. Cafe table: Haru sees strong abstract radio arcs between a phone and Wi-Fi router, but a parcel trying to leave through a distant closed outer doorway stops. One scene, no real software UI. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"연결됐는데 왜 안 열리지?\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "teaching_role": "mechanism_cutaway",
+        "teaching_claim": "와이파이는 가까운 무선망을 연결하고 공유기는 다른 망으로 나갈 경로를 이어 준다",
+        "label": "와이파이 Architectural cutaway metaphor: Haru stands in an open interior corridor linking phone and Wi-Fi router by radio arcs; a separate outward route leads through a door to a city of distant servers. Local and external paths visibly different.",
+        "scene_label": [
+          "와이파이",
+          "공유기",
+          "인터넷"
+        ],
+        "steps": "와이파이 접속 → 공유기 → 외부 망",
+        "curiosity_hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "집 안 길과 바깥 길은 달라!"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 2,
+        "toon_beat": "hidden_mechanism",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 2. Architectural cutaway metaphor: Haru stands in an open interior corridor linking phone and Wi-Fi router by radio arcs; a separate outward route leads through a door to a city of distant servers. Local and external paths visibly different. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"집 안 길과 바깥 길은 달라!\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "teaching_role": "one_minute_check",
+        "teaching_claim": "같은 와이파이의 다른 기기와 서로 다른 사이트를 비교하면 실패 범위를 좁힐 수 있다",
+        "label": "와이파이 Haru compares two unbranded phones on the same cafe table with one router, then two distinct abstract website destination objects; a tiny data parcel travels one route and waits on another. No numeric results or fake UI.",
+        "scene_label": [
+          "와이파이",
+          "공유기",
+          "인터넷"
+        ],
+        "steps": "다른 기기 비교 → 다른 사이트 비교 → 실패 범위 기록",
+        "curiosity_hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "다른 기기도 같은지 볼게요."
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 3,
+        "toon_beat": "one_minute_check",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 3. Haru compares two unbranded phones on the same cafe table with one router, then two distinct abstract website destination objects; a tiny data parcel travels one route and waits on another. No numeric results or fake UI. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"다른 기기도 같은지 볼게요.\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard."
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "teaching_role": "misconception_boundary",
+        "teaching_claim": "와이파이에서 한 사이트만 실패하거나 공용망 로그인이 남은 경우에는 인터넷 전체 장애로 단정할 수 없다",
+        "label": "와이파이 Haru points to a local router connected to two destination buildings: one doorway is open and one closed; beside the cafe exit an admission gate remains closed. One coherent exception scene, no fake login screen.",
+        "scene_label": [
+          "와이파이",
+          "공유기",
+          "인터넷"
+        ],
+        "steps": "한 사이트 실패 → 전체 장애와 구분",
+        "curiosity_hook": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "한 곳만 안 되면 범위를 좁혀요."
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "character_id": "haru-v1",
+        "character_version": 1,
+        "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+        "toon_panel": 4,
+        "toon_beat": "exception_boundary",
+        "character_presence": "haru",
+        "dialogue_mode": "image_bubbles",
+        "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 4. Haru points to a local router connected to two destination buildings: one doorway is open and one closed; beside the cafe exit an admission gate remains closed. One coherent exception scene, no fake login screen. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"한 곳만 안 되면 범위를 좁혀요.\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard.",
+        "condition": "한 사이트만 실패하거나 공용망 이용 절차가 끝나지 않은 경우"
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "와이파이는 연결됐는데 왜 인터넷은 안 될까? 두 연결의 원리",
+    "opening": "카페 와이파이에 연결했고 신호도 꽉 찼는데 웹페이지는 돌기만 한다. 와이파이는 가까운 무선망에 들어가는 연결이고, 인터넷은 그 밖의 여러 망을 지나 목적지에 닿는 연결이라 둘은 따로 실패할 수 있다. 안테나 칸을 보고 인터넷까지 정상이라고 생각하면 확인할 곳을 놓친다. 두 연결을 나누면 어떤 범위부터 살필지 알 수 있다. 같은 와이파이인데 한 사람만 잘 되는 경우는 무엇이 다를까?",
+    "closing": "신호가 꽉 찼다는 장면만으로 인터넷 전체를 판단할 수는 없다. 가까운 무선망과의 대화가 가능해도 바깥 길이나 이름 조회, 서비스의 응답은 다른 조건에 달려 있다. 관찰한 범위를 알면 관리자에게도 “안 돼요”보다 정확한 정보를 전할 수 있다.",
+    "action": "같은 와이파이에서 한 기기만 안 되는지, 모두 안 되는지, 한 사이트만 안 되는지를 구분하고 와이파이 연결이 인터넷 전체의 성공을 보장하지 않는다고 설명할 수 있으면 확인이 끝났다.",
+    "audience_problem": "신호는 강한데 웹이 안 열릴 때 와이파이와 인터넷을 같은 연결로 생각해 무작정 설정을 바꾸는 일반 사용자",
+    "reader_takeaway": "무선 연결·주소 설정·이름 조회·외부 경로를 구분하고 다른 기기와 사이트를 비교해 실패 범위를 좁힌다.",
+    "why_now": "카페와 집에서 매일 만나는 연결 표시를 인터넷 전체의 성공으로 읽기 쉬워 반복해서 필요한 질문이다.",
+    "topic_key": "wifi-local-link-versus-internet-path-address-dns-captive-boundary",
+    "reader_question": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+    "entities": [
+      "와이파이",
+      "공유기",
+      "인터넷",
+      "DNS",
+      "이름 조회"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "decision_guide",
+    "weekly_lane": "curiosity_mechanism",
+    "selection_evaluation": {
+      "policy": "curiosity_mechanism-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 10,
+        "cluster_depth": 8,
+        "everyday_scene": 15,
+        "surprising_mechanism": 14,
+        "one_minute_check": 9
+      },
+      "total": 96,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    },
+    "reader_hook": {
+      "scene": "카페 와이파이에 연결했고 신호가 꽉 찼지만 웹페이지는 돌기만 하는 장면이다.",
+      "stakes": "안테나 칸이 많으면 인터넷도 정상이라고 생각하면 공유기 뒤의 경로나 기기별 설정을 놓친다.",
+      "payoff": "가까운 무선 연결과 바깥 인터넷 연결을 나눠 이해하고 다른 기기·사이트 비교로 실패 범위를 좁힌다.",
+      "open_question": "같은 와이파이에서 다른 사람은 잘 되는데 내 기기만 안 될 때는 무엇이 다른가?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "연결된 것은 먼저 가까운 무선망이다",
+      "immediate_answer": "와이파이 연결은 가까운 무선망에 들어갔다는 뜻이다. 인터넷을 쓰려면 주소 설정과 바깥으로 나가는 경로, 이름 조회까지 필요한데 이 중 하나가 막히면 무선 연결이 유지돼도 웹은 열리지 않는다.",
+      "action_steps": [
+        "설정에서 지금 연결한 와이파이 이름과 인터넷 연결 상태를 읽는다.",
+        "브라우저에서 평소 쓰는 서로 다른 두 사이트를 열어 한 곳만 안 되는지 비교한다.",
+        "가능하면 다른 기기로 같은 와이파이에서 같은 사이트를 열어 본다. 휴대폰의 모바일 데이터 사용 여부도 확인한다.",
+        "공용망이면 로그인 안내가 남았는지 확인하고, 결과를 ‘한 기기만·모두·한 사이트만’으로 기록한다."
+      ],
+      "completion_check": "같은 와이파이에서 한 기기만 안 되는지, 모두 안 되는지, 한 사이트만 안 되는지를 구분하고 와이파이 연결이 인터넷 전체의 성공을 보장하지 않는다고 설명할 수 있으면 확인이 끝났다.",
+      "advanced_heading": "더 궁금하다면: 주소를 받고 이름을 찾는 순서"
+    },
+    "revisit": {
+      "quick_answer": "와이파이 연결은 가까운 무선망에 들어갔다는 뜻이다. 인터넷을 쓰려면 주소 설정과 바깥으로 나가는 경로, 이름 조회까지 필요한데 이 중 하나가 막히면 무선 연결이 유지돼도 웹은 열리지 않는다.",
+      "reuse_case": "신호가 강한데 웹이 안 열릴 때 확인 범위를 정한다.",
+      "failure_case": "이 비교는 문제의 범위를 좁히는 방법이며 고장 부품을 확정하는 검사는 아니다. 두 기기가 함께 실패해도 통신사 장애, 공유기 설정, 로그인 제한 등 여러 원인이 남는다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "운영체제 인터넷 상태 표시 방식 변경",
+        "공용망 로그인 절차 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "와이파이",
+      "reader_need": "연결 표시와 신호가 정상인데 웹이 안 되는 이유를 알고 싶다.",
+      "answer_format": "하루 네 컷, 가까운 망과 외부 경로의 비유, 한 기기·모두·한 사이트 비교표"
+    },
+    "original_value": {
+      "durable_question": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+      "source_gap": "무선망 설명과 주소·이름 조회 표준, 기기별 문제 해결 안내가 떨어져 있어 연결 표시만으로 실패 범위를 이해하기 어렵다.",
+      "contribution": "무선망을 집 안 길로, 외부 연결을 밖으로 이어지는 길로 보여 주고 관찰 범위를 세 갈래로 나눠 고장 원인을 단정하지 않는 판단표를 만든다.",
+      "proof_method": "source_triangulation",
+      "reader_outcome": "무선 연결·주소 설정·이름 조회·외부 경로를 구분하고 다른 기기와 사이트를 비교해 실패 범위를 좁힌다.",
+      "limits": "이 비교는 문제의 범위를 좁히는 방법이며 고장 부품을 확정하는 검사는 아니다. 두 기기가 함께 실패해도 통신사 장애, 공유기 설정, 로그인 제한 등 여러 원인이 남는다."
+    },
+    "value_review": {
+      "primary_reader": "신호는 강한데 웹이 안 열릴 때 와이파이와 인터넷을 같은 연결로 생각해 무작정 설정을 바꾸는 일반 사용자",
+      "reader_question": "와이파이 신호가 강하고 연결됐는데 왜 웹페이지는 열리지 않을까?",
+      "source_gap": "무선망 설명과 주소·이름 조회 표준, 기기별 문제 해결 안내가 떨어져 있어 연결 표시만으로 실패 범위를 이해하기 어렵다.",
+      "selection_reason": "생활 장면, 표준과 독립 교육 근거, 설정을 바꾸지 않는 비교법이 있고 최근 365일 같은 질문이 없다.",
+      "contributions": [
+        {
+          "basis": "documented",
+          "excerpt": "와이파이 연결은 가까운 무선망과의 연결이고, 웹페이지를 받으려면 그 뒤의 주소 설정·이름 조회·외부 경로도 작동해야 한다. 이 단계를 나누면 신호가 강한데 인터넷이 안 되는 상황이 모순이 아님을 알 수 있다.",
+          "limit_excerpt": "이 비교는 문제의 범위를 좁히는 방법이며 고장 부품을 확정하는 검사는 아니다. 두 기기가 함께 실패해도 통신사 장애, 공유기 설정, 로그인 제한 등 여러 원인이 남는다.",
+          "source_urls": [
+            "https://support.microsoft.com/en-us/windows/experience/connectivity-networking/fix-wi-fi-connection-issues-in-windows",
+            "https://www.open.edu/openlearn/mod/oucontent/view.php?id=48321&printable=1",
+            "https://www.rfc-editor.org/rfc/rfc2131",
+            "https://www.rfc-editor.org/rfc/rfc1034",
+            "https://support.apple.com/en-au/102554"
+          ]
+        }
+      ]
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "와이파이는 가까운 무선망에 들어가는 연결이다. 바깥 경로·주소 설정·이름 조회가 막히면 신호가 강해도 웹이 열리지 않는다.",
+      "같은 와이파이의 다른 기기와 서로 다른 사이트를 비교하면 한 기기·공통 경로·특정 서비스 중 어디부터 볼지 좁힐 수 있다.",
+      "기기·사이트 비교는 실패 범위를 좁히는 단서다. 원인이나 고장 부품을 확정하지는 않으며, 휴대폰의 모바일 데이터 전환도 구분해야 한다."
+    ],
+    "glossary": [
+      {
+        "term": "무선망",
+        "meaning": "기기들이 전파로 연결된 가까운 네트워크다. 와이파이는 이 연결에 쓰는 기술이다."
+      },
+      {
+        "term": "공유기",
+        "meaning": "집이나 매장 안의 기기들이 다른 망으로 데이터를 보낼 길을 이어 주는 장치다. 무선 접속 기능이 함께 들어 있는 제품이 흔하다."
+      },
+      {
+        "term": "이름 조회",
+        "meaning": "사람이 입력한 사이트 이름에 대응하는 주소 정보를 찾는 일이다. 뒤에서 DNS라는 이름으로 설명한다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "origin": "imagegen",
+      "alt": "와이파이 연결과 인터넷 연결은 서로 다른 구간이어서 따로 실패할 수 있다 — 와이파이 경로를 확인하는 하루",
+      "path": "docs/tistory/assets/2026-10-06/와이파이-cover.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-06/와이파이-cover.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Asset intent: editorial-scene. Wide landscape 1200x630. Deep perspective cafe scene, Haru kneels beside a Wi-Fi router whose radio arcs connect a phone locally, while the separate route to the outside city ends at a closed door. Clear surprising everyday result, objects occupy 60 percent, no diagram cards or collage panels. Soft gouache adult editorial comic, apricot and teal cafe backdrop. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Reference image is character identity only. Topic: 와이파이 공유기 인터넷. no text; no letters; no labels; no speech bubbles; no watermark; no fake UI.",
+      "korean_labels": [],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "cover_kind": "editorial_scene",
+      "art_direction": "cafe_doorway_wireless_reach",
+      "composition_type": "deep_perspective_open_local_closed_outer_door",
+      "palette_family": "apricot_teal_ivory",
+      "render_family": "ink_drawing",
+      "editorial_treatment": "playful_surrealism",
+      "focal_subject": "공유기 주변에 연결된 기기와 닫힌 외부 문을 관찰하는 하루",
+      "texture_cue": "카페 나무 바닥, 불투명 수채 질감, 잉크 윤곽",
+      "authenticity_cue": "카페에서 가까운 망과 외부 연결을 나눠 이해하는 설명용 장면",
+      "weekday_profile": "everyday_mechanism",
+      "weekday_role": "surprising_everyday_result",
+      "visual_claim": "와이파이 연결과 인터넷 연결은 서로 다른 구간이어서 따로 실패할 수 있다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 132128,
+      "quality": 82,
+      "sha256": "7bcae99fd2604d29bb087b9dbb0ce3d55a22887f698abcfb3263ca5a5f1ce3b8"
+    },
+    "visual_1": {
+      "origin": "imagegen",
+      "alt": "와이파이 신호가 강해도 외부 인터넷 경로가 막히면 웹페이지는 열리지 않을 수 있다 — 와이파이 경로를 확인하는 하루",
+      "path": "docs/tistory/assets/2026-10-06/와이파이-visual_1.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-06/와이파이-visual_1.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 1. Cafe table: Haru sees strong abstract radio arcs between a phone and Wi-Fi router, but a parcel trying to leave through a distant closed outer doorway stops. One scene, no real software UI. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"연결됐는데 왜 안 열리지?\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard.",
+      "korean_labels": [
+        "연결됐는데 왜 안 열리지?"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "everyday_scene",
+      "teaching_claim": "와이파이 신호가 강해도 외부 인터넷 경로가 막히면 웹페이지는 열리지 않을 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 126734,
+      "quality": 82,
+      "sha256": "56b0621cff59dbff3f350b8b16ce35be167aa40b875c18afa7fce94cd2767a0b"
+    },
+    "visual_2": {
+      "origin": "imagegen",
+      "alt": "와이파이는 가까운 무선망을 연결하고 공유기는 다른 망으로 나갈 경로를 이어 준다 — 와이파이 경로를 확인하는 하루",
+      "path": "docs/tistory/assets/2026-10-06/와이파이-visual_2.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-06/와이파이-visual_2.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 2. Architectural cutaway metaphor: Haru stands in an open interior corridor linking phone and Wi-Fi router by radio arcs; a separate outward route leads through a door to a city of distant servers. Local and external paths visibly different. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"집 안 길과 바깥 길은 달라!\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard.",
+      "korean_labels": [
+        "집 안 길과 바깥 길은 달라!"
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "mechanism_cutaway",
+      "teaching_claim": "와이파이는 가까운 무선망을 연결하고 공유기는 다른 망으로 나갈 경로를 이어 준다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 126712,
+      "quality": 82,
+      "sha256": "001c1def96c5a5505365b76e26c7d7fe6a9e0f097c300ceb23c799d815a6a438"
+    },
+    "visual_3": {
+      "origin": "imagegen",
+      "alt": "같은 와이파이의 다른 기기와 서로 다른 사이트를 비교하면 실패 범위를 좁힐 수 있다 — 와이파이 경로를 확인하는 하루",
+      "path": "docs/tistory/assets/2026-10-06/와이파이-visual_3.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-06/와이파이-visual_3.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 3. Haru compares two unbranded phones on the same cafe table with one router, then two distinct abstract website destination objects; a tiny data parcel travels one route and waits on another. No numeric results or fake UI. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"다른 기기도 같은지 볼게요.\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard.",
+      "korean_labels": [
+        "다른 기기도 같은지 볼게요."
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "one_minute_check",
+      "teaching_claim": "같은 와이파이의 다른 기기와 서로 다른 사이트를 비교하면 실패 범위를 좁힐 수 있다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 118882,
+      "quality": 82,
+      "sha256": "64dea3e425fef61eb287709060bceeb66769ef570c0e7f95ca49637dc1176754"
+    },
+    "visual_4": {
+      "origin": "imagegen",
+      "alt": "한 사이트만 실패하거나 공용망 로그인이 남은 경우에는 인터넷 전체 장애로 단정할 수 없다 — 와이파이 경로를 확인하는 하루",
+      "path": "docs/tistory/assets/2026-10-06/와이파이-visual_4.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-06/와이파이-visual_4.webp",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: illustration-story. Wide single Korean IT comic panel 4. Haru points to a local router connected to two destination buildings: one doorway is open and one closed; beside the cafe exit an admission gate remains closed. One coherent exception scene, no fake login screen. Soft gouache adult editorial comic, crisp ink edges, large objects, apricot teal background. same Haru: adult Korean man in his late 20s, short side-parted charcoal-black hair, small deep-green clock-hand hairpin, round deep-green glasses, warm ivory chore jacket over a charcoal shirt, muted sage trousers, canvas notebook pouch, green-rim analog timer showing one o'clock. Preserve character identity from reference. Topic: 와이파이 공유기 인터넷. Add one large white speech balloon with tail to Haru, exactly this Korean text: \"한 곳만 안 되면 범위를 좁혀요.\". Bold crisp lettering at least 55px equivalent in 1200x630 canvas, readable at 390px. No other letters, no labels, no watermark, no fake UI, no dashboard.",
+      "korean_labels": [
+        "한 곳만 안 되면 범위를 좁혀요."
+      ],
+      "character_id": "haru-v1",
+      "character_version": 1,
+      "character_reference_sha256": "573f3b2e4d3785fa89cbdbd922248e5e1ce17d04ca88a251425dde9c6ed186da",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "teaching_role": "misconception_boundary",
+      "teaching_claim": "와이파이에서 한 사이트만 실패하거나 공용망 로그인이 남은 경우에는 인터넷 전체 장애로 단정할 수 없다",
+      "dialogue_mode": "image_bubbles",
+      "dialogue_text_verified": true,
+      "dialogue_mobile_verified": true,
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 121300,
+      "quality": 82,
+      "sha256": "1fdec45ee2935b8bb2ac46175d837873e1dfef331e1b39105e535d89a00df5b8"
+    }
+  },
+  "related_posts": [
+    {
+      "title": "GPS는 인터넷 없이 어떻게 위치를 찾을까? 위성 신호와 오프라인 지도의 원리",
+      "url": "https://won0322.tistory.com/231",
+      "reason": "인터넷 연결과 별도로 가능한 동작을 구분하는 기초다. 위치를 찾는 일과 지도 데이터를 받는 일도 서로 다른 경로를 쓴다.",
+      "role": "foundation"
+    },
+    {
+      "title": "브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?",
+      "url": "https://won0322.tistory.com/219",
+      "reason": "다른 사이트는 잘 열리는데 한 사이트 화면만 깨질 때, 네트워크 전체가 아닌 저장된 웹 자원을 확인하는 다음 질문이다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "가까운 와이파이와 바깥 인터넷 연결은 따로 실패할 수 있다",
+      "source": "Microsoft, Open University, RFC 2131, RFC 1034, Apple",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131",
+      "published_at": "1997-03-01T00:00:00+00:00",
+      "blurb_kr": "와이파이의 가까운 무선 연결과 바깥 인터넷 경로는 서로 다른 구간이다. 다른 기기와 사이트를 비교해 실패한 범위를 먼저 좁힌다.",
+      "references": [
+        {
+          "kind": "official",
+          "title": "Microsoft: Fix Wi-Fi connection issues in Windows",
+          "url": "https://support.microsoft.com/en-us/windows/experience/connectivity-networking/fix-wi-fi-connection-issues-in-windows"
+        },
+        {
+          "kind": "independent",
+          "title": "Open University: Networking and communications — 무선 근거리망",
+          "url": "https://www.open.edu/openlearn/mod/oucontent/view.php?id=48321&printable=1"
+        },
+        {
+          "kind": "standard",
+          "title": "RFC 2131: Dynamic Host Configuration Protocol",
+          "url": "https://www.rfc-editor.org/rfc/rfc2131"
+        },
+        {
+          "kind": "standard",
+          "title": "RFC 1034: Domain names — concepts and facilities",
+          "url": "https://www.rfc-editor.org/rfc/rfc1034"
+        },
+        {
+          "kind": "official",
+          "title": "Apple: Use captive Wi-Fi networks on your iPhone or iPad",
+          "url": "https://support.apple.com/en-au/102554"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "연결된 것은 먼저 가까운 무선망이다"
+        },
+        {
+          "t": "p",
+          "text": "와이파이 연결은 가까운 무선망에 들어갔다는 뜻이다. 인터넷을 쓰려면 주소 설정과 바깥으로 나가는 경로, 이름 조회까지 필요한데 이 중 하나가 막히면 무선 연결이 유지돼도 웹은 열리지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "와이파이를 집 안 복도에, 인터넷 연결을 건물 밖으로 이어지는 길에 빗대어 보자. 방에서 복도로 나갈 수 있어도 건물 출입구가 막히면 밖의 가게까지 갈 수 없다. 신호가 강한데 페이지가 안 열리는 상황은 이처럼 서로 다른 구간의 상태가 함께 보이는 장면이다."
+        },
+        {
+          "t": "p",
+          "text": "이것은 길을 나눠 이해하기 위한 비유다. 실제 데이터는 작은 묶음으로 나뉘어 여러 장치가 정한 경로를 지나며, 인터넷에 물리적인 출입구 하나만 있는 것은 아니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "설정에서 지금 연결한 와이파이 이름과 인터넷 연결 상태를 읽는다.",
+            "브라우저에서 평소 쓰는 서로 다른 두 사이트를 열어 한 곳만 안 되는지 비교한다.",
+            "가능하면 다른 기기로 같은 와이파이에서 같은 사이트를 열어 본다. 휴대폰의 모바일 데이터 사용 여부도 확인한다.",
+            "공용망이면 로그인 안내가 남았는지 확인하고, 결과를 ‘한 기기만·모두·한 사이트만’으로 기록한다."
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "와이파이 신호가 강해도 외부 인터넷 경로가 막히면 웹페이지는 열리지 않을 수 있다 — 생성한 설명용 원리툰이며 실제 기기 화면이나 측정 결과가 아니다.",
+          "toon_panel": 1,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "연결됐는데 왜 안 열리지?"
+            }
+          ]
+        },
+        {
+          "t": "h",
+          "text": "한 상자 안에 서로 다른 역할이 들어 있다"
+        },
+        {
+          "t": "p",
+          "text": "집에서 공유기라고 부르는 상자에는 여러 기능이 함께 들어 있는 경우가 많다. 무선 접속 기능은 휴대폰과 가까운 망을 연결하고, 라우터 기능은 다른 망으로 보낼 데이터를 다음 경로로 넘긴다. 같은 상자라고 두 기능의 성공 조건이 같지는 않다."
+        },
+        {
+          "t": "p",
+          "text": "Open University 교육 자료는 와이파이를 기기들이 전파로 이어지는 무선 근거리망으로 설명한다. 웹사이트가 있는 바깥 망까지 가려면 이 근거리망을 넘어 연결된 다른 망으로 데이터를 보내야 한다. 이 두 범위를 구별하는 것이 오늘 질문의 출발점이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "와이파이는 가까운 무선망을 연결하고 공유기는 다른 망으로 나갈 경로를 이어 준다 — 생성한 설명용 원리툰이며 실제 기기 화면이나 측정 결과가 아니다.",
+          "toon_panel": 2,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "집 안 길과 바깥 길은 달라!"
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "와이파이 연결은 가까운 무선망과의 연결이고, 웹페이지를 받으려면 그 뒤의 주소 설정·이름 조회·외부 경로도 작동해야 한다. 이 단계를 나누면 신호가 강한데 인터넷이 안 되는 상황이 모순이 아님을 알 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 공유기의 무선 기능은 살아 있지만 그 뒤의 회선 연결이 끊겼다고 가정하자. 휴대폰은 가까운 무선망에 계속 들어가 있을 수 있어도 바깥 사이트까지 갈 길은 없어진다. 이 사례는 설명용 가정이며 이 글에서 회선을 뽑아 직접 측정한 결과는 아니다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "1분 확인의 결과는 세 갈래로 읽는다"
+        },
+        {
+          "t": "p",
+          "text": "Microsoft 지원 문서는 다른 기기로 같은 네트워크에 연결해 비교하도록 안내한다. 이를 사이트 비교와 함께 읽으면, 처음부터 모든 설정을 바꾸는 대신 공통된 실패와 기기별 실패를 나누는 관찰이 된다. 결과가 모호하면 모호한 채로 기록해도 좋다."
+        },
+        {
+          "t": "table",
+          "caption": "설정을 바꾸기 전에 실패 범위를 읽는 표",
+          "headers": [
+            "관찰",
+            "먼저 볼 범위",
+            "남는 한계"
+          ],
+          "rows": [
+            [
+              "내 기기만 두 사이트 실패",
+              "그 기기의 연결·주소·앱 설정",
+              "기기별 접근 제한도 가능"
+            ],
+            [
+              "여러 기기가 두 사이트 실패",
+              "공유된 경로·공용망 로그인",
+              "공유기와 통신사 중 확정 불가"
+            ],
+            [
+              "다른 사이트는 되고 한 곳만 실패",
+              "그 서비스·이름 조회·앱",
+              "일부 경로 장애도 가능"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "와이파이 실패 범위 판단표"
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "같은 와이파이의 다른 기기와 서로 다른 사이트를 비교하면 실패 범위를 좁힐 수 있다 — 생성한 설명용 원리툰이며 실제 기기 화면이나 측정 결과가 아니다.",
+          "toon_panel": 3,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "다른 기기도 같은지 볼게요."
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "이 비교는 문제의 범위를 좁히는 방법이며 고장 부품을 확정하는 검사는 아니다. 두 기기가 함께 실패해도 통신사 장애, 공유기 설정, 로그인 제한 등 여러 원인이 남는다."
+        },
+        {
+          "t": "h",
+          "text": "공용망 로그인과 한 사이트 실패는 다른 경계다"
+        },
+        {
+          "t": "p",
+          "text": "카페나 호텔에서는 무선망 접속 뒤 별도의 로그인 안내가 나올 수 있다. Apple 공식 안내는 기기가 공용망과 연결된 채 인터넷 없이 다른 용도로 쓸 수 있는 선택도 설명한다. 따라서 망 이름을 선택한 상태와 인터넷 이용 절차를 끝낸 상태는 같지 않을 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "로그인 안내가 보이면 매장의 정식 망과 안내인지 확인하고 운영자에게 절차를 문의한다. 약관 동의나 요금 결제까지 1분 실험에 포함하지 않는다. 브라우저의 인증서 경고를 넘기거나 정체를 모르는 화면에 계정 정보를 넣는 방식으로 확인하지 않는다."
+        },
+        {
+          "t": "p",
+          "text": "한 사이트만 안 열리는 경우도 따로 읽어야 한다. 사이트 자체가 응답하지 않거나 이름에 대응하는 주소를 찾지 못하거나 앱 설정이 그 요청을 막는 등 여러 단계가 가능하다. 다른 사이트가 열린다는 관찰은 전체 연결이 끊겼다는 설명을 약하게 만들지만 특정 원인을 확정하지는 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_4",
+          "caption": "와이파이에서 한 사이트만 실패하거나 공용망 로그인이 남은 경우에는 인터넷 전체 장애로 단정할 수 없다 — 생성한 설명용 원리툰이며 실제 기기 화면이나 측정 결과가 아니다.",
+          "toon_panel": 4,
+          "dialogue": [
+            {
+              "speaker": "하루",
+              "text": "한 곳만 안 되면 범위를 좁혀요."
+            }
+          ]
+        },
+        {
+          "t": "p",
+          "text": "와이파이 연결 표시와 인터넷 상태 문구는 운영체제마다 다르다. Windows는 무선망에 붙어 있지만 인터넷 연결이 감지되지 않는 상태를 별도로 설명한다. 아이콘 하나의 모양만 외우기보다 현재 연결한 망 이름과 상태 문구, 실제로 실패한 서비스를 함께 읽는 편이 낫다."
+        },
+        {
+          "t": "h",
+          "text": "더 궁금하다면: 주소를 받고 이름을 찾는 순서"
+        },
+        {
+          "t": "p",
+          "text": "가까운 망에 들어온 기기는 데이터를 주고받을 주소와 설정이 필요하다. IPv4 가정용 망에서는 이를 자동으로 받는 방식으로 DHCP를 흔히 쓴다. RFC 2131은 기기가 서버에서 네트워크 주소를 포함한 설정을 얻는 절차를 정의한다. 무선 연결 자체와는 다른 일이다."
+        },
+        {
+          "t": "p",
+          "text": "자동 주소 할당은 “사용할 주소가 있나요?”라는 요청에서 시작해 제안을 받고, 사용할 제안을 요청한 뒤 확인받는 대화로 이해할 수 있다. 주소에는 사용할 기간도 있다. 전파로 연결됐다는 사실만으로 이 대화가 끝났다고 볼 수 없는 이유다."
+        },
+        {
+          "t": "p",
+          "text": "모든 네트워크가 이 방식만 쓰는 것은 아니다. 수동 주소를 쓰는 환경도 있고 IPv6에서는 다른 주소 설정 방식이 함께 쓰일 수 있다. 따라서 자동 주소 할당 하나를 모든 와이파이의 필수 고장 원인으로 외우지 말자."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "무선망 접속: 가까운 기기들과 통신할 연결을 만든다.",
+            "주소 설정: 그 망에서 데이터를 주고받을 주소와 필요한 설정을 갖춘다.",
+            "이름 조회: 사이트 이름에 대응하는 주소 정보를 찾는다.",
+            "외부 요청: 연결된 망들을 지나 목적지에서 응답을 받는다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "DNS는 사이트 이름에 대응하는 주소 정보를 찾는 체계다. RFC 1034는 이름 정보를 관리하는 서버와 이를 찾아 주는 프로그램의 역할을 구분한다. 이름 조회가 실패하면 가까운 무선망이 정상이어도 새 사이트를 찾는 과정이 막힐 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "이름 조회에는 이전 답을 잠시 보관하는 캐시도 있다. 그래서 이미 쓰던 서비스는 계속 동작하고 새로 여는 사이트는 실패하는 장면이 가능하다. 다만 이것만 보고 DNS 장애라고 결론 내리면 안 된다. 서비스가 유지한 연결이나 앱에 저장된 데이터도 관찰을 바꿀 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "이 순서는 처음 원리를 이해하기 위한 개념도다. 실제 기기는 주소와 이전 조회 결과를 재사용할 수 있어 매 요청마다 모든 단계를 처음부터 반복하지 않는다. 웹이 한 번 열렸다는 사실을 영구적인 정상 판정으로 쓰지 않는 이유도 여기에 있다."
+        },
+        {
+          "t": "quote",
+          "text": "문제 해결을 위해 설정을 바꾸기 전에는 관찰한 범위부터 남기자. 공용망이나 회사 망은 관리자의 안내를 따르고, 초기화·보안 해제·인증서 경고 우회는 이 글의 확인법에 포함하지 않는다."
+        }
+      ]
+    }
+  ]
+}
