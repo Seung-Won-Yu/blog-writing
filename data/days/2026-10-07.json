@@ -1,0 +1,724 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-10-07",
+  "publish_date": "2026-10-07",
+  "date_label": "2026. 10. 7",
+  "weekday": "수",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "category": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-07T09:00:00+09:00",
+  "primary_query": "Durable Objects",
+  "tags": [
+    "Durable Objects 작업",
+    "Durable Objects 연결 종료",
+    "Cloudflare Workers",
+    "compatibility_date",
+    "waitUntil",
+    "작업 복구",
+    "멱등성"
+  ],
+  "editorial": {
+    "headline": "Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건",
+    "opening": "보고서 생성을 눌러 두고 창을 닫았는데 완료 기록이 남지 않는다. Durable Objects에서는 10월 1일 변경으로 일부 대기 작업이 사용자의 연결 종료 뒤에도 객체를 유지한다. 다만 오래 살아 있는 것과 중단 후 다시 이어 가는 것은 다른 조건이다. 내 작업이 새 보호 대상인지, 재시작하면 어디서 이어지는지를 나눠 확인해야 한다.",
+    "closing": "백그라운드 작업의 신뢰성은 인스턴스가 몇 분 살아 있었는지만으로 평가할 수 없다. 사용자의 연결과 서버 객체의 생명주기를 분리한 뒤, 남아 있는 작업과 저장된 진행 상태, 외부 처리 결과가 같은 식별자로 이어지는지 보자. 이번 변경은 그중 연결 종료 뒤의 유휴 제거 조건을 개선한다. 재시작과 중복 처리는 여전히 애플리케이션이 설계하고 검증해야 할 경계다.",
+    "action": "배포 설정과 대기 작업 종류를 확인하고 연결 종료·재시작 시험에서 같은 작업 ID의 완료 기록과 중복 여부를 확인했다면 적용 검토가 끝난다.",
+    "audience_problem": "Durable Objects에서 사용자가 연결을 끊은 뒤 비동기 작업이 계속되는 조건을 모르거나, 객체 유지 기능을 재시작 복구와 정확히 한 번 처리 보장으로 오해하기 쉽다.",
+    "reader_takeaway": "호환성 날짜와 보호 대상 작업을 대조하고, 연결 종료와 재시작을 따로 시험해 유지·복구·중복 처리의 책임을 구분할 수 있다.",
+    "why_now": "Cloudflare가 2026년 10월 1일 서비스 바인딩·RPC·waitUntil·타이머 대기를 연결 종료 뒤 객체 유지 조건에 추가했다고 발표했다.",
+    "topic_key": "durable-objects-pending-io-eviction-background-recovery",
+    "reader_question": "Durable Objects 백그라운드 작업은 사용자가 연결을 끊으면 어디까지 계속되고, 재시작 뒤에도 완료하려면 무엇을 따로 설계해야 할까?",
+    "entities": [
+      "Durable Objects",
+      "Cloudflare Workers",
+      "waitUntil",
+      "compatibility_date",
+      "RPC",
+      "Alarms"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "change_impact",
+    "weekly_lane": "change_explainer",
+    "reader_hook": {
+      "scene": "보고서 생성을 요청한 뒤 창을 닫았더니 Durable Objects 작업의 완료 기록이 보이지 않는다.",
+      "stakes": "객체 유지 기능을 영구 실행으로 믿으면 재시작 시 진행 위치를 잃고 외부 결과를 중복 생성할 수 있다.",
+      "payoff": "새 보호 대상과 호환성 날짜를 확인하고 연결 종료 시험과 재시작 복구 시험을 분리할 수 있다.",
+      "open_question": "연결 종료 뒤 계속되는 작업이 서버 재시작 뒤에도 같은 위치에서 이어지는가?"
+    },
+    "reader_path": {
+      "reader_level": "practitioner",
+      "entry_heading": "응답 뒤에 남는 작업부터 찾아본다",
+      "immediate_answer": "연결 종료 뒤 새 보호 대상 작업은 유휴 제거를 늦추지만, 재시작 복구와 중복 처리는 저장 상태와 외부 API 계약으로 따로 확인해야 한다.",
+      "action_steps": [
+        "Durable Objects를 쓰는 작업에서 배포된 compatibility_date와 두 유지 플래그를 확인한다.",
+        "응답을 반환한 뒤 남는 작업이 서비스 바인딩·RPC·타이머·waitUntil 중 무엇인지 구분한다.",
+        "작업 식별자와 진행 상태를 영구 저장하고, 재시작 때 읽어 이어 갈 경로가 있는지 확인한다.",
+        "검증 환경에서 연결 종료와 재시작을 따로 시험하고, 중복 결과와 duration 사용량을 함께 비교한다."
+      ],
+      "completion_check": "배포 설정과 대기 작업 종류를 확인하고 연결 종료·재시작 시험에서 같은 작업 ID의 완료 기록과 중복 여부를 확인했다면 적용 검토가 끝난다."
+    },
+    "revisit": {
+      "quick_answer": "새 보호는 대기 중 객체 유지 조건이며 재시작 복구나 정확히 한 번 처리를 대신하지 않는다.",
+      "reuse_case": "응답 후 작업을 넘기거나 연결 종료 뒤 완료 기록이 빠질 때 유지 조건과 복구 경로를 분리해 확인한다.",
+      "failure_case": "진행 위치를 메모리에만 두거나 외부 완료 확인 없이 재시도하면 작업 누락 또는 중복 결과가 남는다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "유휴 제거 보호 대상과 상한 변경",
+        "호환성 날짜 및 플래그 변경",
+        "알람 재시도 계약 변경",
+        "duration 요금 정책 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "Durable Objects",
+      "reader_need": "연결 종료 뒤 계속되는 작업의 적용 조건과 재시작 복구 책임을 구분하고 싶다.",
+      "answer_format": "배포 조건표와 두 실패 장면의 검증표"
+    },
+    "original_value": {
+      "durable_question": "클라이언트 연결과 서버 생명주기가 다른 비동기 작업에서 실행 유지와 업무 복구를 어떻게 별도로 검증할까?",
+      "source_gap": "변경 기록은 유지 조건을 설명하지만 생명주기·알람·재시도 계약을 한 작업의 검증 순서로 묶지 않는다.",
+      "contribution": "연결 종료·재시작·외부 응답 지연을 분리한 검증표와 저장 상태·외부 중복 키의 경계를 제시한다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "배포 설정과 작업 종류로 영향 대상을 판별하고 복구 및 중복 처리 시험에서 기록해야 할 증거를 정한다.",
+      "limits": "공개 문서 비교이며 실제 Cloudflare 계정에서 실행·비용·완료율을 측정하지 않았다."
+    },
+    "value_review": {
+      "primary_reader": "응답 뒤 보고서·에이전트 작업을 계속하는 Durable Objects 개발자",
+      "reader_question": "클라이언트가 연결을 끊은 뒤 작업 지속과 재시작 복구를 어떻게 구분할까?",
+      "source_gap": "공식 공지의 유지 보장과 애플리케이션이 맡을 저장·중복 처리 책임이 여러 문서에 나뉘어 있다.",
+      "selection_reason": "최근 7일의 실제 실행 조건 변경이며 이전 SaaS 복구 글과 달리 객체의 연결 종료와 유휴 제거라는 적용 대상을 다룬다.",
+      "contributions": [
+        {
+          "basis": "documented",
+          "excerpt": "연결 종료 시험은 살아 있는 인스턴스의 작업 지속을 보고, 재시작 시험은 저장된 진행 상태로 복구되는지를 본다. 둘을 따로 통과해야 화면을 닫아도 업무가 끝난다는 약속을 평가할 수 있다.",
+          "limit_excerpt": "이번 보호는 유휴 제거를 늦추는 조건이며 배포·런타임 재시작을 막거나 업무의 한 번 처리를 보장하지 않는다.",
+          "source_urls": [
+            "https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/",
+            "https://developers.cloudflare.com/durable-objects/concepts/durable-object-lifecycle/",
+            "https://developers.cloudflare.com/durable-objects/api/alarms/",
+            "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+          ]
+        }
+      ]
+    },
+    "selection_evaluation": {
+      "editorial_score": 92,
+      "search_durability": 32,
+      "problem_solving": 28,
+      "evidence": 19,
+      "current_interest": 9,
+      "existing_connection": 4
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "연결 종료 뒤 새 보호 대상 작업은 유휴 제거를 늦추지만, 재시작 복구와 중복 처리는 저장 상태와 외부 API 계약으로 따로 확인해야 한다.",
+      "호환성 날짜와 플래그를 확인한 뒤 연결 종료·재시작을 따로 시험한다.",
+      "유휴 제거 보호는 영구 실행이나 정확히 한 번 처리를 보장하지 않으며 대기 시간도 사용량에 남는다."
+    ],
+    "glossary": [
+      {
+        "term": "유휴 제거",
+        "meaning": "요청이 없는 서버 객체를 런타임이 메모리에서 내리는 동작이다."
+      },
+      {
+        "term": "호환성 날짜",
+        "meaning": "Worker가 따를 런타임 동작의 기준 날짜다. 실제 배포 설정에서 선택한다."
+      },
+      {
+        "term": "멱등성",
+        "meaning": "같은 요청을 다시 보내도 추가 결과가 생기지 않도록 하는 성질이다."
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6-astra",
+    "revision": 9,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "related_posts": [
+    {
+      "title": "SaaS 장애 복구 체크리스트: 로그인 정상 뒤 큐·중복 처리 확인법",
+      "url": "https://won0322.tistory.com/238",
+      "reason": "화면의 정상 응답과 실제 업무 완료를 구분하고 작업 식별자로 중복 결과를 대조하는 기반으로 이어진다.",
+      "role": "foundation"
+    },
+    {
+      "title": "배포 전 체크리스트: 장애 회고를 재발 방지 규칙으로 바꾸는 방법",
+      "url": "https://won0322.tistory.com/235",
+      "reason": "연결 종료·재시작 시험을 반복 가능한 배포 검증 항목으로 남기는 다음 단계다.",
+      "role": "next_step"
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "Durable Objects, 연결 종료 뒤 대기 작업의 유휴 제거 보호 확대",
+      "source": "Cloudflare Changelog",
+      "url": "https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/",
+      "published_at": "2026-10-01T00:00:00Z",
+      "blurb_kr": "Cloudflare는 일부 대기 작업이 연결된 클라이언트 없이도 Durable Objects의 유휴 제거를 늦추도록 변경했다. 호환성 날짜와 작업별 상한, 저장 상태와 중복 처리의 별도 책임을 함께 확인한다.",
+      "references": [
+        {
+          "title": "Cloudflare: Pending I/O keep-alive 변경 기록",
+          "url": "https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/",
+          "kind": "official"
+        },
+        {
+          "title": "Cloudflare: Durable Object 생명주기",
+          "url": "https://developers.cloudflare.com/durable-objects/concepts/durable-object-lifecycle/",
+          "kind": "official"
+        },
+        {
+          "title": "Cloudflare: Durable Object State와 waitUntil",
+          "url": "https://developers.cloudflare.com/durable-objects/api/state/",
+          "kind": "official"
+        },
+        {
+          "title": "Cloudflare: Alarms",
+          "url": "https://developers.cloudflare.com/durable-objects/api/alarms/",
+          "kind": "official"
+        },
+        {
+          "title": "Cloudflare: Durable Objects Pricing",
+          "url": "https://developers.cloudflare.com/durable-objects/platform/pricing/",
+          "kind": "official"
+        },
+        {
+          "title": "AWS Builders’ Library: Making retries safe with idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "kind": "independent"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "응답 뒤에 남는 작업부터 찾아본다"
+        },
+        {
+          "t": "p",
+          "text": "Durable Objects는 상태를 가진 서버 객체다. 같은 작업을 한곳에서 조정할 때 쓰지만, 이름에 Durable이 있다고 실행 중인 함수와 메모리까지 영구 보존되는 것은 아니다. 완료 기록을 저장하는 일과 실행 인스턴스가 살아 있는 일은 구분해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "10월 1일 변경은 사용자의 연결이 끝난 뒤에도 남아 있는 일부 비동기 작업을 보호한다. 서비스 바인딩은 Worker끼리 호출하는 연결이고, RPC는 다른 객체의 메서드를 원격으로 부르는 방식이다. 이런 응답을 기다리는 동안 유휴 상태라는 이유로 객체가 사라지는 상황을 줄인다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "Durable Objects를 쓰는 작업에서 배포된 compatibility_date와 두 유지 플래그를 확인한다.",
+            "응답을 반환한 뒤 남는 작업이 서비스 바인딩·RPC·타이머·waitUntil 중 무엇인지 구분한다.",
+            "작업 식별자와 진행 상태를 영구 저장하고, 재시작 때 읽어 이어 갈 경로가 있는지 확인한다.",
+            "검증 환경에서 연결 종료와 재시작을 따로 시험하고, 중복 결과와 duration 사용량을 함께 비교한다."
+          ],
+          "reusable": true,
+          "reuse_label": "Durable Objects 연결 종료 이후 작업 점검"
+        },
+        {
+          "t": "p",
+          "text": "Durable Objects를 쓰지 않는 일반 Worker나 이미 끝난 작업에는 이 변경을 그대로 적용할 수 없다. 외부 서비스로 나가는 fetch, TCP 소켓과 외부 WebSocket은 이전부터 객체 유지에 관여했다. 모든 네트워크 호출이 이번에 처음 보호된 것은 아니다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "Durable Objects 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다. 공개 문서의 제목·날짜를 실제 캡처했으며 실행 성공을 증명하는 화면은 아니다."
+        },
+        {
+          "t": "h",
+          "text": "오래된 날짜는 자동으로 새 동작을 받지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "Workers는 호환성 날짜로 런타임의 일부 동작을 선택한다. 이번 기본값의 경계는 compatibility_date가 2026-10-01 이상인지다. 달력에서 10월이 됐다는 사실만으로 오래된 배포 설정이 바뀌지는 않는다."
+        },
+        {
+          "t": "table",
+          "caption": "Durable Objects 유휴 제거 보호의 적용 조건",
+          "headers": [
+            "배포 설정",
+            "이번 보호",
+            "확인할 선택"
+          ],
+          "rows": [
+            [
+              "2026-10-01 이상",
+              "기본 적용",
+              "명시적 제외 플래그 확인"
+            ],
+            [
+              "이전 날짜",
+              "자동 적용 아님",
+              "유지 플래그로 선택 적용"
+            ],
+            [
+              "제외 플래그 지정",
+              "이번 동작에서 제외",
+              "기존 동작을 의도했는지 확인"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "이전 날짜를 유지하면서 선택 적용 시는 durable_object_io_tasks_prevent_eviction을 쓴다. 제외할 때는 durable_object_io_tasks_do_not_prevent_eviction이다. 아래는 두 플래그를 함께 쓰지 않는 설정 예시이며, 독자의 프로젝트에서 배포해 확인한 결과는 아니다."
+        },
+        {
+          "t": "code",
+          "language": "jsonc",
+          "text": "// 기존 날짜를 유지하는 선택 적용 예시\n{\n  \"compatibility_date\": \"2026-09-01\",\n  \"compatibility_flags\": [\n    \"durable_object_io_tasks_prevent_eviction\"\n  ]\n}"
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다 — 서비스 바인딩·RPC 응답 대기가 대표적인 새 보호 대상이며, 완료되거나 각 작업의 보호 상한에 닿으면 이 조건은 끝난다."
+        },
+        {
+          "t": "p",
+          "text": "적용 여부는 달력 날짜가 아니라 배포 설정으로 판별한다. 날짜와 플래그를 고정해 두면 아래 실행 조건을 같은 기준에서 비교할 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "15분은 작업별 보호 창이다"
+        },
+        {
+          "t": "p",
+          "text": "공식 생명주기 문서에서 상한은 작업이 시작된 때부터 최대 15분이다. 작업이 먼저 끝나면 그때 보호도 끝난다. 동시에 시작한 두 작업이 각각 15분이라고 30분의 한 창으로 합쳐지는 것은 아니다."
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 A가 0분에 시작하고 B가 10분에 시작했다고 가정하자. A의 보호 상한은 15분, B는 25분이다. B가 실제로 대기 중이면 더 뒤까지 유지 조건이 남을 수 있다. 이것은 문서 규칙을 읽기 위한 가상 시간표이며 25분 실행을 측정한 결과가 아니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "A와 B가 동시에 시작하면 두 보호 상한은 합쳐지지 않는다.",
+            "B가 나중에 시작했어도 먼저 끝나면 그 시점에 B의 유지 조건은 끝난다.",
+            "15분은 작업별 유휴 제거 보호 상한이며 작업 완료 시간 보장이 아니다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "타이머와 this.ctx.waitUntil()에 전달한 Promise도 새 보호 대상이다. 그러나 아무 Promise나 변수에 보관한 것만으로 영구 작업 큐가 생기지는 않는다. State API 문서는 waitUntil이 요청이나 RPC의 완료 시점을 바꾸지는 않는다고 설명한다."
+        },
+        {
+          "t": "h",
+          "text": "끊긴 화면과 재시작한 서버를 따로 시험한다"
+        },
+        {
+          "t": "p",
+          "text": "연결 종료 시험은 살아 있는 인스턴스의 작업 지속을 보고, 재시작 시험은 저장된 진행 상태로 복구되는지를 본다. 둘을 따로 통과해야 화면을 닫아도 업무가 끝난다는 약속을 평가할 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "배포 전 비교할 두 가지 실패 장면",
+          "headers": [
+            "시험 장면",
+            "남길 기록",
+            "통과로 볼 조건"
+          ],
+          "rows": [
+            [
+              "클라이언트 연결 종료",
+              "작업 ID·시작·완료 시각",
+              "응답 뒤 시작한 대상 작업의 완료 기록"
+            ],
+            [
+              "객체 재시작 후 재요청",
+              "저장된 단계·외부 처리 ID",
+              "진행 상태 복구와 중복 결과 없음"
+            ],
+            [
+              "외부 응답 지연",
+              "대기 시간·오류·duration",
+              "제한된 종료 또는 복구 경로가 기록됨"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다 — 연결 종료는 작업 지속을, 재시작은 저장한 상태와 외부 결과의 복구를 검사한다. 이 그림은 제안한 검증 흐름이며 실제 서비스 측정 결과가 아니다."
+        },
+        {
+          "t": "p",
+          "text": "생명주기 문서는 코드 배포와 런타임 변경 등으로 객체가 종료될 수 있다고 설명한다. 종료 직전 저장을 보장하는 훅도 제공하지 않는다. 마지막 순간 한 번 저장하기보다 진행이 확정될 때마다 복구 가능한 상태를 남기는 설계가 필요하다."
+        },
+        {
+          "t": "p",
+          "text": "이번 보호는 유휴 제거를 늦추는 조건이며 배포·런타임 재시작을 막거나 업무의 한 번 처리를 보장하지 않는다."
+        },
+        {
+          "t": "h",
+          "text": "다시 깨우는 알람에도 중복 경계는 남는다"
+        },
+        {
+          "t": "p",
+          "text": "장시간 뒤 다시 실행할 일을 setTimeout에만 맡기면 메모리 생명주기에 의존한다. Durable Objects 알람은 저장소 API로 미래의 기상 시각을 예약한다. 객체당 한 알람을 둘 수 있으므로 여러 일정은 저장한 목록을 읽고 다음 시각을 다시 예약하는 방식으로 구성할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "알람 핸들러는 적어도 한 번 실행되는 계약이며 예외를 던지면 제한된 재시도를 받는다. 적어도 한 번은 정확히 한 번과 다르다. 오래 살아 있는 객체 안에서도 외부 처리는 성공했지만 완료 상태 저장 전 실패하는 구간이 생길 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "AWS Builders’ Library는 같은 요청 식별자로 중복 요청을 판별하고 의미가 같은 응답을 돌려주는 멱등성 설계를 설명한다. 이는 Cloudflare 실행 결과를 검증하는 자료가 아니라 별도 공급자가 설명한 중복 처리 근거다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "가상의 보고서 작업: 작업 ID와 마지막 확정 단계, 결과 위치를 함께 기록한다.",
+            "외부 쓰기 전에 같은 ID의 중복 처리와 결과 조회 계약을 확인한다.",
+            "완료 상태가 없더라도 외부에는 결과가 있을 수 있어 먼저 조회한 뒤 재시도를 결정한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "외부 처리와 우리 저장소 기록은 서로 다른 시스템의 작업이다. 내부 상태를 한 번 저장했다고 외부 부작용까지 원자적으로 묶이는 것은 아니다. 공급자의 중복 키 지원과 결과 조회 기간이 불명확하면 자동 재실행보다 확인 대기로 남기는 편이 안전하다."
+        },
+        {
+          "t": "h",
+          "text": "더 오래 대기하는 시간도 사용량에 남는다"
+        },
+        {
+          "t": "p",
+          "text": "가격 문서는 객체가 실행 중이거나 메모리에 남아 휴면 조건을 충족하지 못하면 duration을 계산한다고 설명한다. duration은 CPU를 바쁘게 쓴 시간만이 아니라 벽시계 시간 기준이다. 외부 응답을 기다리는 동안에도 유지 조건 때문에 사용량이 늘 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "보호가 생겼다는 이유로 주기적인 빈 호출이나 타이머를 추가해 객체를 계속 붙잡는 방식은 피하자. 불필요한 대기는 종료하고, 미래의 재개는 저장된 작업과 알람으로 분리할지 검토한다. 유지 시간을 길게 만드는 것과 유용한 업무를 더 완료하는 것은 다른 성과다."
+        },
+        {
+          "t": "p",
+          "text": "검증 전후에는 같은 입력 수와 같은 대기 조건에서 완료·실패·중복 작업 수, 대기 시간, duration 사용량을 나란히 남긴다. 이 글은 실제 계정의 비용 절감이나 완료율을 측정하지 않았다. 포함 사용량과 요금제에 따라 청구 효과도 달라진다."
+        }
+      ]
+    }
+  ],
+  "visual": {
+    "subject": "Durable Objects 백그라운드 작업의 연결 종료·유휴 제거·재시작 복구 경계",
+    "hook": "연결이 떨어진 보고서 작업 장치 옆에 진행 기록이 남아 있는 장면",
+    "motif": "분리된 연결 플러그, 보고서 작업 릴, 저장된 단계 표찰",
+    "weekday_profile": "change_impact",
+    "subject_terms": [
+      "Durable Objects",
+      "백그라운드 작업"
+    ],
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "label": "Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+        "scene_label": [
+          "이전: 제거 가능",
+          "이후: 대기 보호",
+          "연결 종료",
+          "서비스 응답 대기"
+        ],
+        "steps": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다",
+        "curiosity_hook": "Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+        "evidence_type": "diagram",
+        "teaching_role": "before_after_change",
+        "teaching_claim": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "이전: 제거 가능",
+          "이후: 대기 보호",
+          "연결 종료",
+          "서비스 응답 대기"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Create a 1200x630 Korean diagram of Durable Objects pending service-binding work before and after the October change. Two broad simple abstract scenes: left, client cable disconnected and report-processing object faded while its service request waits; right, disconnected cable but report object remains solid as its service request waits. Four large labels verbatim: 이전: 제거 가능, 이후: 대기 보호, 연결 종료, 서비스 응답 대기. Muted dark green and burgundy on white, strong contrast, 390px readable, generous spacing. No product UI, no logo, no fake performance numbers, no extra words.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "label": "Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+        "scene_label": [
+          "같은 작업 ID",
+          "연결 종료 시험",
+          "완료 기록",
+          "재시작 시험"
+        ],
+        "steps": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다",
+        "curiosity_hook": "Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+        "evidence_type": "diagram",
+        "teaching_role": "action_check",
+        "teaching_claim": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "같은 작업 ID",
+          "연결 종료 시험",
+          "완료 기록",
+          "재시작 시험",
+          "상태 복구",
+          "중복 확인"
+        ],
+        "generation_prompt": "Use case: scientific-educational. Create a 1200x630 Korean educational diagram about Durable Objects background task verification. One starting job identifier branches into two separate horizontal lanes. Top lane tests disconnection and points to a completion record. Bottom lane tests restart and points to restored saved state then duplicate-result check. Six exact large Korean labels only: 같은 작업 ID, 연결 종료 시험, 완료 기록, 재시작 시험, 상태 복구, 중복 확인. Keep lanes visibly distinct, substantial space, plum and olive lines, white background, large legible typography at 390px. No fake UI, screenshots, measured values, logos, extra words.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "capture",
+        "logic_type": "evidence",
+        "label": "Durable Objects 연결 종료 보호가 언제 발표됐나?",
+        "scene_label": [
+          "2026년 10월 1일",
+          "Durable Objects 변경 제목"
+        ],
+        "steps": "Durable Objects 공식 발표의 제목과 날짜를 실제 문서 화면으로 확인한다.",
+        "curiosity_hook": "Durable Objects 백그라운드 작업 보호는 어떤 공식 변경 기록에 남아 있을까?",
+        "evidence_type": "screenshot",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "Durable Objects 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다",
+        "capture_tool": "browser",
+        "capture_target": "Durable Objects 공식 변경 기록의 제목·발표 날짜 영역",
+        "captured_at": "2026-10-07T00:05:16.552609+00:00",
+        "source_url": "https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/",
+        "capture_note": "공개 문서 제목·날짜를 자르고 1200×630 흰 여백 안에 전체를 보존했다. 계정·토큰·IP·개인정보가 없다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "label": "Durable Objects 백그라운드 작업은 연결이 빠진 뒤에도 움직일까?",
+      "scene_label": [
+        "끊긴 연결 플러그",
+        "진행 중인 보고서 릴",
+        "저장된 단계 표찰"
+      ],
+      "steps": "Durable Objects의 클라이언트 연결이 빠져도 보고서 작업 릴이 돌아가는 장면으로 실행 유지와 기록 보존의 차이를 묻는다.",
+      "curiosity_hook": "Durable Objects 백그라운드 작업에서 플러그가 빠졌는데 작업 릴은 왜 움직일까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "disconnected-plug-active-report-reel",
+      "palette_family": "plum_silver_sage",
+      "render_family": "isometric_model",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "Durable Objects의 연결이 빠진 보고서 작업 릴",
+      "texture_cue": "무광 점토 장치와 거친 종이 출력물",
+      "authenticity_cue": "말린 종이 끝과 작은 마모가 있는 장치",
+      "weekday_profile": "change_impact",
+      "weekday_role": "changed_condition_scene",
+      "visual_claim": "Durable Objects는 연결 종료 뒤 대기 작업의 유휴 제거를 늦출 수 있다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "연결 종료",
+        "작업 진행"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Create a 1200x630 landscape editorial isometric clay model for Durable Objects background work. Single compact report-processing reel machine fills 60 percent: a disconnected cable plug lies clearly next to its empty socket, while a paper report reel still rotates with one curled sheet emerging. A small physical checkpoint tag lies beside the reel. Asymmetric close object scene, matte plum machinery, silver cable and sage paper, neutral pale gray background. Quiet natural lighting, tactile imperfections. Text verbatim only: 연결 종료, 작업 진행. Large two short Korean labels on physical tags. This is a conceptual illustration, not a real product screenshot. No diagram arrows, panels, timeline, laptop, people, dashboard, Cloudflare logo, fake interface, extra words, title, watermark."
+    }
+  },
+  "images": {
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "label": "Durable Objects 백그라운드 작업은 연결이 빠진 뒤에도 움직일까?",
+      "scene_label": [
+        "끊긴 연결 플러그",
+        "진행 중인 보고서 릴",
+        "저장된 단계 표찰"
+      ],
+      "steps": "Durable Objects의 클라이언트 연결이 빠져도 보고서 작업 릴이 돌아가는 장면으로 실행 유지와 기록 보존의 차이를 묻는다.",
+      "curiosity_hook": "Durable Objects 백그라운드 작업에서 플러그가 빠졌는데 작업 릴은 왜 움직일까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "disconnected-plug-active-report-reel",
+      "palette_family": "plum_silver_sage",
+      "render_family": "isometric_model",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "Durable Objects의 연결이 빠진 보고서 작업 릴",
+      "texture_cue": "무광 점토 장치와 거친 종이 출력물",
+      "authenticity_cue": "말린 종이 끝과 작은 마모가 있는 장치",
+      "weekday_profile": "change_impact",
+      "weekday_role": "changed_condition_scene",
+      "visual_claim": "Durable Objects는 연결 종료 뒤 대기 작업의 유휴 제거를 늦출 수 있다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "연결 종료",
+        "작업 진행"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Create a 1200x630 landscape editorial isometric clay model for Durable Objects background work. Single compact report-processing reel machine fills 60 percent: a disconnected cable plug lies clearly next to its empty socket, while a paper report reel still rotates with one curled sheet emerging. A small physical checkpoint tag lies beside the reel. Asymmetric close object scene, matte plum machinery, silver cable and sage paper, neutral pale gray background. Quiet natural lighting, tactile imperfections. Text verbatim only: 연결 종료, 작업 진행. Large two short Korean labels on physical tags. This is a conceptual illustration, not a real product screenshot. No diagram arrows, panels, timeline, laptop, people, dashboard, Cloudflare logo, fake interface, extra words, title, watermark.",
+      "alt": "Durable Objects는 연결 종료 뒤 대기 작업의 유휴 제거를 늦출 수 있다 — Durable Objects 백그라운드 작업은 연결이 빠진 뒤에도 움직일까?",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-연결종료-작업릴.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-연결종료-작업릴.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 59464,
+      "quality": 82,
+      "sha256": "6477b86d636f0deed81f286da181f0ac62feaeb9d151a2889b165a915f7a80ae"
+    },
+    "visual_1": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "label": "Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+      "scene_label": [
+        "이전: 제거 가능",
+        "이후: 대기 보호",
+        "연결 종료",
+        "서비스 응답 대기"
+      ],
+      "steps": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다",
+      "curiosity_hook": "Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+      "evidence_type": "diagram",
+      "teaching_role": "before_after_change",
+      "teaching_claim": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "이전: 제거 가능",
+        "이후: 대기 보호",
+        "연결 종료",
+        "서비스 응답 대기"
+      ],
+      "generation_prompt": "Use case: scientific-educational. Create a 1200x630 Korean diagram of Durable Objects pending service-binding work before and after the October change. Two broad simple abstract scenes: left, client cable disconnected and report-processing object faded while its service request waits; right, disconnected cable but report object remains solid as its service request waits. Four large labels verbatim: 이전: 제거 가능, 이후: 대기 보호, 연결 종료, 서비스 응답 대기. Muted dark green and burgundy on white, strong contrast, 390px readable, generous spacing. No product UI, no logo, no fake performance numbers, no extra words.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다 — Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-대기보호-전후.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-대기보호-전후.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 27460,
+      "quality": 82,
+      "sha256": "503357080da92099ed4e09180b467aeaa6461d4a5ab94b90aa7d591dfb308419"
+    },
+    "visual_2": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "flow",
+      "label": "Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+      "scene_label": [
+        "같은 작업 ID",
+        "연결 종료 시험",
+        "완료 기록",
+        "재시작 시험"
+      ],
+      "steps": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다",
+      "curiosity_hook": "Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+      "evidence_type": "diagram",
+      "teaching_role": "action_check",
+      "teaching_claim": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "같은 작업 ID",
+        "연결 종료 시험",
+        "완료 기록",
+        "재시작 시험",
+        "상태 복구",
+        "중복 확인"
+      ],
+      "generation_prompt": "Use case: scientific-educational. Create a 1200x630 Korean educational diagram about Durable Objects background task verification. One starting job identifier branches into two separate horizontal lanes. Top lane tests disconnection and points to a completion record. Bottom lane tests restart and points to restored saved state then duplicate-result check. Six exact large Korean labels only: 같은 작업 ID, 연결 종료 시험, 완료 기록, 재시작 시험, 상태 복구, 중복 확인. Keep lanes visibly distinct, substantial space, plum and olive lines, white background, large legible typography at 390px. No fake UI, screenshots, measured values, logos, extra words.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다 — Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-연결종료-재시작-검증.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-연결종료-재시작-검증.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 21102,
+      "quality": 82,
+      "sha256": "81c7cad2f3f26758f11618307c697b61db7b737ef141dcebb4063c8621601726"
+    },
+    "visual_3": {
+      "content_role": "explanation",
+      "origin": "capture",
+      "logic_type": "evidence",
+      "label": "Durable Objects 연결 종료 보호가 언제 발표됐나?",
+      "scene_label": [
+        "2026년 10월 1일",
+        "Durable Objects 변경 제목"
+      ],
+      "steps": "Durable Objects 공식 발표의 제목과 날짜를 실제 문서 화면으로 확인한다.",
+      "curiosity_hook": "Durable Objects 백그라운드 작업 보호는 어떤 공식 변경 기록에 남아 있을까?",
+      "evidence_type": "screenshot",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "Durable Objects 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다",
+      "capture_tool": "browser",
+      "capture_target": "Durable Objects 공식 변경 기록의 제목·발표 날짜 영역",
+      "captured_at": "2026-10-07T00:05:16.552609+00:00",
+      "source_url": "https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/",
+      "capture_note": "공개 문서 제목·날짜를 자르고 1200×630 흰 여백 안에 전체를 보존했다. 계정·토큰·IP·개인정보가 없다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "Cloudflare 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다 — Durable Objects 연결 종료 보호가 언제 발표됐나?",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-공식변경-날짜.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-공식변경-날짜.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 21626,
+      "quality": 82,
+      "sha256": "608b2ed7c933eccd0cd5643da2fe02edb977bc2d1295edb3f9f97c4d8d8f0a8c",
+      "capture_sha256": "608b2ed7c933eccd0cd5643da2fe02edb977bc2d1295edb3f9f97c4d8d8f0a8c"
+    }
+  }
+}

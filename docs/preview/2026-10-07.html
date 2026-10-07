@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">IT 트렌드 해설</span>
+              <h1>Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건</h1>
+              <span class="meta"><span class="date">2026-10-07</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">보고서 생성을 눌러 두고 창을 닫았는데 완료 기록이 남지 않는다. Durable Objects에서는 10월 1일 변경으로 일부 대기 작업이 사용자의 연결 종료 뒤에도 객체를 유지한다. 다만 오래 살아 있는 것과 중단 후 다시 이어 가는 것은 다른 조건이다. 내 작업이 새 보호 대상인지, 재시작하면 어디서 이어지는지를 나눠 확인해야 한다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-10-07/DurableObjects-연결종료-작업릴.webp" alt="Durable Objects는 연결 종료 뒤 대기 작업의 유휴 제거를 늦출 수 있다 — Durable Objects 백그라운드 작업은 연결이 빠진 뒤에도 움직일까?" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">IT 트렌드 해설</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>연결 종료 뒤 새 보호 대상 작업은 유휴 제거를 늦추지만, 재시작 복구와 중복 처리는 저장 상태와 외부 API 계약으로 따로 확인해야 한다.</li><li>호환성 날짜와 플래그를 확인한 뒤 연결 종료·재시작을 따로 시험한다.</li><li>유휴 제거 보호는 영구 실행이나 정확히 한 번 처리를 보장하지 않으며 대기 시간도 사용량에 남는다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>유휴 제거</dt><dd>요청이 없는 서버 객체를 런타임이 메모리에서 내리는 동작이다.</dd></div><div><dt>호환성 날짜</dt><dd>Worker가 따를 런타임 동작의 기준 날짜다. 실제 배포 설정에서 선택한다.</dd></div><div><dt>멱등성</dt><dd>같은 요청을 다시 보내도 추가 결과가 생기지 않도록 하는 성질이다.</dd></div></dl></div>
+</section>
+
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">핵심 해설 · Cloudflare Changelog · 2026. 10. 1</p>
+    <h3>Durable Objects, 연결 종료 뒤 대기 작업의 유휴 제거 보호 확대</h3>
+    <p class="digest-blurb">Cloudflare는 일부 대기 작업이 연결된 클라이언트 없이도 Durable Objects의 유휴 제거를 늦추도록 변경했다. 호환성 날짜와 작업별 상한, 저장 상태와 중복 처리의 별도 책임을 함께 확인한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">응답 뒤에 남는 작업부터 찾아본다</h4><p>Durable Objects는 상태를 가진 서버 객체다. 같은 작업을 한곳에서 조정할 때 쓰지만, 이름에 Durable이 있다고 실행 중인 함수와 메모리까지 영구 보존되는 것은 아니다. 완료 기록을 저장하는 일과 실행 인스턴스가 살아 있는 일은 구분해야 한다.</p><p>10월 1일 변경은 사용자의 연결이 끝난 뒤에도 남아 있는 일부 비동기 작업을 보호한다. 서비스 바인딩은 Worker끼리 호출하는 연결이고, RPC는 다른 객체의 메서드를 원격으로 부르는 방식이다. 이런 응답을 기다리는 동안 유휴 상태라는 이유로 객체가 사라지는 상황을 줄인다.</p><ul class="digest-bullet-list"><li>Durable Objects를 쓰는 작업에서 배포된 compatibility_date와 두 유지 플래그를 확인한다.</li><li>응답을 반환한 뒤 남는 작업이 서비스 바인딩·RPC·타이머·waitUntil 중 무엇인지 구분한다.</li><li>작업 식별자와 진행 상태를 영구 저장하고, 재시작 때 읽어 이어 갈 경로가 있는지 확인한다.</li><li>검증 환경에서 연결 종료와 재시작을 따로 시험하고, 중복 결과와 duration 사용량을 함께 비교한다.</li></ul><p>Durable Objects를 쓰지 않는 일반 Worker나 이미 끝난 작업에는 이 변경을 그대로 적용할 수 없다. 외부 서비스로 나가는 fetch, TCP 소켓과 외부 WebSocket은 이전부터 객체 유지에 관여했다. 모든 네트워크 호출이 이번에 처음 보호된 것은 아니다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-07/DurableObjects-공식변경-날짜.webp" alt="Cloudflare 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다 — Durable Objects 연결 종료 보호가 언제 발표됐나?" width="1200" height="630" loading="lazy"><figcaption>Durable Objects 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다. 공개 문서의 제목·날짜를 실제 캡처했으며 실행 성공을 증명하는 화면은 아니다.</figcaption></figure><h4 class="digest-subheading">오래된 날짜는 자동으로 새 동작을 받지 않는다</h4><p>Workers는 호환성 날짜로 런타임의 일부 동작을 선택한다. 이번 기본값의 경계는 compatibility_date가 2026-10-01 이상인지다. 달력에서 10월이 됐다는 사실만으로 오래된 배포 설정이 바뀌지는 않는다.</p><div class="digest-table-wrap" role="region" aria-label="Durable Objects 유휴 제거 보호의 적용 조건" tabindex="0"><table class="digest-data-table"><caption>Durable Objects 유휴 제거 보호의 적용 조건</caption><thead><tr><th scope="col">배포 설정</th><th scope="col">이번 보호</th><th scope="col">확인할 선택</th></tr></thead><tbody><tr><td>2026-10-01 이상</td><td>기본 적용</td><td>명시적 제외 플래그 확인</td></tr><tr><td>이전 날짜</td><td>자동 적용 아님</td><td>유지 플래그로 선택 적용</td></tr><tr><td>제외 플래그 지정</td><td>이번 동작에서 제외</td><td>기존 동작을 의도했는지 확인</td></tr></tbody></table></div><p>이전 날짜를 유지하면서 선택 적용 시는 durable_object_io_tasks_prevent_eviction을 쓴다. 제외할 때는 durable_object_io_tasks_do_not_prevent_eviction이다. 아래는 두 플래그를 함께 쓰지 않는 설정 예시이며, 독자의 프로젝트에서 배포해 확인한 결과는 아니다.</p><pre class="digest-code-block language-jsonc"><code>// 기존 날짜를 유지하는 선택 적용 예시
+{
+  &quot;compatibility_date&quot;: &quot;2026-09-01&quot;,
+  &quot;compatibility_flags&quot;: [
+    &quot;durable_object_io_tasks_prevent_eviction&quot;
+  ]
+}</code></pre><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-07/DurableObjects-대기보호-전후.webp" alt="Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다 — Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?" width="1200" height="630" loading="lazy"><figcaption>Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다 — 서비스 바인딩·RPC 응답 대기가 대표적인 새 보호 대상이며, 완료되거나 각 작업의 보호 상한에 닿으면 이 조건은 끝난다.</figcaption></figure><p>적용 여부는 달력 날짜가 아니라 배포 설정으로 판별한다. 날짜와 플래그를 고정해 두면 아래 실행 조건을 같은 기준에서 비교할 수 있다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">15분은 작업별 보호 창이다</h4><p>공식 생명주기 문서에서 상한은 작업이 시작된 때부터 최대 15분이다. 작업이 먼저 끝나면 그때 보호도 끝난다. 동시에 시작한 두 작업이 각각 15분이라고 30분의 한 창으로 합쳐지는 것은 아니다.</p><p>예를 들어 A가 0분에 시작하고 B가 10분에 시작했다고 가정하자. A의 보호 상한은 15분, B는 25분이다. B가 실제로 대기 중이면 더 뒤까지 유지 조건이 남을 수 있다. 이것은 문서 규칙을 읽기 위한 가상 시간표이며 25분 실행을 측정한 결과가 아니다.</p><ul class="digest-bullet-list"><li>A와 B가 동시에 시작하면 두 보호 상한은 합쳐지지 않는다.</li><li>B가 나중에 시작했어도 먼저 끝나면 그 시점에 B의 유지 조건은 끝난다.</li><li>15분은 작업별 유휴 제거 보호 상한이며 작업 완료 시간 보장이 아니다.</li></ul><p>타이머와 this.ctx.waitUntil()에 전달한 Promise도 새 보호 대상이다. 그러나 아무 Promise나 변수에 보관한 것만으로 영구 작업 큐가 생기지는 않는다. State API 문서는 waitUntil이 요청이나 RPC의 완료 시점을 바꾸지는 않는다고 설명한다.</p><h4 class="digest-subheading">끊긴 화면과 재시작한 서버를 따로 시험한다</h4><p>연결 종료 시험은 살아 있는 인스턴스의 작업 지속을 보고, 재시작 시험은 저장된 진행 상태로 복구되는지를 본다. 둘을 따로 통과해야 화면을 닫아도 업무가 끝난다는 약속을 평가할 수 있다.</p><div class="digest-table-wrap" role="region" aria-label="배포 전 비교할 두 가지 실패 장면" tabindex="0"><table class="digest-data-table"><caption>배포 전 비교할 두 가지 실패 장면</caption><thead><tr><th scope="col">시험 장면</th><th scope="col">남길 기록</th><th scope="col">통과로 볼 조건</th></tr></thead><tbody><tr><td>클라이언트 연결 종료</td><td>작업 ID·시작·완료 시각</td><td>응답 뒤 시작한 대상 작업의 완료 기록</td></tr><tr><td>객체 재시작 후 재요청</td><td>저장된 단계·외부 처리 ID</td><td>진행 상태 복구와 중복 결과 없음</td></tr><tr><td>외부 응답 지연</td><td>대기 시간·오류·duration</td><td>제한된 종료 또는 복구 경로가 기록됨</td></tr></tbody></table></div><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-07/DurableObjects-연결종료-재시작-검증.webp" alt="Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다 — Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?" width="1200" height="630" loading="lazy"><figcaption>Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다 — 연결 종료는 작업 지속을, 재시작은 저장한 상태와 외부 결과의 복구를 검사한다. 이 그림은 제안한 검증 흐름이며 실제 서비스 측정 결과가 아니다.</figcaption></figure><p>생명주기 문서는 코드 배포와 런타임 변경 등으로 객체가 종료될 수 있다고 설명한다. 종료 직전 저장을 보장하는 훅도 제공하지 않는다. 마지막 순간 한 번 저장하기보다 진행이 확정될 때마다 복구 가능한 상태를 남기는 설계가 필요하다.</p><p>이번 보호는 유휴 제거를 늦추는 조건이며 배포·런타임 재시작을 막거나 업무의 한 번 처리를 보장하지 않는다.</p><h4 class="digest-subheading">다시 깨우는 알람에도 중복 경계는 남는다</h4><p>장시간 뒤 다시 실행할 일을 setTimeout에만 맡기면 메모리 생명주기에 의존한다. Durable Objects 알람은 저장소 API로 미래의 기상 시각을 예약한다. 객체당 한 알람을 둘 수 있으므로 여러 일정은 저장한 목록을 읽고 다음 시각을 다시 예약하는 방식으로 구성할 수 있다.</p><p>알람 핸들러는 적어도 한 번 실행되는 계약이며 예외를 던지면 제한된 재시도를 받는다. 적어도 한 번은 정확히 한 번과 다르다. 오래 살아 있는 객체 안에서도 외부 처리는 성공했지만 완료 상태 저장 전 실패하는 구간이 생길 수 있다.</p><p>AWS Builders’ Library는 같은 요청 식별자로 중복 요청을 판별하고 의미가 같은 응답을 돌려주는 멱등성 설계를 설명한다. 이는 Cloudflare 실행 결과를 검증하는 자료가 아니라 별도 공급자가 설명한 중복 처리 근거다.</p><ul class="digest-bullet-list"><li>가상의 보고서 작업: 작업 ID와 마지막 확정 단계, 결과 위치를 함께 기록한다.</li><li>외부 쓰기 전에 같은 ID의 중복 처리와 결과 조회 계약을 확인한다.</li><li>완료 상태가 없더라도 외부에는 결과가 있을 수 있어 먼저 조회한 뒤 재시도를 결정한다.</li></ul><p>외부 처리와 우리 저장소 기록은 서로 다른 시스템의 작업이다. 내부 상태를 한 번 저장했다고 외부 부작용까지 원자적으로 묶이는 것은 아니다. 공급자의 중복 키 지원과 결과 조회 기간이 불명확하면 자동 재실행보다 확인 대기로 남기는 편이 안전하다.</p><h4 class="digest-subheading">더 오래 대기하는 시간도 사용량에 남는다</h4><p>가격 문서는 객체가 실행 중이거나 메모리에 남아 휴면 조건을 충족하지 못하면 duration을 계산한다고 설명한다. duration은 CPU를 바쁘게 쓴 시간만이 아니라 벽시계 시간 기준이다. 외부 응답을 기다리는 동안에도 유지 조건 때문에 사용량이 늘 수 있다.</p><p>보호가 생겼다는 이유로 주기적인 빈 호출이나 타이머를 추가해 객체를 계속 붙잡는 방식은 피하자. 불필요한 대기는 종료하고, 미래의 재개는 저장된 작업과 알람으로 분리할지 검토한다. 유지 시간을 길게 만드는 것과 유용한 업무를 더 완료하는 것은 다른 성과다.</p><p>검증 전후에는 같은 입력 수와 같은 대기 조건에서 완료·실패·중복 작업 수, 대기 시간, duration 사용량을 나란히 남긴다. 이 글은 실제 계정의 비용 절감이나 완료율을 측정하지 않았다. 포함 사용량과 요금제에 따라 청구 효과도 달라진다.</p></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://developers.cloudflare.com/changelog/post/2026-10-01-pending-io-keep-alive/" target="_blank" rel="noopener">Cloudflare: Pending I/O keep-alive 변경 기록</a><span>공식</span></li><li><a href="https://developers.cloudflare.com/durable-objects/concepts/durable-object-lifecycle/" target="_blank" rel="noopener">Cloudflare: Durable Object 생명주기</a><span>공식</span></li><li><a href="https://developers.cloudflare.com/durable-objects/api/state/" target="_blank" rel="noopener">Cloudflare: Durable Object State와 waitUntil</a><span>공식</span></li><li><a href="https://developers.cloudflare.com/durable-objects/api/alarms/" target="_blank" rel="noopener">Cloudflare: Alarms</a><span>공식</span></li><li><a href="https://developers.cloudflare.com/durable-objects/platform/pricing/" target="_blank" rel="noopener">Cloudflare: Durable Objects Pricing</a><span>공식</span></li><li><a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/" target="_blank" rel="noopener">AWS Builders’ Library: Making retries safe with idempotent APIs</a><span>독립 자료</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/238"><b>SaaS 장애 복구 체크리스트: 로그인 정상 뒤 큐·중복 처리 확인법</b><span>화면의 정상 응답과 실제 업무 완료를 구분하고 작업 식별자로 중복 결과를 대조하는 기반으로 이어진다.</span></a></li><li><a href="https://won0322.tistory.com/235"><b>배포 전 체크리스트: 장애 회고를 재발 방지 규칙으로 바꾸는 방법</b><span>연결 종료·재시작 시험을 반복 가능한 배포 검증 항목으로 남기는 다음 단계다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">백그라운드 작업의 신뢰성은 인스턴스가 몇 분 살아 있었는지만으로 평가할 수 없다. 사용자의 연결과 서버 객체의 생명주기를 분리한 뒤, 남아 있는 작업과 저장된 진행 상태, 외부 처리 결과가 같은 식별자로 이어지는지 보자. 이번 변경은 그중 연결 종료 뒤의 유휴 제거 조건을 개선한다. 재시작과 중복 처리는 여전히 애플리케이션이 설계하고 검증해야 할 경계다. 배포 설정과 대기 작업 종류를 확인하고 연결 종료·재시작 시험에서 같은 작업 ID의 완료 기록과 중복 여부를 확인했다면 적용 검토가 끝난다.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>

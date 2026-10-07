@@ -1,0 +1,97 @@
+{
+  "title": "Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건",
+  "title_candidates": [
+    "Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건",
+    "Durable Objects, 연결 종료 뒤 대기 작업의 유휴 제거 보호 확대",
+    "Durable Objects 백그라운드 작업의 연결 종료·유휴 제거·재시작 복구 경계: 연결이 떨어진 보고서 작업 장치…"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-10-07",
+  "publish_date": "2026-10-07",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-07T09:00:00+09:00",
+  "tags": [
+    "Durable Objects 작업",
+    "Durable Objects 연결 종료",
+    "Cloudflare Workers",
+    "compatibility_date",
+    "waitUntil",
+    "작업 복구",
+    "멱등성"
+  ],
+  "meta_description": "보고서 생성을 눌러 두고 창을 닫았는데 완료 기록이 남지 않는다. Durable Objects에서는 10월 1일 변경으로 일부 대기 작업이 사용자의 연결 종료 뒤에도 객체를 유지한다. 다만 오래 살아… Cloudflare는 일부 대기 작업이 연결된 클라이언트 없이도 Durable Ob…",
+  "key_summary": [
+    "1. Durable Objects, 연결 종료 뒤 대기 작업의 유휴 제거 보호 확대",
+    "직접 얻는 결과: 호환성 날짜와 보호 대상 작업을 대조하고, 연결 종료와 재시작을 따로 시험해 유지·복구·중복 처리의 책임을 구분할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Durable Objects 백그라운드 작업: 연결 종료 뒤 바뀐 유지 조건"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 11,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-07.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-07.html",
+  "before_ad_html": "docs/tistory/2026-10-07-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-07-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-07-adfit.html",
+  "source_sha256": "d43307268bac44a32bf438e16b96a023d9182a6d1a7761eaec7462e96984df58",
+  "html_sha256": "3309222dafdaf4f2150158884473dae373f257dd66fca11c35dfc44f923d15ac",
+  "adfit_sha256": "3eaad1665c47272b2ea111e12b682a0e40266ad47e9a642f8e6149e4744b64ba",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-연결종료-작업릴.webp",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-연결종료-작업릴.webp",
+      "original_url": "",
+      "alt": "Durable Objects는 연결 종료 뒤 대기 작업의 유휴 제거를 늦출 수 있다 — Durable Objects 백그라운드 작업은 연결이 빠진 뒤에도 움직일까?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-대기보호-전후.webp",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-대기보호-전후.webp",
+      "original_url": "",
+      "alt": "Durable Objects는 연결이 끊긴 뒤에도 새 보호 대상 작업이 대기 중이면 유휴 제거를 늦춘다 — Durable Objects 서비스 바인딩 대기는 전후에 어떻게 달라졌나?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-연결종료-재시작-검증.webp",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-연결종료-재시작-검증.webp",
+      "original_url": "",
+      "alt": "Durable Objects의 연결 종료 시험과 재시작 복구 시험은 서로 다른 결과를 확인해야 한다 — Durable Objects 연결 종료와 재시작은 어떻게 따로 검증할까?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-07/DurableObjects-공식변경-날짜.webp",
+      "path": "docs/tistory/assets/2026-10-07/DurableObjects-공식변경-날짜.webp",
+      "original_url": "",
+      "alt": "Cloudflare 공식 변경 기록은 2026년 10월 1일에 연결된 클라이언트 없이 작업을 계속하는 조건을 발표했다 — Durable Objects 연결 종료 보호가 언제 발표됐나?",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
