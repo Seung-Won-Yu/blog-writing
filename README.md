@@ -13,7 +13,8 @@ Git·Python 명령은 저장소 루트에서 `sh scripts/blog-env ...`로 실행
 sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-id 2026-09-17
 ```
 
-인앱 브라우저에서 `http://127.0.0.1:8765/preview/2026-09-17.html`을 확인한 뒤 서버를 종료합니다.
+서버가 출력한 `Preview ready:` 주소를 인앱 브라우저에서 확인한 뒤 서버를 종료합니다.
+빈 로컬 포트를 자동으로 선택하므로 다른 프로젝트 서버의 포트를 비울 필요가 없습니다.
 저장소 전체나 비공개 원고는 제공하지 않으며, 이전 보안 거절을 해제하는 명령이 아닙니다.
 자세한 승인·검수·초안 보존 구분은 [화면 검수 계약](agent/BROWSER_QA.md)을 따릅니다.
 

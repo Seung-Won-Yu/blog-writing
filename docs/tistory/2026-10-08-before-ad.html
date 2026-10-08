@@ -1,0 +1,22 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">브라우저와 문서 창을 함께 쓰다가 컴퓨터가 버벅이면 RAM부터 늘리고 싶어진다. RAM은 지금 처리할 자료를 펼쳐 두는 공간이라, 그 공간이 부족할 때 늘리면 도움이 된다. 하지만 계산이나 파일 읽기가 느린 상황까지 용량 하나로 해결되지는 않는다. 사용률이 높다는 이유만으로 돈을 쓰면 원인은 그대로 남을 수 있다. 그렇다면 지금 느린 이유가 정말 RAM 부족인지 어떻게 구분할까?</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-넓어진작업공간.webp" alt="RAM 공간이 부족할 때 늘리면 도움이 되지만 다른 느림까지 모두 해결하지는 않는다 — 넘친 작업함과 넓어진 RAM 공간 옆에 그대로 있는 처리 장치" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">궁금한 IT 원리</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>RAM이 부족해 자료를 옮기느라 기다릴 때만 증설이 도움이 될 수 있다.</li><li>느린 순간의 메모리 압력·CPU·디스크를 함께 보고, 불필요한 앱을 닫기 전후를 비교한다.</li><li>RAM 사용률이나 앱 종료 뒤의 변화 하나만으로 원인과 필요한 용량을 확정할 수 없다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>RAM</dt><dd>실행 중인 프로그램과 자료를 담는 작업 공간. 일반적인 PC에서는 전원이 꺼지면 담긴 내용이 유지되지 않는다.</dd></div><div><dt>메모리 압력</dt><dd>macOS가 현재 메모리로 작업을 얼마나 효율적으로 처리하는지 보여 주는 상태.</dd></div><div><dt>스왑</dt><dd>운영체제가 메모리 내용을 저장장치에 옮겨 보관하는 데 사용하는 공간. RAM과 같은 속도의 공간은 아니다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">원리를 쉽게 풀어보면</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-blurb">RAM은 작업 공간이 모자랄 때 늘리는 것이 도움이 될 수 있다. 하지만 느림의 원인을 메모리 사용률 하나로 단정하지 않고 다른 자원과 함께 확인한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">공간이 부족할 때 늘리면 도움이 된다</h4><p>RAM을 늘렸을 때 가장 설명하기 쉬운 이득은 동시에 펼쳐 둘 수 있는 자료가 많아진다는 것이다. 여러 앱이 쓸 자료를 가까운 작업 공간에 유지할 수 있다면, 필요한 내용을 저장장치에서 가져오는 일을 줄일 여지가 생긴다.</p><p>이것을 “RAM 두 배면 모든 작업이 두 배 빨라진다”로 바꾸면 틀린 설명이 된다. 용량은 자료를 담을 수 있는 크기다. 자료를 계산하는 능력이나 저장장치에서 읽는 속도와는 구분해야 한다. Open University도 실행 중인 명령·자료를 담는 주기억장치와 파일을 보관하는 보조기억장치를 나누어 설명한다.</p><p>다음 두 장면은 원리를 설명하기 위한 가상 예시다. 실제 기기를 측정한 결과나 성능 비교 수치가 아니다.</p><ul class="digest-bullet-list"><li>문서·회의·여러 웹페이지를 함께 열었을 때 창을 오갈 때마다 기다린다. 작업 자료를 담을 공간이 부족하다면 RAM 증설이 이 기다림을 줄일 수 있다.</li><li>앱 하나만 실행해도 계산이 오래 걸린다. 현재 자료가 이미 메모리에 들어간 상태라면, 빈 공간을 더 마련하는 것만으로 계산 작업이 반드시 빨라지는 것은 아니다.</li></ul><p>같은 “느리다”라도 어디에서 기다리는지가 다르다. Microsoft는 성능 문제를 살필 때 메모리뿐 아니라 계산 장치와 디스크 사용을 함께 보도록 안내한다. 아래 확인은 구매 결론을 내리는 시험이 아니라, 조사할 원인을 좁히는 첫 관찰이다.</p><h4 class="digest-subheading">평소 작업에서 1분만 먼저 확인하기</h4><ul class="digest-bullet-list"><li>작업 내용을 저장한 뒤, 평소 느려지는 작업을 그대로 실행한다. 일부러 탭을 수백 개 열어 부하를 만들 필요는 없다.</li><li>Windows에서는 <code>Ctrl + Shift + Esc</code>로 작업 관리자를 열고 성능 탭의 메모리·CPU·디스크를 본다. Mac에서는 활성 상태 보기의 메모리 탭에서 메모리 압력을 본다.</li><li>멈칫한 순간에 무엇이 바뀌는지 적는다. RAM 사용률 한 숫자보다, 같은 작업을 할 때 반복되는 지연과 자원 상태를 함께 기록한다.</li><li>저장한 뒤 사용하지 않는 앱만 정상적으로 닫고 같은 작업을 다시 해 본다. 이름을 모르는 시스템 프로세스를 강제로 종료하지 않는다.</li></ul><p>Mac의 녹색 메모리 압력은 메모리를 효율적으로 사용하는 상태를 뜻한다. 노란색은 추가 RAM이 필요해질 수 있다는 신호이고, 빨간색은 Apple 문서에서 RAM이 더 필요한 상태로 설명한다. 다만 한순간의 색만으로 특정 부품을 사야 한다고 판단하지 말고, 평소 작업에서 반복되는지 확인한다.</p><p>앱을 닫은 뒤 나아졌다면 동시에 실행하던 작업의 부담이 줄었다는 단서는 얻는다. 그러나 그 앱은 메모리 외에 계산·디스크 작업도 하고 있었을 수 있다. 이 전후 비교만으로 RAM이 유일한 원인이라고 확정할 수는 없다. 이 판단 경계는 공식 문서의 여러 자원 관찰 원칙을 연결한 이 글의 해석이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-공간부족-다른병목.webp" alt="RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다 — 한쪽은 RAM에서 자료가 넘치고 다른 쪽은 CPU가 처리 중인 설명도" width="1200" height="630" loading="lazy"><figcaption>RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다 — 설명용 그림이며 실제 측정 결과가 아니다.</figcaption></figure><p>운영체제는 각 프로그램이 필요로 하는 메모리를 관리한다. 가까운 공간에 모든 내용을 계속 둘 수 없으면, 일부 내용을 저장장치로 옮겨 두었다가 필요할 때 다시 가져올 수 있다. Microsoft Edge 개발팀은 이런 왕복이 계속되면 브라우저와 다른 앱의 성능에 영향을 줄 수 있다고 설명한다.</p><p>RAM이 부족한 상황에서 용량을 늘리는 이득은 이 왕복을 줄이는 데서 나온다. 탭을 바꿀 때 필요한 자료를 가까운 곳에 유지할 여지가 커지는 것이다. 반대로 이미 가까운 곳에 필요한 자료가 있는 작업이라면, 공간 증가만으로 줄일 왕복이 많지 않을 수 있다.</p></div>
+  </div>
+</section>
+</article>

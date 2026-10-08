@@ -1,9 +1,12 @@
 import json
+import io
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+from contextlib import redirect_stdout
 
-from blog_pipeline.publishing.preview_server import allowed_files, read_allowed
+from blog_pipeline.publishing.preview_server import allowed_files, main, read_allowed
 
 
 class PreviewServerTests(unittest.TestCase):
@@ -48,3 +51,18 @@ class PreviewServerTests(unittest.TestCase):
         source.write_text(json.dumps({"images": {"cover": {"path": "docs/preview/tistory-style.css"}}}))
         with self.assertRaises(ValueError):
             allowed_files(self.root, [self.day])
+
+    def test_server_uses_unused_loopback_port_and_prints_actual_url(self):
+        output = io.StringIO()
+        with patch("blog_pipeline.publishing.preview_server.ROOT", self.root), \
+             patch("blog_pipeline.publishing.preview_server.ThreadingHTTPServer") as server_type, \
+             patch("sys.argv", ["preview_server", "--draft-id", self.day]), \
+             redirect_stdout(output):
+            server = server_type.return_value
+            server.server_address = ("127.0.0.1", 54321)
+            server.serve_forever.side_effect = KeyboardInterrupt
+            main()
+
+        self.assertEqual(server_type.call_args.args[0], ("127.0.0.1", 0))
+        self.assertIn("http://127.0.0.1:54321/preview/2026-09-17.html", output.getvalue())
+        server.server_close.assert_called_once()

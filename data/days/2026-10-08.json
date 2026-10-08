@@ -1,0 +1,611 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-10-08",
+  "publish_date": "2026-10-08",
+  "date_label": "2026. 10. 8",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "category": "궁금한 IT 원리",
+  "weekday": "목",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-08T09:00:00+09:00",
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.1-sol",
+    "revision": 8,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v1"
+  },
+  "primary_query": "RAM이 크면 컴퓨터가 빨라질까",
+  "tags": [
+    "RAM 증설",
+    "메모리 부족",
+    "컴퓨터 느려짐",
+    "메모리 압력",
+    "작업 관리자",
+    "가상 메모리",
+    "스왑"
+  ],
+  "editorial": {
+    "headline": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+    "opening": "브라우저와 문서 창을 함께 쓰다가 컴퓨터가 버벅이면 RAM부터 늘리고 싶어진다. RAM은 지금 처리할 자료를 펼쳐 두는 공간이라, 그 공간이 부족할 때 늘리면 도움이 된다. 하지만 계산이나 파일 읽기가 느린 상황까지 용량 하나로 해결되지는 않는다. 사용률이 높다는 이유만으로 돈을 쓰면 원인은 그대로 남을 수 있다. 그렇다면 지금 느린 이유가 정말 RAM 부족인지 어떻게 구분할까?",
+    "closing": "RAM을 늘릴지 결정하기 전에, 느린 순간에 실제로 어떤 자원이 바쁜지부터 살피자. 용량은 작업 공간을 넓혀 주지만 계산·파일 읽기까지 모두 대신하지는 않는다. 반복되는 지연과 자원 상태를 봐야 구매 판단이 선다.",
+    "action": "평소 느린 작업에서 메모리·CPU·디스크 상태를 함께 살피고, 필요 없는 앱을 닫기 전후를 비교한 뒤 증설 여부를 판단한다.",
+    "audience_problem": "컴퓨터가 느려져 RAM 증설부터 고민하지만 실제 원인을 구별하기 어려운 일반 PC·Mac 사용자",
+    "reader_takeaway": "RAM이 부족해 자료를 저장장치와 자주 주고받을 때는 증설이 도움이 될 수 있다. 하지만 계산이나 파일 읽기가 느린 작업은 RAM 용량만 늘려도 빨라진다고 보장할 수 없다.",
+    "why_now": "RAM 사용률 숫자만 보고 부품 구매를 결정하기 쉬운 오래가는 질문이다.",
+    "topic_key": "ram-upgrade-memory-pressure-cpu-disk-bottleneck-myth",
+    "reader_question": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까? 무엇부터 확인할까?",
+    "entities": [
+      "RAM",
+      "메모리 압력",
+      "CPU",
+      "스왑",
+      "페이지 파일"
+    ],
+    "coverage": [
+      "question",
+      "mechanism",
+      "example",
+      "misconception",
+      "evidence",
+      "takeaway"
+    ],
+    "article_shape": "decision_guide",
+    "weekly_lane": "curiosity_myth_history",
+    "reader_hook": {
+      "scene": "컴퓨터가 버벅일 때 RAM부터 늘리고 싶어진다.",
+      "stakes": "원인이 계산이나 파일 읽기라면 용량만 늘려도 기다림이 줄지 않을 수 있다.",
+      "payoff": "평소 작업에서 메모리 부족과 다른 느림을 구분해 불필요한 증설 결정을 줄인다.",
+      "open_question": "지금 느린 이유가 정말 RAM 부족인지 어떻게 구분할까?"
+    },
+    "reader_path": {
+      "reader_level": "general",
+      "entry_heading": "공간이 부족할 때 늘리면 도움이 된다",
+      "immediate_answer": "RAM이 부족해 자료를 옮기느라 기다릴 때만 증설이 도움이 될 수 있다.",
+      "action_steps": [
+        "작업 내용을 저장한 뒤, 평소 느려지는 작업을 그대로 실행한다. 일부러 탭을 수백 개 열어 부하를 만들 필요는 없다.",
+        "Windows에서는 `Ctrl + Shift + Esc`로 작업 관리자를 열고 성능 탭의 메모리·CPU·디스크를 본다. Mac에서는 활성 상태 보기의 메모리 탭에서 메모리 압력을 본다.",
+        "멈칫한 순간에 무엇이 바뀌는지 적는다. RAM 사용률 한 숫자보다, 같은 작업을 할 때 반복되는 지연과 자원 상태를 함께 기록한다."
+      ],
+      "completion_check": "RAM 사용률만 보고 증설을 결정하지 않고, 느린 순간에 함께 변하는 자원과 확인이 더 필요한 원인을 구분해 보자.",
+      "advanced_heading": "더 궁금하다면: 가상 메모리는 RAM의 복제품이 아니다"
+    },
+    "revisit": {
+      "quick_answer": "RAM이 부족해 자료를 저장장치와 자주 주고받을 때는 증설이 도움이 될 수 있다. 하지만 계산이나 파일 읽기가 느린 작업은 RAM 용량만 늘려도 빨라진다고 보장할 수 없다.",
+      "reuse_case": "PC·Mac이 느릴 때 RAM 증설과 다른 원인 조사를 구분할 때",
+      "failure_case": "앱을 닫아 나아져도 RAM 외의 계산·디스크 부담이 함께 줄었을 수 있다.",
+      "artifact_type": "decision_matrix",
+      "update_triggers": [
+        "Apple 메모리 압력 안내 변경",
+        "Microsoft Windows 성능 관찰 안내 변경",
+        "페이지 파일 동작 안내 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "RAM이 크면",
+      "reader_need": "컴퓨터가 느릴 때 RAM을 늘리면 실제로 빨라질지 구분하고 싶다.",
+      "answer_format": "작업 공간 비유와 메모리·CPU·디스크 관찰 절차, 오해 경계 표"
+    },
+    "original_value": {
+      "durable_question": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "source_gap": "RAM 기초, 메모리 압력, Windows 자원 확인 자료가 분리돼 있어 사용률 하나로 증설을 판단하기 쉽다.",
+      "contribution": "기다리는 원인 → 먼저 볼 단서 → 아직 내릴 수 없는 결론의 세 칸으로 증설 판단표를 재구성한다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "평소 작업의 지연을 관찰해 RAM 부족과 다른 병목을 분리하고 불필요한 구매를 피한다.",
+      "limits": "이 전후 비교만으로 RAM이 유일한 원인이라고 확정할 수는 없다."
+    },
+    "value_review": {
+      "primary_reader": "버벅임을 보고 RAM 증설부터 생각하는 일반 PC·Mac 사용자",
+      "reader_question": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "source_gap": "RAM 기초·성능 안내·메모리 압력 문서가 흩어져 있어 사용률 숫자로 부품 구매를 판단하기 쉽다.",
+      "selection_reason": "공식 운영체제 안내와 독립 교육 자료를 연결해 직접 확인할 수 있고, 최근 글과 질문이 겹치지 않는다.",
+      "contributions": [
+        {
+          "basis": "documented",
+          "excerpt": "이것을 “RAM 두 배면 모든 작업이 두 배 빨라진다”로 바꾸면 틀린 설명이 된다.",
+          "limit_excerpt": "이 전후 비교만으로 RAM이 유일한 원인이라고 확정할 수는 없다.",
+          "source_urls": [
+            "https://www.open.edu/openlearn/mod/oucontent/view.php?id=109019&section=3",
+            "https://support.apple.com/guide/activity-monitor/check-if-your-mac-needs-more-ram-actmntr34865/mac",
+            "https://support.microsoft.com/en-us/windows/experience/performance-optimization/tips-to-improve-pc-performance-in-windows"
+          ]
+        }
+      ]
+    },
+    "selection_evaluation": {
+      "policy": "curiosity_myth_history-v1",
+      "criteria": {
+        "evergreen_question": 20,
+        "verifiable_sources": 20,
+        "simple_explanation": 9,
+        "cluster_depth": 9,
+        "belief_fact_boundary": 15,
+        "historical_evidence": 14,
+        "direct_check": 9
+      },
+      "total": 96,
+      "threshold": 75,
+      "hard_gates": {
+        "role_specific_nonzero": true,
+        "evidence_ready": true,
+        "duplicate_free": true
+      },
+      "decision": "selected",
+      "rejected_reasons": []
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "RAM이 부족해 자료를 옮기느라 기다릴 때만 증설이 도움이 될 수 있다.",
+      "느린 순간의 메모리 압력·CPU·디스크를 함께 보고, 불필요한 앱을 닫기 전후를 비교한다.",
+      "RAM 사용률이나 앱 종료 뒤의 변화 하나만으로 원인과 필요한 용량을 확정할 수 없다."
+    ],
+    "glossary": [
+      {
+        "term": "RAM",
+        "meaning": "실행 중인 프로그램과 자료를 담는 작업 공간. 일반적인 PC에서는 전원이 꺼지면 담긴 내용이 유지되지 않는다."
+      },
+      {
+        "term": "메모리 압력",
+        "meaning": "macOS가 현재 메모리로 작업을 얼마나 효율적으로 처리하는지 보여 주는 상태."
+      },
+      {
+        "term": "스왑",
+        "meaning": "운영체제가 메모리 내용을 저장장치에 옮겨 보관하는 데 사용하는 공간. RAM과 같은 속도의 공간은 아니다."
+      }
+    ]
+  },
+  "related_posts": [
+    {
+      "title": "1TB 용량은 왜 931GB로 보일까? 사라진 공간의 오해",
+      "url": "https://won0322.tistory.com/241",
+      "role": "foundation",
+      "reason": "RAM과 저장장치는 다른 역할이므로 저장장치 용량 표시 원리를 따로 이해하는 기초 글이다."
+    },
+    {
+      "title": "브라우저 캐시 삭제는 왜 깨진 화면을 고칠까?",
+      "url": "https://won0322.tistory.com/219",
+      "role": "next_step",
+      "reason": "메모리 부족과 달리 오래된 웹 자원 때문에 화면이 깨질 때의 다음 질문이다."
+    }
+  ],
+  "news": [
+    {
+      "title_kr": "RAM 증설이 통하는 조건과 다른 느림의 경계",
+      "source": "Apple·Microsoft·Open University",
+      "url": "https://support.apple.com/guide/activity-monitor/check-if-your-mac-needs-more-ram-actmntr34865/mac",
+      "published_at": "2020-11-11T00:00:00+00:00",
+      "blurb_kr": "RAM은 작업 공간이 모자랄 때 늘리는 것이 도움이 될 수 있다. 하지만 느림의 원인을 메모리 사용률 하나로 단정하지 않고 다른 자원과 함께 확인한다.",
+      "references": [
+        {
+          "kind": "independent",
+          "title": "Open University — An introduction to computers and computer systems, Memory",
+          "url": "https://www.open.edu/openlearn/mod/oucontent/view.php?id=109019&section=3"
+        },
+        {
+          "kind": "official",
+          "title": "Apple — Check if your Mac needs more RAM",
+          "url": "https://support.apple.com/guide/activity-monitor/check-if-your-mac-needs-more-ram-actmntr34865/mac"
+        },
+        {
+          "kind": "official",
+          "title": "Apple — View memory usage in Activity Monitor",
+          "url": "https://support.apple.com/guide/activity-monitor/view-memory-usage-actmntr1004/mac"
+        },
+        {
+          "kind": "official",
+          "title": "Microsoft — Tips to improve PC performance in Windows",
+          "url": "https://support.microsoft.com/en-us/windows/experience/performance-optimization/tips-to-improve-pc-performance-in-windows"
+        },
+        {
+          "kind": "official",
+          "title": "Microsoft Edge Team — How Microsoft Edge and other applications manage memory",
+          "url": "https://blogs.windows.com/msedgedev/2020/11/11/how-microsoft-edge-and-other-applications-manage-memory/"
+        },
+        {
+          "kind": "official",
+          "title": "Microsoft Learn — How to determine the appropriate page file size",
+          "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/how-to-determine-the-appropriate-page-file-size-for-64-bit-versions-of-windows"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "공간이 부족할 때 늘리면 도움이 된다"
+        },
+        {
+          "t": "p",
+          "text": "RAM을 늘렸을 때 가장 설명하기 쉬운 이득은 동시에 펼쳐 둘 수 있는 자료가 많아진다는 것이다. 여러 앱이 쓸 자료를 가까운 작업 공간에 유지할 수 있다면, 필요한 내용을 저장장치에서 가져오는 일을 줄일 여지가 생긴다."
+        },
+        {
+          "t": "p",
+          "text": "이것을 “RAM 두 배면 모든 작업이 두 배 빨라진다”로 바꾸면 틀린 설명이 된다. 용량은 자료를 담을 수 있는 크기다. 자료를 계산하는 능력이나 저장장치에서 읽는 속도와는 구분해야 한다. Open University도 실행 중인 명령·자료를 담는 주기억장치와 파일을 보관하는 보조기억장치를 나누어 설명한다."
+        },
+        {
+          "t": "p",
+          "text": "다음 두 장면은 원리를 설명하기 위한 가상 예시다. 실제 기기를 측정한 결과나 성능 비교 수치가 아니다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "문서·회의·여러 웹페이지를 함께 열었을 때 창을 오갈 때마다 기다린다. 작업 자료를 담을 공간이 부족하다면 RAM 증설이 이 기다림을 줄일 수 있다.",
+            "앱 하나만 실행해도 계산이 오래 걸린다. 현재 자료가 이미 메모리에 들어간 상태라면, 빈 공간을 더 마련하는 것만으로 계산 작업이 반드시 빨라지는 것은 아니다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "같은 “느리다”라도 어디에서 기다리는지가 다르다. Microsoft는 성능 문제를 살필 때 메모리뿐 아니라 계산 장치와 디스크 사용을 함께 보도록 안내한다. 아래 확인은 구매 결론을 내리는 시험이 아니라, 조사할 원인을 좁히는 첫 관찰이다."
+        },
+      {
+        "t": "h",
+        "text": "평소 작업에서 1분만 먼저 확인하기"
+      },
+        {
+          "t": "ul",
+          "items": [
+            "작업 내용을 저장한 뒤, 평소 느려지는 작업을 그대로 실행한다. 일부러 탭을 수백 개 열어 부하를 만들 필요는 없다.",
+            "Windows에서는 `Ctrl + Shift + Esc`로 작업 관리자를 열고 성능 탭의 메모리·CPU·디스크를 본다. Mac에서는 활성 상태 보기의 메모리 탭에서 메모리 압력을 본다.",
+            "멈칫한 순간에 무엇이 바뀌는지 적는다. RAM 사용률 한 숫자보다, 같은 작업을 할 때 반복되는 지연과 자원 상태를 함께 기록한다.",
+            "저장한 뒤 사용하지 않는 앱만 정상적으로 닫고 같은 작업을 다시 해 본다. 이름을 모르는 시스템 프로세스를 강제로 종료하지 않는다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "Mac의 녹색 메모리 압력은 메모리를 효율적으로 사용하는 상태를 뜻한다. 노란색은 추가 RAM이 필요해질 수 있다는 신호이고, 빨간색은 Apple 문서에서 RAM이 더 필요한 상태로 설명한다. 다만 한순간의 색만으로 특정 부품을 사야 한다고 판단하지 말고, 평소 작업에서 반복되는지 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "앱을 닫은 뒤 나아졌다면 동시에 실행하던 작업의 부담이 줄었다는 단서는 얻는다. 그러나 그 앱은 메모리 외에 계산·디스크 작업도 하고 있었을 수 있다. 이 전후 비교만으로 RAM이 유일한 원인이라고 확정할 수는 없다. 이 판단 경계는 공식 문서의 여러 자원 관찰 원칙을 연결한 이 글의 해석이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다 — 설명용 그림이며 실제 측정 결과가 아니다."
+        },
+      {
+        "t": "p",
+        "text": "운영체제는 각 프로그램이 필요로 하는 메모리를 관리한다. 가까운 공간에 모든 내용을 계속 둘 수 없으면, 일부 내용을 저장장치로 옮겨 두었다가 필요할 때 다시 가져올 수 있다. Microsoft Edge 개발팀은 이런 왕복이 계속되면 브라우저와 다른 앱의 성능에 영향을 줄 수 있다고 설명한다."
+        },
+        {
+          "t": "p",
+          "text": "RAM이 부족한 상황에서 용량을 늘리는 이득은 이 왕복을 줄이는 데서 나온다. 탭을 바꿀 때 필요한 자료를 가까운 곳에 유지할 여지가 커지는 것이다. 반대로 이미 가까운 곳에 필요한 자료가 있는 작업이라면, 공간 증가만으로 줄일 왕복이 많지 않을 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "책상 비유에도 한계가 있다"
+        },
+        {
+          "t": "p",
+          "text": "책상 비유에도 한계는 있다. 운영체제가 자료를 배치하는 방식은 책을 통째로 옮기는 것보다 복잡하다. macOS는 사용하지 않는 앱의 메모리를 압축하기도 하고, 남는 메모리에 파일을 임시로 보관하기도 한다. 따라서 “사용 중”이라는 표시에는 열린 창 수만으로 설명되지 않는 내용이 들어간다."
+        },
+        {
+          "t": "p",
+          "text": "이 글의 구분 기준은 기다리는 원인 → 관찰할 단서 → 아직 내릴 수 없는 결론이다. 증설의 효과를 미리 약속하지 않고, 다음 확인 대상을 정하는 데 쓴다."
+        },
+        {
+          "t": "table",
+          "caption": "느린 장면에서 먼저 구분할 단서",
+          "headers": [
+            "기다리는 장면",
+            "먼저 볼 단서",
+            "이 단서만으로는 모르는 것"
+          ],
+          "rows": [
+            [
+              "앱을 많이 켰을 때 전환이 느림",
+              "지연과 메모리 압력이 함께 반복되는가",
+              "정확히 몇 GB가 필요한가"
+            ],
+            [
+              "한 작업의 계산이 오래 걸림",
+              "CPU 활동과 지연이 겹치는가",
+              "RAM이 충분하다는 확정"
+            ],
+            [
+              "파일을 열거나 저장할 때 느림",
+              "디스크 활동과 지연이 겹치는가",
+              "디스크 자체가 유일한 원인인가"
+            ]
+          ]
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "RAM 증설 전에 평소 작업의 메모리·CPU·디스크를 함께 살피고 앱을 닫기 전후를 비교한다 — 설명용 절차이며 실제 측정 결과가 아니다."
+        },
+        {
+          "t": "p",
+          "text": "표는 부품 성능을 측정한 결과가 아니라 여러 공식 문서의 관찰 원칙을 재구성한 판단표다. 여러 자원이 동시에 바쁠 수 있으므로 각 행은 서로 배타적인 진단명이 아니다."
+        },
+        {
+          "t": "h",
+          "text": "RAM이 많이 사용돼도 정상일 수 있다"
+        },
+        {
+          "t": "p",
+          "text": "“메모리 사용률이 높다”와 “메모리가 모자라 작업이 지연된다”는 같은 말이 아니다. Apple은 사용하지 않는 메모리가 많다고 성능이 반드시 나아지지는 않는다고 설명한다. 중요한 것은 갖고 있는 메모리를 효율적으로 사용하는지다."
+        },
+        {
+          "t": "p",
+          "text": "macOS의 캐시된 파일은 남는 메모리에 두었다가 앱을 다시 열 때 활용할 수 있는 자료다. 필요할 때 다른 내용으로 덮어쓸 수 있으므로, 그 공간을 사용한다는 사실 자체가 장애는 아니다. 빈칸을 많이 만드는 것을 성능 개선의 목표로 삼으면 이 이점을 놓치게 된다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "따라서 “사용률 80%면 증설” 같은 고정선을 이 글에서는 제시하지 않는다. 동일한 사용률이라도 실제로 어떤 자료를 유지하고 있고, 작업 중 저장장치 왕복이 얼마나 일어나는지에 따라 의미가 달라지기 때문이다.",
+            "스왑 사용량이 0이 아니라고 바로 고장이나 RAM 부족으로 판단하는 것도 섣부르다. 저장장치에 보관 중인 양과 지금 자료를 주고받는 빈도는 서로 다른 정보다. Apple의 메모리 압력은 여유 메모리·스왑 빈도·시스템에 고정된 메모리·파일 캐시 등을 함께 반영한다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "먼저 확인해야 할 것은 용량보다 지금의 작업"
+        },
+        {
+          "t": "p",
+          "text": "증설을 검토할 만한 근거는 평소 하려는 작업에서 메모리 부담과 지연이 반복되는지다. 다만 앱을 줄여 나아진 경우에는 RAM 이외의 활동도 함께 줄었을 수 있다는 한계를 남겨 둔다."
+        },
+        {
+          "t": "p",
+          "text": "반대로 앱 하나만 쓸 때도 계속 느리거나, 메모리 상태가 여유로운데 특정 작업만 지연된다면 다른 원인부터 조사할 이유가 있다. 이 역시 RAM을 충분하다고 인증하는 시험은 아니다. Microsoft의 성능 안내가 여러 원인을 함께 다루는 이유와 연결해 내린 판단이다."
+        },
+        {
+          "t": "p",
+          "text": "구매 전에는 기기 제조사 문서에서 메모리를 교체하거나 추가할 수 있는지도 확인해야 한다. Apple 안내는 메모리 슬롯 정보가 나타나지 않으면 해당 Mac에서 업그레이드 가능한 메모리가 제공되지 않는다고 설명한다. 용량을 더 원한다는 것과 현재 기기에 부품을 추가할 수 있다는 것은 별도 조건이다."
+        },
+        {
+          "t": "h",
+          "text": "더 궁금하다면: 가상 메모리는 RAM의 복제품이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "가상 메모리는 프로그램이 쓰는 주소와 실제 메모리 배치를 운영체제가 관리하는 체계다. Windows의 페이지 파일은 이 관리에서 자주 쓰지 않는 수정된 내용을 저장장치에 보관할 수 있게 하는 수단이다. 페이지 파일을 늘리는 것과 물리 RAM을 추가하는 것은 같은 변경이 아니다."
+        },
+        {
+          "t": "p",
+          "text": "저장장치에 공간을 확보하면 프로그램이 사용할 내용을 뒷받침하는 데 도움이 될 수 있지만, 저장장치가 RAM과 같은 속도로 바뀌지는 않는다. 자주 필요한 자료를 계속 옮겨 읽는 상황이라면 기다림은 여전히 남을 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "따라서 페이지 파일을 끄거나 수동 크기로 고정하는 것을 이 글의 1분 확인에 넣지 않았다. 그런 설정 변경 없이도 평소 작업의 지연과 자원 상태를 함께 관찰할 수 있다. 여기까지 읽었다면 RAM 사용률만 보고 증설을 결정하지 않고, 느린 순간에 함께 변하는 자원과 확인이 더 필요한 원인을 구분해 보자."
+        }
+      ]
+    }
+  ],
+  "visual": {
+    "subject": "RAM 공간 부족과 다른 성능 병목",
+    "hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+    "motif": "투명 작업함·자료 카드·처리 장치·관찰 렌즈",
+    "weekday_profile": "myth_evidence",
+    "subject_terms": [
+      "RAM",
+      "메모리 압력",
+      "CPU"
+    ],
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "RAM 공간이 부족할 때 늘리면 도움이 되지만 다른 느림까지 모두 해결하지는 않는다",
+      "label": "RAM 작업 공간이 넓어져도 그대로인 처리 장치",
+      "scene_label": [
+        "RAM 작업 공간",
+        "처리 장치"
+      ],
+      "steps": "RAM 공간이 부족할 때만 넓어진 작업 공간이 기다림을 줄일 수 있다",
+      "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "memory_workspace_still_life",
+      "composition_type": "single_workbench_unequal_trays",
+      "palette_family": "ivory_midnight_copper",
+      "render_family": "macro_object",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "RAM 작업 공간 두 개와 변하지 않은 처리 장치",
+      "texture_cue": "투명 작업함과 종이 카드, 구리 톱니",
+      "authenticity_cue": "RAM 용량과 다른 성능 원인을 구분하는 설명용 정물",
+      "generation_model": "codex-imagegen",
+      "korean_labels": [],
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Korean IT blog cover, landscape 1200:630. One elegant computer-workbench still life: a small translucent RAM workspace overflowing with open paper-like data cards beside an expanded empty workspace; a separate mechanical processor wheel and storage drawer remain unchanged. Subject occupies 60% of frame. Tactile paper sculpture, warm ivory, midnight blue and copper, studio light. RAM capacity helps only when working space is scarce, not every kind of slowness. No people, no brand, no realistic UI, no numeric claims, no arrows, no text, no watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "comparison",
+        "teaching_role": "myth_fact_boundary",
+        "teaching_claim": "RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다",
+        "label": "RAM 공간 부족과 다른 처리 병목의 차이",
+        "scene_label": [
+          "공간 부족",
+          "다른 병목"
+        ],
+        "steps": "RAM 공간 부족 → 자료 이동 지연, RAM 여유 → 다른 처리 지연",
+        "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "codex-imagegen",
+        "generation_prompt": "Use case: scientific-educational. Wide landscape 1200:630. Explain the boundary between RAM working-space shortage and another component bottleneck. Left: cramped RAM tray spilling document cards to slow storage drawer. Right: RAM tray with room, but a processor gear still handles a long single task. Exact large Korean labels only 공간 부족 and 다른 병목. Conceptual paper-cut diagram, midnight blue, warm ivory and copper, no benchmark, fake UI, chart, percentages or watermark.",
+        "korean_labels": [
+          "공간 부족",
+          "다른 병목"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "teaching_role": "history_or_direct_check",
+        "teaching_claim": "RAM 증설 전에 평소 작업의 메모리·CPU·디스크를 함께 살피고 앱을 닫기 전후를 비교한다",
+        "label": "RAM 증설 전 평소 작업을 다시 비교하는 순서",
+        "scene_label": [
+          "평소 작업",
+          "함께 관찰",
+          "다시 비교"
+        ],
+        "steps": "RAM 평소 작업 → 메모리·CPU·디스크 관찰 → 앱 종료 전후 비교",
+        "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+        "evidence_type": "diagram",
+        "generation_model": "codex-imagegen",
+        "generation_prompt": "Use case: scientific-educational. Wide landscape 1200:630. One left-to-right flow: ordinary laptop with several work windows, magnifying glass on separate RAM/processor/storage physical meters with no numbers, then hand closes unused app and compares notes. Exact large Korean labels 평소 작업, 함께 관찰, 다시 비교. Tactile ink-and-paper illustration, off-white, midnight blue, sage, copper. Conceptual safe observation, not a measured result. No brand, fake OS UI, numeric claim, graph or watermark.",
+        "korean_labels": [
+          "평소 작업",
+          "함께 관찰",
+          "다시 비교",
+          "닫기 전",
+          "닫은 후"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "images": {
+    "cover": {
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "weekday_profile": "myth_evidence",
+      "weekday_role": "belief_result_conflict",
+      "visual_claim": "RAM 공간이 부족할 때 늘리면 도움이 되지만 다른 느림까지 모두 해결하지는 않는다",
+      "label": "RAM 작업 공간이 넓어져도 그대로인 처리 장치",
+      "scene_label": [
+        "RAM 작업 공간",
+        "처리 장치"
+      ],
+      "steps": "RAM 공간이 부족할 때만 넓어진 작업 공간이 기다림을 줄일 수 있다",
+      "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "memory_workspace_still_life",
+      "composition_type": "single_workbench_unequal_trays",
+      "palette_family": "ivory_midnight_copper",
+      "render_family": "macro_object",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "RAM 작업 공간 두 개와 변하지 않은 처리 장치",
+      "texture_cue": "투명 작업함과 종이 카드, 구리 톱니",
+      "authenticity_cue": "RAM 용량과 다른 성능 원인을 구분하는 설명용 정물",
+      "generation_model": "codex-imagegen",
+      "korean_labels": [],
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Korean IT blog cover, landscape 1200:630. One elegant computer-workbench still life: a small translucent RAM workspace overflowing with open paper-like data cards beside an expanded empty workspace; a separate mechanical processor wheel and storage drawer remain unchanged. Subject occupies 60% of frame. Tactile paper sculpture, warm ivory, midnight blue and copper, studio light. RAM capacity helps only when working space is scarce, not every kind of slowness. No people, no brand, no realistic UI, no numeric claims, no arrows, no text, no watermark.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-08/RAM-넓어진작업공간.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-넓어진작업공간.webp",
+      "alt": "RAM 공간이 부족할 때 늘리면 도움이 되지만 다른 느림까지 모두 해결하지는 않는다 — 넘친 작업함과 넓어진 RAM 공간 옆에 그대로 있는 처리 장치",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 92266,
+      "quality": 82,
+      "sha256": "7f006df478c801f923d5cdeb3eb65a18177904d4a5aa7c7d332ad51eb87a2097"
+    },
+    "visual_1": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "teaching_role": "myth_fact_boundary",
+      "teaching_claim": "RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다",
+      "label": "RAM 공간 부족과 다른 처리 병목의 차이",
+      "scene_label": [
+        "공간 부족",
+        "다른 병목"
+      ],
+      "steps": "RAM 공간 부족 → 자료 이동 지연, RAM 여유 → 다른 처리 지연",
+      "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "evidence_type": "diagram",
+      "generation_model": "codex-imagegen",
+      "generation_prompt": "Use case: scientific-educational. Wide landscape 1200:630. Explain the boundary between RAM working-space shortage and another component bottleneck. Left: cramped RAM tray spilling document cards to slow storage drawer. Right: RAM tray with room, but a processor gear still handles a long single task. Exact large Korean labels only 공간 부족 and 다른 병목. Conceptual paper-cut diagram, midnight blue, warm ivory and copper, no benchmark, fake UI, chart, percentages or watermark.",
+      "korean_labels": [
+        "공간 부족",
+        "다른 병목"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-08/RAM-공간부족-다른병목.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-공간부족-다른병목.webp",
+      "alt": "RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다 — 한쪽은 RAM에서 자료가 넘치고 다른 쪽은 CPU가 처리 중인 설명도",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 69360,
+      "quality": 82,
+      "sha256": "3d5084c04f9817d410f6bd8fc3b921b31da8da49e2412099a82100fd8e971e8a"
+    },
+    "visual_2": {
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "flow",
+      "teaching_role": "history_or_direct_check",
+      "teaching_claim": "RAM 증설 전에 평소 작업의 메모리·CPU·디스크를 함께 살피고 앱을 닫기 전후를 비교한다",
+      "label": "RAM 증설 전 평소 작업을 다시 비교하는 순서",
+      "scene_label": [
+        "평소 작업",
+        "함께 관찰",
+        "다시 비교"
+      ],
+      "steps": "RAM 평소 작업 → 메모리·CPU·디스크 관찰 → 앱 종료 전후 비교",
+      "curiosity_hook": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+      "evidence_type": "diagram",
+      "generation_model": "codex-imagegen",
+      "generation_prompt": "Use case: scientific-educational. Wide landscape 1200:630. One left-to-right flow: ordinary laptop with several work windows, magnifying glass on separate RAM/processor/storage physical meters with no numbers, then hand closes unused app and compares notes. Exact large Korean labels 평소 작업, 함께 관찰, 다시 비교. Tactile ink-and-paper illustration, off-white, midnight blue, sage, copper. Conceptual safe observation, not a measured result. No brand, fake OS UI, numeric claim, graph or watermark.",
+      "korean_labels": [
+        "평소 작업",
+        "함께 관찰",
+        "다시 비교",
+        "닫기 전",
+        "닫은 후"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-10-08/RAM-1분확인.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-1분확인.webp",
+      "alt": "RAM 증설 전에 평소 작업의 메모리·CPU·디스크를 함께 살피고 앱을 닫기 전후를 비교한다 — 평소 작업을 실행해 세 자원을 살핀 뒤 앱을 닫기 전후를 기록하는 순서도",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 100306,
+      "quality": 82,
+      "sha256": "77e3752937bfde551af9736c051b94abf80e3cf15191c977291b7e03a870616d"
+    }
+  }
+}

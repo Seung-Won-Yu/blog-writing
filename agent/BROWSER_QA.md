@@ -48,7 +48,10 @@
 `sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-id YYYY-MM-DD`
 를 사용한다. 준비 확인에는 이미 완성된 최근 원고 ID를 쓰고, 최종 확인에는 당일 ID를 쓴다.
 여러 원고의 보완 요청은 `--draft-id`를 반복 지정할 수 있다.
-인앱 브라우저 주소는 `http://127.0.0.1:8765/preview/YYYY-MM-DD.html`이다.
+서버가 출력한 `Preview ready: http://127.0.0.1:<port>/preview/YYYY-MM-DD.html`
+주소를 그대로 인앱 브라우저에서 연다. 포트는 실행 때 빈 값으로 자동 배정되므로
+과거 주소나 8765를 추측해 열지 않는다. 출력한 주소에서 선택 원고가 열리는지
+확인하고, 다른 프로젝트의 서버가 사용 중인 포트는 종료하지 않는다.
 선택한 미리보기 HTML·WebP·CSS만 제공하며 저장소 디렉터리, 원고 JSON, `.git`,
 환경 파일은 제공하지 않는다. 검수 종료 후 Ctrl-C로 서버를 종료한다.
 서버는 127.0.0.1에만 바인딩하며 외부 공개 호스트로 바꾸지 않는다.

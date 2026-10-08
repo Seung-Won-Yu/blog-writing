@@ -1,0 +1,87 @@
+{
+  "title": "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+  "title_candidates": [
+    "RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?",
+    "RAM 증설이 통하는 조건과 다른 느림의 경계",
+    "RAM 공간 부족과 다른 성능 병목: RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?"
+  ],
+  "category": "궁금한 IT 원리",
+  "draft_id": "2026-10-08",
+  "publish_date": "2026-10-08",
+  "content_type": "daily_news",
+  "content_label": "궁금한 IT 원리",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-08T09:00:00+09:00",
+  "tags": [
+    "RAM 증설",
+    "메모리 부족",
+    "컴퓨터 느려짐",
+    "메모리 압력",
+    "작업 관리자",
+    "가상 메모리",
+    "스왑"
+  ],
+  "meta_description": "브라우저와 문서 창을 함께 쓰다가 컴퓨터가 버벅이면 RAM부터 늘리고 싶어진다. RAM은 지금 처리할 자료를 펼쳐 두는 공간이라, 그 공간이 부족할 때 늘리면 도움이 된다. 하지만 계산이나 파일 읽기… RAM은 작업 공간이 모자랄 때 늘리는 것이 도움이 될 수 있다. 하지만 느림의 원…",
+  "key_summary": [
+    "1. RAM 증설이 통하는 조건과 다른 느림의 경계",
+    "직접 얻는 결과: RAM이 부족해 자료를 저장장치와 자주 주고받을 때는 증설이 도움이 될 수 있다. 하지만 계산이나 파일 읽기가 느린 작업은 RAM 용량만 늘려도 빨라진다고 보장할 수 없다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 궁금한 IT 원리로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: RAM이 크면 컴퓨터는 왜 무조건 빨라지지 않을까?"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-08.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-08.html",
+  "before_ad_html": "docs/tistory/2026-10-08-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-08-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-08-adfit.html",
+  "source_sha256": "0ed32ae92c9e181f0fe21857a0075c6c7c0e2649bddad395401cbebd5edcc00f",
+  "html_sha256": "da95f8457e23e199d0bec06b47cb0660e32d8a07fcab97de9ccbbfa80e884180",
+  "adfit_sha256": "f082b079852182d36790e85af1e576f325ba5156bc72f6473b37950ef93d4393",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-넓어진작업공간.webp",
+      "path": "docs/tistory/assets/2026-10-08/RAM-넓어진작업공간.webp",
+      "original_url": "",
+      "alt": "RAM 공간이 부족할 때 늘리면 도움이 되지만 다른 느림까지 모두 해결하지는 않는다 — 넘친 작업함과 넓어진 RAM 공간 옆에 그대로 있는 처리 장치",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-공간부족-다른병목.webp",
+      "path": "docs/tistory/assets/2026-10-08/RAM-공간부족-다른병목.webp",
+      "original_url": "",
+      "alt": "RAM 공간이 부족할 때의 지연과 계산 장치의 다른 병목은 같은 느림이 아니다 — 한쪽은 RAM에서 자료가 넘치고 다른 쪽은 CPU가 처리 중인 설명도",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-08/RAM-1분확인.webp",
+      "path": "docs/tistory/assets/2026-10-08/RAM-1분확인.webp",
+      "original_url": "",
+      "alt": "RAM 증설 전에 평소 작업의 메모리·CPU·디스크를 함께 살피고 앱을 닫기 전후를 비교한다 — 평소 작업을 실행해 세 자원을 살핀 뒤 앱을 닫기 전후를 기록하는 순서도",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

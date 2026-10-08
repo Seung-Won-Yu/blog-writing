@@ -70,9 +70,13 @@ def main():
     parser.add_argument("--draft-id", action="append", required=True)
     args = parser.parse_args()
     allowed = allowed_files(ROOT, args.draft_id)
-    # Host and port are intentionally not configurable: no LAN/public serving.
-    server = ThreadingHTTPServer(("127.0.0.1", 8765), make_handler(allowed))
+    # Bind only to loopback. Port 0 lets the OS choose an unused port so another
+    # project's local server cannot silently serve the QA URL instead.
+    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(allowed))
     try:
+        port = server.server_address[1]
+        for draft_id in args.draft_id:
+            print(f"Preview ready: http://127.0.0.1:{port}/preview/{draft_id}.html", flush=True)
         server.serve_forever()
     except KeyboardInterrupt:
         pass
