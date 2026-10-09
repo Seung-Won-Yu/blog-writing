@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "kind": "automation",
-  "target_day": "2026-10-02",
+  "target_day": "2026-10-09",
   "editorial_lane": "developer_insight",
-  "generated_at": "2026-10-02T00:57:13.773369+00:00",
+  "generated_at": "2026-10-09T01:17:33.893896+00:00",
   "state": "READY",
   "reasons": [],
   "quality": {
