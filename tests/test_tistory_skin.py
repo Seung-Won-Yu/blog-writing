@@ -110,7 +110,7 @@ class TistorySkinTests(unittest.TestCase):
         skin_html = SKIN_PATH.read_text(encoding="utf-8")
         components_html = COMPONENTS_PATH.read_text(encoding="utf-8")
         project_path = (
-            "/category/%EC%8B%A4%EC%A0%84%20IT%20%EC%95%84%ED%8B%B0%ED%81%B4/"
+            "/category/%EC%8B%A4%EC%A0%84%20IT/"
             "%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%C2%B7%ED%9A%8C%EA%B3%A0"
         )
 
@@ -129,6 +129,18 @@ class TistorySkinTests(unittest.TestCase):
         self.assertNotIn('class="count"', skin_html)
         self.assertIn(f'href="{project_path}"', skin_html)
         self.assertIn(f'href="{project_path}"', components_html)
+
+    def test_reader_focused_identity_is_consistent_and_legacy_project_link_is_absent(self):
+        profile = "AI와 디지털 도구를 직접 활용하고, 막히는 문제를 쉽게 해결하는 블로그입니다."
+        footer = "AI·디지털 도구 활용부터 문제 해결까지, 직접 확인하고 다시 꺼내 쓰는 기록."
+        legacy_path = "/category/%EC%8B%A4%EC%A0%84%20IT%20%EC%95%84%ED%8B%B0%ED%81%B4/"
+
+        for path in (SKIN_PATH, COMPONENTS_PATH):
+            with self.subTest(path=path.name):
+                html = path.read_text(encoding="utf-8")
+                self.assertEqual(html.count(profile), 1)
+                self.assertEqual(html.count(footer), 1)
+                self.assertNotIn(legacy_path, html)
 
     def test_footer_uses_blog_identity_instead_of_stock_skin_credit(self):
         skin_html = SKIN_PATH.read_text(encoding="utf-8")
