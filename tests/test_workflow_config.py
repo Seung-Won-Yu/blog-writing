@@ -259,13 +259,15 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("10:00 KST 전후", pipeline)
         self.assertIn("자동 발행하지 않는다", pipeline)
         self.assertIn("editorial.selection_evaluation", pipeline)
+        self.assertIn("토요일 09:00 주식 앱 제작기 예약은 2026-10-12에 종료했다", pipeline)
+        self.assertIn("새 회차를 자동으로 만들지 않는다", pipeline)
+        self.assertNotIn("| 토 |", pipeline)
         for role in (
             "evergreen_problem",
             "curiosity_mechanism",
             "change_explainer",
             "curiosity_myth_history",
             "developer_insight",
-            "project_series",
         ):
             self.assertIn(role, pipeline)
 
@@ -491,10 +493,12 @@ class WorkflowConfigTests(unittest.TestCase):
         self.assertIn("publish_bundle --today --check", contract)
         self.assertIn("티스토리에는 자동 발행하지 않습니다", contract)
 
-    def test_project_contract_runs_at_nine_and_expands_evidence_before_hold(self):
+    def test_project_contract_preserves_evidence_rules_after_schedule_retirement(self):
         contract = PROJECT_CONTRACT.read_text(encoding="utf-8")
 
-        self.assertIn("매주 토요일 09:00 KST", contract)
+        self.assertIn("2026-10-12에 토요일 09:00 예약을 종료했다", contract)
+        self.assertIn("새 회차 제작 지시로 사용하지 않는다", contract)
+        self.assertNotIn("매주 토요일 09:00 KST", contract)
         self.assertIn("`publication_mode`은 `manual_review`", contract)
         self.assertIn("한 번 더 탐색", contract)
         self.assertIn("Codex 웹 리서치", contract)

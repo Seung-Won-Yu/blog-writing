@@ -1,0 +1,97 @@
+{
+  "title": "OOMKilled 해결: 메모리 limit을 올리기 전에 구분할 세 가지",
+  "title_candidates": [
+    "OOMKilled 해결: 메모리 limit을 올리기 전에 구분할 세 가지",
+    "Kubernetes cgroup v2 설명으로 확인하는 메모리 종료의 경계",
+    "OOMKilled 해결에서 컨테이너 한도와 노드 부족을 구분하는 판단: 노드에 빈칸이 남았는데 작은 컨테이너만 꽉 찬 장면"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-10-12",
+  "publish_date": "2026-10-12",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-12T09:00:00+09:00",
+  "tags": [
+    "OOMKilled 해결",
+    "OOMKilled 메모리",
+    "Kubernetes",
+    "메모리 limit",
+    "노드 메모리 부족",
+    "cgroup v2",
+    "Pod 퇴거"
+  ],
+  "meta_description": "Pod가 재시작했는데 지금 메모리 그래프는 낮다. OOMKilled 해결을 위해 limit부터 두 배로 올리면 될까? 먼저 컨테이너 한도 초과와 노드 전체 메모리 부족을 나누고, Evicted 상태도… 최근 cgroup v2 공식 설명을 단서로 컨테이너 한도·노드 OOM·Pod 퇴거를…",
+  "key_summary": [
+    "1. Kubernetes cgroup v2 설명으로 확인하는 메모리 종료의 경계",
+    "직접 얻는 결과: 컨테이너 한도, 노드 전체 부족, Pod 퇴거의 근거를 종료 시각으로 묶고 서로 다른 수정과 되돌리기 기준을 선택할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: OOMKilled 해결: 메모리 limit을 올리기 전에 구분할 세 가지"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 13,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-12.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-12.html",
+  "before_ad_html": "docs/tistory/2026-10-12-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-12-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-12-adfit.html",
+  "source_sha256": "cf5ce51df3562395cbb344a79c7b6448548f871ac3224beaf88902d638119fe6",
+  "html_sha256": "de48c6a5c56638a5fc1e3e9d91688e2b93521ea399e6a2ee060cbc23c5afba0a",
+  "adfit_sha256": "10b297a820b5b8f59b0bab65dad19bfbb8db9a44775c5eba0eb67fe1a7f904f6",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-12/OOMKilled-컨테이너한도-대표.webp",
+      "path": "docs/tistory/assets/2026-10-12/OOMKilled-컨테이너한도-대표.webp",
+      "original_url": "",
+      "alt": "OOMKilled 해결: OOMKilled는 노드에 여유가 있어도 컨테이너 한도에서 발생할 수 있다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-12/OOMKilled-종료근거-진단흐름.webp",
+      "path": "docs/tistory/assets/2026-10-12/OOMKilled-종료근거-진단흐름.webp",
+      "original_url": "",
+      "alt": "OOMKilled 해결은 종료 시각을 고정한 뒤 컨테이너 한도와 노드 전체 부족, Pod 퇴거의 근거를 분리해야 한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-12/OOMKilled-한도와노드-복구경계.webp",
+      "path": "docs/tistory/assets/2026-10-12/OOMKilled-한도와노드-복구경계.webp",
+      "original_url": "",
+      "alt": "OOMKilled 복구는 한도 부족이면 작업 공간과 사용 패턴을, 노드 부족이면 배치와 전체 여유를 바꾸는 서로 다른 경로다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-12/OOMKilled-공식설정문서.webp",
+      "path": "docs/tistory/assets/2026-10-12/OOMKilled-공식설정문서.webp",
+      "original_url": "",
+      "alt": "OOMKilled 관련 Kubernetes 공식 설정 예제는 메모리 request와 limit을 별도 항목으로 기록한다 — request 64Mi와 limit 128Mi 공식 예시",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
