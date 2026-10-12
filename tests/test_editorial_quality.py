@@ -2,7 +2,7 @@ import copy
 import json
 import math
 import unittest
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from blog_pipeline.publishing.draft_identity import (
@@ -13,6 +13,7 @@ from blog_pipeline.publishing.draft_identity import (
     resolve_draft_identity,
 )
 from blog_pipeline.publishing.editorial_quality import (
+    _backfill_deadline,
     HARU_CHARACTER_ANCHOR,
     HARU_CHARACTER_ID,
     HARU_CHARACTER_NAME,
@@ -2910,6 +2911,40 @@ class EditorialQualityTests(unittest.TestCase):
 
         self.assertIn("quality_experiment_evidence", reasons)
         self.assertIn("quality_visual_provenance", reasons)
+
+    def test_authorized_october_nine_resume_is_pinned_to_recorded_cutoff(self):
+        scheduled = datetime.fromisoformat("2026-10-09T09:00:00+09:00")
+        source = {
+            "draft_id": "2026-10-09-automation",
+            "publish_date": "2026-10-09",
+            "content_type": "automation_case",
+            "backfill": {
+                "created_at": "2026-10-12T09:35:45+09:00",
+                "reason": "금요일에 완성하지 못한 동일 원고의 날짜 예외와 커밋·push를 사용자가 승인했다.",
+            },
+        }
+        self.assertEqual(
+            _backfill_deadline(source, scheduled),
+            datetime.fromisoformat(source["backfill"]["created_at"]),
+        )
+        for field, value in (
+            ("draft_id", "2026-10-16-automation"),
+            ("publish_date", "2026-10-16"),
+            ("content_type", "project_log"),
+        ):
+            with self.subTest(field=field):
+                changed = copy.deepcopy(source)
+                changed[field] = value
+                self.assertIsNone(_backfill_deadline(changed, scheduled))
+        for timestamp in (
+            "2026-10-12T09:35:46+09:00",
+            "2026-10-12T09:35:45",
+            "2026-10-12T00:35:45+00:00",
+        ):
+            with self.subTest(timestamp=timestamp):
+                changed = copy.deepcopy(source)
+                changed["backfill"]["created_at"] = timestamp
+                self.assertIsNone(_backfill_deadline(changed, scheduled))
 
 
 if __name__ == "__main__":

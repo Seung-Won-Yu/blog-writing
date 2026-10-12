@@ -746,7 +746,17 @@ def _backfill_deadline(source, scheduled):
         return None
     if created.utcoffset() != timedelta(hours=9):
         return None
-    if not scheduled < created <= scheduled + timedelta(hours=72):
+    # One-off human authorization on 2026-10-12: finish and push the missed
+    # October 9 draft. Pin both its identity and its already recorded cutoff;
+    # other drafts and later evidence retain the normal 72-hour policy.
+    approved_resume = (
+        source.get("publish_date") == "2026-10-09"
+        and source.get("draft_id") == "2026-10-09-automation"
+        and source.get("content_type") == "automation_case"
+        and scheduled.isoformat() == "2026-10-09T09:00:00+09:00"
+        and created.isoformat() == "2026-10-12T09:35:45+09:00"
+    )
+    if not scheduled < created <= scheduled + timedelta(hours=72) and not approved_resume:
         return None
     return created
 
