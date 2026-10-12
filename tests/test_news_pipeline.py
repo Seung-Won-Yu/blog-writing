@@ -522,6 +522,21 @@ class RankingTests(unittest.TestCase):
             demand["lead_score_breakdown"]["known_search_demand"], 3
         )
 
+    def test_protects_existing_search_winner_without_rewarding_duplicate_demand(self):
+        candidate = make_candidate(
+            raw("WMIC PowerShell 대체 방법", "https://example.com/wmic-replacement"),
+            source("engineering", "korean_editorial"),
+        )
+        score_candidate(candidate, [], now=NOW, search_opportunities=[{
+            "query": "WMIC PowerShell 대체",
+            "action": "protect_existing",
+            "page_url": "https://won0322.tistory.com/209",
+            "metric_scope": "page",
+            "impressions": 191,
+        }])
+        self.assertTrue(candidate["search_feedback"]["existing_page_conflict"])
+        self.assertEqual(candidate["search_feedback"]["demand_score"], 0)
+
     def test_official_recent_keyword_item_scores_higher(self):
         official = make_candidate(
             raw("GitHub Actions AI 보안 기능 출시", "https://official.example/1"),

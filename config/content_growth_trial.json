@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "started_on": "2026-10-12",
+  "review_on": "2026-11-23",
+  "timezone": "Asia/Seoul",
+  "purpose": "AI와 디지털 도구를 쉽게 활용하고 막히는 문제를 해결하도록 돕는다.",
+  "weekday_modes": {
+    "monday": "new_article",
+    "tuesday": "refresh_existing",
+    "wednesday": "new_article",
+    "thursday": "refresh_existing",
+    "friday": "new_article",
+    "saturday": "off",
+    "sunday": "off"
+  },
+  "evidence_observed_on": "2026-10-12",
+  "evidence_source": "Google Search Console: 웹 검색, 최근 28일과 이전 28일 비교, 앱 내 브라우저에서 확인",
+  "evidence_scope": "아래 수치는 페이지별 합계이며 특정 검색어의 수치가 아니다. 일부 우선 검토 글만 기록했다.",
+  "baseline": {
+    "period_days": 28,
+    "current_clicks": 68,
+    "previous_clicks": 82,
+    "current_impressions": 2701,
+    "previous_impressions": 2029,
+    "current_ctr_percent": 2.5,
+    "previous_ctr_percent": 4.0,
+    "current_position": 8.1,
+    "previous_position": 7.9
+  },
+  "refresh_queue": [
+    {
+      "priority": 1,
+      "status": "planned",
+      "page_url": "https://won0322.tistory.com/197",
+      "title": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
+      "draft_id": "2026-08-08-automation",
+      "source": "data/automation_cases/2026-08-08.json",
+      "current_clicks": 26,
+      "previous_clicks": 24,
+      "current_impressions": 1112,
+      "previous_impressions": 570,
+      "improvement_goal": "설치·실행·결과 해석에서 실제 독자가 막히는 부분을 확인하고, 기존 실험과 실행 증거를 보존하며 한 글에서 해결한다."
+    },
+    {
+      "priority": 2,
+      "status": "planned",
+      "page_url": "https://won0322.tistory.com/221",
+      "title": "시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법",
+      "draft_id": "2026-09-03",
+      "source": "data/days/2026-09-03.json",
+      "current_clicks": 5,
+      "previous_clicks": 0,
+      "current_impressions": 166,
+      "previous_impressions": 2,
+      "improvement_goal": "기기 내부 기록·다운로드·북마크·외부 관찰을 독자의 상황별로 구분하고 직접 확인할 화면을 제공한다. 타인의 기록 복구나 익명성 보장을 약속하지 않는다."
+    },
+    {
+      "priority": 3,
+      "status": "planned",
+      "page_url": "https://won0322.tistory.com/209",
+      "title": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
+      "draft_id": "2026-08-20",
+      "source": "data/days/2026-08-20.json",
+      "current_clicks": 9,
+      "previous_clicks": 6,
+      "current_impressions": 191,
+      "previous_impressions": 174,
+      "improvement_goal": "WMIC 오류를 만난 Windows 사용자가 필요한 대체 명령을 바로 찾도록 목적·명령·확인 결과를 연결하고 버전·권한의 경계를 확인한다."
+    }
+  ]
+}

@@ -1,5 +1,23 @@
 # Blog Editorial Pipeline
 
+## 현재 운영: 새 글 3편 + 기존 글 개선 2회
+
+2026-10-12부터 월·수·금은 새 글, 화·목은 기존 공개 글 개선을 09:00 KST에 시작합니다.
+AI와 디지털 도구를 쉽게 활용하고 막히는 문제를 해결하는 글에 집중합니다.
+검색 반응·독자 질문·실제 사용 근거로 주제를 고르며 8.5 자동 점수를 성장이나
+AdSense 승인으로 해석하지 않습니다. 첫 개선 큐는 im-not-ai(`/197`), 시크릿 모드(`/221`),
+WMIC(`/209`)이며 기존 URL과 원고 날짜를 유지합니다. 티스토리 발행·본문 교체는 사용자가 합니다.
+
+[6주 운영 계약](agent/CONTENT_GROWTH_TRIAL.md)과 [계획·성과 기준·개선 큐](config/content_growth_trial.json)를
+기준으로 2026-11-23에 성과를 점검합니다. 자동으로 이전 편성에 되돌아가지는 않습니다.
+
+```bash
+sh scripts/blog-env python3 -m blog_pipeline.publishing.growth_plan --today
+```
+
+이 명령은 당일 `new_article`, `refresh_existing`, `off`와 개선 대상을 읽기 전용으로 확인합니다.
+원리·원리툰과 과거 프로젝트 계약은 기존 글 검증 및 별도 요청용으로 보존합니다.
+
 ## 로컬 제작·검수 실행 환경
 
 Git·Python 명령은 저장소 루트에서 `sh scripts/blog-env ...`로 실행합니다.
@@ -28,9 +46,9 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-i
 [![Collect Monday Wednesday news candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-news.yml)
 [![Collect Friday developer insight candidates](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml/badge.svg)](https://github.com/Seung-Won-Yu/blog-writing/actions/workflows/collect-automation.yml)
 
-`쑥쑥자라나라` 블로그를 위한 실전 IT 콘텐츠 제작 프로젝트입니다. 월요일은 오래 검색되는 문제 해결 가이드, 화·목요일은 일상 기술의 원리와 오해를 푸는 지식글, 수요일은 최신 변화의 영향 해설, 금요일은 GitHub·공식 문서·Agent Skills·AI 개발 도구를 깊게 읽는 개발자 인사이트로 나누어 만듭니다.
+`쑥쑥자라나라` 블로그를 위한 실전 IT 콘텐츠 제작 프로젝트입니다. 월요일은 오래 검색되는 문제 해결, 수요일은 실제 변화에 따른 확인·대응, 금요일은 AI·개발 도구의 구체적인 활용·선택을 다룹니다. 화·목은 기존 글의 독자 질문·실행 안내·실제 근거를 보완합니다.
 
-모든 글은 같은 모바일 레이아웃·이미지 규격·광고 위치·출처 표기·발행 도우미를 공유하지만, 독자와 전개를 하나의 만능 템플릿으로 통일하지 않습니다. [요일별 독자 약속](agent/WEEKLY_READER_PROMISES.md)에 따라 월요일은 실무 문제 해결, 화요일은 생활 기술의 작동 원리, 수요일은 변화 대응, 목요일은 오해 검증, 금요일은 개발 도구 판단을 각각 다른 독서 결과로 제공합니다. 토요일 프로젝트 글의 규칙은 과거 발행본 검증용으로 남깁니다.
+모든 글은 같은 모바일 레이아웃·이미지 규격·광고 위치·출처 표기·발행 도우미를 공유하지만, 독자와 전개를 하나의 만능 템플릿으로 통일하지 않습니다. [요일별 독자 약속](agent/WEEKLY_READER_PROMISES.md)에 따라 월요일은 문제 해결, 수요일은 변화 대응, 금요일은 도구 활용·판단을 제공합니다. 화·목 개선본은 실행 요일과 관계없이 원래 글의 독자 경로를 유지합니다. 원리·오해 검증·토요일 프로젝트 규칙은 기존 발행본 검증 및 별도 요청용으로 남깁니다.
 
 [월~금 파이프라인 운영 계약](agent/WEEKLY_PIPELINE.md)은 월·수·금 06:30 후보 수집, 월~금 09:00 글 제작 시작, 10시 전후 사용자 수동 발행이라는 경계를 고정합니다. 월요일과 수요일은 같은 후보 원천을 보더라도 점수 가중치와 최소 통과선을 다르게 적용하고, 화·목·금은 각 역할에 맞는 별도 입력과 선정표를 사용합니다. 화·목의 직접 선정 점수와 하드 게이트는 원고의 `editorial.selection_evaluation`에 남아 품질 가드가 합계까지 다시 확인합니다. 과거 토요일 묶음의 비공개 정보 검사는 이력 검증용으로 유지합니다.
 
@@ -86,14 +104,14 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-i
   → 티스토리 복사용 결과 제작
   → 테스트·GitHub Pages 배포 확인
 
-화·목 09:00 KST · Codex 궁금한 IT 원리 편집
-  → 화요일은 일상 기술이 작동하는 원리 하나 선정
-  → 목요일은 널리 퍼진 기술 오해 또는 역사적 선택 하나 선정
-  → 공식 문서·표준·원 논문과 독립 자료 교차 확인
-  → 먼저 답과 1분 확인을 주고 심화를 분리한 5~10분 장기 지식글 작성
-  → 대표 장면과 원리·오해 경계를 설명하는 본문 이미지 제작
-  → 75점 미만·근거 부족·최근 365일 중복이면 발행 보류
-  → 티스토리 도우미·테스트·GitHub Pages 배포 확인
+화·목 09:00 KST · Codex 기존 글 개선
+  → 성장 계획의 미완료 기존 URL·원고 ID 선택
+  → 실제 검색 반응과 공개 본문의 공백 확인
+  → 원래 답·실행 증거를 보존하며 이해도·실행 안내·링크 보완
+  → 유효한 이미지 재사용, 낡은 화면이나 설명 공백만 교체
+  → 기존 ID로 원고·번들·실화면 QA 검증
+  → 교체용 표시와 대상 URL을 포함해 Pages 도우미에 인계
+  → 당일 신규 원고 생성·티스토리 자동 저장 없음
 
 금요일 06:30 KST · GitHub Actions
   → GitHub Trending·공식 문서·공개 저장소·연구 후보 수집
@@ -118,22 +136,22 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-i
 
 ```
 
-별도 수요일 개발 가이드 예약은 일시중지했습니다. 대신 월요일 09:00 글이 오래 검색되는 `개발 가이드`, 수요일 09:00 글이 최근 변화의 `IT 트렌드 해설`을 담당합니다. 화·목 지식글은 뉴스 후보함과 분리해 공개 자료를 직접 조사합니다. 티스토리에서는 `실전 IT`를 큰 묶음으로만 쓰고 실제 글은 `IT 트렌드 해설`, `궁금한 IT 원리`, `개발 가이드`, `AI·개발 도구`, `프로젝트·회고`에 배치합니다.
+월·수·금 신규 역할과 기존 카테고리는 유지합니다. 화·목 개선본은 원래 글의 역할·카테고리·날짜를 지킵니다. 이번 전환으로 티스토리 카테고리를 일괄 변경하거나 기존 글을 삭제하지 않습니다.
 
 GitHub Actions의 정기 작업은 뉴스·개발·자동화 후보 수집, 중복 제거, 우선순위 계산까지만 수행하며 저장소 실행·글·이미지를 생성하지 않습니다. 후보 페이지는 주제를 고르는 편집용 레이더입니다. Codex 예약 작업도 티스토리에 자동 발행하지 않으며, 사용자는 배포된 도우미에서 최종 HTML을 복사해 직접 발행합니다. 미래 정규 초안의 `publication_mode: manual_review`와 09:00 `scheduled_at`은 Codex 제작 시작 기준이며 티스토리 예약 시각이 아닙니다.
 
 검증된 결과의 GitHub 전송은 `blog_pipeline.publishing.repository_sync`가 담당합니다. 활성 09:00 Codex 예약은 로컬 가드와 단일 커밋이 끝난 뒤 `origin/main` 한 곳만 이 명령으로 전송하도록 외부 쓰기 범위를 명시하며, 원시 push·강제 push·rebase·reset은 허용하지 않습니다. 전송 subprocess는 예약 환경의 `GH_TOKEN`·`GITHUB_TOKEN` 덮어쓰기를 제거해 저장된 Git credential helper를 사용하고, DNS가 막힌 샌드박스의 `gh auth status`만으로 토큰 만료를 단정하지 않습니다. 과거 토요일 묶음의 비공개 증거 유출 검사도 이력 검증용으로 유지합니다. DNS·연결 실패·timeout·HTTP 5xx만 최대 5회 재시도하며 백오프 대기 합계는 45초입니다. 정리된 환경의 실제 push가 반환한 인증·권한·non-fast-forward 오류만 즉시 중단합니다. 최종 실패 시 로컬 커밋을 보존하므로 다음 예약 실행에서 이어서 전송할 수 있습니다.
 
-첫 후보가 품질 기준을 통과하지 못했다고 바로 쉬지 않습니다. 월·수와 금요일은 해당 수집기를 같은 실행에서 한 번만 다시 돌리고 새 후보를 평가한 뒤, Codex 웹 리서치로 공식 문서·표준·공식 저장소·원 논문·독립 자료에서 후보함 밖의 질문을 찾습니다. 화·목은 아이디어 뱅크의 첫 후보군이 탈락하면 같은 요일 역할 안에서 직접 리서치 후보를 한 번 더 확장합니다. 이 단계를 모두 거친 뒤에도 사실·근거·재현성이 부족할 때만 `NO_PUBLISH_QUALITY`로 보류합니다.
+월·수·금 첫 후보가 탈락하면 해당 수집기를 한 번 다시 돌리고 공식 문서·원출처·독립 자료에서 질문을 더 찾습니다. 화·목은 기존 글의 공백을 추가 조사하며 개선 큐가 비어도 새 글로 빈도를 채우지 않습니다. 근거와 실제 검수가 부족하면 미완료 범위를 기록합니다.
 
 ## 콘텐츠 성장 원칙
 
-블로그는 월~금의 네 콘텐츠 축을 키웁니다.
+현재는 신규 제작과 기존 글 개선을 다음처럼 연결합니다.
 
-- 월요일 개발 가이드: Java·Spring·PostgreSQL·API·보안·운영처럼 반복 검색되는 문제를 원리·실패 조건·재사용 판단표까지 설명
-- 화·목 궁금한 IT 원리: 비개발자도 겪는 기술의 작동 원리·오해·역사를 공식 근거와 쉬운 그림으로 설명
+- 월요일 문제 해결: 특정 독자가 반복해서 겪는 사용·설정·개발 문제를 해결 순서와 확인 결과까지 설명
+- 화·목 기존 글 개선: 검색 반응이 있는 답을 보존하면서 부족한 이해·실행·확인 안내를 보강
 - 수요일 IT 트렌드 해설: 최근 변화가 기존 사용·개발 흐름에서 바꾸는 조건과 지금 확인할 행동을 설명
-- 금요일 AI·개발 도구: GitHub·공식 문서·Agent Skills·AI 개발 도구를 지도·비교·근거로 깊게 해설
+- 금요일 AI·개발 도구: 구체적인 작업에서 도구·스킬·문서를 어떻게 활용하고 선택할지 실제 근거로 설명
 
 토요일 주식 앱 제작기는 정규 편성에서 종료했습니다. 공개된 글과 원고·이미지는 보존하지만 새 회차를 예약 생성하지 않습니다.
 
@@ -158,7 +176,7 @@ python3 -m blog_pipeline.collection.analyze_search_performance \
   --input /path/to/search-performance.csv
 ```
 
-입력 예시는 `config/search_performance.example.csv`입니다. 결과는 `config/search_opportunities.json`과 `reports/search-refresh-queue.md`에 저장됩니다. `refresh_existing`, `retitle_existing`, `merge_existing` 대상은 새 글 후보에서 제외하며, 30일이 지난 성과 파일은 수집기가 자동으로 무시합니다. 이 분류 기준은 Google 순위 공식이 아니라 검토 순서를 정하는 내부 운영 휴리스틱입니다.
+입력 예시는 `config/search_performance.example.csv`입니다. 결과는 `config/search_opportunities.json`과 `reports/search-refresh-queue.md`에 저장됩니다. `protect_existing`, `refresh_existing`, `retitle_existing`, `merge_existing` 대상과 충돌하는 새 글은 제외하며 30일 지난 성과는 최신 점수에 쓰지 않습니다. 현재 보호 큐의 수치는 페이지 합계이고 `query`는 편집용 주제 힌트입니다. 정확한 검색어×페이지 CSV와 합쳐 가짜 관측값을 만들지 않습니다. CSV 재분석이 보호 큐를 대체하므로 재분석 뒤 현재 계획의 기존 글 보호 대상도 대조합니다. 이 분류는 Google 순위 공식이 아닌 내부 휴리스틱입니다.
 
 ## 직접 실행
 

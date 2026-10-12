@@ -296,6 +296,7 @@ def _search_feedback(candidate, opportunities):
         action = str(opportunity.get("action") or "").strip().casefold()
         impressions = max(0, int(opportunity.get("impressions") or 0))
         conflict = action in {
+            "protect_existing",
             "retitle_existing",
             "refresh_existing",
             "revise_existing",

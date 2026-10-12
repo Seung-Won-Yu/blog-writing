@@ -1,15 +1,43 @@
 {
-  "schema_version": 1,
-  "updated_at": "2026-08-10T16:40:00+09:00",
-  "source": "Google Search Console",
+  "schema_version": 2,
+  "updated_at": "2026-10-12T00:00:00+09:00",
+  "source": "Google Search Console equal 28-day comparison, observed in-app on 2026-10-12",
+  "policy_note": "페이지 합계로 선정한 기존 글 보호 큐다. query는 편집용 주제 힌트이며 아래 수치를 검색어별 성과나 검색량으로 해석하지 않는다. 정확한 검색어는 해당 페이지 필터로 확인한다.",
   "opportunities": [
     {
-      "query": "코파일럿 한도",
-      "page_url": "https://won0322.tistory.com/145",
-      "impressions": 12,
-      "clicks": 0,
-      "action": "retitle_existing",
-      "suggested_title": "GitHub Copilot 한도 설정: 팀별 AI 크레딧 예산 나누는 법",
+      "query": "im-not-ai 사용법",
+      "page_url": "https://won0322.tistory.com/197",
+      "metric_scope": "page",
+      "impressions": 1112,
+      "clicks": 26,
+      "previous_impressions": 570,
+      "previous_clicks": 24,
+      "action": "protect_existing",
+      "reason": "검색 반응이 있는 기존 글을 우선 보완하고 같은 질문의 새 글로 분산하지 않음",
+      "status": "review"
+    },
+    {
+      "query": "시크릿 모드 기록",
+      "page_url": "https://won0322.tistory.com/221",
+      "metric_scope": "page",
+      "impressions": 166,
+      "clicks": 5,
+      "previous_impressions": 2,
+      "previous_clicks": 0,
+      "action": "protect_existing",
+      "reason": "새로 반응이 생기는 기존 글의 답과 확인법을 우선 보완함",
+      "status": "review"
+    },
+    {
+      "query": "WMIC PowerShell 대체",
+      "page_url": "https://won0322.tistory.com/209",
+      "metric_scope": "page",
+      "impressions": 191,
+      "clicks": 9,
+      "previous_impressions": 174,
+      "previous_clicks": 6,
+      "action": "protect_existing",
+      "reason": "실제 검색 반응이 있는 대체 명령 글을 같은 URL에서 보완함",
       "status": "review"
     }
   ]

@@ -4,6 +4,7 @@ import html
 import json
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from .draft_identity import editorial_lane_for_identity, resolve_draft_identity
 from .editorial_quality import PUBLISH_GATE_START
@@ -221,6 +222,29 @@ def apply_guard_results(drafts, *, root=ROOT):
             draft["publish_ready"] = result.get("status") == "COMPLETE"
         checked.append(draft)
     return checked
+
+
+def apply_refresh_handoffs(drafts, plan):
+    """Label completed replacements without changing identity or QA readiness."""
+    targets = {}
+    for item in plan.get("refresh_queue", []):
+        if item.get("status") not in {"ready_for_review", "published"}:
+            continue
+        url = urlsplit(str(item.get("page_url") or ""))
+        if (
+            url.scheme == "https" and url.netloc == "won0322.tistory.com"
+            and url.path.strip("/").isdigit() and not url.query and not url.fragment
+        ):
+            targets[(item.get("draft_id"), item.get("source"))] = item["page_url"]
+    result = []
+    for original in drafts:
+        draft = dict(original)
+        target = targets.get((draft.get("draft_id"), draft.get("source")))
+        if target:
+            draft["replacement_target_url"] = target
+            draft["scheduled_label"] = "기존 공개 글 수정본 · 새 글 발행이 아닌 본문 교체"
+        result.append(draft)
+    return result
 
 
 def render_preview_page(draft, fragment):
@@ -768,7 +792,8 @@ def render(drafts, skin_contract=None):
     <header class="masthead">
       <p class="eyebrow">DAILY PUBLISH DESK</p>
       <h1>오늘 글 발행 준비</h1>
-      <p class="lead">월·수 실전 IT, 화·목 궁금한 IT 원리, 금요일 개발·AI 인사이트의 발행 준비물을 확인합니다. 이전 토요일 프로젝트 글은 기록으로 남아 있습니다.</p>
+      <p class="lead">월·수·금은 새 글, 화·목은 기존 글 개선입니다. 오전 9시에 제작·검수를 시작하며 티스토리 발행과 본문 교체는 직접 확인 후 진행합니다. 이전 토요일 프로젝트 글은 기록으로 남아 있습니다.</p>
+      <p class="lead"><a href="https://github.com/Seung-Won-Yu/blog-writing/blob/main/agent/CONTENT_GROWTH_TRIAL.md">새 글 3편·기존 글 개선 2회 — 현재 운영 기준</a></p>
       {skin_status}
     </header>
 
@@ -781,6 +806,7 @@ def render(drafts, skin_contract=None):
       <main class="panel">
         <div class="panel-title">티스토리 붙여넣기</div>
         <div class="content">
+          <p class="lead" id="replacementNotice" hidden>기존 글 교체용입니다. <a id="replacementTarget">수정할 공개 글 확인</a> · 새 글로 발행하지 마세요.</p>
           <section class="publish-fields" aria-label="발행 정보">
             <div class="field"><span class="label">추천 제목</span><span class="value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
@@ -844,6 +870,8 @@ def render(drafts, skin_contract=None):
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
       schedule: document.getElementById("schedule"),
+      replacementNotice: document.getElementById("replacementNotice"),
+      replacementTarget: document.getElementById("replacementTarget"),
       readerScores: document.getElementById("readerScores"),
       imageCard: document.getElementById("imageCard"),
       coverPreview: document.getElementById("coverPreview"),
@@ -1024,6 +1052,12 @@ def render(drafts, skin_contract=None):
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
       els.schedule.textContent = draft.scheduled_label || draft.scheduled_at || "직접 지정";
+      els.replacementNotice.hidden = !draft.replacement_target_url;
+      if (draft.replacement_target_url) {{
+        els.replacementTarget.href = draft.replacement_target_url;
+      }} else {{
+        els.replacementTarget.removeAttribute("href");
+      }}
       renderReaderScores(draft.reader_scores);
       renderCover(draft.image_assets);
       currentBaseHtml = "";
@@ -1141,7 +1175,9 @@ def render(drafts, skin_contract=None):
       if (type === "schedule") copyText(current.scheduled_label || current.scheduled_at, "발행 설정");
     }});
 
-    if (latest) selectDraft(latest);
+    const requestedDraft = new URLSearchParams(window.location.search).get("draft");
+    const initialDraft = byId.has(requestedDraft) ? requestedDraft : latest;
+    if (initialDraft) selectDraft(initialDraft);
   </script>
 </body>
 </html>
@@ -1153,6 +1189,11 @@ def main():
     drafts = load_drafts()
     write_preview_pages(drafts)
     drafts = apply_guard_results(drafts, root=ROOT)
+    plan_path = ROOT / "config/content_growth_trial.json"
+    if plan_path.is_file():
+        drafts = apply_refresh_handoffs(
+            drafts, json.loads(plan_path.read_text(encoding="utf-8"))
+        )
     OUT_PATH.write_text(render(drafts), encoding="utf-8")
     print(f"built: {OUT_PATH}")
 

@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from blog_pipeline.publishing.build_copy_page import (
     SKIN_CSS_PATH,
+    apply_refresh_handoffs,
     json_for_script,
     load_drafts,
     render,
@@ -16,6 +17,41 @@ from blog_pipeline.publishing.build_copy_page import (
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_completed_refresh_is_labeled_as_replacement_without_bypassing_qa(self):
+        original = {
+            "draft_id": "2026-09-03", "source": "data/days/2026-09-03.json",
+            "publish_ready": False, "publish_date": "2026-09-03",
+        }
+        checked = apply_refresh_handoffs([original], {"refresh_queue": [{
+            "draft_id": "2026-09-03", "source": "data/days/2026-09-03.json",
+            "page_url": "https://won0322.tistory.com/221", "status": "ready_for_review",
+        }]})
+        self.assertEqual(checked[0]["replacement_target_url"], "https://won0322.tistory.com/221")
+        self.assertIn("본문 교체", checked[0]["scheduled_label"])
+        self.assertFalse(checked[0]["publish_ready"])
+        self.assertEqual(checked[0]["publish_date"], "2026-09-03")
+        self.assertNotIn("replacement_target_url", original)
+
+    def test_planned_or_invalid_target_does_not_claim_a_completed_refresh(self):
+        draft = {"draft_id": "2026-09-03", "source": "data/days/2026-09-03.json"}
+        for status, url, source in [
+            ("planned", "https://won0322.tistory.com/221", draft["source"]),
+            ("ready_for_review", "https://example.com/221", draft["source"]),
+            ("ready_for_review", "https://won0322.tistory.com/221", "data/days/2026-09-04.json"),
+        ]:
+            with self.subTest(status=status, url=url):
+                checked = apply_refresh_handoffs([draft], {"refresh_queue": [{
+                    "draft_id": draft["draft_id"], "source": source,
+                    "page_url": url, "status": status,
+                }]})
+                self.assertNotIn("replacement_target_url", checked[0])
+
+    def test_deep_link_can_only_select_a_known_draft(self):
+        page = render([])
+        self.assertIn('new URLSearchParams(window.location.search).get("draft")', page)
+        self.assertIn("byId.has(requestedDraft) ? requestedDraft : latest", page)
+        self.assertIn("기존 글 교체용", page)
+
     def test_preview_uses_repository_assets_before_public_deploy(self):
         from blog_pipeline.publishing.build_copy_page import render_preview_page
 
@@ -427,9 +463,8 @@ class CopyPageTests(unittest.TestCase):
 
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"', html)
         self.assertIn("오늘 글 발행 준비", html)
-        self.assertIn("월·수 실전 IT", html)
-        self.assertIn("화·목 궁금한 IT 원리", html)
-        self.assertIn("금요일 개발·AI 인사이트", html)
+        self.assertIn("월·수·금은 새 글, 화·목은 기존 글 개선", html)
+        self.assertIn("CONTENT_GROWTH_TRIAL.md", html)
         self.assertIn("토요일 프로젝트 글", html)
         self.assertNotIn("수요일 개발 가이드", html)
         self.assertIn("HTML 모드에 한 번 붙여넣고", html)
