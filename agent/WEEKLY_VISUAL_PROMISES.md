@@ -1,6 +1,7 @@
 # 요일별 이미지 약속과 공통 시각 품질
 
-이 문서는 2026-09-02 이후 월요일부터 토요일까지의 정규 글에 적용한다.
+이 문서는 2026-09-02 이후 월요일부터 금요일까지의 정규 글에 적용한다.
+토요일 역할은 2026-10-12 종료 전 제작된 글의 이미지 검증용으로 남긴다.
 이미지 크기와 진위·가독성은 공통으로 지키고, 대표 이미지의 질문과 본문
 이미지가 설명할 일은 요일마다 다르게 설계한다.
 
@@ -23,7 +24,7 @@
 | 수요일 | `change_impact` | `changed_condition_scene` — 이전 전제와 바뀐 결과가 충돌하는 장면 | `before_after_change`, `action_check` |
 | 목요일 | `myth_evidence` | `belief_result_conflict` — 흔한 믿음과 실제 판정의 차이 | `myth_fact_boundary`, `history_or_direct_check` |
 | 금요일 | `developer_decision` | `tool_choice_scene` — 문서·저장소·도구 사이의 실제 선택 장면 | `source_evidence`, `decision_map` |
-| 토요일 | `project_evidence_story` | `episode_conflict` — 이번 회차의 설계 갈등·실험 장면 | `implementation_evidence`, `decision_result` |
+| 토요일(종료 전 기록) | `project_evidence_story` | `episode_conflict` — 이번 회차의 설계 갈등·실험 장면 | `implementation_evidence`, `decision_result` |
 
 대표의 `weekday_profile`과 `weekday_role`은 `visual.cover`와 `images.cover`에
 같은 값으로 기록한다. 각 본문 브리프의 `teaching_role`도 대응하는
