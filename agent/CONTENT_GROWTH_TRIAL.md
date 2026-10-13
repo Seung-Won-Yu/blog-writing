@@ -88,6 +88,10 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.publish_bundle --draft-i
    재심사는 자동 수행하지 않는다. 동일 제목의 새 글로 발행하도록 안내하지 않는다.
    `?draft=<기존 draft_id>` 도우미 링크로 해당 원고를 바로 열 수 있다. 큐 상태를
    `ready_for_review`로 바꾼 뒤 도우미를 다시 만들면 기존 글 교체용 표시와 대상 URL이 나온다.
+   이번 보완의 검수가 실제로 완료된 한국 날짜를 큐의 `refreshed_on`에
+   `YYYY-MM-DD`로 기록한다. 도우미는 이 보완일과 새 글의 원고 날짜를 함께 최신순으로
+   정렬하고 가장 최근 작업을 기본 선택한다. 최초 발행일·원고 ID는 바꾸지 않는다.
+   단순 재빌드·재배포 때 보완일을 갱신하지 않으며, 미완성 작업을 오늘 작업으로 올리지 않는다.
 8. 상태는 `planned` → `in_progress` → `ready_for_review`로 갱신한다.
    사용자 저장 확인이나 실제 공개 본문 대조 후에만 `published`로 바꾼다.
    `reports/content-refresh/<실행일>.md`에 변경·근거·검증·인계 상태를 기록한다.

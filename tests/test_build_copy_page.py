@@ -7,16 +7,100 @@ from unittest.mock import patch
 from blog_pipeline.publishing.build_copy_page import (
     SKIN_CSS_PATH,
     apply_refresh_handoffs,
+    draft_work_date,
     json_for_script,
     load_drafts,
     render,
     safe_image_assets,
     scheduled_label,
+    sort_drafts,
+    valid_refresh_date,
     write_preview_pages,
 )
 
 
 class CopyPageTests(unittest.TestCase):
+    def test_refresh_completion_date_sorts_old_article_before_yesterday_new_draft(self):
+        original = {
+            "draft_id": "2026-08-08-automation",
+            "source": "data/automation_cases/2026-08-08.json",
+            "publish_date": "2026-08-08", "publish_ready": False,
+            "scheduled_at": "2026-08-08T09:00:00+09:00",
+        }
+        yesterday = {"draft_id": "2026-10-12", "publish_date": "2026-10-12"}
+        plan = {"refresh_queue": [{
+            "draft_id": original["draft_id"], "source": original["source"],
+            "page_url": "https://won0322.tistory.com/197",
+            "status": "ready_for_review", "refreshed_on": "2026-10-13",
+        }]}
+        checked = apply_refresh_handoffs([yesterday, original], plan)
+        self.assertEqual(checked[0]["draft_id"], original["draft_id"])
+        self.assertEqual(draft_work_date(checked[0]), "2026-10-13")
+        self.assertEqual(checked[0]["publish_date"], "2026-08-08")
+        self.assertEqual(checked[0]["scheduled_at"], original["scheduled_at"])
+        self.assertFalse(checked[0]["publish_ready"])
+        self.assertNotIn("refreshed_on", original)
+        self.assertEqual(apply_refresh_handoffs([yesterday, original], plan), checked)
+
+    def test_mixed_new_and_refreshed_drafts_sort_by_work_date_not_type(self):
+        drafts = [
+            {"draft_id": "old", "publish_date": "2026-08-08", "refreshed_on": "2026-10-13"},
+            {"draft_id": "newer", "publish_date": "2026-10-14"},
+            {"draft_id": "new", "publish_date": "2026-10-12"},
+            {"draft_id": "older", "publish_date": "2026-09-03", "refreshed_on": "2026-10-11"},
+        ]
+        self.assertEqual(
+            [item["draft_id"] for item in sort_drafts(drafts)],
+            ["newer", "old", "new", "older"],
+        )
+
+    def test_work_date_ties_are_deterministic_and_do_not_mutate_input(self):
+        drafts = [
+            {"draft_id": "a", "publish_date": "2026-10-13", "scheduled_at": "09:00"},
+            {"draft_id": "c", "publish_date": "2026-08-08", "refreshed_on": "2026-10-13"},
+            {"draft_id": "b", "publish_date": "2026-10-13", "scheduled_at": "09:00"},
+        ]
+        self.assertEqual([d["draft_id"] for d in sort_drafts(drafts)], ["b", "a", "c"])
+        self.assertEqual([d["draft_id"] for d in drafts], ["a", "c", "b"])
+
+    def test_refresh_date_must_be_an_explicit_canonical_calendar_date(self):
+        for value in [None, 20261013, "", "20261013", "2026-1-3", "2026-02-30",
+                      "2026-10-13T09:00:00+09:00", "<script>", " 2026-10-13"]:
+            with self.subTest(value=value):
+                self.assertEqual(valid_refresh_date(value), "")
+                self.assertEqual(draft_work_date({
+                    "publish_date": "2026-08-08", "refreshed_on": value,
+                }), "2026-08-08")
+        self.assertEqual(valid_refresh_date("2026-10-13"), "2026-10-13")
+
+    def test_missing_or_invalid_completion_date_keeps_original_order(self):
+        old = {"draft_id": "2026-09-03", "publish_date": "2026-09-03",
+               "source": "data/days/2026-09-03.json"}
+        newer = {"draft_id": "2026-10-12", "publish_date": "2026-10-12"}
+        for refreshed_on in [None, "2026-02-30"]:
+            with self.subTest(refreshed_on=refreshed_on):
+                checked = apply_refresh_handoffs([old, newer], {"refresh_queue": [{
+                    "draft_id": old["draft_id"], "source": old["source"],
+                    "page_url": "https://won0322.tistory.com/221", "status": "published",
+                    "refreshed_on": refreshed_on,
+                }]})
+                self.assertEqual(checked[0]["draft_id"], newer["draft_id"])
+                self.assertIn("replacement_target_url", checked[1])
+                self.assertNotIn("refreshed_on", checked[1])
+
+    def test_render_groups_and_defaults_to_refresh_date_but_keeps_original_identity(self):
+        old = {"draft_id": "2026-08-08-automation", "publish_date": "2026-08-08",
+               "refreshed_on": "2026-10-13", "title": "기존 글 수정본"}
+        new = {"draft_id": "2026-10-12", "publish_date": "2026-10-12"}
+        page = render([new, old])
+        self.assertIn('const latest = "2026-08-08-automation";', page)
+        self.assertLess(page.index('2026-10-13 · 1건'), page.index('2026-10-12 · 1건'))
+        self.assertIn('data-draft-id="2026-08-08-automation"', page)
+        self.assertIn('기존 글 보완 · 최초 발행 2026-08-08', page)
+        self.assertIn('"publish_date": "2026-08-08"', page)
+        self.assertIn('id="workDate"', page)
+        self.assertNotIn('data-draft-id="2026-10-13"', page)
+
     def test_completed_refresh_is_labeled_as_replacement_without_bypassing_qa(self):
         original = {
             "draft_id": "2026-09-03", "source": "data/days/2026-09-03.json",
@@ -36,15 +120,17 @@ class CopyPageTests(unittest.TestCase):
         draft = {"draft_id": "2026-09-03", "source": "data/days/2026-09-03.json"}
         for status, url, source in [
             ("planned", "https://won0322.tistory.com/221", draft["source"]),
+            ("in_progress", "https://won0322.tistory.com/221", draft["source"]),
             ("ready_for_review", "https://example.com/221", draft["source"]),
             ("ready_for_review", "https://won0322.tistory.com/221", "data/days/2026-09-04.json"),
         ]:
             with self.subTest(status=status, url=url):
                 checked = apply_refresh_handoffs([draft], {"refresh_queue": [{
                     "draft_id": draft["draft_id"], "source": source,
-                    "page_url": url, "status": status,
+                    "page_url": url, "status": status, "refreshed_on": "2026-10-13",
                 }]})
                 self.assertNotIn("replacement_target_url", checked[0])
+                self.assertNotIn("refreshed_on", checked[0])
 
     def test_deep_link_can_only_select_a_known_draft(self):
         page = render([])

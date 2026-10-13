@@ -2,7 +2,7 @@
 """Build a small GitHub Pages UI for copying Tistory draft HTML."""
 import html
 import json
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -94,6 +94,34 @@ def safe_image_assets(values):
     return assets
 
 
+def valid_refresh_date(value):
+    """Accept only an explicit, canonical completion date, never a build time."""
+    if not isinstance(value, str):
+        return ""
+    try:
+        return value if date.fromisoformat(value).isoformat() == value else ""
+    except ValueError:
+        return ""
+
+
+def draft_work_date(draft):
+    refreshed_on = valid_refresh_date(draft.get("refreshed_on"))
+    return refreshed_on or str(draft.get("publish_date") or draft.get("day") or "")
+
+
+def sort_drafts(drafts):
+    return sorted(
+        drafts,
+        key=lambda item: (
+            draft_work_date(item),
+            str(item.get("publish_date") or ""),
+            str(item.get("scheduled_at") or ""),
+            str(item.get("draft_id") or item.get("day") or ""),
+        ),
+        reverse=True,
+    )
+
+
 def load_drafts():
     drafts = []
     for meta_path in sorted(TISTORY_DIR.glob("*.json"), reverse=True):
@@ -169,15 +197,7 @@ def load_drafts():
                 "meta_path": f"tistory/{draft_id}.json",
             }
         )
-    return sorted(
-        drafts,
-        key=lambda item: (
-            item["publish_date"],
-            item["scheduled_at"],
-            item["draft_id"],
-        ),
-        reverse=True,
-    )
+    return sort_drafts(drafts)
 
 
 def apply_guard_results(drafts, *, root=ROOT):
@@ -235,16 +255,19 @@ def apply_refresh_handoffs(drafts, plan):
             url.scheme == "https" and url.netloc == "won0322.tistory.com"
             and url.path.strip("/").isdigit() and not url.query and not url.fragment
         ):
-            targets[(item.get("draft_id"), item.get("source"))] = item["page_url"]
+            targets[(item.get("draft_id"), item.get("source"))] = item
     result = []
     for original in drafts:
         draft = dict(original)
         target = targets.get((draft.get("draft_id"), draft.get("source")))
         if target:
-            draft["replacement_target_url"] = target
+            draft["replacement_target_url"] = target["page_url"]
             draft["scheduled_label"] = "기존 공개 글 수정본 · 새 글 발행이 아닌 본문 교체"
+            refreshed_on = valid_refresh_date(target.get("refreshed_on"))
+            if refreshed_on:
+                draft["refreshed_on"] = refreshed_on
         result.append(draft)
-    return result
+    return sort_drafts(result)
 
 
 def render_preview_page(draft, fragment):
@@ -324,24 +347,28 @@ def write_preview_pages(drafts):
 def render_draft_buttons(drafts):
     groups = []
     for draft in drafts:
-        publish_date = str(draft.get("publish_date") or draft.get("day") or "")
-        if not groups or groups[-1][0] != publish_date:
-            groups.append((publish_date, []))
+        work_date = draft_work_date(draft)
+        if not groups or groups[-1][0] != work_date:
+            groups.append((work_date, []))
         groups[-1][1].append(draft)
     rendered = []
-    for publish_date, items in groups:
+    for work_date, items in groups:
         rendered.append(
             f'<section class="draft-group"><p class="draft-group-title">'
-            f'{esc(publish_date)} · {len(items)}건</p>'
+            f'{esc(work_date)} · {len(items)}건</p>'
         )
         for item in items:
             draft_id = str(item.get("draft_id") or item.get("day") or "")
+            refresh_note = (
+                f'<small>기존 글 보완 · 최초 발행 {esc(item.get("publish_date"))}</small>'
+                if valid_refresh_date(item.get("refreshed_on")) else ""
+            )
             rendered.append(
                 f'<button class="draft-btn" type="button" '
                 f'data-draft-id="{esc(draft_id)}" aria-pressed="false">'
                 f'<span><b>{esc(item.get("content_label") or "뉴스 심층글")}</b>'
                 f'<em>{esc(item.get("scheduled_label"))}</em></span>'
-                f'<small>{esc(item.get("title"))}</small></button>'
+                f'<small>{esc(item.get("title"))}</small>{refresh_note}</button>'
             )
         rendered.append("</section>")
     return "\n".join(rendered)
@@ -366,6 +393,7 @@ def render_skin_contract_status(contract):
 
 
 def render(drafts, skin_contract=None):
+    drafts = sort_drafts(drafts)
     if skin_contract is None:
         skin_contract = inspect_skin_contract(ROOT)
     payload = json_for_script(drafts)
@@ -548,18 +576,19 @@ def render(drafts, skin_contract=None):
     }}
     .draft-btn span {{
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
       align-items: center;
       justify-content: space-between;
       font-size: 13px;
       font-weight: 900;
     }}
-    .draft-btn span b {{ font-weight: 900; }}
+    .draft-btn span b {{ font-weight: 900; flex-shrink: 0; }}
     .draft-btn span em {{
       color: var(--accent);
       font-size: 10px;
       font-style: normal;
-      white-space: nowrap;
+      white-space: normal;
     }}
     .draft-btn small {{
       display: -webkit-box;
@@ -799,7 +828,7 @@ def render(drafts, skin_contract=None):
 
     <div class="layout">
       <aside class="panel">
-        <div class="panel-title">초안 날짜</div>
+        <div class="panel-title">제작·보완일 · 최신순</div>
         <div class="drafts" id="drafts">{buttons or '<p class="empty">아직 생성된 초안이 없습니다.</p>'}</div>
       </aside>
 
@@ -809,6 +838,7 @@ def render(drafts, skin_contract=None):
           <p class="lead" id="replacementNotice" hidden>기존 글 교체용입니다. <a id="replacementTarget">수정할 공개 글 확인</a> · 새 글로 발행하지 마세요.</p>
           <section class="publish-fields" aria-label="발행 정보">
             <div class="field"><span class="label">추천 제목</span><span class="value title-value" id="title"></span><button class="btn dark" type="button" data-copy="title">복사</button></div>
+            <div class="field"><span class="label">제작·보완일</span><span class="value" id="workDate"></span></div>
             <div class="field"><span class="label">카테고리</span><span class="value" id="category"></span><button class="btn" type="button" data-copy="category">복사</button></div>
             <div class="field"><span class="label">태그</span><span class="value" id="tags"></span><button class="btn" type="button" data-copy="tags">복사</button></div>
             <div class="field"><span class="label">발행 방식</span><span class="value" id="schedule"></span><button class="btn" type="button" data-copy="schedule">복사</button></div>
@@ -867,6 +897,7 @@ def render(drafts, skin_contract=None):
 
     const els = {{
       title: document.getElementById("title"),
+      workDate: document.getElementById("workDate"),
       category: document.getElementById("category"),
       tags: document.getElementById("tags"),
       schedule: document.getElementById("schedule"),
@@ -1049,6 +1080,9 @@ def render(drafts, skin_contract=None):
         button.setAttribute("aria-pressed", String(selected));
       }});
       els.title.textContent = draft.title || "";
+      els.workDate.textContent = draft.refreshed_on
+        ? draft.refreshed_on + " · 기존 글 보완 (최초 발행 " + draft.publish_date + ")"
+        : draft.publish_date || "";
       els.category.textContent = draft.category || "";
       els.tags.textContent = draft.tags || "";
       els.schedule.textContent = draft.scheduled_label || draft.scheduled_at || "직접 지정";
@@ -1086,7 +1120,7 @@ def render(drafts, skin_contract=None):
         els.previewFrame.setAttribute("src", currentPreviewPath);
         setPreviewMode(true);
         updateCopyState();
-        setStatus(draft.publish_date + " · " + draft.content_label + " 초안을 불러왔습니다.");
+        setStatus((draft.refreshed_on || draft.publish_date) + " · " + draft.content_label + " 초안을 불러왔습니다.");
       }} catch (error) {{
         if (revision !== selectionRevision) return;
         currentBaseHtml = "";
