@@ -30,7 +30,7 @@
   "refresh_queue": [
     {
       "priority": 1,
-      "status": "planned",
+      "status": "ready_for_review",
       "page_url": "https://won0322.tistory.com/197",
       "title": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
       "draft_id": "2026-08-08-automation",
