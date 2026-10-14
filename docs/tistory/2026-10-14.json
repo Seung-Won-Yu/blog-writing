@@ -1,0 +1,97 @@
+{
+  "title": "GitHub PR 제한: Draft까지 셀 때 확인할 설정과 기여자 예외",
+  "title_candidates": [
+    "GitHub PR 제한: Draft까지 셀 때 확인할 설정과 기여자 예외",
+    "GitHub, 동시 PR 한도에 Draft를 포함하는 선택 설정 추가",
+    "GitHub PR 제한의 Draft 포함과 외부 기여 접수 경계: Draft 표찰도 두 칸 접수함을 차지하는 장면"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-10-14",
+  "publish_date": "2026-10-14",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-14T09:00:00+09:00",
+  "tags": [
+    "GitHub PR 제한",
+    "Draft PR 제한",
+    "외부 기여",
+    "리뷰 대기열",
+    "공개 저장소",
+    "GitHub Actions",
+    "기여 가이드"
+  ],
+  "meta_description": "외부 기여자의 열린 PR 수를 제한했는데 Draft가 계속 쌓인다. GitHub PR 제한은 10월 8일부터 Draft도 포함하도록 선택할 수 있다. 공개 저장소 관리자는 상한 숫자뿐 아니라 포함 옵… 기존 Draft 예외를 선택적으로 닫을 수 있게 됐다. 공개 저장소의 외부 기여자별…",
+  "key_summary": [
+    "1. GitHub, 동시 PR 한도에 Draft를 포함하는 선택 설정 추가",
+    "직접 얻는 결과: Draft 포함 여부와 외부 기여자별 상한을 확인하고, 권한을 늘리지 않는 예외와 검증 가능한 기여 안내를 함께 정리해 접수 정책을 결정할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: GitHub PR 제한: Draft까지 셀 때 확인할 설정과 기여자 예외"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 11,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-14.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-14.html",
+  "before_ad_html": "docs/tistory/2026-10-14-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-14-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-14-adfit.html",
+  "source_sha256": "8cd1cd1058304bf51fb4424893d70d58f297f5e79d9c0c9224f3540edd0cf9a1",
+  "html_sha256": "be5525937478ea754bbf8e0db579bc9aa0c2db6f46dd4efa11b2b100dcf09ee9",
+  "adfit_sha256": "b98d90753ed3c6aa8d82b077f9fda48f5c8dee2595efd8b8b42c1d33420e4e79",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-Draft-접수함.webp",
+      "path": "docs/tistory/assets/2026-10-14/PR제한-Draft-접수함.webp",
+      "original_url": "",
+      "alt": "GitHub PR 제한은 Draft를 같은 접수 상한에 포함할 수 있다 — GitHub PR 제한에서 Draft도 접수 공간을 쓰면 어떤 장면이 될까?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-Draft-포함전후.webp",
+      "path": "docs/tistory/assets/2026-10-14/PR제한-Draft-포함전후.webp",
+      "original_url": "",
+      "alt": "GitHub PR 제한에서 Draft를 포함하면 일반 PR과 Draft가 같은 동시 상한을 사용한다 — GitHub PR 제한은 Draft 포함 전후에 무엇을 세나?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-설정-확인분기.webp",
+      "path": "docs/tistory/assets/2026-10-14/PR제한-설정-확인분기.webp",
+      "original_url": "",
+      "alt": "GitHub PR 제한 점검은 현재 대기열을 읽은 뒤 포함 옵션과 예외를 확인하고 저장된 값을 다시 대조하는 순서다 — GitHub PR 제한에서 정상 기여자가 막히면 어디를 확인하나?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-공식문서-Draft선택.webp",
+      "path": "docs/tistory/assets/2026-10-14/PR제한-공식문서-Draft선택.webp",
+      "original_url": "",
+      "alt": "GitHub PR 제한의 공식 문서는 Draft 포함을 선택 설정으로 설명한다 — GitHub PR 제한 공식 문서에는 Draft 포함 선택이 어떻게 기록됐나?",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

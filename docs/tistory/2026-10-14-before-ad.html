@@ -1,0 +1,23 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-lead">외부 기여자의 열린 PR 수를 제한했는데 Draft가 계속 쌓인다. GitHub PR 제한은 10월 8일부터 Draft도 포함하도록 선택할 수 있다. 공개 저장소 관리자는 상한 숫자뿐 아니라 포함 옵션과 예외 명단을 함께 확인해야 한다. Draft는 검토 준비 상태를 나타낼 뿐, 자동 검사 비용까지 막아 주는 표시는 아니다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-Draft-접수함.webp" alt="GitHub PR 제한은 Draft를 같은 접수 상한에 포함할 수 있다 — GitHub PR 제한에서 Draft도 접수 공간을 쓰면 어떤 장면이 될까?" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">IT 트렌드 해설</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>GitHub PR 제한은 이제 선택 설정으로 Draft까지 셀 수 있다. 공개 저장소의 쓰기 권한 없는 기여자가 대상이며, Draft 표시만 바꿔서는 대기 중인 작업 수를 줄일 수 없다.</li><li>대기열·상한·포함 옵션·예외 명단을 먼저 읽고 정상 기여자의 작업 흐름에 맞춰 정책을 정한다.</li><li>한도는 품질 판정이나 CI 비용 상한이 아니며 이미 열린 초과 PR의 처리도 별도 확인해야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>PR</dt><dd>변경을 저장소에 반영해 달라고 제안하고 검토하는 단위다.</dd></div><div><dt>Draft</dt><dd>아직 검토 준비가 끝나지 않았다고 표시한 PR 상태다.</dd></div><div><dt>CI</dt><dd>변경에 대해 테스트·빌드 같은 검사를 자동으로 실행하는 과정이다.</dd></div></dl></div>
+</section>
+
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">핵심 해설 · GitHub Changelog · 2026. 10. 8</p>
+    <h3>GitHub, 동시 PR 한도에 Draft를 포함하는 선택 설정 추가</h3>
+    <p class="digest-blurb">기존 Draft 예외를 선택적으로 닫을 수 있게 됐다. 공개 저장소의 외부 기여자별 접수 한도와 예외, 검토 준비·CI 경계를 문서 비교로 정리한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">Draft가 계속 쌓였다면 포함 옵션부터 확인한다</h4><p>GitHub PR 제한은 이제 선택 설정으로 Draft까지 셀 수 있다. 공개 저장소의 쓰기 권한 없는 기여자가 대상이며, Draft 표시만 바꿔서는 대기 중인 작업 수를 줄일 수 없다.</p><p>변경 발표는 기존 예외를 닫을 수 있는 선택지를 추가했다는 뜻이다. 모든 저장소에서 자동으로 같은 설정이 켜졌다고 읽지 말고 자기 저장소의 현재 값을 확인한다. 관리 대상은 저장소 전체 PR 수가 아니라 한 외부 기여자가 동시에 열어 둔 PR 수다.</p><ul class="digest-bullet-list"><li>공개 저장소의 외부 기여자별 열린 PR과 Draft를 구분해 현재 대기열을 확인한다.</li><li>관리 화면에서 동시 PR 상한과 Draft 포함 옵션, 기존 예외 명단을 읽는다.</li><li>정상 기여자의 작업 분할·검증 증거·응답 책임을 기준으로 한도와 예외를 결정한다.</li><li>설정 저장 뒤 값을 재확인하고 기여 안내와 실제 접수 결과, CI 실행 기록을 대조한다.</li></ul><p>이 순서는 실제 계정에서 시행한 결과가 아닌 문서 기반 점검안이다. 공개 저장소 관리자라는 전제를 먼저 확인한다. 쓰기 권한이 있는 내부 개발자의 PR이 많아지는 문제는 이 외부 기여자 상한만으로 해결되지 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-공식문서-Draft선택.webp" alt="GitHub PR 제한의 공식 문서는 Draft 포함을 선택 설정으로 설명한다 — GitHub PR 제한 공식 문서에는 Draft 포함 선택이 어떻게 기록됐나?" width="1200" height="630" loading="lazy"><figcaption>GitHub PR 제한의 공식 문서는 Draft 포함을 선택 설정으로 설명한다. 공개 문서의 설정 설명을 실제 캡처했으며 저장소에서 설정을 저장한 화면은 아니다.</figcaption></figure><h4 class="digest-subheading">같은 상한에서도 Draft 포함 여부에 따라 계산이 달라진다</h4><p>10월 14일 확인한 한국어 공식 문서에는 여전히 Draft가 한도에서 제외된다는 설명이 남아 있었다. 같은 페이지의 영문판에는 포함 선택이 있다. 번역본만 보고 기존 예외를 현재 규칙으로 판단하지 말고 최신 변경 기록과 영문 설정 설명을 함께 대조한다.</p><p>다음 표는 동시 상한을 2로 정했다고 가정한 설명용 예시다. 추천 상한이나 실제 저장소의 측정값이 아니다. 쓰기 권한이 없고 예외 명단에도 없는 같은 기여자의 열린 PR만 비교한다.</p><div class="digest-table-wrap" role="region" aria-label="가상 상한 2에서 Draft 포함 전후의 계산" tabindex="0"><table class="digest-data-table"><caption>가상 상한 2에서 Draft 포함 전후의 계산</caption><thead><tr><th scope="col">현재 열린 작업</th><th scope="col">Draft 제외</th><th scope="col">Draft 포함</th></tr></thead><tbody><tr><td>일반 PR 1개·Draft 1개</td><td>1개로 계산</td><td>2개로 계산</td></tr><tr><td>Draft 2개</td><td>0개로 계산</td><td>2개로 계산</td></tr><tr><td>일반 PR 2개</td><td>2개로 계산</td><td>2개로 계산</td></tr></tbody></table></div><p>이 예시에서 포함 옵션을 켜면 일반 PR 하나와 Draft 하나가 같은 접수 공간을 사용한다. 다음 작업을 열기 전 기존 작업을 정리하는 판단이 필요해진다. 한도는 저장소별·사용자별이므로 서로 다른 사람의 PR을 합쳐 개인 상한 초과로 계산하지 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-14/PR제한-Draft-포함전후.webp" alt="GitHub PR 제한에서 Draft를 포함하면 일반 PR과 Draft가 같은 동시 상한을 사용한다 — GitHub PR 제한은 Draft 포함 전후에 무엇을 세나?" width="1200" height="630" loading="lazy"><figcaption>GitHub PR 제한에서 Draft를 포함하면 일반 PR과 Draft가 같은 동시 상한을 사용한다. 그림의 상한 2와 개수는 문서 규칙을 설명하는 가상 예시이며 실제 차단 결과가 아니다.</figcaption></figure><p>상한에 이미 도달했다면 기여자는 불필요한 열린 작업을 닫거나, 검토를 거쳐 병합되는 것을 기다릴 수 있다. 한도 공간을 만들려고 미검증 변경을 서둘러 병합하는 정책은 접수 부담을 배포 위험으로 옮긴다.</p></div>
+  </div>
+</section>
+</article>
