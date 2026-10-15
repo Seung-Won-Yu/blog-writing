@@ -44,7 +44,7 @@
     },
     {
       "priority": 2,
-      "status": "planned",
+      "status": "ready_for_review",
       "page_url": "https://won0322.tistory.com/221",
       "title": "시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법",
       "draft_id": "2026-09-03",
@@ -53,7 +53,8 @@
       "previous_clicks": 0,
       "current_impressions": 166,
       "previous_impressions": 2,
-      "improvement_goal": "기기 내부 기록·다운로드·북마크·외부 관찰을 독자의 상황별로 구분하고 직접 확인할 화면을 제공한다. 타인의 기록 복구나 익명성 보장을 약속하지 않는다."
+      "improvement_goal": "기기 내부 기록·다운로드·북마크·외부 관찰을 독자의 상황별로 구분하고 직접 확인할 화면을 제공한다. 타인의 기록 복구나 익명성 보장을 약속하지 않는다.",
+      "refreshed_on": "2026-10-15"
     },
     {
       "priority": 3,

@@ -36,7 +36,7 @@
     "추천 제목: 시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 9,
+  "estimated_read_minutes": 10,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-03-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-03-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-03-adfit.html",
-  "source_sha256": "9bfde1e53dc13bf78e5ab21a2c57d9c73dc480f866c957c9b2465e479195ad17",
-  "html_sha256": "f93b32a8b8aa6b18be2d49d078996681408c8b085338c888d7d00bed7fe97641",
-  "adfit_sha256": "08f191f468a228288756030870ce6d442b4c1ab51f49c5f266b8609c1ee42658",
+  "source_sha256": "0ad56ec86a367331e21f4d8d6da7ecc053f5dd31c5b3b15acb79c192ba450bc2",
+  "html_sha256": "8b75ecb019c21be2f44ad697e6baa645fd6229cab9f87b94f63e62036b0a0a46",
+  "adfit_sha256": "392db834bfe23e9afdf4c9ef9de98a6633ec9a24f469e605bab4500199b041c1",
   "image_assets": [
     {
       "kind": "cover",
