@@ -1,0 +1,781 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "draft_id": "2026-10-16-automation",
+  "publish_date": "2026-10-16",
+  "date_label": "2026. 10. 16",
+  "weekday": "금",
+  "scheduled_at": "2026-10-16T09:00:00+09:00",
+  "primary_query": "PDF 텍스트 추출",
+  "tags": [
+    "PDF 텍스트 추출",
+    "OCR",
+    "pypdf",
+    "OCRmyPDF",
+    "Tesseract",
+    "AI 문서 처리",
+    "공식 문서"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "PDF에 정확한 텍스트가 있으면 추출하고 이미지 속 글자만 있으면 OCR을 검토한다.",
+      "혼합 PDF에서는 OCR sidecar를 전체 원문으로 취급하지 않는다.",
+      "텍스트 생성 뒤에도 누락·숫자·읽기 순서·표 대응을 원문과 대조해야 한다."
+    ],
+    "glossary": [
+      {
+        "term": "OCR",
+        "meaning": "이미지에 보이는 글자 모양을 컴퓨터가 사용할 문자로 인식하는 처리다."
+      },
+      {
+        "term": "텍스트 레이어",
+        "meaning": "PDF 화면과 함께 저장되어 검색·선택·추출할 수 있는 글자 데이터다."
+      },
+      {
+        "term": "sidecar",
+        "meaning": "OCRmyPDF가 새로 인식한 글자를 별도 파일에 저장하는 보조 출력이다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+    "opening": "PDF를 넣었는데 AI가 본문을 놓치면 OCR부터 돌려야 할까? 먼저 그 페이지에 올바른 텍스트가 있는지 확인한다. 이미 글자가 있으면 추출을, 이미지만 있으면 OCR을 검토한다. 선택이 끝난 뒤에도 전체 페이지의 누락과 표·문단 순서가 남는다. 특히 OCR 보조 파일을 전체 원문으로 착각하면 읽을 수 있던 페이지까지 빠질 수 있다.",
+    "closing": "AI 문서 처리는 화면에 보이는 글과 실제 입력이 같은지 확인하는 데서 출발한다. 도구 선택은 텍스트 유무로 시작하지만 완료 판정은 필요한 근거가 남았는지로 끝난다. 미확인 페이지는 검토 대기로 남겨 다음 변경에서도 같은 기준으로 비교한다.",
+    "action": "지금 처리할 PDF에서 본문·표·스캔 페이지를 골라 필요한 문장을 대조하고, 추출·OCR·검토 대기 경로를 페이지별로 기록한다.",
+    "audience_problem": "PDF를 문자열로 바꿔 AI 도우미에 넣는 개발자가 빈 결과와 혼합 문서 누락을 같은 추출기 문제로 취급한다.",
+    "reader_takeaway": "PDF 페이지별로 추출·OCR·수동 검토 경로와 다음 단계에 넘길 완료 조건을 정한다.",
+    "why_now": "AI 문서 입력을 만들기 전 PDF 추출과 OCR의 책임을 구분할 필요가 있다.",
+    "topic_key": "pdf-text-extraction-ocr-mixed-page-sidecar-choice",
+    "reader_question": "PDF를 AI에 넣기 전에 텍스트 추출과 OCR 중 무엇을 골라야 할까?",
+    "entities": [
+      "PDF",
+      "텍스트 추출",
+      "OCR",
+      "pypdf",
+      "OCRmyPDF",
+      "Tesseract"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "classification",
+      "comparison",
+      "application",
+      "limits",
+      "judgment",
+      "mechanism"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "official_document_guide",
+    "search_intent": {
+      "query": "PDF 텍스트 추출",
+      "reader_need": "PDF 본문의 누락을 막으며 추출과 OCR 중 필요한 경로를 결정한다.",
+      "answer_format": "페이지 상태 선택표와 원문 대조 검수 기록"
+    },
+    "reader_hook": {
+      "scene": "PDF 설명서를 AI에 연결하려는데 본문은 화면에 보이고 추출한 문자열에는 제목만 남는 장면",
+      "stakes": "OCR 보조 파일만 전체 원문으로 쓰면 기존 텍스트 페이지가 빠져도 입력 성공으로 오판할 수 있다.",
+      "payoff": "페이지 상태별 추출·OCR 선택표와 누락·읽기 순서를 확인하는 완료 조건을 얻는다.",
+      "open_question": "PDF에 글자가 보인다는 사실과 AI에 넘길 텍스트가 확보됐다는 사실은 어떻게 다를까?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "글자가 보이는데 추출 결과는 왜 비어 있을까",
+      "immediate_answer": "PDF에 올바른 텍스트가 있으면 먼저 추출하고, 이미지 속 글자만 있는 페이지는 OCR을 검토한다. 글자가 나온 뒤에도 누락·읽기 순서·표의 대응을 확인해야 AI에 넘길 준비가 끝난다.",
+      "action_steps": [
+        "문제가 생긴 PDF의 본문·표·스캔 페이지를 각각 골라 화면과 복사한 문장을 대조한다.",
+        "텍스트가 없거나 일부만 있으면 페이지별로 추출·OCR·수동 검토 경로를 정한다.",
+        "혼합 PDF는 OCR 보조 텍스트 파일만 믿지 않고 최종 PDF 전체에서 다시 추출한다.",
+        "필요한 문장·숫자·읽기 순서가 맞는 페이지에만 다음 AI 처리 단계를 허용한다."
+      ],
+      "completion_check": "지금 처리할 PDF에서 본문·표·스캔 페이지를 골라 필요한 문장을 대조하고, 추출·OCR·검토 대기 경로를 페이지별로 기록한다."
+    },
+    "revisit": {
+      "quick_answer": "PDF에 올바른 텍스트가 있으면 먼저 추출하고, 이미지 속 글자만 있는 페이지는 OCR을 검토한다. 글자가 나온 뒤에도 누락·읽기 순서·표의 대응을 확인해야 AI에 넘길 준비가 끝난다.",
+      "reuse_case": "PDF를 AI 검색·요약용 문자열로 준비할 때",
+      "failure_case": "혼합 PDF의 OCR 보조 출력을 전체 원문으로 사용할 때",
+      "artifact_type": "evaluation_matrix",
+      "update_triggers": [
+        "추출기·OCR 버전 변경",
+        "언어·문서 유형 변경",
+        "표·다단 편집 유입"
+      ]
+    },
+    "original_value": {
+      "durable_question": "PDF에 텍스트가 있는지와 사용 가능한 원문이 확보됐는지를 어떻게 나눌까?",
+      "source_gap": "도구별 문서는 추출과 OCR 기능을 설명하지만 혼합 페이지의 누락과 다음 AI 단계의 완료 조건을 한 흐름으로 연결하지 않는다.",
+      "contribution": "페이지 상태별 선택표와 sidecar 누락 사례, 원문 대조 검수 기록을 연결했다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "추출·OCR·검토 대기 경로를 나누고 필요한 근거가 남은 페이지를 AI 입력으로 정한다.",
+      "limits": "이 글은 공식 문서 다섯 곳을 대조한 선택 가이드다. PDF 추출기나 OCR 엔진을 설치·실행하지 않았으며, 한국어 인식률·표 복원 성능·처리 속도를 측정하지 않았다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 93,
+      "criteria": {
+        "search_durability": 20,
+        "developer_relevance": 24,
+        "source_authority": 20,
+        "original_contribution": 17,
+        "curiosity": 12
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    },
+    "value_review": {
+      "primary_reader": "PDF를 추출해 AI 문서 도우미에 연결하는 개발자",
+      "reader_question": "PDF를 AI에 넣기 전에 텍스트 추출과 OCR 중 무엇을 골라야 할까?",
+      "source_gap": "도구 문서가 분리되어 혼합 PDF의 기존 텍스트와 새 OCR 출력의 누락 경계를 놓치기 쉽다.",
+      "selection_reason": "pypdf의 이미지 페이지 빈 추출 안내와 W3C PDF7의 스캔 텍스트 문제를 확인한 편집 가설이다. 검색량 수치는 확인하지 않았다. 기존 병합·RAG 검색 글과 입력 준비 질문이 다르다.",
+      "contributions": [
+        {
+          "basis": "inference",
+          "excerpt": "여러 공식 문서를 연결한 이 글의 해석은, PDF 전체에 도구 하나를 고정하기보다 페이지의 텍스트 상태와 필요한 결과에 따라 추출·OCR·검토를 나누는 편이 누락을 찾기 쉽다는 것이다.",
+          "limit_excerpt": "이 글은 공식 문서 다섯 곳을 대조한 선택 가이드다. PDF 추출기나 OCR 엔진을 설치·실행하지 않았으며, 한국어 인식률·표 복원 성능·처리 속도를 측정하지 않았다.",
+          "source_urls": [
+            "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+            "https://ocrmypdf.readthedocs.io/en/latest/introduction.html",
+            "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+            "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html",
+            "https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF7"
+          ],
+          "disclosure_excerpt": "여러 공식 문서를 연결한 이 글의 해석은, PDF 전체에 도구 하나를 고정하기보다 페이지의 텍스트 상태와 필요한 결과에 따라 추출·OCR·검토를 나누는 편이 누락을 찾기 쉽다는 것이다."
+        }
+      ]
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "PDF",
+      "텍스트 추출",
+      "OCR"
+    ],
+    "subject": "PDF 입력 준비의 추출·OCR 선택",
+    "hook": "PDF가 보이는데 텍스트는 왜 빠질까?",
+    "motif": "스캔 페이지와 분리되는 텍스트 레이어",
+    "cover": {
+      "label": "PDF 텍스트 레이어를 스캔 이미지와 나눠 살피는 장면",
+      "scene_label": [
+        "PDF",
+        "텍스트 레이어"
+      ],
+      "steps": "PDF의 보이는 페이지와 읽을 수 있는 텍스트를 나눠 본다.",
+      "curiosity_hook": "PDF가 보이는데 텍스트 추출은 왜 비어 있을까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "PDF 텍스트 추출은 보이는 이미지와 글자 데이터를 구분하는 데서 시작한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "transparent_text_layer_scanner_macro",
+      "composition_type": "oblique_scanner_layer_closeup",
+      "palette_family": "cobalt_graphite_coral",
+      "render_family": "macro_object",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "PDF 스캔 이미지에서 분리한 텍스트 레이어",
+      "texture_cue": "스캐너 유리 반사와 얇은 투명 필름",
+      "authenticity_cue": "스캔 유리 위 문서와 들어 올린 글자 필름의 관계",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\n용도: PDF 텍스트 추출과 OCR 선택을 다루는 한국어 개발 매거진 대표, wide 1200:630.\n실제 대상: flatbed scanner lid half-open with a sharply printed technical instruction sheet, and a hand carefully lifting a thin transparent sheet carrying matching letter-shaped marks above the printed page; the transparent layer is a conceptual metaphor for PDF text data, not a real product UI.\n구도: macro closeup from low oblique angle; scanner glass and lifted transparent text layer occupy 65%, a single moment; generous dark margins.\n시각 스타일: macro object photography, quiet physical realism, crisp glass reflections and paper fibers.\n색·조명: cobalt blue glass reflection, warm graphite, soft coral indexing tab, side daylight.\n필수 물체: scanner glass, one technical page, one transparent text layer, hand separating layer.\n짧은 한국어: none, no readable text, no title.\n금지 요소: fake software UI, logos, robot, brain, arrows, panels, flowchart, charts, decorative computer desk, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "pypdf PDF 텍스트 추출의 범위",
+        "scene_label": [
+          "PDF",
+          "텍스트 추출"
+        ],
+        "steps": "pypdf PDF 텍스트 추출의 범위를 확인해 필요한 처리 경로를 고른다.",
+        "curiosity_hook": "PDF 텍스트 추출에서 어떤 결과가 빠질 수 있을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "browser",
+        "capture_target": "PDF 텍스트 추출 공식 문서: https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+        "source_url": "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+        "capture_note": "실제 공식 문서 핵심 구간과 한국어 설명을 함께 보존한다.",
+        "captured_at": "2026-10-16T00:06:39.986Z"
+      },
+      {
+        "label": "PDF 텍스트 추출과 OCR 선택 지도",
+        "scene_label": [
+          "PDF",
+          "추출",
+          "OCR",
+          "원문 대조"
+        ],
+        "steps": "PDF 텍스트 추출과 OCR 선택 지도를 확인해 필요한 처리 경로를 고른다.",
+        "curiosity_hook": "PDF 텍스트 추출에서 언제 OCR을 생략할까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "teaching_claim": "PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: stylized-concept\n용도: PDF 텍스트 추출과 OCR 선택을 설명하는 1200:630 한국어 개념 도식.\n실제 대상: one PDF page represented by a physical sheet; a translucent letter layer peels from its upper half while the lower half is a raster printed scan; two routes lead respectively to a clean text sheet and an OCR magnifying optical lens, then both end at a human inspection sheet.\n구도: spacious asymmetrical branched diagram, objects 60%, generous spacing, large type; no three cards, no fake UI, no scores.\n시각 스타일: clean isometric physical models, sharp typography, educational illustration.\n색·조명: white with cobalt and soft coral accents, high contrast dark type.\n필수 물체: PDF page with separate text layer and scanned image, two distinct routes, review sheet.\n짧은 한국어 정확히 다섯 개: \"텍스트 있음\", \"추출\", \"이미지만 있음\", \"OCR\", \"원문 대조\". Each large and legible at 390px.\n금지 요소: logos, screenshot imitation, tiny text, fabricated numbers, watermark.\nCorrection: Image-only PDF means an image of PRINTED TEXT, not a landscape photograph. Remove every mountain/landscape image. Show rasterized printed letter shapes and short black paragraph rows in the source lower half, OCR magnifier input, and final right-hand inspection sheet. Preserve exact five Korean labels, composition, clean readable typography, arrows, and palette. The magnifier must enlarge pixelated LETTER strokes. No readable invented document sentences.",
+        "korean_labels": [
+          "텍스트 있음",
+          "추출",
+          "이미지만 있음",
+          "원문 대조"
+        ],
+        "condition": "PDF 페이지에 올바른 텍스트가 있으면 추출하고 이미지 글자만 있으면 OCR을 검토한다."
+      },
+      {
+        "label": "OCRmyPDF sidecar의 PDF 누락 경계",
+        "scene_label": [
+          "PDF",
+          "텍스트 추출"
+        ],
+        "steps": "OCRmyPDF sidecar의 PDF 누락 경계를 확인해 필요한 처리 경로를 고른다.",
+        "curiosity_hook": "PDF 텍스트 추출에서 어떤 결과가 빠질 수 있을까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "OCRmyPDF 공식 문서는 sidecar에 기존 텍스트 페이지가 포함되지 않을 수 있음을 설명한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "browser",
+        "capture_target": "PDF 텍스트 추출 공식 문서: https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+        "source_url": "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+        "capture_note": "실제 공식 문서 핵심 구간과 한국어 설명을 함께 보존한다.",
+        "captured_at": "2026-10-16T00:06:44.784Z"
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.1-sol",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "label": "PDF 텍스트 레이어를 스캔 이미지와 나눠 살피는 장면",
+      "scene_label": [
+        "PDF",
+        "텍스트 레이어"
+      ],
+      "steps": "PDF의 보이는 페이지와 읽을 수 있는 텍스트를 나눠 본다.",
+      "curiosity_hook": "PDF가 보이는데 텍스트 추출은 왜 비어 있을까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "PDF 텍스트 추출은 보이는 이미지와 글자 데이터를 구분하는 데서 시작한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "transparent_text_layer_scanner_macro",
+      "composition_type": "oblique_scanner_layer_closeup",
+      "palette_family": "cobalt_graphite_coral",
+      "render_family": "macro_object",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "PDF 스캔 이미지에서 분리한 텍스트 레이어",
+      "texture_cue": "스캐너 유리 반사와 얇은 투명 필름",
+      "authenticity_cue": "스캔 유리 위 문서와 들어 올린 글자 필름의 관계",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: photorealistic-natural\nAsset intent: editorial-scene\n용도: PDF 텍스트 추출과 OCR 선택을 다루는 한국어 개발 매거진 대표, wide 1200:630.\n실제 대상: flatbed scanner lid half-open with a sharply printed technical instruction sheet, and a hand carefully lifting a thin transparent sheet carrying matching letter-shaped marks above the printed page; the transparent layer is a conceptual metaphor for PDF text data, not a real product UI.\n구도: macro closeup from low oblique angle; scanner glass and lifted transparent text layer occupy 65%, a single moment; generous dark margins.\n시각 스타일: macro object photography, quiet physical realism, crisp glass reflections and paper fibers.\n색·조명: cobalt blue glass reflection, warm graphite, soft coral indexing tab, side daylight.\n필수 물체: scanner glass, one technical page, one transparent text layer, hand separating layer.\n짧은 한국어: none, no readable text, no title.\n금지 요소: fake software UI, logos, robot, brain, arrows, panels, flowchart, charts, decorative computer desk, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "PDF 텍스트 추출은 보이는 이미지와 글자 데이터를 구분하는 데서 시작한다",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-텍스트-레이어-대표.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트-레이어-대표.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 83646,
+      "quality": null,
+      "sha256": "5f2e095e023f8401dfd9a6184e5d9f03922e2d306b16093adbe835530faf3fc8"
+    },
+    "visual_1": {
+      "label": "pypdf PDF 텍스트 추출의 범위",
+      "scene_label": [
+        "PDF",
+        "텍스트 추출"
+      ],
+      "steps": "pypdf PDF 텍스트 추출의 범위를 확인해 필요한 처리 경로를 고른다.",
+      "curiosity_hook": "PDF 텍스트 추출에서 어떤 결과가 빠질 수 있을까?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "browser",
+      "capture_target": "PDF 텍스트 추출 공식 문서: https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+      "source_url": "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+      "capture_note": "실제 공식 문서 핵심 구간과 한국어 설명을 함께 보존한다.",
+      "captured_at": "2026-10-16T00:06:39.986Z",
+      "alt": "pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다.",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-pypdf-추출-공식근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-pypdf-추출-공식근거.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 48874,
+      "quality": null,
+      "sha256": "1f9a57911dadb827106efd1d489b48d9896b74f0238eda2857484e1c4e179e04",
+      "capture_sha256": "1f9a57911dadb827106efd1d489b48d9896b74f0238eda2857484e1c4e179e04"
+    },
+    "visual_2": {
+      "label": "PDF 텍스트 추출과 OCR 선택 지도",
+      "scene_label": [
+        "PDF",
+        "추출",
+        "OCR",
+        "원문 대조"
+      ],
+      "steps": "PDF 텍스트 추출과 OCR 선택 지도를 확인해 필요한 처리 경로를 고른다.",
+      "curiosity_hook": "PDF 텍스트 추출에서 언제 OCR을 생략할까?",
+      "evidence_type": "diagram",
+      "logic_type": "conditional",
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "teaching_role": "decision_map",
+      "teaching_claim": "PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\n용도: PDF 텍스트 추출과 OCR 선택을 설명하는 1200:630 한국어 개념 도식.\n실제 대상: one PDF page represented by a physical sheet; a translucent letter layer peels from its upper half while the lower half is a raster printed scan; two routes lead respectively to a clean text sheet and an OCR magnifying optical lens, then both end at a human inspection sheet.\n구도: spacious asymmetrical branched diagram, objects 60%, generous spacing, large type; no three cards, no fake UI, no scores.\n시각 스타일: clean isometric physical models, sharp typography, educational illustration.\n색·조명: white with cobalt and soft coral accents, high contrast dark type.\n필수 물체: PDF page with separate text layer and scanned image, two distinct routes, review sheet.\n짧은 한국어 정확히 다섯 개: \"텍스트 있음\", \"추출\", \"이미지만 있음\", \"OCR\", \"원문 대조\". Each large and legible at 390px.\n금지 요소: logos, screenshot imitation, tiny text, fabricated numbers, watermark.\nCorrection: Image-only PDF means an image of PRINTED TEXT, not a landscape photograph. Remove every mountain/landscape image. Show rasterized printed letter shapes and short black paragraph rows in the source lower half, OCR magnifier input, and final right-hand inspection sheet. Preserve exact five Korean labels, composition, clean readable typography, arrows, and palette. The magnifier must enlarge pixelated LETTER strokes. No readable invented document sentences.",
+      "korean_labels": [
+        "텍스트 있음",
+        "추출",
+        "이미지만 있음",
+        "원문 대조"
+      ],
+      "condition": "PDF 페이지에 올바른 텍스트가 있으면 추출하고 이미지 글자만 있으면 OCR을 검토한다.",
+      "alt": "PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다.",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-텍스트추출-OCR-선택.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트추출-OCR-선택.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 86892,
+      "quality": null,
+      "sha256": "f698c65c00f196c444ddcde47f488afd7eba3135b7e3a8f37921f461d76cd7c3"
+    },
+    "visual_3": {
+      "label": "OCRmyPDF sidecar의 PDF 누락 경계",
+      "scene_label": [
+        "PDF",
+        "텍스트 추출"
+      ],
+      "steps": "OCRmyPDF sidecar의 PDF 누락 경계를 확인해 필요한 처리 경로를 고른다.",
+      "curiosity_hook": "PDF 텍스트 추출에서 어떤 결과가 빠질 수 있을까?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "OCRmyPDF 공식 문서는 sidecar에 기존 텍스트 페이지가 포함되지 않을 수 있음을 설명한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "browser",
+      "capture_target": "PDF 텍스트 추출 공식 문서: https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+      "source_url": "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+      "capture_note": "실제 공식 문서 핵심 구간과 한국어 설명을 함께 보존한다.",
+      "captured_at": "2026-10-16T00:06:44.784Z",
+      "alt": "OCRmyPDF 공식 문서는 sidecar에 기존 텍스트 페이지가 포함되지 않을 수 있음을 설명한다.",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-sidecar-누락-공식근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-sidecar-누락-공식근거.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 58730,
+      "quality": null,
+      "sha256": "403439b27f79b992fedba35e0df2ea054448b4b01c7e89ed3725c63b988bf5d7",
+      "capture_sha256": "403439b27f79b992fedba35e0df2ea054448b4b01c7e89ed3725c63b988bf5d7"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+      "source": "pypdf · OCRmyPDF · Tesseract · W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF7",
+      "published_at": "2025-07-15T00:00:00+00:00",
+      "blurb_kr": "페이지별 텍스트 상태와 OCR 보조 파일의 누락 경계를 나눠 AI 입력을 준비한다.",
+      "references": [
+        {
+          "title": "pypdf: 텍스트 추출과 OCR의 차이",
+          "url": "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+          "kind": "official"
+        },
+        {
+          "title": "OCRmyPDF: 텍스트 레이어와 한계",
+          "url": "https://ocrmypdf.readthedocs.io/en/latest/introduction.html",
+          "kind": "official"
+        },
+        {
+          "title": "OCRmyPDF Cookbook: sidecar·언어·재인식",
+          "url": "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+          "kind": "official"
+        },
+        {
+          "title": "Tesseract: 입력 품질과 표 인식의 한계",
+          "url": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html",
+          "kind": "official"
+        },
+        {
+          "title": "W3C PDF7: OCR 뒤 완전성·읽기 순서 확인",
+          "url": "https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF7",
+          "kind": "reference"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "글자가 보이는데 추출 결과는 왜 비어 있을까"
+        },
+        {
+          "t": "p",
+          "text": "PDF에 올바른 텍스트가 있으면 먼저 추출하고, 이미지 속 글자만 있는 페이지는 OCR을 검토한다. 글자가 나온 뒤에도 누락·읽기 순서·표의 대응을 확인해야 AI에 넘길 준비가 끝난다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "문제가 생긴 PDF의 본문·표·스캔 페이지를 각각 골라 화면과 복사한 문장을 대조한다.",
+            "텍스트가 없거나 일부만 있으면 페이지별로 추출·OCR·수동 검토 경로를 정한다.",
+            "혼합 PDF는 OCR 보조 텍스트 파일만 믿지 않고 최종 PDF 전체에서 다시 추출한다.",
+            "필요한 문장·숫자·읽기 순서가 맞는 페이지에만 다음 AI 처리 단계를 허용한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "PDF 설명서를 읽는 AI 도우미를 만든다고 가정해 보자. 화면에는 설치 안내가 또렷한데 추출한 문자열에는 제품명만 남았다. 모델을 바꾸기 전에 확인할 것은, 필요한 본문이 이미지인지 실제 텍스트인지다. 이는 실행 사례가 아니라 처리 경계를 설명하는 가상 장면이다."
+        },
+        {
+          "t": "p",
+          "text": "여기서 말하는 AI 입력 준비는 PDF를 문자열로 바꿔 검색·요약 파이프라인에 넣는 경로다. PDF 화면 자체를 이해하는 멀티모달 서비스의 내부 처리 방식까지 같은 규칙이라고 가정하지 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다. 생성 도식은 판단을 설명하며 실제 처리 결과가 아니다."
+        },
+        {
+          "t": "h",
+          "text": "pypdf는 글자를 읽지만 사진을 해독하지 않는다"
+        },
+        {
+          "t": "p",
+          "text": "pypdf는 PDF에 저장된 텍스트를 추출하는 도구다. 스캔 이미지만 있는 페이지의 글자를 새로 인식하는 OCR 엔진은 아니다. 이미지 속 글자가 눈에 잘 보인다는 사실만으로 추출 API가 그 문장을 반환할 수 있는 것은 아니다."
+        },
+        {
+          "t": "p",
+          "text": "반대로 스캔처럼 보이는 문서에서도 복사가 될 수 있다. OCR 프로그램이 페이지 이미지 뒤에 인식한 텍스트 레이어를 넣은 경우다. 추출기는 그 레이어를 읽을 수 있지만, 거기에 저장된 오인식까지 올바른 문장으로 고쳐 주지는 않는다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다. 실제 공식 문서 화면이며 이 글에서 PDF를 처리한 결과 화면은 아니다."
+        },
+        {
+          "t": "p",
+          "text": "그래서 복사 가능 여부는 첫 단서로만 쓴다. 제목은 선택되지만 본문은 이미지일 수 있고, 배경에 오래된 OCR 문장이 남아 있을 수도 있다. 화면의 문장과 복사한 문장을 대조해야 데이터가 있는 상태와 쓸 수 있는 상태를 구분한다."
+        },
+        {
+          "t": "p",
+          "text": "이미 정상 텍스트가 있는 페이지를 전부 이미지로 바꿔 다시 인식할 이유도 약하다. 원래 글자 데이터를 버리고 시각적 추정 단계를 추가하기 때문이다. 다만 추출 결과가 깨지는 글꼴·인코딩 등은 별도로 조사할 예외다."
+        },
+        {
+          "t": "p",
+          "text": "OCR은 이미지의 모양에서 문자를 추정하는 단계다. Tesseract는 그 인식 엔진이고, OCRmyPDF는 PDF 페이지를 처리해 검색 가능한 텍스트 레이어를 붙이는 애플리케이션이다. PDF 입출력 흐름과 이미지 인식 엔진을 구분하면 필요한 도구 범위가 줄어든다."
+        },
+        {
+          "t": "p",
+          "text": "입력이 낱장 이미지이고 문자 인식 자체를 다뤄야 한다면 Tesseract 문서가 출발점이다. 여러 페이지 PDF의 모양을 유지하며 검색 가능한 사본을 만들려면 OCRmyPDF의 입력·출력과 기존 텍스트 처리 규칙부터 읽는다. 이것은 문서에 따른 역할 구분이며 성능 순위가 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "화면과 추출 문장을 대조해 처리 경로를 고른다",
+          "headers": [
+            "페이지에서 확인한 상태",
+            "먼저 검토할 경로",
+            "그대로 넘기면 남는 문제"
+          ],
+          "rows": [
+            [
+              "본문이 정확히 복사됨",
+              "기존 텍스트 추출",
+              "단·표의 순서는 별도 확인"
+            ],
+            [
+              "본문이 이미지이고 복사 안 됨",
+              "해당 페이지 OCR",
+              "숫자·고유명사 오인식"
+            ],
+            [
+              "복사되지만 화면과 다른 글자",
+              "기존 OCR·인코딩 점검",
+              "잘못된 레이어 재사용"
+            ],
+            [
+              "제목만 있고 본문은 비어 있음",
+              "본문 이미지 여부 점검",
+              "짧은 텍스트로 전체 성공 오판"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "PDF 페이지별 추출·OCR 선택표"
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "OCR 언어와 입력 품질부터 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "한국어와 영어가 섞인 문서라면 언어 설정과 필요한 언어 데이터가 준비됐는지 먼저 확인한다. OCRmyPDF Cookbook은 지정 언어용 팩이 설치되어야 한다고 설명한다. 언어 이름 하나를 추가했다고 해당 문서의 인식이 정확해졌다고 판단할 수는 없다."
+        },
+        {
+          "t": "p",
+          "text": "Tesseract 품질 가이드는 기울어진 줄, 잡음, 글자 크기와 페이지 분할 같은 입력 조건을 다룬다. 특히 표는 별도 분할·레이아웃 분석 없이 제대로 인식하기 어렵다고 명시한다. 엔진 교체에 앞서 실패한 페이지의 시각적 조건을 남길 이유다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "원본 PDF는 보존하고 별도 출력 사본을 검토 대상으로 둔다.",
+            "언어·회전·기울기 중 바꾼 조건을 기록하고 같은 페이지에서 결과를 대조한다.",
+            "숫자나 열 대응이 중요한 문서는 문장이 나왔다는 이유만으로 다음 단계에 넘기지 않는다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "기존 텍스트를 건너뛸지, 기존 OCR을 다시 할지, 전체 페이지를 강제로 이미지화할지는 서로 다른 선택이다. 기존 OCR이 틀렸는데 단순 건너뛰기만 하면 오인식은 남는다. 반대로 강제 재처리는 벡터·시각 품질에 영향을 줄 수 있어 기본 복구 버튼으로 삼기 어렵다."
+        },
+        {
+          "t": "p",
+          "text": "이 글은 명령을 실행하지 않았으므로 특정 옵션 조합을 검증된 처방으로 제시하지 않는다. 사용할 버전의 Cookbook에서 기존 텍스트 처리와 출력 보존 조건을 읽고, 문제가 있는 사본에서만 검토 범위를 정한다."
+        },
+        {
+          "t": "h",
+          "text": "혼합 PDF에서는 sidecar 파일이 전체 원문이 아니다"
+        },
+        {
+          "t": "p",
+          "text": "디지털 문서 몇 장에 스캔 부록이 붙은 PDF는 특별한 경우가 아니다. 개발자가 인식 후 얻은 텍스트 파일 하나를 전체 원문으로 취급하면, 오히려 이미 읽을 수 있던 페이지를 빼먹을 수 있다. OCR 완료와 전체 본문 확보는 다른 완료 조건이다."
+        },
+        {
+          "t": "p",
+          "text": "OCRmyPDF의 sidecar는 OCR로 찾은 텍스트를 따로 저장하는 보조 파일이다. Cookbook은 이미 텍스트가 있는 페이지의 글자는 그 파일에 들어가지 않는다고 설명한다. 페이지 선택·크기 제한·시간 초과 등으로 건너뛴 페이지도 빠질 수 있다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "OCRmyPDF 공식 문서는 sidecar에 기존 텍스트 페이지가 포함되지 않을 수 있음을 설명한다. 실제 문서 캡처를 근거로 전체 PDF 추출과 OCR 보조 출력을 구분한다."
+        },
+        {
+          "t": "p",
+          "text": "가령 첫 페이지는 디지털 안내문이고 둘째 페이지는 스캔 부록인 문서를 생각해 보자. OCR이 필요한 둘째 페이지의 텍스트만 보조 파일에 남는 경로라면, 그 파일만 요약기에 넣을 때 첫 페이지는 입력에서 사라진다. 이 두 페이지 사례는 문서 규칙을 적용한 가상 예시다."
+        },
+        {
+          "t": "p",
+          "text": "공식 Cookbook은 OCR 여부와 관계없이 PDF 전체의 텍스트가 필요하면 pdftotext 같은 추출 도구를 사용하라고 안내한다. 그러므로 전체 원문 확보가 목적일 때는 최종 PDF에서 전체 텍스트를 다시 읽는 경로와 페이지별 확인을 함께 설계할 수 있다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "보조 파일의 글자 수 대신 최종 PDF의 페이지 목록과 처리 기록을 맞춘다.",
+            "기존 텍스트 페이지와 OCR 페이지에서 대표 문장을 하나씩 대조한다.",
+            "건너뛰기·시간 초과가 있으면 빈 결과와 정상 빈 페이지를 구분해 검토 대기 상태로 둔다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "여기서 페이지 수가 맞는다는 사실도 충분하지 않다. 모든 페이지의 문자열 항목이 있어도 본문이 누락될 수 있다. 필요한 근거 문장을 실제로 찾을 수 있는지 확인해야 “파일은 생성됐지만 답은 없다”는 다음 단계의 실패를 줄인다."
+        },
+        {
+          "t": "h",
+          "text": "텍스트가 나와도 표와 읽기 순서는 다시 본다"
+        },
+        {
+          "t": "p",
+          "text": "W3C PDF7은 OCR 뒤 텍스트가 완전하고 올바른 읽기 순서인지 확인하는 절차를 제시한다. 화면 낭독, 텍스트 저장, 변환 내용 확인 같은 방법이다. 이 안내는 접근성 맥락이며 AI 정확도를 보장하는 규칙은 아니지만 입력 검수에도 참고할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "두 단의 문서가 줄마다 왼쪽·오른쪽을 섞어 읽히면 모든 단어가 있어도 문장 의미가 바뀐다. 표의 품목과 금액이 서로 다른 줄로 떨어져도 마찬가지다. 인식할 글자가 있는 문제와 그 글자의 관계를 복원하는 문제를 나눠 보자."
+        },
+        {
+          "t": "table",
+          "caption": "AI에 넘길 준비가 끝났는지 판단하는 검수 기록",
+          "headers": [
+            "기록 항목",
+            "확인할 예",
+            "문제가 남을 때"
+          ],
+          "rows": [
+            [
+              "본문 완전성",
+              "필수 근거 문장이 존재함",
+              "누락 페이지 재검토"
+            ],
+            [
+              "문자 정확성",
+              "제품명·날짜·숫자 대조",
+              "해당 구간 수정·재인식"
+            ],
+            [
+              "읽기 순서",
+              "단·문단이 화면 순서와 맞음",
+              "레이아웃 처리 검토"
+            ],
+            [
+              "표의 대응",
+              "항목과 수치가 같은 행에 연결됨",
+              "표 추출·수동 확인 분리"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "표가 핵심인 업무라면 일반 텍스트 문자열을 얻는 것만 목표로 잡지 않는다. 행·열 관계가 필요한지, 셀 좌표나 구조화 결과를 보존해야 하는지부터 정한다. 이 글은 특정 표 추출기의 우열을 평가하지 않으며 추가 도구는 실제 실패한 표를 기준으로 비교해야 한다."
+        },
+        {
+          "t": "p",
+          "text": "AI가 그럴듯하게 요약했다고 이 검사를 대신할 수도 없다. 입력에서 빠진 페이지를 모델이 모르는 상태와, 입력은 맞지만 해석이 잘못된 상태를 분리해야 수정할 곳이 보인다. 문제의 원문 페이지와 추출 문자열을 함께 남기면 후속 디버깅이 쉬워진다."
+        },
+        {
+          "t": "p",
+          "text": "여러 공식 문서를 연결한 이 글의 해석은, PDF 전체에 도구 하나를 고정하기보다 페이지의 텍스트 상태와 필요한 결과에 따라 추출·OCR·검토를 나누는 편이 누락을 찾기 쉽다는 것이다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "검수한 페이지·문장과 아직 확인하지 않은 범위를 함께 적는다.",
+            "정상 추출·OCR 필요·검토 대기를 구분하고 검토 대기는 자동 성공으로 바꾸지 않는다.",
+            "텍스트 처리 조건이 바뀌면 같은 대표 페이지와 문장으로 다시 확인한다."
+          ]
+        },
+        {
+          "t": "h",
+          "text": "근거와 한계: 한국어 성능 순위를 매기지 않았다"
+        },
+        {
+          "t": "p",
+          "text": "확인일은 2026년 10월 16일이다. pypdf의 추출 범위, OCRmyPDF의 PDF 처리와 보조 출력, Tesseract의 입력 품질, W3C의 사후 확인 절차를 읽었다. 공식 문서 다섯 URL은 서로 다른 역할을 설명하며 동일 문서를 대상으로 한 비교 실험은 아니다."
+        },
+        {
+          "t": "p",
+          "text": "이 글은 공식 문서 다섯 곳을 대조한 선택 가이드다. PDF 추출기나 OCR 엔진을 설치·실행하지 않았으며, 한국어 인식률·표 복원 성능·처리 속도를 측정하지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "선택을 마쳤다는 신호는 OCR 프로그램 종료나 텍스트 파일 생성만이 아니다. 필요한 페이지의 근거 문장이 있고, 중요한 숫자와 문단·표의 관계가 맞으며, 미확인 페이지가 구분되어 있어야 한다. 그 조건을 남긴 뒤 다음 AI 처리 단계를 연결한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "추출기·OCR 버전이나 언어 데이터를 바꾸면 같은 페이지에서 다시 확인한다.",
+            "새 문서 유형이나 표·다단 편집이 들어오면 기존 선택표가 맞는지 점검한다.",
+            "멀티모달 입력으로 경로를 바꾸면 그 서비스의 PDF 처리·제한을 별도로 확인한다."
+          ]
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+      "url": "https://won0322.tistory.com/228",
+      "reason": "문자열 생성과 작업 완료를 구분하는 검증 기준을 이어 읽는다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "문서를 에이전트 입력에 연결한 뒤 외부 동작과 권한의 경계를 확인한다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-10-16T09:06:16.897143+09:00",
+    "scope": "pypdf·OCRmyPDF·Tesseract·W3C 공식 문서 5개 URL",
+    "method": "텍스트 추출 범위·OCR 보조 출력·표 인식 한계·사후 확인 조건을 직접 읽어 페이지별 선택표를 구성했다.",
+    "selection_rule": "금요일 전용 후보함 READY 확인 후 넓은 목록·기존 중복을 제외하고 구체적 문서 입력 문제로 확장. 93/100점, 5개 출처, 180일 질문 비중복.",
+    "limitations": "이 글은 공식 문서 다섯 곳을 대조한 선택 가이드다. PDF 추출기나 OCR 엔진을 설치·실행하지 않았으며, 한국어 인식률·표 복원 성능·처리 속도를 측정하지 않았다.",
+    "source_urls": [
+      "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+      "https://ocrmypdf.readthedocs.io/en/latest/introduction.html",
+      "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+      "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html",
+      "https://www.w3.org/WAI/WCAG22/Techniques/pdf/PDF7"
+    ],
+    "source_count": 5,
+    "evidence_files": [
+      "visual_1",
+      "visual_3"
+    ],
+    "problem_lane": "PDF 텍스트 추출·OCR·혼합 페이지 누락 선택",
+    "tool_brand": "pypdf·OCRmyPDF·Tesseract"
+  }
+}

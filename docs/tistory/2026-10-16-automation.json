@@ -1,0 +1,96 @@
+{
+  "title": "PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+  "title_candidates": [
+    "PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+    "PDF 입력 준비의 추출·OCR 선택: PDF가 보이는데 텍스트는 왜 빠질까?"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-10-16-automation",
+  "publish_date": "2026-10-16",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-16T09:00:00+09:00",
+  "tags": [
+    "PDF 텍스트 추출",
+    "OCR",
+    "pypdf",
+    "OCRmyPDF",
+    "Tesseract",
+    "AI 문서 처리",
+    "공식 문서"
+  ],
+  "meta_description": "PDF를 넣었는데 AI가 본문을 놓치면 OCR부터 돌려야 할까? 먼저 그 페이지에 올바른 텍스트가 있는지 확인한다. 이미 글자가 있으면 추출을, 이미지만 있으면 OCR을 검토한다. 선택이 끝난 뒤에도… 페이지별 텍스트 상태와 OCR 보조 파일의 누락 경계를 나눠 AI 입력을 준비한다.",
+  "key_summary": [
+    "1. PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+    "직접 얻는 결과: PDF 페이지별로 추출·OCR·수동 검토 경로와 다음 단계에 넘길 완료 조건을 정한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 13,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-10-16.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-16-automation.html",
+  "before_ad_html": "docs/tistory/2026-10-16-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-16-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-16-automation-adfit.html",
+  "source_sha256": "81d0e17e91db302b074fbd8e2ceb3f6b220d118e464a8e51226e250e6f788bef",
+  "html_sha256": "ca7d44d5091f1fec9ce2dd5878c9e1f33cc2511ae54b4c424cb9fbd396cf34d1",
+  "adfit_sha256": "ecf723005721c80c854dcfd2b449d1230c196a7350e1aa7c431775b0e052c698",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트-레이어-대표.webp",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-텍스트-레이어-대표.webp",
+      "original_url": "",
+      "alt": "PDF 텍스트 추출은 보이는 이미지와 글자 데이터를 구분하는 데서 시작한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-pypdf-추출-공식근거.webp",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-pypdf-추출-공식근거.webp",
+      "original_url": "",
+      "alt": "pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트추출-OCR-선택.webp",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-텍스트추출-OCR-선택.webp",
+      "original_url": "",
+      "alt": "PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-sidecar-누락-공식근거.webp",
+      "path": "docs/tistory/assets/2026-10-16-automation/PDF-sidecar-누락-공식근거.webp",
+      "original_url": "",
+      "alt": "OCRmyPDF 공식 문서는 sidecar에 기존 텍스트 페이지가 포함되지 않을 수 있음을 설명한다.",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

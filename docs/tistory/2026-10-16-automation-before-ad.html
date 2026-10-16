@@ -1,0 +1,25 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 10. 16 (금) · 약 13분</p>
+    <p class="digest-lead">PDF를 넣었는데 AI가 본문을 놓치면 OCR부터 돌려야 할까? 먼저 그 페이지에 올바른 텍스트가 있는지 확인한다. 이미 글자가 있으면 추출을, 이미지만 있으면 OCR을 검토한다. 선택이 끝난 뒤에도 전체 페이지의 누락과 표·문단 순서가 남는다. 특히 OCR 보조 파일을 전체 원문으로 착각하면 읽을 수 있던 페이지까지 빠질 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트-레이어-대표.webp" alt="PDF 텍스트 추출은 보이는 이미지와 글자 데이터를 구분하는 데서 시작한다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>PDF에 정확한 텍스트가 있으면 추출하고 이미지 속 글자만 있으면 OCR을 검토한다.</li><li>혼합 PDF에서는 OCR sidecar를 전체 원문으로 취급하지 않는다.</li><li>텍스트 생성 뒤에도 누락·숫자·읽기 순서·표 대응을 원문과 대조해야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>OCR</dt><dd>이미지에 보이는 글자 모양을 컴퓨터가 사용할 문자로 인식하는 처리다.</dd></div><div><dt>텍스트 레이어</dt><dd>PDF 화면과 함께 저장되어 검색·선택·추출할 수 있는 글자 데이터다.</dd></div><div><dt>sidecar</dt><dd>OCRmyPDF가 새로 인식한 글자를 별도 파일에 저장하는 보조 출력이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · pypdf · OCRmyPDF · Tesseract · W3C · 2025. 7. 15</p>
+    <h3>PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준</h3>
+    <p class="digest-blurb">페이지별 텍스트 상태와 OCR 보조 파일의 누락 경계를 나눠 AI 입력을 준비한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">글자가 보이는데 추출 결과는 왜 비어 있을까</h4><p>PDF에 올바른 텍스트가 있으면 먼저 추출하고, 이미지 속 글자만 있는 페이지는 OCR을 검토한다. 글자가 나온 뒤에도 누락·읽기 순서·표의 대응을 확인해야 AI에 넘길 준비가 끝난다.</p><ul class="digest-bullet-list"><li>문제가 생긴 PDF의 본문·표·스캔 페이지를 각각 골라 화면과 복사한 문장을 대조한다.</li><li>텍스트가 없거나 일부만 있으면 페이지별로 추출·OCR·수동 검토 경로를 정한다.</li><li>혼합 PDF는 OCR 보조 텍스트 파일만 믿지 않고 최종 PDF 전체에서 다시 추출한다.</li><li>필요한 문장·숫자·읽기 순서가 맞는 페이지에만 다음 AI 처리 단계를 허용한다.</li></ul><p>PDF 설명서를 읽는 AI 도우미를 만든다고 가정해 보자. 화면에는 설치 안내가 또렷한데 추출한 문자열에는 제품명만 남았다. 모델을 바꾸기 전에 확인할 것은, 필요한 본문이 이미지인지 실제 텍스트인지다. 이는 실행 사례가 아니라 처리 경계를 설명하는 가상 장면이다.</p><p>여기서 말하는 AI 입력 준비는 PDF를 문자열로 바꿔 검색·요약 파이프라인에 넣는 경로다. PDF 화면 자체를 이해하는 멀티모달 서비스의 내부 처리 방식까지 같은 규칙이라고 가정하지 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-텍스트추출-OCR-선택.webp" alt="PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다." width="1200" height="630" loading="lazy"><figcaption>PDF 텍스트 추출과 OCR은 페이지에 이미 글자 데이터가 있는지에 따라 선택한다. 생성 도식은 판단을 설명하며 실제 처리 결과가 아니다.</figcaption></figure><h4 class="digest-subheading">pypdf는 글자를 읽지만 사진을 해독하지 않는다</h4><p>pypdf는 PDF에 저장된 텍스트를 추출하는 도구다. 스캔 이미지만 있는 페이지의 글자를 새로 인식하는 OCR 엔진은 아니다. 이미지 속 글자가 눈에 잘 보인다는 사실만으로 추출 API가 그 문장을 반환할 수 있는 것은 아니다.</p><p>반대로 스캔처럼 보이는 문서에서도 복사가 될 수 있다. OCR 프로그램이 페이지 이미지 뒤에 인식한 텍스트 레이어를 넣은 경우다. 추출기는 그 레이어를 읽을 수 있지만, 거기에 저장된 오인식까지 올바른 문장으로 고쳐 주지는 않는다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-16-automation/PDF-pypdf-추출-공식근거.webp" alt="pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다." width="1200" height="630" loading="lazy"><figcaption>pypdf 공식 문서는 텍스트 추출과 이미지 OCR을 구분한다. 실제 공식 문서 화면이며 이 글에서 PDF를 처리한 결과 화면은 아니다.</figcaption></figure><p>그래서 복사 가능 여부는 첫 단서로만 쓴다. 제목은 선택되지만 본문은 이미지일 수 있고, 배경에 오래된 OCR 문장이 남아 있을 수도 있다. 화면의 문장과 복사한 문장을 대조해야 데이터가 있는 상태와 쓸 수 있는 상태를 구분한다.</p><p>이미 정상 텍스트가 있는 페이지를 전부 이미지로 바꿔 다시 인식할 이유도 약하다. 원래 글자 데이터를 버리고 시각적 추정 단계를 추가하기 때문이다. 다만 추출 결과가 깨지는 글꼴·인코딩 등은 별도로 조사할 예외다.</p><p>OCR은 이미지의 모양에서 문자를 추정하는 단계다. Tesseract는 그 인식 엔진이고, OCRmyPDF는 PDF 페이지를 처리해 검색 가능한 텍스트 레이어를 붙이는 애플리케이션이다. PDF 입출력 흐름과 이미지 인식 엔진을 구분하면 필요한 도구 범위가 줄어든다.</p><p>입력이 낱장 이미지이고 문자 인식 자체를 다뤄야 한다면 Tesseract 문서가 출발점이다. 여러 페이지 PDF의 모양을 유지하며 검색 가능한 사본을 만들려면 OCRmyPDF의 입력·출력과 기존 텍스트 처리 규칙부터 읽는다. 이것은 문서에 따른 역할 구분이며 성능 순위가 아니다.</p><div class="digest-table-wrap" role="region" aria-label="화면과 추출 문장을 대조해 처리 경로를 고른다" tabindex="0"><table class="digest-data-table"><caption>화면과 추출 문장을 대조해 처리 경로를 고른다</caption><thead><tr><th scope="col">페이지에서 확인한 상태</th><th scope="col">먼저 검토할 경로</th><th scope="col">그대로 넘기면 남는 문제</th></tr></thead><tbody><tr><td>본문이 정확히 복사됨</td><td>기존 텍스트 추출</td><td>단·표의 순서는 별도 확인</td></tr><tr><td>본문이 이미지이고 복사 안 됨</td><td>해당 페이지 OCR</td><td>숫자·고유명사 오인식</td></tr><tr><td>복사되지만 화면과 다른 글자</td><td>기존 OCR·인코딩 점검</td><td>잘못된 레이어 재사용</td></tr><tr><td>제목만 있고 본문은 비어 있음</td><td>본문 이미지 여부 점검</td><td>짧은 텍스트로 전체 성공 오판</td></tr></tbody></table></div></div>
+  </div>
+</section>
+</article>
