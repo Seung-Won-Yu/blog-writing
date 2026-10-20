@@ -1,0 +1,96 @@
+{
+  "title": "Spark Hive 연결 오류: 버전 변경 전에 확인할 세 곳",
+  "title_candidates": [
+    "Spark Hive 연결 오류: 버전 변경 전에 확인할 세 곳",
+    "Spark와 Hive의 연결 실패를 요청·클라이언트·대상으로 나누는 기준",
+    "Spark Hive 연결 오류의 대상·라이브러리·요청 불일치: 같은 테이블이 다른 클라이언트에서는 왜 보일까?"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-10-19",
+  "publish_date": "2026-10-19",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-19T09:00:00+09:00",
+  "tags": [
+    "Spark Hive 연결 오류",
+    "Spark Hive 연동",
+    "Hive Metastore",
+    "get_table",
+    "Spark 설정",
+    "데이터 파이프라인"
+  ],
+  "meta_description": "Hive를 바꾼 뒤 Spark 잡만 실패한다. 관리 도구에서는 테이블이 보이는데 같은 이름을 조회하는 배치가 멈추면 무엇부터 고쳐야 할까? Spark Hive 연결 오류는 메타스토어 주소, 실제 클라… 공식 지원표와 실제 운영 사례를 비교해 업그레이드 뒤 Spark만 실패하는 상황의…",
+  "key_summary": [
+    "1. Spark와 Hive의 연결 실패를 요청·클라이언트·대상으로 나누는 기준",
+    "직접 얻는 결과: 메타스토어 주소·실제 Hive 클라이언트·실패한 요청을 분리해 기록하고 설정 수정, 지원 조합 전환, 플랫폼 담당자 확인 중 다음 행동을 선택할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Spark Hive 연결 오류: 버전 변경 전에 확인할 세 곳"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-19.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-19.html",
+  "before_ad_html": "docs/tistory/2026-10-19-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-19-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-19-adfit.html",
+  "source_sha256": "9c853922b8636acf5230f6589adfcc5ee820900afb82e1b75cddb02d0adf2bfb",
+  "html_sha256": "6aff7d41ba834908219fee72300c7abb779afb0be29c80e463fc255ceadbdabe",
+  "adfit_sha256": "6028101b39fa2d11c1014cc39cdcd52d509ba506d708ec6a931ab6803211c0c0",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-19/Spark-Hive-요청불일치-대표.webp",
+      "path": "docs/tistory/assets/2026-10-19/Spark-Hive-요청불일치-대표.webp",
+      "original_url": "",
+      "alt": "Spark Hive 연결 오류는 요청과 서버의 계약이 다를 때도 생긴다 — Spark Hive 연결 오류에서 왜 같은 테이블을 한쪽만 읽지 못할까?",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-19/Spark-Hive-진단분기.webp",
+      "path": "docs/tistory/assets/2026-10-19/Spark-Hive-진단분기.webp",
+      "original_url": "",
+      "alt": "Spark Hive 연결 오류는 주소·클라이언트·실패 요청을 따로 확인해야 한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-19/Spark-Hive-검증과복구.webp",
+      "path": "docs/tistory/assets/2026-10-19/Spark-Hive-검증과복구.webp",
+      "original_url": "",
+      "alt": "Spark Hive 연결 오류 복구는 검증한 조합만 확대하고 조회가 달라지면 이전 배포본으로 돌아갈 조건을 남긴다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-19/Spark-Hive-공식지원설정.webp",
+      "path": "docs/tistory/assets/2026-10-19/Spark-Hive-공식지원설정.webp",
+      "original_url": "",
+      "alt": "Spark Hive 연결 오류 점검에는 버전과 JAR 공급 설정을 함께 읽는다 — Spark Hive 연결 오류의 버전과 JAR 설정은 어떻게 연결되는가?",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

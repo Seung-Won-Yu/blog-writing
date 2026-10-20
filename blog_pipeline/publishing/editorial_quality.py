@@ -1706,6 +1706,14 @@ def _source_freshness_reasons(source, identity):
     scheduled = scheduled.astimezone(timezone.utc)
     if published > scheduled + timedelta(hours=6):
         return ["quality_source_freshness"]
+    # The approved growth trial permits durable Monday problems backed by
+    # currently valid documents; Wednesday still requires a recent change.
+    if (
+        identity.content_type == "daily_news"
+        and date.fromisoformat(identity.publish_date) >= date(2026, 10, 12)
+        and editorial_lane_for_identity(identity) == "evergreen_problem"
+    ):
+        return []
     curiosity_article = editorial_lane_for_identity(identity) in CURIOSITY_LANES
     if (
         identity.content_type == "daily_news"

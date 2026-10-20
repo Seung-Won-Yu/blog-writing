@@ -14,6 +14,7 @@ from blog_pipeline.publishing.draft_identity import (
 )
 from blog_pipeline.publishing.editorial_quality import (
     _backfill_deadline,
+    _source_freshness_reasons,
     HARU_CHARACTER_ANCHOR,
     HARU_CHARACTER_ID,
     HARU_CHARACTER_NAME,
@@ -2516,6 +2517,26 @@ class EditorialQualityTests(unittest.TestCase):
         )
 
         self.assertNotIn("quality_source_freshness", reasons)
+
+    def test_growth_trial_monday_accepts_older_documented_problem(self):
+        source = valid_daily_source("2026-10-19")
+        source["news"][0]["published_at"] = "2026-09-21T09:00:00+09:00"
+        self.assertEqual([], _source_freshness_reasons(
+            source, resolve_draft_identity("2026-10-19")))
+
+    def test_growth_trial_wednesday_still_requires_recent_change(self):
+        source = valid_daily_source("2026-10-21")
+        source["news"][0]["published_at"] = "2026-10-13T09:00:00+09:00"
+        self.assertEqual(["quality_source_freshness"], _source_freshness_reasons(
+            source, resolve_draft_identity("2026-10-21")))
+
+    def test_growth_trial_monday_still_rejects_invalid_or_future_dates(self):
+        for stamp in ("invalid", "2026-09-21T09:00:00", "2026-10-20T09:00:00+09:00"):
+            with self.subTest(stamp=stamp):
+                source = valid_daily_source("2026-10-19")
+                source["news"][0]["published_at"] = stamp
+                self.assertEqual(["quality_source_freshness"], _source_freshness_reasons(
+                    source, resolve_draft_identity("2026-10-19")))
 
     def test_future_posts_require_korean_editorial_and_prose(self):
         source = valid_daily_source()
