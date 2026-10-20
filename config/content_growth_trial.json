@@ -58,7 +58,7 @@
     },
     {
       "priority": 3,
-      "status": "planned",
+      "status": "ready_for_review",
       "page_url": "https://won0322.tistory.com/209",
       "title": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
       "draft_id": "2026-08-20",
@@ -67,7 +67,8 @@
       "previous_clicks": 6,
       "current_impressions": 191,
       "previous_impressions": 174,
-      "improvement_goal": "WMIC 오류를 만난 Windows 사용자가 필요한 대체 명령을 바로 찾도록 목적·명령·확인 결과를 연결하고 버전·권한의 경계를 확인한다."
+      "improvement_goal": "WMIC 오류를 만난 Windows 사용자가 필요한 대체 명령을 바로 찾도록 목적·명령·확인 결과를 연결하고 버전·권한의 경계를 확인한다.",
+      "refreshed_on": "2026-10-20"
     }
   ]
 }

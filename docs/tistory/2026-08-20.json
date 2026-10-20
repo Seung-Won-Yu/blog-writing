@@ -21,10 +21,10 @@
     "윈도우 자동화",
     "시스템 관리"
   ],
-  "meta_description": "오래 쓰던 배치 파일을 실행했는데 'wmic은 내부 또는 외부 명령이 아닙니다'라는 문장이 뜨면, 윈도우 관리 기능 전체가 사라진 것처럼 보일 수 있다. 하지만 Windows 11 25H2에서 제거되… Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는…",
+  "meta_description": "오래 쓰던 배치 파일에서 'wmic은 내부 또는 외부 명령이 아닙니다'가 뜨면, Windows의 PowerShell에서 Get-CimInstance로 같은 정보를 조회할 수 있다. WMIC 도구가 제… Windows 11 25H2에서 WMIC 유틸리티가 제거되며, 기존 관리 스크립트는…",
   "key_summary": [
     "1. Windows 11 25H2에서 WMIC가 빠지며 PowerShell 전환이 필요해졌다",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: WMIC와 WMI의 차이를 구분하고, 운영체제·CPU·BIOS·디스크·프로세스·원격 조회를 Get-CimInstance 기반으로 교체하며, 문자열 파싱 의존성까지 확인할…"
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -36,7 +36,8 @@
     "추천 제목: WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 12,
+  "estimated_read_minutes": 15,
+  "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-08-20.json",
@@ -45,9 +46,9 @@
   "before_ad_html": "docs/tistory/2026-08-20-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-20-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-20-adfit.html",
-  "source_sha256": "ca2df0c04b86425a6662ab8205d2dc7b792eca2ed05c3e59150db091b3e0f3c4",
-  "html_sha256": "0bdf1e3a770f09be1ffe7b0493f3b69e58b5a93f416723dc645d4ca9477f57d4",
-  "adfit_sha256": "5d881ed6d8701178b1fc1d3e8494bb3cb905cc6b9b4d95735a58e3978f7099a9",
+  "source_sha256": "3a8fb459a99bc2750f802b25fe95a662d939827a10933b54e4105411363bd12d",
+  "html_sha256": "c67456300c7690692c942f3f64970970210e7d517b27e07e504795de36e4efed",
+  "adfit_sha256": "7e37243fa112876591b60efb163b8c0de9718019c610aaabe1a06a88fc13b770",
   "image_assets": [
     {
       "kind": "cover",
