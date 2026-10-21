@@ -1,0 +1,96 @@
+{
+  "title": "Wrangler 소스맵 기본 업로드: 배포 성공 뒤에도 확인할 세 단계",
+  "title_candidates": [
+    "Wrangler 소스맵 기본 업로드: 배포 성공 뒤에도 확인할 세 단계",
+    "기본 업로드와 오류 위치 복원을 구분하는 Workers 점검 기준",
+    "Wrangler 소스맵 기본 업로드와 로그 복원 경계: 필름 아래 드러난 원본 위치"
+  ],
+  "category": "IT 트렌드 해설",
+  "draft_id": "2026-10-21",
+  "publish_date": "2026-10-21",
+  "content_type": "daily_news",
+  "content_label": "IT 트렌드 해설",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-21T09:00:00+09:00",
+  "tags": [
+    "Wrangler 소스맵",
+    "소스맵 업로드",
+    "Cloudflare Workers",
+    "오류 로그",
+    "커스텀 빌드",
+    "Vite 설정"
+  ],
+  "meta_description": "오류 로그가 압축된 파일의 한 줄만 가리키면 고칠 원본을 찾기 어렵다. Wrangler 소스맵은 10월 20일 발표된 변경으로 기본 업로드되지만, 배포 성공이 모든 맵의 정상 적용을 뜻하지는 않는다.… Wrangler 기본 소스맵 업로드 변경을 계기로 설정 생략·true·커스텀 빌드와…",
+  "key_summary": [
+    "1. 기본 업로드와 오류 위치 복원을 구분하는 Workers 점검 기준",
+    "직접 얻는 결과: 기본 업로드와 명시적 true의 실패 처리 차이를 알고, 실제 빌드 산출물과 같은 배포의 로그를 대조하는 순서로 원본 위치 복원을 확인한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 IT 트렌드 해설로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Wrangler 소스맵 기본 업로드: 배포 성공 뒤에도 확인할 세 단계"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 10,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-21.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-21.html",
+  "before_ad_html": "docs/tistory/2026-10-21-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-21-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-21-adfit.html",
+  "source_sha256": "106433b173328df98601298a8416f91e19035dc7ef2f7b90ed70bf4dd3675a7f",
+  "html_sha256": "2cfea7fb74937c8ac67b5fd524faf695b28fcba22bd441424cd6660154d35ee5",
+  "adfit_sha256": "5677dd04c20f9e20b1f5e8b56d9d4c2b6c1a334b964351e635f929720d3bd408",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-21/소스맵-원본위치-필름.webp",
+      "path": "docs/tistory/assets/2026-10-21/소스맵-원본위치-필름.webp",
+      "original_url": "",
+      "alt": "Wrangler 소스맵은 변환된 오류 위치와 원본 위치를 연결한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-21/소스맵-기본값-실패분기.webp",
+      "path": "docs/tistory/assets/2026-10-21/소스맵-기본값-실패분기.webp",
+      "original_url": "",
+      "alt": "Wrangler 소스맵은 이전의 명시적 활성화에서 기본 업로드로 바뀌었지만 누락 처리 선택은 남는다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-21/소스맵-배포-확인순서.webp",
+      "path": "docs/tistory/assets/2026-10-21/소스맵-배포-확인순서.webp",
+      "original_url": "",
+      "alt": "Wrangler 소스맵 확인은 빌드 파일·업로드 기록·같은 배포의 로그를 순서대로 연결한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-21/소스맵-공식문서-true설정.webp",
+      "path": "docs/tistory/assets/2026-10-21/소스맵-공식문서-true설정.webp",
+      "original_url": "",
+      "alt": "Wrangler 소스맵 공식 문서는 upload_source_maps를 true로 지정하는 예시를 제공한다",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
