@@ -69,6 +69,22 @@
       "previous_impressions": 174,
       "improvement_goal": "WMIC 오류를 만난 Windows 사용자가 필요한 대체 명령을 바로 찾도록 목적·명령·확인 결과를 연결하고 버전·권한의 경계를 확인한다.",
       "refreshed_on": "2026-10-20"
+    },
+    {
+      "priority": 4,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/144",
+      "title": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
+      "draft_id": "2026-07-24",
+      "source": "data/days/2026-07-24.json",
+      "current_clicks": 9,
+      "current_impressions": 167,
+      "evidence_observed_on": "2026-10-22",
+      "evidence_period_start": "2026-09-22",
+      "evidence_period_end": "2026-10-19",
+      "metric_scope": "page",
+      "improvement_goal": "회의 자료 종류와 찾는 순서, 미생성·처리 중·접근 불가를 구분하고 과거 배포일을 현재 실패 원인으로 단정하는 안내를 바로잡는다.",
+      "refreshed_on": "2026-10-22"
     }
   ]
 }

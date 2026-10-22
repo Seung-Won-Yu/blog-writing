@@ -20,10 +20,10 @@
     "업무 자동화",
     "Google Workspace"
   ],
-  "meta_description": "회의가 끝난 뒤 녹화 영상은 Drive에서, 스크립트는 Calendar 첨부에서, Gemini 회의록은 메일 링크에서 다시 찾곤 했다. 파일이 만들어지는 기능보다 ‘어디에 저장됐는지’ 기억하는 일이… Google Meet 회의가 끝나면 호스트의 내 드라이브에 Google Meet 폴더…",
+  "meta_description": "회의가 끝난 뒤 자료가 안 보이면, 먼저 회의를 예약한 계정의 Drive에서 Google Meet 폴더와 해당 회의 폴더를 찾는다. 참석자는 권한이 있는 원본으로 연결되는 바로가기를 확인한다. 다만… Google Meet 회의가 끝나면 호스트의 내 드라이브에 Google Meet 폴더…",
   "key_summary": [
     "1. Google Meet, 회의록·스크립트·녹화를 Drive의 회의별 폴더로 자동 정리",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: 새 Google Meet 폴더 구조, 호스트 원본과 참석자 바로가기의 차이, 반복 회의 처리 방식과 기존 자동화의 점검 지점을 한 번에 이해한다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -35,7 +35,8 @@
     "추천 제목: Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 12,
+  "estimated_read_minutes": 14,
+  "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-24.json",
@@ -44,9 +45,9 @@
   "before_ad_html": "docs/tistory/2026-07-24-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-24-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-24-adfit.html",
-  "source_sha256": "aaff081b3c62fc6f4dc3ef92b682c44ef78390babefb250a7b0e8cdbc0889689",
-  "html_sha256": "75fcca1df2408f40e2fe624a6bbe6f616aece3cb08b2ffd11aa33b1dda301f68",
-  "adfit_sha256": "64629735b63f249cf856f00371ad3d20673eb51200465a0d57c90c6a37a162ee",
+  "source_sha256": "a4eeac428b6625f49df39fd881c758b9b9309d84e0535d50080ea9c1e232fe13",
+  "html_sha256": "5567334d27f4757b344f1f618a757539bd83df0cb0c08244b1c0560791f7eb30",
+  "adfit_sha256": "7834263250f25579a5a4268636deb874776b28cdec90ec2ac02abc5c0b0e469f",
   "image_assets": [
     {
       "kind": "cover",
