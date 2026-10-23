@@ -1,0 +1,765 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "draft_id": "2026-10-23-automation",
+  "publish_date": "2026-10-23",
+  "date_label": "2026. 10. 23",
+  "weekday": "금",
+  "scheduled_at": "2026-10-23T09:00:00+09:00",
+  "primary_query": "uv run·uvx 차이",
+  "tags": [
+    "uv",
+    "uv run",
+    "uvx",
+    "파이썬 스크립트",
+    "의존성 관리",
+    "AI 개발 도구",
+    "공식 문서"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "내 .py 파일과 프로젝트 명령은 uv run, 배포된 독립 도구 호출은 uvx가 출발점이다.",
+      "스크립트에 인라인 의존성을 넣으면 프로젝트 패키지를 그대로 물려받지 않는다.",
+      "반복 실행은 의존성 선언·잠금 파일·실행 위치를 함께 남겨야 한다."
+    ],
+    "glossary": [
+      {
+        "term": "의존성",
+        "meaning": "프로그램을 실행하는 데 필요한 다른 패키지다."
+      },
+      {
+        "term": "인라인 메타데이터",
+        "meaning": "스크립트의 주석 안에 Python 조건과 필요한 패키지를 적는 형식이다."
+      },
+      {
+        "term": "잠금 파일",
+        "meaning": "요구 조건을 풀어 실제로 선택한 패키지 버전 등을 기록한 파일이다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준",
+    "opening": "AI가 만들어 준 report.py는 있는데 실행하자니 uv run과 uvx가 헷갈린다. 내 파일은 uv run, 배포된 도구 명령은 uvx부터 본다. 다만 프로젝트 안에서 돌리는지, 파일에 의존성이 적혀 있는지에 따라 읽는 환경이 달라진다. 실행 대상과 다시 남길 파일을 나누면 명령 선택을 끝낼 수 있다.",
+    "closing": "실행 명령은 코드와 환경을 연결한다. 스크립트·도구·프로젝트 중 무엇을 실행하는지 정하고, 다음 사람이 같은 조건을 복원할 자료를 남기자. 의존성 분리는 설치 충돌을 줄이는 실행 구조이며, 코드가 올바른 결과를 만드는지의 검증은 별도로 남는다.",
+    "action": "지금 실행할 작업 하나에 대상 파일 또는 명령, 사용할 환경, 보존할 의존성·잠금 파일을 적고 그에 맞는 경로를 고른다.",
+    "audience_problem": "AI가 작성한 Python 스크립트와 기존 프로젝트 검사 도구를 실행하려는 개발자가 uv run과 uvx를 서로 바꿔 쓴다.",
+    "reader_takeaway": "독립 스크립트·배포 도구·프로젝트 작업에 맞는 실행 경로와 다시 실행할 때 보존할 파일을 고른다.",
+    "why_now": "AI가 코드와 함께 제안한 실행 명령이 내 프로젝트 환경을 쓰는지 직접 판단할 필요가 있다.",
+    "topic_key": "uv-run-uvx-python-script-tool-project-environment-choice",
+    "reader_question": "AI가 만든 Python 파일과 프로젝트 검사 도구는 uv run과 uvx 중 무엇으로 실행할까?",
+    "entities": [
+      "uv",
+      "uv run",
+      "uvx",
+      "Python",
+      "인라인 메타데이터",
+      "잠금 파일"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "classification",
+      "comparison",
+      "application",
+      "limits",
+      "judgment",
+      "mechanism"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "decision_guide",
+    "search_intent": {
+      "query": "uv run·uvx 차이",
+      "reader_need": "스크립트와 도구의 실행 환경을 구분해 재실행 가능한 명령 경로를 정한다.",
+      "answer_format": "실행 대상별 선택표와 보존 파일 기록"
+    },
+    "reader_hook": {
+      "scene": "AI가 만든 Python 파일을 실행하려는데 uv run과 uvx가 함께 추천되어 어떤 환경을 쓰는지 헷갈리는 장면",
+      "stakes": "프로젝트 패키지가 없는 환경에서 검사하거나 작업과 무관한 프로젝트 의존성까지 불러올 수 있다.",
+      "payoff": "내 파일·배포 도구·프로젝트 작업별 실행 경로와 다음 실행에 보존할 파일을 고른다.",
+      "open_question": "같은 폴더에서 실행해도 uv run과 uvx가 보는 패키지는 왜 다를까?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "내 파일인가, 이미 배포된 명령인가",
+      "immediate_answer": "내 파일을 실행하려면 uv run, 배포된 명령줄 도구를 따로 호출하려면 uvx를 검토한다. 프로젝트의 코드·의존성이 필요한 작업은 그 프로젝트 환경에서 실행하고, 독립 스크립트는 필요한 패키지를 파일에 함께 기록한다.",
+      "action_steps": [
+        "실행 대상이 직접 저장한 .py 파일인지 배포된 도구 명령인지 구분한다.",
+        "프로젝트 코드와 패키지가 필요한지 확인해 독립 실행과 프로젝트 실행을 나눈다.",
+        "다시 돌릴 작업은 의존성 선언·잠금 파일·실행 위치를 함께 남긴다."
+      ],
+      "completion_check": "지금 실행할 작업 하나에 대상 파일 또는 명령, 사용할 환경, 보존할 의존성·잠금 파일을 적고 그에 맞는 경로를 고른다."
+    },
+    "revisit": {
+      "quick_answer": "내 파일을 실행하려면 uv run, 배포된 명령줄 도구를 따로 호출하려면 uvx를 검토한다. 프로젝트의 코드·의존성이 필요한 작업은 그 프로젝트 환경에서 실행하고, 독립 스크립트는 필요한 패키지를 파일에 함께 기록한다.",
+      "reuse_case": "AI가 제시한 Python 실행 명령을 내 작업 환경에 맞출 때",
+      "failure_case": "독립 도구 환경에서 프로젝트 패키지를 찾으려 할 때",
+      "artifact_type": "evaluation_matrix",
+      "update_triggers": [
+        "uv 실행 환경 규칙 변경",
+        "스크립트의 프로젝트 편입",
+        "의존성·Python 조건 변경"
+      ]
+    },
+    "original_value": {
+      "durable_question": "AI가 만든 Python 파일과 프로젝트 검사 도구는 uv run과 uvx 중 무엇으로 실행할까?",
+      "source_gap": "스크립트·도구·프로젝트 문서가 나뉘어 같은 파일 위치와 실행 환경을 혼동하기 쉽다.",
+      "contribution": "실행 대상·환경 소유·보존 파일을 연결한 선택표와 가상 작업 전환 사례를 구성했다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "독립 스크립트·배포 도구·프로젝트 작업에 맞는 실행 경로와 다시 실행할 때 보존할 파일을 고른다.",
+      "limits": "이 글은 공식 문서 여섯 곳을 대조한 선택 가이드다. uv 명령과 패키지를 설치·실행하지 않았고, 속도·호환성·AI 코드의 정확성을 측정하지 않았다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 94,
+      "criteria": {
+        "search_durability": 20,
+        "developer_relevance": 25,
+        "source_authority": 20,
+        "original_contribution": 17,
+        "curiosity": 12
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    },
+    "value_review": {
+      "primary_reader": "AI가 작성한 Python 파일과 프로젝트 검사 명령을 실행하는 개발자",
+      "reader_question": "AI가 만든 Python 파일과 프로젝트 검사 도구는 uv run과 uvx 중 무엇으로 실행할까?",
+      "source_gap": "스크립트·도구·프로젝트 문서가 나뉘어 같은 파일 위치와 실행 환경을 혼동하기 쉽다.",
+      "selection_reason": "전용 후보함의 공식 문서 읽기 후보를 구체 작업으로 좁혔다. uv 문서의 누락 의존성 오류와 pytest·mypy 환경 분리 주의가 확인된 수요 단서다. 검색량을 측정하지 않은 편집 가설이며 기존 Python 멀티프로세싱·CSV 작업과 질문이 다르다.",
+      "contributions": [
+        {
+          "basis": "inference",
+          "excerpt": "여러 문서를 엮은 이 글의 해석은, 명령 길이보다 실행 대상·환경의 주인·다음 실행에 남길 파일을 먼저 정하면 uv run과 uvx의 선택이 쉬워진다는 것이다.",
+          "limit_excerpt": "이 글은 공식 문서 여섯 곳을 대조한 선택 가이드다. uv 명령과 패키지를 설치·실행하지 않았고, 속도·호환성·AI 코드의 정확성을 측정하지 않았다.",
+          "source_urls": [
+            "https://docs.astral.sh/uv/guides/scripts/",
+            "https://docs.astral.sh/uv/guides/tools/",
+            "https://docs.astral.sh/uv/guides/projects/",
+            "https://packaging.python.org/en/latest/specifications/inline-script-metadata/",
+            "https://docs.astral.sh/uv/concepts/projects/sync/",
+            "https://docs.astral.sh/uv/concepts/tools/"
+          ],
+          "disclosure_excerpt": "여러 문서를 엮은 이 글의 해석은, 명령 길이보다 실행 대상·환경의 주인·다음 실행에 남길 파일을 먼저 정하면 uv run과 uvx의 선택이 쉬워진다는 것이다."
+        }
+      ]
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "uv",
+      "uv run",
+      "uvx"
+    ],
+    "subject": "uv 실행 대상과 환경 선택",
+    "hook": "같은 폴더에서 uv 실행 환경은 왜 달라질까?",
+    "motif": "파일과 필요한 환경을 함께 담는 케이스",
+    "cover": {
+      "label": "uv 독립 스크립트를 의존성과 함께 케이스에 넣는 장면",
+      "scene_label": [
+        "uv",
+        "스크립트"
+      ],
+      "steps": "uv 독립 파일을 필요한 의존성과 함께 담는다.",
+      "curiosity_hook": "uv 스크립트는 어떤 환경을 함께 가져가야 할까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "portable_script_dependency_case_miniature",
+      "composition_type": "oblique_case_insertion_closeup",
+      "palette_family": "plum_mint_chalk",
+      "render_family": "isometric_model",
+      "editorial_treatment": "playful_surrealism",
+      "focal_subject": "uv 독립 스크립트와 의존성을 담은 케이스",
+      "texture_cue": "무광 세라믹 조각과 종이 파일",
+      "authenticity_cue": "파일을 의존성 조각과 함께 넣는 손의 행동",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\n용도: uv run·uvx 차이를 다루는 개발 매거진 대표 이미지, 1200:630 가로.\n실제 대상: a miniature physical Python script sheet report.py being carefully slid by a human hand into a snug open carrying case containing matching small dependency blocks; one large bound project notebook sits closed in background, clearly separate. This is a metaphor for a portable script with its own dependencies.\n구도: single close scene viewed from elevated side angle, script and open case fill central 65%, asymmetric negative space.\n시각 스타일: high quality isometric model, playful physical miniature realism, smooth matte ceramic with paper details.\n색·조명: plum purple, pale mint, warm chalk white, soft daylight shadows.\n필수 물체: report.py sheet, enclosing case, small matching dependency pieces, hand placing sheet; project notebook separate.\n짧은 한국어: none; only small report.py text permitted.\n금지 요소: fake UI, terminal screen, arrows, table, cards, roadmap, chart, logos, robots, brain, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "uv 도구 환경과 프로젝트 의존성의 경계",
+        "scene_label": [
+          "uv",
+          "실행 환경"
+        ],
+        "steps": "uv 도구 환경과 프로젝트 의존성의 경계를 읽어 실행 경로를 정한다.",
+        "curiosity_hook": "uv 실행에서 어떤 환경을 사용하는가?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "browser",
+        "capture_target": "uv 공식 문서: https://docs.astral.sh/uv/guides/tools/",
+        "source_url": "https://docs.astral.sh/uv/guides/tools/",
+        "capture_note": "실제 공식 문서 핵심 구간과 한국어 해설을 함께 보존한다.",
+        "captured_at": "2026-10-23T00:09:52.877Z"
+      },
+      {
+        "label": "uv run·uvx 실행 대상 선택 지도",
+        "scene_label": [
+          "uv",
+          "내 파일",
+          "배포 도구",
+          "프로젝트"
+        ],
+        "steps": "uv 실행 대상과 필요한 환경을 짝지어 고른다.",
+        "curiosity_hook": "uv run과 uvx 중 무엇을 쓸까?",
+        "evidence_type": "diagram",
+        "logic_type": "comparison",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "teaching_claim": "uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다.",
+        "generation_prompt": "Use case: stylized-concept\n용도: uv run·uvx 실행 대상 선택의 한국어 개념 도식, wide 1200:630.\n실제 대상: three distinct physical objects in an asymmetrical branching diagram: a standalone .py sheet, a packaged command-line tool in a small box, and a project folder with interconnected source sheets.\n구도: three spacious branches, very large readable Korean type, objects occupy 60%, routes clearly pair each object and command. Not real UI.\n시각 스타일: crisp flat educational illustration with subtle depth.\n색·조명: warm white, plum, dark charcoal and mint, high contrast.\n필수 물체: .py sheet leads to uv run; packaged CLI leads to uvx; project folder leads to uv run with environment inside folder.\n짧은 한국어 정확히: \"내 파일\", \"배포 도구\", \"프로젝트\". Commands \"uv run\", \"uvx\", \"uv run\" beside corresponding branches. Large typography readable on mobile.\n금지 요소: screenshot imitation, invented metrics, tiny text, extra labels, logos, watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "내 파일",
+          "배포 도구",
+          "프로젝트"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "uv 프로젝트 실행 전 잠금·동기화의 경계",
+        "scene_label": [
+          "uv",
+          "실행 환경"
+        ],
+        "steps": "uv 프로젝트 실행 전 잠금·동기화의 경계를 읽어 실행 경로를 정한다.",
+        "curiosity_hook": "uv 실행에서 어떤 환경을 사용하는가?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        },
+        "capture_tool": "browser",
+        "capture_target": "uv 공식 문서: https://docs.astral.sh/uv/concepts/projects/sync/",
+        "source_url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+        "capture_note": "실제 공식 문서 핵심 구간과 한국어 해설을 함께 보존한다.",
+        "captured_at": "2026-10-23T00:10:01.108Z"
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.1-sol",
+    "revision": 8,
+    "image_provider": "mixed",
+    "image_policy": "webp-v1"
+  },
+  "images": {
+    "cover": {
+      "label": "uv 독립 스크립트를 의존성과 함께 케이스에 넣는 장면",
+      "scene_label": [
+        "uv",
+        "스크립트"
+      ],
+      "steps": "uv 독립 파일을 필요한 의존성과 함께 담는다.",
+      "curiosity_hook": "uv 스크립트는 어떤 환경을 함께 가져가야 할까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "portable_script_dependency_case_miniature",
+      "composition_type": "oblique_case_insertion_closeup",
+      "palette_family": "plum_mint_chalk",
+      "render_family": "isometric_model",
+      "editorial_treatment": "playful_surrealism",
+      "focal_subject": "uv 독립 스크립트와 의존성을 담은 케이스",
+      "texture_cue": "무광 세라믹 조각과 종이 파일",
+      "authenticity_cue": "파일을 의존성 조각과 함께 넣는 손의 행동",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\n용도: uv run·uvx 차이를 다루는 개발 매거진 대표 이미지, 1200:630 가로.\n실제 대상: a miniature physical Python script sheet report.py being carefully slid by a human hand into a snug open carrying case containing matching small dependency blocks; one large bound project notebook sits closed in background, clearly separate. This is a metaphor for a portable script with its own dependencies.\n구도: single close scene viewed from elevated side angle, script and open case fill central 65%, asymmetric negative space.\n시각 스타일: high quality isometric model, playful physical miniature realism, smooth matte ceramic with paper details.\n색·조명: plum purple, pale mint, warm chalk white, soft daylight shadows.\n필수 물체: report.py sheet, enclosing case, small matching dependency pieces, hand placing sheet; project notebook separate.\n짧은 한국어: none; only small report.py text permitted.\n금지 요소: fake UI, terminal screen, arrows, table, cards, roadmap, chart, logos, robots, brain, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 110330,
+      "quality": null,
+      "sha256": "6255eb42aa1d8bc79eb48394ba88d370c8b66ea98ad44aba7a2494c2705e0037"
+    },
+    "visual_1": {
+      "label": "uv 도구 환경과 프로젝트 의존성의 경계",
+      "scene_label": [
+        "uv",
+        "실행 환경"
+      ],
+      "steps": "uv 도구 환경과 프로젝트 의존성의 경계를 읽어 실행 경로를 정한다.",
+      "curiosity_hook": "uv 실행에서 어떤 환경을 사용하는가?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "browser",
+      "capture_target": "uv 공식 문서: https://docs.astral.sh/uv/guides/tools/",
+      "source_url": "https://docs.astral.sh/uv/guides/tools/",
+      "capture_note": "실제 공식 문서 핵심 구간과 한국어 해설을 함께 보존한다.",
+      "captured_at": "2026-10-23T00:09:52.877Z",
+      "alt": "uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다.",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 71166,
+      "quality": null,
+      "sha256": "bfe460e8cf383e84789bdb19612dbbdc4f87785ae19c62e30c8c0929e543e29e",
+      "capture_sha256": "bfe460e8cf383e84789bdb19612dbbdc4f87785ae19c62e30c8c0929e543e29e"
+    },
+    "visual_2": {
+      "label": "uv run·uvx 실행 대상 선택 지도",
+      "scene_label": [
+        "uv",
+        "내 파일",
+        "배포 도구",
+        "프로젝트"
+      ],
+      "steps": "uv 실행 대상과 필요한 환경을 짝지어 고른다.",
+      "curiosity_hook": "uv run과 uvx 중 무엇을 쓸까?",
+      "evidence_type": "diagram",
+      "logic_type": "comparison",
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "teaching_role": "decision_map",
+      "teaching_claim": "uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다.",
+      "generation_prompt": "Use case: stylized-concept\n용도: uv run·uvx 실행 대상 선택의 한국어 개념 도식, wide 1200:630.\n실제 대상: three distinct physical objects in an asymmetrical branching diagram: a standalone .py sheet, a packaged command-line tool in a small box, and a project folder with interconnected source sheets.\n구도: three spacious branches, very large readable Korean type, objects occupy 60%, routes clearly pair each object and command. Not real UI.\n시각 스타일: crisp flat educational illustration with subtle depth.\n색·조명: warm white, plum, dark charcoal and mint, high contrast.\n필수 물체: .py sheet leads to uv run; packaged CLI leads to uvx; project folder leads to uv run with environment inside folder.\n짧은 한국어 정확히: \"내 파일\", \"배포 도구\", \"프로젝트\". Commands \"uv run\", \"uvx\", \"uv run\" beside corresponding branches. Large typography readable on mobile.\n금지 요소: screenshot imitation, invented metrics, tiny text, extra labels, logos, watermark.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "내 파일",
+        "배포 도구",
+        "프로젝트"
+      ],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다.",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 39532,
+      "quality": null,
+      "sha256": "be75a77f2da27306b4c728415ef97cfe41fe8bbebf83461ca78a773430fd745e"
+    },
+    "visual_3": {
+      "label": "uv 프로젝트 실행 전 잠금·동기화의 경계",
+      "scene_label": [
+        "uv",
+        "실행 환경"
+      ],
+      "steps": "uv 프로젝트 실행 전 잠금·동기화의 경계를 읽어 실행 경로를 정한다.",
+      "curiosity_hook": "uv 실행에서 어떤 환경을 사용하는가?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "capture_tool": "browser",
+      "capture_target": "uv 공식 문서: https://docs.astral.sh/uv/concepts/projects/sync/",
+      "source_url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "capture_note": "실제 공식 문서 핵심 구간과 한국어 해설을 함께 보존한다.",
+      "captured_at": "2026-10-23T00:10:01.108Z",
+      "alt": "uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다.",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-잠금-동기화-공식근거.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-잠금-동기화-공식근거.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 69148,
+      "quality": null,
+      "sha256": "473b9ac9f33d3199a18b4f82e4894c7762f8d65ac746b76876abf320cebcb546",
+      "capture_sha256": "473b9ac9f33d3199a18b4f82e4894c7762f8d65ac746b76876abf320cebcb546"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준",
+      "source": "Astral uv · PyPA",
+      "url": "https://packaging.python.org/en/latest/specifications/inline-script-metadata/",
+      "published_at": "2026-10-12T00:00:00+00:00",
+      "blurb_kr": "실행 대상·환경·보존 파일로 uv run과 uvx의 선택을 나눈다.",
+      "references": [
+        {
+          "title": "uv: 독립 스크립트와 인라인 의존성",
+          "url": "https://docs.astral.sh/uv/guides/scripts/",
+          "kind": "official"
+        },
+        {
+          "title": "uv: 도구 호출과 프로젝트 의존성 예외",
+          "url": "https://docs.astral.sh/uv/guides/tools/",
+          "kind": "official"
+        },
+        {
+          "title": "uv: 프로젝트 파일과 실행 환경",
+          "url": "https://docs.astral.sh/uv/guides/projects/",
+          "kind": "official"
+        },
+        {
+          "title": "PyPA: 인라인 스크립트 메타데이터 규격",
+          "url": "https://packaging.python.org/en/latest/specifications/inline-script-metadata/",
+          "kind": "reference"
+        },
+        {
+          "title": "uv: 잠금과 동기화 옵션의 차이",
+          "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+          "kind": "official"
+        },
+        {
+          "title": "uv: 일회 호출·캐시·지속 설치",
+          "url": "https://docs.astral.sh/uv/concepts/tools/",
+          "kind": "official"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "내 파일인가, 이미 배포된 명령인가"
+        },
+        {
+          "t": "p",
+          "text": "내 파일을 실행하려면 uv run, 배포된 명령줄 도구를 따로 호출하려면 uvx를 검토한다. 프로젝트의 코드·의존성이 필요한 작업은 그 프로젝트 환경에서 실행하고, 독립 스크립트는 필요한 패키지를 파일에 함께 기록한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "실행 대상이 직접 저장한 .py 파일인지 배포된 도구 명령인지 구분한다.",
+            "프로젝트 코드와 패키지가 필요한지 확인해 독립 실행과 프로젝트 실행을 나눈다.",
+            "다시 돌릴 작업은 의존성 선언·잠금 파일·실행 위치를 함께 남긴다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "가령 AI에게 CSV 보고서 코드를 받아 report.py로 저장했다고 하자. 이 파일을 실행하는 일과 Ruff라는 배포 도구로 문법을 검사하는 일은 대상부터 다르다. 이는 실제 실행 사례가 아니라 명령을 고르기 위한 가상 장면이다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다. 생성 도식이며 실제 터미널 결과가 아니다."
+        },
+        {
+          "t": "p",
+          "text": "같은 폴더에 있다고 같은 패키지를 쓰는 것은 아니다. 폴더는 입력 파일을 찾는 위치가 될 수 있지만, Python이 import할 패키지의 환경은 실행 방식에 따라 달라진다. “파일이 여기 있으니 패키지도 보일 것”이라는 추정을 먼저 걷어 낸다."
+        },
+        {
+          "t": "table",
+          "caption": "실행 대상과 남길 파일로 고르는 uv 경로",
+          "headers": [
+            "지금 할 일",
+            "먼저 볼 경로",
+            "남길 조건"
+          ],
+          "rows": [
+            [
+              "내 독립 .py 파일 실행",
+              "uv run + 파일",
+              "파일의 의존성·Python 조건"
+            ],
+            [
+              "배포된 CLI 한 번 호출",
+              "uvx + 도구 명령",
+              "도구 이름·버전·옵션"
+            ],
+            [
+              "프로젝트 코드의 테스트",
+              "프로젝트에서 uv run",
+              "pyproject.toml·uv.lock"
+            ],
+            [
+              "다른 프로그램이 도구를 호출",
+              "uv tool install 검토",
+              "설치 버전·PATH 조건"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "uv 실행 대상별 선택표"
+        },
+        {
+          "t": "h",
+          "text": "uvx의 분리는 프로젝트 패키지도 가린다"
+        },
+        {
+          "t": "p",
+          "text": "Using tools 문서는 uvx가 uv tool run의 별칭이라고 설명한다. 대상은 명령줄 인터페이스를 제공하는 패키지다. uvx는 그 도구용 환경에서 실행하므로 작업 프로젝트의 패키지를 자동으로 공유하는 경로가 아니다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다. 실제 공식 문서 캡처이며 검사 실행 화면이 아니다."
+        },
+        {
+          "t": "p",
+          "text": "그래서 문서는 프로젝트 설치가 필요한 pytest·mypy 작업이라면 uv run을 보라고 안내한다. 반대로 프로젝트 설치 없이 파일만 검사할 수 있는 경우에는 uvx가 가능하다는 예외도 둔다. 도구 이름 하나로 항상 어느 명령이라고 외우면 이 조건을 놓친다."
+        },
+        {
+          "t": "p",
+          "text": "AI가 테스트 명령을 제시했다면 먼저 “이 테스트가 내 패키지를 import하는가”를 확인하자. 파일 모양만 검사하는 도구인지, 설치된 프로젝트를 읽고 실행하는 도구인지에 따라 필요한 환경이 바뀐다. 테스트 도구 자체도 프로젝트에 선언되어 있어야 같은 버전을 공유하기 쉽다."
+        },
+        {
+          "t": "p",
+          "text": "패키지 이름과 실행 명령이 다를 수도 있다. Using tools는 --from으로 제공 패키지를 지정하는 방식을 안내한다. 명령을 못 찾았다고 비슷한 이름의 패키지를 추측해 설치하기보다 공식 배포 문서에서 두 이름의 관계부터 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "Tools 개념 문서에 따르면 uvx 환경은 캐시에 재사용될 수 있고 삭제되면 다시 만들어진다. 일회 호출이라는 표현을 “매번 아무것도 남기지 않는다”로 읽지 않는다. 캐시 경로 자체를 팀의 실행 조건 기록으로 삼는 것도 적합하지 않다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "독립 스크립트에는 필요한 것을 함께 적는다"
+        },
+        {
+          "t": "p",
+          "text": "스크립트가 외부 패키지를 쓰는데 그것을 어디에도 적지 않았다면 파일만 전달해도 실행 환경은 전달되지 않는다. Running scripts는 호출할 때 --with로 추가하는 방법과 파일 안에 의존성을 선언하는 방법을 모두 소개한다. 반복해서 공유할 파일이라면 선언을 파일과 함께 읽을 수 있어야 한다."
+        },
+        {
+          "t": "p",
+          "text": "PyPA 인라인 메타데이터 규격은 script 주석 블록에 dependencies와 requires-python을 적는 형식이다. 하나는 필요한 패키지 조건, 다른 하나는 호환 Python 조건이다. 파일을 받은 사람이 import 문만 보고 준비물을 추측하는 부담을 줄이는 계약으로 볼 수 있다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "독립 파일로 보낼 작업이면 필요한 외부 패키지와 Python 조건을 파일에 함께 기록한다.",
+            "프로젝트 모듈을 import하는 작업이면 독립 파일이라고 가정하지 말고 프로젝트 실행 경로를 검토한다.",
+            "패키지 조건을 아직 모르겠다면 실행 성공을 약속하지 말고 필요한 import와 공식 설치 문서를 먼저 맞춘다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "중요한 예외가 있다. uv는 인라인 메타데이터가 있는 스크립트를 프로젝트 안에서 실행해도 프로젝트 의존성을 무시한다고 설명한다. 주석을 추가한 순간 기존 프로젝트 환경을 그대로 쓰는 파일이라는 기대와 어긋날 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "AI가 “실행하기 쉽게” 주석 블록을 추가했는데 파일이 프로젝트 내부 패키지를 사용한다면, 코드만 볼 일이 아니다. 독립 실행 계약으로 옮길 파일인지, 기존 프로젝트 안에 둘 파일인지부터 정해야 한다. 메타데이터 유무는 꾸밈이 아니라 환경 선택을 바꾸는 정보다."
+        },
+        {
+          "t": "p",
+          "text": "인라인 정보가 없는 독립 파일을 프로젝트 밖 문맥으로 실행하려면 문서의 --no-project 조건을 확인한다. 반대로 프로젝트가 필요한데 이 옵션을 붙이면 필요한 환경을 제외하는 선택이 된다. 오류가 사라지는 옵션을 찾기 전에 어느 환경이어야 맞는지를 적는다."
+        },
+        {
+          "t": "h",
+          "text": "프로젝트의 uv run은 실행 전 상태를 맞춘다"
+        },
+        {
+          "t": "p",
+          "text": "Working on projects는 pyproject.toml에 프로젝트 정보와 의존성을 기록하고, uv.lock에 선택된 구체 버전을 남긴다고 설명한다. .venv는 설치 환경이다. 프로젝트에 속한 작업은 파일 하나보다 이 파일들의 관계를 함께 봐야 한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다. 실제 공식 문서 캡처이며 환경 변경 실험 결과가 아니다."
+        },
+        {
+          "t": "p",
+          "text": "Locking and syncing 문서에서 uv run의 기본 경로는 명령 실행 전 잠금과 환경 동기화다. 따라서 “그냥 실행했을 뿐”이라고 생각했어도 프로젝트 상태를 맞추는 처리가 먼저 일어날 수 있다. 변경 검토가 필요한 저장소라면 실행 전후 확인 범위를 정한다."
+        },
+        {
+          "t": "table",
+          "caption": "비슷해 보이는 옵션이 건너뛰는 확인은 다르다",
+          "headers": [
+            "옵션",
+            "문서가 설명하는 차이",
+            "선택할 때의 질문"
+          ],
+          "rows": [
+            [
+              "--locked",
+              "잠금 갱신이 필요하면 오류",
+              "선언과 잠금 불일치를 멈춰야 하나"
+            ],
+            [
+              "--frozen",
+              "잠금 최신성 확인 생략",
+              "현재 잠금을 그대로 쓰겠다는가"
+            ],
+            [
+              "--no-sync",
+              "환경 최신성 확인 생략",
+              "이미 준비된 환경을 신뢰하는가"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "--locked와 --frozen을 같은 고정 버튼으로 다루지 않는다. 선언과 잠금의 불일치를 잡고 싶은 작업에 최신성 확인을 건너뛰는 옵션을 쓰면 의도가 바뀐다. 이 표는 공식 동작의 차이를 읽는 기준이며 내 프로젝트에서 어느 옵션이 성공할지 검증한 결과는 아니다."
+        },
+        {
+          "t": "p",
+          "text": "또한 잠금 파일은 새 패키지가 나왔다는 이유만으로 자동으로 낡은 것이 되지 않는다. 문서는 업그레이드를 명시적으로 수행하는 경로를 구분한다. 재현하려는 실행과 최신 의존성을 시험하는 실행을 같은 명령 관성으로 섞지 말자."
+        },
+        {
+          "t": "h",
+          "text": "한 번의 보고서가 팀 작업으로 바뀌는 순간"
+        },
+        {
+          "t": "p",
+          "text": "가상 보고서 파일이 다음 주에도 쓰이고 동료에게 전달된다고 하자. 파일만 다시 보내면 새로 해결된 의존성 조건이나 다른 Python으로 결과가 달라질 여지가 남는다. 팀에 남길 자료는 실행 명령 한 줄보다 넓어야 한다."
+        },
+        {
+          "t": "p",
+          "text": "스크립트용 잠금을 선택했다면 uv 문서의 uv lock --script 경로를 확인한다. 해당 파일 옆에 별도 잠금 파일을 만드는 방식이며 프로젝트 잠금과 생성 경로가 다르다. 선언만 적은 상태와 구체 의존성을 잠근 상태를 구분해 전달한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "실행 대상: 보고서 파일인지 검사 도구인지, 프로젝트 모듈인지 적는다.",
+            "환경 조건: 독립 메타데이터 또는 프로젝트 선언과 Python 조건을 남긴다.",
+            "재실행 자료: 사용하는 잠금 파일, 입력 예, 실행 위치와 결과 확인 기준을 보존한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "프로젝트의 uv.lock은 버전 관리로 공유할 자료이고 .venv는 설치된 환경이다. 환경 폴더를 복사했다는 사실만으로 다른 운영체제에서도 같은 실행 조건이 준비됐다고 판단하지 않는다. 문서의 잠금·설치 관계를 기준으로 무엇을 보존할지 정한다."
+        },
+        {
+          "t": "p",
+          "text": "반대로 다른 프로그램이 PATH에서 도구 명령을 찾아야 한다면 매번 uvx를 앞에 붙이는 호출이 맞지 않을 수 있다. Tools 개념 문서는 이 경우 지속 설치를 검토할 이유를 설명한다. 자주 쓴다는 빈도뿐 아니라 누가 어떤 이름으로 호출하는지가 설치 선택을 가른다."
+        },
+        {
+          "t": "p",
+          "text": "여러 문서를 엮은 이 글의 해석은, 명령 길이보다 실행 대상·환경의 주인·다음 실행에 남길 파일을 먼저 정하면 uv run과 uvx의 선택이 쉬워진다는 것이다."
+        },
+        {
+          "t": "h",
+          "text": "근거와 한계: 명령 선택과 코드 검증은 별개다"
+        },
+        {
+          "t": "p",
+          "text": "확인일은 2026년 10월 23일이다. uv의 스크립트·도구·프로젝트 안내와 잠금·도구 환경 개념, PyPA 표준을 읽었다. 넓은 도구 생태계 목록 대신 Python 작업 하나의 실행 경계를 골랐다. 검색량은 확인하지 않았으며 문서의 오류·주의 사례를 선정 단서로 삼았다."
+        },
+        {
+          "t": "p",
+          "text": "이 글은 공식 문서 여섯 곳을 대조한 선택 가이드다. uv 명령과 패키지를 설치·실행하지 않았고, 속도·호환성·AI 코드의 정확성을 측정하지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "환경이 맞게 준비돼도 AI가 만든 보고서 계산식이나 파일 처리 방식이 맞는 것은 아니다. 이 글에서 끝내는 일은 실행 경로와 보존 자료의 선택이다. 실제 작업 완료는 안전한 입력 사본으로 예상 결과와 산출물을 대조한 뒤 판단해야 한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "독립 스크립트가 프로젝트 모듈을 사용하게 되면 환경 선택을 다시 본다.",
+            "uv의 환경·잠금 동작이 바뀌면 공식 문서와 팀 명령을 함께 갱신한다.",
+            "같은 실행을 재현할 때는 코드·입력·Python 조건도 잠금 파일과 함께 비교한다."
+          ]
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+      "url": "https://won0322.tistory.com/228",
+      "reason": "실행 환경을 정한 뒤 실제 완료를 판정하는 기준을 이어 읽는다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지",
+      "url": "https://won0322.tistory.com/198",
+      "reason": "실행할 패키지와 코드의 권한을 확인하는 다음 단계로 이어진다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-10-23T09:09:25.375317+09:00",
+    "scope": "Astral uv의 스크립트·배포 도구·프로젝트·잠금·도구 환경 문서와 PyPA 표준 6개 URL",
+    "method": "실행 대상·환경·잠금 규칙을 직접 읽어 선택표와 가상 전환 사례를 구성했다.",
+    "selection_rule": "금요일 전용 후보함 READY의 공식 문서 가이드를 구체 작업으로 좁힘. 94/100, 6개 원출처, 180일 질문 비중복.",
+    "limitations": "이 글은 공식 문서 여섯 곳을 대조한 선택 가이드다. uv 명령과 패키지를 설치·실행하지 않았고, 속도·호환성·AI 코드의 정확성을 측정하지 않았다.",
+    "source_urls": [
+      "https://docs.astral.sh/uv/guides/scripts/",
+      "https://docs.astral.sh/uv/guides/tools/",
+      "https://docs.astral.sh/uv/guides/projects/",
+      "https://packaging.python.org/en/latest/specifications/inline-script-metadata/",
+      "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "https://docs.astral.sh/uv/concepts/tools/"
+    ],
+    "source_count": 6,
+    "evidence_files": [
+      "visual_1",
+      "visual_3"
+    ],
+    "problem_lane": "Python 독립 스크립트·CLI·프로젝트 실행 환경 선택",
+    "tool_brand": "uv·PyPA"
+  }
+}

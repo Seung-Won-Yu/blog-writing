@@ -1,0 +1,96 @@
+{
+  "title": "uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준",
+  "title_candidates": [
+    "uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준",
+    "uv 실행 대상과 환경 선택: 같은 폴더에서 uv 실행 환경은 왜 달라질까?"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-10-23-automation",
+  "publish_date": "2026-10-23",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-23T09:00:00+09:00",
+  "tags": [
+    "uv",
+    "uv run",
+    "uvx",
+    "파이썬 스크립트",
+    "의존성 관리",
+    "AI 개발 도구",
+    "공식 문서"
+  ],
+  "meta_description": "AI가 만들어 준 report.py는 있는데 실행하자니 uv run과 uvx가 헷갈린다. 내 파일은 uv run, 배포된 도구 명령은 uvx부터 본다. 다만 프로젝트 안에서 돌리는지, 파일에 의존성이… 실행 대상·환경·보존 파일로 uv run과 uvx의 선택을 나눈다.",
+  "key_summary": [
+    "1. uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준",
+    "직접 얻는 결과: 독립 스크립트·배포 도구·프로젝트 작업에 맞는 실행 경로와 다시 실행할 때 보존할 파일을 고른다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 12,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-10-23.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-23-automation.html",
+  "before_ad_html": "docs/tistory/2026-10-23-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-23-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-23-automation-adfit.html",
+  "source_sha256": "c4f7558aa3d4cee0e10861e9386f4bd2eb7912335c6bf6d941a423f879982da2",
+  "html_sha256": "e247f4dc91e478d90a7077ffc739d1bcc2bc43f32a39bb86640ec557df5c1729",
+  "adfit_sha256": "86a9d811aaa5e09269d2ffa83c06a1e720379b23ade39c2c1e4994a5a3acb7ef",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp",
+      "original_url": "",
+      "alt": "uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp",
+      "original_url": "",
+      "alt": "uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp",
+      "original_url": "",
+      "alt": "uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-잠금-동기화-공식근거.webp",
+      "path": "docs/tistory/assets/2026-10-23-automation/uv-잠금-동기화-공식근거.webp",
+      "original_url": "",
+      "alt": "uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다.",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 10. 23 (금) · 약 12분</p>
+    <p class="digest-lead">AI가 만들어 준 report.py는 있는데 실행하자니 uv run과 uvx가 헷갈린다. 내 파일은 uv run, 배포된 도구 명령은 uvx부터 본다. 다만 프로젝트 안에서 돌리는지, 파일에 의존성이 적혀 있는지에 따라 읽는 환경이 달라진다. 실행 대상과 다시 남길 파일을 나누면 명령 선택을 끝낼 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp" alt="uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>내 .py 파일과 프로젝트 명령은 uv run, 배포된 독립 도구 호출은 uvx가 출발점이다.</li><li>스크립트에 인라인 의존성을 넣으면 프로젝트 패키지를 그대로 물려받지 않는다.</li><li>반복 실행은 의존성 선언·잠금 파일·실행 위치를 함께 남겨야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>의존성</dt><dd>프로그램을 실행하는 데 필요한 다른 패키지다.</dd></div><div><dt>인라인 메타데이터</dt><dd>스크립트의 주석 안에 Python 조건과 필요한 패키지를 적는 형식이다.</dd></div><div><dt>잠금 파일</dt><dd>요구 조건을 풀어 실제로 선택한 패키지 버전 등을 기록한 파일이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · Astral uv · PyPA · 2026. 10. 12</p>
+    <h3>uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준</h3>
+    <p class="digest-blurb">실행 대상·환경·보존 파일로 uv run과 uvx의 선택을 나눈다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">내 파일인가, 이미 배포된 명령인가</h4><p>내 파일을 실행하려면 uv run, 배포된 명령줄 도구를 따로 호출하려면 uvx를 검토한다. 프로젝트의 코드·의존성이 필요한 작업은 그 프로젝트 환경에서 실행하고, 독립 스크립트는 필요한 패키지를 파일에 함께 기록한다.</p><ul class="digest-bullet-list"><li>실행 대상이 직접 저장한 .py 파일인지 배포된 도구 명령인지 구분한다.</li><li>프로젝트 코드와 패키지가 필요한지 확인해 독립 실행과 프로젝트 실행을 나눈다.</li><li>다시 돌릴 작업은 의존성 선언·잠금 파일·실행 위치를 함께 남긴다.</li></ul><p>가령 AI에게 CSV 보고서 코드를 받아 report.py로 저장했다고 하자. 이 파일을 실행하는 일과 Ruff라는 배포 도구로 문법을 검사하는 일은 대상부터 다르다. 이는 실제 실행 사례가 아니라 명령을 고르기 위한 가상 장면이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp" alt="uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다." width="1200" height="630" loading="lazy"><figcaption>uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다. 생성 도식이며 실제 터미널 결과가 아니다.</figcaption></figure><p>같은 폴더에 있다고 같은 패키지를 쓰는 것은 아니다. 폴더는 입력 파일을 찾는 위치가 될 수 있지만, Python이 import할 패키지의 환경은 실행 방식에 따라 달라진다. “파일이 여기 있으니 패키지도 보일 것”이라는 추정을 먼저 걷어 낸다.</p><div class="digest-table-wrap" role="region" aria-label="실행 대상과 남길 파일로 고르는 uv 경로" tabindex="0"><table class="digest-data-table"><caption>실행 대상과 남길 파일로 고르는 uv 경로</caption><thead><tr><th scope="col">지금 할 일</th><th scope="col">먼저 볼 경로</th><th scope="col">남길 조건</th></tr></thead><tbody><tr><td>내 독립 .py 파일 실행</td><td>uv run + 파일</td><td>파일의 의존성·Python 조건</td></tr><tr><td>배포된 CLI 한 번 호출</td><td>uvx + 도구 명령</td><td>도구 이름·버전·옵션</td></tr><tr><td>프로젝트 코드의 테스트</td><td>프로젝트에서 uv run</td><td>pyproject.toml·uv.lock</td></tr><tr><td>다른 프로그램이 도구를 호출</td><td>uv tool install 검토</td><td>설치 버전·PATH 조건</td></tr></tbody></table></div><h4 class="digest-subheading">uvx의 분리는 프로젝트 패키지도 가린다</h4><p>Using tools 문서는 uvx가 uv tool run의 별칭이라고 설명한다. 대상은 명령줄 인터페이스를 제공하는 패키지다. uvx는 그 도구용 환경에서 실행하므로 작업 프로젝트의 패키지를 자동으로 공유하는 경로가 아니다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp" alt="uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다." width="1200" height="630" loading="lazy"><figcaption>uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다. 실제 공식 문서 캡처이며 검사 실행 화면이 아니다.</figcaption></figure><p>그래서 문서는 프로젝트 설치가 필요한 pytest·mypy 작업이라면 uv run을 보라고 안내한다. 반대로 프로젝트 설치 없이 파일만 검사할 수 있는 경우에는 uvx가 가능하다는 예외도 둔다. 도구 이름 하나로 항상 어느 명령이라고 외우면 이 조건을 놓친다.</p><p>AI가 테스트 명령을 제시했다면 먼저 “이 테스트가 내 패키지를 import하는가”를 확인하자. 파일 모양만 검사하는 도구인지, 설치된 프로젝트를 읽고 실행하는 도구인지에 따라 필요한 환경이 바뀐다. 테스트 도구 자체도 프로젝트에 선언되어 있어야 같은 버전을 공유하기 쉽다.</p><p>패키지 이름과 실행 명령이 다를 수도 있다. Using tools는 --from으로 제공 패키지를 지정하는 방식을 안내한다. 명령을 못 찾았다고 비슷한 이름의 패키지를 추측해 설치하기보다 공식 배포 문서에서 두 이름의 관계부터 확인한다.</p><p>Tools 개념 문서에 따르면 uvx 환경은 캐시에 재사용될 수 있고 삭제되면 다시 만들어진다. 일회 호출이라는 표현을 “매번 아무것도 남기지 않는다”로 읽지 않는다. 캐시 경로 자체를 팀의 실행 조건 기록으로 삼는 것도 적합하지 않다.</p></div>
+  </div>
+</section>
+</article>

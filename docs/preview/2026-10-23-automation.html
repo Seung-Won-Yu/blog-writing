@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'">
+  <title>uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준 · 본문 미리보기</title>
+  <link rel="stylesheet" href="tistory-style.css">
+  <style>
+    html { height: auto; min-height: 100%; overflow-y: visible; background: #f5f7f9; }
+    body.preview-page { height: auto; min-height: 100vh; margin: 0; overflow-y: visible; overflow-wrap: anywhere; }
+    .preview-page #container .content-wrap { max-width: none; }
+    .preview-page #content {
+      float: none;
+      width: min(740px, 100%);
+      margin: 0 auto;
+      padding-bottom: 56px;
+    }
+    .preview-page img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body id="tt-body-page" class="layout-aside-right paging-number preview-page">
+<div id="wrap">
+  <section id="container">
+    <div class="content-wrap">
+      <article id="content">
+        <div class="inner">
+          <div class="post-cover">
+            <div class="inner">
+              <span class="category">AI·개발 도구</span>
+              <h1>uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준</h1>
+              <span class="meta"><span class="date">2026-10-23 · 개발·AI 인사이트</span></span>
+            </div>
+          </div>
+          <div class="entry-content" id="article-view">
+            <div class="tt_article_useless_p_margin contents_style">
+  <article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 10. 23 (금) · 약 12분</p>
+    <p class="digest-lead">AI가 만들어 준 report.py는 있는데 실행하자니 uv run과 uvx가 헷갈린다. 내 파일은 uv run, 배포된 도구 명령은 uvx부터 본다. 다만 프로젝트 안에서 돌리는지, 파일에 의존성이 적혀 있는지에 따라 읽는 환경이 달라진다. 실행 대상과 다시 남길 파일을 나누면 명령 선택을 끝낼 수 있다.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="../tistory/assets/2026-10-23-automation/uv-독립-스크립트-의존성-케이스.webp" alt="uv 실행은 스크립트와 필요한 환경을 함께 고르는 일이다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>내 .py 파일과 프로젝트 명령은 uv run, 배포된 독립 도구 호출은 uvx가 출발점이다.</li><li>스크립트에 인라인 의존성을 넣으면 프로젝트 패키지를 그대로 물려받지 않는다.</li><li>반복 실행은 의존성 선언·잠금 파일·실행 위치를 함께 남겨야 한다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>의존성</dt><dd>프로그램을 실행하는 데 필요한 다른 패키지다.</dd></div><div><dt>인라인 메타데이터</dt><dd>스크립트의 주석 안에 Python 조건과 필요한 패키지를 적는 형식이다.</dd></div><div><dt>잠금 파일</dt><dd>요구 조건을 풀어 실제로 선택한 패키지 버전 등을 기록한 파일이다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · Astral uv · PyPA · 2026. 10. 12</p>
+    <h3>uv run·uvx 차이: AI가 만든 파이썬 스크립트 실행 기준</h3>
+    <p class="digest-blurb">실행 대상·환경·보존 파일로 uv run과 uvx의 선택을 나눈다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">내 파일인가, 이미 배포된 명령인가</h4><p>내 파일을 실행하려면 uv run, 배포된 명령줄 도구를 따로 호출하려면 uvx를 검토한다. 프로젝트의 코드·의존성이 필요한 작업은 그 프로젝트 환경에서 실행하고, 독립 스크립트는 필요한 패키지를 파일에 함께 기록한다.</p><ul class="digest-bullet-list"><li>실행 대상이 직접 저장한 .py 파일인지 배포된 도구 명령인지 구분한다.</li><li>프로젝트 코드와 패키지가 필요한지 확인해 독립 실행과 프로젝트 실행을 나눈다.</li><li>다시 돌릴 작업은 의존성 선언·잠금 파일·실행 위치를 함께 남긴다.</li></ul><p>가령 AI에게 CSV 보고서 코드를 받아 report.py로 저장했다고 하자. 이 파일을 실행하는 일과 Ruff라는 배포 도구로 문법을 검사하는 일은 대상부터 다르다. 이는 실제 실행 사례가 아니라 명령을 고르기 위한 가상 장면이다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-23-automation/uv-run-uvx-실행대상-선택지도.webp" alt="uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다." width="1200" height="630" loading="lazy"><figcaption>uv run·uvx는 실행 대상과 필요한 환경에 따라 고른다. 생성 도식이며 실제 터미널 결과가 아니다.</figcaption></figure><p>같은 폴더에 있다고 같은 패키지를 쓰는 것은 아니다. 폴더는 입력 파일을 찾는 위치가 될 수 있지만, Python이 import할 패키지의 환경은 실행 방식에 따라 달라진다. “파일이 여기 있으니 패키지도 보일 것”이라는 추정을 먼저 걷어 낸다.</p><div class="digest-table-wrap" role="region" aria-label="실행 대상과 남길 파일로 고르는 uv 경로" tabindex="0"><table class="digest-data-table"><caption>실행 대상과 남길 파일로 고르는 uv 경로</caption><thead><tr><th scope="col">지금 할 일</th><th scope="col">먼저 볼 경로</th><th scope="col">남길 조건</th></tr></thead><tbody><tr><td>내 독립 .py 파일 실행</td><td>uv run + 파일</td><td>파일의 의존성·Python 조건</td></tr><tr><td>배포된 CLI 한 번 호출</td><td>uvx + 도구 명령</td><td>도구 이름·버전·옵션</td></tr><tr><td>프로젝트 코드의 테스트</td><td>프로젝트에서 uv run</td><td>pyproject.toml·uv.lock</td></tr><tr><td>다른 프로그램이 도구를 호출</td><td>uv tool install 검토</td><td>설치 버전·PATH 조건</td></tr></tbody></table></div><h4 class="digest-subheading">uvx의 분리는 프로젝트 패키지도 가린다</h4><p>Using tools 문서는 uvx가 uv tool run의 별칭이라고 설명한다. 대상은 명령줄 인터페이스를 제공하는 패키지다. uvx는 그 도구용 환경에서 실행하므로 작업 프로젝트의 패키지를 자동으로 공유하는 경로가 아니다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-23-automation/uv-도구-프로젝트-공식근거.webp" alt="uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다." width="1200" height="630" loading="lazy"><figcaption>uv 공식 문서는 프로젝트 설치가 필요한 검사에 uv run을 권한다. 실제 공식 문서 캡처이며 검사 실행 화면이 아니다.</figcaption></figure><p>그래서 문서는 프로젝트 설치가 필요한 pytest·mypy 작업이라면 uv run을 보라고 안내한다. 반대로 프로젝트 설치 없이 파일만 검사할 수 있는 경우에는 uvx가 가능하다는 예외도 둔다. 도구 이름 하나로 항상 어느 명령이라고 외우면 이 조건을 놓친다.</p><p>AI가 테스트 명령을 제시했다면 먼저 “이 테스트가 내 패키지를 import하는가”를 확인하자. 파일 모양만 검사하는 도구인지, 설치된 프로젝트를 읽고 실행하는 도구인지에 따라 필요한 환경이 바뀐다. 테스트 도구 자체도 프로젝트에 선언되어 있어야 같은 버전을 공유하기 쉽다.</p><p>패키지 이름과 실행 명령이 다를 수도 있다. Using tools는 --from으로 제공 패키지를 지정하는 방식을 안내한다. 명령을 못 찾았다고 비슷한 이름의 패키지를 추측해 설치하기보다 공식 배포 문서에서 두 이름의 관계부터 확인한다.</p><p>Tools 개념 문서에 따르면 uvx 환경은 캐시에 재사용될 수 있고 삭제되면 다시 만들어진다. 일회 호출이라는 표현을 “매번 아무것도 남기지 않는다”로 읽지 않는다. 캐시 경로 자체를 팀의 실행 조건 기록으로 삼는 것도 적합하지 않다.</p></div>
+  </div>
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<p data-ke-size="size16">&nbsp;</p>
+<section class="digest-lead-continuation"><div class="digest-news-copy"><div class="digest-full-content"><h4 class="digest-subheading">독립 스크립트에는 필요한 것을 함께 적는다</h4><p>스크립트가 외부 패키지를 쓰는데 그것을 어디에도 적지 않았다면 파일만 전달해도 실행 환경은 전달되지 않는다. Running scripts는 호출할 때 --with로 추가하는 방법과 파일 안에 의존성을 선언하는 방법을 모두 소개한다. 반복해서 공유할 파일이라면 선언을 파일과 함께 읽을 수 있어야 한다.</p><p>PyPA 인라인 메타데이터 규격은 script 주석 블록에 dependencies와 requires-python을 적는 형식이다. 하나는 필요한 패키지 조건, 다른 하나는 호환 Python 조건이다. 파일을 받은 사람이 import 문만 보고 준비물을 추측하는 부담을 줄이는 계약으로 볼 수 있다.</p><ul class="digest-bullet-list"><li>독립 파일로 보낼 작업이면 필요한 외부 패키지와 Python 조건을 파일에 함께 기록한다.</li><li>프로젝트 모듈을 import하는 작업이면 독립 파일이라고 가정하지 말고 프로젝트 실행 경로를 검토한다.</li><li>패키지 조건을 아직 모르겠다면 실행 성공을 약속하지 말고 필요한 import와 공식 설치 문서를 먼저 맞춘다.</li></ul><p>중요한 예외가 있다. uv는 인라인 메타데이터가 있는 스크립트를 프로젝트 안에서 실행해도 프로젝트 의존성을 무시한다고 설명한다. 주석을 추가한 순간 기존 프로젝트 환경을 그대로 쓰는 파일이라는 기대와 어긋날 수 있다.</p><p>AI가 “실행하기 쉽게” 주석 블록을 추가했는데 파일이 프로젝트 내부 패키지를 사용한다면, 코드만 볼 일이 아니다. 독립 실행 계약으로 옮길 파일인지, 기존 프로젝트 안에 둘 파일인지부터 정해야 한다. 메타데이터 유무는 꾸밈이 아니라 환경 선택을 바꾸는 정보다.</p><p>인라인 정보가 없는 독립 파일을 프로젝트 밖 문맥으로 실행하려면 문서의 --no-project 조건을 확인한다. 반대로 프로젝트가 필요한데 이 옵션을 붙이면 필요한 환경을 제외하는 선택이 된다. 오류가 사라지는 옵션을 찾기 전에 어느 환경이어야 맞는지를 적는다.</p><h4 class="digest-subheading">프로젝트의 uv run은 실행 전 상태를 맞춘다</h4><p>Working on projects는 pyproject.toml에 프로젝트 정보와 의존성을 기록하고, uv.lock에 선택된 구체 버전을 남긴다고 설명한다. .venv는 설치 환경이다. 프로젝트에 속한 작업은 파일 하나보다 이 파일들의 관계를 함께 봐야 한다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="../tistory/assets/2026-10-23-automation/uv-잠금-동기화-공식근거.webp" alt="uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다." width="1200" height="630" loading="lazy"><figcaption>uv run은 프로젝트에서 실행 전 잠금과 동기화를 수행할 수 있다. 실제 공식 문서 캡처이며 환경 변경 실험 결과가 아니다.</figcaption></figure><p>Locking and syncing 문서에서 uv run의 기본 경로는 명령 실행 전 잠금과 환경 동기화다. 따라서 “그냥 실행했을 뿐”이라고 생각했어도 프로젝트 상태를 맞추는 처리가 먼저 일어날 수 있다. 변경 검토가 필요한 저장소라면 실행 전후 확인 범위를 정한다.</p><div class="digest-table-wrap" role="region" aria-label="비슷해 보이는 옵션이 건너뛰는 확인은 다르다" tabindex="0"><table class="digest-data-table"><caption>비슷해 보이는 옵션이 건너뛰는 확인은 다르다</caption><thead><tr><th scope="col">옵션</th><th scope="col">문서가 설명하는 차이</th><th scope="col">선택할 때의 질문</th></tr></thead><tbody><tr><td>--locked</td><td>잠금 갱신이 필요하면 오류</td><td>선언과 잠금 불일치를 멈춰야 하나</td></tr><tr><td>--frozen</td><td>잠금 최신성 확인 생략</td><td>현재 잠금을 그대로 쓰겠다는가</td></tr><tr><td>--no-sync</td><td>환경 최신성 확인 생략</td><td>이미 준비된 환경을 신뢰하는가</td></tr></tbody></table></div><p>--locked와 --frozen을 같은 고정 버튼으로 다루지 않는다. 선언과 잠금의 불일치를 잡고 싶은 작업에 최신성 확인을 건너뛰는 옵션을 쓰면 의도가 바뀐다. 이 표는 공식 동작의 차이를 읽는 기준이며 내 프로젝트에서 어느 옵션이 성공할지 검증한 결과는 아니다.</p><p>또한 잠금 파일은 새 패키지가 나왔다는 이유만으로 자동으로 낡은 것이 되지 않는다. 문서는 업그레이드를 명시적으로 수행하는 경로를 구분한다. 재현하려는 실행과 최신 의존성을 시험하는 실행을 같은 명령 관성으로 섞지 말자.</p><h4 class="digest-subheading">한 번의 보고서가 팀 작업으로 바뀌는 순간</h4><p>가상 보고서 파일이 다음 주에도 쓰이고 동료에게 전달된다고 하자. 파일만 다시 보내면 새로 해결된 의존성 조건이나 다른 Python으로 결과가 달라질 여지가 남는다. 팀에 남길 자료는 실행 명령 한 줄보다 넓어야 한다.</p><p>스크립트용 잠금을 선택했다면 uv 문서의 uv lock --script 경로를 확인한다. 해당 파일 옆에 별도 잠금 파일을 만드는 방식이며 프로젝트 잠금과 생성 경로가 다르다. 선언만 적은 상태와 구체 의존성을 잠근 상태를 구분해 전달한다.</p><ul class="digest-bullet-list"><li>실행 대상: 보고서 파일인지 검사 도구인지, 프로젝트 모듈인지 적는다.</li><li>환경 조건: 독립 메타데이터 또는 프로젝트 선언과 Python 조건을 남긴다.</li><li>재실행 자료: 사용하는 잠금 파일, 입력 예, 실행 위치와 결과 확인 기준을 보존한다.</li></ul><p>프로젝트의 uv.lock은 버전 관리로 공유할 자료이고 .venv는 설치된 환경이다. 환경 폴더를 복사했다는 사실만으로 다른 운영체제에서도 같은 실행 조건이 준비됐다고 판단하지 않는다. 문서의 잠금·설치 관계를 기준으로 무엇을 보존할지 정한다.</p><p>반대로 다른 프로그램이 PATH에서 도구 명령을 찾아야 한다면 매번 uvx를 앞에 붙이는 호출이 맞지 않을 수 있다. Tools 개념 문서는 이 경우 지속 설치를 검토할 이유를 설명한다. 자주 쓴다는 빈도뿐 아니라 누가 어떤 이름으로 호출하는지가 설치 선택을 가른다.</p><p>여러 문서를 엮은 이 글의 해석은, 명령 길이보다 실행 대상·환경의 주인·다음 실행에 남길 파일을 먼저 정하면 uv run과 uvx의 선택이 쉬워진다는 것이다.</p><h4 class="digest-subheading">근거와 한계: 명령 선택과 코드 검증은 별개다</h4><p>확인일은 2026년 10월 23일이다. uv의 스크립트·도구·프로젝트 안내와 잠금·도구 환경 개념, PyPA 표준을 읽었다. 넓은 도구 생태계 목록 대신 Python 작업 하나의 실행 경계를 골랐다. 검색량은 확인하지 않았으며 문서의 오류·주의 사례를 선정 단서로 삼았다.</p><p>이 글은 공식 문서 여섯 곳을 대조한 선택 가이드다. uv 명령과 패키지를 설치·실행하지 않았고, 속도·호환성·AI 코드의 정확성을 측정하지 않았다.</p><p>환경이 맞게 준비돼도 AI가 만든 보고서 계산식이나 파일 처리 방식이 맞는 것은 아니다. 이 글에서 끝내는 일은 실행 경로와 보존 자료의 선택이다. 실제 작업 완료는 안전한 입력 사본으로 예상 결과와 산출물을 대조한 뒤 판단해야 한다.</p><ul class="digest-bullet-list"><li>독립 스크립트가 프로젝트 모듈을 사용하게 되면 환경 선택을 다시 본다.</li><li>uv의 환경·잠금 동작이 바뀌면 공식 문서와 팀 명령을 함께 갱신한다.</li><li>같은 실행을 재현할 때는 코드·입력·Python 조건도 잠금 파일과 함께 비교한다.</li></ul></div><section class="digest-references" aria-label="참고한 자료"><h4>참고한 자료</h4><ul class="digest-reference-list"><li><a href="https://docs.astral.sh/uv/guides/scripts/" target="_blank" rel="noopener">uv: 독립 스크립트와 인라인 의존성</a><span>공식</span></li><li><a href="https://docs.astral.sh/uv/guides/tools/" target="_blank" rel="noopener">uv: 도구 호출과 프로젝트 의존성 예외</a><span>공식</span></li><li><a href="https://docs.astral.sh/uv/guides/projects/" target="_blank" rel="noopener">uv: 프로젝트 파일과 실행 환경</a><span>공식</span></li><li><a href="https://packaging.python.org/en/latest/specifications/inline-script-metadata/" target="_blank" rel="noopener">PyPA: 인라인 스크립트 메타데이터 규격</a><span>참고 자료</span></li><li><a href="https://docs.astral.sh/uv/concepts/projects/sync/" target="_blank" rel="noopener">uv: 잠금과 동기화 옵션의 차이</a><span>공식</span></li><li><a href="https://docs.astral.sh/uv/concepts/tools/" target="_blank" rel="noopener">uv: 일회 호출·캐시·지속 설치</a><span>공식</span></li></ul></section></div></section>
+
+  <section class="digest-related-posts">
+  <p class="digest-section-label">함께 읽기</p>
+  <h2>이어서 보면 좋은 글</h2>
+  <ul><li><a href="https://won0322.tistory.com/228"><b>AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준</b><span>실행 환경을 정한 뒤 실제 완료를 판정하는 기준을 이어 읽는다.</span></a></li><li><a href="https://won0322.tistory.com/198"><b>AI 코딩 에이전트 보안: 패키지·권한·배포 전 확인할 4가지</b><span>실행할 패키지와 코드의 권한을 확인하는 다음 단계로 이어진다.</span></a></li></ul>
+</section>
+
+  <section class="digest-closing">
+  <p class="digest-closing-copy">실행 명령은 코드와 환경을 연결한다. 스크립트·도구·프로젝트 중 무엇을 실행하는지 정하고, 다음 사람이 같은 조건을 복원할 자료를 남기자. 의존성 분리는 설치 충돌을 줄이는 실행 구조이며, 코드가 올바른 결과를 만드는지의 검증은 별도로 남는다. 지금 실행할 작업 하나에 대상 파일 또는 명령, 사용할 환경, 보존할 의존성·잠금 파일을 적고 그에 맞는 경로를 고른다.</p>
+</section>
+</article>
+
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+</body>
+</html>
