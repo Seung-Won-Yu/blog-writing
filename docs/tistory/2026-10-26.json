@@ -1,0 +1,96 @@
+{
+  "title": "JavaScript 날짜 하루 전 오류 해결: UTC 변환 전에 나눌 두 값",
+  "title_candidates": [
+    "JavaScript 날짜 하루 전 오류 해결: UTC 변환 전에 나눌 두 값",
+    "날짜 전용 값과 순간을 구분하는 JavaScript 저장·표시 진단",
+    "JavaScript 날짜 하루 전 오류의 날짜와 시각 경계: 26일을 골랐는데 왜25일이 저장될까?"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-10-26",
+  "publish_date": "2026-10-26",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-10-26T09:00:00+09:00",
+  "tags": [
+    "JavaScript 날짜 하루 전",
+    "날짜 하루 밀림",
+    "toISOString",
+    "Date 시간대",
+    "날짜 입력",
+    "프런트엔드 오류"
+  ],
+  "meta_description": "날짜 입력창에서 10월 26일을 골랐는데 저장된 값은 25일이다. JavaScript 날짜 하루 전 오류는 날짜만 필요한 값에 시각과 시간대 변환을 끼워 넣었을 때 생길 수 있다. 생일·마감일이라면… Date 파싱과 UTC 직렬화의 서로 다른 경계를 두 시간대에서 재현하고, 날짜 전용…",
+  "key_summary": [
+    "1. 날짜 전용 값과 순간을 구분하는 JavaScript 저장·표시 진단",
+    "직접 얻는 결과: 원본·파싱·직렬화·표시를 나눠 오류가 생긴 경계를 찾고, 날짜 전용 문자열 보존과 특정 시각의 시간대 표시 중 맞는 수정 경로를 고를 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: JavaScript 날짜 하루 전 오류 해결: UTC 변환 전에 나눌 두 값"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 13,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-10-26.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-10-26.html",
+  "before_ad_html": "docs/tistory/2026-10-26-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-10-26-after-ad.html",
+  "adfit_html": "docs/tistory/2026-10-26-adfit.html",
+  "source_sha256": "cf9e4ffd6fece326f83624a1367b1b0f3892fa24da01074f1a13c2bac167f60b",
+  "html_sha256": "3c4f6d10bc4160fdb67d924e08bf9c2df4e9d2d9fcca4692a8e611b155fbcd22",
+  "adfit_sha256": "a56dcd5a7361fd0ef47bba5458f4991bd87d26adad669c549638c268738f2419",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜와UTC.webp",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜와UTC.webp",
+      "original_url": "",
+      "alt": "JavaScript 날짜 하루 전 오류는 달력 날짜와 UTC 시각을 혼동할 때 생긴다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜변환진단.webp",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜변환진단.webp",
+      "original_url": "",
+      "alt": "JavaScript 날짜 하루 전 오류는 입력·변환·저장·표시의 경계를 나눠 찾는다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜복구경계.webp",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜복구경계.webp",
+      "original_url": "",
+      "alt": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-UTC공식문서.webp",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-UTC공식문서.webp",
+      "original_url": "",
+      "alt": "JavaScript 날짜 하루 전 오류 점검에서 toISOString의 UTC 고정을 확인한다.",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
