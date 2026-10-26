@@ -1,0 +1,24 @@
+{
+  "code": "const raw='2026-10-26';\nconst parsed=new Date(raw), midnight=new Date(2026,9,26);\nconsole.log(JSON.stringify({node:process.version,tz:process.env.TZ,\nparsedISO:parsed.toISOString(),localDay:parsed.getDate(),\nmidnightISO:midnight.toISOString(),slice:midnight.toISOString().slice(0,10),\nroundTrip:JSON.parse(JSON.stringify({date:raw})).date}));",
+  "results": [
+    {
+      "node": "v20.20.2",
+      "tz": "Asia/Seoul",
+      "parsedISO": "2026-10-26T00:00:00.000Z",
+      "localDay": 26,
+      "midnightISO": "2026-10-25T15:00:00.000Z",
+      "slice": "2026-10-25",
+      "roundTrip": "2026-10-26"
+    },
+    {
+      "node": "v20.20.2",
+      "tz": "America/Los_Angeles",
+      "parsedISO": "2026-10-26T00:00:00.000Z",
+      "localDay": 25,
+      "midnightISO": "2026-10-26T07:00:00.000Z",
+      "slice": "2026-10-26",
+      "roundTrip": "2026-10-26"
+    }
+  ],
+  "synthetic_input": true
+}

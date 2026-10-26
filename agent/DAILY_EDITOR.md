@@ -103,6 +103,11 @@
 
 6. 기사 고유 대표 이미지 1장은 Codex 이미지 생성으로 만들고, 본문 설명 이미지는 기본 2장, 서로 다른 세 번째 설명 지점이나 실제 증거가 꼭 필요할 때만 최대 4장까지 생성·직접 캡처·실측 차트로 준비합니다. 필요한 장수는 글의 실제 설명 지점으로 결정하며, 장수를 채우기 위한 장식 이미지와 같은 이미지의 변형본은 만들지 않습니다. 생성 전에 대표 브리프를 `visual.cover`, 본문 브리프를 `visual.assets`에 기록합니다. 둘 다 아래 필드를 사용하되 대표는 `content_role: hook`, 본문은 `content_role: explanation`으로 기록합니다. 모든 `label`은 서로 다른 질문이어야 하며 대표가 답한 비교·순서·결과를 본문 이미지에서 다시 만들지 않습니다.
 
+   2026-10-26 이후 비율·썸네일은 `WEEKLY_VISUAL_PROMISES.md`의 `webp-v2`를 따릅니다.
+   대표만 1200×630이며 본문은 원본 비율을 유지합니다. 생성 프롬프트에 크기를 썼다는
+   이유로 실제 출력 비율을 믿지 말고 원본·최종 이미지와 작은 목록 썸네일을 대조합니다.
+   납작한 그림에 레터박스를 붙이거나 영어 문장 한 줄을 확대해 장수를 채우지 않습니다.
+
    2026-09-02 이후에는 요일별 이미지 역할을 먼저 확정합니다. 월요일은 `visual.weekday_profile: practical_diagnosis`, 대표 `weekday_role: problem_scene`, 본문 필수 `teaching_role: diagnosis_flow`, `recovery_boundary`를 사용합니다. 수요일은 `visual.weekday_profile: change_impact`, 대표 `weekday_role: changed_condition_scene`, 본문 필수 `teaching_role: before_after_change`, `action_check`를 사용합니다. 프로필과 대표 역할은 `visual.cover`·`images.cover`에, 각 교육 역할은 브리프·대응 `images.visual_N`에 똑같이 기록합니다. 정확한 허용 `logic_type`은 공통 이미지 약속을 따릅니다.
 
    - `label`: 이미지가 답할 핵심 질문

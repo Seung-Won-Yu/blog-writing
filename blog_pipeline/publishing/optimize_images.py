@@ -29,6 +29,9 @@ IMAGE_FILE_BUDGET = 256 * 1024
 IMAGE_SET_BUDGET = 1024 * 1024
 LEAD_IMAGE_SET_BUDGET = 2 * 1024 * 1024
 IMAGE_POLICY = "webp-v1"
+NATIVE_IMAGE_POLICY = "webp-v2"
+NATIVE_IMAGE_POLICY_START = dt.date(2026, 10, 26)
+MIN_COVER_RETAINED_AREA = 0.80
 IMAGE_POLICY_START = dt.date(2026, 7, 16)
 IMAGE_CONTENT_POLICY_START = dt.date(2026, 7, 19)
 QUALITY_STEPS = tuple(range(82, 9, -4))
@@ -129,21 +132,22 @@ def save_bounded_webp(
     max_bytes=IMAGE_FILE_BUDGET,
     *,
     preserve_full_frame=False,
+    target_size=IMAGE_SIZE,
 ):
-    """Write one 1200x630 WebP within the configured byte budget."""
+    """Write a bounded WebP without stretching the source proportions."""
     source = image.convert("RGB")
     if preserve_full_frame:
         contained = ImageOps.contain(
-            source, IMAGE_SIZE, method=Image.Resampling.LANCZOS
+            source, target_size, method=Image.Resampling.LANCZOS
         )
-        normalized = Image.new("RGB", IMAGE_SIZE, "#fcfbf7")
+        normalized = Image.new("RGB", target_size, "#fcfbf7")
         normalized.paste(
             contained,
-            ((IMAGE_SIZE[0] - contained.width) // 2, (IMAGE_SIZE[1] - contained.height) // 2),
+            ((target_size[0] - contained.width) // 2, (target_size[1] - contained.height) // 2),
         )
     else:
         normalized = ImageOps.fit(
-            source, IMAGE_SIZE, method=Image.Resampling.LANCZOS
+            source, target_size, method=Image.Resampling.LANCZOS
         )
     payload = None
     selected_quality = None
@@ -157,7 +161,7 @@ def save_bounded_webp(
             break
     if payload is None:
         raise ValueError(
-            f"image cannot fit {max_bytes} byte budget at {IMAGE_SIZE[0]}x{IMAGE_SIZE[1]}"
+            f"image cannot fit {max_bytes} byte budget at {target_size[0]}x{target_size[1]}"
         )
 
     target = Path(target)
@@ -166,6 +170,35 @@ def save_bounded_webp(
     temporary.write_bytes(payload)
     temporary.replace(target)
     return {"bytes": len(payload), "quality": selected_quality}
+
+
+def native_target_size(kind, source_size):
+    """Require a composed cover; keep explanation/capture aspect ratios."""
+    width, height = source_size
+    ratio = width / height
+    if kind == "cover":
+        target_ratio = IMAGE_SIZE[0] / IMAGE_SIZE[1]
+        retained = min(ratio / target_ratio, target_ratio / ratio)
+        if retained < MIN_COVER_RETAINED_AREA:
+            raise ValueError("cover aspect ratio requires recomposition; do not add letterbox padding")
+        return IMAGE_SIZE
+    target_height = round(1200 / ratio)
+    if not 480 <= target_height <= 1600:
+        raise ValueError("body image aspect ratio is too thin or tall; recompose or split it")
+    return (1200, target_height)
+
+
+def _letterbox_fraction(image):
+    """Detect flat full-width edge bands, not the subject's subjective quality."""
+    rgb = image.convert("RGB")
+    bands = 0
+    for rows in (range(rgb.height), range(rgb.height - 1, -1, -1)):
+        for y in rows:
+            extrema = rgb.crop((0, y, rgb.width, y + 1)).getextrema()
+            if any(high - low > 3 for low, high in extrema):
+                break
+            bands += 1
+    return min(1.0, bands / rgb.height)
 
 
 def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
@@ -177,6 +210,11 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
         raise FileNotFoundError(f"draft not found: {day_path}")
     day = json.loads(day_path.read_text(encoding="utf-8"))
     resolve_draft_identity(identity.draft_id, day)
+    native_policy = (
+        dt.date.fromisoformat(identity.publish_date) >= NATIVE_IMAGE_POLICY_START
+        or day.get("generation", {}).get("image_policy") == NATIVE_IMAGE_POLICY
+    )
+    image_policy = NATIVE_IMAGE_POLICY if native_policy else IMAGE_POLICY
     images = day.get("images")
     if not isinstance(images, dict):
         raise ValueError("day images must be an object")
@@ -221,12 +259,17 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
             target = source.with_suffix(".webp")
             with Image.open(source) as opened:
                 opened.load()
+                target_size = native_target_size(kind, opened.size) if native_policy else IMAGE_SIZE
+                if native_policy and kind == "cover" and _letterbox_fraction(opened) > 0.20:
+                    raise ValueError("cover has excessive letterbox padding; recompose it")
+                if native_policy and asset.get("origin") in {"capture", "annotated_capture"} and opened.width < 960:
+                    raise ValueError("capture resolution is too small; recapture instead of enlarging text")
                 is_compliant = (
                     source == target
                     and opened.format == "WEBP"
-                    and opened.size == IMAGE_SIZE
+                    and opened.size == target_size
                     and source.stat().st_size <= IMAGE_FILE_BUDGET
-                    and day.get("generation", {}).get("image_policy") == IMAGE_POLICY
+                    and day.get("generation", {}).get("image_policy") == image_policy
                 )
                 source_image = None if is_compliant else opened.copy()
             if is_compliant:
@@ -238,13 +281,14 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
             else:
                 staged_target = stage_root / f"{index:02d}-{target.name}"
                 preserve_full_frame = (
-                    is_lead_story(day)
+                    not native_policy and is_lead_story(day)
                     and asset.get("origin") not in {"capture", "annotated_capture"}
                 )
                 result = save_bounded_webp(
                     source_image,
                     staged_target,
                     preserve_full_frame=preserve_full_frame,
+                    target_size=target_size,
                 )
                 staged_outputs.append((staged_target, target))
                 digest_path = staged_target
@@ -253,8 +297,8 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
                 {
                     "path": target.relative_to(root).as_posix(),
                     "url": _webp_url(asset.get("url")),
-                    "width": IMAGE_SIZE[0],
-                    "height": IMAGE_SIZE[1],
+                    "width": target_size[0],
+                    "height": target_size[1],
                     "format": "webp",
                     "bytes": result["bytes"],
                     "quality": result["quality"],
@@ -286,7 +330,7 @@ def optimize_draft_images(draft_id, *, root=ROOT, preserve_sources=False):
                 f"draft image set exceeds {set_budget} bytes: {total_bytes}"
             )
         generation = day.setdefault("generation", {})
-        generation["image_policy"] = IMAGE_POLICY
+        generation["image_policy"] = image_policy
 
         backups = []
         created_targets = []
@@ -341,8 +385,11 @@ def inspect_draft_images(draft_id, *, root=ROOT):
     generation = raw_generation if isinstance(raw_generation, dict) else {}
     if raw_generation is not None and not isinstance(raw_generation, dict):
         reasons.append("invalid_image_manifest")
-    if generation.get("image_policy") != IMAGE_POLICY:
+    native_policy = generation.get("image_policy") == NATIVE_IMAGE_POLICY
+    if generation.get("image_policy") not in {IMAGE_POLICY, NATIVE_IMAGE_POLICY}:
         reasons.append("missing_image_policy")
+    if dt.date.fromisoformat(identity.publish_date) >= NATIVE_IMAGE_POLICY_START and not native_policy:
+        reasons.append("missing_native_image_policy")
     images = day.get("images") if isinstance(day.get("images"), dict) else {}
     total_bytes = 0
     inspected_paths = []
@@ -375,6 +422,7 @@ def inspect_draft_images(draft_id, *, root=ROOT):
                     opened.load()
                     actual_format = opened.format
                     actual_size = opened.size
+                    cover_padding = _letterbox_fraction(opened) if native_policy and kind == "cover" else 0.0
                     grayscale = opened.convert("L")
                     grayscale_extrema = grayscale.getextrema()
                     grayscale_entropy = grayscale.entropy()
@@ -388,8 +436,14 @@ def inspect_draft_images(draft_id, *, root=ROOT):
                 continue
             if actual_format != "WEBP":
                 reasons.append(f"invalid_image_format:{kind}")
-            if actual_size != IMAGE_SIZE:
+            valid_dimensions = (
+                actual_size == IMAGE_SIZE if kind == "cover" or not native_policy
+                else actual_size[0] == 1200 and 480 <= actual_size[1] <= 1600
+            )
+            if not valid_dimensions:
                 reasons.append(f"invalid_image_dimensions:{kind}")
+            if cover_padding > 0.20:
+                reasons.append(f"letterboxed_cover:{kind}")
             if (
                 grayscale_extrema[1] - grayscale_extrema[0] < 12
                 or grayscale_entropy < 0.2
@@ -402,8 +456,8 @@ def inspect_draft_images(draft_id, *, root=ROOT):
                 reasons.append(f"narrow_capture_content:{kind}")
             if (
                 str(asset.get("format") or "").casefold() != "webp"
-                or _as_int(asset.get("width")) != IMAGE_SIZE[0]
-                or _as_int(asset.get("height")) != IMAGE_SIZE[1]
+                or _as_int(asset.get("width")) != actual_size[0]
+                or _as_int(asset.get("height")) != actual_size[1]
                 or _as_int(asset.get("bytes")) != size
             ):
                 reasons.append(f"image_metadata_mismatch:{kind}")
@@ -486,7 +540,7 @@ def _check_all(root):
         generation = day.get("generation") if isinstance(day.get("generation"), dict) else {}
         if (
             publish_date < IMAGE_POLICY_START
-            and generation.get("image_policy") != IMAGE_POLICY
+            and generation.get("image_policy") not in {IMAGE_POLICY, NATIVE_IMAGE_POLICY}
         ):
             continue
         checked += 1

@@ -154,9 +154,9 @@
   "generation": {
     "provider": "codex-agent",
     "model": "gpt-6.1-sol",
-    "revision": 9,
+    "revision": 10,
     "image_provider": "mixed",
-    "image_policy": "webp-v1"
+    "image_policy": "webp-v2"
   },
   "images": {
     "cover": {
@@ -165,46 +165,46 @@
       "logic_type": "comparison",
       "label": "JavaScript 날짜 하루 전 오류는 달력 한 칸이 왜 어긋날까?",
       "scene_label": [
-        "달력 날짜",
-        "UTC 시계"
+        "선택한 날짜",
+        "저장된 날짜"
       ],
-      "steps": "JavaScript 날짜 하루 전 오류로 달력의26일과 시계의25일이 어긋나는 한 장면",
-      "curiosity_hook": "JavaScript의 달력 날짜는 왜 UTC 시계 뒤에서 한 칸 밀릴까?",
+      "steps": "JavaScript 날짜 하루 전 오류로 선택한 26일과 저장된 25일이 어긋나는 한 장면",
+      "curiosity_hook": "JavaScript에서 선택한 날짜는 왜 UTC 변환 뒤 하루 전이 될까?",
       "evidence_type": "diagram",
       "cover_kind": "editorial_scene",
       "art_direction": "single_object_conflict",
-      "composition_type": "calendar-sheet-caught-under-clock-hand",
-      "palette_family": "burgundy_slate_coolwhite",
-      "render_family": "isometric_model",
+      "composition_type": "overlapping-calendar-date-leaves",
+      "palette_family": "ivory_cobalt_coral",
+      "render_family": "flat_illustration",
       "editorial_treatment": "quiet_minimalism",
-      "focal_subject": "JavaScript 날짜를 상징하는26일 달력과 UTC 시계",
-      "texture_cue": "무광 세라믹 달력과 솔질한 금속 시계 바늘",
-      "authenticity_cue": "접힌 달력 모서리와 미세한 종이 마모",
+      "focal_subject": "JavaScript에서 선택한 26일과 저장된 25일이 어긋난 두 날짜",
+      "texture_cue": "단색 면과 굵은 윤곽선",
+      "authenticity_cue": "선택일 26일과 저장일 25일을 큰 숫자로 명확히 구분",
       "weekday_profile": "practical_diagnosis",
       "weekday_role": "problem_scene",
       "visual_claim": "JavaScript 날짜 하루 전 오류는 달력 날짜와 UTC 시각을 혼동할 때 생긴다",
       "generation_model": "gpt-image-2",
       "korean_labels": [
-        "달력 날짜",
-        "UTC 시계"
+        "선택한 날짜",
+        "저장된 날짜"
       ],
-      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Wide1200x630 isometric editorial miniature for JavaScript 날짜 하루 전. One large physical calendar leaf marked26 is caught under a brushed-metal clock hand; beneath its folded edge a25 is partly visible. A single quiet conflict about calendar date versus UTC time. Matte burgundy ceramic, slate grey metal, cool white background, tactile tiny wear, ample empty space. Exactly two short Korean object labels: 달력 날짜, UTC 시계. Calendar and clock fill65percent. No real UI, no computer, no arrows, no panels, no diagram, no title, no watermark. Revision: keep the exact scene and objects but enlarge both Korean object labels dramatically for mobile legibility, each about80px tall in a1730px-wide image, dark high-contrast type in clear bottom whitespace with no clipping. Exact labels 달력 날짜 and UTC 시계. No other text changes.",
-      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜와UTC.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜와UTC.webp",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Final production cover for the Korean article JavaScript 날짜 하루 전. Use the reference as the edit target and preserve its flat editorial illustration style, two overlapping blue/coral calendar forms, short blue conversion ribbon, exact large numbers26 and25, and exact Korean labels 선택한 날짜 and 저장된 날짜. Keep the image composition and color balance; no new objects, no extra text, no paper texture, no 3D/photo rendering. Canvas landscape approximately1200:630, filling the canvas vertically with normal modest margins, no letterbox padding. Both labels and numbers must stay safely inside the edges in a356x178 thumbnail. This is an explanatory editorial illustration, not a screenshot of an actual service or UI.",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-선택일과저장일-v2.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-선택일과저장일-v2.webp",
       "alt": "JavaScript 날짜 하루 전 오류는 달력 날짜와 UTC 시각을 혼동할 때 생긴다",
-      "width": 1200,
-      "height": 630,
-      "format": "webp",
-      "bytes": 47876,
-      "quality": null,
-      "sha256": "053fef09ea911c98bf9a9900c46e97bb41de7edf1386b8acc3efdb3977dec590",
       "qa": {
         "topic_match": true,
         "caption_match": true,
         "mobile_readable": true,
         "text_reviewed": true,
         "not_generic": true
-      }
+      },
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 54992,
+      "quality": 82,
+      "sha256": "a849db11c76e20812183978e76d9c929f30b453399c638ba07be89b0e690996d"
     },
     "visual_1": {
       "content_role": "explanation",
@@ -213,9 +213,9 @@
       "label": "JavaScript 날짜 하루 전 오류는 어디서 시작됐을까?",
       "scene_label": [
         "입력",
-        "변환",
-        "저장",
-        "표시"
+        "날짜 그대로",
+        "UTC 변환",
+        "서울 자정"
       ],
       "steps": "JavaScript 날짜 하루 전 오류는 입력·변환·저장·표시의 경계를 나눠 찾는다.",
       "curiosity_hook": "JavaScript 날짜 하루 전 오류는 어디서 시작됐을까?",
@@ -225,106 +225,118 @@
       "generation_model": "gpt-image-2",
       "korean_labels": [
         "입력",
-        "변환",
-        "저장",
-        "표시"
+        "날짜 그대로",
+        "UTC 변환",
+        "서울 자정"
       ],
-      "generation_prompt": "Use case: scientific-educational. Wide1200x630 Korean diagram for JavaScript 날짜 하루 전 diagnosis. Four large connected checkpoints left to right: calendar leaf, converter ring, storage cylinder, calendar display. The same date token travels between checkpoints and a red magnifying lens inspects one connector rather than blaming storage. Exactly four huge Korean labels: 입력, 변환, 저장, 표시. Cream white background, deep blue lines and crimson inspection accent. Simple open composition, large legible at390px, no title, no fake terminal, no metric, no watermark. Explains inspection sequence, not automatic date correction.",
-      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜변환진단.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜변환진단.webp",
+      "generation_prompt": "Use case: scientific-educational. Create a clear Korean editorial explainer illustration about JavaScript 날짜 하루 전. Landscape 3:2 composition, not a panoramic strip. On an ivory page show one input calendar at the left, reading exactly 2026-10-26. Branch into two generous horizontal paths stacked vertically. Upper path label 날짜 그대로: one simple string document travels to an identical calendar marked 2026-10-26, with a small blue check. Lower path label UTC 변환: a clock token labeled 서울 자정 passes through a conversion arrow labeled UTC, arriving at a calendar marked 2026-10-25 with a coral caution dot. This is specifically the Seoul local-midnight to UTC serialization-and-date-slicing failure, not a universal result for all Date inputs. A small magnifier over this lower conversion highlights the inspected boundary. Text (verbatim, no others): 입력, 날짜 그대로, UTC 변환, 서울 자정, 2026-10-26, 2026-10-25, UTC. Beautiful restrained flat editorial drawing, cobalt and coral, strong readable Korean typography, generous separation between rows, all labels large enough at 390px. Use most of height; no tiny decorative details, no storage cylinders, no fake product UI, no title, no frame, no invented dates like 2024, no watermark.",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜변환-두경로-v2.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜변환-두경로-v2.webp",
       "alt": "JavaScript 날짜 하루 전 오류는 입력·변환·저장·표시의 경계를 나눠 찾는다.",
-      "width": 1200,
-      "height": 630,
-      "format": "webp",
-      "bytes": 36848,
-      "quality": null,
-      "sha256": "a5a2a43ed8b0b16970a80230a6e58ab7066f90e4092994a69a5a2bbd788abcb1",
       "qa": {
         "topic_match": true,
         "caption_match": true,
         "mobile_readable": true,
         "text_reviewed": true,
         "not_generic": true
-      }
+      },
+      "width": 1200,
+      "height": 800,
+      "format": "webp",
+      "bytes": 38938,
+      "quality": 82,
+      "sha256": "cb3051fb5b37b964e36c4710a9877ef3da5e7007634350477364b7aa3f402e93"
     },
     "visual_2": {
       "content_role": "explanation",
       "origin": "imagegen",
       "logic_type": "conditional",
-      "label": "JavaScript 날짜 하루 전 수정을 언제 확대할까?",
+      "label": "JavaScript 날짜 하루 전 수정에서 무엇을 보존해야 할까?",
       "scene_label": [
-        "날짜 왕복",
-        "시각 검증",
-        "통과 시 확대",
-        "실패 시 중단"
+        "생일·마감일",
+        "회의·로그",
+        "날짜 그대로",
+        "같은 순간 유지"
       ],
-      "steps": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
+      "steps": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다.",
       "curiosity_hook": "JavaScript 날짜 하루 전 수정을 언제 확대할까?",
       "evidence_type": "diagram",
       "teaching_role": "recovery_boundary",
-      "teaching_claim": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
+      "teaching_claim": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다.",
       "generation_model": "gpt-image-2",
       "korean_labels": [
-        "날짜 왕복",
-        "시각 검증",
-        "통과 시 확대",
-        "실패 시 중단"
+        "생일·마감일",
+        "날짜 그대로",
+        "회의·로그",
+        "같은 순간 유지",
+        "다르면 중단"
       ],
-      "generation_prompt": "Use case: scientific-educational. Wide1200x630 Korean conditional recovery boundary for JavaScript 날짜 하루 전. Two large test tokens calendar and clock join one validation gate; success path goes right through gate to rollout, failure path branches down to a stop barrier beside preserved original calendar. Exactly four large Korean labels: 날짜 왕복, 시각 검증, 통과 시 확대, 실패 시 중단. Dark forest green with mauve on bright white. Success and failure distinctly conditional, never put failure in mandatory sequence. No invented counts, no fake UI, no title, no watermark. Legible at390px. Revision: remove the rising bar chart entirely. Success rollout must be shown as two identical small software package boxes on a shelf, no chart, no bars, no rising trend. Keep the four Korean labels, conditional success and failure branches, calendar/clock validation gate, and white space. It is a deployment boundary, not a measured growth result.",
-      "condition": "날짜 왕복과 기존 시각 검증의 통과 여부에 따라",
-      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜복구경계.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜복구경계.webp",
-      "alt": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
-      "width": 1200,
-      "height": 630,
-      "format": "webp",
-      "bytes": 35064,
-      "quality": null,
-      "sha256": "219c4c4efb3053c4302db618ad8e3c5aed0ec92a44f8af01a9b7412614d3c786",
+      "generation_prompt": "Use case: scientific-educational. Create a practical Korean decision illustration for correcting JavaScript 날짜 하루 전. Landscape 3:2, balanced vertical use rather than a thin ribbon. Show two large clearly distinct open routes from a small fork at center-left. Upper route has an elegant calendar card labeled 생일·마감일, the date 2026-10-26, and a matching second date card connected by a short cobalt line. Its conclusion label is 날짜 그대로. Lower route has a compact clock and a location pin labeled 회의·로그; two differently positioned clock faces are linked as one preserved instant, not an added nine hours. Its conclusion label is 같은 순간 유지. Below both routes a slim coral stop line, not a boom gate or traffic sign, accompanies label 다르면 중단. The picture teaches date-only preservation versus instant preservation and the boundary for stopping a rollout. Exact Korean labels only: 생일·마감일, 날짜 그대로, 회의·로그, 같은 순간 유지, 다르면 중단. Numeric text only 2026-10-26. Warm ivory background, cobalt and coral cut-paper accents, clean typography, intentional editorial visual hierarchy, readable at390px. No 3D gate, no software package boxes, no stock dashboard, no growth chart, no large blank bands, no title, no watermark.",
+      "condition": "날짜 또는 같은 순간 보존이 어긋난 경우",
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-날짜와시각-보존기준-v2.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-날짜와시각-보존기준-v2.webp",
+      "alt": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다.",
       "qa": {
         "topic_match": true,
         "caption_match": true,
         "mobile_readable": true,
         "text_reviewed": true,
         "not_generic": true
-      }
+      },
+      "width": 1200,
+      "height": 800,
+      "format": "webp",
+      "bytes": 60258,
+      "quality": 82,
+      "sha256": "17c1c9373f324f7dd9cb016ce15e609dbd5af6de602e08b36186dbf268cbcab3"
     },
     "visual_3": {
       "content_role": "explanation",
-      "origin": "capture",
+      "origin": "measured_chart",
       "logic_type": "evidence",
-      "label": "JavaScript 날짜 하루 전에서 UTC 변환은 어떤 조건인가?",
+      "label": "JavaScript 날짜 하루 전 오류는 두 시간대에서 어떻게 달라질까?",
       "scene_label": [
-        "toISOString",
-        "UTC"
+        "서울",
+        "로스앤젤레스",
+        "getDate",
+        "문자열 왕복"
       ],
-      "steps": "JavaScript 날짜 하루 전 점검에서 toISOString의 UTC 고정 확인",
-      "curiosity_hook": "JavaScript의 toISOString은 현지 날짜를 그대로 반환할까?",
-      "evidence_type": "screenshot",
+      "steps": "JavaScript 날짜 하루 전 점검에서 실제 Node 출력의 현지 날짜와 UTC 직렬화 날짜를 대조한다.",
+      "curiosity_hook": "JavaScript의 같은 날짜 입력은 서울과 LA에서 같은 날짜로 읽힐까?",
+      "evidence_type": "chart",
       "teaching_role": "real_evidence",
-      "teaching_claim": "JavaScript 날짜 하루 전 오류 점검에서 toISOString의 UTC 고정을 확인한다.",
-      "capture_tool": "browser",
-      "capture_target": "JavaScript Date.prototype.toISOString MDN 문서의 timezone is always UTC 문장 실제 캡처",
-      "captured_at": "2026-10-26T09:07:50.072157+09:00",
-      "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString",
-      "capture_note": "MDN 문서의 UTC 고정 설명만 뷰포트 캡처에서 잘라 여백을 붙였다. 실제 실행 결과가 아니며 계정·개인정보가 없다.",
-      "path": "docs/tistory/assets/2026-10-26/JavaScript-UTC공식문서.webp",
-      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-UTC공식문서.webp",
-      "alt": "JavaScript 날짜 하루 전 오류 점검에서 toISOString의 UTC 고정을 확인한다.",
-      "width": 1200,
-      "height": 630,
-      "format": "webp",
-      "bytes": 13858,
-      "quality": null,
-      "sha256": "677d2e5206f19c04bcbb9fac2137c601e925577831006698b74980d9232c4f30",
-      "capture_sha256": "677d2e5206f19c04bcbb9fac2137c601e925577831006698b74980d9232c4f30",
+      "teaching_claim": "JavaScript 날짜 하루 전 오류는 같은 입력도 시간대·변환 경로에 따라 다른 날짜를 보여 준다.",
+      "measurement_source": "JavaScript 날짜 하루 전 Node 실제 실행; reports/image-fixes/2026-10-26-results.json; render_date_evidence.py",
+      "unit": "getDate가 반환한 현지 달력 일",
+      "sample_count": 2,
+      "measurement_environment": "macOS, Node v20.20.2, TZ=Asia/Seoul 및 America/Los_Angeles, 합성 입력 2026-10-26; Node 출력 요약 결과표이며 터미널 캡처나 브라우저·DB 검증이 아님",
+      "data_points": [
+        {
+          "label": "Asia/Seoul",
+          "value": 26
+        },
+        {
+          "label": "America/Los_Angeles",
+          "value": 25
+        }
+      ],
+      "path": "docs/tistory/assets/2026-10-26/JavaScript-두시간대-실측결과-v2.webp",
+      "alt": "JavaScript 날짜 하루 전 오류는 같은 입력도 시간대·변환 경로에 따라 다른 날짜를 보여 준다.",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-10-26/JavaScript-두시간대-실측결과-v2.webp",
       "qa": {
         "topic_match": true,
         "caption_match": true,
         "mobile_readable": true,
         "text_reviewed": true,
         "not_generic": true
-      }
+      },
+      "width": 1200,
+      "height": 900,
+      "format": "webp",
+      "bytes": 43904,
+      "quality": 82,
+      "sha256": "eb3785bc75e79af17c4411cf1e7a8d39e0b3441ddcb3aefaf6f777b7bb2fae3c",
+      "measurement_sha256": "cf930671ea90522877c6f425171910f976cb5ac104c73f51d3affffc4e8739f5"
     }
   },
   "news": [
@@ -492,6 +504,11 @@
           ]
         },
         {
+          "t": "visual",
+          "caption": "JavaScript 날짜 하루 전 오류는 같은 입력도 시간대·변환 경로에 따라 다른 날짜를 보여 준다. 실제 Node 출력의 요약 시각화이며 터미널 화면을 흉내 낸 이미지가 아니다. 합성 날짜를 사용했고 브라우저·서버·DB 왕복은 검증하지 않았다.",
+          "image": "visual_3"
+        },
+        {
           "t": "p",
           "text": "서울 실행에서 현지 자정을 toISOString().slice(0, 10)으로 자른 결과는 2026-10-25였다. LA 실행에서는 new Date(raw).getDate()가 25였다. 둘 다 하루 전 증상이지만 전자는 직렬화 뒤 잘라 낸 날짜, 후자는 같은 순간을 현지 날짜로 읽은 결과다."
         },
@@ -519,11 +536,6 @@
         {
           "t": "p",
           "text": "달력 계산이 필요하면 Temporal.PlainDate처럼 시각과 시간대가 없는 날짜 타입이 의미에 맞는다. 도입 전에는 대상 런타임의 지원과 직렬화 경로를 확인한다. 이 실행의 Node20에서 Temporal을 실행한 결과나 전 브라우저 지원을 주장하는 것은 아니다."
-        },
-        {
-          "t": "visual",
-          "caption": "JavaScript 날짜 하루 전 오류 점검에서 toISOString의 UTC 고정을 확인한다. MDN 공식 API 문서의 실제 문구 캡처이며 실행 화면이 아니다. 출처: MDN toISOString 문서.",
-          "image": "visual_3"
         },
         {
           "t": "h",
@@ -565,7 +577,7 @@
         },
         {
           "t": "visual",
-          "caption": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다. 하나라도 달라지면 확대를 멈추고 변경 전 코드와 원본을 보존한다.",
+          "caption": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다. 둘 중 하나라도 바뀌면 적용 확대를 멈추고 원본과 변경 전 코드를 보존한다.",
           "image": "visual_2"
         },
         {
@@ -617,30 +629,30 @@
       "logic_type": "comparison",
       "label": "JavaScript 날짜 하루 전 오류는 달력 한 칸이 왜 어긋날까?",
       "scene_label": [
-        "달력 날짜",
-        "UTC 시계"
+        "선택한 날짜",
+        "저장된 날짜"
       ],
-      "steps": "JavaScript 날짜 하루 전 오류로 달력의26일과 시계의25일이 어긋나는 한 장면",
-      "curiosity_hook": "JavaScript의 달력 날짜는 왜 UTC 시계 뒤에서 한 칸 밀릴까?",
+      "steps": "JavaScript 날짜 하루 전 오류로 선택한 26일과 저장된 25일이 어긋나는 한 장면",
+      "curiosity_hook": "JavaScript에서 선택한 날짜는 왜 UTC 변환 뒤 하루 전이 될까?",
       "evidence_type": "diagram",
       "cover_kind": "editorial_scene",
       "art_direction": "single_object_conflict",
-      "composition_type": "calendar-sheet-caught-under-clock-hand",
-      "palette_family": "burgundy_slate_coolwhite",
-      "render_family": "isometric_model",
+      "composition_type": "overlapping-calendar-date-leaves",
+      "palette_family": "ivory_cobalt_coral",
+      "render_family": "flat_illustration",
       "editorial_treatment": "quiet_minimalism",
-      "focal_subject": "JavaScript 날짜를 상징하는26일 달력과 UTC 시계",
-      "texture_cue": "무광 세라믹 달력과 솔질한 금속 시계 바늘",
-      "authenticity_cue": "접힌 달력 모서리와 미세한 종이 마모",
+      "focal_subject": "JavaScript에서 선택한 26일과 저장된 25일이 어긋난 두 날짜",
+      "texture_cue": "단색 면과 굵은 윤곽선",
+      "authenticity_cue": "선택일 26일과 저장일 25일을 큰 숫자로 명확히 구분",
       "weekday_profile": "practical_diagnosis",
       "weekday_role": "problem_scene",
       "visual_claim": "JavaScript 날짜 하루 전 오류는 달력 날짜와 UTC 시각을 혼동할 때 생긴다",
       "generation_model": "gpt-image-2",
       "korean_labels": [
-        "달력 날짜",
-        "UTC 시계"
+        "선택한 날짜",
+        "저장된 날짜"
       ],
-      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Wide1200x630 isometric editorial miniature for JavaScript 날짜 하루 전. One large physical calendar leaf marked26 is caught under a brushed-metal clock hand; beneath its folded edge a25 is partly visible. A single quiet conflict about calendar date versus UTC time. Matte burgundy ceramic, slate grey metal, cool white background, tactile tiny wear, ample empty space. Exactly two short Korean object labels: 달력 날짜, UTC 시계. Calendar and clock fill65percent. No real UI, no computer, no arrows, no panels, no diagram, no title, no watermark. Revision: keep the exact scene and objects but enlarge both Korean object labels dramatically for mobile legibility, each about80px tall in a1730px-wide image, dark high-contrast type in clear bottom whitespace with no clipping. Exact labels 달력 날짜 and UTC 시계. No other text changes.",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Final production cover for the Korean article JavaScript 날짜 하루 전. Use the reference as the edit target and preserve its flat editorial illustration style, two overlapping blue/coral calendar forms, short blue conversion ribbon, exact large numbers26 and25, and exact Korean labels 선택한 날짜 and 저장된 날짜. Keep the image composition and color balance; no new objects, no extra text, no paper texture, no 3D/photo rendering. Canvas landscape approximately1200:630, filling the canvas vertically with normal modest margins, no letterbox padding. Both labels and numbers must stay safely inside the edges in a356x178 thumbnail. This is an explanatory editorial illustration, not a screenshot of an actual service or UI.",
       "qa": {
         "topic_match": true,
         "caption_match": true,
@@ -657,9 +669,9 @@
         "label": "JavaScript 날짜 하루 전 오류는 어디서 시작됐을까?",
         "scene_label": [
           "입력",
-          "변환",
-          "저장",
-          "표시"
+          "날짜 그대로",
+          "UTC 변환",
+          "서울 자정"
         ],
         "steps": "JavaScript 날짜 하루 전 오류는 입력·변환·저장·표시의 경계를 나눠 찾는다.",
         "curiosity_hook": "JavaScript 날짜 하루 전 오류는 어디서 시작됐을까?",
@@ -669,11 +681,11 @@
         "generation_model": "gpt-image-2",
         "korean_labels": [
           "입력",
-          "변환",
-          "저장",
-          "표시"
+          "날짜 그대로",
+          "UTC 변환",
+          "서울 자정"
         ],
-        "generation_prompt": "Use case: scientific-educational. Wide1200x630 Korean diagram for JavaScript 날짜 하루 전 diagnosis. Four large connected checkpoints left to right: calendar leaf, converter ring, storage cylinder, calendar display. The same date token travels between checkpoints and a red magnifying lens inspects one connector rather than blaming storage. Exactly four huge Korean labels: 입력, 변환, 저장, 표시. Cream white background, deep blue lines and crimson inspection accent. Simple open composition, large legible at390px, no title, no fake terminal, no metric, no watermark. Explains inspection sequence, not automatic date correction.",
+        "generation_prompt": "Use case: scientific-educational. Create a clear Korean editorial explainer illustration about JavaScript 날짜 하루 전. Landscape 3:2 composition, not a panoramic strip. On an ivory page show one input calendar at the left, reading exactly 2026-10-26. Branch into two generous horizontal paths stacked vertically. Upper path label 날짜 그대로: one simple string document travels to an identical calendar marked 2026-10-26, with a small blue check. Lower path label UTC 변환: a clock token labeled 서울 자정 passes through a conversion arrow labeled UTC, arriving at a calendar marked 2026-10-25 with a coral caution dot. This is specifically the Seoul local-midnight to UTC serialization-and-date-slicing failure, not a universal result for all Date inputs. A small magnifier over this lower conversion highlights the inspected boundary. Text (verbatim, no others): 입력, 날짜 그대로, UTC 변환, 서울 자정, 2026-10-26, 2026-10-25, UTC. Beautiful restrained flat editorial drawing, cobalt and coral, strong readable Korean typography, generous separation between rows, all labels large enough at 390px. Use most of height; no tiny decorative details, no storage cylinders, no fake product UI, no title, no frame, no invented dates like 2024, no watermark.",
         "qa": {
           "topic_match": true,
           "caption_match": true,
@@ -686,54 +698,67 @@
         "content_role": "explanation",
         "origin": "imagegen",
         "logic_type": "conditional",
-        "label": "JavaScript 날짜 하루 전 수정을 언제 확대할까?",
+        "label": "JavaScript 날짜 하루 전 수정에서 무엇을 보존해야 할까?",
         "scene_label": [
-          "날짜 왕복",
-          "시각 검증",
-          "통과 시 확대",
-          "실패 시 중단"
+          "생일·마감일",
+          "회의·로그",
+          "날짜 그대로",
+          "같은 순간 유지"
         ],
-        "steps": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
+        "steps": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다.",
         "curiosity_hook": "JavaScript 날짜 하루 전 수정을 언제 확대할까?",
         "evidence_type": "diagram",
         "teaching_role": "recovery_boundary",
-        "teaching_claim": "JavaScript 날짜 하루 전 수정은 날짜 왕복과 기존 시각 검증을 통과한 범위만 확대한다.",
+        "teaching_claim": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다.",
         "generation_model": "gpt-image-2",
         "korean_labels": [
-          "날짜 왕복",
-          "시각 검증",
-          "통과 시 확대",
-          "실패 시 중단"
+          "생일·마감일",
+          "날짜 그대로",
+          "회의·로그",
+          "같은 순간 유지",
+          "다르면 중단"
         ],
-        "generation_prompt": "Use case: scientific-educational. Wide1200x630 Korean conditional recovery boundary for JavaScript 날짜 하루 전. Two large test tokens calendar and clock join one validation gate; success path goes right through gate to rollout, failure path branches down to a stop barrier beside preserved original calendar. Exactly four large Korean labels: 날짜 왕복, 시각 검증, 통과 시 확대, 실패 시 중단. Dark forest green with mauve on bright white. Success and failure distinctly conditional, never put failure in mandatory sequence. No invented counts, no fake UI, no title, no watermark. Legible at390px. Revision: remove the rising bar chart entirely. Success rollout must be shown as two identical small software package boxes on a shelf, no chart, no bars, no rising trend. Keep the four Korean labels, conditional success and failure branches, calendar/clock validation gate, and white space. It is a deployment boundary, not a measured growth result.",
-        "condition": "날짜 왕복과 기존 시각 검증의 통과 여부에 따라",
+        "generation_prompt": "Use case: scientific-educational. Create a practical Korean decision illustration for correcting JavaScript 날짜 하루 전. Landscape 3:2, balanced vertical use rather than a thin ribbon. Show two large clearly distinct open routes from a small fork at center-left. Upper route has an elegant calendar card labeled 생일·마감일, the date 2026-10-26, and a matching second date card connected by a short cobalt line. Its conclusion label is 날짜 그대로. Lower route has a compact clock and a location pin labeled 회의·로그; two differently positioned clock faces are linked as one preserved instant, not an added nine hours. Its conclusion label is 같은 순간 유지. Below both routes a slim coral stop line, not a boom gate or traffic sign, accompanies label 다르면 중단. The picture teaches date-only preservation versus instant preservation and the boundary for stopping a rollout. Exact Korean labels only: 생일·마감일, 날짜 그대로, 회의·로그, 같은 순간 유지, 다르면 중단. Numeric text only 2026-10-26. Warm ivory background, cobalt and coral cut-paper accents, clean typography, intentional editorial visual hierarchy, readable at390px. No 3D gate, no software package boxes, no stock dashboard, no growth chart, no large blank bands, no title, no watermark.",
+        "condition": "날짜 또는 같은 순간 보존이 어긋난 경우",
         "qa": {
           "topic_match": true,
           "caption_match": true,
           "mobile_readable": true,
           "text_reviewed": true,
           "not_generic": true
-        }
+        },
+        "alt": "JavaScript 날짜 하루 전 수정은 날짜 전용 값의 연월일과 시각 값의 같은 순간을 각각 보존해야 한다."
       },
       {
         "content_role": "explanation",
-        "origin": "capture",
+        "origin": "measured_chart",
         "logic_type": "evidence",
-        "label": "JavaScript 날짜 하루 전에서 UTC 변환은 어떤 조건인가?",
+        "label": "JavaScript 날짜 하루 전 오류는 두 시간대에서 어떻게 달라질까?",
         "scene_label": [
-          "toISOString",
-          "UTC"
+          "서울",
+          "로스앤젤레스",
+          "getDate",
+          "문자열 왕복"
         ],
-        "steps": "JavaScript 날짜 하루 전 점검에서 toISOString의 UTC 고정 확인",
-        "curiosity_hook": "JavaScript의 toISOString은 현지 날짜를 그대로 반환할까?",
-        "evidence_type": "screenshot",
+        "steps": "JavaScript 날짜 하루 전 점검에서 실제 Node 출력의 현지 날짜와 UTC 직렬화 날짜를 대조한다.",
+        "curiosity_hook": "JavaScript의 같은 날짜 입력은 서울과 LA에서 같은 날짜로 읽힐까?",
+        "evidence_type": "chart",
         "teaching_role": "real_evidence",
-        "teaching_claim": "JavaScript 날짜 하루 전 오류 점검에서 toISOString의 UTC 고정을 확인한다.",
-        "capture_tool": "browser",
-        "capture_target": "JavaScript Date.prototype.toISOString MDN 문서의 timezone is always UTC 문장 실제 캡처",
-        "captured_at": "2026-10-26T09:07:50.072157+09:00",
-        "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString",
-        "capture_note": "MDN 문서의 UTC 고정 설명만 뷰포트 캡처에서 잘라 여백을 붙였다. 실제 실행 결과가 아니며 계정·개인정보가 없다.",
+        "teaching_claim": "JavaScript 날짜 하루 전 오류는 같은 입력도 시간대·변환 경로에 따라 다른 날짜를 보여 준다.",
+        "measurement_source": "JavaScript 날짜 하루 전 Node 실제 실행; reports/image-fixes/2026-10-26-results.json; render_date_evidence.py",
+        "unit": "getDate가 반환한 현지 달력 일",
+        "sample_count": 2,
+        "measurement_environment": "macOS, Node v20.20.2, TZ=Asia/Seoul 및 America/Los_Angeles, 합성 입력 2026-10-26; Node 출력 요약 결과표이며 터미널 캡처나 브라우저·DB 검증이 아님",
+        "data_points": [
+          {
+            "label": "Asia/Seoul",
+            "value": 26
+          },
+          {
+            "label": "America/Los_Angeles",
+            "value": 25
+          }
+        ],
         "qa": {
           "topic_match": true,
           "caption_match": true,

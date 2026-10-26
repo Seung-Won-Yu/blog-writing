@@ -10,6 +10,7 @@ from blog_pipeline.publishing.optimize_images import (
     IMAGE_FILE_BUDGET,
     IMAGE_SET_BUDGET,
     LEAD_IMAGE_SET_BUDGET,
+    native_target_size,
     _check_all,
     inspect_day_images,
     inspect_draft_images,
@@ -20,6 +21,75 @@ from blog_pipeline.publishing.optimize_images import (
 
 
 class OptimizeImagesTests(unittest.TestCase):
+    def test_native_sizes_separate_cover_from_explanations(self):
+        self.assertEqual(native_target_size("cover", (1730, 909)), (1200, 630))
+        self.assertEqual(native_target_size("visual_1", (1536, 1024)), (1200, 800))
+        self.assertEqual(native_target_size("visual_2", (1200, 900)), (1200, 900))
+
+    def test_native_cover_rejects_the_actual_panoramic_failure(self):
+        with self.assertRaisesRegex(ValueError, "recomposition"):
+            native_target_size("cover", (2078, 757))
+
+    def test_native_body_rejects_thin_text_strips_and_tall_full_pages(self):
+        for size in [(615, 54), (1200, 8000)]:
+            with self.subTest(size=size), self.assertRaisesRegex(ValueError, "recompose or split"):
+                native_target_size("visual_1", size)
+
+    def test_native_body_keeps_its_aspect_ratio_and_legacy_is_unchanged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            day = json.loads(day_path.read_text(encoding="utf-8"))
+            day["generation"]["image_policy"] = "webp-v2"
+            day_path.write_text(json.dumps(day), encoding="utf-8")
+            Image.effect_noise((600, 600), 60).convert("RGB").save(asset_dir / "story-01.png")
+            optimize_day_images(day_id, root=root)
+            stored = json.loads(day_path.read_text(encoding="utf-8"))
+            self.assertEqual(stored["images"]["story_1"]["height"], 1200)
+            self.assertEqual(stored["images"]["cover"]["height"], 630)
+            self.assertEqual(stored["generation"]["image_policy"], "webp-v2")
+            self.assertEqual(inspect_day_images(day_id, root=root)["reasons"], [])
+
+    def test_native_failure_is_atomic_before_any_earlier_image_is_published(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            day = json.loads(day_path.read_text(encoding="utf-8"))
+            day["generation"]["image_policy"] = "webp-v2"
+            day_path.write_text(json.dumps(day), encoding="utf-8")
+            before = day_path.read_bytes()
+            Image.effect_noise((615, 54), 40).convert("RGB").save(asset_dir / "story-01.png")
+            with self.assertRaisesRegex(ValueError, "aspect ratio"):
+                optimize_day_images(day_id, root=root)
+            self.assertEqual(day_path.read_bytes(), before)
+            self.assertFalse((asset_dir / "cover.webp").exists())
+            self.assertTrue((asset_dir / "cover.png").is_file())
+
+    def test_native_cover_rejects_padding_even_after_dimensions_are_faked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            day = json.loads(day_path.read_text(encoding="utf-8"))
+            day["generation"]["image_policy"] = "webp-v2"
+            day_path.write_text(json.dumps(day), encoding="utf-8")
+            padded = Image.new("RGB", (1200, 630), "#eeeeee")
+            padded.paste(Image.effect_noise((1200, 430), 40).convert("RGB"), (0, 100))
+            padded.save(asset_dir / "cover.png")
+            with self.assertRaisesRegex(ValueError, "letterbox"):
+                optimize_day_images(day_id, root=root)
+
+    def test_native_capture_does_not_enlarge_small_text_to_fill_the_width(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            day_id, day_path, asset_dir = self._write_day(root)
+            day = json.loads(day_path.read_text(encoding="utf-8"))
+            day["generation"]["image_policy"] = "webp-v2"
+            day["images"]["story_1"]["origin"] = "capture"
+            day_path.write_text(json.dumps(day), encoding="utf-8")
+            Image.effect_noise((615, 600), 40).convert("RGB").save(asset_dir / "story-01.png")
+            with self.assertRaisesRegex(ValueError, "recapture"):
+                optimize_day_images(day_id, root=root)
+
     def test_check_all_reports_malformed_generation_instead_of_crashing(self):
         from tests.test_editorial_quality import valid_daily_source
 
