@@ -1,0 +1,131 @@
+{
+  "verified_on": "2026-10-27",
+  "timezone": "Asia/Seoul",
+  "site": "https://won0322.tistory.com",
+  "changes": {
+    "meet_post_144": {
+      "public_url": "https://won0322.tistory.com/144",
+      "saved": true,
+      "full_exported_text_matched": true,
+      "body_images_loaded": 3,
+      "original_published_time": "2026-07-24T09:41:27+09:00"
+    },
+    "operating_notice": {
+      "public_url": "https://won0322.tistory.com/notice/123",
+      "saved": true,
+      "full_exported_text_matched": true,
+      "original_date": "2026-07-13",
+      "revised_on": "2026-10-27",
+      "reference_links": [
+        "https://policies.google.com/technologies/partner-sites?hl=ko",
+        "https://adssettings.google.com/",
+        "https://won0322.tistory.com/guestbook",
+        "https://github.com/Seung-Won-Yu"
+      ]
+    },
+    "ad_settings_changed": false,
+    "global_skin_changed": false
+  },
+  "screens": [
+    {
+      "id": "notice-123",
+      "url": "https://won0322.tistory.com/notice/123",
+      "desktop": {
+        "bodyFont": "18px",
+        "documentWidth": 1280,
+        "images": [],
+        "lineHeight": "33.3px",
+        "tables": [],
+        "viewport": 1280
+      },
+      "mobile": {
+        "bodyFont": "17px",
+        "documentWidth": 390,
+        "images": [],
+        "lineHeight": "26px",
+        "tables": [],
+        "viewport": 390
+      }
+    },
+    {
+      "id": "144",
+      "url": "https://won0322.tistory.com/144",
+      "desktop": {
+        "bodyFont": "17px",
+        "documentWidth": 1280,
+        "images": [
+          {
+            "loaded": true,
+            "width": 700
+          },
+          {
+            "loaded": true,
+            "width": 700
+          },
+          {
+            "loaded": true,
+            "width": 700
+          }
+        ],
+        "tables": [
+          {
+            "container": 700,
+            "scroll": 700
+          },
+          {
+            "container": 700,
+            "scroll": 700
+          },
+          {
+            "container": 700,
+            "scroll": 700
+          }
+        ],
+        "viewport": 1280
+      },
+      "mobile": {
+        "bodyFont": "16.5px",
+        "documentWidth": 390,
+        "images": [
+          {
+            "loaded": true,
+            "width": 335
+          },
+          {
+            "loaded": true,
+            "width": 335
+          },
+          {
+            "loaded": true,
+            "width": 335
+          }
+        ],
+        "tables": [
+          {
+            "container": 335,
+            "scroll": 335
+          },
+          {
+            "container": 335,
+            "scroll": 560
+          },
+          {
+            "container": 335,
+            "scroll": 335
+          }
+        ],
+        "viewport": 390
+      }
+    }
+  ],
+  "adsense": {
+    "observed_review_status": "리뷰가 요청됨",
+    "observed_site_status": "준비 중",
+    "observed_heading": "사이트의 광고 게재 가능 여부 검토 중",
+    "request_time_display": "2026-10-27 13:21 KST",
+    "request_clicked_by_this_execution": false,
+    "resolution": "Already requested when final site detail was opened; confirmed and did not submit a duplicate request.",
+    "approval_confirmed": false,
+    "screenshot": "/tmp/blog-writing-qa/2026-10-27-revisions/adsense-review-requested-2026-10-27.png"
+  }
+}
