@@ -113,7 +113,7 @@ def main():
             f'<li><p><strong>/{p["id"]} · {escape(p["title"])}</strong></p>'
             f'<a href="{p["id"]}.html">수정 본문 읽기</a> · '
             f'<a href="{p["id"]}.txt">교체용 HTML</a> · '
-            f'<a href="https://won0322.tistory.com/{p["id"]}">현재 공개 글</a></li>'
+            f'<a href="https://won0322.tistory.com/{p["id"]}">수정 반영된 공개 글</a></li>'
             for p in posts
         )
         (review / "index.html").write_text(
@@ -123,9 +123,9 @@ def main():
             '<title>10월 27일 기존 글 수정본 8편</title>'
             '<style>body{max-width:860px;margin:40px auto;padding:0 20px;color:#24352c;font:17px/1.8 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif}h1{font-size:30px;line-height:1.4;word-break:keep-all}li{border-bottom:1px solid #d6dfd9;padding:12px 0 25px}a{color:#176347;text-underline-offset:3px}.state{border-left:4px solid #337355;background:#eff6f1;padding:14px 18px}ul{padding-left:22px}</style>'
             '<h1>10월 27일 기존 글 수정본 8편</h1>'
-            '<p class="state">본문 재작성·데스크톱·모바일 검수 완료 · 티스토리 반영 대기</p>'
+            '<p class="state">티스토리 8편 본문 교체·공개 반영 확인 완료 · 2026. 10. 27</p>'
             '<p>기존 글의 주소와 발행일을 유지하는 교체용 원고입니다. 무관한 뉴스·시험 문제·용어를 덜고 제목의 질문에 집중했습니다. 광고 설정은 변경하지 않았으며 기존 중간 광고 태그 1개를 유지했습니다.</p>'
-            '<p>이 페이지의 완료 표시는 수정본 제작과 화면 검수를 뜻합니다. 아래 티스토리 글에 저장됐다는 뜻이나 AdSense 승인 판정은 아닙니다.</p>'
+            '<p>8편 모두 기존 URL에 저장한 뒤 제목·전체 본문·출처·발행일을 대조하고, 실제 공개 화면을 데스크톱 1280px·모바일 390px에서 확인했습니다. 이 페이지는 교체 원고의 보관용이며 AdSense 승인 판정은 아닙니다.</p>'
             '<ul>' + links + '</ul><p><a href="../../">기존 발행 도우미로 돌아가기</a></p></html>',
             encoding="utf-8",
         )

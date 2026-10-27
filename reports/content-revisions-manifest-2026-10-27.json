@@ -2,41 +2,73 @@
   {
     "id": 110,
     "html_sha256": "ce2c24d2f07c88e1acea943363ae73939336edcdcbd46bc24d8826efa76c348a",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/110",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-03T10:54:30+09:00",
+    "modified_time": "2026-10-27T12:57:50+09:00"
   },
   {
     "id": 111,
     "html_sha256": "2f82a7f165a4e4b1e8fca0016e80e9a181c03765f727591fe4d2b31c85bbe328",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/111",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-04T13:27:10+09:00",
+    "modified_time": "2026-10-27T13:02:46+09:00"
   },
   {
     "id": 112,
     "html_sha256": "130e441fdc903fa6c0e6cbae64a1412a112c3274c066f5113ebaca7c3becd14f",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/112",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-05T12:55:38+09:00",
+    "modified_time": "2026-10-27T13:05:30+09:00"
   },
   {
     "id": 114,
     "html_sha256": "1a049d7a68964469b0ad86d2199f12f1c6cd5380da861c54fb2360e1d7d05b8a",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/114",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-07T09:17:50+09:00",
+    "modified_time": "2026-10-27T13:06:59+09:00"
   },
   {
     "id": 117,
     "html_sha256": "54d83410ba3ba29fe03b5c0bb0ceefab71f2e405bf2173e6edf49af07bfc38db",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/117",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-10T09:13:44+09:00",
+    "modified_time": "2026-10-27T13:07:35+09:00"
   },
   {
     "id": 119,
     "html_sha256": "c588f102be3e04947632029e2d0e5cd48c26801ddca367e5ec992840ec4351ea",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/119",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-11T09:17:40+09:00",
+    "modified_time": "2026-10-27T13:08:11+09:00"
   },
   {
     "id": 120,
     "html_sha256": "0acae57dd5290ca29e41dc9940518457ea9144d962cdd41dcb935e11abf08110",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/120",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-12T10:30:51+09:00",
+    "modified_time": "2026-10-27T13:08:49+09:00"
   },
   {
     "id": 124,
     "html_sha256": "207ab3bd4c55c79531aa1f2b726812ba494c6cf6a5959a88240f31738f5acfd3",
-    "status": "reviewed_replacement_tistory_pending"
+    "status": "tistory_saved_public_verified",
+    "public_url": "https://won0322.tistory.com/124",
+    "public_verified_on": "2026-10-27",
+    "published_time": "2026-07-14T16:57:39+09:00",
+    "modified_time": "2026-10-27T13:09:24+09:00"
   }
 ]
