@@ -21,10 +21,10 @@
     "익명 계정",
     "대체 앱스토어"
   ],
-  "meta_description": "앱 목록은 열리는데 설치 버튼을 누르면 화면에 `&$Server busy`라는 문구가 뜨며 멈춘다는 공개 이슈가 등록됐다. 낯선 `&$`도 실제 오류 화면에 함께 표시된 문자다. 8월 31일 Nigh… Aurora Store 4.8.4와 8월 31일 Nightly에서 익명 계정으로 앱…",
+  "meta_description": "Aurora Store에서 앱 검색은 되는데 설치·업데이트만 `Server busy`로 멈춘다면, 먼저 실패 단계와 계정 유형을 기록한다. 8월 장애는 9월 23일 관리자가 익명 계정 발급 서버 문제… 8월 31일 공개 이슈는 익명 계정의 설치 실패와 캐시 삭제·VPN 전환 등의 실패…",
   "key_summary": [
     "1. Aurora Store 익명 계정 설치에서 Server busy 오류 보고",
-    "직접 얻는 결과: 확인된 실패 범위와 미확정 원인을 분리하고, 업데이트가 급한 앱만 공식 배포처·GrapheneOS 샌드박스 Play·대기 중 안전한 경로로 나눌 수 있다."
+    "직접 얻는 결과: 8월 장애의 관리자 해결 기록과 10월 재발 댓글을 구분하고, 현재 실패 단계에 맞춰 대기·공식 배포처·샌드박스 Play 중 필요한 경로를 고를 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -36,7 +36,7 @@
     "추천 제목: Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 9,
+  "estimated_read_minutes": 10,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-02-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-02-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-02-adfit.html",
-  "source_sha256": "fe7b320bbd4e5ca4f9a25ceb505c00bd8b560bcb8a0b7f4a12f2286787a7fadc",
-  "html_sha256": "40b4d9a2ea544fb45efe3e8889175830f65c290db8be6288e055a1943e8e840f",
-  "adfit_sha256": "c22554b8a87f50b9e750d3e93129142a9a3e2b17d2d85f0613e5f0bf53c2df98",
+  "source_sha256": "adec7ee9a31b5ac7e80f59aea890b2aa30a5a419975899154f6db5de39ace784",
+  "html_sha256": "2a58bd441996724070da7bf4527c3bb5856cc07676630b0d3e0c7e8b4e0a6eef",
+  "adfit_sha256": "37f5324a4816af6b601893f6f4527debf5ebe67eb8e53847593b49dd3a49abe7",
   "image_assets": [
     {
       "kind": "cover",

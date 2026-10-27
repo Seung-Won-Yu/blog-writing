@@ -85,6 +85,26 @@
       "metric_scope": "page",
       "improvement_goal": "회의 자료 종류와 찾는 순서, 미생성·처리 중·접근 불가를 구분하고 과거 배포일을 현재 실패 원인으로 단정하는 안내를 바로잡는다.",
       "refreshed_on": "2026-10-22"
+    },
+    {
+      "priority": 5,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/220",
+      "title": "Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서",
+      "draft_id": "2026-09-02",
+      "source": "data/days/2026-09-02.json",
+      "current_clicks": 5,
+      "previous_clicks": 0,
+      "current_impressions": 61,
+      "previous_impressions": 28,
+      "evidence_observed_on": "2026-10-27",
+      "evidence_period_start": "2026-09-27",
+      "evidence_period_end": "2026-10-24",
+      "previous_period_start": "2026-08-30",
+      "previous_period_end": "2026-09-26",
+      "metric_scope": "page",
+      "improvement_goal": "8월 장애의 관리자 해결·후속 재발·현재 실패 단계를 구분해 과거 대기 안내와 미확정 원인 단정을 바로잡는다.",
+      "refreshed_on": "2026-10-27"
     }
   ]
 }
