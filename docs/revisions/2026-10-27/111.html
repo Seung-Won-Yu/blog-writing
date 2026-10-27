@@ -1,0 +1,56 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><title>AI 코딩은 개발자를 대신할까? 맡길 일과 확인할 일 구분하기</title><body style="margin:0;padding:24px 20px;background:white"><header style="max-width:860px;margin:0 auto 32px;font-family:sans-serif"><h1 style="font-size:30px;line-height:1.4">AI 코딩은 개발자를 대신할까? 맡길 일과 확인할 일 구분하기</h1></header><style>.sw-revision-20261027{max-width:860px;margin:0 auto;color:#202923;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:18px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}
+.sw-revision-20261027 *{box-sizing:border-box}
+.sw-revision-20261027 p{margin:0 0 1.15em}
+.sw-revision-20261027 .rev-date{font-size:13px;color:#647168}
+.sw-revision-20261027 .rev-lead{font-size:20px;line-height:1.8}
+.sw-revision-20261027 h2{margin:2.2em 0 .85em;font-size:1.35em;line-height:1.45;border-bottom:1px solid #cdd7d1;padding-bottom:.5em;color:#183d30}
+.sw-revision-20261027 .rev-table{margin:1.5em 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sw-revision-20261027 table{border-collapse:collapse;width:100%;font-size:16px;line-height:1.7}
+.sw-revision-20261027 th,.sw-revision-20261027 td{padding:12px 13px;text-align:left;vertical-align:top;border:1px solid #d4ddd7;min-width:110px}
+.sw-revision-20261027 th{background:#eff5f1;color:#244536}
+.sw-revision-20261027 li{margin:.55em 0}
+.sw-revision-20261027 pre{white-space:pre-wrap;background:#f3f6f4;border-left:3px solid #2c7357;padding:18px;font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+.sw-revision-20261027 a{color:#1c654a;text-decoration:underline;text-underline-offset:3px}
+.sw-revision-20261027 .rev-refs{border-top:1px solid #cdd7d1;margin-top:2.5em;padding-top:.5em;font-size:16px}
+@media(max-width:600px){.sw-revision-20261027{font-size:17px;line-height:1.85}.sw-revision-20261027 .rev-lead{font-size:19px}.sw-revision-20261027 th,.sw-revision-20261027 td{min-width:100px;padding:10px}}</style>
+<article class="sw-revision-20261027" data-revision-post="111">
+<p class="rev-date">2026. 10. 27 내용 확인·보완</p>
+<p class="rev-lead">‘기능 구현을 완료했습니다’라는 답을 받고 화면을 열었는데, 정작 필요한 버튼이 없다면 무엇이 끝난 걸까. AI 코딩을 쓸 때 중요한 질문은 코드를 얼마나 빨리 만들었는지뿐 아니라, 내가 결과를 얼마나 쉽게 확인할 수 있는지다. 작은 수정과 큰 기능을 같은 방식으로 맡기면 이 확인 비용이 금세 커진다.</p>
+<section><h2>외부 개발자의 사용기에서 가져올 것은 순위가 아니라 조건이다</h2>
+<p>2026년 7월 1일 공개된 외부 개발자의 글 ‘Artificial adventures’는 코드 리뷰와 반복적인 리팩터링에서 얻은 도움, 큰 구현을 맡길 때 겪은 검토 어려움을 함께 기록한다. 이 글에 등장하는 경험은 해당 작성자의 경험이다. 이 블로그 운영자가 같은 프로젝트와 모델로 재현한 실험이 아니다.</p>
+<p>그 사용기를 모든 AI 도구의 성능표로 읽기보다 ‘작업 결과를 확인하기 쉬운가’라는 질문으로 가져오면 오래 쓸 수 있다. 함수 이름 변경은 누락된 호출을 찾을 수 있지만, 서비스 전체를 잘 설계했는지는 화면 한 장으로 확인하기 어렵다.</p>
+
+</section>
+<section><h2>같은 AI에게도 맡기는 단위를 바꾸면 검토가 달라진다</h2>
+<p>다음은 작업 범위를 정하기 위한 설명용 예시다. 성공률을 측정한 표가 아니라, 결과를 확인할 수 있는 크기로 나누는 방법이다.</p>
+<div class="rev-table" role="region" aria-label="같은 AI에게도 맡기는 단위를 바꾸면 검토가 달라진다 비교표" tabindex="0"><table><thead><tr><th scope="col">막연한 요청</th><th scope="col">작게 나눈 요청</th><th scope="col">내가 확인할 결과</th></tr></thead><tbody><tr><td>회원 기능을 다 만들어줘</td><td>잘못된 이메일 입력 한 경우 처리</td><td>오류 문구와 저장 여부</td></tr><tr><td>코드를 깔끔하게 고쳐줘</td><td>이 함수의 중복 계산만 제거</td><td>기존 입력의 결과 유지</td></tr><tr><td>버그를 찾아 고쳐줘</td><td>재현 조건과 의심 위치부터 제시</td><td>같은 조건에서 오류 재현</td></tr></tbody></table></div>
+<p>작은 요청이 언제나 쉬운 작업이라는 뜻은 아니다. 중요한 것은 틀렸을 때 어디로 돌아갈지 보이는가다. 입력·기대 결과·수정 범위를 적으면 AI의 답과 실제 동작 사이를 비교하기 쉬워진다.</p>
+</section>
+<div style="margin:36px 0;border:1px dashed #a4b4a9;padding:18px;font-size:14px;color:#65776c">기존 본문 중간 광고 위치</div>
+<section><h2>바로 써볼 요청문은 네 줄이면 된다</h2>
+<p>아래 문장은 특정 제품의 특별한 기능이 아니라 요청을 구체화하는 틀이다. 사용하는 코딩 도구에 맞게 파일과 실행 방법을 채워 넣는다.</p>
+<pre>목표: 이메일이 비어 있으면 저장하지 않고 안내한다.
+수정 범위: 입력 검증 함수와 해당 테스트만 본다.
+기대 결과: 빈 값은 실패하고 정상 이메일의 기존 저장은 유지된다.
+완료 보고: 바꾼 파일, 실행한 확인, 실행하지 못한 확인을 구분한다.</pre>
+<p>파일을 직접 고치기 전에 재현 조건을 먼저 설명하게 하는 것도 방법이다. 다만 설명이 그럴듯하다는 이유로 맞다고 판단하지 않는다. 실제 코드와 입력 조건에 연결되는지 확인한다.</p>
+</section>
+<section><h2>‘테스트 통과’와 ‘사용할 수 있음’을 따로 확인한다</h2>
+<p>테스트는 작성된 조건을 확인한다. 사용자가 파일을 고르고 저장 버튼을 누르는 흐름이 테스트에 없다면, 테스트가 통과해도 그 화면에서 막힐 수 있다. 반대로 화면이 한 번 열렸다는 사실만으로 잘못된 입력이나 중복 요청까지 처리됐다고 볼 수도 없다.</p>
+<ol><li>변경 내용을 읽고 요청과 무관한 수정이 섞였는지 확인한다.</li><li>대표적인 정상 입력 한 건과 잘못된 입력 한 건을 비교한다.</li><li>실제로 사용하는 진입점에서 입력부터 결과 확인까지 한 번 진행한다.</li><li>실행하지 못한 부분은 완료 목록에서 분리해 다음 확인 항목으로 남긴다.</li></ol>
+<p>이 절차는 결함을 모두 없애는 보증이 아니다. 그래도 ‘AI가 했다고 말한 일’과 ‘내가 확인한 일’을 같은 칸에 적는 실수는 줄일 수 있다.</p>
+</section>
+<section><h2>개발자의 역할은 없어지기보다 확인 가능한 일을 설계하는 쪽으로 이동한다</h2>
+<p>반복 코드를 만드는 수고가 줄면 문제를 정하고 결과를 받아들이는 판단이 더 잘 보인다. 초보자라면 이해할 수 없는 큰 기능부터 맡기기보다, 결과를 설명할 수 있는 한 동작으로 시작하자. 그 결과를 확인한 뒤 다음 동작을 붙이면 된다.</p>
+<p>AI에 맡길 범위는 ‘모델이 자신 있어 하는가’보다 ‘내가 실패를 알아볼 수 있는가’로 정하는 편이 실용적이다. 이 글의 표와 요청문은 외부 사용기에서 얻은 문제의식을 바탕으로 구성한 편집 예시이며, 별도의 생산성 비교 실험 결과는 아니다.</p>
+
+</section>
+<section class="rev-refs"><h2>참고한 자료</h2><ul>
+<li><a href="https://www.scattered-thoughts.net/writing/artificial-adventures/" target="_blank" rel="noopener noreferrer">외부 개발자의 원 사용기: Artificial adventures</a></li>
+<li><a href="https://www.langchain.com/blog/the-art-of-loop-engineering" target="_blank" rel="noopener noreferrer">LangChain: 작업 루프와 검증 루프의 구분</a></li>
+</ul></section>
+<section><h2>이어서 읽기</h2><ul>
+<li><a href="https://won0322.tistory.com/114">추가 기능을 만들기 전에 정할 기준</a></li>
+</ul></section>
+</article>
+</body></html>

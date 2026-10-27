@@ -1,0 +1,53 @@
+<style>.sw-revision-20261027{max-width:860px;margin:0 auto;color:#202923;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:18px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}
+.sw-revision-20261027 *{box-sizing:border-box}
+.sw-revision-20261027 p{margin:0 0 1.15em}
+.sw-revision-20261027 .rev-date{font-size:13px;color:#647168}
+.sw-revision-20261027 .rev-lead{font-size:20px;line-height:1.8}
+.sw-revision-20261027 h2{margin:2.2em 0 .85em;font-size:1.35em;line-height:1.45;border-bottom:1px solid #cdd7d1;padding-bottom:.5em;color:#183d30}
+.sw-revision-20261027 .rev-table{margin:1.5em 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sw-revision-20261027 table{border-collapse:collapse;width:100%;font-size:16px;line-height:1.7}
+.sw-revision-20261027 th,.sw-revision-20261027 td{padding:12px 13px;text-align:left;vertical-align:top;border:1px solid #d4ddd7;min-width:110px}
+.sw-revision-20261027 th{background:#eff5f1;color:#244536}
+.sw-revision-20261027 li{margin:.55em 0}
+.sw-revision-20261027 pre{white-space:pre-wrap;background:#f3f6f4;border-left:3px solid #2c7357;padding:18px;font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+.sw-revision-20261027 a{color:#1c654a;text-decoration:underline;text-underline-offset:3px}
+.sw-revision-20261027 .rev-refs{border-top:1px solid #cdd7d1;margin-top:2.5em;padding-top:.5em;font-size:16px}
+@media(max-width:600px){.sw-revision-20261027{font-size:17px;line-height:1.85}.sw-revision-20261027 .rev-lead{font-size:19px}.sw-revision-20261027 th,.sw-revision-20261027 td{min-width:100px;padding:10px}}</style>
+<article class="sw-revision-20261027" data-revision-post="119">
+<p class="rev-date">2026. 10. 27 내용 확인·보완</p>
+<p class="rev-lead">검은 창에 글자를 보여 주는 터미널을 만드는 데 왜 프로그래밍 언어와 화면 기술이 여러 개 필요할까. Ghostty를 보면 답은 ‘Zig가 빨라서’ 한마디로 끝나지 않는다. 터미널의 공통 동작과 운영체제다운 화면을 나누고, 두 부분을 연결한 구조가 중요한 선택이다.</p>
+<section><h2>Zig를 고른 출발점과 제품의 구조를 나눠 보자</h2>
+<p>미첼 하시모토는 2025년 Terminal Trove 인터뷰에서 터미널·셸 등 여러 층의 동작을 더 알고 싶었고 Zig와 그래픽 프로그래밍을 배울 프로젝트를 찾던 중 Ghostty를 시작했다고 설명한다. 처음부터 모든 언어를 벤치마크해 Zig가 가장 빨랐다고 결론 낸 이야기는 아니다.</p>
+<p>프로젝트가 이어지면서 목표는 속도·기능·각 운영체제에 자연스러운 화면을 함께 갖추는 쪽으로 구체화됐다. 언어 선택의 개인적 출발점과 이후 제품이 해결한 과제를 구분하면 ‘유명한 프로젝트가 쓰니 내 앱도 같은 언어’라는 성급한 결론을 피할 수 있다.</p>
+
+</section>
+<section><h2>터미널은 명령을 실행하는 셸과 다르다</h2>
+<p>터미널 에뮬레이터는 입력을 전달하고 프로그램이 보낸 글자와 제어 신호를 화면에 표현하는 앱이다. 셸은 그 안에서 명령을 해석하는 프로그램이다. 터미널 앱을 바꿨다고 셸의 모든 동작이나 실행하는 프로그램의 성능이 함께 바뀌는 것은 아니다.</p>
+<p>Ghostty 공식 설명은 공통 핵심인 libghostty와 운영체제별 화면을 나눈다. 이 분리가 있어야 같은 터미널 동작을 공유하면서도 macOS와 Linux의 화면 관례를 따를 수 있다.</p>
+<div class="rev-table" role="region" aria-label="터미널은 명령을 실행하는 셸과 다르다 비교표" tabindex="0"><table><thead><tr><th scope="col">부분</th><th scope="col">Ghostty 설명에 나온 구성</th><th scope="col">쉽게 말하면</th></tr></thead><tbody><tr><td>공통 핵심</td><td>Zig 기반 libghostty</td><td>문자 처리·글꼴·화면 그리기의 공통 엔진</td></tr><tr><td>macOS 화면</td><td>Swift와 AppKit·SwiftUI</td><td>맥의 창·탭·시스템 기능을 다루는 외피</td></tr><tr><td>Linux 화면</td><td>Zig와 GTK4 C API</td><td>리눅스 데스크톱 관례에 맞춘 외피</td></tr></tbody></table></div>
+
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<section><h2>서로 다른 언어를 붙이는 경계가 설계의 핵심이다</h2>
+<p>인터뷰에서 하시모토는 Zig 코드를 C ABI와 호환되는 라이브러리로 만들고 운영체제별 화면에서 연결하는 구조를 설명한다. ABI는 서로 다른 코드가 함수를 부르고 값을 주고받을 때 지키는 연결 규칙이라고 이해하면 된다.</p>
+<p>배달 서비스에 비유하면 주문 처리 규칙은 공유하되, 매장마다 다른 출입구와 안내판은 따로 맞추는 방식이다. 공통 엔진에 모든 화면 관례를 억지로 넣지 않아도 된다. 이 비유는 구조를 설명하기 위한 것이며 Ghostty 내부의 모든 구현을 대응시킨 설계도는 아니다.</p>
+
+</section>
+<section><h2>내 프로젝트에는 언어 이름보다 이 질문을 가져오자</h2>
+<p>작은 앱의 화면 하나를 만들면서 처음부터 다중 언어 구조를 도입할 필요는 없다. 연결 경계가 늘면 빌드·배포·디버깅 부담도 생긴다. 공통 부분을 분리할 이유가 실제로 있는지 먼저 본다.</p>
+<ol><li>두 플랫폼에서 완전히 같은 규칙과 달라야 하는 화면 동작을 적는다.</li><li>현재 문제가 계산·입출력·화면 갱신 중 어디에 있는지 확인한다.</li><li>공통 코드를 분리했을 때 테스트할 입력과 결과를 정의한다.</li><li>언어를 추가해 얻는 이득과 연결·배포 부담을 함께 비교한다.</li></ol>
+<p>Ghostty가 쓰는 언어만 보고 내 프로그램의 병목을 설명할 수는 없다. 터미널이 빠르다는 말도 시작 시간·스크롤·입력 반응처럼 측정 대상에 따라 달라진다. 이 글에서는 실행 속도 비교나 특정 플랫폼의 우열을 측정하지 않았다.</p>
+</section>
+<section><h2>왜 Zig인가를 물었다면, 무엇을 분리했는지도 보자</h2>
+<p>Ghostty의 흥미로운 점은 하나의 언어로 모든 것을 통일하지 않았다는 데 있다. 공통 엔진에는 Zig를 쓰고, 화면은 운영체제의 기술과 연결한다. 언어 선택을 제품의 요구와 연결해 읽으면 유행하는 언어 소개보다 내 설계에 남는 질문이 많아진다.</p>
+<p>인터뷰와 공식 설명을 바탕으로 정리했으며 직접 빌드·성능 측정한 사용기는 아니다. 라이브러리 API의 현재 안정성이나 지원 범위는 도입 시점의 공식 문서를 별도로 확인한다.</p>
+
+</section>
+<section class="rev-refs"><h2>참고한 자료</h2><ul>
+<li><a href="https://terminaltrove.com/blog/terminal-trove-talks-with-mitchell-hashimoto-ghostty/" target="_blank" rel="noopener noreferrer">Terminal Trove: 하시모토의 프로젝트 시작·Zig·연결 구조 인터뷰</a></li>
+<li><a href="https://ghostty.org/docs/about" target="_blank" rel="noopener noreferrer">Ghostty 공식 설명: 플랫폼별 화면과 공통 핵심</a></li>
+</ul></section>
+<section><h2>이어서 읽기</h2><ul>
+<li><a href="https://won0322.tistory.com/114">AI 코드의 양보다 설계 판단을 보는 이유</a></li>
+</ul></section>
+</article>

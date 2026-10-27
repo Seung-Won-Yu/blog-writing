@@ -1,0 +1,53 @@
+<style>.sw-revision-20261027{max-width:860px;margin:0 auto;color:#202923;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:18px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}
+.sw-revision-20261027 *{box-sizing:border-box}
+.sw-revision-20261027 p{margin:0 0 1.15em}
+.sw-revision-20261027 .rev-date{font-size:13px;color:#647168}
+.sw-revision-20261027 .rev-lead{font-size:20px;line-height:1.8}
+.sw-revision-20261027 h2{margin:2.2em 0 .85em;font-size:1.35em;line-height:1.45;border-bottom:1px solid #cdd7d1;padding-bottom:.5em;color:#183d30}
+.sw-revision-20261027 .rev-table{margin:1.5em 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sw-revision-20261027 table{border-collapse:collapse;width:100%;font-size:16px;line-height:1.7}
+.sw-revision-20261027 th,.sw-revision-20261027 td{padding:12px 13px;text-align:left;vertical-align:top;border:1px solid #d4ddd7;min-width:110px}
+.sw-revision-20261027 th{background:#eff5f1;color:#244536}
+.sw-revision-20261027 li{margin:.55em 0}
+.sw-revision-20261027 pre{white-space:pre-wrap;background:#f3f6f4;border-left:3px solid #2c7357;padding:18px;font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+.sw-revision-20261027 a{color:#1c654a;text-decoration:underline;text-underline-offset:3px}
+.sw-revision-20261027 .rev-refs{border-top:1px solid #cdd7d1;margin-top:2.5em;padding-top:.5em;font-size:16px}
+@media(max-width:600px){.sw-revision-20261027{font-size:17px;line-height:1.85}.sw-revision-20261027 .rev-lead{font-size:19px}.sw-revision-20261027 th,.sw-revision-20261027 td{min-width:100px;padding:10px}}</style>
+<article class="sw-revision-20261027" data-revision-post="124">
+<p class="rev-date">2026. 10. 27 내용 확인·보완</p>
+<p class="rev-lead">너무 반듯한 얼굴이면 AI일까. 실제 사람의 사진도 보정과 조명에 따라 그렇게 보일 수 있다. AI 얼굴 판별 훈련 연구가 흥미로운 이유는 ‘가짜 얼굴의 특징 하나’를 외우게 한 것이 아니라 얼굴 전체에서 받는 인상을 비교하도록 했다는 데 있다. 다만 연구에서 정확도가 올랐다는 사실이 내 메신저의 낯선 계정을 판별해 준다는 뜻은 아니다.</p>
+<section><h2>연구가 실제로 확인한 것은 무엇인가</h2>
+<p>2026년 PNAS에 발표된 ‘Training humans to detect AI-generated faces’는 주 실험 참가자 45명의 훈련 전후를 비교했고, 훈련에 쓰지 않은 얼굴에서 평균 판별 정확도가 거의 두 배로 높아졌다고 보고했다. 반복해서 시험을 본 효과만으로 설명되는지 확인하는 대조 연구와 온라인 재현 연구도 포함했다.</p>
+<p>연구팀의 ANU 설명은 얼굴의 독특함·기억에 남는 정도·비례·대칭·매력도·표현력 같은 전체 인상에 주의를 기울이도록 했다고 밝힌다. 반지나 손가락의 오류 하나를 찾는 요령과 다른 접근이다. 이 결과는 연구팀의 실험이며 이 블로그가 참가자를 모집해 재현한 결과는 아니다.</p>
+
+</section>
+<section><h2>정확도 두 배와 ‘아무 사진이나 80% 판별’은 다르다</h2>
+<p>정확도는 어떤 사진을 어떤 비율로 보여 줬는지에 영향을 받는다. 학습에 쓴 얼굴을 외운 것인지 새 얼굴에도 적용됐는지, 어떤 생성 방식의 얼굴인지도 중요하다. 기사 제목의 숫자만 떼어 다른 조건의 사진에 옮기면 연구가 답하지 않은 질문까지 답한 것처럼 된다.</p>
+<p>ANU는 StyleGAN 얼굴에서 효과를 확인했지만 다른 AI 얼굴에도 훈련이 일반화되는지, 더 짧은 훈련과 효과 지속성은 추가 확인이 필요하다고 설명한다. 정지된 얼굴 사진의 결과를 압축된 영상통화·합성 음성·모든 최신 생성 모델의 탐지 성능으로 확대하지 않는다.</p>
+<div class="rev-table" role="region" aria-label="정확도 두 배와 ‘아무 사진이나 80% 판별’은 다르다 비교표" tabindex="0"><table><thead><tr><th scope="col">연구에서 읽을 질문</th><th scope="col">일상에 옮길 때의 주의</th></tr></thead><tbody><tr><td>훈련하지 않은 얼굴도 평가했나</td><td>외운 사진을 맞힌 결과와 구분</td></tr><tr><td>어떤 생성 얼굴을 썼나</td><td>다른 생성 방식까지 자동 적용하지 않음</td></tr><tr><td>평균과 개인 결과가 같은가</td><td>높은 성적의 참가자를 모두의 결과로 쓰지 않음</td></tr><tr><td>얼마나 오래 효과가 남았나</td><td>일회성 향상을 장기 능력으로 단정하지 않음</td></tr></tbody></table></div>
+
+</section>
+<figure class="ad-wp" contenteditable="false" data-ke-type="revenue" data-ad-vendor="adfit" data-ad-id-pc="713977" data-ad-id-mobile="713980"></figure>
+<section><h2>의심 신호와 신원 확인을 한 단계로 묶지 않는다</h2>
+<p>가상 상황을 하나 보자. 새 계정이 선명한 프로필 사진을 내세워 업무 파일을 보내 달라고 한다. 사진이 실제처럼 보여도 그 사람이 주장하는 회사의 직원인지는 별도다. 반대로 얼굴이 부자연스럽다고 해서 그 계정을 곧바로 사기라고 공개 지목할 근거도 되지 않는다.</p>
+<p>얼굴의 인상은 추가 확인을 시작하는 단서로만 둔다. 상대가 주장한 소속의 공식 웹사이트에서 별도로 찾은 연락 경로로 요청 사실을 확인하고, 받은 메시지 안의 링크만으로 신원을 확인하지 않는다. 확신이 들지 않는 상태에서는 민감한 자료 전달을 보류한다.</p>
+
+</section>
+<section><h2>내가 바로 써볼 것은 판별 점수보다 확인 기록이다</h2>
+<p>낯선 연락을 받았을 때 아래 네 칸을 적으면 ‘사진이 그럴듯하다’와 ‘요청을 확인했다’를 분리할 수 있다.</p>
+<div class="rev-table" role="region" aria-label="내가 바로 써볼 것은 판별 점수보다 확인 기록이다 비교표" tabindex="0"><table><thead><tr><th scope="col">기록할 것</th><th scope="col">확인 예시</th></tr></thead><tbody><tr><td>상대의 주장</td><td>어느 조직의 누구라고 하는가</td></tr><tr><td>요청 내용</td><td>무엇을 언제까지 보내 달라는가</td></tr><tr><td>별도로 찾은 근거</td><td>공식 연락처·기존에 알고 있던 채널로 확인했는가</td></tr><tr><td>아직 모르는 것</td><td>소속·권한·요청 목적 중 미확인 부분은 무엇인가</td></tr></tbody></table></div>
+<p>타인의 사진을 허락 없이 여러 탐지 서비스에 올려 점수를 비교할 필요는 없다. 얼굴 판별 도구의 점수나 영상통화 한 번도 단독 신원 보증으로 쓰지 않는다. 이 확인표는 예방을 위한 편집 제안이며 실제 사건의 진위나 법적 책임을 판정하는 도구가 아니다.</p>
+</section>
+<section><h2>연구의 성과를 인정하면서 적용 범위는 좁게 잡자</h2>
+<p>사람의 판별 능력도 훈련으로 좋아질 수 있다는 결과는 의미가 있다. 동시에 특정 실험에서 배운 능력이 새로운 이미지 환경에서도 유지되는지 묻는 것이 연구를 의심하는 태도가 아니라 제대로 읽는 태도다.</p>
+<p>사진을 잘 맞히는 능력과 상대의 신원을 확인하는 일은 목적이 다르다. 다음에 ‘AI 얼굴 판별 정확도’라는 숫자를 보면 먼저 실험의 얼굴·대상·평가 조건을 확인하자. 일상에서는 그 숫자보다 독립된 연락 경로와 요청 내용의 검증을 우선한다.</p>
+
+</section>
+<section class="rev-refs"><h2>참고한 자료</h2><ul>
+<li><a href="https://pubmed.ncbi.nlm.nih.gov/42372163/" target="_blank" rel="noopener noreferrer">PNAS 논문 초록·참가자·훈련 전후 설계</a></li>
+<li><a href="https://www.anu.edu.au/news/all-news/humans-trained-to-spot-ai-faces-in-the-battle-against-deepfake-fraud" target="_blank" rel="noopener noreferrer">ANU 연구팀 설명: StyleGAN·훈련 방법·일반화 한계</a></li>
+</ul></section>
+<section><h2>이어서 읽기</h2><ul>
+<li><a href="https://won0322.tistory.com/120">인스타 사진 참조 기능이 중단된 범위</a></li>
+</ul></section>
+</article>
