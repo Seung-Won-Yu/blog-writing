@@ -78,7 +78,7 @@
     },
     {
       "priority": 4,
-      "status": "ready_for_review",
+      "status": "published",
       "page_url": "https://won0322.tistory.com/144",
       "title": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
       "draft_id": "2026-07-24",
@@ -90,7 +90,9 @@
       "evidence_period_end": "2026-10-19",
       "metric_scope": "page",
       "improvement_goal": "회의 자료 종류와 찾는 순서, 미생성·처리 중·접근 불가를 구분하고 과거 배포일을 현재 실패 원인으로 단정하는 안내를 바로잡는다.",
-      "refreshed_on": "2026-10-22"
+      "refreshed_on": "2026-10-22",
+      "public_verified_on": "2026-10-27",
+      "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
     {
       "priority": 5,
