@@ -45,6 +45,11 @@ LEGACY_AUTO_DIGEST_PHRASES = (
     "자동 생성 데일리 다이제스트",
     "본문은 핵심 내용 요약과 학습용 문제로 구성",
 )
+DAILY_NEWS_HEADING = re.compile(r"^오늘의\s*뉴스\s*(\d+)\s*개$")
+DAILY_AUXILIARY_HEADINGS = {
+    "오늘의정처기문제",
+    "오늘의IT·개발·기획용어",
+}
 SPACE_PATTERN = re.compile(r"\s+")
 TITLE_PATTERN = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)
 CATEGORY_PATTERN = re.compile(r'categoryLabel":"([^"]*)"')
@@ -59,6 +64,7 @@ RISK_WEIGHTS = {
     "duplicate_title": 4,
     "question_dump": 4,
     "legacy_auto_digest": 4,
+    "mixed_news_quiz": 2,
     "link_list": 4,
     "thin_text": 3,
     "code_heavy": 3,
@@ -90,6 +96,8 @@ class _ArticleParser(HTMLParser):
         self.code_parts = []
         self.paragraphs = 0
         self.headings = 0
+        self.heading_texts = []
+        self.current_heading_parts = None
         self.images = 0
         self.tables = 0
         self.external_links = 0
@@ -127,6 +135,7 @@ class _ArticleParser(HTMLParser):
             self.paragraphs += 1
         elif tag in {"h2", "h3", "h4"}:
             self.headings += 1
+            self.current_heading_parts = []
         elif tag == "img":
             self.images += 1
         elif tag == "table":
@@ -152,6 +161,9 @@ class _ArticleParser(HTMLParser):
             self.ignored_depth -= 1
         elif tag in {"pre", "code"} and self.code_depth:
             self.code_depth -= 1
+        if tag in {"h2", "h3", "h4"} and self.current_heading_parts is not None:
+            self.heading_texts.append(_clean_text(self.current_heading_parts))
+            self.current_heading_parts = None
         if tag == "div":
             self.article_depth -= 1
 
@@ -162,6 +174,8 @@ class _ArticleParser(HTMLParser):
         if not value:
             return
         self.text_parts.append(value)
+        if self.current_heading_parts is not None:
+            self.current_heading_parts.append(value)
         if self.code_depth:
             self.code_parts.append(value)
 
@@ -176,6 +190,14 @@ def parse_post_html(html_text, *, post_id, url, blog_url=BLOG_URL):
     category = unescape(category_match.group(1)).strip() if category_match else ""
     text = _clean_text(parser.text_parts)
     code = _clean_text(parser.code_parts)
+    # Renamed titles and longer intros can hide the old mixed daily format.
+    # This is an editorial review signal, not an originality or policy verdict.
+    news_headings = [DAILY_NEWS_HEADING.fullmatch(h) for h in parser.heading_texts]
+    multiple_news = any(m and int(m.group(1)) >= 2 for m in news_headings)
+    auxiliary = any(
+        SPACE_PATTERN.sub("", h) in DAILY_AUXILIARY_HEADINGS
+        for h in parser.heading_texts
+    )
     return {
         "id": int(post_id),
         "url": str(url),
@@ -194,6 +216,7 @@ def parse_post_html(html_text, *, post_id, url, blog_url=BLOG_URL):
         "legacy_auto_digest": any(
             phrase in text for phrase in LEGACY_AUTO_DIGEST_PHRASES
         ),
+        "mixed_news_quiz": multiple_news and auxiliary,
         "article_found": parser.found_article,
     }
 
@@ -220,6 +243,8 @@ def editorial_reasons(post):
         reasons.append("question_dump")
     if post.get("legacy_auto_digest"):
         reasons.append("legacy_auto_digest")
+    if post.get("mixed_news_quiz"):
+        reasons.append("mixed_news_quiz")
     if any(term in title for term in GENERIC_TITLE_TERMS):
         reasons.append("generic_summary_title")
     if (

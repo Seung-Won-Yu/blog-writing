@@ -101,6 +101,43 @@ class TistoryContentAuditTests(unittest.TestCase):
 
         self.assertNotIn("code_heavy", editorial_reasons(post))
 
+    def test_renamed_long_daily_news_with_quiz_still_requires_review(self):
+        html = article_html(
+            title="AI 도구가 업무를 바꾸는 방법",
+            body=(
+                "<h2>오늘의 <span>뉴스</span> 2개</h2>"
+                + "<p>관련 사실과 해석을 자세히 설명합니다.</p>" * 100
+                + "<h2>오늘의 정처기 문제</h2>"
+                + "<p>여러 뉴스와 별도의 시험 문제가 남아 있습니다.</p>"
+            ),
+        )
+        post = parse_post_html(html, post_id=110, url="https://example.com/110")
+        self.assertFalse(post["legacy_auto_digest"])
+        self.assertTrue(post["mixed_news_quiz"])
+        self.assertIn("mixed_news_quiz", editorial_reasons(post))
+        self.assertEqual(audit_posts([post])[0]["risk"], "review")
+
+    def test_daily_news_with_unrelated_glossary_requires_review(self):
+        html = article_html(
+            title="도구 도입의 선택 기준",
+            body="<h2>오늘의 뉴스 3개</h2>"
+            "<h3>오늘의 IT · 개발 · 기획 용어</h3>",
+        )
+        post = parse_post_html(html, post_id=117, url="https://example.com/117")
+        self.assertTrue(post["mixed_news_quiz"])
+
+    def test_news_roundup_or_quoted_old_labels_are_not_enough(self):
+        for body in (
+            "<h2>오늘의 뉴스 2개</h2><p>두 소식의 공통 질문을 분석합니다.</p>",
+            "<h2>작성법</h2><p>오늘의 뉴스 2개, 오늘의 정처기 문제</p>",
+            "<h2>오늘의 뉴스 1개</h2><h2>오늘의 정처기 문제</h2>",
+        ):
+            with self.subTest(body=body):
+                html = article_html(title="편집 형식 분석", body=body)
+                post = parse_post_html(html, post_id=1, url="https://example.com/1")
+                self.assertFalse(post["mixed_news_quiz"])
+                self.assertNotIn("mixed_news_quiz", editorial_reasons(post))
+
     def test_duplicate_normalized_titles_are_high_risk(self):
         base = {
             "category": "프로젝트",

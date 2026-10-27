@@ -30,7 +30,7 @@
   "refresh_queue": [
     {
       "priority": 1,
-      "status": "ready_for_review",
+      "status": "published",
       "refreshed_on": "2026-10-13",
       "page_url": "https://won0322.tistory.com/197",
       "title": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
@@ -40,11 +40,13 @@
       "previous_clicks": 24,
       "current_impressions": 1112,
       "previous_impressions": 570,
-      "improvement_goal": "설치·실행·결과 해석에서 실제 독자가 막히는 부분을 확인하고, 기존 실험과 실행 증거를 보존하며 한 글에서 해결한다."
+      "improvement_goal": "설치·실행·결과 해석에서 실제 독자가 막히는 부분을 확인하고, 기존 실험과 실행 증거를 보존하며 한 글에서 해결한다.",
+      "public_verified_on": "2026-10-27",
+      "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
     {
       "priority": 2,
-      "status": "ready_for_review",
+      "status": "published",
       "page_url": "https://won0322.tistory.com/221",
       "title": "시크릿 모드 기록은 어디까지 숨겨질까? 남는 흔적 확인법",
       "draft_id": "2026-09-03",
@@ -54,11 +56,13 @@
       "current_impressions": 166,
       "previous_impressions": 2,
       "improvement_goal": "기기 내부 기록·다운로드·북마크·외부 관찰을 독자의 상황별로 구분하고 직접 확인할 화면을 제공한다. 타인의 기록 복구나 익명성 보장을 약속하지 않는다.",
-      "refreshed_on": "2026-10-15"
+      "refreshed_on": "2026-10-15",
+      "public_verified_on": "2026-10-27",
+      "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
     {
       "priority": 3,
-      "status": "ready_for_review",
+      "status": "published",
       "page_url": "https://won0322.tistory.com/209",
       "title": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
       "draft_id": "2026-08-20",
@@ -68,7 +72,9 @@
       "current_impressions": 191,
       "previous_impressions": 174,
       "improvement_goal": "WMIC 오류를 만난 Windows 사용자가 필요한 대체 명령을 바로 찾도록 목적·명령·확인 결과를 연결하고 버전·권한의 경계를 확인한다.",
-      "refreshed_on": "2026-10-20"
+      "refreshed_on": "2026-10-20",
+      "public_verified_on": "2026-10-27",
+      "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
     {
       "priority": 4,
@@ -88,7 +94,7 @@
     },
     {
       "priority": 5,
-      "status": "ready_for_review",
+      "status": "published",
       "page_url": "https://won0322.tistory.com/220",
       "title": "Aurora Store 설치 오류: 익명 계정 Server busy 확인 순서",
       "draft_id": "2026-09-02",
@@ -104,7 +110,9 @@
       "previous_period_end": "2026-09-26",
       "metric_scope": "page",
       "improvement_goal": "8월 장애의 관리자 해결·후속 재발·현재 실패 단계를 구분해 과거 대기 안내와 미확정 원인 단정을 바로잡는다.",
-      "refreshed_on": "2026-10-27"
+      "refreshed_on": "2026-10-27",
+      "public_verified_on": "2026-10-27",
+      "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     }
   ]
 }
