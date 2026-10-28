@@ -2205,3 +2205,47 @@ body #content > .inner:has(> .post-item) > .post-item:nth-child(3n+1) {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Compact table layout fix — 2026-10-28. Scoped to generated two-column tables. */
+.daily-digest-post .digest-compact-table {
+  display: table !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  border-collapse: collapse !important;
+  border-top: 2px solid var(--sw-ink) !important;
+  border-bottom: 1px solid var(--sw-line-strong) !important;
+  background: var(--sw-surface) !important;
+}
+
+.daily-digest-post .digest-compact-table caption {
+  padding: 0 0 10px !important;
+  color: var(--sw-ink) !important;
+  font-size: 15px !important;
+  font-weight: 760 !important;
+  line-height: 1.55 !important;
+  text-align: left !important;
+}
+
+.daily-digest-post .digest-compact-table :is(th, td) {
+  min-width: 0 !important;
+  padding: 12px 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sw-line) !important;
+  color: var(--sw-text) !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  vertical-align: top !important;
+  white-space: normal !important;
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
+}
+
+.daily-digest-post .digest-compact-table th {
+  color: var(--sw-ink) !important;
+  font-weight: 780 !important;
+  background: var(--sw-surface-subtle) !important;
+}
