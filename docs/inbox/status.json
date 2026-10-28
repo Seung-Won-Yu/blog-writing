@@ -3,15 +3,15 @@
   "kind": "news",
   "target_day": "2026-10-28",
   "editorial_lane": "change_explainer",
-  "generated_at": "2026-10-28T00:04:22.178690+00:00",
+  "generated_at": "2026-10-28T00:40:32.278195+00:00",
   "state": "READY",
   "reasons": [],
   "quality": {
     "ok": true,
     "reasons": [],
-    "successful_sources": 31,
-    "candidate_sources": 29,
-    "candidates": 137,
+    "successful_sources": 30,
+    "candidate_sources": 28,
+    "candidates": 130,
     "selected": 3
   }
 }

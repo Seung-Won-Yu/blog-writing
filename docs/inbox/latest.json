@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "day": "2026-10-28",
-  "generated_at": "2026-10-28T00:04:22.178690+00:00",
+  "generated_at": "2026-10-28T00:40:32.278195+00:00",
   "review_required": true,
   "selection": {
     "mode": "lead_shortlist",
@@ -668,6 +668,168 @@
       "recent_topic_family": ""
     },
     {
+      "id": "61384f5d5a5e",
+      "title": "클라우드 토큰 비용 부담에 PC로 옮겨가는 AI 작업",
+      "normalized_title": "클라우드 토큰 비용 부담에 pc로 옮겨가는 ai 작업",
+      "url": "https://www.itworld.co.kr/article/4241424/%ed%81%b4%eb%9d%bc%ec%9a%b0%eb%93%9c-%ed%86%a0%ed%81%b0-%eb%b9%84%ec%9a%a9-%eb%b6%80%eb%8b%b4%ec%97%90-pc%eb%a1%9c-%ec%98%ae%ea%b2%a8%ea%b0%80%eb%8a%94-ai-%ec%9e%91%ec%97%85.html",
+      "published_at": "2026-10-28T00:26:29+00:00",
+      "summary": "AI 비용이 불어나면서 기업이 토큰 비용 절감에 나서고 있다. 해법은 더 많은 AI 작업을 PC로 옮기는 것이다. PC가 클라우드를 대체하지는 못한다. 초기 단계의 AI 작업은 PC에서 처리하고, 현재 PC로는 감당하기 어려운 고난도 작업은 클라우드로 넘기는 방식이다. IT 시장 조사 업체 테크날리시스 리서치 인사이츠(TECHnalysis Research Insights)의 대표 밥 오도넬은 링크드인 게시글 에서 일부 작업에는 항상 최첨단 클라우드 기반 프런티어 모델이 필요하지만, 모든 작업에 그럴 필요는 없다고 밝혔다. 마이크로소프트가 하이브리드 인텔리전스라고 부르는 비전이다. 윈도우가 AI를 항상 쓸 수 있게 하고, 가장 어려운 작업은 클라우드 모델이, 부담이 덜한 작업은 PC에서 로컬로 처리하는 구조다. 윈도우 PC 기준으로는 현 시점에서 코파일럿 플러스 AI PC가 그 역할을 맡는다. 마이크로소프트 윈도우·디바이스 총괄 파반 다불루리는 10월 7일 열린 PC 신제품 발표 행사에서 “AI의 미래는 모델 하나만 갖추는 데 있지 않다. 적절한 순간에 적절한 모델을 쓰는 것이다. 필요할 때는 프런티어급 성능을, 속도를 원할 때는 더 작고 빠른 모델을 쓴다”라고 밝혔다. 마이크로소프트 CEO 사티아 나델라는 행사에서 하이브리드 인텔리전스가 어디에나 자리 잡아 클라우드와 PC 사이 AI의 경계를 흐릴 것이라고 전망했다. 나델라는 “내가 하려는 일이 매끄럽게 이어지는 흐름 속에서, 컴퓨팅 파워가 어디에 있든 그대로 쓰고 싶을 뿐이다”라고 말했다. 에이전틱 AI PC 마이크로소프트는 클라우드 토큰 비용 부담이 커지면서 기업이 AI 확대를 주저한다고 인식하고 있다. 해법은 클라우드 모델이 필요 없는 AI 작업을 AI PC로 넘기는 것이다. 시장조사 업체 J. 골드 어소시에이츠(J. Gold Associates)의 애널리스트 잭 골드는 향후 3~4년 사이 AI 워크로드의 약 10~15%가 PC에서, 40~45%가 클라우드에서 실행될 것으로 예상했다. 골드는 기업에 AI 가속 PC가 필요해지고, 어느 시점에는 신형 장비 구매가 다시 강조될 가능성이 크다고 내다봤다. 여기서 등장한 것이 에이전틱 AI PC다. 에이전트 실행, 영상 생성, 코드 작성, 고급 생성형 AI 모델과의 대화를 PC에서 처리하며, PC가 감당하지 못하는 작업은 클라우드로 넘긴다. 다불루리는 “1년 전까지 프런티어 클라우드 모델의 전유물이던 기능을 이제 PC에서 구동할 수 있다”라고 설명했다. 에이전틱 AI PC에는 데이터센터용 GPU의 먼 친척 뻘인 고성능 GPU가 탑재된다. 블랙웰 GPU를 갖춘 엔비디아의 RTX 스파크 슈퍼칩이 마이크로소프트의 신제품 서피스 랩톱 울트라를 비롯한 상당수 제품에 쓰인다. 엔비디아 제품 관리 수석 이사 제라르도 델가도는 기존 AI PC와 달리 신형 에이전틱 PC가 완전한 AI 모델을 구동할 수 있고, 모델을 빠르게 돌릴 만큼 연산 능력도 충분하다고 설명했다. 사용자와 기업이 AI 프로젝트를 한 단계 발전시킬 경로를 마련해준다는 것이다. 델가도는 엔비디아가 정의하는 AI PC가 로컬 모델을 구동해 지능 수준을 유지하면서 경제적 이점도 누리게 해주는 PC라고 덧붙였다. 설계 단계부터 로컬 HP 글로벌 Z 워크스테이션 제품 담당 매니저 브라이언 앨런은 HP가 새로 발표한 모바일 워크스테이션 지북 울트라 G3a의 AMD GPU가 무료 토큰을 생성해 클라우드 비용을 줄여준다고 설명했다. 앨런은 “온프레미스로 쓸 수 있어 기밀 정보가 클라우드로 나갈까 걱정할 필요도, 토큰을 추적하다 일주일에 1,000달러씩 청구받을 걱정도 없다”라고 말했다. 지북 울트라 G3a에는 AI 검색 업체 퍼플렉시티(Perplexity)의 포터블 컴퓨터 서비스가 탑재됐다. 로컬 모델을 클라우드의 프런티어 모델과 연결하는 에이전트가 들어 있다. 예를 들어 에이전틱 PC는 오토데스크의 3D 모델링 소프트웨어 레빗(Revit)에서 기본적인 AI 기반 설계 작업을 인터넷 연결 없이 처리할 수 있다. 더 고난도 설계 작업은 퍼플렉시티가 클라우드의 프런티어 모델 19개 중 가장 적합한 모델로 넘긴다. 앨런은 디자이너가 일반 작업은 클라우드의 프런티어 모델에 맡기고, 독점 업무는 로컬에 두는 경향을 보일 것으로 내다봤다. HP는 윈도우 작업 표시줄에서 퍼플렉시티 도구를 연결해 쓸 수 있게 했다. 퍼플렉시티에는 레빗용 모델 컨텍스트 프로토콜(MCP) 커넥터가 있어 사용자는 원하는 바를 입력하기만 하면 된다. 앨런은 “‘이거 만들어줘’라고 맥락에 맞춰 입력하기만 하면 되고, 세부 사항을 알 필요가 없다”라고 설명했다. 레빗의 세부 기능을 익히는 데 수년이 걸리지만, 앨런은 “에이전틱 AI를 통하면 단 몇 시간 만에 레빗 사용법을 익힐 수 있다”라고 밝혔다. 코딩 버그 퇴치 마이크로소프트는 로컬 모델이 통상 클라우드에서 발생하는 토큰 비용을 어떻게 아낄 수 있는지 시연했다. 한 팀이 소프트웨어 버그를 재현하지 못하자 깃허브 코파일럿이 클라우드의 GPT-6 루나를 선택해 코드를 분석했다. 이어 클라우드 모델이 빌드와 테스트 작업을 PC에서 MAI 코드 1.1 플래시를 구동하는 로컬 하위 에이전트에 넘겨 버그를 재현했다. 로컬 작업은 무료였다. 깃허브 제품 매니저 한 명은 시연 도중 하위 에이전트 하나가 로컬 모델에 코드와 컨텍스트 160만 토큰을 입력하자, 모델이 1만 500토큰을 생성해 응답했다고 밝혔다. 마이크로소프트는 PC에서 구동할 수 있도록 1,300억 개 파라미터 규모의 MAI 코드 1.1 플래시 모델을 압축했다. 다불루리는 “모델을 3비트 정밀도로 줄여 코딩 품질을 유지하면서 크기를 80% 가까이 줄였다”라고 밝혔다. 시연에는 로컬 모델과 클라우드 사이에서 코딩 작업을 옮겨주는 깃허브의 히드라퓨전 기능이 쓰였다. 마이크로소프트는 히드라퓨전을 윈도우 코파일럿 플러스 PC용 깃허브 코파일럿 앱에 도입할 계획이다. 남아 있는 과제 골드는 에이전틱 AI를 PC에서 쓰는 일이 모델이나 소프트웨어 설치만큼 간단하지 않다고 지적했다. 기업이 기업 환경의 애플리케이션에 맞춰 PC용 모델을 개발하고 맞춤화해야 한다는 것이다. 또한 골드는 맞춤화가 가능한 오픈소스 AI 모델을 에이전틱 PC에 적용하면 AI 비용을 상당히 줄이고 투자수익률(ROI)을 높일 수 있다고 분석했다. 초기 에이전틱 AI PC는 가격도 비싸다. 마이크로소프트 서피스 랩톱 울트라는 약 2,600달러부터 시작해 모든 사양을 갖추면 6,000달러에 이른다. 자매 매체 PCWorld 수석 기자 마크 해크먼은 제품 리뷰에서 더 저렴한 노트북으로도 클라우드 AI 모델을 활용해 같은 작업을 할 수 있고, 새 모델이 나오면 서피스가 금세 구형이 될 수 있다고 지적했다. 애널리스트는 PC 가격이 2027년 말까지 높은 수준을 유지할 것으로 내다본다. 높은 부품 가격과 이란 전쟁, 불확실한 경제 환경이 부분적 원인으로 꼽힌다. IDC 그룹 부사장 톰 메인엘리는 링크드인 게시글에서 하이브리드 AI 환경이 나아갈 방향이지만, PC와 클라우드 중 어느 쪽에서 AI를 쓰든 아직 매끄럽지는 않다고 지적했다. 메인엘리는 “하이브리드 AI가 일반 사용자에게까지 확산되려면 부품 가격, 모델 진화, 에이전트 활용 사례 등 여러 요소가 맞물려 움직여야 한다”라고 덧붙였다. HP는 여전히 에이전틱 AI PC의 시장을 모색하는 중이다. 앨런은 기업이 활용법을 익히기까지 학습 곡선이 길다고 설명했다. 앨런은 기업이 아직 이 PC가 너무 좋아서 믿기 어렵다고 느끼는 단계에 머물러 있으며, 자체 검색 증강 생성(RAG) 모델로 직접 성능을 시험해보려 한다고 전했다. dl-itworldkorea@foundryco.com",
+      "source_id": "itworld-korea",
+      "source_family": "itworld",
+      "source_name": "ITWorld Korea",
+      "group": "korean_editorial",
+      "source_weight": 3,
+      "evergreen_bias": 0,
+      "lane_bias": {
+        "broad": 2,
+        "practical": 1
+      },
+      "requires_manual_review": true,
+      "score": 9,
+      "score_reasons": [
+        "출처 가중치 3",
+        "24시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 3,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 6,
+        "deep": 3
+      },
+      "topic_tags": [
+        "ai",
+        "privacy",
+        "cloud",
+        "automation"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 5,
+        "deep": 3
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [
+          "코딩",
+          "도구",
+          "오픈소스",
+          "무료",
+          "성능"
+        ],
+        "deep": [
+          "성능",
+          "클라우드",
+          "모델"
+        ]
+      },
+      "topic_family": "privacy",
+      "brand_tags": [],
+      "lasting_value_matches": [
+        "사례",
+        "설계",
+        "성능",
+        "테스트",
+        "선택",
+        "기준"
+      ],
+      "article_type_matches": {
+        "case_study": [
+          "사례"
+        ],
+        "problem_solving": [
+          "원인"
+        ],
+        "implementation_guide": [
+          "설계",
+          "도입"
+        ],
+        "measurement": [
+          "성능",
+          "비용"
+        ]
+      },
+      "article_types": [
+        "case_study",
+        "problem_solving",
+        "implementation_guide",
+        "measurement"
+      ],
+      "evidence_matches": [
+        "테스트"
+      ],
+      "announcement_matches": [],
+      "announcement_only": false,
+      "reader_problem_matches": [
+        "비용",
+        "원인"
+      ],
+      "search_intent_matches": [
+        "선택",
+        "기준",
+        "어떻게"
+      ],
+      "artifact_matches": [
+        "코드",
+        "표",
+        "재현"
+      ],
+      "shallow_matches": [],
+      "durable_problem_score": 8,
+      "shallow_penalty": 0,
+      "search_feedback": {
+        "matched_queries": [],
+        "demand_score": 0,
+        "existing_page_conflict": false
+      },
+      "editorial_angle": {
+        "intent": "measurement",
+        "recommended_shape": "hands_on_test",
+        "recommended_artifact": "decision_matrix",
+        "source_role": "case_evidence"
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 2,
+        "actionability": 5,
+        "explanatory_depth": 3,
+        "evidence": 3,
+        "lasting_value": 8,
+        "evergreen_fit": 7,
+        "durable_problem": 8,
+        "known_search_demand": 0,
+        "cannibalization_penalty": 0,
+        "shallow_penalty": 0,
+        "announcement_penalty": 0,
+        "freshness": 3
+      },
+      "lead_score": 39,
+      "change_signal": false,
+      "weekly_lane": "change_explainer",
+      "weekly_lane_score_breakdown": {
+        "freshness": 9,
+        "reader_relevance": 4,
+        "actionability": 5,
+        "evidence": 3,
+        "known_search_demand": 0,
+        "durable_problem": 8,
+        "lasting_value": 3,
+        "change_signal": 0,
+        "penalties": 0
+      },
+      "weekly_lane_score": 32,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
       "id": "92608e65bdba",
       "title": "GitHub Copilot supports server-to-server authentication",
       "normalized_title": "github copilot supports server to server authentication",
@@ -1020,165 +1182,6 @@
       "recent_brands": [
         "cloudflare"
       ],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "f16736c3d59e",
-      "title": "AI가 먼저 찾아낸 PHP의 허점 “패치를 미루지 마라”",
-      "normalized_title": "ai가 먼저 찾아낸 php의 허점 패치를 미루지 마라",
-      "url": "https://www.itworld.co.kr/article/4238838/%eb%91%90-%ea%b0%80%ec%a7%80-%ec%a4%91%eb%8c%80%ed%95%9c-php-%ec%b7%a8%ec%95%bd%ec%a0%90%ec%9c%bc%eb%a1%9c-%ec%9d%b8%ed%95%b4-%ec%9b%b9-%ec%97%85%ea%b3%84%ea%b0%80-%ea%b2%bd%ea%b3%84-%ed%83%9c.html",
-      "published_at": "2026-10-22T02:22:38+00:00",
-      "summary": "전 세계 기업이 인터넷 상당 부분을 구동하는 널리 쓰이는 코드에서 치명적 취약점 2건이 공개된 뒤 대응에 분주하다. PHP 스크립트 언어에서 발견된 두 결함은 공격자가 인증 없이 원격 코드 실행(RCE)을 수행하도록 허용할 수 있다. PHP 재단(PHP Foundation)은 수요일 오전 영향받는 버전의 패치를 배포하고, PHP를 운영하는 기업이 즉시 패치하는 것이 필수적이라고 밝혔다. 또한 PHP-FPM, 아파치(Apache)의 mod_php, php-cgi, 프랭큰PHP(FrankenPHP), 라이트스피드(LiteSpeed) 등 웹 요청을 처리하는 모든 PHP 설치 환경이 위험하다고 설명했다. 위험도가 가장 높은 환경은 mod_php로, 인증 없는 요청만으로 애플리케이션 코드가 실행되기 전에 공격이 이뤄질 수 있다고 판단했다. 취약점 공개에 대응해 네덜란드와 핀란드 등 유럽 일부 정부 웹사이트와 전 세계 다른 기업의 웹사이트가 예방 차원에서 오프라인으로 전환됐다. ‘웹 그 자체’로 불리는 PHP PHP는 널리 쓰이는 오픈소스 서버 측 스크립트 언어로, 전체 웹의 43%를 구동하는 워드프레스(WordPress)를 비롯해 메일침프(Mailchimp), 드루팔(Drupal), 마젠토(Magento), 라라벨(Laravel), 슬랙과 줌의 일부 등 수많은 서비스의 기반이다. 네덜란드 국가사이버보안센터(NCSC-NL)는 PHP2Shell로 통칭되는 두 결함을 설명하며 영향이 웹사이트에 국한되지 않는다고 짚었다. PHP는 어플라이언스, 네트워크 장비, 관리 인터페이스 등 관리자가 PHP를 직접 업데이트할 수 없는 업체 제품에도 내장돼 있다. 또한 유럽연합의 사이버 보안 위협 추적 기구 CERT-EU는 다수의 상용 및 오픈소스 제품이 PHP를 백엔드 기술로 쓰고 있어, PHP 설치 환경을 직접 노출하지 않더라도 결함의 영향을 받을 수 있다고 경고했다. 사정이 이렇다 보니 취약점의 심각성은 한층 높아진다. 공통 취약점 평가 시스템(CVSS)에서 9.2점을 받은 CVE-2026-109618은 메모리 부족(OOM) 처리 중 발생하는 메모리 손상을 통해 원격 코드 실행을 허용할 수 있다. OOM 처리는 운영체제와 애플리케이션이 물리적 RAM과 스왑 공간이 고갈됐을 때 사용하는 전략이다. CVE-2026-109619 역시 9.2점으로, 같은 워커에서 이후 요청이 앞선 요청이 남긴 오래된 전역 상태를 재사용하는 과정에서 원격 코드 실행이 가능하다. PHP 재단은 두 결함이 거의 모든 요청이 거치는 영역인 메모리 관리와 오류 처리에 자리 잡고 있다고 짚었다. 그만큼 두 버그는 극도로 심각하며, 호환성이나 성능에 영향을 주지 않고 고치기도 어렵다. 기업은 이미 노출돼 있다는 가정에서 대응을 시작해야 한다. 포레스터의 시니어 애널리스트 마델레인 판 데르 하우트는 취약점의 심각성이 결함이 위치한 곳에서 비롯된다고 설명했다. PHP가 전체 웹사이트의 70%를 떠받치고 있어 거대한 집중 위험이 된다는 분석이다. 판 데르 하우트는 “기업 웹사이트만 점검해서는 충분하지 않다”라고 말했다. 또한 기업이 노출 지점을 파악하고 인터넷에 연결된 시스템부터 우선 처리해야 한다고 조언했다. 영향받는 기업은 PHP 8.5.12, 8.4.27, 8.3.36 또는 8.2.35로 업데이트해야 한다. PHP 재단은 리눅스와 장기 지원(LTS) 업체가 패치를 미리 받은 만큼 기업이 업체에 수정 사항을 확인해야 한다고 밝혔다. PHP 8.1과 기타 수명 종료 버전은 PHP 프로젝트에서 더 이상 업데이트를 받지 못한다. 다만 일부 배포 업체와 LTS 업체가 백포트 패치를 내놓기도 하므로, 지원이 끝난 버전을 쓰는 기업도 업체에 확인해야 한다. PHP 재단은 자원봉사자가 관리하는 rpms.remirepo.net에 의존하는 기업이 업데이트를 즉시 적용하려면 배포 패키지로 바꾸거나 소스에서 직접 빌드해야 한다고 권고했다. CERT-EU는 즉시 패치할 수 없는 기업이 PHP 재단이 설명한 예방 조치를 취해 노출을 줄여야 한다고 밝혔다. 다만 이런 완화 조치만으로 설치 환경이 안전해지는 것은 아니라고 경고했다. 런타임 앱 보안 업체 OX 시큐리티(OX Security)의 CEO 니트순 지브는 “인터넷 규모 취약점의 전형적인 모습이다”라고 말했다. 또한 이처럼 어디서나 쓰이는 기술에 결함이 발생하면 피해 범위는 특정 제품이나 산업에 그치지 않고 웹 그 자체가 된다고 강조했다. OX 시큐리티 연구진은 독립적으로 결함을 재현한 결과, 취약한 기능이 기본적으로 활성화돼 있으며 PHP 5.4 버전부터 존재해 왔다는 사실을 확인했다. 그럼에도 전문가는 패치가 대응의 한 요소일 뿐이라고 강조한다. 판 데르 하우트는 속도가 중요하다며, 보안팀이 PHP가 구동되는 모든 곳을 파악하고, 노출된 시스템의 우선순위를 정하고, 공식 수정 사항을 신속히 적용하고, 침해 징후를 조사해야 한다고 언급했다. 또한 판 데르 하우트는 패치가 취약점을 고칠 뿐 공격자가 이미 확보했을지 모를 접근 권한까지 반드시 없애지는 않는다고 경고했다. 오프라인 전환과 해킹의 구분 다크웹에 익스플로잇이 이미 나돈다는 소문이 있는 상황에서, 전문가들은 서비스를 내려 보호하고 패치하는 것이 현실적인 선택이라고 평가했다. 판 데르 하우트는 웹사이트를 오프라인으로 전환했다고 해서 해킹당했다는 의미는 아니라고 강조했다. 기업이 잠재적으로 취약한 시스템을 아직 패치하지 못했거나 충분히 보호하지 못한다면, 일시적인 오프라인 전환이 ‘비례적 위험 판단’이 될 수 있다는 것이다. 즉, 심각한 침해 가능성을 감수하느니 짧은 가용성 손실을 받아들이는 선택이다. 궁극적으로 이번 사태는 단순한 패치 관리가 아니라 운영 복원력의 시험대라고 판 데르 하우트는 분석했다. 기업은 서비스를 계속 운영할 수 있는지, 필요할 때 누가 서비스를 내릴 권한을 갖는지 결정해야 한다. 판 데르 하우트는 “일시적인 서비스 중단이 옳은 결정일 수 있지만, 확인된 침해가 없어도 소프트웨어 취약점이 비즈니스 중단으로 번질 수 있음을 보여준다”라고 덧붙였다. 방어와 해킹 양쪽에서 AI가 맡는 역할 오픈AI는 PHP 대응에서 자사가 맡은 역할을 상세히 설명하는 블로그 게시물을 올렸다. 레드팀 기업 캘리프(Calif)가 오픈AI의 ‘패치 더 플래닛(Patch the Planet)’ 이니셔티브의 일환으로 GPT 5.6 Sol을 이용해 치명적 결함을 식별했다고 밝혔다. 클라우드 보안 업체 위즈(Wiz)도 독립적으로 두 취약점을 발견해 보고했으며, 오픈AI 파트너는 PHP 공개에 앞서 연구, 기술 지원, 조율에 기여했다. PHP 버전 점검 도구는 코덱스 스킬 형태로 공유돼, 기업이 취약한 PHP 버전을 식별하고 알맞은 업데이트를 적용하는 데 쓸 수 있다. 오픈AI는 “결함의 심각성과 PHP의 광범위한 사용을 고려할 때 최근 가장 큰 영향을 미친 보안 문제 중 하나로 판단한다”라고 밝혔다. 또한 오픈AI는 이번 사례가 보안 분야에서 AI의 역할이 바뀌는 전환점이라는 입장을 나타냈다. 공격자보다 먼저 프런티어 AI가 취약점을 발견해, 유지관리자에게 ‘방어자의 창’이라 불리는 선제 대응 시간을 벌어줬다는 설명이다. 오픈AI는 AI가 인터넷 규모의 영향을 지닌 보안 결함을 찾아낼 수 있지만, 같은 역량이 공격자의 공격 도구와 익스플로잇을 빠르게 개발하는 데에도 쓰일 수 있다고 우려를 나타냈다. 글로벌 기술 공급업체 어댑태비스트 그룹(The Adaptavist Group)의 데브옵스 책임자 맷 손더스는 후자의 가능성을 강조했다. 취약점이 공개되는 즉시 수많은 AI 봇이 악용할 시스템을 찾아 나설 것이며, 낮은 심각도의 공격 여러 건을 새로운 치명적 결함과 엮어 기업에 침투할 수 있다는 지적이다. 손더스는 AI로 고도화된 공격을 쓰려는 쪽이 활용할 수 있게 된 만큼, 침해가 발생했을 때 피해 범위가 과거보다 훨씬 넓어질 수 있다고 우려했다. dl-itworldkorea@foundryco.com",
-      "source_id": "itworld-korea",
-      "source_family": "itworld",
-      "source_name": "ITWorld Korea",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 0,
-      "lane_bias": {
-        "broad": 2,
-        "practical": 1
-      },
-      "requires_manual_review": true,
-      "score": 6,
-      "score_reasons": [
-        "출처 가중치 3",
-        "7일 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 3,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 5,
-        "deep": 5
-      },
-      "topic_tags": [
-        "ai",
-        "security",
-        "privacy",
-        "web_frontend",
-        "cloud"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 5
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "도구",
-          "업데이트",
-          "오픈소스",
-          "성능"
-        ],
-        "deep": [
-          "보안",
-          "취약점",
-          "성능",
-          "연구",
-          "클라우드"
-        ]
-      },
-      "topic_family": "security",
-      "brand_tags": [],
-      "lasting_value_matches": [
-        "사례",
-        "성능",
-        "운영",
-        "선택",
-        "보안"
-      ],
-      "article_type_matches": {
-        "case_study": [
-          "사례"
-        ],
-        "decision_guide": [
-          "판단"
-        ],
-        "measurement": [
-          "성능"
-        ]
-      },
-      "article_types": [
-        "case_study",
-        "decision_guide",
-        "measurement"
-      ],
-      "evidence_matches": [
-        "결과",
-        "운영"
-      ],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [
-        "오류",
-        "보안",
-        "권한",
-        "security"
-      ],
-      "search_intent_matches": [
-        "선택",
-        "확인"
-      ],
-      "artifact_matches": [
-        "코드",
-        "로그",
-        "재현"
-      ],
-      "shallow_matches": [],
-      "durable_problem_score": 9,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "measurement",
-        "recommended_shape": "hands_on_test",
-        "recommended_artifact": "decision_matrix",
-        "source_role": "case_evidence"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 5,
-        "explanatory_depth": 5,
-        "evidence": 3,
-        "lasting_value": 8,
-        "evergreen_fit": 8,
-        "durable_problem": 9,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 1
-      },
-      "lead_score": 41,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 3,
-        "reader_relevance": 4,
-        "actionability": 5,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 9,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 27,
-      "recent_publisher": false,
-      "recent_brands": [],
       "recent_topic_family": ""
     },
     {
@@ -3962,127 +3965,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "fb6af7ea3061",
-      "title": "Amazon, 거듭된 실패 끝에 AI 부문 대폭 축소",
-      "normalized_title": "amazon 거듭된 실패 끝에 ai 부문 대폭 축소",
-      "url": "https://news.hada.io/topic?id=36127",
-      "published_at": "2026-10-27T23:33:57+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "evergreen_bias": 2,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 8,
-      "score_reasons": [
-        "출처 가중치 3",
-        "24시간 이내",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 1,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [
-          "축소"
-        ],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [
-        "amazon"
-      ],
-      "lasting_value_matches": [],
-      "article_type_matches": {
-        "problem_solving": [
-          "실패"
-        ]
-      },
-      "article_types": [
-        "problem_solving"
-      ],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [
-        "실패"
-      ],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 1,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "troubleshooting",
-        "recommended_shape": "troubleshooting",
-        "recommended_artifact": "troubleshooting_tree",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "lasting_value": 2,
-        "evergreen_fit": 4,
-        "durable_problem": 1,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 3
-      },
-      "lead_score": 15,
-      "change_signal": true,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 9,
-        "reader_relevance": 0,
-        "actionability": 1,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 1,
-        "lasting_value": 2,
-        "change_signal": 4,
-        "penalties": 0
-      },
-      "weekly_lane_score": 20,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "238c52c1c5ab",
       "title": "Learning Force-Reactive Humanoid Loco-Manipulation",
       "normalized_title": "learning force reactive humanoid loco manipulation",
@@ -5732,11 +5614,11 @@
       "recent_topic_family": "cloud"
     },
     {
-      "id": "db6356119067",
-      "title": "Tailscale SSH 권한 상승 취약점 조사 중 - 불필요한 SSH 포워딩 비활성화 권고",
-      "normalized_title": "tailscale ssh 권한 상승 취약점 조사 중 불필요한 ssh 포워딩 비활성화 권고",
-      "url": "https://news.hada.io/topic?id=36129",
-      "published_at": "2026-10-27T23:47:11+00:00",
+      "id": "87fad4ec83f7",
+      "title": "StreamFusion - Flink SQL을 Rust 기반 네이티브 실행기로 가속하는 도구",
+      "normalized_title": "streamfusion flink sql을 rust 기반 네이티브 실행기로 가속하는 도구",
+      "url": "https://news.hada.io/topic?id=36136",
+      "published_at": "2026-10-28T00:30:02+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -5756,34 +5638,30 @@
       ],
       "lane_scores": {
         "broad": 0,
-        "reader_impact": 1,
+        "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
+        "practical": 2,
+        "deep": 1
       },
-      "topic_tags": [
-        "security"
-      ],
+      "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 0,
-        "reader_impact": 1,
+        "reader_impact": 0,
         "reader_consequence": 0,
-        "practical": 0,
-        "deep": 1
+        "practical": 1,
+        "deep": 0
       },
       "raw_lane_matches": {
         "broad": [],
-        "reader_impact": [
-          "취약점"
-        ],
+        "reader_impact": [],
         "reader_consequence": [],
-        "practical": [],
-        "deep": [
-          "취약점"
-        ]
+        "practical": [
+          "도구"
+        ],
+        "deep": []
       },
-      "topic_family": "security",
+      "topic_family": "other",
       "brand_tags": [],
       "lasting_value_matches": [],
       "article_type_matches": {},
@@ -5791,13 +5669,11 @@
       "evidence_matches": [],
       "announcement_matches": [],
       "announcement_only": false,
-      "reader_problem_matches": [
-        "권한"
-      ],
+      "reader_problem_matches": [],
       "search_intent_matches": [],
       "artifact_matches": [],
       "shallow_matches": [],
-      "durable_problem_score": 1,
+      "durable_problem_score": 0,
       "shallow_penalty": 0,
       "search_feedback": {
         "matched_queries": [],
@@ -5812,28 +5688,28 @@
       },
       "lead_score_breakdown": {
         "reader_relevance": 1,
-        "actionability": 1,
-        "explanatory_depth": 2,
+        "actionability": 2,
+        "explanatory_depth": 1,
         "evidence": 3,
         "lasting_value": 2,
         "evergreen_fit": 2,
-        "durable_problem": 1,
+        "durable_problem": 0,
         "known_search_demand": 0,
         "cannibalization_penalty": 0,
         "shallow_penalty": 0,
         "announcement_penalty": 0,
         "freshness": 3
       },
-      "lead_score": 15,
+      "lead_score": 14,
       "change_signal": false,
       "weekly_lane": "change_explainer",
       "weekly_lane_score_breakdown": {
         "freshness": 9,
         "reader_relevance": 2,
-        "actionability": 1,
+        "actionability": 2,
         "evidence": 3,
         "known_search_demand": 0,
-        "durable_problem": 1,
+        "durable_problem": 0,
         "lasting_value": 2,
         "change_signal": 0,
         "penalties": 0
@@ -6663,6 +6539,226 @@
         "known_search_demand": 0,
         "durable_problem": 3,
         "lasting_value": 3,
+        "change_signal": 0,
+        "penalties": 0
+      },
+      "weekly_lane_score": 17,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "b82420cd1406",
+      "title": "baidu/Unlimited-OCR-2 - 고정 크기 참조로 초장문 문서를 파싱하는 OCR 모델",
+      "normalized_title": "baidu unlimited ocr 2 고정 크기 참조로 초장문 문서를 파싱하는 ocr 모델",
+      "url": "https://news.hada.io/topic?id=36137",
+      "published_at": "2026-10-28T00:37:25+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "24시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai",
+        "automation"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "automation",
+      "brand_tags": [],
+      "lasting_value_matches": [],
+      "article_type_matches": {},
+      "article_types": [],
+      "evidence_matches": [],
+      "announcement_matches": [],
+      "announcement_only": false,
+      "reader_problem_matches": [],
+      "search_intent_matches": [],
+      "artifact_matches": [],
+      "shallow_matches": [],
+      "durable_problem_score": 0,
+      "shallow_penalty": 0,
+      "search_feedback": {
+        "matched_queries": [],
+        "demand_score": 0,
+        "existing_page_conflict": false
+      },
+      "editorial_angle": {
+        "intent": "explanation",
+        "recommended_shape": "decision_guide",
+        "recommended_artifact": "checklist",
+        "source_role": "problem_signal"
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "lasting_value": 2,
+        "evergreen_fit": 2,
+        "durable_problem": 0,
+        "known_search_demand": 0,
+        "cannibalization_penalty": 0,
+        "shallow_penalty": 0,
+        "announcement_penalty": 0,
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "change_signal": false,
+      "weekly_lane": "change_explainer",
+      "weekly_lane_score_breakdown": {
+        "freshness": 9,
+        "reader_relevance": 2,
+        "actionability": 1,
+        "evidence": 3,
+        "known_search_demand": 0,
+        "durable_problem": 0,
+        "lasting_value": 2,
+        "change_signal": 0,
+        "penalties": 0
+      },
+      "weekly_lane_score": 17,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
+    },
+    {
+      "id": "d643a28bb58e",
+      "title": "LFM3 - 로컬 실행과 맞춤 학습을 위한 2B급 멀티모달 AI 모델군",
+      "normalized_title": "lfm3 로컬 실행과 맞춤 학습을 위한 2b급 멀티모달 ai 모델군",
+      "url": "https://news.hada.io/topic?id=36132",
+      "published_at": "2026-10-28T00:03:11+00:00",
+      "summary": "",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
+      "group": "community",
+      "source_weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 1
+      },
+      "requires_manual_review": true,
+      "score": 8,
+      "score_reasons": [
+        "출처 가중치 3",
+        "24시간 이내",
+        "관심 키워드"
+      ],
+      "lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "ai"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 1,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 1
+      },
+      "raw_lane_matches": {
+        "broad": [
+          "AI"
+        ],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": [
+          "모델"
+        ]
+      },
+      "topic_family": "ai",
+      "brand_tags": [],
+      "lasting_value_matches": [],
+      "article_type_matches": {},
+      "article_types": [],
+      "evidence_matches": [],
+      "announcement_matches": [],
+      "announcement_only": false,
+      "reader_problem_matches": [],
+      "search_intent_matches": [],
+      "artifact_matches": [],
+      "shallow_matches": [],
+      "durable_problem_score": 0,
+      "shallow_penalty": 0,
+      "search_feedback": {
+        "matched_queries": [],
+        "demand_score": 0,
+        "existing_page_conflict": false
+      },
+      "editorial_angle": {
+        "intent": "explanation",
+        "recommended_shape": "decision_guide",
+        "recommended_artifact": "checklist",
+        "source_role": "problem_signal"
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 1,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "lasting_value": 2,
+        "evergreen_fit": 2,
+        "durable_problem": 0,
+        "known_search_demand": 0,
+        "cannibalization_penalty": 0,
+        "shallow_penalty": 0,
+        "announcement_penalty": 0,
+        "freshness": 3
+      },
+      "lead_score": 14,
+      "change_signal": false,
+      "weekly_lane": "change_explainer",
+      "weekly_lane_score_breakdown": {
+        "freshness": 9,
+        "reader_relevance": 2,
+        "actionability": 1,
+        "evidence": 3,
+        "known_search_demand": 0,
+        "durable_problem": 0,
+        "lasting_value": 2,
         "change_signal": 0,
         "penalties": 0
       },
@@ -8623,11 +8719,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "d643a28bb58e",
-      "title": "LFM3 소개: 특화 지능을 위한 모든 모달리티",
-      "normalized_title": "lfm3 소개 특화 지능을 위한 모든 모달리티",
-      "url": "https://news.hada.io/topic?id=36132",
-      "published_at": "2026-10-28T00:03:11+00:00",
+      "id": "4ffd7f5dea2e",
+      "title": "지수 시간 가설은 거짓이다 [PDF]",
+      "normalized_title": "지수 시간 가설은 거짓이다 pdf",
+      "url": "https://news.hada.io/topic?id=36134",
+      "published_at": "2026-10-28T00:09:29+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -8727,11 +8823,11 @@
       "recent_topic_family": ""
     },
     {
-      "id": "6cfd38c6582c",
-      "title": "Survival LLM - 인터넷 없이 작동하는 AI 도우미와 비상 대응 자료실",
-      "normalized_title": "survival llm 인터넷 없이 작동하는 ai 도우미와 비상 대응 자료실",
-      "url": "https://news.hada.io/topic?id=36130",
-      "published_at": "2026-10-27T23:49:14+00:00",
+      "id": "8e2519486876",
+      "title": "Shitty Screenshare - 화면 공유 화질을 직접 제어할 수 있도록 WHIP을 지원하자",
+      "normalized_title": "shitty screenshare 화면 공유 화질을 직접 제어할 수 있도록 whip을 지원하자",
+      "url": "https://news.hada.io/topic?id=36133",
+      "published_at": "2026-10-28T00:06:29+00:00",
       "summary": "",
       "source_id": "geeknews",
       "source_family": "geeknews",
@@ -8744,153 +8840,44 @@
         "deep": 1
       },
       "requires_manual_review": true,
-      "score": 8,
+      "score": 7,
       "score_reasons": [
         "출처 가중치 3",
-        "24시간 이내",
-        "관심 키워드"
+        "24시간 이내"
       ],
       "lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
-        "reader_consequence": 0,
+        "reader_consequence": 1,
         "practical": 1,
         "deep": 1
       },
-      "topic_tags": [
-        "ai"
-      ],
+      "topic_tags": [],
       "unknown_publication_date": false,
       "raw_lane_scores": {
-        "broad": 1,
+        "broad": 0,
         "reader_impact": 0,
-        "reader_consequence": 0,
+        "reader_consequence": 1,
         "practical": 0,
         "deep": 0
       },
       "raw_lane_matches": {
-        "broad": [
-          "AI"
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [
+          "지원"
         ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 1,
-        "evidence": 3,
-        "lasting_value": 2,
-        "evergreen_fit": 2,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 3
-      },
-      "lead_score": 12,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 9,
-        "reader_relevance": 0,
-        "actionability": 1,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 2,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "a89a2cfd5530",
-      "title": "Discord, 곧 누구나 Google에서 공개 서버 메시지를 찾을 수 있게 할 예정",
-      "normalized_title": "discord 곧 누구나 google에서 공개 서버 메시지를 찾을 수 있게 할 예정",
-      "url": "https://news.hada.io/topic?id=36128",
-      "published_at": "2026-10-27T23:36:57+00:00",
-      "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
-      "group": "community",
-      "source_weight": 3,
-      "evergreen_bias": 2,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 1
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "24시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 1
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
         "practical": [],
         "deep": []
       },
       "topic_family": "other",
-      "brand_tags": [
-        "google"
-      ],
+      "brand_tags": [],
       "lasting_value_matches": [],
       "article_type_matches": {},
       "article_types": [],
       "evidence_matches": [],
       "announcement_matches": [
-        "공개"
+        "지원"
       ],
       "announcement_only": true,
       "reader_problem_matches": [],
@@ -8944,21 +8931,21 @@
       "recent_topic_family": ""
     },
     {
-      "id": "cede1ecf7a42",
-      "title": "미 국제개발처 해체 주도한 28세 DOGE 인사, 인사 부서엔 고용 기록도 없었다",
-      "normalized_title": "미 국제개발처 해체 주도한 28세 doge 인사 인사 부서엔 고용 기록도 없었다",
-      "url": "https://news.hada.io/topic?id=36126",
-      "published_at": "2026-10-27T22:31:26+00:00",
+      "id": "1d470e86547e",
+      "title": "Reviewers rarely talk about reliability. Owners bring it up twice as often",
+      "normalized_title": "reviewers rarely talk about reliability owners bring it up twice as often",
+      "url": "https://www.bettascore.ai/research/reliability-reviewers-vs-owners",
+      "published_at": "2026-10-27T22:31:15+00:00",
       "summary": "",
-      "source_id": "geeknews",
-      "source_family": "geeknews",
-      "source_name": "GeekNews",
+      "source_id": "hacker-news",
+      "source_family": "hacker-news",
+      "source_name": "Hacker News",
       "group": "community",
       "source_weight": 3,
       "evergreen_bias": 2,
       "lane_bias": {
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
       "requires_manual_review": true,
       "score": 7,
@@ -8971,9 +8958,11 @@
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
-        "deep": 1
+        "deep": 2
       },
-      "topic_tags": [],
+      "topic_tags": [
+        "reliability"
+      ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
         "broad": 0,
@@ -8989,7 +8978,7 @@
         "practical": [],
         "deep": []
       },
-      "topic_family": "other",
+      "topic_family": "reliability",
       "brand_tags": [],
       "lasting_value_matches": [],
       "article_type_matches": {},
@@ -9017,7 +9006,7 @@
       "lead_score_breakdown": {
         "reader_relevance": 0,
         "actionability": 1,
-        "explanatory_depth": 1,
+        "explanatory_depth": 2,
         "evidence": 3,
         "lasting_value": 2,
         "evergreen_fit": 2,
@@ -9028,7 +9017,7 @@
         "announcement_penalty": 0,
         "freshness": 3
       },
-      "lead_score": 12,
+      "lead_score": 13,
       "change_signal": false,
       "weekly_lane": "change_explainer",
       "weekly_lane_score_breakdown": {
@@ -9100,110 +9089,6 @@
       "brand_tags": [
         "anthropic"
       ],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "lasting_value": 2,
-        "evergreen_fit": 2,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 3
-      },
-      "lead_score": 13,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 9,
-        "reader_relevance": 0,
-        "actionability": 1,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 2,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "6c88208d12c7",
-      "title": "Raspberry Pi Zero 3W and Pi 4 Model A spotted in device trees",
-      "normalized_title": "raspberry pi zero 3w and pi 4 model a spotted in device trees",
-      "url": "https://bret.dk/raspberry-pi-zero-3-w-pi-4-model-a",
-      "published_at": "2026-10-27T20:48:49+00:00",
-      "summary": "",
-      "source_id": "hacker-news",
-      "source_family": "hacker-news",
-      "source_name": "Hacker News",
-      "group": "community",
-      "source_weight": 3,
-      "evergreen_bias": 2,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "24시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
       "lasting_value_matches": [],
       "article_type_matches": {},
       "article_types": [],
@@ -10310,110 +10195,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "58902a9297ec",
-      "title": "Shitty Screenshare",
-      "normalized_title": "shitty screenshare",
-      "url": "http://shittyscreenshare.com/",
-      "published_at": "2026-10-27T00:12:16+00:00",
-      "summary": "",
-      "source_id": "lobsters",
-      "source_family": "lobsters",
-      "source_name": "Lobsters",
-      "group": "community",
-      "source_weight": 3,
-      "evergreen_bias": 2,
-      "lane_bias": {
-        "practical": 1,
-        "deep": 2
-      },
-      "requires_manual_review": true,
-      "score": 7,
-      "score_reasons": [
-        "출처 가중치 3",
-        "24시간 이내"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 2
-      },
-      "topic_tags": [],
-      "unknown_publication_date": false,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 1,
-        "explanatory_depth": 2,
-        "evidence": 3,
-        "lasting_value": 2,
-        "evergreen_fit": 2,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 3
-      },
-      "lead_score": 13,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 9,
-        "reader_relevance": 0,
-        "actionability": 1,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 2,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 15,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "8eb6001a836a",
       "title": "Working with academic communities to build scientific understanding",
       "normalized_title": "working with academic communities to build scientific understanding",
@@ -10751,125 +10532,6 @@
         "evidence": 5,
         "known_search_demand": 0,
         "durable_problem": 1,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 14,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "50c00243526f",
-      "title": "LLM을 위한 자바스크립트 디버깅 1: 크롬 개발자 도구로 AI 가시성 점검하기",
-      "normalized_title": "llm을 위한 자바스크립트 디버깅 1 크롬 개발자 도구로 ai 가시성 점검하기",
-      "url": "https://yozm.wishket.com/magazine/detail/4006",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 5,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 4,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai",
-        "developer_tools"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "개발자",
-          "도구"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [],
-      "lasting_value_matches": [
-        "디버깅"
-      ],
-      "article_type_matches": {
-        "problem_solving": [
-          "디버깅"
-        ]
-      },
-      "article_types": [
-        "problem_solving"
-      ],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "troubleshooting",
-        "recommended_shape": "troubleshooting",
-        "recommended_artifact": "troubleshooting_tree",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 2,
-        "actionability": 4,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 5,
-        "evergreen_fit": 6,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 20,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 4,
-        "actionability": 4,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
         "lasting_value": 3,
         "change_signal": 0,
         "penalties": 0
@@ -12477,115 +12139,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "3c3f14afa160",
-      "title": "비개발자라면 이렇게 해보세요: 클로드 코드와 친해지기",
-      "normalized_title": "비개발자라면 이렇게 해보세요 클로드 코드와 친해지기",
-      "url": "https://yozm.wishket.com/magazine/detail/4011",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "개발자"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [
-        "코드"
-      ],
-      "shallow_matches": [],
-      "durable_problem_score": 1,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 3,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 4,
-        "evergreen_fit": 4,
-        "durable_problem": 1,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 16,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 2,
-        "actionability": 3,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 1,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 12,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "aa0e139f9bff",
       "title": "Bringing post-quantum cryptography to geographically fenced key management",
       "normalized_title": "bringing post quantum cryptography to geographically fenced key management",
@@ -12701,6 +12254,110 @@
         "cloudflare"
       ],
       "recent_topic_family": "cloud"
+    },
+    {
+      "id": "58902a9297ec",
+      "title": "Shitty Screenshare",
+      "normalized_title": "shitty screenshare",
+      "url": "http://shittyscreenshare.com/",
+      "published_at": "2026-10-27T00:12:16+00:00",
+      "summary": "",
+      "source_id": "lobsters",
+      "source_family": "lobsters",
+      "source_name": "Lobsters",
+      "group": "community",
+      "source_weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 6,
+      "score_reasons": [
+        "출처 가중치 3",
+        "48시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "other",
+      "brand_tags": [],
+      "lasting_value_matches": [],
+      "article_type_matches": {},
+      "article_types": [],
+      "evidence_matches": [],
+      "announcement_matches": [],
+      "announcement_only": false,
+      "reader_problem_matches": [],
+      "search_intent_matches": [],
+      "artifact_matches": [],
+      "shallow_matches": [],
+      "durable_problem_score": 0,
+      "shallow_penalty": 0,
+      "search_feedback": {
+        "matched_queries": [],
+        "demand_score": 0,
+        "existing_page_conflict": false
+      },
+      "editorial_angle": {
+        "intent": "explanation",
+        "recommended_shape": "decision_guide",
+        "recommended_artifact": "checklist",
+        "source_role": "problem_signal"
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "lasting_value": 2,
+        "evergreen_fit": 2,
+        "durable_problem": 0,
+        "known_search_demand": 0,
+        "cannibalization_penalty": 0,
+        "shallow_penalty": 0,
+        "announcement_penalty": 0,
+        "freshness": 2
+      },
+      "lead_score": 12,
+      "change_signal": false,
+      "weekly_lane": "change_explainer",
+      "weekly_lane_score_breakdown": {
+        "freshness": 6,
+        "reader_relevance": 0,
+        "actionability": 1,
+        "evidence": 3,
+        "known_search_demand": 0,
+        "durable_problem": 0,
+        "lasting_value": 2,
+        "change_signal": 0,
+        "penalties": 0
+      },
+      "weekly_lane_score": 12,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": ""
     },
     {
       "id": "d868073a2a21",
@@ -15871,444 +15528,6 @@
       "recent_topic_family": ""
     },
     {
-      "id": "2ff2cb7800f6",
-      "title": "LLM을 위한 자바스크립트 디버깅 2: 페이지를 무너뜨리는 파일 찾기부터 AI처럼 접속해 보기까지",
-      "normalized_title": "llm을 위한 자바스크립트 디버깅 2 페이지를 무너뜨리는 파일 찾기부터 ai처럼 접속해 보기까지",
-      "url": "https://yozm.wishket.com/magazine/detail/4007",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai",
-        "automation"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "automation",
-      "brand_tags": [],
-      "lasting_value_matches": [
-        "디버깅"
-      ],
-      "article_type_matches": {
-        "problem_solving": [
-          "디버깅"
-        ]
-      },
-      "article_types": [
-        "problem_solving"
-      ],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "troubleshooting",
-        "recommended_shape": "troubleshooting",
-        "recommended_artifact": "troubleshooting_tree",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 5,
-        "evergreen_fit": 6,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 16,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 0,
-        "actionability": 2,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 8,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "4a8a073dbc33",
-      "title": "LLM부터 MCP까지 ‘왜 필요한가’로 이해하는 AI 리터러시",
-      "normalized_title": "llm부터 mcp까지 왜 필요한가 로 이해하는 ai 리터러시",
-      "url": "https://yozm.wishket.com/magazine/detail/4010",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {
-        "decision_guide": [
-          "왜"
-        ]
-      },
-      "article_types": [
-        "decision_guide"
-      ],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "decision",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "decision_matrix",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 4,
-        "evergreen_fit": 6,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 15,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 0,
-        "actionability": 2,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 8,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "63659ebbae5a",
-      "title": "AI 시대에 아이에게 무엇을 가르쳐야 할까",
-      "normalized_title": "ai 시대에 아이에게 무엇을 가르쳐야 할까",
-      "url": "https://yozm.wishket.com/magazine/detail/4005",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "topic_tags": [
-        "ai"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 1,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [
-          "AI"
-        ],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "ai",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 4,
-        "evergreen_fit": 4,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 13,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 0,
-        "actionability": 2,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 8,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
-      "id": "e3a2ceab58cd",
-      "title": "VSCode를 사용하다가 Orca로 옮긴 후기",
-      "normalized_title": "vscode를 사용하다가 orca로 옮긴 후기",
-      "url": "https://yozm.wishket.com/magazine/detail/4009",
-      "published_at": "",
-      "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 3,
-      "score_reasons": [
-        "출처 가중치 3"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 2,
-        "deep": 0
-      },
-      "topic_tags": [],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 0,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [],
-        "deep": []
-      },
-      "topic_family": "other",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [],
-      "shallow_matches": [],
-      "durable_problem_score": 0,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 0,
-        "actionability": 2,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 4,
-        "evergreen_fit": 4,
-        "durable_problem": 0,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 13,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 0,
-        "actionability": 2,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 0,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 8,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": ""
-    },
-    {
       "id": "9bfc1e2b37ef",
       "title": "FBI Arrests Executive at Ransomware Negotiation Firm",
       "normalized_title": "fbi arrests executive at ransomware negotiation firm",
@@ -17759,148 +16978,38 @@
       "selection_reason": "원문 날짜·문제 맥락 수동 확인"
     },
     {
-      "id": "3c3f14afa160",
-      "title": "비개발자라면 이렇게 해보세요: 클로드 코드와 친해지기",
-      "normalized_title": "비개발자라면 이렇게 해보세요 클로드 코드와 친해지기",
-      "url": "https://yozm.wishket.com/magazine/detail/4011",
-      "published_at": "",
+      "id": "b82420cd1406",
+      "title": "baidu/Unlimited-OCR-2 - 고정 크기 참조로 초장문 문서를 파싱하는 OCR 모델",
+      "normalized_title": "baidu unlimited ocr 2 고정 크기 참조로 초장문 문서를 파싱하는 ocr 모델",
+      "url": "https://news.hada.io/topic?id=36137",
+      "published_at": "2026-10-28T00:37:25+00:00",
       "summary": "",
-      "source_id": "yozmit",
-      "source_family": "yozmit",
-      "source_name": "요즘IT",
-      "group": "korean_editorial",
-      "source_weight": 3,
-      "evergreen_bias": 4,
-      "lane_bias": {
-        "practical": 2
-      },
-      "requires_manual_review": true,
-      "score": 4,
-      "score_reasons": [
-        "출처 가중치 3",
-        "관심 키워드"
-      ],
-      "lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 3,
-        "deep": 0
-      },
-      "topic_tags": [
-        "developer_tools"
-      ],
-      "unknown_publication_date": true,
-      "raw_lane_scores": {
-        "broad": 0,
-        "reader_impact": 0,
-        "reader_consequence": 0,
-        "practical": 1,
-        "deep": 0
-      },
-      "raw_lane_matches": {
-        "broad": [],
-        "reader_impact": [],
-        "reader_consequence": [],
-        "practical": [
-          "개발자"
-        ],
-        "deep": []
-      },
-      "topic_family": "developer_tools",
-      "brand_tags": [],
-      "lasting_value_matches": [],
-      "article_type_matches": {},
-      "article_types": [],
-      "evidence_matches": [],
-      "announcement_matches": [],
-      "announcement_only": false,
-      "reader_problem_matches": [],
-      "search_intent_matches": [],
-      "artifact_matches": [
-        "코드"
-      ],
-      "shallow_matches": [],
-      "durable_problem_score": 1,
-      "shallow_penalty": 0,
-      "search_feedback": {
-        "matched_queries": [],
-        "demand_score": 0,
-        "existing_page_conflict": false
-      },
-      "editorial_angle": {
-        "intent": "explanation",
-        "recommended_shape": "decision_guide",
-        "recommended_artifact": "checklist",
-        "source_role": "problem_signal"
-      },
-      "lead_score_breakdown": {
-        "reader_relevance": 1,
-        "actionability": 3,
-        "explanatory_depth": 0,
-        "evidence": 3,
-        "lasting_value": 4,
-        "evergreen_fit": 4,
-        "durable_problem": 1,
-        "known_search_demand": 0,
-        "cannibalization_penalty": 0,
-        "shallow_penalty": 0,
-        "announcement_penalty": 0,
-        "freshness": 0
-      },
-      "lead_score": 16,
-      "change_signal": false,
-      "weekly_lane": "change_explainer",
-      "weekly_lane_score_breakdown": {
-        "freshness": 0,
-        "reader_relevance": 2,
-        "actionability": 3,
-        "evidence": 3,
-        "known_search_demand": 0,
-        "durable_problem": 1,
-        "lasting_value": 3,
-        "change_signal": 0,
-        "penalties": 0
-      },
-      "weekly_lane_score": 12,
-      "recent_publisher": false,
-      "recent_brands": [],
-      "recent_topic_family": "",
-      "problem_signal_rank": 4,
-      "selection_reason": "원문 날짜·문제 맥락 수동 확인"
-    },
-    {
-      "id": "51888f116f5b",
-      "title": "Turning Database Grading into RL Rewards: Post-Training Agents with ThinkingBox",
-      "normalized_title": "turning database grading into rl rewards post training agents with thinkingbox",
-      "url": "https://huggingface.co/blog/microsoft/thinkingbox-training",
-      "published_at": "2026-10-22T22:24:34+00:00",
-      "summary": "",
-      "source_id": "huggingface-blog",
-      "source_family": "huggingface-blog",
-      "source_name": "Hugging Face Blog",
+      "source_id": "geeknews",
+      "source_family": "geeknews",
+      "source_name": "GeekNews",
       "group": "community",
       "source_weight": 3,
       "evergreen_bias": 2,
       "lane_bias": {
         "practical": 1,
-        "deep": 2
+        "deep": 1
       },
       "requires_manual_review": true,
-      "score": 4,
+      "score": 7,
       "score_reasons": [
         "출처 가중치 3",
-        "7일 이내"
+        "24시간 이내"
       ],
       "lane_scores": {
         "broad": 0,
         "reader_impact": 0,
         "reader_consequence": 0,
         "practical": 1,
-        "deep": 3
+        "deep": 2
       },
       "topic_tags": [
-        "backend_data"
+        "ai",
+        "automation"
       ],
       "unknown_publication_date": false,
       "raw_lane_scores": {
@@ -17916,10 +17025,10 @@
         "reader_consequence": [],
         "practical": [],
         "deep": [
-          "database"
+          "모델"
         ]
       },
-      "topic_family": "backend_data",
+      "topic_family": "automation",
       "brand_tags": [],
       "lasting_value_matches": [],
       "article_type_matches": {},
@@ -17947,7 +17056,7 @@
       "lead_score_breakdown": {
         "reader_relevance": 1,
         "actionability": 1,
-        "explanatory_depth": 3,
+        "explanatory_depth": 2,
         "evidence": 3,
         "lasting_value": 2,
         "evergreen_fit": 2,
@@ -17956,13 +17065,13 @@
         "cannibalization_penalty": 0,
         "shallow_penalty": 0,
         "announcement_penalty": 0,
-        "freshness": 1
+        "freshness": 3
       },
-      "lead_score": 13,
+      "lead_score": 14,
       "change_signal": false,
       "weekly_lane": "change_explainer",
       "weekly_lane_score_breakdown": {
-        "freshness": 3,
+        "freshness": 9,
         "reader_relevance": 2,
         "actionability": 1,
         "evidence": 3,
@@ -17972,7 +17081,115 @@
         "change_signal": 0,
         "penalties": 0
       },
-      "weekly_lane_score": 11,
+      "weekly_lane_score": 17,
+      "recent_publisher": false,
+      "recent_brands": [],
+      "recent_topic_family": "",
+      "problem_signal_rank": 4,
+      "selection_reason": "원문 날짜·문제 맥락 수동 확인"
+    },
+    {
+      "id": "1d470e86547e",
+      "title": "Reviewers rarely talk about reliability. Owners bring it up twice as often",
+      "normalized_title": "reviewers rarely talk about reliability owners bring it up twice as often",
+      "url": "https://www.bettascore.ai/research/reliability-reviewers-vs-owners",
+      "published_at": "2026-10-27T22:31:15+00:00",
+      "summary": "",
+      "source_id": "hacker-news",
+      "source_family": "hacker-news",
+      "source_name": "Hacker News",
+      "group": "community",
+      "source_weight": 3,
+      "evergreen_bias": 2,
+      "lane_bias": {
+        "practical": 1,
+        "deep": 2
+      },
+      "requires_manual_review": true,
+      "score": 7,
+      "score_reasons": [
+        "출처 가중치 3",
+        "24시간 이내"
+      ],
+      "lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 1,
+        "deep": 2
+      },
+      "topic_tags": [
+        "reliability"
+      ],
+      "unknown_publication_date": false,
+      "raw_lane_scores": {
+        "broad": 0,
+        "reader_impact": 0,
+        "reader_consequence": 0,
+        "practical": 0,
+        "deep": 0
+      },
+      "raw_lane_matches": {
+        "broad": [],
+        "reader_impact": [],
+        "reader_consequence": [],
+        "practical": [],
+        "deep": []
+      },
+      "topic_family": "reliability",
+      "brand_tags": [],
+      "lasting_value_matches": [],
+      "article_type_matches": {},
+      "article_types": [],
+      "evidence_matches": [],
+      "announcement_matches": [],
+      "announcement_only": false,
+      "reader_problem_matches": [],
+      "search_intent_matches": [],
+      "artifact_matches": [],
+      "shallow_matches": [],
+      "durable_problem_score": 0,
+      "shallow_penalty": 0,
+      "search_feedback": {
+        "matched_queries": [],
+        "demand_score": 0,
+        "existing_page_conflict": false
+      },
+      "editorial_angle": {
+        "intent": "explanation",
+        "recommended_shape": "decision_guide",
+        "recommended_artifact": "checklist",
+        "source_role": "problem_signal"
+      },
+      "lead_score_breakdown": {
+        "reader_relevance": 0,
+        "actionability": 1,
+        "explanatory_depth": 2,
+        "evidence": 3,
+        "lasting_value": 2,
+        "evergreen_fit": 2,
+        "durable_problem": 0,
+        "known_search_demand": 0,
+        "cannibalization_penalty": 0,
+        "shallow_penalty": 0,
+        "announcement_penalty": 0,
+        "freshness": 3
+      },
+      "lead_score": 13,
+      "change_signal": false,
+      "weekly_lane": "change_explainer",
+      "weekly_lane_score_breakdown": {
+        "freshness": 9,
+        "reader_relevance": 0,
+        "actionability": 1,
+        "evidence": 3,
+        "known_search_demand": 0,
+        "durable_problem": 0,
+        "lasting_value": 2,
+        "change_signal": 0,
+        "penalties": 0
+      },
+      "weekly_lane_score": 15,
       "recent_publisher": false,
       "recent_brands": [],
       "recent_topic_family": "",
@@ -17980,5 +17197,10 @@
       "selection_reason": "원문 날짜·문제 맥락 수동 확인"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "source_id": "yozmit",
+      "message": "HTTP Error 405: Not Allowed"
+    }
+  ]
 }
