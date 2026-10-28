@@ -24,8 +24,10 @@ Codex가 같은 실행 안에서 원고를 고치는 자동 재편집 신호다.
 - `reader_scores.public_readability >= 8.5`
 - `editorial.reader_path`가 요일별 독자·본문 순서와 일치
 - 최종 `daily_guard` 또는 `saturday_guard`가 `COMPLETE`
+- `agent/BROWSER_QA.md`의 표 내부 너비·이미지 로딩/비율·캡션 연결·PC/모바일
+  실화면 검수를 완료하고 현재 HTML/CSS의 증거를 기록함
 
-네 조건을 모두 만족하기 전에는 발행 도우미를 완성본으로 보고하거나 커밋하지
+위 조건을 모두 만족하기 전에는 발행 도우미를 완성본으로 보고하거나 커밋하지
 않는다. `quality_reader_path`나 `quality_reader_access`가 남은 상태를 `PARTIAL`,
 `BLOCKED`, 재실행 요청으로 사용자에게 넘기지 않는다. 티스토리 직접 발행은 하지 않는다.
 
