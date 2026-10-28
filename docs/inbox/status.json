@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
   "kind": "news",
-  "target_day": "2026-10-26",
-  "editorial_lane": "evergreen_problem",
-  "generated_at": "2026-10-25T23:28:30.598440+00:00",
+  "target_day": "2026-10-28",
+  "editorial_lane": "change_explainer",
+  "generated_at": "2026-10-28T00:04:22.178690+00:00",
   "state": "READY",
   "reasons": [],
   "quality": {
     "ok": true,
     "reasons": [],
-    "successful_sources": 30,
-    "candidate_sources": 27,
-    "candidates": 133,
+    "successful_sources": 31,
+    "candidate_sources": 29,
+    "candidates": 137,
     "selected": 3
   }
 }
