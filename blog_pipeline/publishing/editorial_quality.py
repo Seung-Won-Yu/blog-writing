@@ -10,6 +10,7 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from .reader_value import reader_value_reasons
+from ..collection.search_demand import source_demand_reasons
 
 from .draft_identity import (
     EVERGREEN_DAILY_START,
@@ -1679,13 +1680,22 @@ def _reference_reasons(source):
     ]
     urls = {_canonical_url(reference.get("url")) for reference in valid}
     kinds = {plain(reference.get("kind")).casefold() for reference in valid}
+    # Comparing two vendors' own documented behavior does not turn either
+    # official manual into an independent commentary. Keep the labels honest.
+    documented_comparison = (
+        (source.get("editorial", {}).get("original_value") or {}).get("proof_method")
+        == "document_comparison"
+        and all(plain(r.get("kind")).casefold() in {"official", "documentation"} for r in valid)
+        and len({".".join((urlsplit(r["url"]).hostname or "").split(".")[-2:]) for r in valid}) >= 2
+        and len({plain(r.get("publisher")).casefold() for r in valid if plain(r.get("publisher"))}) >= 2
+    )
     if (
         any(not plain(item.get(key)) for key in required_item_fields)
         or not _is_http_url(item.get("url"))
         or not 3 <= len(valid) <= 6
         or len(urls) != len(valid)
         or not kinds.intersection({"official", "documentation"})
-        or not kinds.intersection({"independent", "reference", "research"})
+        or not (kinds.intersection({"independent", "reference", "research"}) or documented_comparison)
     ):
         return ["quality_reference_mix"]
     return []
@@ -3375,6 +3385,7 @@ def source_authoring_reasons(source, identity):
         lambda: _schema_reasons(source, identity, require_images=False),
         lambda: _editorial_reasons(source, identity),
         lambda: _search_metadata_reasons(source, identity),
+        lambda: source_demand_reasons(source, identity),
         lambda: _search_conversion_reasons(source, identity),
         lambda: _revisit_value_reasons(source, identity),
         lambda: _original_value_reasons(source, identity),

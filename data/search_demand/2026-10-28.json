@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "source": "Google Search Console",
+  "property": "https://won0322.tistory.com/",
+  "observed_at": "2026-10-28T00:43:17.687Z",
+  "search_type": "web",
+  "metric_scope": "query",
+  "current_period": {
+    "start": "2026-09-28",
+    "end": "2026-10-25"
+  },
+  "previous_period": {
+    "start": "2026-08-31",
+    "end": "2026-09-27"
+  },
+  "coverage": {
+    "visible_rows": 50,
+    "total_rows": 154,
+    "sort": "current_clicks_desc",
+    "note": "표에 표시된 첫 50행만 관측했다. 익명화·생략된 검색어 및 표 밖 행은 추정하지 않는다."
+  },
+  "queries": [
+    {
+      "query": "im-not-ai 사용법",
+      "current_clicks": 2,
+      "previous_clicks": 5,
+      "current_impressions": 77,
+      "previous_impressions": 88
+    },
+    {
+      "query": "im not ai 스킬",
+      "current_clicks": 2,
+      "previous_clicks": 0,
+      "current_impressions": 29,
+      "previous_impressions": 1
+    },
+    {
+      "query": "im not ai",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 311,
+      "previous_impressions": 125
+    },
+    {
+      "query": "im-not-ai 설치 방법",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 37,
+      "previous_impressions": 10
+    },
+    {
+      "query": "iam not ai",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 34,
+      "previous_impressions": 9
+    },
+    {
+      "query": "get-ciminstance",
+      "current_clicks": 1,
+      "previous_clicks": 1,
+      "current_impressions": 19,
+      "previous_impressions": 17
+    },
+    {
+      "query": "크롬 시크릿 모드 기록 보는 법",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "cloudformation iac generator",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "wmic'은(는) 내부 또는 외부 명령 실행할 수 있는 프로그램 또는 배치 파일이 아닙니다",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im-not-ai",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 105,
+      "previous_impressions": 45
+    },
+    {
+      "query": "gpt 5.6 tera light와 medium 차이",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 59,
+      "previous_impressions": 0
+    },
+    {
+      "query": "i am not ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 42,
+      "previous_impressions": 6
+    },
+    {
+      "query": "im not ai 사용법",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 16,
+      "previous_impressions": 29
+    },
+    {
+      "query": "im-not-ai 스킬",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 14,
+      "previous_impressions": 1
+    },
+    {
+      "query": "site:won0322.tistory.com",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 14,
+      "previous_impressions": 0
+    },
+    {
+      "query": "아임낫ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 13,
+      "previous_impressions": 2
+    },
+    {
+      "query": "931gb",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 10,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im-not-ai 설치",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 9,
+      "previous_impressions": 0
+    },
+    {
+      "query": "시크릿모드 기록",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 8,
+      "previous_impressions": 10
+    },
+    {
+      "query": "imnot ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 6,
+      "previous_impressions": 9
+    },
+    {
+      "query": "i am not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 0
+    },
+    {
+      "query": "not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 0
+    },
+    {
+      "query": "구글 미트 회의록 저장 위치",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 0
+    },
+    {
+      "query": "not ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 6
+    },
+    {
+      "query": "im-not-ai 클로드",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 0
+    },
+    {
+      "query": "시크릿 모드 기록",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 7
+    },
+    {
+      "query": "get-ciminstance win32_bios",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 2
+    },
+    {
+      "query": "google fido2",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 1
+    },
+    {
+      "query": "wmic powershell",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "애플 이메일 주소를 확인할 수 없음",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 3
+    },
+    {
+      "query": "iam-not-ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 2
+    },
+    {
+      "query": "im no ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "1tb 931gb",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "i'm not ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ocr 말고 ai로 문서 읽는 제품 뭐가 있나요",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ai83577",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ciminstance",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 1
+    },
+    {
+      "query": "get ciminstance",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 3
+    },
+    {
+      "query": "im not a ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ㅑㅡ ㅜㅐㅅ 먀",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "i-am-not-ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 2
+    },
+    {
+      "query": "im not ai codex",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 1
+    },
+    {
+      "query": "imnotai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "get-ciminstance win32_computersystemproduct",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "copilot auto",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "get-ciminstance win32_processor",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ollama litellm",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "powershell get ciminstance",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    },
+    {
+      "query": "typescript 7 migration",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 0
+    }
+  ]
+}

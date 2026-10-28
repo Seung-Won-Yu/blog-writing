@@ -20,7 +20,7 @@
     "클라우드 빌드",
     "설치 오류"
   ],
-  "meta_description": "로컬에서는 설치되는데 클라우드 빌드에서만 의존성 설치가 막힌다. Workers Builds npm 버전은 10월 23일 변경 이후 packageManager에 정확한 버전을 적어 지정할 수 있다. 다… 새 버전 선택 기능을 engines.npm·빌드 루트·잠금 파일·npm ci의 조건…",
+  "meta_description": "같은 프로젝트가 로컬에서는 설치되는데 Workers Builds npm 설치 단계에서만 막힌다고 하자. engines.npm에 버전을 적었어도 빌드 로그에는 다른 숫자가 찍힌다면, 버전을 고르는 설정… 새 버전 선택 기능을 engines.npm·빌드 루트·잠금 파일·npm ci의 조건…",
   "key_summary": [
     "1. Workers Builds에서 npm 버전을 지정할 때 나눠 확인할 세 경계",
     "직접 얻는 결과: npm 버전을 지정하는 필드와 설치 도구를 고르는 잠금 파일을 구분하고, 같은 커밋의 로그와 테스트로 적용 여부를 판단하는 순서를 얻는다."
@@ -35,7 +35,7 @@
     "추천 제목: Workers Builds npm 버전 고정: engines 대신 확인할 설정과 잠금 파일"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 10,
+  "estimated_read_minutes": 9,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -48,9 +48,9 @@
   "before_ad_html": "docs/tistory/2026-10-28-before-ad.html",
   "after_ad_html": "docs/tistory/2026-10-28-after-ad.html",
   "adfit_html": "docs/tistory/2026-10-28-adfit.html",
-  "source_sha256": "734fb6361f2842de21879b33a2b4e9303cdfe5d520264afa8ce06fa88958268c",
-  "html_sha256": "48c23085042cc71e9d7c8b2fb0db9a6e8f941454602340817f3703d91944cbb3",
-  "adfit_sha256": "123d5742a76d743f2b63cda7f9bc9f5bd3e156d562ce7df54111b0ff7d476869",
+  "source_sha256": "7c6892b8f2d66fbdee2c75539009f1a2ab59d90273f7a61580d54d4156750496",
+  "html_sha256": "b9984dd5dc48ffced7b41f23c57dc76bd4965fec201559db05945e12ac2d4243",
+  "adfit_sha256": "a3c703f9ddd3e0e507adfe054b9e199b8874b2c2b1118bd8f8fd1dcb128d8167",
   "image_assets": [
     {
       "kind": "cover",

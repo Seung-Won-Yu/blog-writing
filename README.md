@@ -178,6 +178,14 @@ python3 -m blog_pipeline.collection.analyze_search_performance \
 
 입력 예시는 `config/search_performance.example.csv`입니다. 결과는 `config/search_opportunities.json`과 `reports/search-refresh-queue.md`에 저장됩니다. `protect_existing`, `refresh_existing`, `retitle_existing`, `merge_existing` 대상과 충돌하는 새 글은 제외하며 30일 지난 성과는 최신 점수에 쓰지 않습니다. 현재 보호 큐의 수치는 페이지 합계이고 `query`는 편집용 주제 힌트입니다. 정확한 검색어×페이지 CSV와 합쳐 가짜 관측값을 만들지 않습니다. CSV 재분석이 보호 큐를 대체하므로 재분석 뒤 현재 계획의 기존 글 보호 대상도 대조합니다. 이 분류는 Google 순위 공식이 아닌 내부 휴리스틱입니다.
 
+2026-10-28부터 예약 편집은 [실제 검색어 선정 계약](agent/SEARCH_DEMAND.md)을
+우선합니다. `sh scripts/blog-env python3 -m blog_pipeline.collection.search_demand --today`로
+관측한 검색어·클릭·노출을 먼저 읽고 기존 글과 다른 질문인지 대조한 뒤 수집기에서
+근거를 찾습니다. `data/search_demand/`의 날짜별 관측은 검색어 합계이며 위의 페이지
+보호 큐와 수치를 합치지 않습니다. 2026-10-29 이후 신규 원고는 보존된 실제 검색어와
+`editorial.search_demand`가 일치해야 가드를 통과합니다. 별도 질문이 없으면 기존 글을
+개선하고 새 글 수를 채우기 위한 가설 기사는 만들지 않습니다.
+
 ## 직접 실행
 
 Python 3.12를 권장합니다.

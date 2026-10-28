@@ -116,5 +116,6 @@
       "public_verified_on": "2026-10-27",
       "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     }
-  ]
+  ],
+  "demand_snapshot": "data/search_demand/2026-10-28.json"
 }
