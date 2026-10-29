@@ -115,6 +115,16 @@
       "refreshed_on": "2026-10-27",
       "public_verified_on": "2026-10-27",
       "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
+    },
+    {
+      "priority": 6,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/211",
+      "title": "CloudFormation 드리프트 감지: 콘솔 변경을 IaC로 되돌리는 기준",
+      "draft_id": "2026-08-24",
+      "source": "data/days/2026-08-24.json",
+      "improvement_goal": "관측 검색어 cloudformation iac generator와 연결된 기존 설명에서 빠진 리소스 누락 시 계정·리전·읽기 권한·지원 범위 확인 순서를 보완한다.",
+      "refreshed_on": "2026-10-29"
     }
   ],
   "demand_snapshot": "data/search_demand/2026-10-28.json"

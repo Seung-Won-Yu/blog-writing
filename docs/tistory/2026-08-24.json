@@ -25,7 +25,7 @@
   "meta_description": "배포 코드는 그대로인데 운영 장애가 난 뒤 콘솔을 열어 보니 보안 그룹 규칙 하나가 달라져 있다. 누군가 급하게 바꾼 설정이 템플릿에는 남지 않은 전형적인 ClickOps다. AWS가 8월 21일 공… 기존 AWS 리소스를 IaC Generator로 템플릿화하고 CloudFormati…",
   "key_summary": [
     "1. AWS, ClickOps를 관리형 IaC로 전환하는 CloudFormation 드리프트 운영법 공개",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: CloudFormation 드리프트의 범위와 제한을 이해하고, 감지·상세 확인·import 또는 recreate·알림·제한적 복구 순서로 운영 규칙을 만들 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -37,7 +37,8 @@
     "추천 제목: CloudFormation 드리프트 감지: 콘솔 변경을 IaC로 되돌리는 기준"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 12,
+  "estimated_read_minutes": 13,
+  "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-08-24.json",
@@ -46,9 +47,9 @@
   "before_ad_html": "docs/tistory/2026-08-24-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-24-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-24-adfit.html",
-  "source_sha256": "41322f2b8f59af18d85b6a4e2bdbb7d6ce6ba5723c10b226357e80a7e58f50e0",
-  "html_sha256": "08c202535f43121c926c4b149db89da84dd9d832b52bd7d3f7d030a46540123b",
-  "adfit_sha256": "5ec53d04821bf46d5f4ce8c3123fd2b7a76e9604a2d8ad130c0b36d8c1aae4ea",
+  "source_sha256": "f4234a35556168467c530c4ca21e3f60ccaffe5ff5ef04a51e22e43ed0defe6a",
+  "html_sha256": "30de3b8934e95e6ff639d0aebc0a5ca80197e0f0d24a8f31b82d38905c5d9d4f",
+  "adfit_sha256": "d4ad95432961ef8d62f5a603bc411eacef4d4f16e8fe0da12d82e583c7e89dae",
   "image_assets": [
     {
       "kind": "cover",
