@@ -35,7 +35,7 @@
     "추천 제목: im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 14,
+  "estimated_read_minutes": 15,
   "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
@@ -45,9 +45,9 @@
   "before_ad_html": "docs/tistory/2026-08-08-automation-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-08-automation-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-08-automation-adfit.html",
-  "source_sha256": "bfeea5845190b6e8678bbdde8959996afc16252f297b1b94af35df03aa0e41b1",
-  "html_sha256": "4eefab90552a09a6ed46092d781b1984d162c8a9aedfedb2b94c6049ff83d2aa",
-  "adfit_sha256": "1357bc665ac573fade1f3ab27c49af15abc4838f3897faa33ccdb6118663e099",
+  "source_sha256": "003a6f60af9cda8ac7b5d23025913abd16fe1f7b8545c52b1c3be1a80115cae3",
+  "html_sha256": "84c6b13d2d2588b5606d3489bfc83f046f9d16cf46b3459e3a90bd0da746f43c",
+  "adfit_sha256": "2bb1475665b0d2e0086d0efe4c649c7e52a54e85f839b1522216f7f48bb1bdcc",
   "image_assets": [
     {
       "kind": "cover",

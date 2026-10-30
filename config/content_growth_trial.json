@@ -30,8 +30,8 @@
   "refresh_queue": [
     {
       "priority": 1,
-      "status": "published",
-      "refreshed_on": "2026-10-13",
+      "status": "ready_for_review",
+      "refreshed_on": "2026-10-30",
       "page_url": "https://won0322.tistory.com/197",
       "title": "im-not-ai 사용법: AI 글투 진단과 변경률 가드 직접 실험",
       "draft_id": "2026-08-08-automation",
@@ -40,7 +40,7 @@
       "previous_clicks": 24,
       "current_impressions": 1112,
       "previous_impressions": 570,
-      "improvement_goal": "설치·실행·결과 해석에서 실제 독자가 막히는 부분을 확인하고, 기존 실험과 실행 증거를 보존하며 한 글에서 해결한다.",
+      "improvement_goal": "실제 관측 im-not-ai 사용법 질문의 기존 답을 유지하고 변경률 WARN=1·ABORT=2와 실행 오류=3 구분을 보완한다.",
       "public_verified_on": "2026-10-27",
       "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
