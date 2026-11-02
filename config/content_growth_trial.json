@@ -125,6 +125,16 @@
       "source": "data/days/2026-08-24.json",
       "improvement_goal": "관측 검색어 cloudformation iac generator와 연결된 기존 설명에서 빠진 리소스 누락 시 계정·리전·읽기 권한·지원 범위 확인 순서를 보완한다.",
       "refreshed_on": "2026-10-29"
+    },
+    {
+      "priority": 7,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/241",
+      "title": "1TB 용량은 왜 931GB로 보일까? 사라진 공간의 오해",
+      "draft_id": "2026-10-01",
+      "source": "data/days/2026-10-01.json",
+      "improvement_goal": "관측 검색어 931gb와 연결된 기존 설명에서 빠진 Windows 디스크 전체·볼륨·남은 공간의 확인 경로와 다음 판단을 보완한다.",
+      "refreshed_on": "2026-11-02"
     }
   ],
   "demand_snapshot": "data/search_demand/2026-10-28.json"
