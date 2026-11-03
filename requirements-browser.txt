@@ -1,0 +1,2 @@
+# Isolated scheduled preview capture; install once in the repository venv.
+playwright==1.64.1

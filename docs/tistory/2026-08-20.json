@@ -36,7 +36,7 @@
     "추천 제목: WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 15,
+  "estimated_read_minutes": 16,
   "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
@@ -46,9 +46,9 @@
   "before_ad_html": "docs/tistory/2026-08-20-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-20-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-20-adfit.html",
-  "source_sha256": "3a8fb459a99bc2750f802b25fe95a662d939827a10933b54e4105411363bd12d",
-  "html_sha256": "c67456300c7690692c942f3f64970970210e7d517b27e07e504795de36e4efed",
-  "adfit_sha256": "7e37243fa112876591b60efb163b8c0de9718019c610aaabe1a06a88fc13b770",
+  "source_sha256": "07eaaa067631ed08fe174d89f0395cc9f5ae4fd20cb928e509c5a2a895e040bd",
+  "html_sha256": "110c91f980bfc12f35eeef32a8eb73994704169b3d2156eca5b050f1ba80cfc3",
+  "adfit_sha256": "dd7517a6c5e66ac2c8dbfaf217cff908a3d80e5066ff58e81b7aa00c5b82cb41",
   "image_assets": [
     {
       "kind": "cover",

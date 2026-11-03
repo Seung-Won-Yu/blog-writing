@@ -182,7 +182,7 @@
   "generation": {
     "provider": "codex-agent",
     "model": "gpt-5.6",
-    "revision": 8,
+    "revision": 9,
     "image_provider": "mixed",
     "image_policy": "webp-v1"
   },
@@ -298,7 +298,7 @@
           "kind": "official"
         },
         {
-          "title": "Get-CimInstance",
+          "title": "Get-CimInstance — Filter 문법과 LIKE 조회 예시",
           "url": "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-7.6",
           "kind": "official"
         },
@@ -426,6 +426,31 @@
         },
         {
           "t": "h",
+          "text": "필터를 바꿨는데 결과가 없으면 조건부터 비교한다"
+        },
+        {
+          "t": "p",
+          "text": "5번 프로세스 예제에서 이름을 바꿀 때는 따옴표와 조건 문법을 함께 확인한다. `-Filter`에는 PowerShell의 `-eq` 대신 WMI 조회 조건을 넣으며 `WHERE`라는 단어는 쓰지 않는다. 아래는 Microsoft 문서를 따른 읽기 전용 예시이며 Windows 장비에서 새로 실행한 결과는 아니다. 줄 끝의 백틱 기호까지 함께 복사한다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "# 이름이 정확히 일치하는 프로세스\nGet-CimInstance Win32_Process `\n  -Filter \"Name='notepad.exe'\" |\n  Select-Object ProcessId, Name\n\n# 이름이 note로 시작하는 프로세스\nGet-CimInstance Win32_Process `\n  -Filter \"Name LIKE 'note%'\" |\n  Select-Object ProcessId, Name"
+        },
+        {
+          "t": "p",
+          "text": "부분 일치에는 PowerShell에서 익숙한 `*` 대신 `LIKE`와 `%`를 쓴다. 위의 `%`는 뒤에 문자가 없거나 더 이어질 수 있다는 뜻이다. 문자열 값의 작은따옴표와 전체 조건의 큰따옴표도 보존한다."
+        },
+        {
+          "t": "p",
+          "text": "오류 문구가 나오면 클래스·속성 철자와 조건 문법부터 본다. 오류 없이 결과만 비었다면 `Get-CimInstance Win32_Process | Select-Object ProcessId, Name`으로 필터 없는 목록을 확인한다. 대상이 전체 목록에만 있으면 조건을, 양쪽 모두 없으면 실행 여부와 실제 이름을 확인한다. 두 조회 사이에 프로세스가 종료될 수도 있다."
+        },
+        {
+          "t": "p",
+          "text": "권한 거부·원격 연결 오류는 아래 오류 표의 해당 항목으로 돌아간다. 필요한 이름과 ProcessId가 확인되거나 대상이 실행 중이지 않음을 구분했다면 이 조건 점검은 끝이다."
+        },
+        {
+          "t": "h",
           "text": "결과를 문자열로 다시 부수지 않는다"
         },
         {
@@ -515,18 +540,6 @@
         {
           "t": "p",
           "text": "WMIC 재설치는 비교 기간을 벌기 위한 임시 수단으로만 두고, 완료 기준은 WMIC가 없는 PC에서도 같은 자동화 결과가 나오는지로 잡는다."
-        },
-        {
-          "t": "h",
-          "text": "WMIC를 다시 켜는 것은 종료 조건이 아니다"
-        },
-        {
-          "t": "p",
-          "text": "25H2에서 WMIC를 다시 설치하면 기존 배치가 즉시 살아날 수는 있다. 그러나 Microsoft가 완전 제거 예정을 밝히고 재설치를 권하지 않는 이상, 이 선택은 장애 복구 시간을 벌어 주는 한시적 조치로 보는 편이 안전하다. 새 PowerShell 스크립트가 같은 정보를 읽고, 다음 자동화가 그 객체를 정상적으로 소비하고, 예약·원격 환경에서도 동작해야 교체가 끝난다."
-        },
-        {
-          "t": "p",
-          "text": "나중에 다시 이 글을 찾을 지점은 새 Windows 버전이 나올 때, 원격 CIM 정책이 바뀔 때, 또는 오래된 배치 파일을 새 PC로 옮길 때다. 그때는 재설치 가능 여부보다 검색하지 못한 WMIC 사용처와 문자열 파싱 의존성이 남았는지를 먼저 보면 된다."
         },
         {
           "t": "p",

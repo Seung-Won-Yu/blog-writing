@@ -25,7 +25,28 @@ Git·Python 명령은 저장소 루트에서 `sh scripts/blog-env ...`로 실행
 새 환경은 `python3 -m venv .venv`와 `.venv/bin/python3 -m pip install -r requirements-images.txt`로
 이미지 의존성을 준비하고, 제작 전에 `sh scripts/blog-env python3 -c 'import PIL'`로 확인합니다.
 
-허용된 로컬 검수 환경에서는 다음 명령으로 지정한 글의 HTML·이미지·CSS만 제공합니다.
+예약 검수는 로그인 없는 전용 Playwright Chromium을 사용합니다. 앱 패널이 닫혀 있거나
+연결 요청이 `queued`여도 이 검수 경로에는 영향을 주지 않습니다. 최초 한 번 준비합니다.
+
+```bash
+sh scripts/blog-env python3 -m pip install -r requirements-browser.txt
+sh scripts/blog-env python3 -m playwright install chromium --only-shell
+```
+
+```bash
+# 실제 존재하는 검수 완료 원고를 선택해 실행 환경을 확인
+sh scripts/blog-env python3 -m blog_pipeline.publishing.browser_qa --preflight
+# 실제 원고 ID로 최종 PC·모바일 캡처와 배치를 검사
+sh scripts/blog-env python3 -m blog_pipeline.publishing.browser_qa --draft-id 2026-08-20
+# 배포 후 같은 원고의 공개 파일 바이트와 화면을 확인
+sh scripts/blog-env python3 -m blog_pipeline.publishing.browser_qa --draft-id 2026-08-20 --published
+```
+
+보완 날짜로 URL을 추측하지 않습니다. 명령이 출력한 임시 폴더의 PNG를 파일 이미지 도구로
+열어 문자·잘림·캡션·읽기 순서를 검수합니다. `CAPTURED`는 시각 검수 통과가 아닙니다.
+선택한 파일만 loopback 서버로 제공하고 브라우저·서버를 종료하며 개인 프로필은 사용하지 않습니다.
+
+수동 앱 내 미리보기에는 다음 명령으로 지정한 글의 HTML·이미지·CSS만 제공합니다.
 
 ```bash
 sh scripts/blog-env python3 -m blog_pipeline.publishing.preview_server --draft-id 2026-09-17
