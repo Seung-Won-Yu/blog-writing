@@ -154,8 +154,10 @@ def capture(root, draft_id, output, published=False):
                     # Trigger every lazy image before testing natural dimensions.
                     for img in page.locator('img').all():
                         img.scroll_into_view_if_needed()
-                    page.wait_for_function(
-                        'Array.from(document.images).every(i => i.complete)')
+                    # These previews have only finite local/public asset loads.
+                    # Network readiness avoids Playwright's string-predicate eval,
+                    # which older previews correctly forbid through script-src none.
+                    page.wait_for_load_state('networkidle', timeout=10000)
                     report = page.evaluate(script)
                     reports.append(report)
                     (output / f'{label}.json').write_text(

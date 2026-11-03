@@ -46,6 +46,13 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.browser_qa --draft-id 20
 열어 문자·잘림·캡션·읽기 순서를 검수합니다. `CAPTURED`는 시각 검수 통과가 아닙니다.
 선택한 파일만 loopback 서버로 제공하고 브라우저·서버를 종료하며 개인 프로필은 사용하지 않습니다.
 
+전용 브라우저의 실제 회귀 검사는 설치 후 다음 명령으로 실행합니다. 엄격한 CSP와
+표 내부 폭이 잘못된 경우를 시험하며 사이트 보안 정책을 완화하지 않습니다.
+
+```bash
+BLOG_BROWSER_QA_LIVE=1 sh scripts/blog-env python3 -m unittest tests.test_browser_qa_live
+```
+
 수동 앱 내 미리보기에는 다음 명령으로 지정한 글의 HTML·이미지·CSS만 제공합니다.
 
 ```bash

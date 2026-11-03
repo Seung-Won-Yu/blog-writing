@@ -38,4 +38,20 @@
 이것은 실제 예약 검수 명령의 앱 독립 실행 검증이며 다음 예약 전체의 무중단 보장은 아니다.
 네트워크·인증·자료 부족·정식 보안 거절은 여전히 구체적 실패로 보고한다.
 
+## 공개 화면 CSP 호환 보완
+
+오늘 /209 공개 미리보기 최종 검사에서 Playwright의 문자열 predicate 대기가
+script-src none 정책과 충돌했다. 사이트 CSP·브라우저 보안 설정을 변경하지 않고
+정적 자산의 네트워크 완료 대기로 바꿨다. 같은 공개 HTML·CSS·이미지 바이트와 두
+화면을 다시 검사해 CAPTURED/METRICS_PASS, console 오류 없음과 시각 판정을 확인했다.
+이미 배포한 본문을 다시 만들지 않았다.
+
+옵트인 실제 Chromium 회귀 검사 두 개를 추가했다. 엄격한 CSP의 정상 표를 캡처하고,
+tbody만 좁힌 경우에는 LAYOUT_FAILED가 되는지 확인한다. 기본 CI는 브라우저 설치 없이
+계약 검사를 실행하고 실제 브라우저 검사는 BLOG_BROWSER_QA_LIVE=1로 별도 실행한다.
+
 근거: https://playwright.dev/python/docs/library , https://playwright.dev/python/docs/browsers
+
+최종 검증은 BLOG_BROWSER_QA_LIVE=1 전체583개 테스트 성공이며 실제 Chromium 회귀2개를 포함한다.
+공개 /209 교체본의 선택 HTML·CSS·이미지는 로컬 검수본과 바이트가 모두 같고, 두 화면
+METRICS_PASS·console 오류 없음·수정 코드/표 시각 검수까지 확인했다.
