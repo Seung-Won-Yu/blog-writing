@@ -30,6 +30,10 @@ sh scripts/blog-env python3 -m blog_pipeline.publishing.growth_plan --today
 위 명령은 읽기 전용이다. 계획·관찰 기준·개선 큐는 `config/content_growth_trial.json`에 있다.
 `refresh_existing`이면 `daily_guard --today`로 새 화·목 글을 만들지 않는다.
 `off`이면 정규 제작을 하지 않는다. 큐가 비어도 개선 슬롯을 새 글로 대체하지 않는다.
+`target: null`은 선정 완료가 아니라 `DISCOVERY_REQUIRED`다. SEARCH_DEMAND의
+`selection_worklist --today`로 전체 검색어와 전체 보존 원고에서 다음 대상을 찾아,
+공개 본문·공식 자료로 공백을 확인한 뒤 기존 큐에 `planned` 또는 `in_progress`로 추가한다.
+검수 대기본은 다시 쓰지 않으며 특정 검색어·몇 편의 큐가 소진됐다는 이유로 종료하지 않는다.
 
 ## 2026-10-28 변경: 관측 검색어를 먼저 선정
 

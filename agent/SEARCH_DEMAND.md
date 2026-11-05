@@ -30,6 +30,55 @@ sh scripts/blog-env python3 -m blog_pipeline.collection.search_demand --today
 
 ## 질문을 고르는 순서
 
+### 2026-11-05: 후보 소진·조회 실패 뒤에도 선정 계속
+
+`growth_plan.target: null`은 `DISCOVERY_REQUIRED`이며 종료 조건이 아니다. 새 글 실행도
+검색어 상위 몇 개만 보고 선정 불가로 끝내지 않는다. 아래 명령은 보존 스냅샷의 유효한
+**전체 검색어**와 전체 원고의 제목·검색어·태그를 대조한 검토 목록을 만든다.
+현재 파일은 50행 중 탐색 검색어 1개를 제외한 49개다. 기존 20행 출력 제한은 제거했다.
+
+```bash
+sh scripts/blog-env python3 -m blog_pipeline.publishing.selection_worklist --today
+```
+
+- `source_hints`는 어휘 탐색 힌트다. 검색어별 페이지 성과·같은 의도·공개 URL을 입증하지
+  않는다. `page_url: null`이면 실제 공개 글 제목과 본문으로 매핑한 뒤 기록한다.
+- `ready_for_review`는 보존하고, 다음 검색어·다른 기존 글·별도 후속 과제로 이동한다.
+  이미 `published`인 글도 새로 확인한 공백이 있을 때만 다시 보완한다.
+- `refresh_due: true`는 갱신 알림이다. Search Console 로그인 접근을 한 번 확인한 뒤
+  없으면 유효한 30일 이내 캐시로 계속한다. 로그인 없는 QA 브라우저에 계정을 복사하거나
+  앱 패널이 올 때까지 대기하지 않는다. 오래된 관측을 갱신한 것처럼 기록하지 않는다.
+- 웹 도구의 Cache miss·일시적 조회 실패는 본문 부재나 보안 거절이 아니다. 아래 명령으로
+  이 블로그의 공개 HTML을 로그인·쿠키·JS 없이 직접 읽어 대조한다. HTTP 오류·로그인
+  페이지·다른 글·본문 추출 실패는 READ_UNAVAILABLE이며 성공으로 꾸미지 않는다.
+
+```bash
+sh scripts/blog-env python3 -m blog_pipeline.publishing.public_article --url https://won0322.tistory.com/214 --output /tmp/blog-writing-qa/DATE/214-public.json
+```
+
+URL과 DATE는 실제 후보·실행일로 바꾼다. 이 명령은 숫자 글 경로만 허용하고 로그인·
+외부·다른 글로의 리다이렉트는 거절한다. 실제 보안/접근 거절을 우회하는 용도가 아니다.
+한 후보를 읽을 수 없으면 사유를 남기고 다른 후보를 조사한다.
+
+선정 기록은 `/tmp/blog-writing-qa/DATE/selection-review.json`에 남긴다. `snapshot`과
+`reviews`를 기록하고 각 검토에 실제 `queries` 배열, `decision`, 20자 이상 구체적
+`reason`을 쓴다. decision은 `already_answered`, `pending_handoff`, `unrelated`,
+`source_unavailable`, `gap_confirmed`다. 의미가 같은 변형은 한 검토에 묶어도 된다.
+선정된 `gap_confirmed`는 `action`, `source`, 실제 `page_url`, `public_evidence`,
+`official_evidence`를 기록한다. 새 글은 action `new_article`, `existing_page_urls` 배열과
+20자 이상 `distinct_outcome`도 필요하다. 해당 글의 별도 과제·변화·중복·원고 가드는 그대로다.
+
+```bash
+sh scripts/blog-env python3 -m blog_pipeline.publishing.selection_worklist --today --check-review /tmp/blog-writing-qa/DATE/selection-review.json
+```
+
+확인된 공백 하나를 찾으면 `SELECTED` 뒤 집필·QA·배포를 진행한다. 후보가 없다는
+결론은 전체 유효 검색어 검토와 서로 다른 공식 자료 3곳의 직접 조사 후에만 낸다.
+`direct_research`에 각각 실제 `url`·20자 이상 `finding`을 남겨 `EXHAUSTED`를 확인한다.
+`RESEARCH_REQUIRED`면 미검토 질문·근거부터 계속한다. 이 검사는 기록의 범위·형식을
+확인하며 실제 읽기·의미 판정을 대신하지 않는다. 실패 때문에 가짜 공백·검색어·관측일을
+만들거나 품질 기준을 낮추지 않는다. 추적 보고서는 최종 커밋에 함께 정리한다.
+
 1. 클릭이 있는 검색어를 먼저 보고, 노출은 있으나 클릭이 적은 검색어도 함께 읽는다.
    철자·띄어쓰기 변형은 사람이 같은 의도로 묶는다. 변형마다 새 글을 만들지 않는다.
    `site:` 탐색, 무관한 이름, 해석 불가능한 문자열은 글감에서 제외한다.

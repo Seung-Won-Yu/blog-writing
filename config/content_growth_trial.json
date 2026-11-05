@@ -135,6 +135,16 @@
       "source": "data/days/2026-10-01.json",
       "improvement_goal": "관측 검색어 931gb와 연결된 기존 설명에서 빠진 Windows 디스크 전체·볼륨·남은 공간의 확인 경로와 다음 판단을 보완한다.",
       "refreshed_on": "2026-11-02"
+    },
+    {
+      "priority": 8,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/214",
+      "title": "애플 로그인 이메일 오류: 새 도메인 확인 4곳",
+      "draft_id": "2026-08-26",
+      "source": "data/days/2026-08-26.json",
+      "improvement_goal": "관측 검색어의 오류 문구만으로 도메인 변경을 원인으로 단정하지 않도록 이용자 설정과 서비스 운영자의 가입·메일 전달 점검을 구분한다.",
+      "refreshed_on": "2026-11-05"
     }
   ],
   "demand_snapshot": "data/search_demand/2026-10-28.json"

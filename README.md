@@ -214,6 +214,14 @@ python3 -m blog_pipeline.collection.analyze_search_performance \
 `editorial.search_demand`가 일치해야 가드를 통과합니다. 별도 질문이 없으면 기존 글을
 개선하고 새 글 수를 채우기 위한 가설 기사는 만들지 않습니다.
 
+개선 큐가 비면 `growth_plan`은 `DISCOVERY_REQUIRED`와 실행할 선정 명령을 반환합니다.
+`sh scripts/blog-env python3 -m blog_pipeline.publishing.selection_worklist --today`는
+20행 제한 없이 유효 검색어 전체와 원고 탐색 힌트를 제공합니다. 검수 대기본은 보호하며
+선정/전체 검토 기록은 `--check-review`로 확인합니다. 웹 조회가 Cache miss로 실패하면
+`public_article --url https://won0322.tistory.com/숫자 --output /tmp/blog-writing-qa/날짜/public.json`
+명령으로 로그인 없이 공개 본문만 읽습니다. 캐시 갱신 알림·앱 부재·빈 큐 자체가
+중단 조건이 되지 않으며, 실제 공백·근거·품질·공개 QA 기준은 유지합니다.
+
 ## 직접 실행
 
 Python 3.12를 권장합니다.

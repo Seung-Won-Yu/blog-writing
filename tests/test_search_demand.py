@@ -76,6 +76,14 @@ class SearchDemandTests(unittest.TestCase):
         self.assertEqual(report["status"], "READY")
         self.assertTrue(report["refresh_due"])
 
+    def test_lower_ranked_real_queries_are_not_truncated_after_twenty(self):
+        data = snapshot()
+        template = data["queries"][1]
+        data["queries"] = [{**template, "query": f"실제 관측 질문 {i}"} for i in range(50)]
+        report = demand_report(data, self.day)
+        self.assertEqual(report["query_count"], 50)
+        self.assertEqual(len(report["queries"]), 50)
+
     def test_future_article_must_reference_a_real_archived_query(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

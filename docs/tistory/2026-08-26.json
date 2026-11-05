@@ -24,7 +24,7 @@
   "meta_description": "Apple 로그인을 쓰는 앱·웹사이트라면 올해 후반부터 새 릴레이 주소의 도메인이 바뀐다. 기존 주소는 계속 작동하지만 회원가입 검증, 도메인 허용 목록, 인증 메일 발송 규칙이 새 주소를 막을 수… Apple은 올해 후반부터 새 Sign in with Apple 릴레이 주소에 pri…",
   "key_summary": [
     "1. Apple 로그인 새 릴레이 도메인, 올해 후반부터 적용",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: 기존 릴레이 주소를 유지하면서 새 도메인을 추가하고, 가입 검증부터 Apple 릴레이 발신 설정과 반송 목록까지 네 곳을 확인할 수 있다."
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -36,7 +36,8 @@
     "추천 제목: 애플 로그인 이메일 오류: 새 도메인 확인 4곳"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 7,
+  "estimated_read_minutes": 8,
+  "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-08-26.json",
@@ -45,9 +46,9 @@
   "before_ad_html": "docs/tistory/2026-08-26-before-ad.html",
   "after_ad_html": "docs/tistory/2026-08-26-after-ad.html",
   "adfit_html": "docs/tistory/2026-08-26-adfit.html",
-  "source_sha256": "d518ce90f4867da0296c50a74da6427ac371e00ab7248186a4a33f210af2d4c0",
-  "html_sha256": "c23bdfe8c4ce51e1105b38bf8e23b5bfe833f8a59c5252840b07f4ec9c3c2a97",
-  "adfit_sha256": "d159ec06959beaafb9b9b359aad60a0d2a69575de7e291ede5ec4e7084dbc49d",
+  "source_sha256": "d772968a5152322a5391e25692a466b53c256d0b461fcbcf6c26aff7b5aa129b",
+  "html_sha256": "4ae3afda46f9748f13a25dba4c0d3849cc25d42b774b9d711835383b895d7a5d",
+  "adfit_sha256": "166c397b7b632827baa8b86684e4a505f2d4c54eec1b0463c3b4a606d85d2b0f",
   "image_assets": [
     {
       "kind": "cover",

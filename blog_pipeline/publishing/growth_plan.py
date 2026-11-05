@@ -47,6 +47,7 @@ def plan_for_day(plan, day):
             "Refresh Search Console evidence; do not present the old snapshot as current."
         ),
         "target": None,
+        "selection_command": "sh scripts/blog-env python3 -m blog_pipeline.publishing.selection_worklist --today",
     }
     if mode != "refresh_existing":
         return result
@@ -74,9 +75,12 @@ def plan_for_day(plan, day):
             key=lambda item: (item["status"] != "in_progress", item["priority"]),
         )
     else:
+        result["selection_required"] = True
+        result["selection_state"] = "DISCOVERY_REQUIRED"
         result["next_action"] = (
-            "Review pending handoffs and select another existing page using current "
-            "Search Console evidence; do not replace this slot with a new article."
+            "Run selection_command to discover another existing page across ALL observed "
+            "queries and preserved sources. A null target is not completion. Review pending "
+            "handoffs without rewriting them; do not replace this slot with a new article."
         )
     return result
 

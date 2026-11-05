@@ -74,6 +74,8 @@ class GrowthPlanTests(unittest.TestCase):
         self.assertEqual(result["mode"], "refresh_existing")
         self.assertIsNone(result["target"])
         self.assertIn("existing page", result["next_action"])
+        self.assertEqual(result["selection_state"], "DISCOVERY_REQUIRED")
+        self.assertIn("selection_worklist", result["selection_command"])
 
     def test_review_date_does_not_silently_restore_five_new_posts(self):
         result = plan_for_day(self.plan, dt.date(2026, 11, 24))

@@ -89,7 +89,8 @@ def demand_report(snapshot, day):
         "current_period": snapshot["current_period"],
         "metric_scope": "query",
         "refresh_due": (day - observed.astimezone(ZoneInfo("Asia/Seoul")).date()).days >= 7,
-        "queries": rows[:20],
+        "query_count": len(rows),
+        "queries": rows,
         "selection_rule": "실제 검색 의도를 먼저 읽고 기존 글과 대조한다. 같은 답은 기존 URL 개선, 별도 질문만 새 글로 선정한다. 수집기 점수로 이 순서를 바꾸지 않는다.",
         "limits": "표시된 검색어 일부의 사이트 내 합계다. 검색량·페이지별 검색어 성과·성장 보장이 아니다. 관련 없는 기술 발표에 검색어를 붙이지 않는다.",
     }
