@@ -1,0 +1,96 @@
+{
+  "title": "Ollama LiteLLM 연결: 직접 호출·SDK·Proxy 선택 기준",
+  "title_candidates": [
+    "Ollama LiteLLM 연결: 직접 호출·SDK·Proxy 선택 기준",
+    "Ollama·LiteLLM 연결 경로 선택: Ollama를 이미 쓰는데 LiteLLM 서버가 꼭 필요할까?"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-11-06-automation",
+  "publish_date": "2026-11-06",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-11-06T09:00:00+09:00",
+  "tags": [
+    "Ollama",
+    "LiteLLM",
+    "LiteLLM SDK",
+    "LiteLLM Proxy",
+    "로컬 LLM",
+    "OpenAI 호환 API",
+    "AI 개발 도구"
+  ],
+  "meta_description": "Ollama로 모델은 이미 돌아가는데, 연결 예제를 찾다 보니 LiteLLM 서버까지 띄우라고 한다. 앱 하나라면 서버 추가부터 할 필요는 없다. 직접 호출, 앱 안의 SDK, 별도 Proxy는 맡는… 같은 Ollama 모델 앞에 직접 호환 API·앱 내부 SDK·별도 Proxy 중…",
+  "key_summary": [
+    "1. Ollama LiteLLM 연결: 직접 호출·SDK·Proxy 선택 기준",
+    "직접 얻는 결과: 직접 호환 API·앱 내부 SDK·별도 Proxy의 접속 대상을 나누고 추가 서버가 필요한 조건과 실패 확인 경로를 고른다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: Ollama LiteLLM 연결: 직접 호출·SDK·Proxy 선택 기준"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 9,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-11-06.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-11-06-automation.html",
+  "before_ad_html": "docs/tistory/2026-11-06-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-11-06-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-11-06-automation-adfit.html",
+  "source_sha256": "26cc48666dc7ffa1ff7b38d2e37cdbbf0afabd2b519746c85cfb909217a8b6b4",
+  "html_sha256": "e5544a63814a131717424f667dcf1fffeecb2ab22b2927b7ad24ba59183f3113",
+  "adfit_sha256": "de7ad080c870182e688f3f8081f67c9aa0b1a10176d2db2278b606d697cab40a",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-06-automation/Ollama-LiteLLM-연결-어댑터-선택.webp",
+      "path": "docs/tistory/assets/2026-11-06-automation/Ollama-LiteLLM-연결-어댑터-선택.webp",
+      "original_url": "",
+      "alt": "Ollama·LiteLLM 연결은 앱 내부 라이브러리와 별도 관문 운영을 구분하는 선택이다. 작은 앱 내부 어댑터를 고르는 손의 설명용 그림.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-06-automation/Ollama-호환-API-공식-연결근거.webp",
+      "path": "docs/tistory/assets/2026-11-06-automation/Ollama-호환-API-공식-연결근거.webp",
+      "original_url": "",
+      "alt": "Ollama 공식 문서는 기존 호환 클라이언트를 로컬 서버로 연결하는 예를 제공하며 지원 범위는 일부 기능으로 한정한다.",
+      "width": 1200,
+      "height": 1002
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-06-automation/Ollama-LiteLLM-직접-SDK-Proxy-경계.webp",
+      "path": "docs/tistory/assets/2026-11-06-automation/Ollama-LiteLLM-직접-SDK-Proxy-경계.webp",
+      "original_url": "",
+      "alt": "Ollama·LiteLLM 세 연결 경로의 프로세스 경계",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-06-automation/LiteLLM-SDK-공식-호출근거.webp",
+      "path": "docs/tistory/assets/2026-11-06-automation/LiteLLM-SDK-공식-호출근거.webp",
+      "original_url": "",
+      "alt": "LiteLLM 공식 Ollama 예제는 앱 코드에서 라이브러리 함수를 불러 호출 대상을 정한다.",
+      "width": 1200,
+      "height": 1002
+    }
+  ]
+}
