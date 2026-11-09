@@ -1,0 +1,86 @@
+{
+  "title": "IaC Generator로 기존 AWS 리소스 가져오기 전후 확인 순서",
+  "title_candidates": [
+    "IaC Generator로 기존 AWS 리소스 가져오기 전후 확인 순서",
+    "IaC Generator에서 기존 버킷의 실물 매핑과 편입 뒤 검증",
+    "IaC Generator의 기존 버킷 편입 경계: YAML을 받은 뒤 언제 기존 버킷 관리가 시작될까?"
+  ],
+  "category": "개발 가이드",
+  "draft_id": "2026-11-09",
+  "publish_date": "2026-11-09",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-11-09T09:00:00+09:00",
+  "tags": [
+    "IaC Generator",
+    "CloudFormation IaC Generator",
+    "AWS 리소스 가져오기",
+    "CloudFormation Import",
+    "S3 버킷 관리",
+    "드리프트 감지"
+  ],
+  "meta_description": "콘솔에서 만든 S3 버킷을 인수했는데 팀 저장소에는 그 버킷을 설명하는 코드가 없다. IaC Generator는 AWS에서 읽은 설정으로 템플릿을 만든다. 이 파일로 기존 버킷을 관리하려면 가져오기… 부분 스캔으로 생성한 템플릿을 검토하고 기존 실물 식별자를 스택에 연결하는 과정의 확…",
+  "key_summary": [
+    "1. IaC Generator에서 기존 버킷의 실물 매핑과 편입 뒤 검증",
+    "직접 얻는 결과: 검토 대상 하나를 선정한 뒤 스캔, 템플릿 경고, 실물 식별자 매핑, 가져오기 변경 세트와 편입 후 확인을 차례로 적용할 수 있다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 개발 가이드로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: IaC Generator로 기존 AWS 리소스 가져오기 전후 확인 순서"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/days/2026-11-09.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-11-09.html",
+  "before_ad_html": "docs/tistory/2026-11-09-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-11-09-after-ad.html",
+  "adfit_html": "docs/tistory/2026-11-09-adfit.html",
+  "source_sha256": "e121b0e1cf89537b73aa93139e605b22b620573b4a1e2dd3b265e49a0d912235",
+  "html_sha256": "083f5b5bd9455d0ffbae5ad534e4e7c2148a870570be343f7c15a3b2c3f6bf14",
+  "adfit_sha256": "e1ffcb162f7de9955731e5223f27ea9a642946a036377f3a392f3ae7f9ff2315",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-09/IaC-Generator-버킷과-YAML-태그.webp",
+      "path": "docs/tistory/assets/2026-11-09/IaC-Generator-버킷과-YAML-태그.webp",
+      "original_url": "",
+      "alt": "IaC Generator의 템플릿과 기존 버킷 사이에는 가져오기 검토가 남아 있다. 종이로 만든 버킷 손잡이 옆에 YAML 태그가 떨어져 있다.",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-09/IaC-Generator-리소스별-경고.webp",
+      "path": "docs/tistory/assets/2026-11-09/IaC-Generator-리소스별-경고.webp",
+      "original_url": "",
+      "alt": "IaC Generator의 AWS 공개 예시에서 Lambda 논리 ID와 Code/S3Bucket, Code/S3Key 경고를 표시한 화면",
+      "width": 1200,
+      "height": 554
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-09/IaC-Generator-식별자-대조-분기.webp",
+      "path": "docs/tistory/assets/2026-11-09/IaC-Generator-식별자-대조-분기.webp",
+      "original_url": "",
+      "alt": "IaC Generator 식별자 대조에서 일치하면 편입을 검토하고 불일치하면 중단하는 두 경로",
+      "width": 1200,
+      "height": 800
+    }
+  ]
+}
