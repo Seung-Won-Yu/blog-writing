@@ -21,7 +21,7 @@
     "온라인 익명성",
     "개인정보 보호"
   ],
-  "meta_description": "가족과 함께 쓰는 컴퓨터에서 선물을 검색할 때 시크릿 모드를 켜곤 한다. 검은 창을 닫으면 흔적이 모두 사라진다고 생각하기 쉽다. 실제로 방문 기록과 쿠키는 세션이 끝난 뒤 기기에 남지 않는다. 하지… 비공개 브라우징은 세션 종료 뒤 기기의 방문 기록과 임시 사이트 데이터를 정리하지만…",
+  "meta_description": "크롬 시크릿 모드에서 봤던 페이지를 다시 찾고 싶다면 먼저 창이 아직 열려 있는지 확인하자. 모든 시크릿 창을 닫았다면 Chrome 방문 기록에서 그 세션의 페이지 목록을 다시 볼 수 없다. 다만 열… 비공개 브라우징은 세션 종료 뒤 기기의 방문 기록과 임시 사이트 데이터를 정리하지만…",
   "key_summary": [
     "1. 시크릿 모드가 지우는 기록과 남기는 흔적의 경계",
     "직접 얻는 결과: 시크릿 모드가 지우는 기기 내부 데이터와 남는 파일·북마크·외부 관찰 범위를 구분하고, 1분 확인으로 기능의 경계를 직접 검증할 수 있다."
@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-03-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-03-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-03-adfit.html",
-  "source_sha256": "0ad56ec86a367331e21f4d8d6da7ecc053f5dd31c5b3b15acb79c192ba450bc2",
-  "html_sha256": "8b75ecb019c21be2f44ad697e6baa645fd6229cab9f87b94f63e62036b0a0a46",
-  "adfit_sha256": "392db834bfe23e9afdf4c9ef9de98a6633ec9a24f469e605bab4500199b041c1",
+  "source_sha256": "24c2198691ab9a7fb4ae1ad47a5fde9d79308d9decba96cca47fd04cebc0b0b1",
+  "html_sha256": "b6facdb5cb5d92193cc3df4e55ccd3d342ea051009c76b5b61e7d617f0388424",
+  "adfit_sha256": "99cb1baa50fa0bf7bdceb90419362cb9b18a0dbf449ac72a04b32a012a6c5e48",
   "image_assets": [
     {
       "kind": "cover",
