@@ -215,8 +215,8 @@
   ],
   "related_posts": [
     {
-      "title": "TypeScript 7, Go 재작성으로 10배 빨라졌다? 바로 올리기 전 확인할 것",
-      "url": "https://won0322.tistory.com/116",
+      "title": "TypeScript 7 마이그레이션 가이드: Go 네이티브 컴파일러 전환 전 확인할 것",
+      "url": "https://won0322.tistory.com/162",
       "reason": "성능 발표를 실제 운영 환경의 측정과 조건으로 확인하는 방법을 함께 볼 수 있다."
     },
     {
