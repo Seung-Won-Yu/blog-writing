@@ -78,7 +78,7 @@
     },
     {
       "priority": 4,
-      "status": "published",
+      "status": "ready_for_review",
       "page_url": "https://won0322.tistory.com/144",
       "title": "Google Meet 회의록이 Drive에 자동 정리된다: 저장 위치와 공유 범위",
       "draft_id": "2026-07-24",
@@ -89,8 +89,8 @@
       "evidence_period_start": "2026-09-22",
       "evidence_period_end": "2026-10-19",
       "metric_scope": "page",
-      "improvement_goal": "회의 자료 종류와 찾는 순서, 미생성·처리 중·접근 불가를 구분하고 과거 배포일을 현재 실패 원인으로 단정하는 안내를 바로잡는다.",
-      "refreshed_on": "2026-10-22",
+      "improvement_goal": "구글 미트 회의록 저장 위치를 찾는 독자가 자동 회의록·회의 중 Gemini 개인 답변·직접 작성한 Calendar 회의록을 구분하고 알맞은 경로를 확인하도록 보완한다.",
+      "refreshed_on": "2026-11-12",
       "public_verified_on": "2026-10-27",
       "public_verification_report": "reports/refresh-public-verification-2026-10-27.json"
     },
