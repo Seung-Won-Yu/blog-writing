@@ -1,0 +1,95 @@
+{
+  "title": "TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법",
+  "title_candidates": [
+    "TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법",
+    "TypeScript 7 마이그레이션의 타입 기반 ESLint 검증: TypeScript 7로 타입 검사기를 바꾼 뒤에도…"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-11-13-automation",
+  "publish_date": "2026-11-13",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-11-13T09:00:00+09:00",
+  "tags": [
+    "TypeScript 7",
+    "ESLint",
+    "타입 기반 린트",
+    "CI 검증",
+    "Promise",
+    "마이그레이션"
+  ],
+  "meta_description": "TypeScript 7의 타입 검사 작업은 초록불인데, 비동기 호출을 방치해도 CI가 통과한다면 어디부터 봐야 할까? 컴파일러와 ESLint는 서로 다른 결함을 찾는다. Promise를 처리한 예와… TypeScript 7을 CI에 추가할 때 기존 타입 기반 ESLint가 방치된 Pr…",
+  "key_summary": [
+    "1. TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법",
+    "직접 얻는 결과: 같은 커밋에서 TypeScript 7 검사와 ESLint 규칙의 합격 여부를 기록하고 전환할 작업을 고른다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-11-13.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-11-13-automation.html",
+  "before_ad_html": "docs/tistory/2026-11-13-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-11-13-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-11-13-automation-adfit.html",
+  "source_sha256": "27968df8ac7d97ae6f889adb3b4663ed62878f466f8a9e16c88a8dac7c709123",
+  "html_sha256": "3b731c481634c6342b191a2d41862ac8978fb53a2017988584ad54bf8b74f1bc",
+  "adfit_sha256": "1848febec6557c2185f5be0b5a40e80f50af0d1d2cf001f052f65bf13d495337",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-검토-표시.webp",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-검토-표시.webp",
+      "original_url": "",
+      "alt": "TypeScript 7 전환에서는 타입 검사와 ESLint가 찾는 결함을 따로 확인한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-공식-병행-안내.webp",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-공식-병행-안내.webp",
+      "original_url": "",
+      "alt": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+      "width": 1200,
+      "height": 494
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-CI-판정.webp",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-CI-판정.webp",
+      "original_url": "",
+      "alt": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+      "width": 1200,
+      "height": 629
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/ESLint-프로젝트-서비스-공식-안내.webp",
+      "path": "docs/tistory/assets/2026-11-13-automation/ESLint-프로젝트-서비스-공식-안내.webp",
+      "original_url": "",
+      "alt": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+      "width": 1200,
+      "height": 480
+    }
+  ]
+}

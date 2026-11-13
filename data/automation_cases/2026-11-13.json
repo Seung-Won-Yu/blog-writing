@@ -1,0 +1,715 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "draft_id": "2026-11-13-automation",
+  "publish_date": "2026-11-13",
+  "date_label": "2026. 11. 13",
+  "weekday": "금",
+  "scheduled_at": "2026-11-13T09:00:00+09:00",
+  "primary_query": "TypeScript 7 ESLint",
+  "tags": [
+    "TypeScript 7",
+    "ESLint",
+    "타입 기반 린트",
+    "CI 검증",
+    "Promise",
+    "마이그레이션"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "TypeScript 7 타입 검사와 ESLint 규칙 검사의 합격 기준을 분리한다.",
+      "Promise를 처리한 입력과 방치한 입력을 같은 린트 설정에서 비교한다.",
+      "위반 입력에서 규칙 ID와 CI 실패를 확인한 뒤 전환 범위를 정한다."
+    ],
+    "glossary": [
+      {
+        "term": "타입 기반 린트",
+        "meaning": "변수나 함수 반환값의 타입을 읽어 코드 규칙을 검사하는 린트 방식이다."
+      },
+      {
+        "term": "규칙 ID",
+        "meaning": "ESLint 결과에서 어느 검사 규칙이 위반을 보고했는지 식별하는 이름이다."
+      },
+      {
+        "term": "npm 별칭",
+        "meaning": "설치할 패키지를 의존성 목록의 다른 이름에 연결하는 npm 기능이다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법",
+    "opening": "TypeScript 7의 타입 검사 작업은 초록불인데, 비동기 호출을 방치해도 CI가 통과한다면 어디부터 봐야 할까? 컴파일러와 ESLint는 서로 다른 결함을 찾는다. Promise를 처리한 예와 방치한 예를 짝지어 확인하면, 컴파일러만 교체해도 기존 린트 규칙이 살아 있는지 판단할 수 있다.",
+    "closing": "컴파일러 작업을 전환할 때 린트가 사용하던 타입 정보와 차단 규칙도 점검 기록에 남기자. 다음 전환에서도 같은 정상·위반 입력으로 규칙이 유지되는지 확인할 수 있다. 확인한 파일과 버전도 함께 적는다.",
+    "action": "CI의 린트 대상 파일 하나를 골라 정상 입력과 위반 입력의 규칙 ID 및 종료 상태부터 기록한다.",
+    "audience_problem": "TypeScript 7 CLI 도입을 검토하며 타입 기반 ESLint 검사를 CI에 유지해야 하는 개발자",
+    "reader_takeaway": "같은 커밋에서 TypeScript 7 검사와 ESLint 규칙의 합격 여부를 기록하고 전환할 작업을 고른다.",
+    "why_now": "관측된 TypeScript 7 전환 검색어를 공개 162번과 대조했다. 기존 글은 타입 검사 병행을 다루며 린트가 실제 오류 입력을 잡는지 판정하는 과제는 남아 있다.",
+    "topic_key": "typescript-7-ci-typed-eslint-promise-positive-negative-fixture",
+    "reader_question": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?",
+    "entities": [
+      "TypeScript 7",
+      "ESLint",
+      "Promise",
+      "CI"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "classification",
+      "comparison",
+      "application",
+      "limits",
+      "judgment",
+      "mechanism"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "decision_guide",
+    "search_intent": {
+      "query": "TypeScript 7 ESLint",
+      "reader_need": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?",
+      "answer_format": "정상·위반 입력의 기대 규칙 ID와 CI 판정표"
+    },
+    "reader_hook": {
+      "scene": "TypeScript 7 타입 검사는 성공했는데 방치된 Promise 호출이 CI에서 검출되지 않는 장면",
+      "stakes": "설정이나 의존성을 바꾼 뒤 타입 기반 린트가 빠져도 CI의 초록불만 보면 발견하기 어렵다.",
+      "payoff": "같은 커밋에서 TypeScript 7 검사와 ESLint 규칙의 합격 여부를 기록하고 전환할 작업을 고른다.",
+      "open_question": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "CI에서 타입 검사와 린트의 역할을 나눈다",
+      "immediate_answer": "TypeScript 7 타입 검사와 기존 ESLint를 별도 작업으로 실행한다. Promise를 처리한 입력과 처리하지 않은 입력을 같은 설정으로 비교해, 후자에만 지정한 규칙 ID가 나오는지 확인한다.",
+      "action_steps": [
+        "CI가 실행하는 타입 검사 명령과 ESLint 명령을 각각 찾는다.",
+        "정상 입력과 위반 입력을 같은 린트 설정과 TypeScript 프로젝트에 넣는다.",
+        "위반 입력의 규칙 ID와 CI 종료 상태를 확인한 뒤 전환 범위를 정한다."
+      ],
+      "completion_check": "정상 입력에 지정 규칙 ID가 없고 위반 입력에는 해당 ID와 차단 상태가 남으며 TypeScript 7 타입 검사 결과가 별도로 기록된다."
+    },
+    "revisit": {
+      "quick_answer": "TypeScript 7 타입 검사와 기존 ESLint를 별도 작업으로 실행한다. Promise를 처리한 입력과 처리하지 않은 입력을 같은 설정으로 비교해, 후자에만 지정한 규칙 ID가 나오는지 확인한다.",
+      "reuse_case": "컴파일러 전환과 기존 타입 기반 ESLint를 같은 CI에서 운용할 때",
+      "failure_case": "린트 대상 파일이 빠지거나 경고가 차단되지 않아 위반 입력이 CI를 통과할 때",
+      "artifact_type": "evaluation_matrix",
+      "update_triggers": [
+        "typescript-eslint의 TypeScript 지원 범위 변경",
+        "TypeScript 7의 프로그래밍 API 지원 변경",
+        "CI의 린트 설정 또는 파일 범위 변경"
+      ]
+    },
+    "original_value": {
+      "durable_question": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?",
+      "source_gap": "공개 162번은 두 컴파일러를 병행하고 린트 결과도 확인하라고 안내한다. 이번 글은 타입 기반 ESLint가 오류 입력에서 지정 규칙 ID를 내는지 판정하고 CI의 린트 게이트를 보존한다.",
+      "contribution": "처리한 Promise와 방치한 Promise를 짝지어 검사하고 규칙 ID, 파일 범위, 종료 상태를 함께 보는 CI 판정표를 만든다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "같은 커밋에서 TypeScript 7 검사와 ESLint 규칙의 합격 여부를 기록하고 전환할 작업을 고른다.",
+      "limits": "2026년 11월 13일에 공식 문서 다섯 곳을 대조했다. 예제는 판정 기준을 설명하는 입력이며 실제 패키지 설치, 린트 실행, CI 시간 측정은 하지 않았다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 92,
+      "criteria": {
+        "search_durability": 18,
+        "developer_relevance": 24,
+        "source_authority": 20,
+        "original_contribution": 18,
+        "curiosity": 12
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    },
+    "value_review": {
+      "primary_reader": "TypeScript 7 CLI 도입을 검토하며 타입 기반 ESLint 검사를 CI에 유지해야 하는 개발자",
+      "reader_question": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?",
+      "source_gap": "공개 162번은 두 컴파일러를 병행하고 린트 결과도 확인하라고 안내한다. 이번 글은 타입 기반 ESLint가 오류 입력에서 지정 규칙 ID를 내는지 판정하고 CI의 린트 게이트를 보존한다.",
+      "selection_reason": "실제 검색어 typescript 7 migration은 0클릭 1노출, 직전 0클릭 0노출의 작은 관측이다. 공개 162번의 본문과 공식 문서를 대조해 별도의 CI 린트 과제를 확인했다.",
+      "contributions": [
+        {
+          "basis": "inference",
+          "excerpt": "공식 문서를 대조한 이 글의 판단은, 타입 검사기와 린트의 합격 조건을 분리하면 어느 작업을 전환하고 어느 작업을 유지할지 커밋 단위로 결정할 수 있다는 것이다.",
+          "limit_excerpt": "2026년 11월 13일에 공식 문서 다섯 곳을 대조했다. 예제는 판정 기준을 설명하는 입력이며 실제 패키지 설치, 린트 실행, CI 시간 측정은 하지 않았다.",
+          "disclosure_excerpt": "공식 문서를 대조한 이 글의 판단은, 타입 검사기와 린트의 합격 조건을 분리하면 어느 작업을 전환하고 어느 작업을 유지할지 커밋 단위로 결정할 수 있다는 것이다.",
+          "source_urls": [
+            "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+            "https://typescript-eslint.io/getting-started/typed-linting/",
+            "https://typescript-eslint.io/users/dependency-versions/",
+            "https://typescript-eslint.io/rules/no-floating-promises/",
+            "https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/"
+          ]
+        }
+      ]
+    },
+    "search_demand": {
+      "snapshot": "data/search_demand/2026-10-28.json",
+      "query": "typescript 7 migration",
+      "relation": "distinct_followup",
+      "existing_page_urls": [
+        "https://won0322.tistory.com/162"
+      ],
+      "intent_gap": "공개 162번은 두 컴파일러를 병행하고 린트 결과도 확인하라고 안내한다. 이번 글은 타입 기반 ESLint가 오류 입력에서 지정 규칙 ID를 내는지 판정하고 CI의 린트 게이트를 보존한다."
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "TypeScript 7",
+      "ESLint",
+      "Promise"
+    ],
+    "subject": "TypeScript 7 마이그레이션의 타입 기반 ESLint 검증",
+    "hook": "TypeScript 7로 타입 검사기를 바꾼 뒤에도 CI에서 타입 기반 ESLint 규칙이 실제 위반을 찾아내는지 어떻게 확인할까?",
+    "motif": "한 소스에 남기는 컴파일러와 린터의 독립적인 검토 표시",
+    "cover": {
+      "label": "TypeScript 7과 ESLint 검토 표시를 소스 문서 한 장에서 확인하는 장면",
+      "scene_label": [
+        "TypeScript 7",
+        "ESLint"
+      ],
+      "steps": "TypeScript 7 검사와 ESLint 검사의 표시를 한 소스에서 구분한다.",
+      "curiosity_hook": "TypeScript 7 검사 옆에 ESLint가 찾아야 할 결함은 무엇일까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "TypeScript 7 전환에서는 타입 검사와 ESLint가 찾는 결함을 따로 확인한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "source_proof_two_review_tabs",
+      "composition_type": "hand_placing_second_proof_tab",
+      "palette_family": "cobalt_amber_slate",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "TypeScript 7과 ESLint를 구분하는 소스 검토 탭",
+      "texture_cue": "무광 반투명 탭과 종이 단면",
+      "authenticity_cue": "한 소스 종이에 두 번째 검토 탭을 붙이는 손",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nLandscape editorial image 1200:630, strong at thumbnail size. A developer's hand places a matte translucent amber tab marked ESLint beside a cobalt one marked tsc on the SAME stack of source-code proof sheets. One proof sheet shows a single visible async function line as generic typography, no other legible writing. Focus on two distinct review marks on one source document and the concrete placement action. Photorealistic natural editorial still life, slate-blue background, amber and cobalt accents, crisp edge light, centered key subjects within central 65 percent. No arrows, cards, charts, diagrams, screenshots, logos, extra words or watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+        "scene_label": [
+          "TypeScript 7",
+          "TypeScript 6"
+        ],
+        "steps": "TypeScript 7.0 공식 문서의 병행 구성과 별칭 설명을 읽는다.",
+        "curiosity_hook": "TypeScript 7 CLI를 쓰면서 기존 API를 어떻게 남길까?",
+        "logic_type": "evidence",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "evidence_type": "screenshot",
+        "source_url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+        "capture_tool": "playwright",
+        "capture_target": "TypeScript 7.0 공식 발표: https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+        "capture_note": "공식 화면의 병행 사용 문단을 발췌하고 한국어 주석을 추가했다.",
+        "content_role": "explanation",
+        "weekday_profile": "developer_decision",
+        "teaching_claim": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+        "captured_at": "2026-11-13T00:08:09.566410+00:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+        "scene_label": [
+          "타입 검사",
+          "Promise 규칙",
+          "타입 진단",
+          "규칙 ID"
+        ],
+        "steps": "TypeScript 7 결과와 ESLint 규칙 ID를 서로 다른 CI 작업에 대응시킨다.",
+        "curiosity_hook": "TypeScript 7 성공 뒤 ESLint에서 확인할 신호는 무엇일까?",
+        "logic_type": "flow",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "evidence_type": "diagram",
+        "generation_model": "gpt-image-2",
+        "generation_prompt": "Use case: scientific-educational\nLandscape technical explanatory image 1200:630, large Korean labels, high contrast. One source document with two branching arrows, left ends at a cobalt panel labeled TypeScript 7 with the Korean label '타입 검사', right ends at an amber panel labeled ESLint with the Korean label 'Promise 규칙'. Under left panel label '타입 진단', under right panel label '규칙 ID'. Left and right branches independent, no arrows between panels. Four Korean labels exactly as given, no other labels. Clean generous padding, thick arrows, very large dark type on an off-white background, no tiny typography, no fake UI or logos.",
+        "korean_labels": [
+          "타입 검사",
+          "Promise 규칙",
+          "타입 진단",
+          "규칙 ID"
+        ],
+        "content_role": "explanation",
+        "weekday_profile": "developer_decision",
+        "teaching_claim": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+        "scene_label": [
+          "ESLint",
+          "projectService"
+        ],
+        "steps": "ESLint의 프로젝트 서비스 설명에서 타입 정보가 필요한 설정을 확인한다.",
+        "curiosity_hook": "ESLint가 Promise 반환 타입을 어디서 읽을까?",
+        "logic_type": "evidence",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "evidence_type": "screenshot",
+        "source_url": "https://typescript-eslint.io/getting-started/typed-linting/",
+        "capture_tool": "playwright",
+        "capture_target": "ESLint 타입 기반 린트 공식 문서: https://typescript-eslint.io/getting-started/typed-linting/",
+        "capture_note": "공식 화면에서 프로젝트 서비스 설명을 발췌하고 한국어 주석을 추가했다.",
+        "content_role": "explanation",
+        "weekday_profile": "developer_decision",
+        "teaching_claim": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+        "captured_at": "2026-11-13T00:08:09.566410+00:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.1-sol",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v2"
+  },
+  "images": {
+    "cover": {
+      "label": "TypeScript 7과 ESLint 검토 표시를 소스 문서 한 장에서 확인하는 장면",
+      "scene_label": [
+        "TypeScript 7",
+        "ESLint"
+      ],
+      "steps": "TypeScript 7 검사와 ESLint 검사의 표시를 한 소스에서 구분한다.",
+      "curiosity_hook": "TypeScript 7 검사 옆에 ESLint가 찾아야 할 결함은 무엇일까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "TypeScript 7 전환에서는 타입 검사와 ESLint가 찾는 결함을 따로 확인한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "source_proof_two_review_tabs",
+      "composition_type": "hand_placing_second_proof_tab",
+      "palette_family": "cobalt_amber_slate",
+      "render_family": "photorealistic_natural",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "TypeScript 7과 ESLint를 구분하는 소스 검토 탭",
+      "texture_cue": "무광 반투명 탭과 종이 단면",
+      "authenticity_cue": "한 소스 종이에 두 번째 검토 탭을 붙이는 손",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept\nAsset intent: editorial-scene\nLandscape editorial image 1200:630, strong at thumbnail size. A developer's hand places a matte translucent amber tab marked ESLint beside a cobalt one marked tsc on the SAME stack of source-code proof sheets. One proof sheet shows a single visible async function line as generic typography, no other legible writing. Focus on two distinct review marks on one source document and the concrete placement action. Photorealistic natural editorial still life, slate-blue background, amber and cobalt accents, crisp edge light, centered key subjects within central 65 percent. No arrows, cards, charts, diagrams, screenshots, logos, extra words or watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "TypeScript 7 전환에서는 타입 검사와 ESLint가 찾는 결함을 따로 확인한다",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-검토-표시.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-검토-표시.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 50024,
+      "quality": 82,
+      "sha256": "113f7070b48f13843cf7a930d56804e5f0e9c3e06eef59a8112955227ded2170"
+    },
+    "visual_1": {
+      "label": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+      "scene_label": [
+        "TypeScript 7",
+        "TypeScript 6"
+      ],
+      "steps": "TypeScript 7.0 공식 문서의 병행 구성과 별칭 설명을 읽는다.",
+      "curiosity_hook": "TypeScript 7 CLI를 쓰면서 기존 API를 어떻게 남길까?",
+      "logic_type": "evidence",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "evidence_type": "screenshot",
+      "source_url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+      "capture_tool": "playwright",
+      "capture_target": "TypeScript 7.0 공식 발표: https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+      "capture_note": "공식 화면의 병행 사용 문단을 발췌하고 한국어 주석을 추가했다.",
+      "content_role": "explanation",
+      "weekday_profile": "developer_decision",
+      "teaching_claim": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+      "captured_at": "2026-11-13T00:08:09.566410+00:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다.",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-공식-병행-안내.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-공식-병행-안내.webp",
+      "width": 1200,
+      "height": 494,
+      "format": "webp",
+      "bytes": 29226,
+      "quality": 82,
+      "sha256": "6b962c4ee3f80d4629a1e2b098541011e609726548caceeac90965363400cdba",
+      "capture_sha256": "6b962c4ee3f80d4629a1e2b098541011e609726548caceeac90965363400cdba"
+    },
+    "visual_2": {
+      "label": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+      "scene_label": [
+        "타입 검사",
+        "Promise 규칙",
+        "타입 진단",
+        "규칙 ID"
+      ],
+      "steps": "TypeScript 7 결과와 ESLint 규칙 ID를 서로 다른 CI 작업에 대응시킨다.",
+      "curiosity_hook": "TypeScript 7 성공 뒤 ESLint에서 확인할 신호는 무엇일까?",
+      "logic_type": "flow",
+      "origin": "imagegen",
+      "teaching_role": "decision_map",
+      "evidence_type": "diagram",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: scientific-educational\nLandscape technical explanatory image 1200:630, large Korean labels, high contrast. One source document with two branching arrows, left ends at a cobalt panel labeled TypeScript 7 with the Korean label '타입 검사', right ends at an amber panel labeled ESLint with the Korean label 'Promise 규칙'. Under left panel label '타입 진단', under right panel label '규칙 ID'. Left and right branches independent, no arrows between panels. Four Korean labels exactly as given, no other labels. Clean generous padding, thick arrows, very large dark type on an off-white background, no tiny typography, no fake UI or logos.",
+      "korean_labels": [
+        "타입 검사",
+        "Promise 규칙",
+        "타입 진단",
+        "규칙 ID"
+      ],
+      "content_role": "explanation",
+      "weekday_profile": "developer_decision",
+      "teaching_claim": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다.",
+      "path": "docs/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-CI-판정.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/TypeScript-7-ESLint-CI-판정.webp",
+      "width": 1200,
+      "height": 629,
+      "format": "webp",
+      "bytes": 29606,
+      "quality": 82,
+      "sha256": "99ddf59e705abfb1ab87e5b8b5b1ac57b70dbf0990350bfe3fcf0d37c7717472"
+    },
+    "visual_3": {
+      "label": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+      "scene_label": [
+        "ESLint",
+        "projectService"
+      ],
+      "steps": "ESLint의 프로젝트 서비스 설명에서 타입 정보가 필요한 설정을 확인한다.",
+      "curiosity_hook": "ESLint가 Promise 반환 타입을 어디서 읽을까?",
+      "logic_type": "evidence",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "evidence_type": "screenshot",
+      "source_url": "https://typescript-eslint.io/getting-started/typed-linting/",
+      "capture_tool": "playwright",
+      "capture_target": "ESLint 타입 기반 린트 공식 문서: https://typescript-eslint.io/getting-started/typed-linting/",
+      "capture_note": "공식 화면에서 프로젝트 서비스 설명을 발췌하고 한국어 주석을 추가했다.",
+      "content_role": "explanation",
+      "weekday_profile": "developer_decision",
+      "teaching_claim": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+      "captured_at": "2026-11-13T00:08:09.566410+00:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "alt": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다.",
+      "path": "docs/tistory/assets/2026-11-13-automation/ESLint-프로젝트-서비스-공식-안내.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-13-automation/ESLint-프로젝트-서비스-공식-안내.webp",
+      "width": 1200,
+      "height": 480,
+      "format": "webp",
+      "bytes": 31184,
+      "quality": 82,
+      "sha256": "29c1973794c00493fd756e6a0a7fc7696fae669b326c9e06b99a891ef1f26cb7",
+      "capture_sha256": "29c1973794c00493fd756e6a0a7fc7696fae669b326c9e06b99a891ef1f26cb7"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "TypeScript 7 ESLint 전환: 방치한 Promise를 CI에서 확인하는 법",
+      "source": "Microsoft·typescript-eslint 공식 문서 확인일",
+      "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+      "published_at": "2026-11-13T09:00:00+09:00",
+      "blurb_kr": "TypeScript 7을 CI에 추가할 때 기존 타입 기반 ESLint가 방치된 Promise를 검출하는지 정상·위반 입력으로 판단한다.",
+      "source_date_kind": "observed_at",
+      "references": [
+        {
+          "title": "Microsoft TypeScript 7.0 발표와 병행 구성",
+          "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+          "kind": "official",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "typescript-eslint 타입 기반 린트 설정",
+          "url": "https://typescript-eslint.io/getting-started/typed-linting/",
+          "kind": "official",
+          "publisher": "typescript-eslint"
+        },
+        {
+          "title": "typescript-eslint 의존성 지원 범위",
+          "url": "https://typescript-eslint.io/users/dependency-versions/",
+          "kind": "official",
+          "publisher": "typescript-eslint"
+        },
+        {
+          "title": "typescript-eslint Promise 방치 검출 규칙",
+          "url": "https://typescript-eslint.io/rules/no-floating-promises/",
+          "kind": "official",
+          "publisher": "typescript-eslint"
+        },
+        {
+          "title": "Microsoft TypeScript 7.1 베타 API 설명",
+          "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/",
+          "kind": "official",
+          "publisher": "Microsoft"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "CI에서 타입 검사와 린트의 역할을 나눈다"
+        },
+        {
+          "t": "p",
+          "text": "TypeScript 7 타입 검사와 기존 ESLint를 별도 작업으로 실행한다. Promise를 처리한 입력과 처리하지 않은 입력을 같은 설정으로 비교해, 후자에만 지정한 규칙 ID가 나오는지 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "타입 검사는 코드의 타입 관계가 맞는지 확인한다. 타입 기반 린트는 타입 정보를 써서 팀이 금지한 패턴도 찾는다. 함수가 Promise를 반환할 때 그 결과를 쓰지 않는 호출은 타입상 유효할 수 있다. 방치한 호출을 찾아내려면 해당 린트 규칙이 활성화돼 있어야 한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "CI가 실행하는 타입 검사 명령과 ESLint 명령을 각각 찾는다.",
+            "정상 입력과 위반 입력을 같은 린트 설정과 TypeScript 프로젝트에 넣는다.",
+            "위반 입력의 규칙 ID와 CI 종료 상태를 확인한 뒤 전환 범위를 정한다."
+          ]
+        },
+        {
+          "t": "table",
+          "caption": "같은 커밋에서 남길 두 가지 합격 신호",
+          "headers": [
+            "CI 작업",
+            "무엇을 확인할까"
+          ],
+          "rows": [
+            [
+              "TypeScript 7 타입 검사",
+              "선택한 tsconfig로 검사하고 기존에 기대한 타입 진단과 비교한다."
+            ],
+            [
+              "타입 기반 ESLint",
+              "위반 입력에서 지정한 규칙 ID를 확인하고 정상 입력에서는 그 ID가 없어야 한다."
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "TypeScript 7·ESLint CI 전환 판정표"
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "TypeScript 검사와 타입 기반 ESLint에는 각각 다른 합격 신호가 있다. 설명용 생성 도식이다."
+        },
+        {
+          "t": "h",
+          "text": "ESLint가 불러오는 TypeScript를 먼저 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "Microsoft의 TypeScript 7.0 안내에는 7.0 CLI와 기존 API를 요구하는 도구를 병행하는 예가 있다. 예제는 npm 별칭으로 7.0 CLI 패키지와 기존 API 패키지의 설치 이름을 분리한다. 기존 도구가 typescript라는 이름으로 패키지를 찾는다는 점이 중요하다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Microsoft는 TypeScript 7.0 CLI와 기존 API가 필요한 도구를 병행하는 구성을 안내한다. Microsoft 공식 문서의 병행 구성 안내를 캡처했다."
+        },
+        {
+          "t": "p",
+          "text": "모노레포라면 루트 선언만 읽고 끝내지 말자. 린트 명령이 실행되는 워크스페이스의 의존성 선언과 lockfile을 확인한다. 7.0 발표에 나온 예제를 옮길 때도 정확한 버전과 린터 지원 범위를 먼저 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "이 글을 작성할 때 typescript-eslint의 지원 문서는 TypeScript 6.1 미만을 지원 범위로 명시했다. 7.1 베타의 새 API를 확인했다면, 사용하는 린터가 그 API를 지원하는지도 별도로 확인한다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "한 줄만 다른 Promise 입력을 고른다"
+        },
+        {
+          "t": "p",
+          "text": "기존 CI가 린트하는 테스트 경로에서, 호출 대상의 반환 타입이 Promise라고 알 수 있는 작은 입력을 고른다. 가상의 함수 sendReceipt가 Promise<void>를 반환하고 호출 지점은 async 함수 안이라고 가정한다. 아래 표는 팀의 실제 설정으로 대조할 예시다."
+        },
+        {
+          "t": "table",
+          "caption": "정상 입력과 위반 입력의 예상 차이",
+          "headers": [
+            "입력",
+            "기대하는 린트 결과"
+          ],
+          "rows": [
+            [
+              "await sendReceipt()",
+              "이 호출에서 no-floating-promises가 나오지 않는다."
+            ],
+            [
+              "sendReceipt()",
+              "이 호출에서 @typescript-eslint/no-floating-promises가 나온다."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "함수와 파일 위치, 설정을 그대로 두고 await의 유무만 바꾼다. 처음부터 여러 규칙을 동시에 건드리면 린트가 실패했을 때 어느 규칙이 반응했는지 판단하기 어렵다. 두 입력의 결과와 실행한 커밋을 같이 기록한다."
+        },
+        {
+          "t": "h",
+          "text": "린트가 실패한 이유까지 읽는다"
+        },
+        {
+          "t": "p",
+          "text": "파일이 ignore에 걸리거나 프로젝트에 포함되지 않으면, 원하는 규칙까지 도달하지 못할 수 있다. 파서 오류만 나왔다면 설정을 먼저 바로잡는다. projectService를 쓰는 구성에서는 대상 파일이 어느 tsconfig에 속하는지 확인한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "typescript-eslint의 프로젝트 서비스는 린트 규칙에 필요한 타입 정보를 읽는다. typescript-eslint 공식 문서에서 projectService가 하는 일을 확인할 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "예상과 다른 결과가 나왔을 때",
+          "headers": [
+            "CI에서 보이는 결과",
+            "다음에 확인할 곳"
+          ],
+          "rows": [
+            [
+              "둘 다 깨끗하게 통과",
+              "파일 제외, 규칙 활성화, 호출의 실제 반환 타입을 확인한다."
+            ],
+            [
+              "둘 다 파서 오류",
+              "린터가 읽은 TypeScript 버전과 tsconfig 포함 범위를 확인한다."
+            ],
+            [
+              "위반이 경고로만 기록",
+              "팀이 차단 규칙으로 운영한다면 규칙 심각도와 CI의 경고 처리 조건을 확인한다."
+            ],
+            [
+              "위반 입력에서 해당 규칙 ID로 실패",
+              "정상 입력도 확인한 뒤 기존 린트 게이트가 동작했다고 기록한다."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "text": "CI 작업별로 전환 결정을 남긴다"
+        },
+        {
+          "t": "p",
+          "text": "공식 문서를 대조한 이 글의 판단은, 타입 검사기와 린트의 합격 조건을 분리하면 어느 작업을 전환하고 어느 작업을 유지할지 커밋 단위로 결정할 수 있다는 것이다."
+        },
+        {
+          "t": "p",
+          "text": "가령 TypeScript 7의 진단이 기대와 같고, 기존 ESLint가 정상 입력을 통과시키면서 위반 입력에 지정 규칙 ID를 남겼다면 컴파일러 작업부터 바꿀 근거가 생긴다. 린트에서 실패하면 의존성이나 파일 범위를 확인하고 기존 린트 설정을 유지한다."
+        },
+        {
+          "t": "p",
+          "text": "위반 입력은 임시 브랜치나 별도 검증 단계에서만 확인한다. 마지막에는 입력을 원래 상태로 돌리고, 평소 CI가 사용하는 명령으로 타입 검사와 린트가 모두 통과하는지 확인한다."
+        },
+        {
+          "t": "h",
+          "text": "근거와 한계"
+        },
+        {
+          "t": "p",
+          "text": "정상 입력에 지정 규칙 ID가 없고 위반 입력에는 해당 ID와 차단 상태가 남으며 TypeScript 7 타입 검사 결과가 별도로 기록된다."
+        },
+        {
+          "t": "p",
+          "text": "2026년 11월 13일에 공식 문서 다섯 곳을 대조했다. 예제는 판정 기준을 설명하는 입력이며 실제 패키지 설치, 린트 실행, CI 시간 측정은 하지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "이 판정은 선택한 Promise 규칙과 파일에 한정된다. 프레임워크 플러그인이나 별도 tsconfig를 쓰는 워크스페이스는 해당 작업이 읽는 설정으로 각각 확인한다. 린터가 새 TypeScript API 지원을 발표하면 지원 버전과 규칙 결과를 다시 확인한다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "TypeScript 7 마이그레이션 가이드: Go 네이티브 컴파일러 전환 전 확인할 것",
+      "url": "https://won0322.tistory.com/162",
+      "reason": "두 컴파일러 병행과 프로젝트별 전환 순서를 먼저 확인한다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 검증: ‘테스트 통과’ 뒤 완료를 가르는 기준",
+      "url": "https://won0322.tistory.com/228",
+      "reason": "CI 결과를 작업 완료 근거로 남길 때 실패 사례와 범위를 정하는 데 도움이 된다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-11-13T00:08:42.734723+00:00",
+    "scope": "TypeScript 7.0·7.1 베타와 typescript-eslint 공식 문서 다섯 곳",
+    "method": "공식 문서의 버전 지원, 병행 방식, 타입 기반 규칙 입력을 대조했다.",
+    "selection_rule": "실제 검색어 typescript 7 migration과 공개 162번의 본문에서 별도 린트 검증 과제를 확인했다.",
+    "limitations": "2026년 11월 13일에 공식 문서 다섯 곳을 대조했다. 예제는 판정 기준을 설명하는 입력이며 실제 패키지 설치, 린트 실행, CI 시간 측정은 하지 않았다.",
+    "source_urls": [
+      "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+      "https://typescript-eslint.io/getting-started/typed-linting/",
+      "https://typescript-eslint.io/users/dependency-versions/",
+      "https://typescript-eslint.io/rules/no-floating-promises/",
+      "https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/"
+    ],
+    "source_count": 5,
+    "evidence_files": [
+      "visual_1",
+      "visual_3"
+    ],
+    "problem_lane": "TypeScript 7 전환 뒤 CI의 타입 기반 린트 보존",
+    "tool_brand": "TypeScript·typescript-eslint"
+  }
+}
