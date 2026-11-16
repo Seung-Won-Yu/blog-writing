@@ -1,0 +1,312 @@
+{
+  "source": "Google Search Console",
+  "property": "https://won0322.tistory.com/",
+  "metric_scope": "query",
+  "search_type": "web",
+  "observed_at": "2026-11-16T00:24:11.869Z",
+  "current_period": {
+    "start": "2026-10-17",
+    "end": "2026-11-13"
+  },
+  "previous_period": {
+    "start": "2026-09-19",
+    "end": "2026-10-16"
+  },
+  "observation_note": "검색어 표 161행 중 최근 기간 1클릭 이상 또는 3노출 이상인 관측 검색어를 보존했다. 사이트 단위 합계다.",
+  "queries": [
+    {
+      "query": "시크릿모드 기록",
+      "current_clicks": 2,
+      "previous_clicks": 0,
+      "current_impressions": 27,
+      "previous_impressions": 13
+    },
+    {
+      "query": "시크릿모드 기록 보는법",
+      "current_clicks": 2,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im-not-ai 사용법",
+      "current_clicks": 1,
+      "previous_clicks": 4,
+      "current_impressions": 63,
+      "previous_impressions": 56
+    },
+    {
+      "query": "im not ai 스킬",
+      "current_clicks": 1,
+      "previous_clicks": 1,
+      "current_impressions": 4,
+      "previous_impressions": 27
+    },
+    {
+      "query": "get-ciminstance win32_processor",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "powershell get-ciminstance",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 2,
+      "previous_impressions": 0
+    },
+    {
+      "query": "get-ciminstance win32_process",
+      "current_clicks": 1,
+      "previous_clicks": 0,
+      "current_impressions": 1,
+      "previous_impressions": 1
+    },
+    {
+      "query": "im not ai",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 70,
+      "previous_impressions": 405
+    },
+    {
+      "query": "im-not-ai",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 32,
+      "previous_impressions": 128
+    },
+    {
+      "query": "get-ciminstance",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 28,
+      "previous_impressions": 17
+    },
+    {
+      "query": "im not ai git",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 22,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im-not-ai 설치",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 18,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im not ai 사용법",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 17,
+      "previous_impressions": 21
+    },
+    {
+      "query": "i am not ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 16,
+      "previous_impressions": 41
+    },
+    {
+      "query": "애플 이메일 주소를 확인할 수 없음",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 13,
+      "previous_impressions": 0
+    },
+    {
+      "query": "iam not ai",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 13,
+      "previous_impressions": 35
+    },
+    {
+      "query": "im-not-ai 후기",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 13,
+      "previous_impressions": 1
+    },
+    {
+      "query": "시크릿 모드 기록",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 12,
+      "previous_impressions": 10
+    },
+    {
+      "query": "아임낫ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 12,
+      "previous_impressions": 14
+    },
+    {
+      "query": "구글 미트 회의록 저장 위치",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 10,
+      "previous_impressions": 0
+    },
+    {
+      "query": "ocr 말고 ai로 문서 읽는 제품 뭐가 있나요",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 7,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im not ai skill",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 7,
+      "previous_impressions": 0
+    },
+    {
+      "query": "get ciminstance",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 7,
+      "previous_impressions": 2
+    },
+    {
+      "query": "i am not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 6,
+      "previous_impressions": 4
+    },
+    {
+      "query": "not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 6,
+      "previous_impressions": 3
+    },
+    {
+      "query": "애플 프라이빗 메일 확인",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 6,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im not ai github",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 3
+    },
+    {
+      "query": "시크릿모드 방문기록 보는법",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 1
+    },
+    {
+      "query": "시크릿모드 검색기록 보는법",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 1
+    },
+    {
+      "query": "시크릿 탭 기록 보는 법",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 0
+    },
+    {
+      "query": "비밀번호 특수문자 제한",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 5,
+      "previous_impressions": 0
+    },
+    {
+      "query": "1tb 931gb",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 2
+    },
+    {
+      "query": "imnot ai",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 8
+    },
+    {
+      "query": "im-not-ai 클로드",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 4,
+      "previous_impressions": 0
+    },
+    {
+      "query": "google fido2",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 1
+    },
+    {
+      "query": "get-ciminstance win32_bios",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 5
+    },
+    {
+      "query": "애플 계정 생성 이메일 주소를 확인할 수 없음",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "codex security sdk",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "im not ai codex",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 1
+    },
+    {
+      "query": "wmic'은(는) 내부 또는 외부 명령 실행할 수 있는 프로그램 또는 배치 파일이 아닙니다",
+      "current_clicks": 0,
+      "previous_clicks": 1,
+      "current_impressions": 3,
+      "previous_impressions": 1
+    },
+    {
+      "query": "im-not-ai skill",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 0
+    },
+    {
+      "query": "931gb",
+      "current_clicks": 0,
+      "previous_clicks": 0,
+      "current_impressions": 3,
+      "previous_impressions": 8
+    }
+  ]
+}

@@ -1,0 +1,623 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "draft_id": "2026-11-16",
+  "publish_date": "2026-11-16",
+  "date_label": "2026. 11. 16",
+  "weekday": "월",
+  "content_type": "daily_news",
+  "content_label": "개발 가이드",
+  "category": "개발 가이드",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-11-16T09:00:00+09:00",
+  "primary_query": "Get-CimInstance 원격 오류",
+  "tags": [
+    "Get-CimInstance 원격 오류",
+    "Get-CimInstance",
+    "WinRM",
+    "Test-WSMan",
+    "New-CimSession",
+    "PowerShell",
+    "WMI 권한"
+  ],
+  "editorial": {
+    "headline": "Get-CimInstance 원격 오류: WinRM 응답부터 조회 권한까지",
+    "opening": "내 PC에서는 Get-CimInstance가 운영체제 정보를 보여 주는데, 관리 대상 PC 이름을 넣으면 오류가 난다. 같은 명령이라도 원격 요청은 네트워크를 지나 계정과 조회 권한을 확인한다. 연결을 못 한 건지, 접속은 했지만 정보를 읽지 못한 건지 네 번의 읽기 점검으로 좁힐 수 있다.",
+    "closing": "원격 조회를 복구하려면 처음 멈춘 지점부터 고친다. 포트까지 닿았는지, WinRM이 응답했는지, 실제 계정으로 무엇을 읽었는지를 남기면 같은 오류가 반복될 때도 같은 순서로 다시 좁힐 수 있다.",
+    "action": "대상 PC 이름과 포트, 마지막으로 통과한 명령, 실패한 클래스나 오류 코드를 한 줄에 적을 수 있으면 진단이 끝난다.",
+    "audience_problem": "Windows 장비를 관리하는 개발자가 로컬 조회는 되는데 원격 Get-CimInstance 명령만 실패해 담당자에게 어느 단계의 결과를 전달할지 알아야 한다.",
+    "reader_takeaway": "같은 PC 이름과 포트의 TCP 연결부터 WinRM 응답, 세션 인증, WMI 클래스 조회까지 순서대로 점검하고 첫 실패를 기록한다.",
+    "why_now": "최근 28일 Search Console에서 Get-CimInstance 관련 유입과 노출을 확인했다. 기존 WMIC 교체 글에 이어 원격 명령의 실행 결과가 다를 때 참고할 절차를 제공한다.",
+    "topic_key": "windows-cim-remote-winrm-session-read-troubleshooting",
+    "reader_question": "Windows PowerShell에서 로컬 Get-CimInstance는 되는데 원격 조회만 안 될 때 어느 경계에서 멈췄는지 어떻게 확인할까?",
+    "entities": [
+      "Get-CimInstance",
+      "WinRM",
+      "Test-WSMan",
+      "New-CimSession",
+      "WMI"
+    ],
+    "coverage": [
+      "change",
+      "mechanism",
+      "comparison",
+      "application",
+      "limits",
+      "decision"
+    ],
+    "article_shape": "official_document_guide",
+    "weekly_lane": "evergreen_problem",
+    "reader_hook": {
+      "scene": "내 PC에서 운영체제 조회는 되는데 관리 대상 Windows PC에 같은 명령을 보내면 실패한다.",
+      "stakes": "어느 단계가 막혔는지 모르고 방화벽과 권한부터 바꾸면 원래 원인을 더 좁히기 어렵다.",
+      "payoff": "포트, 응답, 계정 연결, 실제 조회를 나눠 어느 담당자에게 무엇을 전달할지 정한다.",
+      "open_question": "WinRM은 응답하는데 Get-CimInstance는 왜 여전히 실패할까?"
+    },
+    "reader_path": {
+      "reader_level": "practitioner",
+      "entry_heading": "원격 조회는 마지막으로 성공한 단계부터 본다",
+      "immediate_answer": "Get-CimInstance 원격 오류가 나면 대상 포트, WinRM 응답, 계정으로 만든 세션, 실제 읽기 쿼리를 같은 대상에서 차례로 확인한다.",
+      "action_steps": [
+        "장애가 난 곳과 같은 Windows PC에서 승인된 대상 이름과 포트의 TCP 연결을 확인한다.",
+        "같은 이름과 포트에서 Test-WSMan으로 WinRM의 식별 응답을 확인한다.",
+        "실제 조회에 사용할 계정으로 New-CimSession을 실행해 세션을 만든다.",
+        "같은 세션에서 운영체제 정보와 실패한 클래스를 차례로 읽고 오류 위치를 기록한다."
+      ],
+      "completion_check": "대상 PC 이름과 포트, 마지막으로 통과한 명령, 실패한 클래스나 오류 코드를 한 줄에 적을 수 있으면 진단이 끝난다."
+    },
+    "revisit": {
+      "quick_answer": "Get-CimInstance 원격 오류가 나면 대상 포트, WinRM 응답, 계정으로 만든 세션, 실제 읽기 쿼리를 같은 대상에서 차례로 확인한다.",
+      "reuse_case": "같은 원격 인벤토리 스크립트가 관리 대상 PC 하나에서만 실패할 때 순서대로 다시 확인한다.",
+      "failure_case": "기본 클래스만 통과하면 실패한 클래스와 네임스페이스의 존재 및 조회 권한을 확인한다.",
+      "artifact_type": "checklist",
+      "update_triggers": [
+        "WinRM 승인 포트나 인증 방식 변경",
+        "실행 계정 또는 대상 네임스페이스 변경"
+      ]
+    },
+    "search_intent": {
+      "query": "Get-CimInstance 원격",
+      "reader_need": "로컬은 되지만 원격 조회가 거부되거나 연결이 안 될 때 실패 지점과 담당자를 확인한다.",
+      "answer_format": "복사 가능한 진단 명령과 마지막 성공 기준표"
+    },
+    "original_value": {
+      "durable_question": "연결 오류가 날 때 네트워크, WinRM, 접속 계정, 클래스 문제 중 어디인지 어떻게 좁힐까?",
+      "source_gap": "각 명령 문서는 별도 동작을 설명하며 오류를 접수할 때의 마지막 성공 기준을 한눈에 보여 주지 않는다.",
+      "contribution": "도달·응답·세션·조회를 나눠 검사하면 마지막 성공 결과로 네트워크 담당자, WinRM 관리자, WMI 권한 담당자에게 각각 확인할 일을 전달할 수 있다.",
+      "proof_method": "document_comparison",
+      "reader_outcome": "대상 PC 이름과 포트, 마지막으로 통과한 명령, 실패한 클래스나 오류 코드를 한 줄에 적을 수 있으면 진단이 끝난다.",
+      "limits": "Microsoft 명령 문서와 DMTF 표준으로 동작을 대조했다. PC 이름과 판정 사례는 가상이며 운영 장비에서 명령을 실행한 결과는 아니다."
+    },
+    "value_review": {
+      "primary_reader": "Windows 장비의 원격 조회 실패를 처음 맡은 개발자",
+      "reader_question": "같은 명령이 로컬에서만 성공할 때 어디부터 확인해야 할까?",
+      "source_gap": "공개 209번은 WMIC를 PowerShell로 바꾸는 예제와 로컬 조회가 중심이다. 이 글에서는 대상 포트부터 같은 계정의 원격 세션과 실제 조회까지 어느 단계가 막혔는지 좁힌다.",
+      "selection_reason": "2026-10-17~11-13 get-ciminstance는 0클릭·28노출(직전 1클릭·17노출), powershell get-ciminstance는 1클릭·2노출이다. 사이트 합계이며 특정 글이나 원격 오류 자체의 검색량은 아니다. 별도 진단 과제는 공개 209번 본문과 대조했다.",
+      "contributions": [
+        {
+          "basis": "documented",
+          "excerpt": "도달·응답·세션·조회를 나눠 검사하면 마지막 성공 결과로 네트워크 담당자, WinRM 관리자, WMI 권한 담당자에게 각각 확인할 일을 전달할 수 있다.",
+          "limit_excerpt": "Microsoft 명령 문서와 DMTF 표준으로 동작을 대조했다. PC 이름과 판정 사례는 가상이며 운영 장비에서 명령을 실행한 결과는 아니다.",
+          "source_urls": [
+            "https://learn.microsoft.com/en-us/powershell/module/microsoft.wsman.management/test-wsman?view=powershell-5.1",
+            "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/new-cimsession?view=powershell-5.1",
+            "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-5.1",
+            "https://learn.microsoft.com/en-us/windows/win32/wmisdk/access-to-wmi-namespaces",
+            "https://www.dmtf.org/sites/default/files/standards/documents/DSP0226_1.2.0.pdf"
+          ]
+        }
+      ]
+    },
+    "selection_evaluation": {
+      "editorial_score": 87,
+      "search_durability": 32,
+      "problem_solving": 29,
+      "evidence": 18,
+      "current_interest": 4,
+      "existing_connection": 4
+    },
+    "search_demand": {
+      "snapshot": "data/search_demand/2026-11-16.json",
+      "query": "get-ciminstance",
+      "relation": "distinct_followup",
+      "existing_page_urls": [
+        "https://won0322.tistory.com/209"
+      ],
+      "intent_gap": "공개 209번은 WMIC를 PowerShell로 바꾸는 예제와 로컬 조회가 중심이다. 이 글에서는 대상 포트부터 같은 계정의 원격 세션과 실제 조회까지 어느 단계가 막혔는지 좁힌다."
+    }
+  },
+  "reader_access": {
+    "quick_summary": [
+      "Get-CimInstance 원격 오류가 나면 대상 포트, WinRM 응답, 계정으로 만든 세션, 실제 읽기 쿼리를 같은 대상에서 차례로 확인한다.",
+      "WinRM이 응답하면 실제로 작업할 계정으로 세션을 만든다. 같은 세션으로 기본 정보와 원하는 클래스를 읽는다.",
+      "대상 PC 이름과 포트, 마지막으로 통과한 명령, 실패한 클래스나 오류 코드를 한 줄에 적을 수 있으면 진단이 끝난다."
+    ],
+    "glossary": [
+      {
+        "term": "WinRM",
+        "meaning": "Windows가 원격 관리 요청을 받는 서비스다."
+      },
+      {
+        "term": "CIM 세션",
+        "meaning": "같은 원격 PC에 여러 번 조회할 때 재사용하는 연결이다."
+      },
+      {
+        "term": "네임스페이스",
+        "meaning": "운영체제나 하드웨어 관련 클래스들이 모여 있는 이름 공간이다."
+      }
+    ]
+  },
+  "visual": {
+    "subject": "Get-CimInstance 원격 오류를 좁히는 경계",
+    "subject_terms": [
+      "Get-CimInstance",
+      "WinRM",
+      "Test-WSMan",
+      "New-CimSession"
+    ],
+    "hook": "내 PC에서 조회되던 명령은 원격에서 어디까지 도달했을까?",
+    "motif": "로컬 출력 영수증 끝이 닫힌 원격 슬롯에서 접힌 장면",
+    "weekday_profile": "practical_diagnosis",
+    "cover": {
+      "label": "Get-CimInstance는 왜 내 PC에서만 답을 돌려줄까?",
+      "scene_label": [
+        "로컬 조회 영수증",
+        "닫힌 원격 조회 슬롯"
+      ],
+      "steps": "로컬 조회는 끝났지만 Get-CimInstance 원격 요청이 회신을 받지 못한 장면이다.",
+      "curiosity_hook": "Get-CimInstance 원격 요청은 어느 경계를 넘지 못했을까?",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "local-receipt-stops-at-remote-slot",
+      "palette_family": "smoke_cobalt_orange",
+      "render_family": "editorial_collage",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "Get-CimInstance 로컬 출력 영수증과 닫힌 원격 조회 슬롯",
+      "texture_cue": "인쇄 점과 가장자리가 보이는 회색빛 스크린프린트 종이",
+      "authenticity_cue": "종이 끝이 원격 슬롯의 닫힌 금속 셔터 앞에서 접혀 있다.",
+      "weekday_profile": "practical_diagnosis",
+      "weekday_role": "problem_scene",
+      "visual_claim": "Get-CimInstance는 로컬에서 답해도 원격 대상에서 멈출 수 있다.",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Korean technology blog cover for Get-CimInstance remote WinRM troubleshooting. Wide 1.9:1 landscape, deliberately designed to crop vertically to 1200x630. A tactile analog editorial screenprint collage, smoke-gray background, cobalt and restrained vermilion. One crumpled long white-blue diagnostic receipt is printed from a small exposed cobalt port at left and its leading edge folds against a closed burnt-orange metal mail slot on a remote-machine steel plate at right. The receipt is the bridge and focal subject. It has sparse abstract dotted rows and two cobalt checkmarks, never actual text or a fake terminal. Slot has one small practical circular orange lamp, NO locks or keyhole. Strong central framing, subjects big at thumbnail size, generous crop safety at top/bottom, gray screenprint paper grain and thin offset-register misalignment. No lettering, no numbers, no people, no neon, no windows logo, no captions, no arrows, no split panels, no chart, no slide, full bleed. Make it a single compelling scene.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "Get-CimInstance 원격 오류는 어떤 순서로 좁힐까?",
+        "scene_label": [
+          "포트",
+          "WinRM 응답",
+          "계정 세션",
+          "실제 조회"
+        ],
+        "steps": "Get-CimInstance 원격 조회의 네 경계를 직렬로 놓고 앞에서부터 확인한다.",
+        "curiosity_hook": "WinRM 응답을 받았으면 어떤 확인이 남았을까?",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "flow",
+        "evidence_type": "diagram",
+        "teaching_role": "diagnosis_flow",
+        "teaching_claim": "Get-CimInstance 원격 조회는 포트, WinRM 응답, 계정 세션, 실제 조회 순으로 확인한다.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "포트",
+          "WinRM 응답",
+          "계정 세션",
+          "실제 조회"
+        ],
+        "generation_prompt": "Use case: scientific-educational. True diagnostic sequence for Get-CimInstance; a clean Korean technical illustration, landscape 3:2. Text-first four vertically stacked broad rows, on very light warm beige with thin slate guides. One narrow vertical line with small downward arrow between rows, to the left of the text. Slightly hand-printed navy text with very large output size. EXACTLY four labels, one per row, from top to bottom: 포트 / WinRM 응답 / 계정 세션 / 실제 조회. Typography should dominate and remain readable at 350px scaled width; align them all to the left with generous padding, one subtle tiny icon for each row on the right: connection plug, reply bubble, credential badge, returned document. Keep row space evenly balanced across frame, minimum 8% safe margins. No extra characters, no numbers, no English except WinRM, no heading, no gradients, no fake UI, no letterbox.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "WinRM에 응답은 오는데 조회가 멈추면 누구에게 무엇을 물을까?",
+        "scene_label": [
+          "세션 실패",
+          "계정 확인",
+          "클래스 실패",
+          "권한 확인"
+        ],
+        "steps": "WinRM 연결 뒤 세션이 막힌 경로와 특정 클래스만 막힌 경로의 확인 대상을 비교한다.",
+        "curiosity_hook": "Get-CimInstance에서 세션과 클래스 중 어디에서 막혔을까?",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "logic_type": "conditional",
+        "condition": "WinRM 응답을 확인했거나 기본 클래스를 읽은 뒤 다음 단계가 실패한 경우",
+        "evidence_type": "diagram",
+        "teaching_role": "recovery_boundary",
+        "teaching_claim": "WinRM 응답 후 세션이 실패하면 계정 인증을, 기본 조회 뒤 특정 클래스만 실패하면 그 클래스와 권한을 확인한다.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "세션 실패",
+          "계정 확인",
+          "클래스 실패",
+          "권한 확인"
+        ],
+        "generation_prompt": "Use case: scientific-educational. A simple if-observed-then-check comparison for WinRM and Get-CimInstance. Landscape 3:2 on pale lavender gray. Exactly TWO unrelated large horizontal rows, never join the rows. Upper row: two clear large dark Korean labels, left 세션 실패 with one single right-facing arrow pointing to 계정 확인. Lower row: left 클래스 실패 with one single right-facing arrow pointing to 권한 확인. Large simple wide typography, 8% safe margins, rows vertically balanced. Upper row subdued ochre accent shape, lower row plum accent shape, both dark ink on pale background, low ornament, clear two-row separation. Exactly four labels, no title, no English, no slide/panels/grid borders, no additional text or labels, no letterbox, no fake software window.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "news": [
+    {
+      "title_kr": "Get-CimInstance 원격 오류의 첫 실패 단계 찾기",
+      "source": "Microsoft Learn · DMTF",
+      "url": "https://www.dmtf.org/sites/default/files/standards/documents/DSP0226_1.2.0.pdf",
+      "published_at": "2014-09-30T00:00:00+00:00",
+      "blurb_kr": "승인된 WinRM 접속에서 포트·서비스 응답·세션·클래스 조회를 비교해 담당자에게 넘길 증거를 정리한다.",
+      "references": [
+        {
+          "title": "Microsoft Learn · Test-WSMan의 식별 요청과 인증 동작",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.wsman.management/test-wsman?view=powershell-5.1",
+          "kind": "documentation",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "Microsoft Learn · Test-NetConnection으로 TCP 포트 확인",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2025-ps",
+          "kind": "documentation",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "Microsoft Learn · New-CimSession의 연결 검사와 HTTPS 옵션",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/new-cimsession?view=powershell-5.1",
+          "kind": "documentation",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "Microsoft Learn · Get-CimInstance의 세션과 네임스페이스",
+          "url": "https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-5.1",
+          "kind": "documentation",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "Microsoft Learn · WMI 네임스페이스 접근 권한",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/wmisdk/access-to-wmi-namespaces",
+          "kind": "documentation",
+          "publisher": "Microsoft"
+        },
+        {
+          "title": "DMTF · WS-Management 표준의 Identify와 자원 열거",
+          "url": "https://www.dmtf.org/sites/default/files/standards/documents/DSP0226_1.2.0.pdf",
+          "kind": "documentation",
+          "publisher": "DMTF"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "원격 조회는 마지막으로 성공한 단계부터 본다"
+        },
+        {
+          "t": "p",
+          "text": "Get-CimInstance 원격 오류가 나면 대상 포트, WinRM 응답, 계정으로 만든 세션, 실제 읽기 쿼리를 같은 대상에서 차례로 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "WinRM은 Windows가 원격 관리 요청을 받는 서비스다. CIM 세션은 같은 PC와 계정으로 여러 조회를 이어 하는 연결이고, 클래스는 운영체제나 프로세스처럼 읽을 정보의 종류다. 오류 메시지에 원격 연결 문제가 함께 표시돼도 세 단계의 성공 범위는 다르다."
+        },
+        {
+          "t": "p",
+          "text": "예제는 도메인에 가입한 Windows PC에서 Windows PowerShell 5.1을 열고, 사내 관리 대상 PC 한 대에 현재 도메인 계정으로 접속하는 상황이다. 이름과 포트는 담당자가 승인한 WinRM 주소를 사용한다. 5986은 HTTPS 예시이며 조직에서 다른 포트를 쓴다면 세 명령 모두에 같은 값을 넣는다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "장애가 난 곳과 같은 Windows PC에서 승인된 대상 이름과 포트의 TCP 연결을 확인한다.",
+            "같은 이름과 포트에서 Test-WSMan으로 WinRM의 식별 응답을 확인한다.",
+            "실제 조회에 사용할 계정으로 New-CimSession을 실행해 세션을 만든다.",
+            "같은 세션에서 운영체제 정보와 실패한 클래스를 차례로 읽고 오류 위치를 기록한다."
+          ],
+          "reusable": true,
+          "reuse_label": "Get-CimInstance 원격 조회 점검 순서"
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Get-CimInstance 원격 조회는 포트, WinRM 응답, 계정 세션, 실제 조회 순으로 확인한다. 앞 단계가 실패하면 그 결과부터 기록한다."
+        },
+        {
+          "t": "h",
+          "text": "1. 대상 PC의 포트까지 열리는지 본다"
+        },
+        {
+          "t": "p",
+          "text": "원래 조회가 실패한 Windows PC에서 그대로 실행한다. 다른 관리 서버에서 성공한 결과는 내 PC에서 같은 경로가 열린다는 뜻이 아니다. 예시에서는 PC 이름 전체와 포트를 변수에 한 번만 적어 다음 단계에서도 재사용한다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "$target = 'pc01.example.com'\n$port = 5986\n$endpoint = @{ ComputerName = $target; Port = $port }\n\nTest-NetConnection @endpoint -InformationLevel Detailed"
+        },
+        {
+          "t": "p",
+          "text": "TcpTestSucceeded가 False면 RemoteAddress와 지정 포트부터 확인한다. 이름이 풀린 주소가 관리 대상과 다르면 이름이나 DNS 기록을 담당자에게 대조한다. 주소가 맞으면 현재 망의 접근 정책과 대상 PC의 수신 설정을 확인할 차례다. True면 그 포트에 연결할 수 있다는 신호를 얻은 것이다."
+        },
+        {
+          "t": "p",
+          "text": "오류가 간헐적이면 성공과 실패 시각을 구분한다. 같은 주소와 포트를 반복해서 확인하고 결과가 바뀌는지 기록하면, 계정 문제를 점검하기 전에 연결 경로의 변화 여부를 전달할 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "2. 열린 포트에서 WinRM 응답을 확인한다"
+        },
+        {
+          "t": "p",
+          "text": "같은 주소와 포트에 WinRM이 답하는지 확인한다. 예제의 HTTPS 환경에서는 UseSSL을 함께 지정한다. 사내에서 승인된 기존 HTTP 구성을 쓰는 곳은 승인된 포트로 바꾸고 여기와 다음 세션의 UseSSL을 모두 빼서 동일한 방식으로 검사한다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "Test-WSMan @endpoint -UseSSL -ErrorAction Stop"
+        },
+        {
+          "t": "p",
+          "text": "WinRM이 답하면 ProtocolVersion 같은 식별 정보가 돌아온다. DMTF 표준에서 서비스 식별과 자원 조회는 별도 요청이다. 예제는 Authentication을 지정하지 않아 현재 계정까지 검증하지 않는다. 여기서만 실패하면 프로토콜, 리스너 설정, HTTPS 인증서의 이름과 신뢰 상태를 점검한다."
+        },
+        {
+          "t": "h",
+          "text": "3. 실제로 쓸 계정으로 세션을 만든다"
+        },
+        {
+          "t": "p",
+          "text": "서비스가 응답했다면 현재 계정으로 연결을 확인한다. 자동화 계정에서 난 문제라면 담당자가 승인한 실행 환경에서 같은 계정으로 점검한다. 내 계정 결과만으로 자동화 계정의 권한을 추정하기 어렵다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "$options = New-CimSessionOption -UseSsl\n$session = New-CimSession @endpoint -SessionOption $options -ErrorAction Stop"
+        },
+        {
+          "t": "p",
+          "text": "앞 단계가 HTTPS였으므로 여기에도 HTTPS 옵션을 쓴다. 승인된 HTTP로 점검 중이라면 옵션 첫 줄과 -SessionOption 참조를 함께 뺀다. 세션을 만들 때 연결 검사 건너뛰기 옵션은 사용하지 않는다. 이 단계에서 거부되면 인증 방식, 현재 로그온 계정과 승인된 접속 정책을 대조한다."
+        },
+        {
+          "t": "p",
+          "text": "문제가 나는 계정과 이미 접속이 되는 계정이 있다면 담당자가 확인한 범위에서만 차이를 비교한다. 계정을 더 높은 권한으로 바꾸면 실행 자체는 될 수 있어도 원래 작업이 왜 막혔는지 좁히기 어렵다. 원래 계정으로 세션을 만들 수 있는지 먼저 기록한다."
+        },
+        {
+          "t": "h",
+          "text": "4. 같은 세션으로 기본 정보와 원하는 클래스를 읽는다"
+        },
+        {
+          "t": "p",
+          "text": "운영체제 이름을 먼저 읽은 뒤 실제 작업에 필요한 클래스를 조회한다. 아래 두 번째 클래스는 CPU 정보 예시다. 문제를 일으킨 네임스페이스와 클래스가 따로 있다면 두 번째 명령에서 그 값만 바꾼다. try/finally는 두 번째 조회가 실패해도 이번에 만든 세션을 정리한다."
+        },
+        {
+          "t": "code",
+          "language": "powershell",
+          "text": "try {\n    Get-CimInstance -CimSession $session -Namespace root/cimv2 `\n        -ClassName Win32_OperatingSystem -ErrorAction Stop |\n        Select-Object CSName, Caption, Version\n    Get-CimInstance -CimSession $session -Namespace root/cimv2 `\n        -ClassName Win32_Processor -ErrorAction Stop |\n        Select-Object Name, NumberOfCores\n} finally {\n    Remove-CimSession -CimSession $session\n}"
+        },
+        {
+          "t": "p",
+          "text": "첫 결과의 CSName을 승인받은 대상 PC의 컴퓨터 이름과 비교한다. 이름이 맞고 운영체제가 조회되면 그 계정으로 원격 기본 클래스 하나를 읽은 것이다. 다음 명령에서만 실패하면 정확한 네임스페이스와 클래스가 그 대상에서 제공되는지, 해당 계정에 그 범위의 원격 읽기 권한이 있는지 확인한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "WinRM 응답 후 세션이 실패하면 계정 인증을, 기본 조회 뒤 특정 클래스만 실패하면 그 클래스와 권한을 확인한다. 클래스 자체가 대상에 있는지도 함께 본다."
+        },
+        {
+          "t": "h",
+          "text": "오류가 처음 난 곳을 한 줄로 남긴다"
+        },
+        {
+          "t": "table",
+          "caption": "같은 PC에서 확인한 상태와 다음 대상",
+          "headers": [
+            "마지막으로 확인한 상태",
+            "다음에 확인할 것"
+          ],
+          "rows": [
+            [
+              "TCP 포트 연결 실패",
+              "대상 이름·포트와 접속 경로"
+            ],
+            [
+              "TCP는 성공, WinRM 응답 실패",
+              "HTTP·HTTPS, 리스너와 인증서"
+            ],
+            [
+              "WinRM은 응답, 세션 생성 실패",
+              "현재 계정·인증 방식·접속 정책"
+            ],
+            [
+              "기본 클래스만 성공",
+              "실패한 클래스·네임스페이스·읽기 권한"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 운영체제 이름은 나왔지만 대상 클래스에서 ‘Invalid class’가 나왔다면, 클래스 이름과 네임스페이스, 대상 Windows 버전부터 대조한다. ‘Access denied’라도 어느 단계에서 거부됐는지에 따라 담당자에게 전달할 항목이 달라진다. 이름이 맞는데 결과만 비어 있다면 동일 클래스의 필터와 대상에 실제 인스턴스가 있는지를 확인한다."
+        },
+        {
+          "t": "p",
+          "text": "담당자에게는 실행 시각, 출발 PC의 망 구간, 대상 이름과 포트, 계정 종류, 성공한 마지막 명령과 첫 오류 전문을 보낸다. 클래스 조회에서 실패했다면 네임스페이스와 클래스도 포함한다. 인증서 검사를 끄거나 방화벽 범위를 넓히는 변경은 담당자가 접속 정책을 확인할 때까지 보류한다."
+        },
+        {
+          "t": "p",
+          "text": "도달·응답·세션·조회를 나눠 검사하면 마지막 성공 결과로 네트워크 담당자, WinRM 관리자, WMI 권한 담당자에게 각각 확인할 일을 전달할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "Microsoft 명령 문서와 DMTF 표준으로 동작을 대조했다. PC 이름과 판정 사례는 가상이며 운영 장비에서 명령을 실행한 결과는 아니다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "WMIC PowerShell 대체 방법: Get-CimInstance 명령 6가지",
+      "url": "https://won0322.tistory.com/209",
+      "role": "foundation",
+      "reason": "WMIC를 바꿀 때 로컬 컴퓨터에서 원하는 정보의 클래스부터 확인한다."
+    },
+    {
+      "title": "Python 멀티프로세싱 오류: fork·spawn·forkserver 진단 순서",
+      "url": "https://won0322.tistory.com/224",
+      "role": "next_step",
+      "reason": "다른 개발 환경에서 오류가 처음 생기는 지점을 좁히는 절차 사례다."
+    }
+  ],
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.1-sol",
+    "revision": 7,
+    "image_provider": "codex-imagegen",
+    "image_policy": "webp-v2"
+  },
+  "images": {
+    "cover": {
+      "label": "Get-CimInstance는 왜 내 PC에서만 답을 돌려줄까?",
+      "scene_label": [
+        "로컬 조회 영수증",
+        "닫힌 원격 조회 슬롯"
+      ],
+      "steps": "로컬 조회는 끝났지만 Get-CimInstance 원격 요청이 회신을 받지 못한 장면이다.",
+      "curiosity_hook": "Get-CimInstance 원격 요청은 어느 경계를 넘지 못했을까?",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "logic_type": "comparison",
+      "evidence_type": "diagram",
+      "cover_kind": "editorial_scene",
+      "art_direction": "single_object_conflict",
+      "composition_type": "local-receipt-stops-at-remote-slot",
+      "palette_family": "smoke_cobalt_orange",
+      "render_family": "editorial_collage",
+      "editorial_treatment": "quiet_minimalism",
+      "focal_subject": "Get-CimInstance 로컬 출력 영수증과 닫힌 원격 조회 슬롯",
+      "texture_cue": "인쇄 점과 가장자리가 보이는 회색빛 스크린프린트 종이",
+      "authenticity_cue": "종이 끝이 원격 슬롯의 닫힌 금속 셔터 앞에서 접혀 있다.",
+      "weekday_profile": "practical_diagnosis",
+      "weekday_role": "problem_scene",
+      "visual_claim": "Get-CimInstance는 로컬에서 답해도 원격 대상에서 멈출 수 있다.",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. Korean technology blog cover for Get-CimInstance remote WinRM troubleshooting. Wide 1.9:1 landscape, deliberately designed to crop vertically to 1200x630. A tactile analog editorial screenprint collage, smoke-gray background, cobalt and restrained vermilion. One crumpled long white-blue diagnostic receipt is printed from a small exposed cobalt port at left and its leading edge folds against a closed burnt-orange metal mail slot on a remote-machine steel plate at right. The receipt is the bridge and focal subject. It has sparse abstract dotted rows and two cobalt checkmarks, never actual text or a fake terminal. Slot has one small practical circular orange lamp, NO locks or keyhole. Strong central framing, subjects big at thumbnail size, generous crop safety at top/bottom, gray screenprint paper grain and thin offset-register misalignment. No lettering, no numbers, no people, no neon, no windows logo, no captions, no arrows, no split panels, no chart, no slide, full bleed. Make it a single compelling scene.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-16/Get-CimInstance-로컬-출력과-원격-회신.webp",
+      "alt": "Get-CimInstance는 로컬에서 답해도 원격 대상에서 멈출 수 있다. 로컬 장치에서 나온 종이가 닫힌 원격 슬롯 앞에 접혀 있다.",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-16/Get-CimInstance-로컬-출력과-원격-회신.webp",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 239730,
+      "quality": 78,
+      "sha256": "0db2a787f273a1822a032f1ff4c475946383b23739706c3fcd8cf3761172a608"
+    },
+    "visual_1": {
+      "label": "Get-CimInstance 원격 오류는 어떤 순서로 좁힐까?",
+      "scene_label": [
+        "포트",
+        "WinRM 응답",
+        "계정 세션",
+        "실제 조회"
+      ],
+      "steps": "Get-CimInstance 원격 조회의 네 경계를 직렬로 놓고 앞에서부터 확인한다.",
+      "curiosity_hook": "WinRM 응답을 받았으면 어떤 확인이 남았을까?",
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "flow",
+      "evidence_type": "diagram",
+      "teaching_role": "diagnosis_flow",
+      "teaching_claim": "Get-CimInstance 원격 조회는 포트, WinRM 응답, 계정 세션, 실제 조회 순으로 확인한다.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "포트",
+        "WinRM 응답",
+        "계정 세션",
+        "실제 조회"
+      ],
+      "generation_prompt": "Use case: scientific-educational. True diagnostic sequence for Get-CimInstance; a clean Korean technical illustration, landscape 3:2. Text-first four vertically stacked broad rows, on very light warm beige with thin slate guides. One narrow vertical line with small downward arrow between rows, to the left of the text. Slightly hand-printed navy text with very large output size. EXACTLY four labels, one per row, from top to bottom: 포트 / WinRM 응답 / 계정 세션 / 실제 조회. Typography should dominate and remain readable at 350px scaled width; align them all to the left with generous padding, one subtle tiny icon for each row on the right: connection plug, reply bubble, credential badge, returned document. Keep row space evenly balanced across frame, minimum 8% safe margins. No extra characters, no numbers, no English except WinRM, no heading, no gradients, no fake UI, no letterbox.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-16/Get-CimInstance-원격-점검-순서.webp",
+      "alt": "Get-CimInstance 원격 조회는 포트, WinRM 응답, 계정 세션, 실제 조회 순으로 확인한다.",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-16/Get-CimInstance-원격-점검-순서.webp",
+      "width": 1200,
+      "height": 800,
+      "format": "webp",
+      "bytes": 37180,
+      "quality": 82,
+      "sha256": "e6553ea24df19f81e204dd6edeabefe5c663b4adcc2a79e064c4aa1568597ca8"
+    },
+    "visual_2": {
+      "label": "WinRM에 응답은 오는데 조회가 멈추면 누구에게 무엇을 물을까?",
+      "scene_label": [
+        "세션 실패",
+        "계정 확인",
+        "클래스 실패",
+        "권한 확인"
+      ],
+      "steps": "WinRM 연결 뒤 세션이 막힌 경로와 특정 클래스만 막힌 경로의 확인 대상을 비교한다.",
+      "curiosity_hook": "Get-CimInstance에서 세션과 클래스 중 어디에서 막혔을까?",
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "logic_type": "conditional",
+      "condition": "WinRM 응답을 확인했거나 기본 클래스를 읽은 뒤 다음 단계가 실패한 경우",
+      "evidence_type": "diagram",
+      "teaching_role": "recovery_boundary",
+      "teaching_claim": "WinRM 응답 후 세션이 실패하면 계정 인증을, 기본 조회 뒤 특정 클래스만 실패하면 그 클래스와 권한을 확인한다.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "세션 실패",
+        "계정 확인",
+        "클래스 실패",
+        "권한 확인"
+      ],
+      "generation_prompt": "Use case: scientific-educational. A simple if-observed-then-check comparison for WinRM and Get-CimInstance. Landscape 3:2 on pale lavender gray. Exactly TWO unrelated large horizontal rows, never join the rows. Upper row: two clear large dark Korean labels, left 세션 실패 with one single right-facing arrow pointing to 계정 확인. Lower row: left 클래스 실패 with one single right-facing arrow pointing to 권한 확인. Large simple wide typography, 8% safe margins, rows vertically balanced. Upper row subdued ochre accent shape, lower row plum accent shape, both dark ink on pale background, low ornament, clear two-row separation. Exactly four labels, no title, no English, no slide/panels/grid borders, no additional text or labels, no letterbox, no fake software window.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-16/WinRM-계정과-클래스-오류-분기.webp",
+      "alt": "WinRM 응답 후 세션이 실패하면 계정 인증을, 기본 조회 뒤 특정 클래스만 실패하면 그 클래스와 권한을 확인한다.",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-16/WinRM-계정과-클래스-오류-분기.webp",
+      "width": 1200,
+      "height": 800,
+      "format": "webp",
+      "bytes": 23644,
+      "quality": 82,
+      "sha256": "cb21afbf3bc87b1fc62a1c91e30732d33ea1775adf14f3f469a0b1b3ab59071a"
+    }
+  }
+}
