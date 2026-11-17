@@ -36,7 +36,7 @@
     "추천 제목: 비밀번호 특수문자, 왜 넣어도 무조건 안전하지 않을까?"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 9,
+  "estimated_read_minutes": 10,
   "reader_scores": {
     "general_reader_understanding": 10.0,
     "public_readability": 10.0
@@ -49,9 +49,9 @@
   "before_ad_html": "docs/tistory/2026-09-10-before-ad.html",
   "after_ad_html": "docs/tistory/2026-09-10-after-ad.html",
   "adfit_html": "docs/tistory/2026-09-10-adfit.html",
-  "source_sha256": "193c5dde10439eff12b1fa012823c0775da511dd78a989798b6eb69a36b1963b",
-  "html_sha256": "b208999aa982e7498a6e8975499004ee2867c296bbd1e95002f0edaea39ea60d",
-  "adfit_sha256": "f73cb4cc3d06062068d345bf90f3e9215ab190cd55f0db50f51265d4ff115695",
+  "source_sha256": "c5386ce4059c9b6fa9b88b008cc7d2460aea9053781ac728bf3bc7a149d3fa90",
+  "html_sha256": "f2970d9c17c920acba8a7e33bd12111d027204ed9ea0eaa013bb1cfe1a8f3f4a",
+  "adfit_sha256": "c241cd1b77b5023e12506a38f95562fb056899683959490fc89a4abe6a869360",
   "image_assets": [
     {
       "kind": "cover",

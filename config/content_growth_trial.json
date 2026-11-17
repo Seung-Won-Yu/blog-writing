@@ -145,6 +145,16 @@
       "source": "data/days/2026-08-26.json",
       "improvement_goal": "관측 검색어의 오류 문구만으로 도메인 변경을 원인으로 단정하지 않도록 이용자 설정과 서비스 운영자의 가입·메일 전달 점검을 구분한다.",
       "refreshed_on": "2026-11-05"
+    },
+    {
+      "priority": 9,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/227",
+      "title": "특수문자 하나와 실제 비밀번호 강도의 경계",
+      "draft_id": "2026-09-10",
+      "source": "data/days/2026-09-10.json",
+      "improvement_goal": "‘비밀번호 특수문자 제한’ 검색 의도에 맞춰 필수 기호 누락, 허용 문자 위반, 비밀번호 전체 거부를 구분하고 각각의 다음 확인 경로를 설명한다.",
+      "refreshed_on": "2026-11-17"
     }
   ],
   "demand_snapshot": "data/search_demand/2026-11-16.json"
