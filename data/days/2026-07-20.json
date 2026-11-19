@@ -57,7 +57,12 @@
       },
       {
         "label": "휴대전화 확인과 FIDO2 보안 키의 두 번째 인증 비교",
-        "scene_label": ["휴대전화 확인", "FIDO2 보안 키", "2단계 인증", "비밀번호"],
+        "scene_label": [
+          "휴대전화 확인",
+          "FIDO2 보안 키",
+          "2단계 인증",
+          "비밀번호"
+        ],
         "steps": "휴대전화 확인과 물리 키 확인을 비교하되 둘 다 비밀번호 뒤의 두 번째 인증임을 표시",
         "curiosity_hook": "새 옵션은 비밀번호 없는 로그인과 어떻게 다를까?",
         "evidence_type": "diagram",
@@ -65,8 +70,19 @@
         "logic_type": "comparison",
         "generation_prompt": "Use case: infographic-diagram. Asset type: Korean technical blog explanation image, 1200×630 landscape. Side-by-side comparison of phone prompt and FIDO2 physical security key as Windows Google Workspace login second factors. Exact Korean labels: '휴대전화 확인', 'FIDO2 보안 키', '둘 다 2단계 인증', '비밀번호 대체 아님'. Clean flat editorial diagram, no fake UI, terminal, humans, robots, neon, watermark, or unverified numbers.",
         "generation_model": "gpt-image-2",
-        "korean_labels": ["휴대전화 확인", "FIDO2 보안 키", "둘 다 2단계 인증", "비밀번호 대체 아님"],
-        "qa": {"topic_match": true, "caption_match": true, "mobile_readable": true, "text_reviewed": true, "not_generic": true}
+        "korean_labels": [
+          "휴대전화 확인",
+          "FIDO2 보안 키",
+          "둘 다 2단계 인증",
+          "비밀번호 대체 아님"
+        ],
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
       }
     ]
   },
@@ -153,9 +169,6 @@
           "caption": "휴대전화 확인과 FIDO2 키는 모두 두 번째 인증에 속한다. 새 기능을 비밀번호 제거로 해석하면 정책과 지원 범위를 잘못 설계할 수 있다."
         },
         {
-          "t": "ad_break"
-        },
-        {
           "t": "h",
           "text": "도입 전에 확인할 정책과 등록 조건"
         },
@@ -183,9 +196,9 @@
               "키 소유자와 예비 키"
             ],
             [
-              "배포 상태",
-              "점진 배포 중인지 기능이 실제로 보이는지 확인",
-              "확인 날짜와 기기"
+              "로그인 단계",
+              "최초·재인증의 Google 화면인지 일반 Windows 로그인인지 구분",
+              "화면 종류와 오류 문구"
             ],
             [
               "복구",
@@ -196,8 +209,45 @@
           "caption": "공식 자료에서 확인 가능한 범위와, 조직이 자체적으로 검증해야 할 운영 항목을 구분한 표"
         },
         {
+          "t": "ad_break"
+        },
+        {
           "t": "p",
           "text": "Google은 관리자가 2단계 인증 강제를 확인하라고 안내한다. 반면 사용자에게 이 기능을 켜는 별도의 설정은 없다고 설명한다. 따라서 ‘사용자 PC에서 메뉴 하나를 켠다’는 방식으로 접근하기보다 조직 정책과 계정의 키 등록을 먼저 맞춰야 한다. Google 계정 도움말에 따르면 새로 추가한 키는 로그인에 쓰기까지 대기 시간이 필요할 수 있으므로, 배포 당일 전사 전환보다 시험 계정 검증이 안전하다."
+        },
+        {
+          "t": "h",
+          "text": "키 선택지가 안 보이면 로그인 단계부터 확인하기"
+        },
+        {
+          "t": "p",
+          "text": "7월 13일부터 최대 15일이라는 일정은 당시의 배포 안내다. 지금 키가 보이지 않는 이유를 그 일정만으로 설명하지 않는다. Google Workspace 로그인 도움말에 따르면 최초 GCPW 로그인에는 인터넷 연결이 필요하며, Google 계정 인증과 화면에 요청되는 2단계 인증을 진행한다. 이미 로그인한 뒤의 일반 Windows 로그인은 기존 프로필에서 비밀번호로 진행할 수 있다."
+        },
+        {
+          "t": "table",
+          "caption": "보안 키가 보이지 않을 때 먼저 구분할 화면",
+          "headers": [
+            "지금 보이는 화면",
+            "다음 확인"
+          ],
+          "rows": [
+            [
+              "일반 Windows 프로필 로그인",
+              "키 요청이 없다는 사실만으로 등록 실패라고 판단하지 않는다."
+            ],
+            [
+              "최초 Google 로그인 또는 보안 이벤트 뒤 재인증",
+              "화면의 인증 요청을 확인하고, 키 선택이 없으면 관리자에게 적용 정책과 계정 등록을 확인한다."
+            ],
+            [
+              "새로 등록한 키가 목록에만 보임",
+              "Google 계정 도움말은 사용까지 최대 7일 대기가 필요할 수 있다고 안내한다. 예비 수단을 유지한다."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "text": "세션 만료, 의심스러운 활동, Google 비밀번호 변경 뒤에는 Google 로그인 화면으로 재인증할 수 있다. 화면 종류·확인 시각·오류 문구를 남기면 관리자가 정책 문제와 로그인 단계 차이를 구분하기 쉽다. 이 안내는 공식 문헌 대조이며 실제 조직의 Windows 로그인이나 키 분실 시험을 수행한 결과는 아니다. 정책을 끄거나 기존 키를 삭제해 확인하지 말고, 복구 수단이 확보된 시험 계정에서 담당자와 검증한다."
         },
         {
           "t": "h",
@@ -214,7 +264,7 @@
             "GCPW가 설치된 Windows 10 또는 11에서 관리형 계정 로그인을 실행한다.",
             "2단계 인증 시 보안 키와 근처 휴대전화 패스키 옵션이 정책대로 보이는지 확인한다.",
             "키를 뽑거나 분실했다고 가정해 예비 수단과 지원 절차로 복구되는지 기록한다.",
-            "점진 배포 기간에는 기능이 보이지 않는 기기를 오류로 단정하지 말고 배포 상태를 다시 확인한다."
+            "키 선택지가 없으면 일반 Windows 로그인인지 Google 재인증 화면인지 먼저 구분한다."
           ]
         },
         {
@@ -237,7 +287,7 @@
             "FIDO2 호환 키를 시험 계정과 예비 수단에 등록한다.",
             "실제 Windows 로그인에서 키 인증이 완료되는지 확인한다.",
             "키 분실·교체 시 복구 절차와 담당자를 문서화한다.",
-            "최대 15일의 점진 배포 기간을 고려해 기능 노출 시점을 기록한다."
+            "7월 배포 대기 대신 현재 로그인 단계와 계정 등록 상태를 기록한다."
           ]
         }
       ]

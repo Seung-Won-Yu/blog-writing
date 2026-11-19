@@ -23,7 +23,7 @@
   "meta_description": "회사 Windows PC에서 로그인할 때마다 휴대전화 알림을 확인하는 흐름은 익숙하지만, 현장이나 공유 공간에서는 그 한 단계가 자주 막힙니다. Google은 GCPW(Google Credential… Google은 GCPW에서 FIDO2 호환 물리 보안 키와 근처 블루투스 휴대전화의…",
   "key_summary": [
     "1. Google Credential Provider for Windows, FIDO2 물리 보안 키를 두 번째 인증 수단으로 지원",
-    "각 소식의 핵심을 확인한 뒤 궁금한 내용은 원문에서 이어서 살펴보세요."
+    "직접 얻는 결과: FIDO2 키는 이번 기능에서 비밀번호를 없애는 단독 로그인 수단이 아니라 GCPW의 두 번째 인증 선택지입니다. 키 등록, 2단계 인증 정책, 예비 수단과 실제 Wind…"
   ],
   "publish_checklist": [
     "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
@@ -35,7 +35,8 @@
     "추천 제목: Windows 로그인에 FIDO2 보안 키를 더한 Google Workspace, 바뀌는 지점과 준비 순서"
   ],
   "generation_provider": "codex-agent",
-  "estimated_read_minutes": 8,
+  "estimated_read_minutes": 9,
+  "reader_scores": {},
   "quality_reasons": [],
   "publish_ready": true,
   "source": "data/days/2026-07-20.json",
@@ -44,9 +45,9 @@
   "before_ad_html": "docs/tistory/2026-07-20-before-ad.html",
   "after_ad_html": "docs/tistory/2026-07-20-after-ad.html",
   "adfit_html": "docs/tistory/2026-07-20-adfit.html",
-  "source_sha256": "829cdedf110c7b8455757b596e1d5a29b142c632fb49537453292f02e3930b8b",
-  "html_sha256": "09c9673e5d2c3bb61522698b2f5d6a105c06027c08a5df25e7e2a5b8ae9165be",
-  "adfit_sha256": "89b3b45b5fdd09d21cc63b69ebf906bd91119b5eda07eb69fdc99fe0cb24e6b0",
+  "source_sha256": "9c1b968751bc4a232da931c2831ee27d7e76e5711d4fe3d702baea0859949a6e",
+  "html_sha256": "c93e3075f0d6beb8c75838dc15e38e9855b9b3b2c79b4dc726833b20d4204ef6",
+  "adfit_sha256": "e3489e3ea084b219614d630dc012a567c9f96519b0c0611e71026e42b4be4d1a",
   "image_assets": [
     {
       "kind": "cover",

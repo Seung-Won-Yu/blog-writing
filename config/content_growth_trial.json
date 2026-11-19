@@ -155,6 +155,16 @@
       "source": "data/days/2026-09-10.json",
       "improvement_goal": "‘비밀번호 특수문자 제한’ 검색 의도에 맞춰 필수 기호 누락, 허용 문자 위반, 비밀번호 전체 거부를 구분하고 각각의 다음 확인 경로를 설명한다.",
       "refreshed_on": "2026-11-17"
+    },
+    {
+      "priority": 10,
+      "status": "ready_for_review",
+      "page_url": "https://won0322.tistory.com/138",
+      "title": "Windows 로그인에 FIDO2 보안 키를 더한 Google Workspace, 바뀌는 지점과 준비 순서",
+      "draft_id": "2026-07-20",
+      "source": "data/days/2026-07-20.json",
+      "improvement_goal": "7월 배포 대기 안내를 과거 사실로 구분하고 최초·재인증과 일반 Windows 로그인에서 키가 보이지 않을 때 확인 순서를 보완한다.",
+      "refreshed_on": "2026-11-19"
     }
   ],
   "demand_snapshot": "data/search_demand/2026-11-16.json"
