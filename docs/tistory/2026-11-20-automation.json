@@ -1,0 +1,95 @@
+{
+  "title": "PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것",
+  "title_candidates": [
+    "PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것",
+    "PDF 문서 AI 입력 선택: PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할…"
+  ],
+  "category": "AI·개발 도구",
+  "draft_id": "2026-11-20-automation",
+  "publish_date": "2026-11-20",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "publication_mode": "manual_review",
+  "scheduled_at": "2026-11-20T09:00:00+09:00",
+  "tags": [
+    "PDF 문서 읽는 AI",
+    "Gemini",
+    "Claude",
+    "OCR",
+    "문서 이해",
+    "API 선택"
+  ],
+  "meta_description": "PDF 설명서를 AI에 넣었는데 표의 열 관계나 차트의 조건이 답에서 빠진다면, OCR을 바꾸는 것만으로 해결될까? 글자를 꺼내는 일과 화면의 관계를 해석하는 일은 다르다. PDF 화면을 받는 API… PDF 문서 읽는 AI의 입력 경로를 원문 문자열·화면 관계·근거 페이지 기준으로…",
+  "key_summary": [
+    "1. PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것",
+    "직접 얻는 결과: PDF 질문의 결과물과 근거 페이지를 정하고 API 입력 경로를 선택한다."
+  ],
+  "publish_checklist": [
+    "제목 후보 중 검색 키워드가 가장 자연스러운 제목을 선택하기",
+    "본문 이미지가 정상 표시되는지 확인하기",
+    "원문 링크와 핵심 사실을 직접 대조해 확인하기",
+    "직접 확인한 내용과 내 판단/경험을 각각 2문장 이상 추가하기",
+    "태그 입력 후 카테고리를 AI·개발 도구로 지정하기",
+    "본문의 표·차트·관련 글 링크가 내용과 맞는지 확인하기",
+    "추천 제목: PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것"
+  ],
+  "generation_provider": "codex-agent",
+  "estimated_read_minutes": 8,
+  "reader_scores": {
+    "general_reader_understanding": 10.0,
+    "public_readability": 10.0
+  },
+  "quality_reasons": [],
+  "publish_ready": true,
+  "source": "data/automation_cases/2026-11-20.json",
+  "source_page": null,
+  "html": "docs/tistory/2026-11-20-automation.html",
+  "before_ad_html": "docs/tistory/2026-11-20-automation-before-ad.html",
+  "after_ad_html": "docs/tistory/2026-11-20-automation-after-ad.html",
+  "adfit_html": "docs/tistory/2026-11-20-automation-adfit.html",
+  "source_sha256": "4ac10b9104ceba305815bff86c51512d327fe7f22eaa712a96a7efc641525199",
+  "html_sha256": "2014087cf9c5a805343355af029bbdc48d6b680c1e1b9492c47fd14ab9f02b73",
+  "adfit_sha256": "dde5c3d9615b9e75d620f675f8e2da03c0f0acacb4304ea292b1fa8ebeddcc60",
+  "image_assets": [
+    {
+      "kind": "cover",
+      "title": "대표 이미지",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/PDF-차트와-각주-선택.webp",
+      "path": "docs/tistory/assets/2026-11-20-automation/PDF-차트와-각주-선택.webp",
+      "original_url": "",
+      "alt": "PDF 문서 AI 선택은 필요한 화면 관계를 확인하는 데서 시작한다",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "kind": "visual_1",
+      "title": "본문 이해 이미지 1",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/Gemini-PDF-시각입력.webp",
+      "path": "docs/tistory/assets/2026-11-20-automation/Gemini-PDF-시각입력.webp",
+      "original_url": "",
+      "alt": "Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다.",
+      "width": 1200,
+      "height": 628
+    },
+    {
+      "kind": "visual_2",
+      "title": "본문 이해 이미지 2",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/PDF-문자열과-화면-선택.webp",
+      "path": "docs/tistory/assets/2026-11-20-automation/PDF-문자열과-화면-선택.webp",
+      "original_url": "",
+      "alt": "PDF 문서 AI 선택은 원문 문자열과 화면 관계 중 필요한 결과에서 시작한다.",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "visual_3",
+      "title": "본문 이해 이미지 3",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/Claude-PDF-요청조건.webp",
+      "path": "docs/tistory/assets/2026-11-20-automation/Claude-PDF-요청조건.webp",
+      "original_url": "",
+      "alt": "Claude 공식 문서는 PDF 요구 조건과 플랫폼별 입력 방식 확인을 요구한다.",
+      "width": 1200,
+      "height": 1179
+    }
+  ]
+}

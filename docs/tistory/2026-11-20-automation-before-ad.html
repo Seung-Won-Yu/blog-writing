@@ -1,0 +1,25 @@
+<article class="daily-digest-post" data-digest-version="3">
+  <section class="digest-hero" aria-label="글 소개">
+    <p class="digest-kicker">2026. 11. 20 (금) · 약 8분</p>
+    <p class="digest-lead">PDF 설명서를 AI에 넣었는데 표의 열 관계나 차트의 조건이 답에서 빠진다면, OCR을 바꾸는 것만으로 해결될까? 글자를 꺼내는 일과 화면의 관계를 해석하는 일은 다르다. PDF 화면을 받는 API가 필요한지부터 정하고, 선택한 서비스의 입력 방식과 근거 대조 기준을 함께 확인하자.</p>
+  </section>
+
+  <figure class="digest-cover-figure"><img class="digest-cover-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/PDF-차트와-각주-선택.webp" alt="PDF 문서 AI 선택은 필요한 화면 관계를 확인하는 데서 시작한다" width="1200" height="630" loading="eager"></figure>
+
+  <section class="digest-project-aid" aria-label="30초 요약">
+  <p class="digest-section-label">개발·AI 인사이트</p>
+  <h2>30초 요약</h2>
+  <ul class="digest-bullet-list"><li>PDF 화면의 표·차트까지 질문하려면 PDF 시각 입력을 지원하는 API를 확인한다.</li><li>Gemini·Claude의 문서 지원은 문자열 추출기와 목적이 다르다.</li><li>PDF 응답의 페이지·숫자를 원문과 대조해야 API 선택이 끝난다.</li></ul>
+  <div class="digest-project-glossary"><h3>먼저 알아둘 말</h3><dl><div><dt>API</dt><dd>개발 프로그램이 서비스에 요청과 응답을 주고받는 접점이다.</dd></div><div><dt>텍스트 추출</dt><dd>PDF 안에 저장된 문자 데이터를 꺼내는 처리다.</dd></div><div><dt>OCR</dt><dd>이미지에 있는 글자 모양을 문자로 인식하는 처리다.</dd></div></dl></div>
+</section>
+
+  <h2 class="digest-news-heading">개발·AI 인사이트</h2>
+  <section id="digest-news-1" class="digest-news-card digest-lead-story">
+  <div class="digest-news-copy">
+    <p class="digest-source">근거와 해설 · Google·Anthropic·pypdf 공식 문서 확인일 · 2026. 11. 20</p>
+    <h3>PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것</h3>
+    <p class="digest-blurb">PDF 문서 읽는 AI의 입력 경로를 원문 문자열·화면 관계·근거 페이지 기준으로 선택한다.</p>
+    <div class="digest-full-content"><h4 class="digest-subheading">답에 화면의 관계가 필요한지 먼저 정한다</h4><p>차트와 표의 배치까지 질문하려면 PDF 화면을 받는 Gemini·Claude API를 검토한다. 원문 문자열 확보가 목적이면 텍스트 추출·OCR 경로를 유지하고, 어떤 경로든 답의 근거 페이지와 숫자를 대조한다.</p><ul class="digest-bullet-list"><li>답에서 필요한 결과를 원문 문자열·표 관계·차트 설명 중 하나로 정한다.</li><li>개인정보 없는 대표 페이지에서 질문과 근거 페이지를 짝지어 준비한다.</li><li>선택한 API의 PDF 입력 방식과 모델·플랫폼 제한을 확인한다.</li><li>답의 수치와 근거 페이지를 원문과 대조하고 미확인 항목은 보류한다.</li></ul><p>가령 공개 제품 설명서에서 “이 그래프의 성능이 성립하는 조건은 무엇인가”를 묻는다고 하자. 그래프 아래 각주가 본문과 떨어져 있으면 글자만 나열한 결과에서 둘의 관계가 흐려질 수 있다. 이는 선택을 설명하는 가상 사례이며 실제 API 실행 결과가 아니다.</p><div class="digest-table-wrap" role="region" aria-label="PDF에서 필요한 결과로 경로를 나눈다" tabindex="0"><table class="digest-compact-table"><caption>PDF에서 필요한 결과로 경로를 나눈다</caption><thead><tr><th scope="col">필요한 결과</th><th scope="col">먼저 검토할 입력 경로</th></tr></thead><tbody><tr><td>원문 문자열과 검색 가능한 사본</td><td>기존 텍스트 추출과 필요 페이지 OCR</td></tr><tr><td>차트·그림과 본문을 연결한 설명</td><td>PDF 시각 입력을 지원하는 Gemini·Claude API</td></tr><tr><td>정확한 표의 숫자와 행·열 대응</td><td>구조를 보존할 처리와 원문 대조를 함께 설계</td></tr></tbody></table></div><p>문서 전체를 질문에 넣을 수 있다는 것과 원하는 정보가 정확히 답에 포함된다는 것은 다르다. 선택표는 기능 순위가 아니라 확인할 입력 경로를 줄이는 기준이다. 문서 유형과 허용 가능한 오류가 달라지면 같은 제품도 다른 선택이 된다.</p><h4 class="digest-subheading">Gemini는 PDF의 시각 내용까지 질문하는 경로다</h4><p>Google의 Document understanding 문서는 PDF의 텍스트뿐 아니라 이미지·차트·표를 함께 다루는 시각 입력을 설명한다. 따라서 그림의 관계가 필요한 질문에서는 먼저 PDF 자체를 입력하는 경로를 검토할 수 있다.</p><p>Google 문서에는 작은 일시적 입력을 직접 전달하는 방식과, 반복 참조할 큰 문서를 Files API로 올리는 방식이 구분되어 있다. 파일을 어디에 두고 몇 번 쓸지에 따라 구현에서 확인할 곳이 달라진다. 파일 업로드 성공은 답의 정확성 검사가 아니다.</p><figure class="digest-content-figure"><img class="digest-content-image" src="https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/Gemini-PDF-시각입력.webp" alt="Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다." width="1200" height="628" loading="lazy"><figcaption>Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다.</figcaption></figure><p>SDK 코드에 모델 이름만 바꾸기 전에 현재 사용하는 API와 SDK의 입력 구조를 확인한다. 웹 채팅에서 PDF를 읽어 본 경험이 API의 파일 재사용·요청 한도·출력 형태까지 검증해 주지는 않는다. 같은 브랜드에서도 제품과 API 경로가 다를 수 있다.</p></div>
+  </div>
+</section>
+</article>

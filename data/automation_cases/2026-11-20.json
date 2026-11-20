@@ -1,0 +1,676 @@
+{
+  "schema_version": 3,
+  "format": "lead-story-v1",
+  "content_type": "automation_case",
+  "content_label": "개발·AI 인사이트",
+  "category": "AI·개발 도구",
+  "publication_mode": "manual_review",
+  "draft_id": "2026-11-20-automation",
+  "publish_date": "2026-11-20",
+  "date_label": "2026. 11. 20",
+  "weekday": "금",
+  "scheduled_at": "2026-11-20T09:00:00+09:00",
+  "primary_query": "PDF 문서 읽는 AI",
+  "tags": [
+    "PDF 문서 읽는 AI",
+    "Gemini",
+    "Claude",
+    "OCR",
+    "문서 이해",
+    "API 선택"
+  ],
+  "reader_access": {
+    "quick_summary": [
+      "PDF 화면의 표·차트까지 질문하려면 PDF 시각 입력을 지원하는 API를 확인한다.",
+      "Gemini·Claude의 문서 지원은 문자열 추출기와 목적이 다르다.",
+      "PDF 응답의 페이지·숫자를 원문과 대조해야 API 선택이 끝난다."
+    ],
+    "glossary": [
+      {
+        "term": "API",
+        "meaning": "개발 프로그램이 서비스에 요청과 응답을 주고받는 접점이다."
+      },
+      {
+        "term": "텍스트 추출",
+        "meaning": "PDF 안에 저장된 문자 데이터를 꺼내는 처리다."
+      },
+      {
+        "term": "OCR",
+        "meaning": "이미지에 있는 글자 모양을 문자로 인식하는 처리다."
+      }
+    ]
+  },
+  "editorial": {
+    "headline": "PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것",
+    "opening": "PDF 설명서를 AI에 넣었는데 표의 열 관계나 차트의 조건이 답에서 빠진다면, OCR을 바꾸는 것만으로 해결될까? 글자를 꺼내는 일과 화면의 관계를 해석하는 일은 다르다. PDF 화면을 받는 API가 필요한지부터 정하고, 선택한 서비스의 입력 방식과 근거 대조 기준을 함께 확인하자.",
+    "closing": "문서 이해 API를 고르는 결정은 브랜드 선호보다 입력과 결과의 계약에 가깝다. 문자열이 필요한 곳과 화면의 관계가 필요한 곳을 나누면 확인할 문서와 보류할 답도 선명해진다. 문서 유형도 기록한다.",
+    "action": "답의 수치와 근거 페이지를 원문과 대조하고 미확인 항목은 보류한다.",
+    "audience_problem": "PDF 문서 도우미를 만들며 텍스트 추출과 시각 입력 API 중 필요한 경로를 고르는 개발자",
+    "reader_takeaway": "PDF 질문의 결과물과 근거 페이지를 정하고 API 입력 경로를 선택한다.",
+    "why_now": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다.",
+    "topic_key": "pdf-vision-api-versus-text-extraction-evidence-page-choice",
+    "reader_question": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?",
+    "entities": [
+      "PDF",
+      "Gemini",
+      "Claude",
+      "OCR"
+    ],
+    "coverage": [
+      "question",
+      "sources",
+      "classification",
+      "comparison",
+      "application",
+      "limits",
+      "judgment",
+      "mechanism"
+    ],
+    "weekly_lane": "developer_insight",
+    "article_shape": "official_document_guide",
+    "search_intent": {
+      "query": "PDF 문서 읽는 AI",
+      "reader_need": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?",
+      "answer_format": "PDF 결과물별 입력 경로 선택표"
+    },
+    "reader_hook": {
+      "scene": "PDF 설명서의 글자는 추출했지만 표의 열과 차트 조건을 AI 답에서 확인하지 못하는 장면",
+      "stakes": "문자 인식 성공을 문서 이해 성공으로 취급하면 잘못 연결된 표의 수치도 답에 남을 수 있다.",
+      "payoff": "PDF 질문의 결과물과 근거 페이지를 정하고 API 입력 경로를 선택한다.",
+      "open_question": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?"
+    },
+    "reader_path": {
+      "reader_level": "developer",
+      "entry_heading": "답에 화면의 관계가 필요한지 먼저 정한다",
+      "immediate_answer": "차트와 표의 배치까지 질문하려면 PDF 화면을 받는 Gemini·Claude API를 검토한다. 원문 문자열 확보가 목적이면 텍스트 추출·OCR 경로를 유지하고, 어떤 경로든 답의 근거 페이지와 숫자를 대조한다.",
+      "action_steps": [
+        "답에서 필요한 결과를 원문 문자열·표 관계·차트 설명 중 하나로 정한다.",
+        "개인정보 없는 대표 페이지에서 질문과 근거 페이지를 짝지어 준비한다.",
+        "선택한 API의 PDF 입력 방식과 모델·플랫폼 제한을 확인한다.",
+        "답의 수치와 근거 페이지를 원문과 대조하고 미확인 항목은 보류한다."
+      ],
+      "completion_check": "선택한 입력 경로와 대표 질문, 근거 페이지 및 숫자 대조 결과가 기록되어야 한다."
+    },
+    "revisit": {
+      "quick_answer": "차트와 표의 배치까지 질문하려면 PDF 화면을 받는 Gemini·Claude API를 검토한다. 원문 문자열 확보가 목적이면 텍스트 추출·OCR 경로를 유지하고, 어떤 경로든 답의 근거 페이지와 숫자를 대조한다.",
+      "reuse_case": "PDF 문서 도우미의 입력 API를 정할 때",
+      "failure_case": "텍스트 추출 성공만으로 표와 차트 해석도 끝났다고 판단할 때",
+      "artifact_type": "evaluation_matrix",
+      "update_triggers": [
+        "PDF 입력 제한 변경",
+        "모델·플랫폼 변경",
+        "문서 유형 변경"
+      ]
+    },
+    "original_value": {
+      "durable_question": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?",
+      "source_gap": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다.",
+      "contribution": "필요한 결과물과 입력·근거 대조 조건을 연결한 PDF 처리 선택표",
+      "proof_method": "document_comparison",
+      "reader_outcome": "PDF 질문의 결과물과 근거 페이지를 정하고 API 입력 경로를 선택한다.",
+      "limits": "공식 문서를 대조한 선택 가이드이며 API 호출과 한국어 정확도·비용·속도 비교는 실행하지 않았다."
+    },
+    "selection_evaluation": {
+      "policy": "developer-insight-v1",
+      "threshold": 75,
+      "total": 91,
+      "criteria": {
+        "search_durability": 18,
+        "developer_relevance": 24,
+        "source_authority": 20,
+        "original_contribution": 17,
+        "curiosity": 12
+      },
+      "hard_gates": {
+        "evidence_ready": true,
+        "duplicate_free": true
+      }
+    },
+    "value_review": {
+      "primary_reader": "PDF 문서 도우미를 만들며 텍스트 추출과 시각 입력 API 중 필요한 경로를 고르는 개발자",
+      "reader_question": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?",
+      "source_gap": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다.",
+      "selection_reason": "11월 16일 관측 검색어 ocr 말고 ai로 문서 읽는 제품 뭐가 있나요는 0클릭 7노출의 작은 사이트 관측이다. 공개 /248의 범위 밖인 PDF 시각 입력 API 선택을 대조한다. 검색량이나 검색어별 페이지 성과는 아니다.",
+      "contributions": [
+        {
+          "basis": "inference",
+          "excerpt": "공식 문서를 대조한 이 글의 판단은, 제품 이름보다 필요한 결과와 근거 대조 방식을 먼저 정하면 PDF 화면 이해와 텍스트 추출을 구분해 선택할 수 있다는 것이다.",
+          "disclosure_excerpt": "공식 문서를 대조한 이 글의 판단은, 제품 이름보다 필요한 결과와 근거 대조 방식을 먼저 정하면 PDF 화면 이해와 텍스트 추출을 구분해 선택할 수 있다는 것이다.",
+          "limit_excerpt": "공식 문서를 대조한 선택 가이드이며 API 호출과 한국어 정확도·비용·속도 비교는 실행하지 않았다.",
+          "source_urls": [
+            "https://ai.google.dev/gemini-api/docs/document-processing",
+            "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+            "https://pypdf.readthedocs.io/en/stable/user/extract-text.html"
+          ]
+        }
+      ]
+    },
+    "search_demand": {
+      "snapshot": "data/search_demand/2026-11-16.json",
+      "query": "ocr 말고 ai로 문서 읽는 제품 뭐가 있나요",
+      "relation": "distinct_followup",
+      "existing_page_urls": [
+        "https://won0322.tistory.com/248"
+      ],
+      "intent_gap": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다."
+    }
+  },
+  "visual": {
+    "weekday_profile": "developer_decision",
+    "subject_terms": [
+      "PDF",
+      "Gemini",
+      "Claude"
+    ],
+    "subject": "PDF 문서 AI 입력 선택",
+    "hook": "PDF를 읽는 AI API를 고를 때 텍스트 추출과 화면 이해 중 어떤 입력 경로를 선택할까?",
+    "motif": "문서 화면과 문자열을 나눠 고르는 손",
+    "cover": {
+      "label": "PDF 문서에서 차트와 문자를 함께 살피는 장면",
+      "scene_label": [
+        "PDF",
+        "차트와 각주"
+      ],
+      "steps": "PDF 화면의 관계를 살피며 입력 경로를 고른다.",
+      "curiosity_hook": "PDF 문서 AI는 글자 밖의 관계도 읽을까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "PDF 문서 AI 선택은 필요한 화면 관계를 확인하는 데서 시작한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "folded_pdf_chart_loupe",
+      "composition_type": "closeup_open_document_loupe",
+      "palette_family": "burgundy_silver_sage",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "PDF 문서의 차트와 각주를 함께 살피는 돋보기",
+      "texture_cue": "접힌 종이와 은빛 돋보기",
+      "authenticity_cue": "차트와 각주를 같은 시야에 둔 문서",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. 용도: PDF 문서 AI 선택 기사 대표 이미지, wide 1.9:1 landscape. 실제 대상: a folded paper technical PDF page with one printed line chart and its adjacent footnote, a silver magnifying glass held over both chart and footnote together, a plain text transcription sheet slightly out of focus behind. 구도: close low oblique view, central 60% object, no panels, single moment. 시각 스타일: tactile paper editorial sculpture, precise folds and cut paper, premium. 색·조명: burgundy, silver, sage, natural side light. 필수 물체: PDF paper, chart, footnote marks, magnifier. 짧은 한국어: none, no readable words. 금지 요소: fake software UI, logo, robot, arrows, cards, infographic, numbers, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      }
+    },
+    "assets": [
+      {
+        "label": "Gemini PDF 시각 입력 근거",
+        "scene_label": [
+          "PDF",
+          "Gemini"
+        ],
+        "steps": "Gemini PDF 입력 공식 문서에서 처리 범위를 확인한다.",
+        "curiosity_hook": "Gemini PDF 입력에서 확인할 조건은 무엇일까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다.",
+        "capture_tool": "playwright",
+        "capture_target": "Gemini PDF 공식 문서 https://ai.google.dev/gemini-api/docs/document-processing",
+        "source_url": "https://ai.google.dev/gemini-api/docs/document-processing",
+        "captured_at": "2026-11-20T00:06:37.821970+00:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "PDF 문서 AI 입력 경로 선택 지도",
+        "scene_label": [
+          "PDF",
+          "원문 문자열",
+          "화면 관계"
+        ],
+        "steps": "PDF에서 원문 문자열과 화면 관계 중 필요한 결과를 먼저 고른다.",
+        "curiosity_hook": "PDF 문서 AI 선택은 어디서 시작할까?",
+        "evidence_type": "diagram",
+        "logic_type": "conditional",
+        "content_role": "explanation",
+        "origin": "imagegen",
+        "teaching_role": "decision_map",
+        "teaching_claim": "PDF 문서 AI 선택은 원문 문자열과 화면 관계 중 필요한 결과에서 시작한다.",
+        "generation_prompt": "Use case: infographic-diagram. 용도: PDF 문서 AI 입력 선택 설명 도식. 실제 대상: a PDF page and two destination objects, a text sheet and a chart with footnote under magnifying glass. 구도: wide landscape, two clearly separated branching routes, very large Korean labels exactly \"필요한 결과\", \"원문 문자열\", \"화면 관계\", \"원문 대조\". 시각 스타일: crisp paper educational diagram, spacious, clear arrow direction from top question to two choices then final check. 색·조명: white, burgundy, graphite, sage. 필수 물체: PDF page, text sheet, chart and footnote, source comparison check. 금지 요소: fake UI, logos, tiny text, invented numbers, watermark.",
+        "generation_model": "gpt-image-2",
+        "korean_labels": [
+          "필요한 결과",
+          "원문 문자열",
+          "화면 관계",
+          "원문 대조"
+        ],
+        "condition": "PDF 처리에서 문자열이 필요한지 화면 관계가 필요한지 구분한다.",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      },
+      {
+        "label": "Claude 요청 형식과 문서 제한",
+        "scene_label": [
+          "PDF",
+          "Claude"
+        ],
+        "steps": "Claude PDF 입력 공식 문서에서 처리 범위를 확인한다.",
+        "curiosity_hook": "Claude PDF 입력에서 확인할 조건은 무엇일까?",
+        "evidence_type": "screenshot",
+        "logic_type": "evidence",
+        "content_role": "explanation",
+        "origin": "annotated_capture",
+        "teaching_role": "source_evidence",
+        "teaching_claim": "Claude 공식 문서는 PDF 요구 조건과 플랫폼별 입력 방식 확인을 요구한다.",
+        "capture_tool": "playwright",
+        "capture_target": "Claude PDF 공식 문서 https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+        "source_url": "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+        "captured_at": "2026-11-20T00:06:03.895551+00:00",
+        "qa": {
+          "topic_match": true,
+          "caption_match": true,
+          "mobile_readable": true,
+          "text_reviewed": true,
+          "not_generic": true
+        }
+      }
+    ]
+  },
+  "generation": {
+    "provider": "codex-agent",
+    "model": "gpt-6.2",
+    "revision": 7,
+    "image_provider": "mixed",
+    "image_policy": "webp-v2"
+  },
+  "images": {
+    "cover": {
+      "label": "PDF 문서에서 차트와 문자를 함께 살피는 장면",
+      "scene_label": [
+        "PDF",
+        "차트와 각주"
+      ],
+      "steps": "PDF 화면의 관계를 살피며 입력 경로를 고른다.",
+      "curiosity_hook": "PDF 문서 AI는 글자 밖의 관계도 읽을까?",
+      "logic_type": "single_moment",
+      "content_role": "hook",
+      "origin": "imagegen",
+      "weekday_profile": "developer_decision",
+      "weekday_role": "tool_choice_scene",
+      "visual_claim": "PDF 문서 AI 선택은 필요한 화면 관계를 확인하는 데서 시작한다",
+      "cover_kind": "editorial_scene",
+      "art_direction": "folded_pdf_chart_loupe",
+      "composition_type": "closeup_open_document_loupe",
+      "palette_family": "burgundy_silver_sage",
+      "render_family": "tactile_paper",
+      "editorial_treatment": "tactile_realism",
+      "focal_subject": "PDF 문서의 차트와 각주를 함께 살피는 돋보기",
+      "texture_cue": "접힌 종이와 은빛 돋보기",
+      "authenticity_cue": "차트와 각주를 같은 시야에 둔 문서",
+      "generation_model": "gpt-image-2",
+      "generation_prompt": "Use case: stylized-concept. Asset intent: editorial-scene. 용도: PDF 문서 AI 선택 기사 대표 이미지, wide 1.9:1 landscape. 실제 대상: a folded paper technical PDF page with one printed line chart and its adjacent footnote, a silver magnifying glass held over both chart and footnote together, a plain text transcription sheet slightly out of focus behind. 구도: close low oblique view, central 60% object, no panels, single moment. 시각 스타일: tactile paper editorial sculpture, precise folds and cut paper, premium. 색·조명: burgundy, silver, sage, natural side light. 필수 물체: PDF paper, chart, footnote marks, magnifier. 짧은 한국어: none, no readable words. 금지 요소: fake software UI, logo, robot, arrows, cards, infographic, numbers, watermark.",
+      "korean_labels": [],
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-20-automation/PDF-차트와-각주-선택.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/PDF-차트와-각주-선택.webp",
+      "alt": "PDF 문서 AI 선택은 필요한 화면 관계를 확인하는 데서 시작한다",
+      "width": 1200,
+      "height": 630,
+      "format": "webp",
+      "bytes": 101942,
+      "quality": 82,
+      "sha256": "f1d555c684189d78aee1ba9605099315abb0c176fa2b08af00d2484bb5dca44e"
+    },
+    "visual_2": {
+      "label": "PDF 문서 AI 입력 경로 선택 지도",
+      "scene_label": [
+        "PDF",
+        "원문 문자열",
+        "화면 관계"
+      ],
+      "steps": "PDF에서 원문 문자열과 화면 관계 중 필요한 결과를 먼저 고른다.",
+      "curiosity_hook": "PDF 문서 AI 선택은 어디서 시작할까?",
+      "evidence_type": "diagram",
+      "logic_type": "conditional",
+      "content_role": "explanation",
+      "origin": "imagegen",
+      "teaching_role": "decision_map",
+      "teaching_claim": "PDF 문서 AI 선택은 원문 문자열과 화면 관계 중 필요한 결과에서 시작한다.",
+      "generation_prompt": "Use case: infographic-diagram. 용도: PDF 문서 AI 입력 선택 설명 도식. 실제 대상: a PDF page and two destination objects, a text sheet and a chart with footnote under magnifying glass. 구도: wide landscape, two clearly separated branching routes, very large Korean labels exactly \"필요한 결과\", \"원문 문자열\", \"화면 관계\", \"원문 대조\". 시각 스타일: crisp paper educational diagram, spacious, clear arrow direction from top question to two choices then final check. 색·조명: white, burgundy, graphite, sage. 필수 물체: PDF page, text sheet, chart and footnote, source comparison check. 금지 요소: fake UI, logos, tiny text, invented numbers, watermark.",
+      "generation_model": "gpt-image-2",
+      "korean_labels": [
+        "필요한 결과",
+        "원문 문자열",
+        "화면 관계",
+        "원문 대조"
+      ],
+      "condition": "PDF 처리에서 문자열이 필요한지 화면 관계가 필요한지 구분한다.",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-20-automation/PDF-문자열과-화면-선택.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/PDF-문자열과-화면-선택.webp",
+      "alt": "PDF 문서 AI 선택은 원문 문자열과 화면 관계 중 필요한 결과에서 시작한다.",
+      "width": 1200,
+      "height": 675,
+      "format": "webp",
+      "bytes": 38462,
+      "quality": 82,
+      "sha256": "c1cfc80c46853c488c8982a0c6c94574165f1bd91005956f8f6d7f4a19deb2c4"
+    },
+    "visual_1": {
+      "label": "Gemini PDF 시각 입력 근거",
+      "scene_label": [
+        "PDF",
+        "Gemini"
+      ],
+      "steps": "Gemini PDF 입력 공식 문서에서 처리 범위를 확인한다.",
+      "curiosity_hook": "Gemini PDF 입력에서 확인할 조건은 무엇일까?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다.",
+      "capture_tool": "playwright",
+      "capture_target": "Gemini PDF 공식 문서 https://ai.google.dev/gemini-api/docs/document-processing",
+      "source_url": "https://ai.google.dev/gemini-api/docs/document-processing",
+      "captured_at": "2026-11-20T00:06:37.821970+00:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-20-automation/Gemini-PDF-시각입력.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/Gemini-PDF-시각입력.webp",
+      "alt": "Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다.",
+      "width": 1200,
+      "height": 628,
+      "format": "webp",
+      "bytes": 42948,
+      "quality": 82,
+      "sha256": "4d9f44a7199bfbcd108516ff750aaef0652e467cf80dd674ff7caeb9633cfae7",
+      "capture_sha256": "4d9f44a7199bfbcd108516ff750aaef0652e467cf80dd674ff7caeb9633cfae7"
+    },
+    "visual_3": {
+      "label": "Claude 요청 형식과 문서 제한",
+      "scene_label": [
+        "PDF",
+        "Claude"
+      ],
+      "steps": "Claude PDF 입력 공식 문서에서 처리 범위를 확인한다.",
+      "curiosity_hook": "Claude PDF 입력에서 확인할 조건은 무엇일까?",
+      "evidence_type": "screenshot",
+      "logic_type": "evidence",
+      "content_role": "explanation",
+      "origin": "annotated_capture",
+      "teaching_role": "source_evidence",
+      "teaching_claim": "Claude 공식 문서는 PDF 요구 조건과 플랫폼별 입력 방식 확인을 요구한다.",
+      "capture_tool": "playwright",
+      "capture_target": "Claude PDF 공식 문서 https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+      "captured_at": "2026-11-20T00:06:03.895551+00:00",
+      "qa": {
+        "topic_match": true,
+        "caption_match": true,
+        "mobile_readable": true,
+        "text_reviewed": true,
+        "not_generic": true
+      },
+      "path": "docs/tistory/assets/2026-11-20-automation/Claude-PDF-요청조건.webp",
+      "url": "https://seung-won-yu.github.io/blog-writing/tistory/assets/2026-11-20-automation/Claude-PDF-요청조건.webp",
+      "alt": "Claude 공식 문서는 PDF 요구 조건과 플랫폼별 입력 방식 확인을 요구한다.",
+      "width": 1200,
+      "height": 1179,
+      "format": "webp",
+      "bytes": 69096,
+      "quality": 82,
+      "sha256": "451e22fa58dde257ed4676f9b01a836471ee5136b2020902e6b08697eb396a1e",
+      "capture_sha256": "451e22fa58dde257ed4676f9b01a836471ee5136b2020902e6b08697eb396a1e"
+    }
+  },
+  "news": [
+    {
+      "title_kr": "PDF 문서 읽는 AI: Gemini·Claude를 OCR 대신 쓸 때 확인할 것",
+      "source": "Google·Anthropic·pypdf 공식 문서 확인일",
+      "url": "https://ai.google.dev/gemini-api/docs/document-processing",
+      "published_at": "2026-11-20T09:00:00+09:00",
+      "source_date_kind": "observed_at",
+      "blurb_kr": "PDF 문서 읽는 AI의 입력 경로를 원문 문자열·화면 관계·근거 페이지 기준으로 선택한다.",
+      "references": [
+        {
+          "title": "Gemini PDF document understanding",
+          "url": "https://ai.google.dev/gemini-api/docs/document-processing",
+          "kind": "official",
+          "publisher": "Google"
+        },
+        {
+          "title": "Claude PDF support",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+          "kind": "official",
+          "publisher": "Anthropic"
+        },
+        {
+          "title": "pypdf Extract Text",
+          "url": "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+          "kind": "official",
+          "publisher": "pypdf"
+        }
+      ],
+      "content": [
+        {
+          "t": "h",
+          "text": "답에 화면의 관계가 필요한지 먼저 정한다"
+        },
+        {
+          "t": "p",
+          "text": "차트와 표의 배치까지 질문하려면 PDF 화면을 받는 Gemini·Claude API를 검토한다. 원문 문자열 확보가 목적이면 텍스트 추출·OCR 경로를 유지하고, 어떤 경로든 답의 근거 페이지와 숫자를 대조한다."
+        },
+        {
+          "t": "ul",
+          "items": [
+            "답에서 필요한 결과를 원문 문자열·표 관계·차트 설명 중 하나로 정한다.",
+            "개인정보 없는 대표 페이지에서 질문과 근거 페이지를 짝지어 준비한다.",
+            "선택한 API의 PDF 입력 방식과 모델·플랫폼 제한을 확인한다.",
+            "답의 수치와 근거 페이지를 원문과 대조하고 미확인 항목은 보류한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "가령 공개 제품 설명서에서 “이 그래프의 성능이 성립하는 조건은 무엇인가”를 묻는다고 하자. 그래프 아래 각주가 본문과 떨어져 있으면 글자만 나열한 결과에서 둘의 관계가 흐려질 수 있다. 이는 선택을 설명하는 가상 사례이며 실제 API 실행 결과가 아니다."
+        },
+        {
+          "t": "table",
+          "caption": "PDF에서 필요한 결과로 경로를 나눈다",
+          "headers": [
+            "필요한 결과",
+            "먼저 검토할 입력 경로"
+          ],
+          "rows": [
+            [
+              "원문 문자열과 검색 가능한 사본",
+              "기존 텍스트 추출과 필요 페이지 OCR"
+            ],
+            [
+              "차트·그림과 본문을 연결한 설명",
+              "PDF 시각 입력을 지원하는 Gemini·Claude API"
+            ],
+            [
+              "정확한 표의 숫자와 행·열 대응",
+              "구조를 보존할 처리와 원문 대조를 함께 설계"
+            ]
+          ],
+          "reusable": true,
+          "reuse_label": "PDF 문서 AI 입력 선택표"
+        },
+        {
+          "t": "p",
+          "text": "문서 전체를 질문에 넣을 수 있다는 것과 원하는 정보가 정확히 답에 포함된다는 것은 다르다. 선택표는 기능 순위가 아니라 확인할 입력 경로를 줄이는 기준이다. 문서 유형과 허용 가능한 오류가 달라지면 같은 제품도 다른 선택이 된다."
+        },
+        {
+          "t": "h",
+          "text": "Gemini는 PDF의 시각 내용까지 질문하는 경로다"
+        },
+        {
+          "t": "p",
+          "text": "Google의 Document understanding 문서는 PDF의 텍스트뿐 아니라 이미지·차트·표를 함께 다루는 시각 입력을 설명한다. 따라서 그림의 관계가 필요한 질문에서는 먼저 PDF 자체를 입력하는 경로를 검토할 수 있다."
+        },
+        {
+          "t": "p",
+          "text": "Google 문서에는 작은 일시적 입력을 직접 전달하는 방식과, 반복 참조할 큰 문서를 Files API로 올리는 방식이 구분되어 있다. 파일을 어디에 두고 몇 번 쓸지에 따라 구현에서 확인할 곳이 달라진다. 파일 업로드 성공은 답의 정확성 검사가 아니다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_1",
+          "caption": "Gemini 공식 문서는 PDF의 텍스트·이미지·차트·표를 함께 다루는 입력을 설명한다."
+        },
+        {
+          "t": "p",
+          "text": "SDK 코드에 모델 이름만 바꾸기 전에 현재 사용하는 API와 SDK의 입력 구조를 확인한다. 웹 채팅에서 PDF를 읽어 본 경험이 API의 파일 재사용·요청 한도·출력 형태까지 검증해 주지는 않는다. 같은 브랜드에서도 제품과 API 경로가 다를 수 있다."
+        },
+        {
+          "t": "ad_break"
+        },
+        {
+          "t": "h",
+          "text": "Claude도 PDF 질문을 받지만 입력 계약은 따로 읽는다"
+        },
+        {
+          "t": "p",
+          "text": "Anthropic의 PDF support 문서는 PDF의 텍스트·그림·차트·표를 질문 대상으로 설명한다. 문서 URL, base64 데이터, Files API 참조가 제시되지만 사용 플랫폼별 지원 방식이 같다고 가정해서는 안 된다."
+        },
+        {
+          "t": "p",
+          "text": "암호가 걸린 파일을 일반 PDF 입력과 같은 것으로 취급하지 않는다. 페이지 수와 요청 크기처럼 바뀔 수 있는 제한은 선택한 모델·플랫폼의 현재 문서에서 확인한다. 다른 입력이 함께 실리면 PDF 파일 크기만 보고 전체 요청의 적합성을 판단하기 어렵다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_3",
+          "caption": "Claude 공식 문서는 PDF 요구 조건과 플랫폼별 입력 방식 확인을 요구한다."
+        },
+        {
+          "t": "p",
+          "text": "두 서비스 모두 PDF를 받는다는 이유만으로 한국어 문서의 숫자·표·도표에서 동일한 정확도를 낸다고 말할 수 없다. 이 글은 같은 문서를 넣은 비교 실행을 하지 않았으므로 성능이나 비용의 승자를 정하지 않는다. 먼저 필요한 입력 계약을 충족하는 후보만 남긴다."
+        },
+        {
+          "t": "h",
+          "text": "OCR을 생략할 수 있는 경우와 남겨 둘 경우"
+        },
+        {
+          "t": "p",
+          "text": "pypdf 문서는 텍스트 추출을 제공하지만 이미지뿐인 페이지에서 글자를 인식하는 OCR 도구는 아니다. 기존 문자열이 필요한 검색 파이프라인과 PDF 화면을 바로 질문하는 경로를 한 가지 처리로 묶지 말자."
+        },
+        {
+          "t": "p",
+          "text": "AI 응답이 아닌 검색 가능한 PDF 사본을 남겨야 한다면 텍스트 레이어를 만드는 OCR 경로가 여전히 목적에 맞는다. 반면 그림의 의미를 묻는 과제에서 먼저 모든 페이지를 문자열로 바꾸는 것이 필수라고 단정할 이유는 없다. 서비스의 실제 PDF 입력 방식을 확인한 뒤 필요한 전처리만 정한다."
+        },
+        {
+          "t": "visual",
+          "image": "visual_2",
+          "caption": "PDF 문서 AI 선택은 원문 문자열과 화면 관계 중 필요한 결과에서 시작한다. 설명용 생성 도식이다."
+        },
+        {
+          "t": "p",
+          "text": "스캔한 표의 숫자를 읽고 합계까지 답하게 할 때는 두 문제가 이어진다. 글자를 틀리게 읽는 오류와, 읽은 수치를 잘못 연결하거나 계산하는 오류다. 입력 방식만 교체하고 최종 합계만 확인하면 어느 단계의 문제인지 찾기 어렵다."
+        },
+        {
+          "t": "h",
+          "text": "대표 질문에 근거 페이지를 붙여 선택을 끝낸다"
+        },
+        {
+          "t": "ul",
+          "items": [
+            "공개 자료나 합성 문서에서 본문·표·차트 대표 페이지를 고른다.",
+            "각 질문의 정답 근거와 페이지 번호를 사람이 먼저 적는다.",
+            "답이 없는 질문도 포함해 근거 없는 추정과 보류를 구분한다.",
+            "응답과 원문을 대조하고 누락·숫자·표 대응 오류를 따로 기록한다."
+          ]
+        },
+        {
+          "t": "p",
+          "text": "예를 들어 “표에서 모델 A의 최대 입력은 얼마인가”라는 질문이라면 값만 적지 말고 단위와 행·열 제목을 함께 정답 근거에 넣는다. 차트 조건을 묻는다면 본문이나 각주의 조건 문장도 포함한다. 이 목록은 실행 결과가 아니라 후보를 시험할 평가 설계다."
+        },
+        {
+          "t": "p",
+          "text": "공식 문서를 대조한 이 글의 판단은, 제품 이름보다 필요한 결과와 근거 대조 방식을 먼저 정하면 PDF 화면 이해와 텍스트 추출을 구분해 선택할 수 있다는 것이다."
+        },
+        {
+          "t": "p",
+          "text": "한 문서의 성공을 전체 문서 유형의 성공으로 일반화하지 않는다. 스캔 화질과 레이아웃이 바뀌면 같은 질문 유형도 다시 대조한다. 입력 한도에 맞추기 위해 파일을 나눴다면 질문에 필요한 다른 페이지가 빠졌는지도 기록한다."
+        },
+        {
+          "t": "h",
+          "text": "근거와 한계"
+        },
+        {
+          "t": "p",
+          "text": "공식 문서를 대조한 선택 가이드이며 API 호출과 한국어 정확도·비용·속도 비교는 실행하지 않았다."
+        },
+        {
+          "t": "p",
+          "text": "2026년 11월 20일 Google·Anthropic·pypdf의 공식 문서를 확인했다. 개인 문서 업로드나 유료 API 실행은 하지 않았다. 문서 지원 기능을 비교한 것으로 제품 사용 후기나 한국어 인식률 순위는 아니다."
+        },
+        {
+          "t": "p",
+          "text": "선택한 입력 경로와 대표 질문, 근거 페이지 및 숫자 대조 결과가 기록되어야 한다."
+        }
+      ]
+    }
+  ],
+  "related_posts": [
+    {
+      "title": "PDF 텍스트 추출은 언제 OCR이 필요할까: AI 입력 준비 기준",
+      "url": "https://won0322.tistory.com/248",
+      "reason": "문자열 추출과 OCR 입력 준비를 먼저 확인한다.",
+      "role": "foundation"
+    },
+    {
+      "title": "AI 코딩 에이전트 검증: 테스트 통과 뒤 완료를 가르는 기준",
+      "url": "https://won0322.tistory.com/228",
+      "reason": "응답 생성과 작업 완료의 근거를 구분하는 기준을 이어 읽는다.",
+      "role": "next_step"
+    }
+  ],
+  "verification": {
+    "mode": "source_research",
+    "checked_at": "2026-11-20T00:03:00+00:00",
+    "scope": "Google Gemini와 Anthropic Claude의 PDF 시각 입력 및 pypdf 문자열 추출 공식 문서 3곳",
+    "method": "공식 PDF 입력 범위와 공개 /248의 문자열 준비 범위를 대조했다.",
+    "selection_rule": "11월 16일 관측 검색어 ocr 말고 ai로 문서 읽는 제품 뭐가 있나요는 0클릭 7노출의 작은 사이트 관측이다. 공개 /248의 범위 밖인 PDF 시각 입력 API 선택을 대조한다. 검색량이나 검색어별 페이지 성과는 아니다.",
+    "limitations": "공식 문서를 대조한 선택 가이드이며 API 호출과 한국어 정확도·비용·속도 비교는 실행하지 않았다.",
+    "source_urls": [
+      "https://ai.google.dev/gemini-api/docs/document-processing",
+      "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+      "https://pypdf.readthedocs.io/en/stable/user/extract-text.html"
+    ],
+    "source_count": 3,
+    "evidence_files": [
+      "visual_1",
+      "visual_3"
+    ],
+    "problem_lane": "PDF 문서 AI 입력 경로 선택",
+    "tool_brand": "Gemini·Claude·pypdf"
+  }
+}

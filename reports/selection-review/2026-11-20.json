@@ -1,0 +1,25 @@
+{
+  "snapshot": "data/search_demand/2026-11-16.json",
+  "reviews": [
+    {
+      "queries": [
+        "ocr 말고 ai로 문서 읽는 제품 뭐가 있나요"
+      ],
+      "decision": "gap_confirmed",
+      "reason": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다.",
+      "action": "new_article",
+      "source": "data/automation_cases/2026-11-20.json",
+      "page_url": "https://won0322.tistory.com/248",
+      "public_evidence": "/tmp/blog-writing-qa/2026-11-20/248-public.json",
+      "official_evidence": [
+        "https://ai.google.dev/gemini-api/docs/document-processing",
+        "https://platform.claude.com/docs/en/build-with-claude/pdf-support",
+        "https://pypdf.readthedocs.io/en/stable/user/extract-text.html"
+      ],
+      "existing_page_urls": [
+        "https://won0322.tistory.com/248"
+      ],
+      "distinct_outcome": "공개 /248은 문자열 추출과 OCR 입력 준비를 다루며 멀티모달 서비스의 내부 처리는 범위 밖이라고 밝힌다. 이번 글은 PDF 화면을 받는 API와 문자열 경로를 결과물 기준으로 고르는 별도 과제다."
+    }
+  ]
+}
